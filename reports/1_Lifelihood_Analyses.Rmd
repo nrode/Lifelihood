@@ -21,8 +21,29 @@ devtools::load_all()
 # Analyses
 ## Test LifelihoodC
 ```{r, eval=FALSE }
-  pathtolifelihood<-here::here("src/lifelihoodC.exe")
-  system(pathtolifelihood, intern = FALSE,
+llin=here::here("src/100%mort_Pierrickintercept.txt")
+customfile=here::here("data/raw_data/custom.txt")
+GbyG=0
+MCMC=0
+interval=25
+SEcal="false"
+saveprobevent=0
+fitness=0
+r=0
+seed1=12
+seed2=13
+seed3=14
+seed4=15
+ntr=2
+nst=2
+To=50
+Tf=1
+climbrate=1
+precision=0.001
+pathtolifelihood <- here::here("src/lifelihoodC.exe")
+string <- paste(infile, customfile, GbyG, MCMC, interval, SEcal, saveprobevent, fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision)
+  
+system(pathtolifelihood, intern = FALSE,
          ignore.stdout = FALSE, ignore.stderr = FALSE,
          wait = TRUE, input = string, show.output.on.console = TRUE,
          minimized = FALSE, invisible = TRUE)
