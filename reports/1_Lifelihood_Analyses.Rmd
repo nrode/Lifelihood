@@ -19,8 +19,9 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 devtools::load_all() 
 ```
 # Analyses
-# Test LifelihoodC
-```{r }
+## Test LifelihoodC
+```{r, eval=FALSE }
+  pathtolifelihood<-here::here("src/lifelihoodC.exe")
   system(pathtolifelihood, intern = FALSE,
          ignore.stdout = FALSE, ignore.stderr = FALSE,
          wait = TRUE, input = string, show.output.on.console = TRUE,
