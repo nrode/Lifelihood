@@ -1,0 +1,29 @@
+---
+title: "Lifelihood analyses"
+author: "Nicolas RODE, Thomas LENORMAND"
+date: "`r format(Sys.Date(), '%d-%B-%Y')`"
+output: 
+  html_document: 
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include =FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+devtools::load_all() 
+```
+# Analyses
+# Test LifelihoodC
+```{r }
+  system(pathtolifelihood, intern = FALSE,
+         ignore.stdout = FALSE, ignore.stderr = FALSE,
+         wait = TRUE, input = string, show.output.on.console = TRUE,
+         minimized = FALSE, invisible = TRUE)
+
+```
