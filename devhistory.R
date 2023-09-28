@@ -15,6 +15,7 @@ usethis::use_git(message = ":bulb: Update documentation")
 dir.create("data")
 dir.create("data/raw_data")
 dir.create("data/simulated_data")
+dir.create("src")
 dir.create("reports")
 dir.create("plots")
 
