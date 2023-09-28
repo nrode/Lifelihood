@@ -24,6 +24,11 @@ devtools::load_all()
 pathtolifelihood <- here::here("src/lifelihoodC.exe")
 infile=here::here("data/raw_data/100%mort_Pierrickintercept.txt")
 customfile=here::here("data/raw_data/custom.txt")
+
+pathtolifelihood <- gsub("/","\\", pathtolifelihood , fixed=T)
+infile <- gsub("/","\\", infile, fixed=T)
+customfile <- gsub("/","\\", customfile, fixed=T)
+
 GbyG=0
 MCMC=0
 interval=25
