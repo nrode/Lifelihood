@@ -21,6 +21,7 @@ dir.create("plots")
 
 ## Create a R directory and a file for functions
 usethis::use_r("utils-pipe")
+usethis::use_r("run_lifelihood_console")
 
 ## Update DESCRIPTION file
 usethis::use_package("here")
