@@ -23,8 +23,8 @@ devtools::load_all()
 ```{r, eval=FALSE }
 setwd(here::here("src"))
 pathtolifelihood <- here::here("src/lifelihoodC.exe")
-infile=here::here("src/DataLenski_gam_gam_gam__Rep1.txt")
-customfile=here::here("src/custom.in")
+infile=here::here("src/100%mort_Pierrick211genoparinteraction.txt")
+customfile=here::here("src/custom.txt")
 
 pathtolifelihood <- gsub("/","\\", pathtolifelihood , fixed=T)
 infile <- gsub("/","\\", infile, fixed=T)
