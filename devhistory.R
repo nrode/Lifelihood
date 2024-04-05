@@ -26,7 +26,6 @@ usethis::use_r("run_lifelihood_console")
 ## Update DESCRIPTION file
 usethis::use_package("here")
 
-
 ## Update NAMESPACE file
 devtools::document()
 
