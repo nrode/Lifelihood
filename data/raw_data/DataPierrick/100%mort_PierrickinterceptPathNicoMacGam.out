@@ -1,0 +1,38 @@
+---------------------------
+
+datafile= ~\Dropbox\pourNico\LifeLihood\Console\100%mort_PierrickinterceptGam.txt
+seed1= 12 seed2= 13 seed3= 14 seed4= 15
+#parameters= 7
+Likelihood_max= -33463.089257
+int_E(tmort)f -2.37783126 0.00000000
+int_morta -1.23750259 0.00000000
+int_E(tmat)f -3.97677233 0.00000000
+int_mata -1.44846866 0.00000000
+int_E(tpon) -3.97677233 0.00000000
+int_ponta -2.44846866 0.00000000
+int_pontn -5.62375338 0.00000000
+
+
+Parameter_Range_Table
+E(tmort)f 1.00000000 200.00000000
+morta 0.00100000 30.00000000
+RE(tmort)m 0.10000000 4.00000000
+mortp 0.00010000 1.00000000
+propmal 0.00001000 0.99999000
+E(tmat)f 1.00000000 100.00000000
+mata 0.00010000 12.00000000
+RE(tmat)m 0.10000000 10.00000000
+E(tpon) 0.10000000 200.00000000
+ponta 0.00100000 12.00000000
+pontn 1.00000000 50.00000000
+to(ps)int 0.00001000 10.00000000
+to(ps)am 0.00000010 10.00000000
+to(ps)tp 0.00000010 10.00000000
+sen(pu)t -20.00000000 20.00000000
+sen(pu)t2 -20.00000000 20.00000000
+sen(pn)t -10.00000000 10.00000000
+sen(pn)t2 -10.00000000 10.00000000
+to(pupn) -10.00000000 10.00000000
+ratiomax 10
+tinf_(right_censoring) 1000
+tc_(juvenile_period_length) 20
