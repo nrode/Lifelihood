@@ -89,10 +89,8 @@ lifelihood <- function(
       print("Running on Windows")
       path <- file.path(here("src", "compiled"), "lifelihoodC2023.exe")
       system(
-         path, intern = FALSE,
-         ignore.stdout = FALSE, ignore.stderr = FALSE,
-         wait = TRUE, input = string, show.output.on.console = TRUE,
-         minimized = FALSE, invisible = TRUE
+         path,
+         input = arg_string
       )
 
    # run lifelihood for Unix-like
@@ -101,9 +99,7 @@ lifelihood <- function(
       path <- file.path(here("src", "compiled"), "lifelihoodC2023")
       system(
          path,
-         input = arg_string,
-         intern = FALSE,
-         wait = TRUE,
+         input = arg_string
       )
 
    # stop the program if the OS is not properly detected
