@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="47"/>
+        <CursorPos X="19" Y="63"/>
+        <UsageCount Value="34"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Unit2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1009"/>
+        <CursorPos X="43" Y="1008"/>
+        <UsageCount Value="34"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Alea.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="34"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fmath.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="34"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fspec.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="34"/>
+      </Unit>
+      <Unit>
+        <Filename Value="mathromb.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="34"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Unit1.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="216"/>
+        <CursorPos X="36" Y="246"/>
+        <UsageCount Value="34"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="14">
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="7" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="30" Column="15" TopLine="8"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="72" Column="20" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="73" Column="3" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="73" Column="10" TopLine="54"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="67" Column="3" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="66" Column="58" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="60" Column="57" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="5" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="5" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="10" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="32" Column="38" TopLine="21"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="32" Column="38" TopLine="21"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="11" Column="11"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="76" Column="39" TopLine="51"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="Default">
+        <Mode Name="Default">
+          <local>
+            <LaunchingApplication Use="True" PathPlusParams="&quot;$(Pas2JSBrowser)&quot; &quot;$(Pas2JSProjectURL)&quot;"/>
+          </local>
+        </Mode>
+      </Modes>
+    </RunParams>
+    <HistoryLists>
+      <List Name="LaunchingApplication" Type="File" Count="1">
+        <Item1 Value="&quot;$(Pas2JSBrowser)&quot; &quot;$(Pas2JSProjectURL)&quot;"/>
+      </List>
+    </HistoryLists>
+  </ProjectSession>
+  <Debugging>
+    <Watches>
+      <Item>
+        <Expression Value="  nomf1:=list[0];
+"/>
+      </Item>
+    </Watches>
+  </Debugging>
+</CONFIG>
