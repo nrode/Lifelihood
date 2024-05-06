@@ -1,7 +1,7 @@
 #' Run lifelihood program
 #' @description Run lifelihood program in console mode
-#' @param infile file with the model and data to be fitted
-#' @param customfile file with the min and max boudaries for each parameter
+#' @param input_file file with the model and data to be fitted
+#' @param custom_file file with the min and max boudaries for each parameter
 #' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
@@ -19,11 +19,25 @@
 #' @param Tf Initial temperature for the simulated annealing
 #' @param climbrate Rate for the simulated annealing ?
 #' @param precision TBD - Check the actual meaning
+#' @name run_lifelihood
 #' @return dataset with the simulated hatch rate
 #' @export
 #'
 #' @examples
-#'run_lifelihood_console(infile="100%mort_Pierrick211genoparinteraction.txt", ntr=10, To=50, Tf=1, seed2=34)
+#' library(here)
+#' 
+#' # path to inputs
+#'input_file = file.path(
+#'    'data', 'raw_data', 'DataPierrick_GroupbyGroup',
+#'    '100%mort_Pierrick211genoparinteraction.txt'
+#' )
+#' custom_file = file.path('data', 'custom.txt')
+#
+#' # run the program
+#' run_lifelihood(
+#'    input_file = input_file,
+#'    custom_file = custom_file
+#')
 
 library(here)
 
@@ -38,7 +52,7 @@ detect_os <- function() {
   }
 }
 
-lifelihood <- function(
+run_lifelihood <- function(
    input_file,
    custom_file,
    GbyG,

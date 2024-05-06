@@ -1,4 +1,4 @@
-source(file.path('R', 'lifelihood.R'))
+source(file.path('R', 'run_lifelihood.R'))
 
 
 # path to inputs
@@ -10,7 +10,7 @@ custom_file = file.path('data', 'custom.txt')
 
 # run the program
 execution_time <- system.time({
-   lifelihood(
+   run_lifelihood(
       input_file = input_file,
       custom_file = custom_file
    )
