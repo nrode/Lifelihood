@@ -3,7 +3,9 @@ source(file.path('R', 'run_lifelihood.R'))
 
 # path to inputs
 input_file = file.path(
-   'data', 'raw_data', 'DataPierrick_GroupbyGroup',
+   'data',
+   'raw_data',
+   'DataPierrick_GroupbyGroup',
    '100%mort_Pierrick211genoparinteraction.txt'
 )
 custom_file = file.path('data', 'custom.txt')

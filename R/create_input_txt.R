@@ -22,4 +22,3 @@ create_txt_file <- function(dataframe, file_path) {
 }
 
 
-
