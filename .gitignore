@@ -6,8 +6,4 @@
 .Rdata
 .httr-oauth
 .quarto
-
-# output files
-*.out
-test_input.txt
 docs
