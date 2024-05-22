@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_output.R
 \name{read_output_from_file}
 \alias{read_output_from_file}
-\title{Read the output of the lifelihood program}
+\title{Read the output of the Lifelihood program}
 \usage{
 read_output_from_file(file_path)
 }
@@ -29,7 +29,7 @@ A list with the following elements:
 }
 }
 \description{
-Read the output of the lifelihood program
+Read the output of the Lifelihood program
 }
 \examples{
 # path to input

@@ -1,4 +1,3 @@
 rm(list = ls())
-library(devtools)
-build()
-load_all()
+devtools::build()
+devtools::load_all()

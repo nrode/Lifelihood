@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_lifelihood.R
 \name{run_lifelihood}
 \alias{run_lifelihood}
-\title{Run lifelihood program}
+\title{Run Lifelihood program}
 \arguments{
 \item{input_file}{file with the model and data to be fitted}
 
@@ -46,7 +46,7 @@
 dataset with the simulated hatch rate
 }
 \description{
-Run lifelihood program in console mode
+Run Lifelihood program in console mode
 }
 \examples{
 library(here)
