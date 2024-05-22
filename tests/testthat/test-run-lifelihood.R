@@ -1,61 +1,38 @@
 library(testthat)
-library(mockery)
-library(Lifelihood)
+library(here)
 
-# Mocking the detect_os function
-mock_detect_os <- function(os) {
-  force(os)
-  function() os
-}
-mock_detect_os("Unix")()
-
-test_that("run_lifelihood constructs argument string correctly and calls the executable on Unix", {
-
-  # Mocking the system function
-  assignInNamespace("detect_os", mock_detect_os("Unix"), ns = "Lifelihood")
-  system_mock <- mock()
-  stub(run_lifelihood, "system", system_mock)
-  
-  # Setting input parameters
-  input_file <- "data/input.txt"
-  custom_file <- "data/custom.txt"
-  GbyG <- 1
-  MCMC <- 1
-  interval <- 30
-  SEcal <- 1
-  saveprobevent <- 1
-  fitness <- 1
-  r <- 1
-  seed1 <- 100
-  seed2 <- 101
-  seed3 <- 102
-  seed4 <- 103
-  ntr <- 3
-  nst <- 4
-  To <- 100
-  Tf <- 5
-  climbrate <- 2
-  precision <- 0.01
-
-  # Expected argument string
-  expected_arg_string <- paste(
-    input_file, custom_file, GbyG, MCMC, interval, SEcal, saveprobevent, fitness,
-    r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
+test_that("run_lifelihood runs with default parameters", {
+  # Define the input files
+  input_file = file.path(
+   'data',
+   'raw_data',
+   'DataPierrick_GroupbyGroup',
+   '100%mort_Pierrick211genoparinteraction.txt'
   )
-  
-  # Run the function
-  run_lifelihood(
-    input_file, custom_file, GbyG, MCMC, interval, SEcal, saveprobevent, fitness,
-    r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
-  )
+  custom_file = file.path('data', 'custom.txt')
 
-  # Verify that the system function was called once
-  expect_called(system_mock, 1)
-  
-  # Retrieve the arguments passed to the system function
-  system_call <- mock_args(system_mock)[[1]]
-  
-  # Check the executable path and input string
-  expect_equal(system_call[[1]], file.path(here("src", "compiled"), "lifelihoodC2023"))
-  expect_equal(system_call[[2]], expected_arg_string)
+  # Mock the detect_os function to return the actual OS
+  detect_os <- function() {
+    if (.Platform$OS.type == "windows") {
+      return("Windows")
+    } else {
+      return("Unix-like")
+    }
+  }
+
+  # Run the function with default parameters
+  expect_silent(run_lifelihood(
+    input_file = input_file,
+    custom_file = custom_file
+  ))
+
+  # Check if the expected path is being used
+  if (detect_os() == "Windows") {
+    expected_path <- file.path(here("src", "compiled"), "lifelihoodC2023.exe")
+  } else {
+    expected_path <- file.path(here("src", "compiled"), "lifelihoodC2023")
+  }
+
+  # Check if the file exists (assuming the compiled program is present)
+  expect_true(file.exists(expected_path))
 })

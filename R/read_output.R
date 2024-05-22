@@ -62,7 +62,7 @@ read_output_from_file <- function(file_path) {
   results$effects <- data.frame(
     Name = as.character(sapply(effects, function(x) x[1])),
     Estimate = as.numeric(sapply(effects, function(x) x[2])),
-    # TODO (J): verify with Nicolas and Thomas that this is actually the standard error
+    # TODO (Jo): verify with Nicolas and Thomas that this is actually the standard error
     StdError = as.numeric(sapply(effects, function(x) x[3]))
   )
 
