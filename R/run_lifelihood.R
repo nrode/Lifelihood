@@ -1,5 +1,5 @@
-#' Run lifelihood program
-#' @description Run lifelihood program in console mode
+#' Run Lifelihood program
+#' @description Run Lifelihood program in console mode
 #' @param input_file file with the model and data to be fitted
 #' @param custom_file file with the min and max boudaries for each parameter
 #' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors
@@ -40,16 +40,17 @@
 #')
 
 library(here)
+library(mockr)
 
 detect_os <- function() {
-  os <- Sys.info()["sysname"]
-  if (os == "Windows") {
-    return("Windows")
-  } else if (os == "Linux" || os == "Darwin") {
-    return("Unix-like")
-  } else {
-    return("Unknown")
-  }
+   os <- Sys.info()["sysname"]
+   if (os == "Windows") {
+      return("Windows")
+   } else if (os == "Linux" || os == "Darwin") {
+      return("Unix-like")
+   } else {
+      return("Unknown")
+   }
 }
 
 run_lifelihood <- function(
@@ -98,18 +99,16 @@ run_lifelihood <- function(
       r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 
-   # run lifelihood for windows
+   # run Lifelihood for windows
    if (detect_os() == "Windows") {
-      print("Running on Windows")
       path <- file.path(here("src", "compiled"), "lifelihoodC2023.exe")
       system(
          path,
          input = arg_string
       )
 
-   # run lifelihood for Unix-like
+   # run Lifelihood for Unix-like
    } else if (detect_os() == "Unix-like") {
-      print("Running on Unix")
       path <- file.path(here("src", "compiled"), "lifelihoodC2023")
       system(
          path,
@@ -121,5 +120,6 @@ run_lifelihood <- function(
       stop("Unknown OS")
    }
 }
+
 
 

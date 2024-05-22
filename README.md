@@ -21,6 +21,6 @@ TODO: write a short description of the project and what it does.
 
 ## State of the project
 
-- `R/lifelihood.R` is the main R script that runs the project. It works well and can be tested with `tests/test_lifelihood.R`.
+- `R/Lifelihood.R` is the main R script that runs the project. It works well and can be tested with `tests/test_lifelihood.R`.
 
 - Currently developing the `create_input_txt.R` script that will transform a dataframe into a `.txt` file that can be read by the pascal code.

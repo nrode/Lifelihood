@@ -1,5 +1,5 @@
-#' Read the output of the lifelihood program
-#' @description Read the output of the lifelihood program
+#' Read the output of the Lifelihood program
+#' @description Read the output of the Lifelihood program
 #' @param file_path Path to the output file
 #' @return A list with the following elements:
 #' \itemize{
@@ -62,7 +62,7 @@ read_output_from_file <- function(file_path) {
   results$effects <- data.frame(
     Name = as.character(sapply(effects, function(x) x[1])),
     Estimate = as.numeric(sapply(effects, function(x) x[2])),
-    # TODO: verify with Nicolas and Thomas that this is actually the standard error
+    # TODO (J): verify with Nicolas and Thomas that this is actually the standard error
     StdError = as.numeric(sapply(effects, function(x) x[3]))
   )
 
