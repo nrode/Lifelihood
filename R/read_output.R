@@ -63,23 +63,4 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results$ratiomax <- ratiomax
   
   return(results)
-  
 }
-
-
-
-# use case
-file_path = file.path(
-   'data',
-   'raw_data',
-   'DataPierrick_GroupbyGroup',
-   '100%mort_Pierrick211genoparinteraction.out'
-)
-fitted = read_output_from_file(file_path)
-fitted$datafile
-fitted$seeds
-fitted$likelihood
-fitted$n_parameters
-fitted$effects
-fitted$parameter_ranges
-fitted$ratiomax

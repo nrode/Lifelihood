@@ -3,9 +3,6 @@
 \name{read_output_from_file}
 \alias{read_output_from_file}
 \title{Read the output of the Lifelihood program}
-\usage{
-read_output_from_file(file_path)
-}
 \arguments{
 \item{file_path}{Path to the output file}
 }
@@ -45,6 +42,6 @@ fitted = read_output_from_file(file_path)
 fitted$datafile
 fitted$seeds
 fitted$likelihood_max
-head(fitted$effects)
-head(fitted$parameter_ranges)
+fitted$effects
+fitted$parameter_ranges
 }

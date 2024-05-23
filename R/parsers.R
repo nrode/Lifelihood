@@ -1,5 +1,42 @@
-library(glue)
+#' Data Parsing Functions for Model Output Files
+#'
+#' These functions parse specific elements from model output files, including seeds, likelihood values, parameter ranges, effects, and ratio maximum values. The functions can handle group-by-group parsing where applicable.
+#'
+#' In practice, the `parse()` function is used to call the specific parsing functions based on the element to be parsed. It is then used in the `read_output_from_file()` function to extract the relevant information from the output file.
+#' 
+#' @param lines A character vector where each element represents a line from the output file.
+#' @param group_by_group A logical indicating whether to parse the data in a group-by-group manner. Default is FALSE.
+#'
+#' @return Depending on the function:
+#' - `get_seeds`: Returns a numeric vector of seeds or a matrix of seeds if `group_by_group` is TRUE.
+#' - `get_likelihood`: Returns a numeric value of the likelihood or a matrix of likelihood values if `group_by_group` is TRUE.
+#' - `get_param_ranges`: Returns a data frame with parameter names and their respective min and max values.
+#' - `get_effects`: Returns a data frame with effect names, estimates, and standard errors.
+#' - `get_ratio_max`: Returns a numeric value of the ratio maximum.
+#'
+#' @examples
+#'
+#' lines <- c(
+#'   "seed1= 123 seed2= 456 seed3= 789 seed4= 101",
+#'   "Likelihood_max= -123.456",
+#'   "Parameter_Range_Table",
+#'   "param1 0 10",
+#'   "param2 5 15",
+#'   "ratiomax 20",
+#'   "eff_param1 0.5 0.1",
+#'   "eff_param2 0.8 0.2"
+# )
+#'
+#' seeds <- parse(lines, "seeds")
+#' likelihood <- parse(lines, "likelihood")
+#' param_ranges <- parse(lines, "parameter_ranges")
+#' effects <- parse(lines, "effects")
+#' ratio_max <- parse(lines, "ratio_max")
+#' 
 
+
+
+library(glue)
 
 
 get_seeds = function(lines, group_by_group=FALSE){
@@ -152,70 +189,3 @@ parse = function(lines, element, group_by_group=FALSE){
       ratio_max = get_ratio_max(lines)
    )
 }
-
-# Sample lines
-lines <- c(
-  "seed1= 123 seed2= 456 seed3= 789 seed4= 101",
-  "Likelihood_max= -123.456",
-  "Parameter_Range_Table",
-  "param1 0 10",
-  "param2 5 15",
-  "ratiomax 20",
-  "eff_param1 0.5 0.1",
-  "eff_param2 0.8 0.2"
-)
-
-# Extract seeds
-seeds <- parse(lines, "seeds")
-print(seeds)
-
-# Extract likelihood
-likelihood <- parse(lines, "likelihood")
-print(likelihood)
-
-# Extract parameter ranges
-parameter_ranges <- parse(lines, "parameter_ranges")
-print(parameter_ranges)
-
-# Extract effects
-effects <- parse(lines, "effects")
-print(effects)
-
-# Extract ratiomax
-ratiomax <- parse(lines, "ratio_max")
-print(ratiomax)
-
-
-
-
-
-
-
-####################
-# Example use case #
-####################
-run_usecases = TRUE
-if (run_usecases){
-   file_path1 <- file.path(
-      'data',
-      'raw_data',
-      'DataPierrick_GroupbyGroup',
-      '100%mort_Pierrick211genoparinteraction.out'
-   )
-   file_path2 <- file.path(
-      'data',
-      'raw_data',
-      'DataPierrick_GroupbyGroup',
-      'resultgroupbygroup.out'
-   )
-
-   # get_seeds(readLines(file_path1))
-   # get_seeds(readLines(file_path2), group_by_group=TRUE)
-   # get_likelihood(readLines(file_path1))
-   # get_likelihood(readLines(file_path2), group_by_group=TRUE)
-   # get_param_ranges(readLines(file_path1))
-   # get_ratio_max(readLines(file_path1))
-}
-
-
-
