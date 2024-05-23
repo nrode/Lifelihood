@@ -41,60 +41,28 @@
 
 source(file.path('R', 'parsers.R'))
 
-read_output_from_file <- function(
-  file_path,
-  group_by_group = FALSE
-) {
+read_output_from_file <- function(file_path, group_by_group = FALSE){
 
   # initialize results
   lines <- readLines(file_path)
   results <- list()
-  seeds <- get_seeds(lines=lines, group_by_group=group_by_group)
   
-  # parser when group by group is not selected
-  if (!group_by_group){
+  # parse elements from .out file
+  seeds <- parse(lines, "seeds")
+  likelihood <- parse(lines, "likelihood", group_by_group)
+  effects <- parse(lines, "effects", group_by_group)
+  parameter_ranges <- parse(lines, "parameter_ranges", group_by_group)
+  ratiomax <- parse(lines, "ratio_max", group_by_group)
 
-    # get likelihood
-    likelihood_line <- lines[grepl("Likelihood_max=", lines)]
-    results$likelihood <- as.numeric(sub("Likelihood_max=\\s*(-?\\d+\\.\\d+)", "\\1", likelihood_line))
-
-    # get number of parameters (format: #parameters= 84)
-    n_parameters_line <- lines[grepl("#parameters", lines)]
-    n_parameters <- as.numeric(sub("#parameters=\\s*(\\d+)", "\\1", n_parameters_line))
-    results$n_parameters <- n_parameters
-
-    # get effects
-    effect_lines <- lines[grepl("^eff_", lines)]
-    effects <- strsplit(effect_lines, " ")
-    results$effects <- data.frame(
-      Name = as.character(sapply(effects, function(x) x[1])),
-      Estimate = as.numeric(sapply(effects, function(x) x[2])),
-      # TODO (Jo): verify with Nicolas and Thomas that this is actually the standard error
-      StdError = as.numeric(sapply(effects, function(x) x[3]))
-    )
-
-    # get parameter ranges
-    start <- which(grepl("Parameter_Range_Table", lines)) # find the first match
-    end <- which(grepl("ratiomax", lines)) # find the end match
-    range_lines <- lines[(start+1):(end-1)]
-    range_values <- strsplit(range_lines, " ")
-    results$parameter_ranges <- data.frame(
-      Name = as.character(sapply(range_values, function(x) x[1])),
-      Min = as.numeric(sapply(range_values, function(x) x[2])),
-      Max = as.numeric(sapply(range_values, function(x) x[3]))
-    )
-
-    # get ratiomax
-    ratiomax_line <- lines[end]
-    results$ratiomax <- as.numeric(gsub("[^0-9]", "", ratiomax_line))
-
-    return(results)
-  }
-
-  # parser when group by group is selected
-  else {
-     
-  }
+  # store results
+  results$datafile <- file_path
+  results$seeds <- seeds
+  results$likelihood <- likelihood
+  results$effects <- effects
+  results$parameter_ranges <- parameter_ranges
+  results$ratiomax <- ratiomax
+  
+  return(results)
   
 }
 
