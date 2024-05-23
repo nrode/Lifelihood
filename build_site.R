@@ -3,6 +3,7 @@
 
 rm(list=ls())
 Sys.setenv(RSTUDIO_PANDOC = "/opt/homebrew/bin/")
+roxygen2::roxygenise()
 devtools::document()
 devtools::install()
 pkgdown::build_site()

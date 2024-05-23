@@ -19,7 +19,7 @@
 #' @param Tf Initial temperature for the simulated annealing
 #' @param climbrate Rate for the simulated annealing ?
 #' @param precision TBD - Check the actual meaning
-#' @name run_lifelihood
+#' @name run_lifelihood()
 #' @return dataset with the simulated hatch rate
 #' @export
 #'

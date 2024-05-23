@@ -18,7 +18,7 @@
 #' \item \code{Min} The minimum value of the parameter
 #' \item \code{Max} The maximum value of the parameter
 #' }
-#' @name read_output_from_file
+#' @name read_output_from_file()
 #'
 #' @export
 #' 
@@ -48,7 +48,7 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results <- list()
   
   # parse elements from .out file
-  seeds <- parse(lines, "seeds")
+  seeds <- parse(lines, "seeds", group_by_group)
   likelihood <- parse(lines, "likelihood", group_by_group)
   effects <- parse(lines, "effects", group_by_group)
   parameter_ranges <- parse(lines, "parameter_ranges", group_by_group)
@@ -64,3 +64,13 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   
   return(results)
 }
+
+
+# use case
+file = file.path(
+  'data',
+  'raw_data',
+  'DataPierrick_GroupbyGroup',
+  '100%mort_Pierrick211genoparinteraction.out'
+)
+read_output_from_file(file)

@@ -33,6 +33,7 @@
 #' effects <- parse(lines, "effects")
 #' ratio_max <- parse(lines, "ratio_max")
 #' 
+#' @name parsers
 
 
 
@@ -74,10 +75,7 @@ get_seeds = function(lines, group_by_group=FALSE){
       seeds_gbg <- matrix(seeds, ncol=4)
       return(seeds_gbg)
 
-   } else {
-   
-   return(seeds)
-   }
+   } else {return(seeds)}
 }
 
 
@@ -113,7 +111,14 @@ get_likelihood = function(lines, group_by_group=FALSE){
       likelihood_line <- lines[grepl("Likelihood_max=", lines)]
 
       # retrieve the likelihood value
-      likelihood <- as.numeric(sub("Likelihood_max=\\s*(-?\\d+\\.\\d+)", "\\1", likelihood_line))
+      likelihood <- as.numeric(sub(
+         
+         # pattern of Likelihood_max=
+         "Likelihood_max=\\s*(-?\\d+\\.\\d+)",
+         
+         # replacement pattern
+         "\\1", likelihood_line
+      ))
       return(likelihood)
    }
 }
