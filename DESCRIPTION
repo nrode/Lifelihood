@@ -3,13 +3,13 @@ Title: This Package Estimates The Likelihood Of An Individual's Life History
 Version: 0.0.0.9000
 Authors@R: 
         c(person(given = "Nicolas",
-           family = "Rode",
-           role = c("aut", "cre"),
-           email = "nicolas.rode@inrae.fr"),
+        family = "Rode",
+        role = c("aut", "cre"),
+        email = "nicolas.rode@inrae.fr"),
         person(given = "Thomas",
-           family = "Lenormand",
-           role = c("aut"),
-           email = "thomas.lenormand@cefe.cnrs.fr"))
+        family = "Lenormand",
+        role = c("aut"),
+        email = "thomas.lenormand@cefe.cnrs.fr"))
 Description: Lifelihood is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death). 
 License: MIT + file LICENSE
 ByteCompile: true

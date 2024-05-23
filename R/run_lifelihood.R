@@ -1,5 +1,5 @@
-#' Run lifelihood program
-#' @description Run lifelihood program in console mode
+#' Run Lifelihood program
+#' @description Run Lifelihood program in console mode
 #' @param input_file file with the model and data to be fitted
 #' @param custom_file file with the min and max boudaries for each parameter
 #' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors
@@ -40,57 +40,29 @@
 #')
 
 library(here)
-
-detect_os <- function() {
-  os <- Sys.info()["sysname"]
-  if (os == "Windows") {
-    return("Windows")
-  } else if (os == "Linux" || os == "Darwin") {
-    return("Unix-like")
-  } else {
-    return("Unknown")
-  }
-}
+source(file.path('R', 'utils.R'))
 
 run_lifelihood <- function(
    input_file,
    custom_file,
-   GbyG,
-   MCMC,
-   interval,
-   SEcal,
-   saveprobevent,
-   fitness,
-   r,
-   seed1,
-   seed2,
-   seed3,
-   seed4,
-   ntr,
-   nst,
-   To,
-   Tf,
-   climbrate,
-   precision
+   GbyG=0,
+   MCMC=0,
+   interval=25,
+   SEcal=0,
+   saveprobevent=0,
+   fitness=0,
+   r=0,
+   seed1=12,
+   seed2=13,
+   seed3=14,
+   seed4=15,
+   ntr=2,
+   nst=2,
+   To=50,
+   Tf=1,
+   climbrate=1,
+   precision=0.001
 ) {
-   # Set default values within the function body
-   if (missing(GbyG)) GbyG <- 0
-   if (missing(MCMC)) MCMC <- 0
-   if (missing(interval)) interval <- 25
-   if (missing(SEcal)) SEcal <- 0
-   if (missing(saveprobevent)) saveprobevent <- 0
-   if (missing(fitness)) fitness <- 0
-   if (missing(r)) r <- 0
-   if (missing(seed1)) seed1 <- 12
-   if (missing(seed2)) seed2 <- 13
-   if (missing(seed3)) seed3 <- 14
-   if (missing(seed4)) seed4 <- 15
-   if (missing(ntr)) ntr <- 2
-   if (missing(nst)) nst <- 2
-   if (missing(To)) To <- 50
-   if (missing(Tf)) Tf <- 1
-   if (missing(climbrate)) climbrate <- 1
-   if (missing(precision)) precision <- 0.001
 
    # concatenate the inputs and other parameters
    arg_string <- paste(
@@ -98,28 +70,23 @@ run_lifelihood <- function(
       r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 
-   # run lifelihood for windows
+   # get the path to the compiled program
    if (detect_os() == "Windows") {
-      print("Running on Windows")
       path <- file.path(here("src", "compiled"), "lifelihoodC2023.exe")
-      system(
-         path,
-         input = arg_string
-      )
-
-   # run lifelihood for Unix-like
    } else if (detect_os() == "Unix-like") {
-      print("Running on Unix")
       path <- file.path(here("src", "compiled"), "lifelihoodC2023")
-      system(
-         path,
-         input = arg_string
-      )
 
    # stop the program if the OS is not properly detected
    } else {
       stop("Unknown OS")
    }
+
+   # run the program
+   system(
+      path,
+      input = arg_string
+   )
 }
+
 
 
