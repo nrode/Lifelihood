@@ -1,47 +1,37 @@
-#' Run Lifelihood program
-#' @description Run Lifelihood program in console mode
-#' @param input_file file with the model and data to be fitted
-#' @param custom_file file with the min and max boudaries for each parameter
-#' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors
-#' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
-#' @param interval TBD - Check the actual meaning
-#' @param SEcal Compute the standard error of eahc parameter using the Hessian matrix
-#' @param saveprobevent TBD - Check the actual meaning
-#' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
-#' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
-#' @param seed1 first seed used so that random values can found again (https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator)
-#' @param seed2 second seed used so that random values can found again
-#' @param seed3 third seed used so that random values can found again
-#' @param seed4 fourth seed used so that random values can found again
-#' @param ntr number of thread for the paralelisation ?
-#' @param nst TBD - Check the actual meaning
-#' @param To Initial temperature for the simulated annealing
-#' @param Tf Initial temperature for the simulated annealing
-#' @param climbrate Rate for the simulated annealing ?
-#' @param precision TBD - Check the actual meaning
-#' @name run_lifelihood()
-#' @return dataset with the simulated hatch rate
-#' @export
+#' Run Lifelihood Simulation
+#'
+#' This function runs the lifelihood simulation using a specified input file and custom parameters.
+#'
+#' @param input_file Character string specifying the path to the input file.
+#' @param custom_file Character string specifying the path to the custom file.
+#' @param GbyG Integer value for the GbyG parameter. Default is 0.
+#' @param MCMC Integer value for the MCMC parameter. Default is 0.
+#' @param interval Integer value specifying the interval. Default is 25.
+#' @param SEcal Integer value for the SEcal parameter. Default is 0.
+#' @param saveprobevent Integer value for the saveprobevent parameter. Default is 0.
+#' @param fitness Integer value for the fitness parameter. Default is 0.
+#' @param r Integer value for the r parameter. Default is 0.
+#' @param seed1 Integer value specifying the first seed. Default is 12.
+#' @param seed2 Integer value specifying the second seed. Default is 13.
+#' @param seed3 Integer value specifying the third seed. Default is 14.
+#' @param seed4 Integer value specifying the fourth seed. Default is 15.
+#' @param ntr Integer value for the ntr parameter. Default is 2.
+#' @param nst Integer value for the nst parameter. Default is 2.
+#' @param To Integer value specifying the starting time. Default is 50.
+#' @param Tf Integer value specifying the final time. Default is 1.
+#' @param climbrate Numeric value specifying the climate rate. Default is 1.
+#' @param precision Numeric value specifying the precision. Default is 0.001.
+#'
+#' @return No return value. This function is called for its side effects.
 #'
 #' @examples
-#' library(here)
+#' \dontrun{
+#' run_lifelihood("path/to/input_file.txt", "path/to/custom_file.txt")
+#' }
 #' 
-#' # path to inputs
-#'input_file = file.path(
-#'    'data', 'raw_data', 'DataPierrick_GroupbyGroup',
-#'    '100%mort_Pierrick211genoparinteraction.txt'
-#' )
-#' custom_file = file.path('data', 'custom.txt')
-#
-#' # run the program
-#' run_lifelihood(
-#'    input_file = input_file,
-#'    custom_file = custom_file
-#')
-
-library(here)
-source(file.path('R', 'utils.R'))
-
+#' @import here
+#' @importFrom utils system
+#' @export
 run_lifelihood <- function(
    input_file,
    custom_file,
@@ -63,7 +53,6 @@ run_lifelihood <- function(
    climbrate=1,
    precision=0.001
 ) {
-
    # concatenate the inputs and other parameters
    arg_string <- paste(
       input_file, custom_file, GbyG, MCMC, interval, SEcal, saveprobevent, fitness,
@@ -75,8 +64,6 @@ run_lifelihood <- function(
       path <- file.path(here("src", "compiled"), "lifelihoodC2023.exe")
    } else if (detect_os() == "Unix-like") {
       path <- file.path(here("src", "compiled"), "lifelihoodC2023")
-
-   # stop the program if the OS is not properly detected
    } else {
       stop("Unknown OS")
    }

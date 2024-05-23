@@ -1,8 +1,10 @@
-#' Data Parsing Functions for Model Output Files
+#' Data Parsing Function for Model Output Files
 #'
 #' These functions parse specific elements from model output files, including seeds, likelihood values, parameter ranges, effects, and ratio maximum values. The functions can handle group-by-group parsing where applicable.
 #'
 #' In practice, the `parse()` function is used to call the specific parsing functions based on the element to be parsed. It is then used in the `read_output_from_file()` function to extract the relevant information from the output file.
+#' 
+#' @name parsers
 #' 
 #' @param lines A character vector where each element represents a line from the output file.
 #' @param group_by_group A logical indicating whether to parse the data in a group-by-group manner. Default is FALSE.
@@ -33,14 +35,13 @@
 #' effects <- parse(lines, "effects")
 #' ratio_max <- parse(lines, "ratio_max")
 #' 
-#' @name parsers
+#' 
 
 
 
 library(glue)
 
-
-get_seeds = function(lines, group_by_group=FALSE){
+get_seeds <- function(lines, group_by_group=FALSE){
 
    # find the line starting with pattern "seed1="
    seeds_line <- lines[grepl("seed1=", lines)]
@@ -80,7 +81,7 @@ get_seeds = function(lines, group_by_group=FALSE){
 
 
 
-get_likelihood = function(lines, group_by_group=FALSE){
+get_likelihood <- function(lines, group_by_group=FALSE){
 
    if (group_by_group){
       
@@ -125,7 +126,7 @@ get_likelihood = function(lines, group_by_group=FALSE){
 
 
 
-get_param_ranges = function(lines){
+get_param_ranges <- function(lines){
 
    # find start and end of the parameter range table
    start <- which(grepl("Parameter_Range_Table", lines))
@@ -148,31 +149,7 @@ get_param_ranges = function(lines){
 
 
 
-get_effects = function(lines, group_by_group=FALSE){
-   
-   if (group_by_group){
-
-      #TODO: implement parser for group by group effects
-      stop("Group by group effects not implemented yet")
-
-   } else {
-      # get effects
-      effect_lines <- lines[grepl("^eff_", lines)]
-      effects <- strsplit(effect_lines, " ")
-      all_effects <- data.frame(
-         Name = as.character(sapply(effects, function(x) x[1])),
-         Estimate = as.numeric(sapply(effects, function(x) x[2])),
-         # TODO (Jo): verify with Nicolas and Thomas that this is actually the standard error
-         # probably not
-         StdError = as.numeric(sapply(effects, function(x) x[3]))
-      )
-      return(all_effects)
-   }
-}
-
-
-
-get_ratio_max = function(lines){
+get_ratio_max <- function(lines){
 
    # find the line containing the ratiomax value
    index <- which(grepl("ratiomax", lines))
@@ -184,7 +161,49 @@ get_ratio_max = function(lines){
 }
 
 
-parse = function(lines, element, group_by_group=FALSE){
+
+get_effects <- function(lines, group_by_group=FALSE){
+   
+   if (group_by_group){
+      
+      # find all lines starting with "group"
+      groups <- grep("^group", lines)
+
+      all_effects_gbg <- lapply(groups, function(i) {
+         
+         # get the lines for the group and split them
+         line <- lines[i]
+         effects <- unlist(strsplit(line, " "))
+
+         # get name, first and second value, with a step of 3
+         effect_names <- effects[seq(5, length(effects) - 1, by = 3)]
+         effect_values1 <- as.numeric(effects[seq(6, length(effects) - 1, by = 3)])
+         effect_values2 <- as.numeric(effects[seq(7, length(effects), by = 3)])
+         
+         data.frame(
+            Name = effect_names,
+            Value1 = effect_values1,
+            Value2 = effect_values2
+         )
+      })
+      return(all_effects_gbg)
+   
+   } else {
+      # get effects
+      effect_lines <- lines[grepl("^eff_", lines)]
+      effects <- strsplit(effect_lines, " ")
+      all_effects <- data.frame(
+         Name = as.character(sapply(effects, function(x) x[1])),
+         Value1 = as.numeric(sapply(effects, function(x) x[2])),
+         Value2 = as.numeric(sapply(effects, function(x) x[3]))
+      )
+      return(all_effects)
+   }
+}
+
+
+
+parse <- function(lines, element, group_by_group=FALSE){
    switch(
       element,
       seeds = get_seeds(lines, group_by_group),
@@ -194,3 +213,17 @@ parse = function(lines, element, group_by_group=FALSE){
       ratio_max = get_ratio_max(lines)
    )
 }
+
+
+
+
+file <- file.path(
+   "data", "raw_data", "DataPierrick_GroupbyGroup", "resultgroupbygroup.out"
+)
+lines <- readLines(file)
+seeds <- parse(lines, "seeds", group_by_group=TRUE)
+likelihood <- parse(lines, "likelihood", group_by_group=TRUE)
+effects <- parse(lines, "effects", group_by_group=TRUE)
+param_ranges <- parse(lines, "parameter_ranges")
+ratio_max <- parse(lines, "ratio_max")
+

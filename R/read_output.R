@@ -18,7 +18,7 @@
 #' \item \code{Min} The minimum value of the parameter
 #' \item \code{Max} The maximum value of the parameter
 #' }
-#' @name read_output_from_file()
+#' @name read_output_from_file
 #'
 #' @export
 #' 
@@ -42,6 +42,26 @@
 source(file.path('R', 'parsers.R'))
 
 read_output_from_file <- function(file_path, group_by_group = FALSE){
+
+  # test if file exists
+  if (!file.exists(file_path)){
+    stop("File not found")
+  }
+
+  # test if file is a .out file
+  if (!grepl(".out$", file_path)){
+    stop("File is not a .out file")
+  }
+
+  # test if file is not empty
+  if (file.size(file_path) == 0){
+    stop("File is empty")
+  }
+
+  # test if group_by_group is a boolean
+  if (!is.logical(group_by_group)){
+    stop("group_by_group must be a boolean")
+  }
 
   # initialize results
   lines <- readLines(file_path)
@@ -73,4 +93,4 @@ file = file.path(
   'DataPierrick_GroupbyGroup',
   '100%mort_Pierrick211genoparinteraction.out'
 )
-read_output_from_file(file)
+results = read_output_from_file(file)
