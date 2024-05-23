@@ -21,4 +21,14 @@ create_txt_file <- function(dataframe, file_path) {
   close(file_conn)
 }
 
+# Example usage
+data <- data.frame(
+  Name = c("param1", "param2", "param3"),
+  Min = c(0.1, 0.2, 0.3),
+  Max = c(1.0, 2.0, 3.0)
+)
+
+file_path <- "joseph.txt"
+create_txt_file(data, file_path)
+
 

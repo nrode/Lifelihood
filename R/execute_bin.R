@@ -26,13 +26,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' run_lifelihood("path/to/input_file.txt", "path/to/custom_file.txt")
+#' execute_bin("path/to/input_file.txt", "path/to/custom_file.txt")
 #' }
 #' 
 #' @import here
 #' @importFrom utils system
 #' @export
-run_lifelihood <- function(
+execute_bin <- function(
    input_file,
    custom_file,
    GbyG=0,
