@@ -1,7 +1,7 @@
 library(testthat)
 library(here)
 
-test_that("run_lifelihood runs with default parameters", {
+test_that("execute_bin runs with default parameters", {
   # Define the input files
   input_file = file.path(
    'data',
@@ -21,7 +21,7 @@ test_that("run_lifelihood runs with default parameters", {
   }
 
   # Run the function with default parameters
-  expect_silent(run_lifelihood(
+  expect_silent(execute_bin(
     input_file = input_file,
     custom_file = custom_file
   ))

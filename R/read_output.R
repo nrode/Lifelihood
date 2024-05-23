@@ -41,77 +41,56 @@
 
 source(file.path('R', 'parsers.R'))
 
-read_output_from_file <- function(
-  file_path,
-  group_by_group = FALSE
-) {
+read_output_from_file <- function(file_path, group_by_group = FALSE){
+
+  # test if file exists
+  if (!file.exists(file_path)){
+    stop("File not found")
+  }
+
+  # test if file is a .out file
+  if (!grepl(".out$", file_path)){
+    stop("File is not a .out file")
+  }
+
+  # test if file is not empty
+  if (file.size(file_path) == 0){
+    stop("File is empty")
+  }
+
+  # test if group_by_group is a boolean
+  if (!is.logical(group_by_group)){
+    stop("group_by_group must be a boolean")
+  }
 
   # initialize results
   lines <- readLines(file_path)
   results <- list()
-  seeds <- get_seeds(lines=lines, group_by_group=group_by_group)
   
-  # parser when group by group is not selected
-  if (!group_by_group){
+  # parse elements from .out file
+  seeds <- parse(lines, "seeds", group_by_group)
+  likelihood <- parse(lines, "likelihood", group_by_group)
+  effects <- parse(lines, "effects", group_by_group)
+  parameter_ranges <- parse(lines, "parameter_ranges", group_by_group)
+  ratiomax <- parse(lines, "ratio_max", group_by_group)
 
-    # get likelihood
-    likelihood_line <- lines[grepl("Likelihood_max=", lines)]
-    results$likelihood <- as.numeric(sub("Likelihood_max=\\s*(-?\\d+\\.\\d+)", "\\1", likelihood_line))
-
-    # get number of parameters (format: #parameters= 84)
-    n_parameters_line <- lines[grepl("#parameters", lines)]
-    n_parameters <- as.numeric(sub("#parameters=\\s*(\\d+)", "\\1", n_parameters_line))
-    results$n_parameters <- n_parameters
-
-    # get effects
-    effect_lines <- lines[grepl("^eff_", lines)]
-    effects <- strsplit(effect_lines, " ")
-    results$effects <- data.frame(
-      Name = as.character(sapply(effects, function(x) x[1])),
-      Estimate = as.numeric(sapply(effects, function(x) x[2])),
-      # TODO (Jo): verify with Nicolas and Thomas that this is actually the standard error
-      StdError = as.numeric(sapply(effects, function(x) x[3]))
-    )
-
-    # get parameter ranges
-    start <- which(grepl("Parameter_Range_Table", lines)) # find the first match
-    end <- which(grepl("ratiomax", lines)) # find the end match
-    range_lines <- lines[(start+1):(end-1)]
-    range_values <- strsplit(range_lines, " ")
-    results$parameter_ranges <- data.frame(
-      Name = as.character(sapply(range_values, function(x) x[1])),
-      Min = as.numeric(sapply(range_values, function(x) x[2])),
-      Max = as.numeric(sapply(range_values, function(x) x[3]))
-    )
-
-    # get ratiomax
-    ratiomax_line <- lines[end]
-    results$ratiomax <- as.numeric(gsub("[^0-9]", "", ratiomax_line))
-
-    return(results)
-  }
-
-  # parser when group by group is selected
-  else {
-     
-  }
+  # store results
+  results$datafile <- file_path
+  results$seeds <- seeds
+  results$likelihood <- likelihood
+  results$effects <- effects
+  results$parameter_ranges <- parameter_ranges
+  results$ratiomax <- ratiomax
   
+  return(results)
 }
 
 
-
 # use case
-file_path = file.path(
-   'data',
-   'raw_data',
-   'DataPierrick_GroupbyGroup',
-   '100%mort_Pierrick211genoparinteraction.out'
+file = file.path(
+  'data',
+  'raw_data',
+  'DataPierrick_GroupbyGroup',
+  '100%mort_Pierrick211genoparinteraction.out'
 )
-fitted = read_output_from_file(file_path)
-fitted$datafile
-fitted$seeds
-fitted$likelihood
-fitted$n_parameters
-fitted$effects
-fitted$parameter_ranges
-fitted$ratiomax
+results = read_output_from_file(file)
