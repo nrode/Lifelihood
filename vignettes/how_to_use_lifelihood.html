@@ -1520,26 +1520,21 @@ font-size: 0.95em;
 <pre class="r"><code>library(here)
 print(here::here())</code></pre>
 <pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood&quot;</code></pre>
-<pre class="r"><code>source(here(&quot;R&quot;, &quot;execute_bin.R&quot;))
-source(here(&quot;R&quot;, &quot;read_output.R&quot;))</code></pre>
+<pre class="r"><code>source(here(&quot;R&quot;, &quot;lifelihood.R&quot;))</code></pre>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data preparation</h2>
 <pre class="r"><code>file_name &lt;- &quot;DataLenski_gam_gam_gam__Rep1&quot;
-path_to_data &lt;- here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.txt&quot;))</code></pre>
-</div>
-<div id="custom-parameters" class="section level2">
-<h2>Custom parameters</h2>
-<pre class="r"><code>path_to_custom &lt;- here(&quot;data&quot;, &quot;custom.txt&quot;)</code></pre>
-</div>
-<div id="run-the-program" class="section level2">
-<h2>Run the program</h2>
-<pre class="r"><code>execute_bin(path_to_data, path_to_custom)</code></pre>
+path_to_data &lt;- here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.txt&quot;))
+print(path_to_data)</code></pre>
+<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt&quot;</code></pre>
+<pre class="r"><code>path_to_custom &lt;- here(&quot;data&quot;, &quot;custom.txt&quot;)
+print(path_to_custom)</code></pre>
+<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/data/custom.txt&quot;</code></pre>
 </div>
 <div id="get-the-results" class="section level2">
 <h2>Get the results</h2>
-<pre class="r"><code>path_to_out &lt;- here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.out&quot;))
-results &lt;- read_output_from_file(path_to_out)
+<pre class="r"><code>results &lt;- lifelihood(path_to_data, path_to_custom, group_by_group=FALSE)
 summary(results)</code></pre>
 <pre><code>##                  Length Class      Mode     
 ## datafile         1      -none-     character
