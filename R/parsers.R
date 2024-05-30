@@ -1,44 +1,3 @@
-#' Data Parsing Function for Model Output Files
-#'
-#' These functions parse specific elements from model output files, including seeds, likelihood values, parameter ranges, effects, and ratio maximum values. The functions can handle group-by-group parsing where applicable.
-#'
-#' In practice, the `parse()` function is used to call the specific parsing functions based on the element to be parsed. It is then used in the `read_output_from_file()` function to extract the relevant information from the output file.
-#' 
-#' @name parsers
-#' 
-#' @param lines A character vector where each element represents a line from the output file.
-#' @param group_by_group A logical indicating whether to parse the data in a group-by-group manner. Default is FALSE.
-#'
-#' @return Depending on the function:
-#' - `get_seeds`: Returns a numeric vector of seeds or a matrix of seeds if `group_by_group` is TRUE.
-#' - `get_likelihood`: Returns a numeric value of the likelihood or a matrix of likelihood values if `group_by_group` is TRUE.
-#' - `get_param_ranges`: Returns a data frame with parameter names and their respective min and max values.
-#' - `get_effects`: Returns a data frame with effect names, estimates, and standard errors.
-#' - `get_ratio_max`: Returns a numeric value of the ratio maximum.
-#'
-#' @examples
-#'
-#' lines <- c(
-#'   "seed1= 123 seed2= 456 seed3= 789 seed4= 101",
-#'   "Likelihood_max= -123.456",
-#'   "Parameter_Range_Table",
-#'   "param1 0 10",
-#'   "param2 5 15",
-#'   "ratiomax 20",
-#'   "eff_param1 0.5 0.1",
-#'   "eff_param2 0.8 0.2"
-# )
-#'
-#' seeds <- parse(lines, "seeds")
-#' likelihood <- parse(lines, "likelihood")
-#' param_ranges <- parse(lines, "parameter_ranges")
-#' effects <- parse(lines, "effects")
-#' ratio_max <- parse(lines, "ratio_max")
-#' 
-#' 
-
-
-
 library(glue)
 
 get_seeds <- function(lines, group_by_group=FALSE){
@@ -189,9 +148,16 @@ get_effects <- function(lines, group_by_group=FALSE){
       return(all_effects_gbg)
    
    } else {
-      # get effects
-      effect_lines <- lines[grepl("^eff_", lines)]
+      # find start and end of the effects
+      start <- grep("Likelihood_max", lines)
+      after_likelihood <- lines[(start + 1):length(lines)]
+      end <- which(after_likelihood == "")[1]
+      
+      # get vector of lines in the range
+      effect_lines <- after_likelihood[1:(end - 1)]
       effects <- strsplit(effect_lines, " ")
+
+      # return the effects as a data frame
       all_effects <- data.frame(
          Name = as.character(sapply(effects, function(x) x[1])),
          Value1 = as.numeric(sapply(effects, function(x) x[2])),
@@ -217,13 +183,11 @@ parse <- function(lines, element, group_by_group=FALSE){
 
 
 
-file <- file.path(
-   "data", "raw_data", "DataPierrick_GroupbyGroup", "resultgroupbygroup.out"
-)
-lines <- readLines(file)
-seeds <- parse(lines, "seeds", group_by_group=TRUE)
-likelihood <- parse(lines, "likelihood", group_by_group=TRUE)
-effects <- parse(lines, "effects", group_by_group=TRUE)
-param_ranges <- parse(lines, "parameter_ranges")
-ratio_max <- parse(lines, "ratio_max")
+# file <- here("data", "raw_data", "DataLenski", paste0(file_name, ".out"))
+# lines <- readLines(file)
+# seeds <- parse(lines, "seeds", group_by_group=F)
+# likelihood <- parse(lines, "likelihood", group_by_group=F)
+# effects <- parse(lines, "effects", group_by_group=F)
+# param_ranges <- parse(lines, "parameter_ranges")
+# ratio_max <- parse(lines, "ratio_max")
 

@@ -1,67 +1,13 @@
-#' Read the output of the Lifelihood program
-#' @description Read the output of the Lifelihood program
-#' @param file_path Path to the output file
-#' @return A list with the following elements:
-#' \itemize{
-#'  \item \code{datafile} Path to the output file
-#' \item \code{seeds} A vector of four integers representing the seeds used in the simulation
-#' \item \code{likelihood_max} The maximum likelihood value
-#' \item \code{effects} A data frame with the following columns:
-#' \itemize{
-#' \item \code{Name} The name of the effect
-#' \item \code{Estimate} The estimated value of the effect
-#' \item \code{StdError} The standard error of the estimate
-#' }
-#' \item \code{parameter_ranges} A data frame with the following columns:
-#' \itemize{
-#' \item \code{Name} The name of the parameter
-#' \item \code{Min} The minimum value of the parameter
-#' \item \code{Max} The maximum value of the parameter
-#' }
-#' @name read_output_from_file
-#'
-#' @export
-#' 
-#' @examples
-#' # path to input
-#' file_path = file.path(
-#'   'data',
-#'   'raw_data',
-#'   'DataPierrick_GroupbyGroup',
-#'   '100%mort_Pierrick211genoparinteraction.out'
-#')
-#'
-#' # read the output and print the results
-#' fitted = read_output_from_file(file_path)
-#' fitted$datafile
-#' fitted$seeds
-#' fitted$likelihood_max
-#' fitted$effects
-#' fitted$parameter_ranges
-
-source(file.path('R', 'parsers.R'))
+library(here)
+source(here('R', 'parsers.R'))
 
 read_output_from_file <- function(file_path, group_by_group = FALSE){
 
-  # test if file exists
-  if (!file.exists(file_path)){
-    stop("File not found")
-  }
-
-  # test if file is a .out file
-  if (!grepl(".out$", file_path)){
-    stop("File is not a .out file")
-  }
-
-  # test if file is not empty
-  if (file.size(file_path) == 0){
-    stop("File is empty")
-  }
-
-  # test if group_by_group is a boolean
-  if (!is.logical(group_by_group)){
-    stop("group_by_group must be a boolean")
-  }
+  # test validity of input
+  if (!file.exists(file_path)){stop("File not found")}
+  if (!grepl(".out$", file_path)){stop("File is not a .out file")}
+  if (file.size(file_path) == 0){stop("File is empty")}
+  if (!is.logical(group_by_group)){stop("group_by_group must be a boolean")}
 
   # initialize results
   lines <- readLines(file_path)
@@ -87,10 +33,6 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
 
 
 # use case
-file = file.path(
-  'data',
-  'raw_data',
-  'DataPierrick_GroupbyGroup',
-  '100%mort_Pierrick211genoparinteraction.out'
-)
-results = read_output_from_file(file)
+# file_name <- "DataLenski_gam_gam_gam__Rep1"
+# file <- here("data", "raw_data", "DataLenski", paste0(file_name, ".out"))
+# results = read_output_from_file(file)

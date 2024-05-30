@@ -1,0 +1,73 @@
+---
+title: "Lifelihood analyses"
+author: "Nicolas RODE, Thomas LENORMAND"
+date: "`r format(Sys.Date(), '%d-%B-%Y')`"
+output: 
+  html_document:
+    theme: journal
+    css: style.css
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# How to use the `Lifelihood` package
+***
+
+## Load libraries
+
+```{r}
+library(here)
+print(here::here())
+source(here("R", "execute_bin.R"))
+source(here("R", "read_output.R"))
+```
+
+## Data preparation
+
+```{r}
+file_name <- "DataLenski_gam_gam_gam__Rep1"
+path_to_data <- here("data", "raw_data", "DataLenski", paste0(file_name, ".txt"))
+```
+
+## Custom parameters
+
+```{r}
+path_to_custom <- here("data", "custom.txt")
+```
+
+## Run the program
+
+```{r}
+execute_bin(path_to_data, path_to_custom)
+```
+
+## Get the results
+
+```{r}
+path_to_out <- here("data", "raw_data", "DataLenski", paste0(file_name, ".out"))
+results <- read_output_from_file(path_to_out)
+summary(results)
+
+seeds <- results$seeds
+print(seeds)
+
+likelihood <- results$likelihood
+print(likelihood)
+
+effects <- results$effects
+print(effects)
+
+parameter_ranges <- results$parameter_ranges
+print(parameter_ranges)
+
+ratio_max <- results$ratiomax
+print(ratio_max)
+```
