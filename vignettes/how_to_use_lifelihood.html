@@ -1517,14 +1517,15 @@ font-size: 0.95em;
 <hr />
 <div id="load-libraries" class="section level2">
 <h2>Load libraries</h2>
-<pre class="r"><code>library(here)
-library(kableExtra)
-print(here::here())</code></pre>
-<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood&quot;</code></pre>
-<pre class="r"><code>source(here(&quot;R&quot;, &quot;lifelihood.R&quot;))</code></pre>
+<hr />
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>## here() starts at /Users/josephbarbier/Desktop/Lifelihood</code></pre>
+<pre class="r"><code>library(kableExtra)
+source(here(&quot;R&quot;, &quot;lifelihood.R&quot;))</code></pre>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data preparation</h2>
+<hr />
 <pre class="r"><code># input data
 file_name &lt;- &quot;DataLenski_gam_gam_gam__Rep1&quot;
 path_to_data &lt;- here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.txt&quot;))
@@ -1533,38 +1534,40 @@ print(path_to_data)</code></pre>
 </div>
 <div id="get-the-results" class="section level2">
 <h2>Get the results</h2>
+<hr />
 <div id="all-default-parameters" class="section level3">
 <h3>All default parameters</h3>
 <pre class="r"><code># run the analysis
-results &lt;- lifelihood(data_path=path_to_data)
-summary(results)</code></pre>
+results &lt;- lifelihood(data_path=path_to_data)</code></pre>
+<pre><code>## Using default parameter ranges</code></pre>
+<pre class="r"><code>summary(results)</code></pre>
 <pre><code>## LIFELIHOODIZATION
 ## 
 ## Seeds:
 ## [1] 12 13 14 15
 ## 
 ## Likelihood optimum found:
-## [1] -266.0079
+## [1] -265.9992
 ## 
 ## Effects:
 ##            Name    Value1 Value2
-## 1 int_E(tmort)f -3.478558      0
-## 2     int_morta -1.685508      0
-## 3  int_E(tmat)f -4.381995      0
-## 4      int_mata -4.187259      0
-## 5   int_E(tpon) -5.074644      0
-## 6     int_ponta -3.228550      0
-## 7     int_pontn -3.112280      0
+## 1 int_E(tmort)f -3.868426      0
+## 2     int_morta -1.153408      0
+## 3  int_E(tmat)f -4.382585      0
+## 4      int_mata -4.419591      0
+## 5   int_E(tpon) -5.062727      0
+## 6     int_ponta -3.230823      0
+## 7     int_pontn -3.113569      0
 ## 
 ## Parameter Ranges:
 ##          Name    Min       Max
-## 1   E(tmort)f  1e+00 200.00000
-## 2       morta  1e-03  30.00000
+## 1   E(tmort)f  1e+00 300.00000
+## 2       morta  1e-03  20.00000
 ## 3  RE(tmort)m  1e-01   4.00000
 ## 4       mortp  1e-04   1.00000
 ## 5     propmal  1e-05   0.99999
 ## 6    E(tmat)f  1e+00 100.00000
-## 7        mata  1e-04  12.00000
+## 7        mata  1e-04  15.00000
 ## 8   RE(tmat)m  1e-01  10.00000
 ## 9     E(tpon)  1e-01 200.00000
 ## 10      ponta  1e-03  12.00000
@@ -1574,9 +1577,9 @@ summary(results)</code></pre>
 ## 14   to(ps)tp  1e-07  10.00000
 ## 15   sen(pu)t -2e+01  20.00000
 ## 16  sen(pu)t2 -2e+01  20.00000
-## 17   sen(pn)t -1e+01  10.00000
-## 18  sen(pn)t2 -1e+01  10.00000
-## 19   to(pupn) -1e+01  10.00000
+## 17   sen(pn)t -8e+00  10.00000
+## 18  sen(pn)t2 -8e+00  10.00000
+## 19   to(pupn) -8e+00  10.00000
 ## 
 ## Ratio Max:
 ## [1] 10</code></pre>
@@ -1713,27 +1716,27 @@ summary(results)</code></pre>
 ## [1] 12 13 14 15
 ## 
 ## Likelihood optimum found:
-## [1] -266.0079
+## [1] -265.9992
 ## 
 ## Effects:
 ##            Name    Value1 Value2
-## 1 int_E(tmort)f -3.478558      0
-## 2     int_morta -1.685508      0
-## 3  int_E(tmat)f -4.381995      0
-## 4      int_mata -4.187259      0
-## 5   int_E(tpon) -5.074644      0
-## 6     int_ponta -3.228550      0
-## 7     int_pontn -3.112280      0
+## 1 int_E(tmort)f -3.868426      0
+## 2     int_morta -1.153408      0
+## 3  int_E(tmat)f -4.382585      0
+## 4      int_mata -4.419591      0
+## 5   int_E(tpon) -5.062727      0
+## 6     int_ponta -3.230823      0
+## 7     int_pontn -3.113569      0
 ## 
 ## Parameter Ranges:
 ##          Name    Min       Max
-## 1   E(tmort)f  1e+00 200.00000
-## 2       morta  1e-03  30.00000
+## 1   E(tmort)f  1e+00 300.00000
+## 2       morta  1e-03  20.00000
 ## 3  RE(tmort)m  1e-01   4.00000
 ## 4       mortp  1e-04   1.00000
 ## 5     propmal  1e-05   0.99999
 ## 6    E(tmat)f  1e+00 100.00000
-## 7        mata  1e-04  12.00000
+## 7        mata  1e-04  15.00000
 ## 8   RE(tmat)m  1e-01  10.00000
 ## 9     E(tpon)  1e-01 200.00000
 ## 10      ponta  1e-03  12.00000
@@ -1743,9 +1746,9 @@ summary(results)</code></pre>
 ## 14   to(ps)tp  1e-07  10.00000
 ## 15   sen(pu)t -2e+01  20.00000
 ## 16  sen(pu)t2 -2e+01  20.00000
-## 17   sen(pn)t -1e+01  10.00000
-## 18  sen(pn)t2 -1e+01  10.00000
-## 19   to(pupn) -1e+01  10.00000
+## 17   sen(pn)t -8e+00  10.00000
+## 18  sen(pn)t2 -8e+00  10.00000
+## 19   to(pupn) -8e+00  10.00000
 ## 
 ## Ratio Max:
 ## [1] 10</code></pre>

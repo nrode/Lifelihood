@@ -14,23 +14,20 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-```
-
 # How to use the `Lifelihood` package
 ***
 
 ## Load libraries
+***
 
 ```{r}
 library(here)
 library(kableExtra)
-print(here::here())
 source(here("R", "lifelihood.R"))
 ```
 
 ## Data preparation
+***
 
 ```{r}
 # input data
@@ -40,6 +37,7 @@ print(path_to_data)
 ```
 
 ## Get the results
+***
 
 ### All default parameters
 

@@ -5,7 +5,7 @@ source(here('R', 'utils.R'))
 lifelihood <- function(
    data_path,
    param_range_df=NULL,
-   group_by_group=0,
+   group_by_group=FALSE,
    MCMC=0,
    interval=25,
    SEcal=0,
@@ -26,6 +26,7 @@ lifelihood <- function(
 
    # if param_range_df is NULL, use default values
    if(is.null(param_range_df)){
+      message("Using default parameter ranges")
       param_range_df <- data.frame(
          param = c("E(tmort)f", "morta", "RE(tmort)m", "mortp", "propmal", "E(tmat)f", "mata", 
                      "RE(tmat)m", "E(tpon)", "ponta", "pontn", "to(ps)int", "to(ps)am", "to(ps)tp", 
@@ -36,8 +37,8 @@ lifelihood <- function(
       )
    }
 
-   # change group by group to boolean
-   group_by_group <- as.logical(group_by_group)
+   # change group by group to 0 or 1
+   group_by_group_int <- as.integer(group_by_group)
 
    # create parameters range file
    path_param_range <- write_param_range(data = param_range_df)
@@ -46,11 +47,11 @@ lifelihood <- function(
 
    # create output file
    execute_bin(
-      data_path, path_param_range, group_by_group, MCMC, interval, SEcal, saveprobevent,
+      data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
       fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 
-   # delete parameters range file
+   # delete parameters range file after execution
    delete_param_range(file_param_range)
 
    # get path to output file
