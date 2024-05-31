@@ -4,7 +4,7 @@ source(here('R', 'utils.R'))
 execute_bin <- function(
    input_file,
    custom_file,
-   GbyG=0,
+   group_by_group=0,
    MCMC=0,
    interval=25,
    SEcal=0,
@@ -25,7 +25,7 @@ execute_bin <- function(
    
    # concatenate the inputs and other parameters
    arg_string <- paste(
-      input_file, custom_file, GbyG, MCMC, interval, SEcal, saveprobevent, fitness,
+      input_file, custom_file, group_by_group, MCMC, interval, SEcal, saveprobevent, fitness,
       r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 

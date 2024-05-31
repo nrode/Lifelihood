@@ -27,12 +27,41 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results$effects <- effects
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
-  
+
+  class(results) <- "LifelihoodResults"
   return(results)
 }
+
+# define a custom summary method
+summary.LifelihoodResults <- function(object, ...) {
+  cat("LIFELIHOODIZATION\n\n")
+  
+  cat("Seeds:\n")
+  print(object$seeds)
+  cat("\n")
+  
+  cat("Likelihood optimum found:\n")
+  print(object$likelihood)
+  cat("\n")
+  
+  cat("Effects:\n")
+  print(object$effects)
+  cat("\n")
+  
+  cat("Parameter Ranges:\n")
+  print(object$parameter_ranges)
+  cat("\n")
+  
+  cat("Ratio Max:\n")
+  print(object$ratiomax)
+  cat("\n")
+}
+
+
 
 
 # use case
 # file_name <- "DataLenski_gam_gam_gam__Rep1"
 # file <- here("data", "raw_data", "DataLenski", paste0(file_name, ".out"))
-# results = read_output_from_file(file)
+# results <- read_output_from_file(file)
+# summary(results)

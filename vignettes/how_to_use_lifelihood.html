@@ -12,7 +12,7 @@
 <meta name="author" content="Nicolas RODE, Thomas LENORMAND" />
 
 
-<title>Lifelihood analyses</title>
+<title>Lifelihood analysis</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1505,9 +1505,9 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lifelihood analyses</h1>
+<h1 class="title toc-ignore">Lifelihood analysis</h1>
 <h4 class="author">Nicolas RODE, Thomas LENORMAND</h4>
-<h4 class="date">30-May-2024</h4>
+<h4 class="date">31-May-2024</h4>
 
 </div>
 
@@ -1518,50 +1518,46 @@ font-size: 0.95em;
 <div id="load-libraries" class="section level2">
 <h2>Load libraries</h2>
 <pre class="r"><code>library(here)
+library(kableExtra)
 print(here::here())</code></pre>
 <pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood&quot;</code></pre>
 <pre class="r"><code>source(here(&quot;R&quot;, &quot;lifelihood.R&quot;))</code></pre>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data preparation</h2>
-<pre class="r"><code>file_name &lt;- &quot;DataLenski_gam_gam_gam__Rep1&quot;
+<pre class="r"><code># input data
+file_name &lt;- &quot;DataLenski_gam_gam_gam__Rep1&quot;
 path_to_data &lt;- here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.txt&quot;))
 print(path_to_data)</code></pre>
 <pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt&quot;</code></pre>
-<pre class="r"><code>path_to_custom &lt;- here(&quot;data&quot;, &quot;custom.txt&quot;)
-print(path_to_custom)</code></pre>
-<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/data/custom.txt&quot;</code></pre>
 </div>
 <div id="get-the-results" class="section level2">
 <h2>Get the results</h2>
-<pre class="r"><code>results &lt;- lifelihood(path_to_data, path_to_custom, group_by_group=FALSE)
+<div id="all-default-parameters" class="section level3">
+<h3>All default parameters</h3>
+<pre class="r"><code># run the analysis
+results &lt;- lifelihood(data_path=path_to_data)
 summary(results)</code></pre>
-<pre><code>##                  Length Class      Mode     
-## datafile         1      -none-     character
-## seeds            4      -none-     numeric  
-## likelihood       1      -none-     numeric  
-## effects          3      data.frame list     
-## parameter_ranges 3      data.frame list     
-## ratiomax         1      -none-     numeric</code></pre>
-<pre class="r"><code>seeds &lt;- results$seeds
-print(seeds)</code></pre>
-<pre><code>## [1] 12 13 14 15</code></pre>
-<pre class="r"><code>likelihood &lt;- results$likelihood
-print(likelihood)</code></pre>
-<pre><code>## [1] -266.0079</code></pre>
-<pre class="r"><code>effects &lt;- results$effects
-print(effects)</code></pre>
-<pre><code>##            Name    Value1 Value2
+<pre><code>## LIFELIHOODIZATION
+## 
+## Seeds:
+## [1] 12 13 14 15
+## 
+## Likelihood optimum found:
+## [1] -266.0079
+## 
+## Effects:
+##            Name    Value1 Value2
 ## 1 int_E(tmort)f -3.478558      0
 ## 2     int_morta -1.685508      0
 ## 3  int_E(tmat)f -4.381995      0
 ## 4      int_mata -4.187259      0
 ## 5   int_E(tpon) -5.074644      0
 ## 6     int_ponta -3.228550      0
-## 7     int_pontn -3.112280      0</code></pre>
-<pre class="r"><code>parameter_ranges &lt;- results$parameter_ranges
-print(parameter_ranges)</code></pre>
-<pre><code>##          Name    Min       Max
+## 7     int_pontn -3.112280      0
+## 
+## Parameter Ranges:
+##          Name    Min       Max
 ## 1   E(tmort)f  1e+00 200.00000
 ## 2       morta  1e-03  30.00000
 ## 3  RE(tmort)m  1e-01   4.00000
@@ -1580,10 +1576,180 @@ print(parameter_ranges)</code></pre>
 ## 16  sen(pu)t2 -2e+01  20.00000
 ## 17   sen(pn)t -1e+01  10.00000
 ## 18  sen(pn)t2 -1e+01  10.00000
-## 19   to(pupn) -1e+01  10.00000</code></pre>
-<pre class="r"><code>ratio_max &lt;- results$ratiomax
-print(ratio_max)</code></pre>
-<pre><code>## [1] 10</code></pre>
+## 19   to(pupn) -1e+01  10.00000
+## 
+## Ratio Max:
+## [1] 10</code></pre>
+</div>
+<div id="with-custom-parameter-ranges" class="section level3">
+<h3>With custom parameter ranges</h3>
+<pre class="r"><code># dataframe with param ranges
+param_ranges &lt;- data.frame(
+  param = c(&quot;E(tmort)f&quot;, &quot;morta&quot;, &quot;RE(tmort)m&quot;, &quot;mortp&quot;, &quot;propmal&quot;, &quot;E(tmat)f&quot;, &quot;mata&quot;, 
+            &quot;RE(tmat)m&quot;, &quot;E(tpon)&quot;, &quot;ponta&quot;, &quot;pontn&quot;, &quot;to(ps)int&quot;, &quot;to(ps)am&quot;, &quot;to(ps)tp&quot;, 
+            &quot;sen(pu)t&quot;, &quot;sen(pu)t2&quot;, &quot;sen(pn)t&quot;, &quot;sen(pn)t2&quot;, &quot;to(pupn)&quot;, &quot;W&quot;),
+  min = c(1, 0.001, 0.1, 0.0001, 0.00001, 1, 0.0001, 0.1, 0.1, 0.001, 1, 0.00001, 
+          0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
+  max = c(300, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
+)
+kable(param_ranges)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">param</th>
+<th align="right">min</th>
+<th align="right">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">E(tmort)f</td>
+<td align="right">1e+00</td>
+<td align="right">300.00000</td>
+</tr>
+<tr class="even">
+<td align="left">morta</td>
+<td align="right">1e-03</td>
+<td align="right">20.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">RE(tmort)m</td>
+<td align="right">1e-01</td>
+<td align="right">4.00000</td>
+</tr>
+<tr class="even">
+<td align="left">mortp</td>
+<td align="right">1e-04</td>
+<td align="right">1.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">propmal</td>
+<td align="right">1e-05</td>
+<td align="right">0.99999</td>
+</tr>
+<tr class="even">
+<td align="left">E(tmat)f</td>
+<td align="right">1e+00</td>
+<td align="right">100.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">mata</td>
+<td align="right">1e-04</td>
+<td align="right">15.00000</td>
+</tr>
+<tr class="even">
+<td align="left">RE(tmat)m</td>
+<td align="right">1e-01</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">E(tpon)</td>
+<td align="right">1e-01</td>
+<td align="right">200.00000</td>
+</tr>
+<tr class="even">
+<td align="left">ponta</td>
+<td align="right">1e-03</td>
+<td align="right">12.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">pontn</td>
+<td align="right">1e+00</td>
+<td align="right">50.00000</td>
+</tr>
+<tr class="even">
+<td align="left">to(ps)int</td>
+<td align="right">1e-05</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">to(ps)am</td>
+<td align="right">1e-07</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="even">
+<td align="left">to(ps)tp</td>
+<td align="right">1e-07</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">sen(pu)t</td>
+<td align="right">-2e+01</td>
+<td align="right">20.00000</td>
+</tr>
+<tr class="even">
+<td align="left">sen(pu)t2</td>
+<td align="right">-2e+01</td>
+<td align="right">20.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">sen(pn)t</td>
+<td align="right">-8e+00</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="even">
+<td align="left">sen(pn)t2</td>
+<td align="right">-8e+00</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="odd">
+<td align="left">to(pupn)</td>
+<td align="right">-8e+00</td>
+<td align="right">10.00000</td>
+</tr>
+<tr class="even">
+<td align="left">W</td>
+<td align="right">1e-03</td>
+<td align="right">1200.00000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># run the analysis
+results &lt;- lifelihood(data_path=path_to_data, param_range_df=param_ranges)
+summary(results)</code></pre>
+<pre><code>## LIFELIHOODIZATION
+## 
+## Seeds:
+## [1] 12 13 14 15
+## 
+## Likelihood optimum found:
+## [1] -266.0079
+## 
+## Effects:
+##            Name    Value1 Value2
+## 1 int_E(tmort)f -3.478558      0
+## 2     int_morta -1.685508      0
+## 3  int_E(tmat)f -4.381995      0
+## 4      int_mata -4.187259      0
+## 5   int_E(tpon) -5.074644      0
+## 6     int_ponta -3.228550      0
+## 7     int_pontn -3.112280      0
+## 
+## Parameter Ranges:
+##          Name    Min       Max
+## 1   E(tmort)f  1e+00 200.00000
+## 2       morta  1e-03  30.00000
+## 3  RE(tmort)m  1e-01   4.00000
+## 4       mortp  1e-04   1.00000
+## 5     propmal  1e-05   0.99999
+## 6    E(tmat)f  1e+00 100.00000
+## 7        mata  1e-04  12.00000
+## 8   RE(tmat)m  1e-01  10.00000
+## 9     E(tpon)  1e-01 200.00000
+## 10      ponta  1e-03  12.00000
+## 11      pontn  1e+00  50.00000
+## 12  to(ps)int  1e-05  10.00000
+## 13   to(ps)am  1e-07  10.00000
+## 14   to(ps)tp  1e-07  10.00000
+## 15   sen(pu)t -2e+01  20.00000
+## 16  sen(pu)t2 -2e+01  20.00000
+## 17   sen(pn)t -1e+01  10.00000
+## 18  sen(pn)t2 -1e+01  10.00000
+## 19   to(pupn) -1e+01  10.00000
+## 
+## Ratio Max:
+## [1] 10</code></pre>
+</div>
 </div>
 </div>
 
