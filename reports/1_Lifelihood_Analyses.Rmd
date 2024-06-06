@@ -17,6 +17,8 @@ editor_options:
 ```{r setup, include =FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 devtools::load_all()
+
+
 ```
 # Analyses
 ## Test LifelihoodC
