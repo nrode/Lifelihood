@@ -1,0 +1,67 @@
+---
+title: "Lifelihood analysis"
+author: "Nicolas RODE, Thomas LENORMAND"
+date: "`r format(Sys.Date(), '%d-%B-%Y')`"
+output: 
+  html_document:
+    theme: journal
+    css: style.css
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+editor_options: 
+  chunk_output_type: console
+---
+
+# How to use the `Lifelihood` package
+***
+
+## Load libraries
+***
+
+```{r}
+library(here)
+library(kableExtra)
+source(here("R", "lifelihood.R"))
+```
+
+## Data preparation
+***
+
+```{r}
+# input data
+file_name <- "DataLenski_gam_gam_gam__Rep1"
+path_to_data <- here("data", "raw_data", "DataLenski", paste0(file_name, ".txt"))
+print(path_to_data)
+```
+
+## Get the results
+***
+
+### All default parameters
+
+```{r}
+# run the analysis
+results <- lifelihood(data_path=path_to_data)
+summary(results)
+```
+
+### With custom parameter ranges
+
+```{r}
+# dataframe with param ranges
+param_ranges <- data.frame(
+  param = c("E(tmort)f", "morta", "RE(tmort)m", "mortp", "propmal", "E(tmat)f", "mata", 
+            "RE(tmat)m", "E(tpon)", "ponta", "pontn", "to(ps)int", "to(ps)am", "to(ps)tp", 
+            "sen(pu)t", "sen(pu)t2", "sen(pn)t", "sen(pn)t2", "to(pupn)", "W"),
+  min = c(1, 0.001, 0.1, 0.0001, 0.00001, 1, 0.0001, 0.1, 0.1, 0.001, 1, 0.00001, 
+          0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
+  max = c(300, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
+)
+kable(param_ranges)
+
+# run the analysis
+results <- lifelihood(data_path=path_to_data, param_range_df=param_ranges)
+summary(results)
+```
