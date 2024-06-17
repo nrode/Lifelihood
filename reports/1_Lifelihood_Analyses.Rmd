@@ -1,5 +1,5 @@
 ---
-title: "Lifelihood analyses"
+title: "lifelihood analyses"
 author: "Nicolas RODE, Thomas LENORMAND"
 date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 

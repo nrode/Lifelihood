@@ -1,3 +1,3 @@
 library(testthat)
-library(Lifelihood)
-test_package("Lifelihood")
+library(lifelihood)
+test_package("lifelihood")

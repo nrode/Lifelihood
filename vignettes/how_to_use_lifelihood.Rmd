@@ -1,5 +1,5 @@
 ---
-title: "Lifelihood analysis"
+title: "lifelihood analysis"
 author: "Nicolas RODE, Thomas LENORMAND"
 date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
@@ -14,7 +14,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# How to use the `Lifelihood` package
+# How to use the `lifelihood` package
 ***
 
 ## Load libraries
@@ -22,7 +22,7 @@ editor_options:
 
 ```{r}
 library(kableExtra)
-source(here::here("R", "lifelihood.R"))
+library(lifelihood)
 ```
 
 ## Data preparation
