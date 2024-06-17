@@ -38,7 +38,7 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
 
 #' @name summary
 #' @title custom summary function for lifelihood
-#' @description creates a custom summary method for the LifelihoodResults object
+#' @description (internal function) creates a custom summary method for the LifelihoodResults object
 #' @param object `LifelihoodResults` object from [lifelihood::read_output_from_file()]
 #' @export
 summary.LifelihoodResults <- function(object, ...) {

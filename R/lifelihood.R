@@ -1,4 +1,4 @@
-#' Main function of the lifelihood function
+#' Main function of the lifelihood program
 #' @name lifelihood
 #' @param data_path path to the input file with data and model
 #' @param param_range_df dataframe with the parameter ranges/boundaries/boundaries

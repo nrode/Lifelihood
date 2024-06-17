@@ -2,7 +2,7 @@
 #' 
 #' @name get_seeds
 #' @title get the seeds in the output file
-#' @description find the seeds value in the output file of the lifelihood program
+#' @description (internal function) find the seeds value in the output file of the lifelihood program
 #' @param lines vector of the output file, where each element is a line of the file
 #' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
 get_seeds <- function(lines, group_by_group=FALSE){
@@ -45,7 +45,7 @@ get_seeds <- function(lines, group_by_group=FALSE){
 
 #' @name get_likelihood
 #' @title get the likelihood in the output file
-#' @description find the likelihood value (optimum found) in the output file of the lifelihood program
+#' @description (internal function) find the likelihood value (optimum found) in the output file of the lifelihood program
 #' @param lines vector of the output file, where each element is a line of the file
 #' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
 get_likelihood <- function(lines, group_by_group=FALSE){
@@ -93,7 +93,7 @@ get_likelihood <- function(lines, group_by_group=FALSE){
 
 #' @name get_param_ranges
 #' @title get the parameter ranges/boundaries in the output file
-#' @description find the parameter ranges/boundaries in the output file of the lifelihood program
+#' @description (internal function) find the parameter ranges/boundaries in the output file of the lifelihood program
 #' @param lines vector of the output file, where each element is a line of the file
 get_param_ranges <- function(lines){
 
@@ -118,7 +118,7 @@ get_param_ranges <- function(lines){
 
 #' @name get_ratio_max
 #' @title Get the ratio max in the output file
-#' @description find the ratio max value in the output file of the lifelihood program
+#' @description (internal function) find the ratio max value in the output file of the lifelihood program
 #' @param lines vector of the output file, where each element is a line of the file
 get_ratio_max <- function(lines){
 
@@ -133,7 +133,7 @@ get_ratio_max <- function(lines){
 
 #' @name get_effects
 #' @title get the estimation in the output file
-#' @description find the estimated effects in the output file of the lifelihood program
+#' @description (internal function) find the estimated effects in the output file of the lifelihood program
 #' @param lines vector of the output file, where each element is a line of the file
 #' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
 get_effects <- function(lines, group_by_group=FALSE){
@@ -184,7 +184,7 @@ get_effects <- function(lines, group_by_group=FALSE){
 
 #' @name parse_output
 #' @title parse results from the output file
-#' @description find specific result in the output file of the lifelihood program, according to the `element` argument
+#' @description (internal function) find specific result in the output file of the lifelihood program, according to the `element` argument
 #' @param lines vector of the output file, where each element is a line of the file
 #' @param element name of the result to parse
 #' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)

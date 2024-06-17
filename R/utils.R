@@ -1,7 +1,7 @@
 #' Group of internal functions used in the lifelihood programme
 #' 
 #' @name detect_os
-#' @description `detect_os()` finds the OS name
+#' @description (internal function) `detect_os()` finds the OS name
 #' @return string of operatin system
 #' @export
 detect_os <- function() {
