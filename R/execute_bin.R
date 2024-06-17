@@ -1,5 +1,4 @@
-library(here)
-source(here('R', 'utils.R'))
+source(here::here('R', 'utils.R'))
 
 execute_bin <- function(
    input_file,
@@ -7,7 +6,7 @@ execute_bin <- function(
    group_by_group=0,
    MCMC=0,
    interval=25,
-   SEcal=0,
+   SEcal=0, # std error calculation
    saveprobevent=0,
    fitness=0,
    r=0,
@@ -33,8 +32,8 @@ execute_bin <- function(
    os <- detect_os()
    path <- switch(
       os,
-      "Windows" = file.path(here("src", "compiled"), "lifelihoodC2023.exe"),
-      "Unix-like" = file.path(here("src", "compiled"), "lifelihoodC2023"),
+      "Windows" = file.path(here::here("src", "compiled"), "lifelihoodC2023.exe"),
+      "Unix-like" = file.path(here::here("src", "compiled"), "lifelihoodC2023"),
       stop("Unknown OS")
    )
    system(path, input = arg_string)
@@ -43,7 +42,7 @@ execute_bin <- function(
 
 
 # use case
-# execute_bin(
-#    input_file = here("data", "raw_data", "DataLenski", "DataLenski_gam_gam_gam__Rep1.txt"),
-#    custom_file = here("data", "custom.txt")
-# )
+execute_bin(
+   input_file = here::here("data", "raw_data", "DataLenski", "DataLenski_gam_gam_gam__Rep1.txt"),
+   custom_file = here::here("data", "custom.txt")
+)

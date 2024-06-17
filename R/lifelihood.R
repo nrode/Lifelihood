@@ -1,6 +1,6 @@
-source(here('R', 'execute_bin.R'))
-source(here('R', 'read_output.R'))
-source(here('R', 'utils.R'))
+source(here::here('R', 'execute_bin.R'))
+source(here::here('R', 'read_output.R'))
+source(here::here('R', 'utils.R'))
 
 lifelihood <- function(
    data_path,

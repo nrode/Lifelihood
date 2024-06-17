@@ -21,9 +21,8 @@ editor_options:
 ***
 
 ```{r}
-library(here)
 library(kableExtra)
-source(here("R", "lifelihood.R"))
+source(here::here("R", "lifelihood.R"))
 ```
 
 ## Data preparation
@@ -32,7 +31,7 @@ source(here("R", "lifelihood.R"))
 ```{r}
 # input data
 file_name <- "DataLenski_gam_gam_gam__Rep1"
-path_to_data <- here("data", "raw_data", "DataLenski", paste0(file_name, ".txt"))
+path_to_data <- here::here("data", "raw_data", "DataLenski", paste0(file_name, ".txt"))
 print(path_to_data)
 ```
 
