@@ -2,7 +2,7 @@
 % Please edit documentation in R/parsers.R
 \name{get_likelihood}
 \alias{get_likelihood}
-\title{get the likelihood in the output file}
+\title{(internal function) get the likelihood in the output file}
 \usage{
 get_likelihood(lines, group_by_group = FALSE)
 }
@@ -11,6 +11,9 @@ get_likelihood(lines, group_by_group = FALSE)
 
 \item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
+\value{
+the parsed likelihood
+}
 \description{
-find the likelihood value (optimum found) in the output file of the lifelihood program
+(internal function) find the likelihood value (optimum found) in the output file of the lifelihood program
 }

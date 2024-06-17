@@ -2,7 +2,7 @@
 % Please edit documentation in R/lifelihood.R
 \name{lifelihood}
 \alias{lifelihood}
-\title{Main function of the lifelihood function}
+\title{Main function of the lifelihood program}
 \usage{
 lifelihood(
   data_path,
@@ -66,5 +66,5 @@ lifelihood(
 \item{precision}{TBD - Check the actual meaning}
 }
 \description{
-Main function of the lifelihood function
+Main function of the lifelihood program
 }

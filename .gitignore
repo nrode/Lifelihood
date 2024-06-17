@@ -6,3 +6,5 @@
 .Rdata
 .httr-oauth
 .quarto
+*.tar.gz
+sandbox.R

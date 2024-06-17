@@ -2,13 +2,16 @@
 % Please edit documentation in R/parsers.R
 \name{get_ratio_max}
 \alias{get_ratio_max}
-\title{Get the ratio max in the output file}
+\title{(internal function) Get the ratio max in the output file}
 \usage{
 get_ratio_max(lines)
 }
 \arguments{
 \item{lines}{vector of the output file, where each element is a line of the file}
 }
+\value{
+the parsed ratio max
+}
 \description{
-find the ratio max value in the output file of the lifelihood program
+(internal function) find the ratio max value in the output file of the lifelihood program
 }

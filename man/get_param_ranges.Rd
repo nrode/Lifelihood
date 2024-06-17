@@ -2,13 +2,16 @@
 % Please edit documentation in R/parsers.R
 \name{get_param_ranges}
 \alias{get_param_ranges}
-\title{get the parameter ranges/boundaries in the output file}
+\title{(internal function) get the parameter ranges/boundaries in the output file}
 \usage{
 get_param_ranges(lines)
 }
 \arguments{
 \item{lines}{vector of the output file, where each element is a line of the file}
 }
+\value{
+the parsed parameter ranges/boundaries
+}
 \description{
-find the parameter ranges/boundaries in the output file of the lifelihood program
+(internal function) find the parameter ranges/boundaries in the output file of the lifelihood program
 }

@@ -11,6 +11,9 @@ read_output_from_file(file_path, group_by_group = FALSE)
 
 \item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
+\value{
+an object of class \code{LifelihoodResults} with all results from the output file
+}
 \description{
-takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}
+(internal function) takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}
 }

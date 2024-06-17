@@ -10,6 +10,9 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/required_data_format.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -23,6 +26,12 @@
   </url>
   <url>
     <loc>/reference/execute_bin.html</loc>
+  </url>
+  <url>
+    <loc>/reference/format_dataframe_to_txt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/format_row.html</loc>
   </url>
   <url>
     <loc>/reference/get_effects.html</loc>

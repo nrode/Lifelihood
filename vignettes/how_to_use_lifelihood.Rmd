@@ -1,5 +1,5 @@
 ---
-title: "lifelihood analysis"
+title: "How to use the lifelihood package"
 author: "Nicolas RODE, Thomas LENORMAND"
 date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
@@ -14,10 +14,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-# How to use the `lifelihood` package
-***
+<br>
 
-## Load libraries
+# Load libraries
 ***
 
 ```{r}
@@ -25,7 +24,9 @@ library(kableExtra)
 library(lifelihood)
 ```
 
-## Data preparation
+<br>
+
+# Data preparation
 ***
 
 ```{r}
@@ -35,10 +36,12 @@ path_to_data <- here::here("data", "raw_data", "DataLenski", paste0(file_name, "
 print(path_to_data)
 ```
 
-## Get the results
+<br>
+
+# Get the results
 ***
 
-### All default parameters
+## All default parameters
 
 ```{r}
 # run the analysis
@@ -46,7 +49,7 @@ results <- lifelihood(data_path=path_to_data)
 summary(results)
 ```
 
-### With custom parameter ranges
+## With custom parameter ranges
 
 ```{r}
 # dataframe with param ranges

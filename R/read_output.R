@@ -1,9 +1,10 @@
 #' Functions used to read the output file and create an object with results
 #' 
 #' @name read_output_from_file
-#' @description takes the file path of the output file and read the results using parsers from [lifelihood::parse_output()]
+#' @description (internal function) takes the file path of the output file and read the results using parsers from [lifelihood::parse_output()]
 #' @param file_path location of the output file from the programme
 #' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
+#' @return an object of class `LifelihoodResults` with all results from the output file
 #' @export 
 read_output_from_file <- function(file_path, group_by_group = FALSE){
 
@@ -38,8 +39,9 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
 
 #' @name summary
 #' @title custom summary function for lifelihood
-#' @description (internal function) creates a custom summary method for the LifelihoodResults object
+#' @description creates a custom summary method for the LifelihoodResults object
 #' @param object `LifelihoodResults` object from [lifelihood::read_output_from_file()]
+#' @return NULL
 #' @export
 summary.LifelihoodResults <- function(object, ...) {
   cat("LIFELIHOODIZATION\n\n")

@@ -65,9 +65,6 @@ execute_bin(
 
 \item{GbyG}{Option to fit the full factorail model with all the interactions between each of the factors}
 }
-\value{
-None
-}
 \description{
-Run lifelihood program in console mode
+(internal function) Run lifelihood program in console mode
 }

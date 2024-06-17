@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{write_param_range}
 \alias{write_param_range}
-\title{write parameter ranges/boundaries to a file}
+\title{(internal function) write parameter ranges/boundaries to a file}
 \usage{
 write_param_range(data, file_name = "param_range.txt")
 }

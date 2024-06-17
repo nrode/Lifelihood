@@ -20,7 +20,7 @@
 #' @param Tf Initial temperature for the simulated annealing
 #' @param climbrate Rate for the simulated annealing ?
 #' @param precision TBD - Check the actual meaning
-#' @return None
+#' @return NULL
 #' @export
 execute_bin <- function(
    input_file,

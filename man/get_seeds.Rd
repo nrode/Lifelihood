@@ -2,7 +2,7 @@
 % Please edit documentation in R/parsers.R
 \name{get_seeds}
 \alias{get_seeds}
-\title{get the seeds in the output file}
+\title{(internal function) get the seeds in the output file}
 \usage{
 get_seeds(lines, group_by_group = FALSE)
 }
@@ -11,8 +11,11 @@ get_seeds(lines, group_by_group = FALSE)
 
 \item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
+\value{
+the parsed seeds
+}
 \description{
-find the seeds value in the output file of the lifelihood program
+(internal function) find the seeds value in the output file of the lifelihood program
 }
 \details{
 List of parsing functions use to read the output file of the lifelihood program

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{delete_param_range}
 \alias{delete_param_range}
-\title{delete parameter ranges/boundaries file}
+\title{(internal function) delete parameter ranges/boundaries file}
 \usage{
 delete_param_range(file_path)
 }
