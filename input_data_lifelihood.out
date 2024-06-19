@@ -1,16 +1,16 @@
 ---------------------------
 
-datafile= /Users/josephbarbier/Desktop/Lifelihood/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt
+datafile= /Users/josephbarbier/Desktop/Lifelihood/input_data_lifelihood.txt
 seed1= 12 seed2= 13 seed3= 14 seed4= 15
 #parameters= 7
-Likelihood_max= -266.007919
-int_E(tmort)f -3.47855809 0.00000000
-int_morta -1.68550821 0.00000000
-int_E(tmat)f -4.38199504 0.00000000
-int_mata -4.18725892 0.00000000
-int_E(tpon) -5.07464380 0.00000000
-int_ponta -3.22855028 0.00000000
-int_pontn -3.11227982 0.00000000
+Likelihood_max= -1620.416914
+int_E(tmort)f -6.04172665 0.00000000
+int_morta -0.90516396 0.00000000
+int_E(tmat)f -3.66147550 0.00000000
+int_mata -9.29211079 0.00000000
+int_E(tpon) -4.11728857 0.00000000
+int_ponta 4.34848040 0.00000000
+int_pontn -2.42442743 0.00000000
 
 
 Parameter_Range_Table

@@ -1,12 +1,11 @@
 rm(list=ls())
-library(lifelihood)
+devtools::load_all() # load the package
 
 df <- read.csv(here::here("data/fake_sample.csv"))
 
 clutchs <- c(
    "clutch_start1", "clutch_end1", "clutch_size1",
-   "clutch_start2", "clutch_end2", "clutch_size2",
-   "clutch_start3", "clutch_end3", "clutch_size3"
+   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
 results <- lifelihood(

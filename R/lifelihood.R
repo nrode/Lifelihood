@@ -86,7 +86,7 @@ lifelihood <- function(
    path_param_range <- here::here(file_param_range)
 
    # create data file
-   format_dataframe_to_txt(
+   path_to_txt <- format_dataframe_to_txt(
       df = df,
       sex = sex,
       sex_start = sex_start,
@@ -100,7 +100,7 @@ lifelihood <- function(
       extra2 = extra2,
       extra3 = extra3
    )
-   data_path <- here::here("input_data_lifelihood.txt")
+   data_path <- here::here(path_to_txt)
 
    # create output file
    execute_bin(

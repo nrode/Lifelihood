@@ -1,5 +1,5 @@
 *******data struct****
-matclutch true
+matclutch false
 Group
 1
 ****modele******
@@ -24,10 +24,9 @@ sen(pn)t -1
 sen(pn)t2 -1
 to(pupn) -1
 *******data*********
- 1 sex 1 2 0 mat 2 4 pon 3 4 4 pon 5 6 5 pon 7 8 1 mor 8 12
- 3 sex 3 4 0 mat 1 2 pon 2 3 6 mor 11 11
- 1 sex 2 3 0 mat 0 1000 mor 0 1
- 0 sex 10 11 0 mat 1 2 pon 2 3 5 pon 5 6 7 pon 6 7 1 mor 11 12
- 2 sex 3 4 0 mat 0 1000 mor 0 1
- 0 sex 4 5 0 mat 2 3 pon 3 4 2 pon 4 5 10 mor 7 8
- 1 sex 5 6 0 mat 1 2 pon 2 3 30 pon 3 4 5 pon 5 6 2 mor 9 10
+0 sex 0 1000 0 mat 0 1000 mor 0 1
+0 sex 0 1000 0 mat 2 3 pon 4 3 4 pon 2 4 5 mor 9 10
+0 sex 0 1000 0 mat 3 4 pon 2 4 5 mor 5 6
+0 sex 0 1000 0 mat 0 1000 mor 0 1
+0 sex 0 1000 0 mat 1 2 pon 2 2 3 pon 5 3 4 mor 11 12
+0 sex 0 1000 0 mat 0 1000 mor 0 1

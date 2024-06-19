@@ -58,10 +58,10 @@ format_row <- function(
    clutch_cols <- names(row)[grep("pon_", names(row))]
    clutch_cols <- clutchs
    for (i in seq(1, length(clutch_cols), by = 3)) {
-      clutch_start <- row[[clutch_cols[i]]]
-      clutch_end <- row[[clutch_cols[i + 1]]]
-      clutch_size <- row[[clutch_cols[i + 2]]]
-      if (!is.na(clutch_start) & !is.na(clutch_end) & !is.na(clutch_size)) {
+      clutch_start <- gsub("[[:space:]]", "", row[[clutch_cols[i]]])
+      clutch_end <- gsub("[[:space:]]", "", row[[clutch_cols[i + 1]]])
+      clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])
+      if (clutch_start != 'NA' & clutch_end != 'NA' & clutch_size != 'NA') {
          formatted_row <- paste(formatted_row, "pon", clutch_start, clutch_end, clutch_size)
       }
    }
@@ -70,6 +70,9 @@ format_row <- function(
    death_start_value <- row[death_start]
    death_end_value <- row[death_end]
    formatted_row <- paste(formatted_row, "mor", death_start_value, death_end_value)
+
+   formatted_row <- gsub("\\s+", " ", formatted_row)
+   formatted_row <- sub("^\\s+", "", formatted_row)
 
    # return the well formatted row
    return(formatted_row)
@@ -146,7 +149,7 @@ format_dataframe_to_txt <- function(
    # add model info (DEFAULT ABITRARY VALUES)
    model_info <- c(
       "*******data struct****",
-      "matclutch true", "Group", "1",
+      "matclutch false", "Group", "1",
       "****modele******",
       "gam gam gam",
       "mortuf 0", "morta 0", "Rmortum -1", "mortp -1",
@@ -160,6 +163,11 @@ format_dataframe_to_txt <- function(
    )
    formatted_rows <- c(model_info, formatted_rows)
 
+   # clean the NA 
+
    # write the formatted rows to the output file
-   writeLines(formatted_rows, con = "input_data_lifelihood.txt")
+   path_to_data <- "input_data_lifelihood.txt"
+   writeLines(formatted_rows, con = path_to_data)
+
+   return(path_to_data)
 }

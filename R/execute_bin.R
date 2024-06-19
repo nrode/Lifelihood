@@ -44,7 +44,7 @@ execute_bin <- function(
    climbrate=1,
    precision=0.001
 ) {
-   
+
    # concatenate the inputs and other parameters
    arg_string <- paste(
       input_file, custom_file, group_by_group, MCMC, interval, SEcal, saveprobevent,
