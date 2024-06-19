@@ -15,6 +15,6 @@
 - `tests/testthat/`: contains tests for the R code
 - `src/`: contains both compiled and source pascal (Lazarus and Delphi) code
 - `man/`: contains the documentation
-- `reports/`:
+- `vignettes/`: tutorials on how to use lifelihood
 
 <br>
