@@ -1,6 +1,6 @@
 #' @name format_row
-#' @title Format a single row for the input data file
-#' @description Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file)
+#' @title (internal function) Format a single row for the input data file
+#' @description (internal function) Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file)
 #' @param row A row of a dataframe object
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
@@ -76,8 +76,8 @@ format_row <- function(
 }
 
 #' @name format_dataframe_to_txt
-#' @title Create the input data file from a dataframe
-#' @description Takes a dataframe and apply to each row the [format_row()] function to create the input data file.
+#' @title (internal function) Create the input data file from a dataframe
+#' @description (internal function) Takes a dataframe and apply to each row the [format_row()] function to create the input data file.
 #' @param df The dataframe of the input data.
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.

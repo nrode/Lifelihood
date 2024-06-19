@@ -2,12 +2,12 @@
 % Please edit documentation in R/utils.R
 \name{delete_param_range}
 \alias{delete_param_range}
-\title{(internal function) delete parameter ranges/boundaries file}
+\title{(internal function) Delete parameter ranges/boundaries file}
 \usage{
 delete_param_range(file_path)
 }
 \arguments{
-\item{file_path}{path of where the .txt file is}
+\item{file_path}{Path of where the .txt file is}
 }
 \description{
 (internal function) \code{delete_param_range()} takes a path to the parameter ranges/boundaries file and delete it

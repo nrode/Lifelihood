@@ -2,20 +2,20 @@
 % Please edit documentation in R/parsers.R
 \name{parse_output}
 \alias{parse_output}
-\title{(internal function) parse results from the output file}
+\title{(internal function) Parse results from the output file}
 \usage{
 parse_output(lines, element, group_by_group = FALSE)
 }
 \arguments{
-\item{lines}{vector of the output file, where each element is a line of the file}
+\item{lines}{Vector of the output file, where each element is a line of the file}
 
-\item{element}{name of the result to parse. Must be in \code{c('seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max')}}
+\item{element}{Name of the result to parse. Must be in \code{c('seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max')}}
 
-\item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
+\item{group_by_group}{Boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
 \value{
-the parsed element
+The parsed element
 }
 \description{
-(internal function) find specific result in the output file of the lifelihood program, according to the \code{element} argument
+(internal function) Find specific result in the output file of the lifelihood program, according to the \code{element} argument
 }

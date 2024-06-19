@@ -3,7 +3,7 @@
 \name{summary}
 \alias{summary}
 \alias{summary.LifelihoodResults}
-\title{custom summary function for lifelihood}
+\title{Custom summary function for lifelihood}
 \usage{
 \method{summary}{LifelihoodResults}(object, ...)
 }
@@ -11,5 +11,5 @@
 \item{object}{\code{LifelihoodResults} object from \code{\link[=read_output_from_file]{read_output_from_file()}}}
 }
 \description{
-creates a custom summary method for the LifelihoodResults object
+Creates a custom summary method for the LifelihoodResults object
 }

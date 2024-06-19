@@ -2,7 +2,7 @@
 % Please edit documentation in R/execute_bin.R
 \name{execute_bin}
 \alias{execute_bin}
-\title{Execute compiled files of the lifelihood program}
+\title{(internal function) Execution of the compiled files}
 \usage{
 execute_bin(
   input_file,
@@ -39,15 +39,15 @@ execute_bin(
 
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
-\item{seed1}{first seed used so that random values can found again}
+\item{seed1}{First seed used so that random values can found again}
 
-\item{seed2}{second seed used so that random values can found again}
+\item{seed2}{Second seed used so that random values can found again}
 
-\item{seed3}{third seed used so that random values can found again}
+\item{seed3}{Third seed used so that random values can found again}
 
-\item{seed4}{fourth seed used so that random values can found again}
+\item{seed4}{Fourth seed used so that random values can found again}
 
-\item{ntr}{number of thread for the paralelisation ?}
+\item{ntr}{Number of thread for the paralelisation ?}
 
 \item{nst}{TBD - Check the actual meaning}
 
@@ -59,12 +59,15 @@ execute_bin(
 
 \item{precision}{TBD - Check the actual meaning}
 
-\item{infile}{file with the model and data to be fitted}
+\item{infile}{File with the model and data to be fitted}
 
-\item{customfile}{file with the min and max boudaries for each parameter}
+\item{customfile}{File with the min and max boudaries for each parameter}
 
 \item{GbyG}{Option to fit the full factorail model with all the interactions between each of the factors}
 }
 \description{
 (internal function) Run lifelihood program in console mode
+}
+\details{
+Execute compiled files of the lifelihood program
 }

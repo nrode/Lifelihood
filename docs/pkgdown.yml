@@ -2,7 +2,7 @@ pandoc: 3.1.13
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  how_to_use_lifelihood: how_to_use_lifelihood.html
-  required_data_format: required_data_format.html
-last_built: 2024-06-17T15:16Z
+  1_required_data_format: 1_required_data_format.html
+  2_how_to_use_lifelihood: 2_how_to_use_lifelihood.html
+last_built: 2024-06-19T10:07Z
 
