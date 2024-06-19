@@ -1,5 +1,5 @@
 library(mockery)
-library(Lifelihood)
+library(lifelihood)
 
 test_that("detect_os correctly identifies Windows", {
    mock_sys_info <- mock(c(sysname = "Windows"))

@@ -1,5 +1,11 @@
-library(glue)
-
+#' List of parsing functions use to read the output file of the lifelihood program
+#' 
+#' @name get_seeds
+#' @title (internal function) get the seeds in the output file
+#' @description (internal function) find the seeds value in the output file of the lifelihood program
+#' @param lines vector of the output file, where each element is a line of the file
+#' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
+#' @return the parsed seeds 
 get_seeds <- function(lines, group_by_group=FALSE){
 
    # find the line starting with pattern "seed1="
@@ -28,7 +34,7 @@ get_seeds <- function(lines, group_by_group=FALSE){
 
       # ensure that the number of groups is an integer
       if (n_groups != round(n_groups)){
-         message(glue("Number of groups seems weird: ", n_groups))
+         message(glue::glue("Number of groups seems weird: ", n_groups))
       }
 
       # reshape the seeds into a matrix
@@ -38,8 +44,12 @@ get_seeds <- function(lines, group_by_group=FALSE){
    } else {return(seeds)}
 }
 
-
-
+#' @name get_likelihood
+#' @title (internal function) get the likelihood in the output file
+#' @description (internal function) find the likelihood value (optimum found) in the output file of the lifelihood program
+#' @param lines vector of the output file, where each element is a line of the file
+#' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
+#' @return the parsed likelihood
 get_likelihood <- function(lines, group_by_group=FALSE){
 
    if (group_by_group){
@@ -83,8 +93,11 @@ get_likelihood <- function(lines, group_by_group=FALSE){
    }
 }
 
-
-
+#' @name get_param_ranges
+#' @title (internal function) get the parameter ranges/boundaries in the output file
+#' @description (internal function) find the parameter ranges/boundaries in the output file of the lifelihood program
+#' @param lines vector of the output file, where each element is a line of the file
+#' @return the parsed parameter ranges/boundaries
 get_param_ranges <- function(lines){
 
    # find start and end of the parameter range table
@@ -97,7 +110,7 @@ get_param_ranges <- function(lines){
    # split the range lines into values
    range_values <- strsplit(range_lines, " ")
    
-   # return the parameter ranges as a data frame
+   # return the parameter ranges/boundaries as a data frame
    parameter_ranges <- data.frame(
       Name = as.character(sapply(range_values, function(x) x[1])),
       Min = as.numeric(sapply(range_values, function(x) x[2])),
@@ -106,8 +119,11 @@ get_param_ranges <- function(lines){
    return(parameter_ranges)
 }
 
-
-
+#' @name get_ratio_max
+#' @title (internal function) Get the ratio max in the output file
+#' @description (internal function) find the ratio max value in the output file of the lifelihood program
+#' @param lines vector of the output file, where each element is a line of the file
+#' @return the parsed ratio max
 get_ratio_max <- function(lines){
 
    # find the line containing the ratiomax value
@@ -119,8 +135,12 @@ get_ratio_max <- function(lines){
    return(ratiomax)
 }
 
-
-
+#' @name get_effects
+#' @title (internal function) get the estimation in the output file
+#' @description (internal function) find the estimated effects in the output file of the lifelihood program
+#' @param lines vector of the output file, where each element is a line of the file
+#' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
+#' @return the parsed effects estimation
 get_effects <- function(lines, group_by_group=FALSE){
    
    if (group_by_group){
@@ -167,9 +187,14 @@ get_effects <- function(lines, group_by_group=FALSE){
    }
 }
 
-
-
-parse <- function(lines, element, group_by_group=FALSE){
+#' @name parse_output
+#' @title (internal function) parse results from the output file
+#' @description (internal function) find specific result in the output file of the lifelihood program, according to the `element` argument
+#' @param lines vector of the output file, where each element is a line of the file
+#' @param element name of the result to parse. Must be in `c('seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max')`
+#' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
+#' @return the parsed element
+parse_output <- function(lines, element, group_by_group=FALSE){
    switch(
       element,
       seeds = get_seeds(lines, group_by_group),
@@ -179,15 +204,3 @@ parse <- function(lines, element, group_by_group=FALSE){
       ratio_max = get_ratio_max(lines)
    )
 }
-
-
-
-
-# file <- here("data", "raw_data", "DataLenski", paste0(file_name, ".out"))
-# lines <- readLines(file)
-# seeds <- parse(lines, "seeds", group_by_group=F)
-# likelihood <- parse(lines, "likelihood", group_by_group=F)
-# effects <- parse(lines, "effects", group_by_group=F)
-# param_ranges <- parse(lines, "parameter_ranges")
-# ratio_max <- parse(lines, "ratio_max")
-

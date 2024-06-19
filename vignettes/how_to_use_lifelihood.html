@@ -12,7 +12,7 @@
 <meta name="author" content="Nicolas RODE, Thomas LENORMAND" />
 
 
-<title>Lifelihood analysis</title>
+<title>lifelihood analysis</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1505,30 +1505,28 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">Lifelihood analysis</h1>
+<h1 class="title toc-ignore">lifelihood analysis</h1>
 <h4 class="author">Nicolas RODE, Thomas LENORMAND</h4>
-<h4 class="date">31-May-2024</h4>
+<h4 class="date">17-June-2024</h4>
 
 </div>
 
 
 <div id="how-to-use-the-lifelihood-package" class="section level1">
-<h1>How to use the <code>Lifelihood</code> package</h1>
+<h1>How to use the <code>lifelihood</code> package</h1>
 <hr />
 <div id="load-libraries" class="section level2">
 <h2>Load libraries</h2>
 <hr />
-<pre class="r"><code>library(here)</code></pre>
-<pre><code>## here() starts at /Users/josephbarbier/Desktop/Lifelihood</code></pre>
 <pre class="r"><code>library(kableExtra)
-source(here(&quot;R&quot;, &quot;lifelihood.R&quot;))</code></pre>
+library(lifelihood)</code></pre>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data preparation</h2>
 <hr />
 <pre class="r"><code># input data
 file_name &lt;- &quot;DataLenski_gam_gam_gam__Rep1&quot;
-path_to_data &lt;- here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.txt&quot;))
+path_to_data &lt;- here::here(&quot;data&quot;, &quot;raw_data&quot;, &quot;DataLenski&quot;, paste0(file_name, &quot;.txt&quot;))
 print(path_to_data)</code></pre>
 <pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt&quot;</code></pre>
 </div>
@@ -1539,7 +1537,7 @@ print(path_to_data)</code></pre>
 <h3>All default parameters</h3>
 <pre class="r"><code># run the analysis
 results &lt;- lifelihood(data_path=path_to_data)</code></pre>
-<pre><code>## Using default parameter ranges</code></pre>
+<pre><code>## Using default parameter ranges/boundaries</code></pre>
 <pre class="r"><code>summary(results)</code></pre>
 <pre><code>## LIFELIHOODIZATION
 ## 
@@ -1559,7 +1557,7 @@ results &lt;- lifelihood(data_path=path_to_data)</code></pre>
 ## 6     int_ponta -3.230823      0
 ## 7     int_pontn -3.113569      0
 ## 
-## Parameter Ranges:
+## parameter ranges/boundaries:
 ##          Name    Min       Max
 ## 1   E(tmort)f  1e+00 300.00000
 ## 2       morta  1e-03  20.00000
@@ -1728,7 +1726,7 @@ summary(results)</code></pre>
 ## 6     int_ponta -3.230823      0
 ## 7     int_pontn -3.113569      0
 ## 
-## Parameter Ranges:
+## parameter ranges/boundaries:
 ##          Name    Min       Max
 ## 1   E(tmort)f  1e+00 300.00000
 ## 2       morta  1e-03  20.00000

@@ -4,10 +4,46 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/how_to_use_lifelihood.html</loc>
+  </url>
+  <url>
+    <loc>/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>/articles/required_data_format.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
     <loc>/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/delete_param_range.html</loc>
+  </url>
+  <url>
+    <loc>/reference/detect_os.html</loc>
+  </url>
+  <url>
+    <loc>/reference/execute_bin.html</loc>
+  </url>
+  <url>
+    <loc>/reference/format_dataframe_to_txt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/format_row.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_effects.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_likelihood.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_param_ranges.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_ratio_max.html</loc>
   </url>
   <url>
     <loc>/reference/get_seeds.html</loc>
@@ -17,6 +53,9 @@
   </url>
   <url>
     <loc>/reference/lifelihood.html</loc>
+  </url>
+  <url>
+    <loc>/reference/parse_output.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
@@ -29,5 +68,11 @@
   </url>
   <url>
     <loc>/reference/run_lifelihood_console.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summary.html</loc>
+  </url>
+  <url>
+    <loc>/reference/write_param_range.html</loc>
   </url>
 </urlset>

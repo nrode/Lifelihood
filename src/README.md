@@ -1,6 +1,6 @@
 ## Compilation process
 
-Documentation of the process of compiling the Lifelihood project on both macOS and Windows.
+Documentation of the process of compiling the lifelihood project on both macOS and Windows.
 
 <br>
 
@@ -50,7 +50,7 @@ end.
 ```
 Once compiled, I ran the program with `./project1` and it worked as expected.
 
-- ✅ Create a project in Lazarus and tried to compile the whole `Lifelihood` project. The project is not compiling because of the following error:
+- ✅ Create a project in Lazarus and tried to compile the whole `lifelihood` project. The project is not compiling because of the following error:
 ```
 Unit1.pas(189,46) Error: Illegal assignment to for loop variable "j"
 ```

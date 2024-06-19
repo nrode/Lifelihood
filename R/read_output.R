@@ -1,6 +1,11 @@
-library(here)
-source(here('R', 'parsers.R'))
-
+#' Functions used to read the output file and create an object with results
+#' 
+#' @name read_output_from_file
+#' @description (internal function) takes the file path of the output file and read the results using parsers from [lifelihood::parse_output()]
+#' @param file_path location of the output file from the programme
+#' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
+#' @return an object of class `LifelihoodResults` with all results from the output file
+#' @export 
 read_output_from_file <- function(file_path, group_by_group = FALSE){
 
   # test validity of input
@@ -12,13 +17,13 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   # initialize results
   lines <- readLines(file_path)
   results <- list()
-  
-  # parse elements from .out file
-  seeds <- parse(lines, "seeds", group_by_group)
-  likelihood <- parse(lines, "likelihood", group_by_group)
-  effects <- parse(lines, "effects", group_by_group)
-  parameter_ranges <- parse(lines, "parameter_ranges", group_by_group)
-  ratiomax <- parse(lines, "ratio_max", group_by_group)
+
+  # parse_output elements from .out file
+  seeds <- parse_output(lines, "seeds", group_by_group)
+  likelihood <- parse_output(lines, "likelihood", group_by_group)
+  effects <- parse_output(lines, "effects", group_by_group)
+  parameter_ranges <- parse_output(lines, "parameter_ranges", group_by_group)
+  ratiomax <- parse_output(lines, "ratio_max", group_by_group)
 
   # store results
   results$datafile <- file_path
@@ -32,7 +37,12 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   return(results)
 }
 
-# define a custom summary method
+#' @name summary
+#' @title custom summary function for lifelihood
+#' @description creates a custom summary method for the LifelihoodResults object
+#' @param object `LifelihoodResults` object from [lifelihood::read_output_from_file()]
+#' @return NULL
+#' @export
 summary.LifelihoodResults <- function(object, ...) {
   cat("LIFELIHOODIZATION\n\n")
   
@@ -48,7 +58,7 @@ summary.LifelihoodResults <- function(object, ...) {
   print(object$effects)
   cat("\n")
   
-  cat("Parameter Ranges:\n")
+  cat("parameter ranges/boundaries:\n")
   print(object$parameter_ranges)
   cat("\n")
   
@@ -56,12 +66,3 @@ summary.LifelihoodResults <- function(object, ...) {
   print(object$ratiomax)
   cat("\n")
 }
-
-
-
-
-# use case
-# file_name <- "DataLenski_gam_gam_gam__Rep1"
-# file <- here("data", "raw_data", "DataLenski", paste0(file_name, ".out"))
-# results <- read_output_from_file(file)
-# summary(results)

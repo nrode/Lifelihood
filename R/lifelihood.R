@@ -1,7 +1,25 @@
-source(here('R', 'execute_bin.R'))
-source(here('R', 'read_output.R'))
-source(here('R', 'utils.R'))
-
+#' Main function of the lifelihood program
+#' @name lifelihood
+#' @param data_path path to the input file with data and model
+#' @param param_range_df dataframe with the parameter ranges/boundaries/boundaries
+#' @param group_by_group Option to fit the full factorail model with all the interactions between each of the factors
+#' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
+#' @param interval TBD - Check the actual meaning
+#' @param SEcal Compute the standard error of eahc parameter using the Hessian matrix
+#' @param saveprobevent TBD - Check the actual meaning
+#' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
+#' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
+#' @param seed1 first seed used so that random values can found again
+#' @param seed2 second seed used so that random values can found again
+#' @param seed3 third seed used so that random values can found again
+#' @param seed4 fourth seed used so that random values can found again
+#' @param ntr number of thread for the paralelisation ?
+#' @param nst TBD - Check the actual meaning
+#' @param To Initial temperature for the simulated annealing
+#' @param Tf Initial temperature for the simulated annealing
+#' @param climbrate Rate for the simulated annealing ?
+#' @param precision TBD - Check the actual meaning
+#' @export
 lifelihood <- function(
    data_path,
    param_range_df=NULL,
@@ -26,7 +44,7 @@ lifelihood <- function(
 
    # if param_range_df is NULL, use default values
    if(is.null(param_range_df)){
-      message("Using default parameter ranges")
+      message("Using default parameter ranges/boundaries")
       param_range_df <- data.frame(
          param = c("E(tmort)f", "morta", "RE(tmort)m", "mortp", "propmal", "E(tmat)f", "mata", 
                      "RE(tmat)m", "E(tpon)", "ponta", "pontn", "to(ps)int", "to(ps)am", "to(ps)tp", 
@@ -43,7 +61,7 @@ lifelihood <- function(
    # create parameters range file
    path_param_range <- write_param_range(data = param_range_df)
    file_param_range <- 'param_range.txt'
-   path_param_range <- here(file_param_range)
+   path_param_range <- here::here(file_param_range)
 
    # create output file
    execute_bin(

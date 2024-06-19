@@ -1,6 +1,27 @@
-library(here)
-source(here('R', 'utils.R'))
-
+#' Execute compiled files of the lifelihood program
+#' @name execute_bin
+#' @description (internal function) Run lifelihood program in console mode
+#' @param infile file with the model and data to be fitted
+#' @param customfile file with the min and max boudaries for each parameter
+#' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors
+#' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
+#' @param interval TBD - Check the actual meaning
+#' @param SEcal Compute the standard error of eahc parameter using the Hessian matrix
+#' @param saveprobevent TBD - Check the actual meaning
+#' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
+#' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
+#' @param seed1 first seed used so that random values can found again
+#' @param seed2 second seed used so that random values can found again
+#' @param seed3 third seed used so that random values can found again
+#' @param seed4 fourth seed used so that random values can found again
+#' @param ntr number of thread for the paralelisation ?
+#' @param nst TBD - Check the actual meaning
+#' @param To Initial temperature for the simulated annealing
+#' @param Tf Initial temperature for the simulated annealing
+#' @param climbrate Rate for the simulated annealing ?
+#' @param precision TBD - Check the actual meaning
+#' @return NULL
+#' @export
 execute_bin <- function(
    input_file,
    custom_file,
@@ -33,17 +54,9 @@ execute_bin <- function(
    os <- detect_os()
    path <- switch(
       os,
-      "Windows" = file.path(here("src", "compiled"), "lifelihoodC2023.exe"),
-      "Unix-like" = file.path(here("src", "compiled"), "lifelihoodC2023"),
+      "Windows" = file.path(here::here("src", "compiled"), "lifelihoodC2023.exe"),
+      "Unix-like" = file.path(here::here("src", "compiled"), "lifelihoodC2023"),
       stop("Unknown OS")
    )
    system(path, input = arg_string)
 }
-
-
-
-# use case
-# execute_bin(
-#    input_file = here("data", "raw_data", "DataLenski", "DataLenski_gam_gam_gam__Rep1.txt"),
-#    custom_file = here("data", "custom.txt")
-# )

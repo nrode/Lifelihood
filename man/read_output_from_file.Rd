@@ -2,46 +2,18 @@
 % Please edit documentation in R/read_output.R
 \name{read_output_from_file}
 \alias{read_output_from_file}
-\title{Read the output of the Lifelihood program}
+\title{Functions used to read the output file and create an object with results}
+\usage{
+read_output_from_file(file_path, group_by_group = FALSE)
+}
 \arguments{
-\item{file_path}{Path to the output file}
+\item{file_path}{location of the output file from the programme}
+
+\item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
 \value{
-A list with the following elements:
-\itemize{
-\item \code{datafile} Path to the output file
-\item \code{seeds} A vector of four integers representing the seeds used in the simulation
-\item \code{likelihood_max} The maximum likelihood value
-\item \code{effects} A data frame with the following columns:
-\itemize{
-\item \code{Name} The name of the effect
-\item \code{Estimate} The estimated value of the effect
-\item \code{StdError} The standard error of the estimate
-}
-\item \code{parameter_ranges} A data frame with the following columns:
-\itemize{
-\item \code{Name} The name of the parameter
-\item \code{Min} The minimum value of the parameter
-\item \code{Max} The maximum value of the parameter
-}
+an object of class \code{LifelihoodResults} with all results from the output file
 }
 \description{
-Read the output of the Lifelihood program
-}
-\examples{
-# path to input
-file_path = file.path(
-  'data',
-  'raw_data',
-  'DataPierrick_GroupbyGroup',
-  '100\%mort_Pierrick211genoparinteraction.out'
-)
-
-# read the output and print the results
-fitted = read_output_from_file(file_path)
-fitted$datafile
-fitted$seeds
-fitted$likelihood_max
-fitted$effects
-fitted$parameter_ranges
+(internal function) takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}
 }
