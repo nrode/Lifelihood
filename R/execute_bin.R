@@ -47,8 +47,8 @@ execute_bin <- function(
    
    # concatenate the inputs and other parameters
    arg_string <- paste(
-      input_file, custom_file, group_by_group, MCMC, interval, SEcal, saveprobevent, fitness,
-      r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
+      input_file, custom_file, group_by_group, MCMC, interval, SEcal, saveprobevent,
+      fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 
    # get the path to the compiled program and execute it

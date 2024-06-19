@@ -20,7 +20,6 @@ editor_options:
 ***
 
 ```{r}
-library(kableExtra)
 library(lifelihood)
 ```
 
@@ -29,11 +28,23 @@ library(lifelihood)
 # Data preparation
 ***
 
+Load the dataset from `.csv` file:
+
 ```{r}
 # input data
-file_name <- "DataLenski_gam_gam_gam__Rep1"
-path_to_data <- here::here("data", "raw_data", "DataLenski", paste0(file_name, ".txt"))
-print(path_to_data)
+df <- read.csv(here::here('data/fake_sample.csv'))
+kableExtra::kable(df)
+```
+
+Prepare input parameters for the `lifelihood()` function:
+
+```{r}
+# we define name of the columns of the clutchs into a single vector
+clutchs = c(
+   'clutch_start1', 'clutch_end1', 'clutch_size1',
+   'clutch_start2', 'clutch_end2', 'clutch_size2',
+   'clutch_start3', 'clutch_end3', 'clutch_size3'
+)
 ```
 
 <br>
@@ -45,7 +56,18 @@ print(path_to_data)
 
 ```{r}
 # run the analysis
-results <- lifelihood(data_path=path_to_data)
+results <- lifelihood(
+  df = df,
+  sex = 'sex',
+  sex_start = 'sex_start',
+  sex_end = 'sex_end',
+  maturity_start = 'mat_start',
+  maturity_end = 'mat_end',
+  clutchs = clutchs,
+  death_start = 'mor_start',
+  death_end = 'mor_end',
+  extra1 = 'geno'
+)
 summary(results)
 ```
 
@@ -61,7 +83,7 @@ param_ranges <- data.frame(
           0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
   max = c(300, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
 )
-kable(param_ranges)
+kableExtra::kable(param_ranges)
 
 # run the analysis
 results <- lifelihood(data_path=path_to_data, param_range_df=param_ranges)

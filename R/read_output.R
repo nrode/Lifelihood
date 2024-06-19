@@ -10,7 +10,7 @@
 read_output_from_file <- function(file_path, group_by_group = FALSE){
 
   # test validity of input
-  if (!file.exists(file_path)){stop("File not found")}
+  if (!file.exists(file_path)){stop(paste("File", file_path  ,"not found"))}
   if (!grepl(".out$", file_path)){stop("File is not a .out file")}
   if (file.size(file_path) == 0){stop("File is empty")}
   if (!is.logical(group_by_group)){stop("group_by_group must be a boolean")}

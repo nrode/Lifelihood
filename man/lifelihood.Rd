@@ -5,7 +5,18 @@
 \title{Main function of the lifelihood program}
 \usage{
 lifelihood(
-  data_path,
+  df,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  clutchs,
+  death_start,
+  death_end,
+  extra1 = NULL,
+  extra2 = NULL,
+  extra3 = NULL,
   param_range_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -27,7 +38,27 @@ lifelihood(
 )
 }
 \arguments{
-\item{data_path}{Path to the input file with data and model}
+\item{sex}{Column name containing the sex of the observations.}
+
+\item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
+
+\item{sex_end}{Column name containing the second date of the interval in which the sex was determined.}
+
+\item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
+
+\item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
+
+\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
+
+\item{death_start}{Column name containing the first date of the interval in which the death was determined.}
+
+\item{death_end}{Column name containing the second date of the interval in which the death was determined.}
+
+\item{extra1}{(facultative) Column name of the first column to add in the input data file}
+
+\item{extra2}{(facultative) Column name of the second column to add in the input data file}
+
+\item{extra3}{(facultative) Column name of the third column to add in the input data file}
 
 \item{param_range_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
@@ -64,6 +95,8 @@ lifelihood(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
+
+\item{data_path}{Path to the input file with data and model}
 }
 \description{
 Main function of the lifelihood program

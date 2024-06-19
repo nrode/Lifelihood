@@ -33,17 +33,3 @@ write_param_range <- function(data, file_name = "param_range.txt"){
 )
    return(file_name)
 }
-
-#' @name delete_param_range
-#' @title (internal function) Delete parameter ranges/boundaries file
-#' @description (internal function) `delete_param_range()` takes a path to the parameter ranges/boundaries file and delete it
-#' @param file_path Path of where the .txt file is
-#' @export 
-delete_param_range <- function(file_path){
-   if (file.exists(file_path)){
-      file.remove(file_path)
-   } else {
-      message <- paste("File", file_path, "does not exist")
-      stop(message)
-   }
-}

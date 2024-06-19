@@ -1,0 +1,8 @@
+"geno","sex","sex_start","sex_end","mat_start","mat_end","clutch_start1","clutch_end1","clutch_size1","clutch_start2","clutch_end2","clutch_size2","clutch_start3","clutch_end3","clutch_size3","mor_start","mor_end"
+1,0,1,2,2,4,3,4,4,5,6,5,7,8,1,8,12
+3,0,3,4,1,2,2,3,6,NA,NA,NA,NA,NA,NA,11,11
+1,0,2,3,0,1000,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,1
+0,0,10,11,1,2,2,3,5,5,6,7,6,7,1,11,12
+2,0,3,4,0,1000,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,1
+0,0,4,5,2,3,3,4,2,4,5,10,NA,NA,NA,7,8
+1,0,5,6,1,2,2,3,30,3,4,5,5,6,2,9,10

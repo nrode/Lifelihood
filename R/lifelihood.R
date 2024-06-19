@@ -1,6 +1,17 @@
 #' Main function of the lifelihood program
 #' @name lifelihood
 #' @param data_path Path to the input file with data and model
+#' @param sex Column name containing the sex of the observations.
+#' @param sex_start Column name containing the first date of the interval in which the sex was determined.
+#' @param sex_end Column name containing the second date of the interval in which the sex was determined.
+#' @param maturity_start Column name containing the first date of the interval in which the maturity was determined.
+#' @param maturity_end Column name containing the second date of the interval in which the maturity was determined.
+#' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
+#' @param death_start Column name containing the first date of the interval in which the death was determined.
+#' @param death_end Column name containing the second date of the interval in which the death was determined.
+#' @param extra1 (facultative) Column name of the first column to add in the input data file
+#' @param extra2 (facultative) Column name of the second column to add in the input data file
+#' @param extra3 (facultative) Column name of the third column to add in the input data file
 #' @param param_range_df Dataframe with the parameter ranges/boundaries/boundaries
 #' @param group_by_group Option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
@@ -21,7 +32,18 @@
 #' @param precision TBD - Check the actual meaning
 #' @export
 lifelihood <- function(
-   data_path,
+   df,
+   sex,
+   sex_start,
+   sex_end,
+   maturity_start,
+   maturity_end,
+   clutchs,
+   death_start,
+   death_end,
+   extra1=NULL,
+   extra2=NULL,
+   extra3=NULL,
    param_range_df=NULL,
    group_by_group=FALSE,
    MCMC=0,
@@ -63,14 +85,32 @@ lifelihood <- function(
    file_param_range <- 'param_range.txt'
    path_param_range <- here::here(file_param_range)
 
+   # create data file
+   format_dataframe_to_txt(
+      df = df,
+      sex = sex,
+      sex_start = sex_start,
+      sex_end = sex_end,
+      maturity_start = maturity_start,
+      maturity_end = maturity_end,
+      clutchs = clutchs,
+      death_start = death_start,
+      death_end = death_end,
+      extra1 = extra1,
+      extra2 = extra2,
+      extra3 = extra3
+   )
+   data_path <- here::here("input_data_lifelihood.txt")
+
    # create output file
    execute_bin(
       data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
       fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 
-   # delete parameters range file after execution
-   delete_param_range(file_param_range)
+   # delete intermediate files after execution
+   #file.remove(file_param_range)
+   #file.remove(data_path)
 
    # get path to output file
    filename_output <- sub("\\.txt$", "", data_path)

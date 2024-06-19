@@ -14,9 +14,9 @@ format_dataframe_to_txt(
   clutchs,
   death_start,
   death_end,
-  extra1 = NULL,
-  extra2 = NULL,
-  extra3 = NULL
+  extra1,
+  extra2,
+  extra3
 )
 }
 \arguments{
@@ -38,11 +38,11 @@ format_dataframe_to_txt(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{extra1}{(facultative) Column name of the first column to add in the input data file}
+\item{extra1}{Column name of the first column to add in the input data file}
 
-\item{extra2}{(facultative) Column name of the second column to add in the input data file}
+\item{extra2}{Column name of the second column to add in the input data file}
 
-\item{extra3}{(facultative) Column name of the third column to add in the input data file}
+\item{extra3}{Column name of the third column to add in the input data file}
 }
 \description{
 (internal function) Takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.

@@ -1,3 +1,28 @@
+*******data struct****
+matclutch true
+Group
+1
+****modele******
+gam gam gam
+mortuf 0
+morta 0
+Rmortum -1
+mortp -1
+propmal -1
+matuf 0
+mata 0
+Rmatum -1
+pontu 0
+ponta 0
+(W)pontn 0
+to(ps)int -1
+to(ps)am -1
+to(ps)tp -1
+sen(pu)t -1
+sen(pu)t2 -1
+sen(pn)t -1
+sen(pn)t2 -1
+to(pupn) -1
 *******data*********
  1 sex 1 2 0 mat 2 4 pon 3 4 4 pon 5 6 5 pon 7 8 1 mor 8 12
  3 sex 3 4 0 mat 1 2 pon 2 3 6 mor 11 11

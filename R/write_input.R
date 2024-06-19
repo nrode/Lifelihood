@@ -66,7 +66,7 @@ format_row <- function(
       }
    }
 
-   # add the 'mor' column (death event)
+   # add the death events
    death_start_value <- row[death_start]
    death_end_value <- row[death_end]
    formatted_row <- paste(formatted_row, "mor", death_start_value, death_end_value)
@@ -87,9 +87,9 @@ format_row <- function(
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param extra1 (facultative) Column name of the first column to add in the input data file
-#' @param extra2 (facultative) Column name of the second column to add in the input data file
-#' @param extra3 (facultative) Column name of the third column to add in the input data file
+#' @param extra1 Column name of the first column to add in the input data file
+#' @param extra2 Column name of the second column to add in the input data file
+#' @param extra3 Column name of the third column to add in the input data file
 #' @details The number of extra column is **currently limited** to 3 for simplicity, but we definitly should **change** this accept an unlimited number of extra columns
 #' @return NULL
 #' @export
@@ -103,9 +103,9 @@ format_dataframe_to_txt <- function(
    clutchs,
    death_start,
    death_end,
-   extra1=NULL,
-   extra2=NULL,
-   extra3=NULL
+   extra1,
+   extra2,
+   extra3
 ){
 
    # create vector with all column names
@@ -143,6 +143,23 @@ format_dataframe_to_txt <- function(
    header_line <- "*******data*********"
    formatted_rows <- c(header_line, formatted_rows)
 
+   # add model info (DEFAULT ABITRARY VALUES)
+   model_info <- c(
+      "*******data struct****",
+      "matclutch true", "Group", "1",
+      "****modele******",
+      "gam gam gam",
+      "mortuf 0", "morta 0", "Rmortum -1", "mortp -1",
+      "propmal -1",
+      "matuf 0", "mata 0", "Rmatum -1",
+      "pontu 0", "ponta 0",
+      "(W)pontn 0",
+      "to(ps)int -1", "to(ps)am -1", "to(ps)tp -1",
+      "sen(pu)t -1", "sen(pu)t2 -1", "sen(pn)t -1", "sen(pn)t2 -1",
+      "to(pupn) -1"
+   )
+   formatted_rows <- c(model_info, formatted_rows)
+
    # write the formatted rows to the output file
-   writeLines(formatted_rows, con = "input_data.txt")
+   writeLines(formatted_rows, con = "input_data_lifelihood.txt")
 }

@@ -54,7 +54,6 @@ string <- paste(infile, customfile, GbyG, MCMC, interval, SEcal, saveprobevent, 
   
 system(pathtolifelihood, intern = FALSE,
          ignore.stdout = FALSE, ignore.stderr = FALSE,
-         wait = TRUE, input = string, show.output.on.console = TRUE,
-         minimized = FALSE, invisible = FALSE)
+         wait = TRUE, input = string)
 
 ```
