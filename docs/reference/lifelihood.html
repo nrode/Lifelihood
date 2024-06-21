@@ -85,7 +85,11 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>sex</dt>
+    <dl><dt>df</dt>
+<dd><p>Dataframe with the data of life history. It should have one row per life history / observation.</p></dd>
+
+
+<dt>sex</dt>
 <dd><p>Column name containing the sex of the observations.</p></dd>
 
 
@@ -115,6 +119,10 @@
 
 <dt>death_end</dt>
 <dd><p>Column name containing the second date of the interval in which the death was determined.</p></dd>
+
+
+<dt>models</dt>
+<dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.</p></dd>
 
 
 <dt>extra1</dt>
@@ -195,10 +203,6 @@
 
 <dt>precision</dt>
 <dd><p>TBD - Check the actual meaning</p></dd>
-
-
-<dt>data_path</dt>
-<dd><p>Path to the input file with data and model</p></dd>
 
 </dl></div>
 

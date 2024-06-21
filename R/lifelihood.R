@@ -1,6 +1,6 @@
 #' Main function of the lifelihood program
 #' @name lifelihood
-#' @param data_path Path to the input file with data and model
+#' @param df Dataframe with the data of life history. It should have one row per life history / observation.
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
 #' @param sex_end Column name containing the second date of the interval in which the sex was determined.
@@ -9,6 +9,7 @@
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
+#' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param extra1 (facultative) Column name of the first column to add in the input data file
 #' @param extra2 (facultative) Column name of the second column to add in the input data file
 #' @param extra3 (facultative) Column name of the third column to add in the input data file

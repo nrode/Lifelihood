@@ -95,7 +95,7 @@ format_row <- function(
 #' @param extra1 Column name of the first column to add in the input data file
 #' @param extra2 Column name of the second column to add in the input data file
 #' @param extra3 Column name of the third column to add in the input data file
-#' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn".
+#' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @details The number of extra column is **currently limited** to 3 for simplicity, but we definitly should **change** this accept an unlimited number of extra columns
 #' @return NULL
 #' @export

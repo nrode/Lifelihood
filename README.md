@@ -8,13 +8,23 @@
 
 <br>
 
-## Project Structure Overview
+## Project progress
 
-- `data/`: contains the data to test code
-- `R/`: contains source R code
-- `tests/testthat/`: contains tests for the R code
-- `src/`: contains both compiled and source pascal (Lazarus and Delphi) code
-- `man/`: contains the documentation
-- `vignettes/`: tutorials on how to use lifelihood
+- ✅ Transforming the dataframe into a `.txt` input file
+- ✅ Reading the output file to return estimations and other values
+- ✅ Simple way to provides
+   - parameter ranges
+   - seeds
+   - which statistical law to use
+   - extra variables (geno, spore etc)
+- ❌ Compile for Windows with Lazarus
+- ❌ Specify which parameters to estimate and interaction effect (`****modele******` section). It currently uses arbitrary default values from `R/write_input.R`.
+- ❌ Visualization (what kind?)
+- ❌ Simulation using estimation
+- ❌ Goodness of fit
+
+There currently are 2 functions for users:
+- `lifelihood()`: main function that does most of the job that returns an object of class `LifelihoodResults`
+- `summary()`: to use on the output object of `lifelihood()` to display main results such as estimations, seeds used etc.
 
 <br>

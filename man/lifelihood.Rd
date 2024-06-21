@@ -38,6 +38,8 @@ lifelihood(
 )
 }
 \arguments{
+\item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
+
 \item{sex}{Column name containing the sex of the observations.}
 
 \item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
@@ -53,6 +55,8 @@ lifelihood(
 \item{death_start}{Column name containing the first date of the interval in which the death was determined.}
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
+
+\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
 \item{extra1}{(facultative) Column name of the first column to add in the input data file}
 
@@ -93,8 +97,6 @@ lifelihood(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
-
-\item{data_path}{Path to the input file with data and model}
 }
 \description{
 Main function of the lifelihood program

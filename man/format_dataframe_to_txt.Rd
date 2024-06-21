@@ -51,7 +51,7 @@ format_dataframe_to_txt(
 
 \item{extra3}{Column name of the third column to add in the input data file}
 
-\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn".}
+\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 }
 \description{
 (internal function) Takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
