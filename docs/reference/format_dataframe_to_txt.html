@@ -56,12 +56,15 @@
 <span>  <span class="va">sex_end</span>,</span>
 <span>  <span class="va">maturity_start</span>,</span>
 <span>  <span class="va">maturity_end</span>,</span>
+<span>  <span class="va">matclutch</span>,</span>
+<span>  <span class="va">matclutch_size</span>,</span>
 <span>  <span class="va">clutchs</span>,</span>
 <span>  <span class="va">death_start</span>,</span>
 <span>  <span class="va">death_end</span>,</span>
 <span>  <span class="va">extra1</span>,</span>
 <span>  <span class="va">extra2</span>,</span>
-<span>  <span class="va">extra3</span></span>
+<span>  <span class="va">extra3</span>,</span>
+<span>  <span class="va">models</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +94,14 @@
 <dd><p>Column name containing the second date of the interval in which the maturity was determined.</p></dd>
 
 
+<dt>matclutch</dt>
+<dd><p>Whether the maturity event (designated by <code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not. If <code>TRUE</code>, must specify the <code>matclutch_size</code> argument.</p></dd>
+
+
+<dt>matclutch_size</dt>
+<dd><p>Column name containing the size of the clutch for the maturity event. Only used (and required) if <code>matclutch</code> is <code>TRUE</code>.</p></dd>
+
+
 <dt>clutchs</dt>
 <dd><p>Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</p></dd>
 
@@ -113,6 +124,10 @@
 
 <dt>extra3</dt>
 <dd><p>Column name of the third column to add in the input data file</p></dd>
+
+
+<dt>models</dt>
+<dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn".</p></dd>
 
 </dl></div>
     <div class="section level2">

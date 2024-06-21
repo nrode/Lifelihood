@@ -131,11 +131,12 @@ function:</p>
 <span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
 <span>  extra1 <span class="op">=</span> <span class="st">"geno"</span>,</span>
-<span>  seeds <span class="op">=</span> <span class="va">seeds</span></span>
+<span>  seeds <span class="op">=</span> <span class="va">seeds</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Using default parameter ranges/boundaries</span></span></code></pre>
-<pre><code><span><span class="co">## [1] "here"</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
 <span><span class="co">## </span></span>
@@ -143,21 +144,21 @@ function:</p>
 <span><span class="co">## [1] 1 2 3 4</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## likelihood:</span></span>
-<span><span class="co">## [1] -1620.415</span></span>
+<span><span class="co">## [1] -1937.531</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## effects:</span></span>
 <span><span class="co">##            Name     Value1 Value2</span></span>
-<span><span class="co">## 1 int_E(tmort)f -6.4486369      0</span></span>
-<span><span class="co">## 2     int_morta -0.2744611      0</span></span>
-<span><span class="co">## 3  int_E(tmat)f -3.6606293      0</span></span>
-<span><span class="co">## 4      int_mata -9.5649910      0</span></span>
-<span><span class="co">## 5   int_E(tpon) -4.0509389      0</span></span>
-<span><span class="co">## 6     int_ponta  5.4481983      0</span></span>
-<span><span class="co">## 7     int_pontn -2.4253961      0</span></span>
+<span><span class="co">## 1 int_E(tmort)f -0.5317772      0</span></span>
+<span><span class="co">## 2     int_morta -2.2130453      0</span></span>
+<span><span class="co">## 3  int_E(tmat)f -3.6741016      0</span></span>
+<span><span class="co">## 4      int_mata -6.3462724      0</span></span>
+<span><span class="co">## 5   int_E(tpon)  1.5767529      0</span></span>
+<span><span class="co">## 6     int_ponta -3.9144522      0</span></span>
+<span><span class="co">## 7     int_pontn -2.4247010      0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## parameter ranges/boundaries:</span></span>
 <span><span class="co">##          Name    Min       Max</span></span>
-<span><span class="co">## 1   E(tmort)f  1e+00 301.00000</span></span>
+<span><span class="co">## 1   E(tmort)f  1e+00 302.00000</span></span>
 <span><span class="co">## 2       morta  1e-03  20.00000</span></span>
 <span><span class="co">## 3  RE(tmort)m  1e-01   4.00000</span></span>
 <span><span class="co">## 4       mortp  1e-04   1.00000</span></span>
@@ -183,7 +184,7 @@ function:</p>
 <div class="section level3">
 <h3 id="with-custom-parameter-ranges">With custom parameter ranges<a class="anchor" aria-label="anchor" href="#with-custom-parameter-ranges"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># dataframe with param ranges</span></span>
 <span><span class="va">param_ranges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E(tmort)f"</span>, <span class="st">"morta"</span>, <span class="st">"RE(tmort)m"</span>, <span class="st">"mortp"</span>, <span class="st">"propmal"</span>, <span class="st">"E(tmat)f"</span>, <span class="st">"mata"</span>, </span>
@@ -200,21 +201,21 @@ function:</p>
 <span><span class="co">## [1] 1 2 3 4</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## likelihood:</span></span>
-<span><span class="co">## [1] -1620.415</span></span>
+<span><span class="co">## [1] -1937.531</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## effects:</span></span>
 <span><span class="co">##            Name     Value1 Value2</span></span>
-<span><span class="co">## 1 int_E(tmort)f -6.4486369      0</span></span>
-<span><span class="co">## 2     int_morta -0.2744611      0</span></span>
-<span><span class="co">## 3  int_E(tmat)f -3.6606293      0</span></span>
-<span><span class="co">## 4      int_mata -9.5649910      0</span></span>
-<span><span class="co">## 5   int_E(tpon) -4.0509389      0</span></span>
-<span><span class="co">## 6     int_ponta  5.4481983      0</span></span>
-<span><span class="co">## 7     int_pontn -2.4253961      0</span></span>
+<span><span class="co">## 1 int_E(tmort)f -0.5317772      0</span></span>
+<span><span class="co">## 2     int_morta -2.2130453      0</span></span>
+<span><span class="co">## 3  int_E(tmat)f -3.6741016      0</span></span>
+<span><span class="co">## 4      int_mata -6.3462724      0</span></span>
+<span><span class="co">## 5   int_E(tpon)  1.5767529      0</span></span>
+<span><span class="co">## 6     int_ponta -3.9144522      0</span></span>
+<span><span class="co">## 7     int_pontn -2.4247010      0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## parameter ranges/boundaries:</span></span>
 <span><span class="co">##          Name    Min       Max</span></span>
-<span><span class="co">## 1   E(tmort)f  1e+00 301.00000</span></span>
+<span><span class="co">## 1   E(tmort)f  1e+00 302.00000</span></span>
 <span><span class="co">## 2       morta  1e-03  20.00000</span></span>
 <span><span class="co">## 3  RE(tmort)m  1e-01   4.00000</span></span>
 <span><span class="co">## 4       mortp  1e-04   1.00000</span></span>
@@ -243,9 +244,9 @@ function:</p>
 <h2 id="get-specific-results">Get specific results<a class="anchor" aria-label="anchor" href="#get-specific-results"></a>
 </h2>
 <hr>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">Effects</span></span></code></pre></div>
-<pre><code><span><span class="co">## NULL</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">effects</span><span class="op">$</span><span class="va">Value1</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -0.5317772 -2.2130453 -3.6741016 -6.3462724  1.5767529 -3.9144522 -2.4247010</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
