@@ -59,14 +59,18 @@
 
 
 
-
-<div class="row">
+<link href="1_required_data_format_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="1_required_data_format_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="1_required_data_format_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="1_required_data_format_files/datatables-binding-0.33/datatables.js"></script><link href="1_required_data_format_files/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="1_required_data_format_files/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="1_required_data_format_files/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="1_required_data_format_files/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="1_required_data_format_files/crosstalk-1.2.1/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>What is the required data format?</h1>
                         <h4 data-toc-skip class="author">Nicolas RODE,
 Thomas LENORMAND</h4>
             
-            <h4 data-toc-skip class="date">19-June-2024</h4>
+            <h4 data-toc-skip class="date">21-June-2024</h4>
       
       
       <div class="d-none name"><code>1_required_data_format.Rmd</code></div>
@@ -157,184 +161,9 @@ input data file</li>
 <span>  clutch_size3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  mor_start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">11</span>, <span class="fl">0</span>, <span class="fl">11</span>, <span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span>,</span>
 <span>  mor_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">11</span>, <span class="fl">1</span>, <span class="fl">12</span>, <span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="2%">
-<col width="2%">
-<col width="5%">
-<col width="4%">
-<col width="5%">
-<col width="4%">
-<col width="7%">
-<col width="6%">
-<col width="7%">
-<col width="7%">
-<col width="6%">
-<col width="7%">
-<col width="7%">
-<col width="6%">
-<col width="7%">
-<col width="5%">
-<col width="4%">
-</colgroup>
-<thead><tr class="header">
-<th align="right">geno</th>
-<th align="right">sex</th>
-<th align="right">sex_start</th>
-<th align="right">sex_end</th>
-<th align="right">mat_start</th>
-<th align="right">mat_end</th>
-<th align="right">clutch_start1</th>
-<th align="right">clutch_end1</th>
-<th align="right">clutch_size1</th>
-<th align="right">clutch_start2</th>
-<th align="right">clutch_end2</th>
-<th align="right">clutch_size2</th>
-<th align="right">clutch_start3</th>
-<th align="right">clutch_end3</th>
-<th align="right">clutch_size3</th>
-<th align="right">mor_start</th>
-<th align="right">mor_end</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">5</td>
-<td align="right">7</td>
-<td align="right">8</td>
-<td align="right">1</td>
-<td align="right">8</td>
-<td align="right">12</td>
-</tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">6</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">11</td>
-<td align="right">11</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">1000</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">10</td>
-<td align="right">11</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">5</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">7</td>
-<td align="right">6</td>
-<td align="right">7</td>
-<td align="right">1</td>
-<td align="right">11</td>
-<td align="right">12</td>
-</tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">0</td>
-<td align="right">1000</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">10</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">7</td>
-<td align="right">8</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">30</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">2</td>
-<td align="right">9</td>
-<td align="right">10</td>
-</tr>
-</tbody>
-</table>
-<p>As you can see, some observations made more ponts, leading to the
+<span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7"],[1,3,1,0,2,0,1],[0,0,0,0,0,0,0],[1,3,2,10,3,4,5],[2,4,3,11,4,5,6],[2,1,0,1,0,2,1],[4,2,1000,2,1000,3,2],[3,2,null,2,null,3,2],[4,3,null,3,null,4,3],[4,6,null,5,null,2,30],[5,null,null,5,null,4,3],[6,null,null,6,null,5,4],[5,null,null,7,null,10,5],[7,null,null,6,null,null,5],[8,null,null,7,null,null,6],[1,null,null,1,null,null,2],[8,11,0,11,0,7,9],[12,11,1,12,1,8,10]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>geno<\/th>\n      <th>sex<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>clutch_start3<\/th>\n      <th>clutch_end3<\/th>\n      <th>clutch_size3<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"geno","targets":1},{"name":"sex","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"mat_start","targets":5},{"name":"mat_end","targets":6},{"name":"clutch_start1","targets":7},{"name":"clutch_end1","targets":8},{"name":"clutch_size1","targets":9},{"name":"clutch_start2","targets":10},{"name":"clutch_end2","targets":11},{"name":"clutch_size2","targets":12},{"name":"clutch_start3","targets":13},{"name":"clutch_end3","targets":14},{"name":"clutch_size3","targets":15},{"name":"mor_start","targets":16},{"name":"mor_end","targets":17}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>As you can see, some observations made more ponts, leading to the
 presence of NULL values.</p>
 <p><em>One</em> row of the dataset should represent the <strong>life
 history</strong> of <em>one</em> observation.</p>

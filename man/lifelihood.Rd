@@ -17,6 +17,8 @@ lifelihood(
   extra1 = NULL,
   extra2 = NULL,
   extra3 = NULL,
+  matclutch = FALSE,
+  matclutch_size = NULL,
   param_range_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -25,10 +27,7 @@ lifelihood(
   saveprobevent = 0,
   fitness = 0,
   r = 0,
-  seed1 = 12,
-  seed2 = 13,
-  seed3 = 14,
-  seed4 = 15,
+  seeds = c(12, 13, 14, 15),
   ntr = 2,
   nst = 2,
   To = 50,
@@ -60,6 +59,10 @@ lifelihood(
 
 \item{extra3}{(facultative) Column name of the third column to add in the input data file}
 
+\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
+
+\item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
+
 \item{param_range_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
 \item{group_by_group}{Option to fit the full factorail model with all the interactions between each of the factors}
@@ -76,13 +79,7 @@ lifelihood(
 
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
-\item{seed1}{First seed used so that random values can found again}
-
-\item{seed2}{Second seed used so that random values can found again}
-
-\item{seed3}{Third seed used so that random values can found again}
-
-\item{seed4}{Fourth seed used so that random values can found again}
+\item{seeds}{Numbers used to reproduce results (same seeds = same results)}
 
 \item{ntr}{Number of thread for the paralelisation ?}
 

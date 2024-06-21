@@ -59,14 +59,18 @@
 
 
 
-
-<div class="row">
+<link href="2_how_to_use_lifelihood_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="2_how_to_use_lifelihood_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="2_how_to_use_lifelihood_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="2_how_to_use_lifelihood_files/datatables-binding-0.33/datatables.js"></script><link href="2_how_to_use_lifelihood_files/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="2_how_to_use_lifelihood_files/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="2_how_to_use_lifelihood_files/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="2_how_to_use_lifelihood_files/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="2_how_to_use_lifelihood_files/crosstalk-1.2.1/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>How to use the lifelihood package</h1>
                         <h4 data-toc-skip class="author">Nicolas RODE,
 Thomas LENORMAND</h4>
             
-            <h4 data-toc-skip class="date">19-June-2024</h4>
+            <h4 data-toc-skip class="date">21-June-2024</h4>
       
       
       <div class="d-none name"><code>2_how_to_use_lifelihood.Rmd</code></div>
@@ -80,20 +84,31 @@ Thomas LENORMAND</h4>
 </h2>
 <hr>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/" class="external-link">kableExtra</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lifelihood</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lifelihood</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
 <h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <hr>
+<p>If you haven’t already check it, have a look at <a href="1_required_data_format.html">what is the required data format to
+work with lifelihood?</a></p>
+<p>Load the dataset from <code>.csv</code> file:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># input data</span></span>
-<span><span class="va">file_name</span> <span class="op">&lt;-</span> <span class="st">"DataLenski_gam_gam_gam__Rep1"</span></span>
-<span><span class="va">path_to_data</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"raw_data"</span>, <span class="st">"DataLenski"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">file_name</span>, <span class="st">".txt"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">path_to_data</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/Users/josephbarbier/Desktop/Lifelihood/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt"</span></span></code></pre>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'data/fake_sample.csv'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[0,0,0,0,0,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"geno","targets":1},{"name":"sex_start","targets":2},{"name":"sex_end","targets":3},{"name":"sex","targets":4},{"name":"mat_start","targets":5},{"name":"mat_end","targets":6},{"name":"clutch_start1","targets":7},{"name":"clutch_end1","targets":8},{"name":"clutch_size1","targets":9},{"name":"clutch_start2","targets":10},{"name":"clutch_end2","targets":11},{"name":"clutch_size2","targets":12},{"name":"mor_start","targets":13},{"name":"mor_end","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Prepare input parameters for the <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
+function:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span>
+<span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># seeds value (must of length 4!)</span></span>
+<span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -105,31 +120,44 @@ Thomas LENORMAND</h4>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># run the analysis</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span>data_path<span class="op">=</span><span class="va">path_to_data</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
+<span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
+<span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
+<span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
+<span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
+<span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
+<span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
+<span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
+<span>  extra1 <span class="op">=</span> <span class="st">"geno"</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="va">seeds</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Using default parameter ranges/boundaries</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] "here"</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Seeds:</span></span>
-<span><span class="co">## [1] 12 13 14 15</span></span>
+<span><span class="co">## seeds:</span></span>
+<span><span class="co">## [1] 1 2 3 4</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Likelihood optimum found:</span></span>
-<span><span class="co">## [1] -265.9992</span></span>
+<span><span class="co">## likelihood:</span></span>
+<span><span class="co">## [1] -1620.415</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Effects:</span></span>
-<span><span class="co">##            Name    Value1 Value2</span></span>
-<span><span class="co">## 1 int_E(tmort)f -3.868426      0</span></span>
-<span><span class="co">## 2     int_morta -1.153408      0</span></span>
-<span><span class="co">## 3  int_E(tmat)f -4.382585      0</span></span>
-<span><span class="co">## 4      int_mata -4.419591      0</span></span>
-<span><span class="co">## 5   int_E(tpon) -5.062727      0</span></span>
-<span><span class="co">## 6     int_ponta -3.230823      0</span></span>
-<span><span class="co">## 7     int_pontn -3.113569      0</span></span>
+<span><span class="co">## effects:</span></span>
+<span><span class="co">##            Name     Value1 Value2</span></span>
+<span><span class="co">## 1 int_E(tmort)f -6.4486369      0</span></span>
+<span><span class="co">## 2     int_morta -0.2744611      0</span></span>
+<span><span class="co">## 3  int_E(tmat)f -3.6606293      0</span></span>
+<span><span class="co">## 4      int_mata -9.5649910      0</span></span>
+<span><span class="co">## 5   int_E(tpon) -4.0509389      0</span></span>
+<span><span class="co">## 6     int_ponta  5.4481983      0</span></span>
+<span><span class="co">## 7     int_pontn -2.4253961      0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## parameter ranges/boundaries:</span></span>
 <span><span class="co">##          Name    Min       Max</span></span>
-<span><span class="co">## 1   E(tmort)f  1e+00 300.00000</span></span>
+<span><span class="co">## 1   E(tmort)f  1e+00 301.00000</span></span>
 <span><span class="co">## 2       morta  1e-03  20.00000</span></span>
 <span><span class="co">## 3  RE(tmort)m  1e-01   4.00000</span></span>
 <span><span class="co">## 4       mortp  1e-04   1.00000</span></span>
@@ -149,13 +177,13 @@ Thomas LENORMAND</h4>
 <span><span class="co">## 18  sen(pn)t2 -8e+00  10.00000</span></span>
 <span><span class="co">## 19   to(pupn) -8e+00  10.00000</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Ratio Max:</span></span>
+<span><span class="co">## ratiomax:</span></span>
 <span><span class="co">## [1] 10</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="with-custom-parameter-ranges">With custom parameter ranges<a class="anchor" aria-label="anchor" href="#with-custom-parameter-ranges"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># dataframe with param ranges</span></span>
 <span><span class="va">param_ranges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E(tmort)f"</span>, <span class="st">"morta"</span>, <span class="st">"RE(tmort)m"</span>, <span class="st">"mortp"</span>, <span class="st">"propmal"</span>, <span class="st">"E(tmat)f"</span>, <span class="st">"mata"</span>, </span>
@@ -163,143 +191,30 @@ Thomas LENORMAND</h4>
 <span>            <span class="st">"sen(pu)t"</span>, <span class="st">"sen(pu)t2"</span>, <span class="st">"sen(pn)t"</span>, <span class="st">"sen(pn)t2"</span>, <span class="st">"to(pupn)"</span>, <span class="st">"W"</span><span class="op">)</span>,</span>
 <span>  min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="fl">0.0001</span>, <span class="fl">0.00001</span>, <span class="fl">1</span>, <span class="fl">0.0001</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.001</span>, <span class="fl">1</span>, <span class="fl">0.00001</span>, </span>
 <span>          <span class="fl">0.0000001</span>, <span class="fl">0.0000001</span>, <span class="op">-</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">20</span>, <span class="op">-</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">8</span>, <span class="op">-</span><span class="fl">8</span>, <span class="fl">0.001</span><span class="op">)</span>,</span>
-<span>  max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">20</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">0.99999</span>, <span class="fl">100</span>, <span class="fl">15</span>, <span class="fl">10</span>, <span class="fl">200</span>, <span class="fl">12</span>, <span class="fl">50</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">1200</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">param_ranges</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">param</th>
-<th align="right">min</th>
-<th align="right">max</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">E(tmort)f</td>
-<td align="right">1e+00</td>
-<td align="right">300.00000</td>
-</tr>
-<tr class="even">
-<td align="left">morta</td>
-<td align="right">1e-03</td>
-<td align="right">20.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">RE(tmort)m</td>
-<td align="right">1e-01</td>
-<td align="right">4.00000</td>
-</tr>
-<tr class="even">
-<td align="left">mortp</td>
-<td align="right">1e-04</td>
-<td align="right">1.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">propmal</td>
-<td align="right">1e-05</td>
-<td align="right">0.99999</td>
-</tr>
-<tr class="even">
-<td align="left">E(tmat)f</td>
-<td align="right">1e+00</td>
-<td align="right">100.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">mata</td>
-<td align="right">1e-04</td>
-<td align="right">15.00000</td>
-</tr>
-<tr class="even">
-<td align="left">RE(tmat)m</td>
-<td align="right">1e-01</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">E(tpon)</td>
-<td align="right">1e-01</td>
-<td align="right">200.00000</td>
-</tr>
-<tr class="even">
-<td align="left">ponta</td>
-<td align="right">1e-03</td>
-<td align="right">12.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">pontn</td>
-<td align="right">1e+00</td>
-<td align="right">50.00000</td>
-</tr>
-<tr class="even">
-<td align="left">to(ps)int</td>
-<td align="right">1e-05</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">to(ps)am</td>
-<td align="right">1e-07</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="even">
-<td align="left">to(ps)tp</td>
-<td align="right">1e-07</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">sen(pu)t</td>
-<td align="right">-2e+01</td>
-<td align="right">20.00000</td>
-</tr>
-<tr class="even">
-<td align="left">sen(pu)t2</td>
-<td align="right">-2e+01</td>
-<td align="right">20.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">sen(pn)t</td>
-<td align="right">-8e+00</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="even">
-<td align="left">sen(pn)t2</td>
-<td align="right">-8e+00</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="odd">
-<td align="left">to(pupn)</td>
-<td align="right">-8e+00</td>
-<td align="right">10.00000</td>
-</tr>
-<tr class="even">
-<td align="left">W</td>
-<td align="right">1e-03</td>
-<td align="right">1200.00000</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># run the analysis</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span>data_path<span class="op">=</span><span class="va">path_to_data</span>, param_range_df<span class="op">=</span><span class="va">param_ranges</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
+<span>  max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">301</span>, <span class="fl">20</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">0.99999</span>, <span class="fl">100</span>, <span class="fl">15</span>, <span class="fl">10</span>, <span class="fl">200</span>, <span class="fl">12</span>, <span class="fl">50</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">1200</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Seeds:</span></span>
-<span><span class="co">## [1] 12 13 14 15</span></span>
+<span><span class="co">## seeds:</span></span>
+<span><span class="co">## [1] 1 2 3 4</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Likelihood optimum found:</span></span>
-<span><span class="co">## [1] -265.9992</span></span>
+<span><span class="co">## likelihood:</span></span>
+<span><span class="co">## [1] -1620.415</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Effects:</span></span>
-<span><span class="co">##            Name    Value1 Value2</span></span>
-<span><span class="co">## 1 int_E(tmort)f -3.868426      0</span></span>
-<span><span class="co">## 2     int_morta -1.153408      0</span></span>
-<span><span class="co">## 3  int_E(tmat)f -4.382585      0</span></span>
-<span><span class="co">## 4      int_mata -4.419591      0</span></span>
-<span><span class="co">## 5   int_E(tpon) -5.062727      0</span></span>
-<span><span class="co">## 6     int_ponta -3.230823      0</span></span>
-<span><span class="co">## 7     int_pontn -3.113569      0</span></span>
+<span><span class="co">## effects:</span></span>
+<span><span class="co">##            Name     Value1 Value2</span></span>
+<span><span class="co">## 1 int_E(tmort)f -6.4486369      0</span></span>
+<span><span class="co">## 2     int_morta -0.2744611      0</span></span>
+<span><span class="co">## 3  int_E(tmat)f -3.6606293      0</span></span>
+<span><span class="co">## 4      int_mata -9.5649910      0</span></span>
+<span><span class="co">## 5   int_E(tpon) -4.0509389      0</span></span>
+<span><span class="co">## 6     int_ponta  5.4481983      0</span></span>
+<span><span class="co">## 7     int_pontn -2.4253961      0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## parameter ranges/boundaries:</span></span>
 <span><span class="co">##          Name    Min       Max</span></span>
-<span><span class="co">## 1   E(tmort)f  1e+00 300.00000</span></span>
+<span><span class="co">## 1   E(tmort)f  1e+00 301.00000</span></span>
 <span><span class="co">## 2       morta  1e-03  20.00000</span></span>
 <span><span class="co">## 3  RE(tmort)m  1e-01   4.00000</span></span>
 <span><span class="co">## 4       mortp  1e-04   1.00000</span></span>
@@ -319,9 +234,18 @@ Thomas LENORMAND</h4>
 <span><span class="co">## 18  sen(pn)t2 -8e+00  10.00000</span></span>
 <span><span class="co">## 19   to(pupn) -8e+00  10.00000</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Ratio Max:</span></span>
+<span><span class="co">## ratiomax:</span></span>
 <span><span class="co">## [1] 10</span></span></code></pre>
+<p><br></p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="get-specific-results">Get specific results<a class="anchor" aria-label="anchor" href="#get-specific-results"></a>
+</h2>
+<hr>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">Effects</span></span></code></pre></div>
+<pre><code><span><span class="co">## NULL</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -37,33 +37,3 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   class(results) <- "LifelihoodResults"
   return(results)
 }
-
-#' @name summary
-#' @title Custom summary function for lifelihood
-#' @description Creates a custom summary method for the LifelihoodResults object
-#' @param object `LifelihoodResults` object from [lifelihood::read_output_from_file()]
-#' @return NULL
-#' @export
-summary.LifelihoodResults <- function(object, ...) {
-  cat("LIFELIHOODIZATION\n\n")
-  
-  cat("Seeds:\n")
-  print(object$seeds)
-  cat("\n")
-  
-  cat("Likelihood optimum found:\n")
-  print(object$likelihood)
-  cat("\n")
-  
-  cat("Effects:\n")
-  print(object$effects)
-  cat("\n")
-  
-  cat("parameter ranges/boundaries:\n")
-  print(object$parameter_ranges)
-  cat("\n")
-  
-  cat("Ratio Max:\n")
-  print(object$ratiomax)
-  cat("\n")
-}

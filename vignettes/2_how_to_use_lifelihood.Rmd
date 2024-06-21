@@ -28,23 +28,30 @@ library(lifelihood)
 # Data preparation
 ***
 
+If you haven't already check it, have a look at [what is the required data format to work with lifelihood?](1_required_data_format.html)
+
 Load the dataset from `.csv` file:
 
 ```{r}
 # input data
 df <- read.csv(here::here('data/fake_sample.csv'))
-kableExtra::kable(df)
+```
+
+```{r, echo=FALSE}
+DT::datatable(df, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
 ```
 
 Prepare input parameters for the `lifelihood()` function:
 
 ```{r}
-# we define name of the columns of the clutchs into a single vector
-clutchs = c(
-   'clutch_start1', 'clutch_end1', 'clutch_size1',
-   'clutch_start2', 'clutch_end2', 'clutch_size2',
-   'clutch_start3', 'clutch_end3', 'clutch_size3'
+# name of the columns of the clutchs into a single vector
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
 )
+
+# seeds value (must of length 4!)
+seeds <- c(1, 2, 3, 4)
 ```
 
 <br>
@@ -58,15 +65,16 @@ clutchs = c(
 # run the analysis
 results <- lifelihood(
   df = df,
-  sex = 'sex',
-  sex_start = 'sex_start',
-  sex_end = 'sex_end',
-  maturity_start = 'mat_start',
-  maturity_end = 'mat_end',
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
   clutchs = clutchs,
-  death_start = 'mor_start',
-  death_end = 'mor_end',
-  extra1 = 'geno'
+  death_start = "mor_start",
+  death_end = "mor_end",
+  extra1 = "geno",
+  seeds = seeds
 )
 summary(results)
 ```
@@ -81,11 +89,37 @@ param_ranges <- data.frame(
             "sen(pu)t", "sen(pu)t2", "sen(pn)t", "sen(pn)t2", "to(pupn)", "W"),
   min = c(1, 0.001, 0.1, 0.0001, 0.00001, 1, 0.0001, 0.1, 0.1, 0.001, 1, 0.00001, 
           0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
-  max = c(300, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
+  max = c(301, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
 )
-kableExtra::kable(param_ranges)
+```
+
+```{r, echo=FALSE}
+DT::datatable(param_ranges, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
 
 # run the analysis
-results <- lifelihood(data_path=path_to_data, param_range_df=param_ranges)
+results <- lifelihood(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  extra1 = "geno",
+  seeds = seeds,
+  param_range_df = param_ranges
+)
 summary(results)
+```
+
+<br>
+
+
+# Get specific results
+***
+
+```{r}
+results$effects$Value1
 ```

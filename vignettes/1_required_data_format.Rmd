@@ -62,7 +62,10 @@ df <- data.frame(
   mor_start = c(8, 11, 0, 11, 0, 7, 9),
   mor_end = c(12, 11, 1, 12, 1, 8, 10)
 )
-kableExtra::kable(df)
+```
+
+```{r, echo=FALSE}
+DT::datatable(df, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
 ```
 
 As you can see, some observations made more ponts, leading to the presence of NULL values.

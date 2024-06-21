@@ -11,6 +11,8 @@ format_dataframe_to_txt(
   sex_end,
   maturity_start,
   maturity_end,
+  matclutch,
+  matclutch_size,
   clutchs,
   death_start,
   death_end,
@@ -31,6 +33,10 @@ format_dataframe_to_txt(
 \item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
 
 \item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
+
+\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
+
+\item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 
 \item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
 

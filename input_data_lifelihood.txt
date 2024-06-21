@@ -1,9 +1,9 @@
 *******data struct****
 matclutch false
-Group
+geno
 1
 ****modele******
-gam gam gam
+gam lgn wei
 mortuf 0
 morta 0
 Rmortum -1
