@@ -4027,8 +4027,8 @@ work with lifelihood?</a></p>
 <p>Load the dataset from <code>.csv</code> file:</p>
 <pre class="r"><code># input data
 df &lt;- read.csv(here::here(&#39;data/fake_sample.csv&#39;))</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-f7caa076983f26bbb268" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-f7caa076983f26bbb268">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[0,0,0,0,0,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"geno","targets":1},{"name":"sex_start","targets":2},{"name":"sex_end","targets":3},{"name":"sex","targets":4},{"name":"mat_start","targets":5},{"name":"mat_end","targets":6},{"name":"clutch_start1","targets":7},{"name":"clutch_end1","targets":8},{"name":"clutch_size1","targets":9},{"name":"clutch_start2","targets":10},{"name":"clutch_end2","targets":11},{"name":"clutch_size2","targets":12},{"name":"mor_start","targets":13},{"name":"mor_end","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-63938fcff5991424a0a7" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-63938fcff5991424a0a7">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[0,0,0,0,0,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"geno","targets":1},{"name":"sex_start","targets":2},{"name":"sex_end","targets":3},{"name":"sex","targets":4},{"name":"mat_start","targets":5},{"name":"mat_end","targets":6},{"name":"clutch_start1","targets":7},{"name":"clutch_end1","targets":8},{"name":"clutch_size1","targets":9},{"name":"clutch_start2","targets":10},{"name":"clutch_end2","targets":11},{"name":"clutch_size2","targets":12},{"name":"mor_start","targets":13},{"name":"mor_end","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>Prepare input parameters for the <code>lifelihood()</code>
 function:</p>
 <pre class="r"><code># name of the columns of the clutchs into a single vector
@@ -4058,10 +4058,11 @@ results &lt;- lifelihood(
   death_start = &quot;mor_start&quot;,
   death_end = &quot;mor_end&quot;,
   extra1 = &quot;geno&quot;,
-  seeds = seeds
+  seeds = seeds,
+  matclutch = FALSE,
+  models = c(&quot;gam&quot;, &quot;lgn&quot;, &quot;wei&quot;)
 )</code></pre>
 <pre><code>## Using default parameter ranges/boundaries</code></pre>
-<pre><code>## [1] &quot;here&quot;</code></pre>
 <pre class="r"><code>summary(results)</code></pre>
 <pre><code>## LIFELIHOODIZATION
 ## 
@@ -4069,21 +4070,21 @@ results &lt;- lifelihood(
 ## [1] 1 2 3 4
 ## 
 ## likelihood:
-## [1] -1620.415
+## [1] -1937.531
 ## 
 ## effects:
 ##            Name     Value1 Value2
-## 1 int_E(tmort)f -6.4486369      0
-## 2     int_morta -0.2744611      0
-## 3  int_E(tmat)f -3.6606293      0
-## 4      int_mata -9.5649910      0
-## 5   int_E(tpon) -4.0509389      0
-## 6     int_ponta  5.4481983      0
-## 7     int_pontn -2.4253961      0
+## 1 int_E(tmort)f -0.5317772      0
+## 2     int_morta -2.2130453      0
+## 3  int_E(tmat)f -3.6741016      0
+## 4      int_mata -6.3462724      0
+## 5   int_E(tpon)  1.5767529      0
+## 6     int_ponta -3.9144522      0
+## 7     int_pontn -2.4247010      0
 ## 
 ## parameter ranges/boundaries:
 ##          Name    Min       Max
-## 1   E(tmort)f  1e+00 301.00000
+## 1   E(tmort)f  1e+00 302.00000
 ## 2       morta  1e-03  20.00000
 ## 3  RE(tmort)m  1e-01   4.00000
 ## 4       mortp  1e-04   1.00000
@@ -4117,29 +4118,29 @@ param_ranges &lt;- data.frame(
           0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
   max = c(301, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
 )</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-00f37951fcd2bfdb6e5b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-00f37951fcd2bfdb6e5b">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-17acc7b64b11f451914a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-17acc7b64b11f451914a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre><code>## LIFELIHOODIZATION
 ## 
 ## seeds:
 ## [1] 1 2 3 4
 ## 
 ## likelihood:
-## [1] -1620.415
+## [1] -1937.531
 ## 
 ## effects:
 ##            Name     Value1 Value2
-## 1 int_E(tmort)f -6.4486369      0
-## 2     int_morta -0.2744611      0
-## 3  int_E(tmat)f -3.6606293      0
-## 4      int_mata -9.5649910      0
-## 5   int_E(tpon) -4.0509389      0
-## 6     int_ponta  5.4481983      0
-## 7     int_pontn -2.4253961      0
+## 1 int_E(tmort)f -0.5317772      0
+## 2     int_morta -2.2130453      0
+## 3  int_E(tmat)f -3.6741016      0
+## 4      int_mata -6.3462724      0
+## 5   int_E(tpon)  1.5767529      0
+## 6     int_ponta -3.9144522      0
+## 7     int_pontn -2.4247010      0
 ## 
 ## parameter ranges/boundaries:
 ##          Name    Min       Max
-## 1   E(tmort)f  1e+00 301.00000
+## 1   E(tmort)f  1e+00 302.00000
 ## 2       morta  1e-03  20.00000
 ## 3  RE(tmort)m  1e-01   4.00000
 ## 4       mortp  1e-04   1.00000
@@ -4168,7 +4169,7 @@ param_ranges &lt;- data.frame(
 <h1>Get specific results</h1>
 <hr />
 <pre class="r"><code>results$effects$Value1</code></pre>
-<pre><code>## [1] -6.4486369 -0.2744611 -3.6606293 -9.5649910 -4.0509389  5.4481983 -2.4253961</code></pre>
+<pre><code>## [1] -0.5317772 -2.2130453 -3.6741016 -6.3462724  1.5767529 -3.9144522 -2.4247010</code></pre>
 </div>
 
 

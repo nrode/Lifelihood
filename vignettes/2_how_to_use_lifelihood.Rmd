@@ -74,7 +74,9 @@ results <- lifelihood(
   death_start = "mor_start",
   death_end = "mor_end",
   extra1 = "geno",
-  seeds = seeds
+  seeds = seeds,
+  matclutch = FALSE,
+  models = c("gam", "lgn", "wei")
 )
 summary(results)
 ```
@@ -109,7 +111,9 @@ results <- lifelihood(
   death_end = "mor_end",
   extra1 = "geno",
   seeds = seeds,
-  param_range_df = param_ranges
+  param_range_df = param_ranges,
+  matclutch = FALSE,
+  models = c("gam", "lgn", "wei")
 )
 summary(results)
 ```

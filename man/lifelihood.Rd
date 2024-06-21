@@ -14,6 +14,7 @@ lifelihood(
   clutchs,
   death_start,
   death_end,
+  models,
   extra1 = NULL,
   extra2 = NULL,
   extra3 = NULL,

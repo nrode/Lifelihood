@@ -63,6 +63,12 @@ lifelihood <- function(
    precision=0.001
 ){
 
+   # ensure `models` has the right format and values
+   valid_models <- c("wei", "gam", "lgn")
+   if (length(models) != 3 || !all(models %in% valid_models)) {
+      stop("'models' must be a vector of length 3 containing only 'wei', 'gam', or 'lgn'")
+   }
+
    # ensure that `matclutch_size` is defined when `matclutch` is `TRUE`
    if (isTRUE(matclutch) & is.null(matclutch_size)){
       stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")

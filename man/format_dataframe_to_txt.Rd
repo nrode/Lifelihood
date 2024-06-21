@@ -18,7 +18,8 @@ format_dataframe_to_txt(
   death_end,
   extra1,
   extra2,
-  extra3
+  extra3,
+  models
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ format_dataframe_to_txt(
 \item{extra2}{Column name of the second column to add in the input data file}
 
 \item{extra3}{Column name of the third column to add in the input data file}
+
+\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn".}
 }
 \description{
 (internal function) Takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
