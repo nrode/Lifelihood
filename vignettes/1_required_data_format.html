@@ -1507,7 +1507,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">What is the required data format?</h1>
 <h4 class="author">Nicolas RODE, Thomas LENORMAND</h4>
-<h4 class="date">17-June-2024</h4>
+<h4 class="date">21-June-2024</h4>
 
 </div>
 
@@ -1532,71 +1532,94 @@ properly.</p>
 <hr />
 <p>But in order for this to work properly, it requires a specific
 format.</p>
-<p>Let’s create a simple dataset with just 7 observations:</p>
+<p>Let’s create a simple dataset with just 7 observations and the
+following columns:</p>
 <ul>
-<li><code>geno</code> is a simple categorical variable</li>
-<li><code>sex</code> is a (pseudo-) boolean of 0 and 1</li>
-<li><code>mat_start</code> and <code>mat_end</code> designate the
-interval where the maturity occured</li>
-<li><code>pon_start1</code> and <code>pon_end1</code> designate the
-interval of the 1st pont</li>
-<li><code>pon_start2</code> and <code>pon_end2</code> designate the
-interval of the 2nd pont</li>
-<li>etc for other potential ponts</li>
-<li><code>mor_start</code> and <code>mor_end</code> designate the
-interval where the death occured</li>
+<li><code>sex</code> Column name containing the sex of the
+observations.</li>
+<li><code>sex_start</code> Column name containing the first date of the
+interval in which the sex was determined.</li>
+<li><code>sex_end</code> Column name containing the second date of the
+interval in which the sex was determined.</li>
+<li><code>maturity_start</code> Column name containing the first date of
+the interval in which the maturity was determined.</li>
+<li><code>maturity_end</code> Column name containing the second date of
+the interval in which the maturity was determined.</li>
+<li><code>clutchs</code> Vector containing the names of the clutch
+columns. The order should be: first clutch first date, first clutch
+second date, first clutch clutch size, second clutch first date, first
+clutch second date, second clutch clutch size, and so on. If the
+observation with the most clutches is, for example, 10, then the vector
+must be of size 10 x 3 = 30 (3 elements per clutch: first date, second
+date and size).</li>
+<li><code>death_start</code> Column name containing the first date of
+the interval in which the death was determined.</li>
+<li><code>death_end</code> Column name containing the second date of the
+interval in which the death was determined.</li>
+<li><code>extra1</code> Column name of the first column to add in the
+input data file</li>
+<li><code>extra2</code> Column name of the second column to add in the
+input data file</li>
+<li><code>extra3</code> Column name of the third column to add in the
+input data file</li>
 </ul>
 <pre class="r"><code>df &lt;- data.frame(
-  geno = c(1, 2, 1, 0, 2, 0, 1),
+  geno = c(1, 3, 1, 0, 2, 0, 1),
   sex = c(0, 0, 0, 0, 0, 0, 0),
+  sex_start = c(1, 3, 2, 10, 3, 4, 5),
+  sex_end = c(2, 4, 3, 11, 4, 5, 6),
   mat_start = c(2, 1, 0, 1, 0, 2, 1),
-  mat_end = c(3, 2, 1000, 2, 1000, 3, 2),
-  pon_start1 = c(3, 2, NA, 2, NA, 3, 2),
-  pon_end1 = c(4, 3, NA, 3, NA, 4, 3),
-  pon_size1 = c(4, 6, NA, 5, NA, 2, 7),
-  pon_start2 = c(5, NA, NA, 5, NA, 4, 3),
-  pon_end2 = c(6, NA, NA, 6, NA, 5, 4),
-  pon_size2 = c(5, NA, NA, 5, NA, 3, 5),
-  pon_start3 = c(7, NA, NA, 6, NA, NA, 5),
-  pon_end3 = c(8, NA, NA, 7, NA, NA, 6),
-  pon_size3 = c(1, NA, NA, 1, NA, NA, 2),
+  mat_end = c(4, 2, 1000, 2, 1000, 3, 2),
+  clutch_start1 = c(3, 2, NA, 2, NA, 3, 2),
+  clutch_end1 = c(4, 3, NA, 3, NA, 4, 3),
+  clutch_size1 = c(4, 6, NA, 5, NA, 2, 30),
+  clutch_start2 = c(5, NA, NA, 5, NA, 4, 3),
+  clutch_end2 = c(6, NA, NA, 6, NA, 5, 4),
+  clutch_size2 = c(5, NA, NA, 7, NA, 10, 5),
+  clutch_start3 = c(7, NA, NA, 6, NA, NA, 5),
+  clutch_end3 = c(8, NA, NA, 7, NA, NA, 6),
+  clutch_size3 = c(1, NA, NA, 1, NA, NA, 2),
   mor_start = c(8, 11, 0, 11, 0, 7, 9),
-  mor_end = c(9, 12, 1, 12, 1, 8, 10)
+  mor_end = c(12, 11, 1, 12, 1, 8, 10)
 )
 kableExtra::kable(df)</code></pre>
 <table style="width:100%;">
 <colgroup>
-<col width="3%" />
 <col width="2%" />
+<col width="2%" />
+<col width="5%" />
+<col width="4%" />
+<col width="5%" />
+<col width="4%" />
+<col width="7%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
 <col width="7%" />
 <col width="5%" />
-<col width="8%" />
-<col width="6%" />
-<col width="7%" />
-<col width="8%" />
-<col width="6%" />
-<col width="7%" />
-<col width="8%" />
-<col width="6%" />
-<col width="7%" />
-<col width="7%" />
-<col width="5%" />
+<col width="4%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="right">geno</th>
 <th align="right">sex</th>
+<th align="right">sex_start</th>
+<th align="right">sex_end</th>
 <th align="right">mat_start</th>
 <th align="right">mat_end</th>
-<th align="right">pon_start1</th>
-<th align="right">pon_end1</th>
-<th align="right">pon_size1</th>
-<th align="right">pon_start2</th>
-<th align="right">pon_end2</th>
-<th align="right">pon_size2</th>
-<th align="right">pon_start3</th>
-<th align="right">pon_end3</th>
-<th align="right">pon_size3</th>
+<th align="right">clutch_start1</th>
+<th align="right">clutch_end1</th>
+<th align="right">clutch_size1</th>
+<th align="right">clutch_start2</th>
+<th align="right">clutch_end2</th>
+<th align="right">clutch_size2</th>
+<th align="right">clutch_start3</th>
+<th align="right">clutch_end3</th>
+<th align="right">clutch_size3</th>
 <th align="right">mor_start</th>
 <th align="right">mor_end</th>
 </tr>
@@ -1605,8 +1628,10 @@ kableExtra::kable(df)</code></pre>
 <tr class="odd">
 <td align="right">1</td>
 <td align="right">0</td>
+<td align="right">1</td>
 <td align="right">2</td>
-<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">4</td>
 <td align="right">3</td>
 <td align="right">4</td>
 <td align="right">4</td>
@@ -1617,11 +1642,13 @@ kableExtra::kable(df)</code></pre>
 <td align="right">8</td>
 <td align="right">1</td>
 <td align="right">8</td>
-<td align="right">9</td>
+<td align="right">12</td>
 </tr>
 <tr class="even">
-<td align="right">2</td>
+<td align="right">3</td>
 <td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
 <td align="right">1</td>
 <td align="right">2</td>
 <td align="right">2</td>
@@ -1634,11 +1661,13 @@ kableExtra::kable(df)</code></pre>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">11</td>
-<td align="right">12</td>
+<td align="right">11</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="right">0</td>
+<td align="right">2</td>
+<td align="right">3</td>
 <td align="right">0</td>
 <td align="right">1000</td>
 <td align="right">NA</td>
@@ -1656,6 +1685,8 @@ kableExtra::kable(df)</code></pre>
 <tr class="even">
 <td align="right">0</td>
 <td align="right">0</td>
+<td align="right">10</td>
+<td align="right">11</td>
 <td align="right">1</td>
 <td align="right">2</td>
 <td align="right">2</td>
@@ -1663,7 +1694,7 @@ kableExtra::kable(df)</code></pre>
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">6</td>
-<td align="right">5</td>
+<td align="right">7</td>
 <td align="right">6</td>
 <td align="right">7</td>
 <td align="right">1</td>
@@ -1673,6 +1704,8 @@ kableExtra::kable(df)</code></pre>
 <tr class="odd">
 <td align="right">2</td>
 <td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
 <td align="right">0</td>
 <td align="right">1000</td>
 <td align="right">NA</td>
@@ -1690,6 +1723,8 @@ kableExtra::kable(df)</code></pre>
 <tr class="even">
 <td align="right">0</td>
 <td align="right">0</td>
+<td align="right">4</td>
+<td align="right">5</td>
 <td align="right">2</td>
 <td align="right">3</td>
 <td align="right">3</td>
@@ -1697,7 +1732,7 @@ kableExtra::kable(df)</code></pre>
 <td align="right">2</td>
 <td align="right">4</td>
 <td align="right">5</td>
-<td align="right">3</td>
+<td align="right">10</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -1707,11 +1742,13 @@ kableExtra::kable(df)</code></pre>
 <tr class="odd">
 <td align="right">1</td>
 <td align="right">0</td>
+<td align="right">5</td>
+<td align="right">6</td>
 <td align="right">1</td>
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">3</td>
-<td align="right">7</td>
+<td align="right">30</td>
 <td align="right">3</td>
 <td align="right">4</td>
 <td align="right">5</td>

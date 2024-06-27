@@ -2,18 +2,21 @@
 % Please edit documentation in R/read_output.R
 \name{read_output_from_file}
 \alias{read_output_from_file}
-\title{Functions used to read the output file and create an object with results}
+\title{(internal function) Read and format the output file of the program}
 \usage{
 read_output_from_file(file_path, group_by_group = FALSE)
 }
 \arguments{
-\item{file_path}{location of the output file from the programme}
+\item{file_path}{Location of the output file from the programme}
 
-\item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
+\item{group_by_group}{Boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
 \value{
-an object of class \code{LifelihoodResults} with all results from the output file
+An object of class \code{LifelihoodResults} with all results from the output file
 }
 \description{
-(internal function) takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}
+(internal function) Takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}
+}
+\details{
+Functions used to read the output file and create an object with results
 }

@@ -1,9 +1,9 @@
 #' Group of internal functions used in the lifelihood programme
 #' 
 #' @name detect_os
-#' @title (internal function) find the operating system of the user
+#' @title (internal function) Find the operating system of the user
 #' @description (internal function) `detect_os()` finds the OS name
-#' @return string of operatin system
+#' @return String of the operatin system
 #' @export
 detect_os <- function() {
    os <- Sys.info()["sysname"]
@@ -17,10 +17,10 @@ detect_os <- function() {
 }
 
 #' @name write_param_range
-#' @title (internal function) write parameter ranges/boundaries to a file
+#' @title (internal function) Write parameter ranges/boundaries to a file
 #' @description (internal function) `write_param_range()` takes a dataframe of parameter ranges/boundaries and write it as .txt file
-#' @param data a dataframe with 3 columns: parameter names, minimum value and maximum value
-#' @param file_name path of where the .txt file will be stored
+#' @param data A dataframe with 3 columns: parameter names, minimum value and maximum value
+#' @param file_name Path of where the .txt file will be stored
 #' @export
 write_param_range <- function(data, file_name = "param_range.txt"){
   write.table(
@@ -32,18 +32,4 @@ write_param_range <- function(data, file_name = "param_range.txt"){
    quote = FALSE
 )
    return(file_name)
-}
-
-#' @name delete_param_range
-#' @title (internal function) delete parameter ranges/boundaries file
-#' @description (internal function) `delete_param_range()` takes a path to the parameter ranges/boundaries file and delete it
-#' @param file_path path of where the .txt file is
-#' @export 
-delete_param_range <- function(file_path){
-   if (file.exists(file_path)){
-      file.remove(file_path)
-   } else {
-      message <- paste("File", file_path, "does not exist")
-      stop(message)
-   }
 }

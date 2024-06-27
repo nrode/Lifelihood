@@ -5,7 +5,21 @@
 \title{Main function of the lifelihood program}
 \usage{
 lifelihood(
-  data_path,
+  df,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  clutchs,
+  death_start,
+  death_end,
+  models,
+  extra1 = NULL,
+  extra2 = NULL,
+  extra3 = NULL,
+  matclutch = FALSE,
+  matclutch_size = NULL,
   param_range_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -14,10 +28,7 @@ lifelihood(
   saveprobevent = 0,
   fitness = 0,
   r = 0,
-  seed1 = 12,
-  seed2 = 13,
-  seed3 = 14,
-  seed4 = 15,
+  seeds = c(12, 13, 14, 15),
   ntr = 2,
   nst = 2,
   To = 50,
@@ -27,9 +38,37 @@ lifelihood(
 )
 }
 \arguments{
-\item{data_path}{path to the input file with data and model}
+\item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
 
-\item{param_range_df}{dataframe with the parameter ranges/boundaries/boundaries}
+\item{sex}{Column name containing the sex of the observations.}
+
+\item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
+
+\item{sex_end}{Column name containing the second date of the interval in which the sex was determined.}
+
+\item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
+
+\item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
+
+\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
+
+\item{death_start}{Column name containing the first date of the interval in which the death was determined.}
+
+\item{death_end}{Column name containing the second date of the interval in which the death was determined.}
+
+\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+
+\item{extra1}{(facultative) Column name of the first column to add in the input data file}
+
+\item{extra2}{(facultative) Column name of the second column to add in the input data file}
+
+\item{extra3}{(facultative) Column name of the third column to add in the input data file}
+
+\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
+
+\item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
+
+\item{param_range_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
 \item{group_by_group}{Option to fit the full factorail model with all the interactions between each of the factors}
 
@@ -45,15 +84,9 @@ lifelihood(
 
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
-\item{seed1}{first seed used so that random values can found again}
+\item{seeds}{Numbers used to reproduce results (same seeds = same results)}
 
-\item{seed2}{second seed used so that random values can found again}
-
-\item{seed3}{third seed used so that random values can found again}
-
-\item{seed4}{fourth seed used so that random values can found again}
-
-\item{ntr}{number of thread for the paralelisation ?}
+\item{ntr}{Number of thread for the paralelisation ?}
 
 \item{nst}{TBD - Check the actual meaning}
 

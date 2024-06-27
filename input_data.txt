@@ -1,8 +1,0 @@
-*******data*********
- 1 sex 0 1000 0 mat 2 3 pon 3 4 4 pon 5 6 5 pon 7 8 1 mor 8 9
- 2 sex 0 1000 0 mat 1 2 pon 2 3 6 mor 11 12
- 1 sex 0 1000 0 mat 0 1000 mor 0 1
- 0 sex 0 1000 0 mat 1 2 pon 2 3 5 pon 5 6 5 pon 6 7 1 mor 11 12
- 2 sex 0 1000 0 mat 0 1000 mor 0 1
- 0 sex 0 1000 0 mat 2 3 pon 3 4 2 pon 4 5 3 pon 5 6 3 mor 7 8
- 1 sex 0 1000 0 mat 1 2 pon 2 3 7 pon 3 4 5 pon 5 6 2 mor 9 10

@@ -2,24 +2,60 @@
 % Please edit documentation in R/write_input.R
 \name{format_dataframe_to_txt}
 \alias{format_dataframe_to_txt}
-\title{create the input data file from a dataframe}
+\title{(internal function) Create the input data file from a dataframe}
 \usage{
-format_dataframe_to_txt(df, extra1 = NULL, extra2 = NULL, extra3 = NULL)
+format_dataframe_to_txt(
+  df,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  matclutch,
+  matclutch_size,
+  clutchs,
+  death_start,
+  death_end,
+  extra1,
+  extra2,
+  extra3,
+  models
+)
 }
 \arguments{
-\item{df}{the dataframe of the input data}
+\item{df}{The dataframe of the input data.}
 
-\item{extra1}{name of the first column to add in the input data file}
+\item{sex}{Column name containing the sex of the observations.}
 
-\item{extra2}{name of the second column to add in the input data file}
+\item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
 
-\item{extra3}{name of the third column to add in the input data file}
+\item{sex_end}{Column name containing the second date of the interval in which the sex was determined.}
 
-\item{output_file}{path used to write the input data file}
+\item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
+
+\item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
+
+\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
+
+\item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
+
+\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
+
+\item{death_start}{Column name containing the first date of the interval in which the death was determined.}
+
+\item{death_end}{Column name containing the second date of the interval in which the death was determined.}
+
+\item{extra1}{Column name of the first column to add in the input data file}
+
+\item{extra2}{Column name of the second column to add in the input data file}
+
+\item{extra3}{Column name of the third column to add in the input data file}
+
+\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 }
 \description{
-takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file
+(internal function) Takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
 }
 \details{
-the number of extra column is \strong{currently limited} to 3 for simplicity, but we definitly should \strong{change} this accept an unlimited number of extra columns
+The number of extra column is \strong{currently limited} to 3 for simplicity, but we definitly should \strong{change} this accept an unlimited number of extra columns
 }

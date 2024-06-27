@@ -1,8 +1,9 @@
 #' Execute compiled files of the lifelihood program
 #' @name execute_bin
+#' @title (internal function) Execution of the compiled files
 #' @description (internal function) Run lifelihood program in console mode
-#' @param infile file with the model and data to be fitted
-#' @param customfile file with the min and max boudaries for each parameter
+#' @param infile File with the model and data to be fitted
+#' @param customfile File with the min and max boudaries for each parameter
 #' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
@@ -10,11 +11,11 @@
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
-#' @param seed1 first seed used so that random values can found again
-#' @param seed2 second seed used so that random values can found again
-#' @param seed3 third seed used so that random values can found again
-#' @param seed4 fourth seed used so that random values can found again
-#' @param ntr number of thread for the paralelisation ?
+#' @param seed1 First seed used so that random values can found again
+#' @param seed2 Second seed used so that random values can found again
+#' @param seed3 Third seed used so that random values can found again
+#' @param seed4 Fourth seed used so that random values can found again
+#' @param ntr Number of thread for the paralelisation ?
 #' @param nst TBD - Check the actual meaning
 #' @param To Initial temperature for the simulated annealing
 #' @param Tf Initial temperature for the simulated annealing
@@ -43,11 +44,11 @@ execute_bin <- function(
    climbrate=1,
    precision=0.001
 ) {
-   
+
    # concatenate the inputs and other parameters
    arg_string <- paste(
-      input_file, custom_file, group_by_group, MCMC, interval, SEcal, saveprobevent, fitness,
-      r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
+      input_file, custom_file, group_by_group, MCMC, interval, SEcal, saveprobevent,
+      fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
    )
 
    # get the path to the compiled program and execute it

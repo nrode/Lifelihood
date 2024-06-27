@@ -7,11 +7,11 @@
 get_ratio_max(lines)
 }
 \arguments{
-\item{lines}{vector of the output file, where each element is a line of the file}
+\item{lines}{Vector of the output file, where each element is a line of the file}
 }
 \value{
-the parsed ratio max
+The parsed ratio max
 }
 \description{
-(internal function) find the ratio max value in the output file of the lifelihood program
+(internal function) Find the ratio max value in the output file of the lifelihood program
 }

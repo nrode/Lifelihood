@@ -2,20 +2,20 @@
 % Please edit documentation in R/parsers.R
 \name{get_seeds}
 \alias{get_seeds}
-\title{(internal function) get the seeds in the output file}
+\title{(internal function) Get the seeds in the output file}
 \usage{
 get_seeds(lines, group_by_group = FALSE)
 }
 \arguments{
-\item{lines}{vector of the output file, where each element is a line of the file}
+\item{lines}{Vector of the output file, where each element is a line of the file}
 
-\item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
+\item{group_by_group}{Boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
 \value{
-the parsed seeds
+A vector of the parsed seeds
 }
 \description{
-(internal function) find the seeds value in the output file of the lifelihood program
+(internal function) Find the seeds value in the output file of the lifelihood program
 }
 \details{
 List of parsing functions use to read the output file of the lifelihood program

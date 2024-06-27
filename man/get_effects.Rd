@@ -2,18 +2,18 @@
 % Please edit documentation in R/parsers.R
 \name{get_effects}
 \alias{get_effects}
-\title{(internal function) get the estimation in the output file}
+\title{(internal function) Get the estimation in the output file}
 \usage{
 get_effects(lines, group_by_group = FALSE)
 }
 \arguments{
-\item{lines}{vector of the output file, where each element is a line of the file}
+\item{lines}{Vector of the output file, where each element is a line of the file}
 
-\item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
+\item{group_by_group}{Boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
 \value{
-the parsed effects estimation
+A dataframe of the parsed effects estimation
 }
 \description{
-(internal function) find the estimated effects in the output file of the lifelihood program
+(internal function) Find the estimated effects in the output file of the lifelihood program
 }

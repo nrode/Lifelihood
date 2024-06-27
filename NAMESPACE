@@ -2,7 +2,6 @@
 
 S3method(summary,LifelihoodResults)
 export("%>%")
-export(delete_param_range)
 export(detect_os)
 export(execute_bin)
 export(format_dataframe_to_txt)

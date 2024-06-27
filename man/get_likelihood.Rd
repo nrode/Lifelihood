@@ -12,7 +12,7 @@ get_likelihood(lines, group_by_group = FALSE)
 \item{group_by_group}{boolean indicating whether the analysis should be made group by group or not (default to false)}
 }
 \value{
-the parsed likelihood
+The parsed likelihood
 }
 \description{
 (internal function) find the likelihood value (optimum found) in the output file of the lifelihood program

@@ -2,25 +2,51 @@
 % Please edit documentation in R/write_input.R
 \name{format_row}
 \alias{format_row}
-\title{format a single row for the input data file}
+\title{(internal function) Format a single row for the input data file}
 \usage{
-format_row(row, extra1, extra2, extra3)
+format_row(
+  row,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  clutchs,
+  death_start,
+  death_end,
+  extra1,
+  extra2,
+  extra3
+)
 }
 \arguments{
-\item{row}{a row of a dataframe object}
+\item{row}{A row of a dataframe object}
 
-\item{extra1}{name of the first column to add in the input data file}
+\item{sex}{Column name containing the sex of the observations.}
 
-\item{extra2}{name of the second column to add in the input data file}
+\item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
 
-\item{extra3}{name of the third column to add in the input data file}
+\item{sex_end}{Column name containing the second date of the interval in which the sex was determined.}
+
+\item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
+
+\item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
+
+\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
+
+\item{death_start}{Column name containing the first date of the interval in which the death was determined.}
+
+\item{death_end}{Column name containing the second date of the interval in which the death was determined.}
+
+\item{extra1}{Column name of the first column to add in the input data file}
+
+\item{extra2}{Column name of the second column to add in the input data file}
+
+\item{extra3}{Column name of the third column to add in the input data file}
 }
 \value{
-a string of the well formated row
+A string of the well formated row
 }
 \description{
-takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file)
-}
-\details{
-Functions used to create input data (.txt) file for the lifelihood program
+(internal function) Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file)
 }

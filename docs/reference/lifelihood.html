@@ -24,8 +24,8 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/how_to_use_lifelihood.html">How to use the lifelihood package</a>
-    <a class="dropdown-item" href="../articles/required_data_format.html">What is the required data format?</a>
+    <a class="dropdown-item" href="../articles/1_required_data_format.html">What is the required data format?</a>
+    <a class="dropdown-item" href="../articles/2_how_to_use_lifelihood.html">How to use the lifelihood package</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -50,7 +50,21 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lifelihood</span><span class="op">(</span></span>
-<span>  <span class="va">data_path</span>,</span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">sex</span>,</span>
+<span>  <span class="va">sex_start</span>,</span>
+<span>  <span class="va">sex_end</span>,</span>
+<span>  <span class="va">maturity_start</span>,</span>
+<span>  <span class="va">maturity_end</span>,</span>
+<span>  <span class="va">clutchs</span>,</span>
+<span>  <span class="va">death_start</span>,</span>
+<span>  <span class="va">death_end</span>,</span>
+<span>  <span class="va">models</span>,</span>
+<span>  extra1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extra2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extra3 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  matclutch_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  param_range_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group_by_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -59,10 +73,7 @@
 <span>  saveprobevent <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  fitness <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  seed1 <span class="op">=</span> <span class="fl">12</span>,</span>
-<span>  seed2 <span class="op">=</span> <span class="fl">13</span>,</span>
-<span>  seed3 <span class="op">=</span> <span class="fl">14</span>,</span>
-<span>  seed4 <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">15</span><span class="op">)</span>,</span>
 <span>  ntr <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  nst <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  To <span class="op">=</span> <span class="fl">50</span>,</span>
@@ -74,12 +85,68 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>data_path</dt>
-<dd><p>path to the input file with data and model</p></dd>
+    <dl><dt>df</dt>
+<dd><p>Dataframe with the data of life history. It should have one row per life history / observation.</p></dd>
+
+
+<dt>sex</dt>
+<dd><p>Column name containing the sex of the observations.</p></dd>
+
+
+<dt>sex_start</dt>
+<dd><p>Column name containing the first date of the interval in which the sex was determined.</p></dd>
+
+
+<dt>sex_end</dt>
+<dd><p>Column name containing the second date of the interval in which the sex was determined.</p></dd>
+
+
+<dt>maturity_start</dt>
+<dd><p>Column name containing the first date of the interval in which the maturity was determined.</p></dd>
+
+
+<dt>maturity_end</dt>
+<dd><p>Column name containing the second date of the interval in which the maturity was determined.</p></dd>
+
+
+<dt>clutchs</dt>
+<dd><p>Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</p></dd>
+
+
+<dt>death_start</dt>
+<dd><p>Column name containing the first date of the interval in which the death was determined.</p></dd>
+
+
+<dt>death_end</dt>
+<dd><p>Column name containing the second date of the interval in which the death was determined.</p></dd>
+
+
+<dt>models</dt>
+<dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.</p></dd>
+
+
+<dt>extra1</dt>
+<dd><p>(facultative) Column name of the first column to add in the input data file</p></dd>
+
+
+<dt>extra2</dt>
+<dd><p>(facultative) Column name of the second column to add in the input data file</p></dd>
+
+
+<dt>extra3</dt>
+<dd><p>(facultative) Column name of the third column to add in the input data file</p></dd>
+
+
+<dt>matclutch</dt>
+<dd><p>Whether the maturity event (designated by <code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not. If <code>TRUE</code>, must specify the <code>matclutch_size</code> argument.</p></dd>
+
+
+<dt>matclutch_size</dt>
+<dd><p>Column name containing the size of the clutch for the maturity event. Only used (and required) if <code>matclutch</code> is <code>TRUE</code>.</p></dd>
 
 
 <dt>param_range_df</dt>
-<dd><p>dataframe with the parameter ranges/boundaries/boundaries</p></dd>
+<dd><p>Dataframe with the parameter ranges/boundaries/boundaries</p></dd>
 
 
 <dt>group_by_group</dt>
@@ -110,24 +177,12 @@
 <dd><p>Reparametrize the model with one parameter as the intrinsic rate of increase</p></dd>
 
 
-<dt>seed1</dt>
-<dd><p>first seed used so that random values can found again</p></dd>
-
-
-<dt>seed2</dt>
-<dd><p>second seed used so that random values can found again</p></dd>
-
-
-<dt>seed3</dt>
-<dd><p>third seed used so that random values can found again</p></dd>
-
-
-<dt>seed4</dt>
-<dd><p>fourth seed used so that random values can found again</p></dd>
+<dt>seeds</dt>
+<dd><p>Numbers used to reproduce results (same seeds = same results)</p></dd>
 
 
 <dt>ntr</dt>
-<dd><p>number of thread for the paralelisation ?</p></dd>
+<dd><p>Number of thread for the paralelisation ?</p></dd>
 
 
 <dt>nst</dt>
