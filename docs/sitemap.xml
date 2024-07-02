@@ -4,10 +4,19 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/1-required-data-format.html</loc>
+  </url>
+  <url>
     <loc>/articles/1_required_data_format.html</loc>
   </url>
   <url>
+    <loc>/articles/2-setting-up-the-configuration-file.html</loc>
+  </url>
+  <url>
     <loc>/articles/2_how_to_use_lifelihood.html</loc>
+  </url>
+  <url>
+    <loc>/articles/3-how-to-use-lifelihood.html</loc>
   </url>
   <url>
     <loc>/articles/how_to_use_lifelihood.html</loc>

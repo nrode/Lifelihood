@@ -12,7 +12,7 @@
 <meta name="author" content="Nicolas RODE, Thomas LENORMAND" />
 
 
-<title>What is the required data format?</title>
+<title>2 - Setting up the configuration file</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1505,9 +1505,9 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">What is the required data format?</h1>
+<h1 class="title toc-ignore">2 - Setting up the configuration file</h1>
 <h4 class="author">Nicolas RODE, Thomas LENORMAND</h4>
-<h4 class="date">21-June-2024</h4>
+<h4 class="date">02-July-2024</h4>
 
 </div>
 
@@ -1516,255 +1516,40 @@ font-size: 0.95em;
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <hr />
-<p>As life history data is by nature heterogeneous between observations
-from the same sample, the format of the data required can be somewhat
-tricky. Under the hood, <code>lifelihood</code> creates a text file
-containing the data (and other parameters), and then use this file for
-the (core) source code. Fortunately, <code>lifelihood</code>
-automatically transform the dataframe into the text file with the right
-format.</p>
-<p>In this vignette, we’ll look at how the dataframe containing your
-data needs to be formatted for the Lifelihood programme to work
-properly.</p>
-</div>
-<div id="data-preparation" class="section level1">
-<h1>Data preparation</h1>
-<hr />
-<p>But in order for this to work properly, it requires a specific
-format.</p>
-<p>Let’s create a simple dataset with just 7 observations and the
-following columns:</p>
-<ul>
-<li><code>sex</code> Column name containing the sex of the
-observations.</li>
-<li><code>sex_start</code> Column name containing the first date of the
-interval in which the sex was determined.</li>
-<li><code>sex_end</code> Column name containing the second date of the
-interval in which the sex was determined.</li>
-<li><code>maturity_start</code> Column name containing the first date of
-the interval in which the maturity was determined.</li>
-<li><code>maturity_end</code> Column name containing the second date of
-the interval in which the maturity was determined.</li>
-<li><code>clutchs</code> Vector containing the names of the clutch
-columns. The order should be: first clutch first date, first clutch
-second date, first clutch clutch size, second clutch first date, first
-clutch second date, second clutch clutch size, and so on. If the
-observation with the most clutches is, for example, 10, then the vector
-must be of size 10 x 3 = 30 (3 elements per clutch: first date, second
-date and size).</li>
-<li><code>death_start</code> Column name containing the first date of
-the interval in which the death was determined.</li>
-<li><code>death_end</code> Column name containing the second date of the
-interval in which the death was determined.</li>
-<li><code>extra1</code> Column name of the first column to add in the
-input data file</li>
-<li><code>extra2</code> Column name of the second column to add in the
-input data file</li>
-<li><code>extra3</code> Column name of the third column to add in the
-input data file</li>
-</ul>
-<pre class="r"><code>df &lt;- data.frame(
-  geno = c(1, 3, 1, 0, 2, 0, 1),
-  sex = c(0, 0, 0, 0, 0, 0, 0),
-  sex_start = c(1, 3, 2, 10, 3, 4, 5),
-  sex_end = c(2, 4, 3, 11, 4, 5, 6),
-  mat_start = c(2, 1, 0, 1, 0, 2, 1),
-  mat_end = c(4, 2, 1000, 2, 1000, 3, 2),
-  clutch_start1 = c(3, 2, NA, 2, NA, 3, 2),
-  clutch_end1 = c(4, 3, NA, 3, NA, 4, 3),
-  clutch_size1 = c(4, 6, NA, 5, NA, 2, 30),
-  clutch_start2 = c(5, NA, NA, 5, NA, 4, 3),
-  clutch_end2 = c(6, NA, NA, 6, NA, 5, 4),
-  clutch_size2 = c(5, NA, NA, 7, NA, 10, 5),
-  clutch_start3 = c(7, NA, NA, 6, NA, NA, 5),
-  clutch_end3 = c(8, NA, NA, 7, NA, NA, 6),
-  clutch_size3 = c(1, NA, NA, 1, NA, NA, 2),
-  mor_start = c(8, 11, 0, 11, 0, 7, 9),
-  mor_end = c(12, 11, 1, 12, 1, 8, 10)
-)
-kableExtra::kable(df)</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="2%" />
-<col width="2%" />
-<col width="5%" />
-<col width="4%" />
-<col width="5%" />
-<col width="4%" />
-<col width="7%" />
-<col width="6%" />
-<col width="7%" />
-<col width="7%" />
-<col width="6%" />
-<col width="7%" />
-<col width="7%" />
-<col width="6%" />
-<col width="7%" />
-<col width="5%" />
-<col width="4%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="right">geno</th>
-<th align="right">sex</th>
-<th align="right">sex_start</th>
-<th align="right">sex_end</th>
-<th align="right">mat_start</th>
-<th align="right">mat_end</th>
-<th align="right">clutch_start1</th>
-<th align="right">clutch_end1</th>
-<th align="right">clutch_size1</th>
-<th align="right">clutch_start2</th>
-<th align="right">clutch_end2</th>
-<th align="right">clutch_size2</th>
-<th align="right">clutch_start3</th>
-<th align="right">clutch_end3</th>
-<th align="right">clutch_size3</th>
-<th align="right">mor_start</th>
-<th align="right">mor_end</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">5</td>
-<td align="right">7</td>
-<td align="right">8</td>
-<td align="right">1</td>
-<td align="right">8</td>
-<td align="right">12</td>
-</tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">6</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">11</td>
-<td align="right">11</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">1000</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">10</td>
-<td align="right">11</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">5</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">7</td>
-<td align="right">6</td>
-<td align="right">7</td>
-<td align="right">1</td>
-<td align="right">11</td>
-<td align="right">12</td>
-</tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">0</td>
-<td align="right">1000</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">10</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">7</td>
-<td align="right">8</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">30</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">5</td>
-<td align="right">6</td>
-<td align="right">2</td>
-<td align="right">9</td>
-<td align="right">10</td>
-</tr>
-</tbody>
-</table>
-<p>As you can see, some observations made more ponts, leading to the
-presence of NULL values.</p>
-<p><em>One</em> row of the dataset should represent the <strong>life
-history</strong> of <em>one</em> observation.</p>
-<p>TODO: finish this vignette</p>
+<p>Since <code>lifelihood</code> allows for a large number of
+combinations on which parameter to estimate for a same dataset, it makes
+it easier to have a separate configuration file to specify what you want
+to fit.</p>
+<pre class="yaml"><code>constants:
+  right_censoring_date: 1000
+  critical_age: 20
+  ratiomax: 10
+estimations:
+  mortality:
+    expected_time_to_death: [0,1,21]
+    survival_shape_parameter: [0,1,21]
+    ratio_expected_time_to_death_male_vs_female: [0,1,21]
+    probability_of_death_before_critical_time: [0,1,21]
+    sex_ratio: [0,1,21]
+  maturity:
+    expected_time_to_maturity: [0,1,21]
+    maturity_shape_parameter: [0,1,21]
+    ratio_expected_time_to_maturity_male_vs_female: [0,1,21]
+  reproduction:
+    expected_time_next_reproduction: [0,1,21]
+    reproduction_shape_parameter: [0,1,21]
+    number_offspring_per_reproduction_or_fitness: [0,1,21]
+    increase_in_death_hazard_following_a_reproduction_event (=tof): [0,1,21]
+    tof_reduction_date: exponential_rate_of_decrease_of_tof_with_time: [0,1,21]
+    increase_in_tof_proportional_to_number_of_offspring:
+    (=tof_number_of_offspring): [0,1,21]
+    linear_decrease_in_hazard_rate_with_time_since_maturity: [0,1,21]
+    (=linear_senescence_of_interval_between_reproduction_events): [0,1,21]
+    quadratic_senescence_of_interval_between_reproduction_events:
+    quadratic_decrease_in_hazard_rate_with_time_since_maturity: [0,1,21]
+    linear_change_in_number_of_offspring_with_time_since_maturity: [0,1,21]
+    quadratic_change_in_number_of_offspring_with_time_since_maturity: [0,1,21]
+    tof_between_previous_reproductive_interval_and_current_number_of_offspring: [0,1,21]</code></pre>
 </div>
 
 
