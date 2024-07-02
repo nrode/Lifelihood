@@ -1517,39 +1517,128 @@ font-size: 0.95em;
 <h1>Introduction</h1>
 <hr />
 <p>Since <code>lifelihood</code> allows for a large number of
-combinations on which parameter to estimate for a same dataset, it makes
-it easier to have a separate configuration file to specify what you want
-to fit.</p>
-<pre class="yaml"><code>constants:
-  right_censoring_date: 1000
-  critical_age: 20
-  ratiomax: 10
-estimations:
-  mortality:
-    expected_time_to_death: [0,1,21]
-    survival_shape_parameter: [0,1,21]
-    ratio_expected_time_to_death_male_vs_female: [0,1,21]
-    probability_of_death_before_critical_time: [0,1,21]
-    sex_ratio: [0,1,21]
-  maturity:
-    expected_time_to_maturity: [0,1,21]
-    maturity_shape_parameter: [0,1,21]
-    ratio_expected_time_to_maturity_male_vs_female: [0,1,21]
-  reproduction:
-    expected_time_next_reproduction: [0,1,21]
-    reproduction_shape_parameter: [0,1,21]
-    number_offspring_per_reproduction_or_fitness: [0,1,21]
-    increase_in_death_hazard_following_a_reproduction_event (=tof): [0,1,21]
-    tof_reduction_date: exponential_rate_of_decrease_of_tof_with_time: [0,1,21]
-    increase_in_tof_proportional_to_number_of_offspring:
-    (=tof_number_of_offspring): [0,1,21]
-    linear_decrease_in_hazard_rate_with_time_since_maturity: [0,1,21]
-    (=linear_senescence_of_interval_between_reproduction_events): [0,1,21]
-    quadratic_senescence_of_interval_between_reproduction_events:
-    quadratic_decrease_in_hazard_rate_with_time_since_maturity: [0,1,21]
-    linear_change_in_number_of_offspring_with_time_since_maturity: [0,1,21]
-    quadratic_change_in_number_of_offspring_with_time_since_maturity: [0,1,21]
-    tof_between_previous_reproductive_interval_and_current_number_of_offspring: [0,1,21]</code></pre>
+combinations on which parameters to estimate for a given dataset, it
+makes it easier to have a separate <strong>configuration file</strong>
+to specify what you want to fit. Under the hood, the program will use
+this file to only estimate what you have specified and returns the
+estimations.</p>
+<p>The needed configuration file must be in the <code>YAML</code>
+format, a convenient kind of file that is both easy to
+<strong>read</strong> (for humans) and to <strong>parse</strong> (for
+the program). It relies on <strong>indentation</strong> to represent
+structure. Learn more about <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>.</p>
+</div>
+<div id="parameters" class="section level1">
+<h1>Parameters</h1>
+<hr />
+<p>There are 2 main sections in the required <code>YAML</code>
+configuration file:</p>
+<ul>
+<li>constants: some fixed parameters, set by design</li>
+<li>estimations:
+<ul>
+<li>mortality: parameters related to mortality</li>
+<li>maturity: parameters related to maturity</li>
+<li>reproduction: parameters related to reproduction</li>
+</ul></li>
+</ul>
+<div id="constants" class="section level3">
+<h3>Constants</h3>
+<ul>
+<li><p><code>right_censoring_date</code> (integer): time point at which
+a subject’s data is censored. This means that for subjects who do not
+experience the event of interest (e.g., death, failure) by this date,
+their data is considered censored. In practice, choose a value much
+larger than the maximum longevity seen in the data.</p></li>
+<li><p><code>critical_age</code> (integer): critical age below which
+life histories are not followed individually.</p></li>
+<li><p><code>ratiomax</code> (integer): maximum ratio between number of
+offspring of last and first reproduction events. Cannot be greater than
+ratiomax.</p></li>
+</ul>
+</div>
+<div id="estimations" class="section level3">
+<h3>Estimations</h3>
+<div id="possible-values" class="section level4">
+<h4>Possible values</h4>
+<p>Assuming you have 2 covariables in your dataset (named
+<code>covar1</code> and <code>covar2</code>), for each of the estimation
+parameters, the following values are possible:</p>
+<ul>
+<li><code>not_fitted</code>: do not estimate this parameter.</li>
+<li><code>1</code>: only fit the intercept.</li>
+<li><code>1 + covar1</code>: fit the intercept and the parameter of
+<code>covar1</code>.</li>
+<li><code>1 + covar1 + covar2</code>: fit the intercept, the parameter
+of <code>covar1</code> and the parameter of <code>covar1</code>.</li>
+<li><code>1 + covar1 + covar2 + covar1*covar2</code>: fit the intercept,
+the parameter of <code>covar1</code>, the parameter of
+<code>covar1</code> and the interaction between <code>covar1</code> and
+<code>covar2</code>.</li>
+</ul>
+<p><em>Note: <code>covar1</code> and <code>covar2</code> are arbitrary
+names. The only rule is that they should be the name of one of your
+columns in your dataset.</em></p>
+<p><em>Note 2: interaction effect, noted with <code>*</code> can also be
+written with the <code>:</code> symbol.</em></p>
+<p><br></p>
+</div>
+<div id="mortality" class="section level4">
+<h4>Mortality</h4>
+<ul>
+<li><code>expt_death</code>: Expected time to death</li>
+<li><code>survival_shape</code>: Survival shape parameter</li>
+<li><code>ratio_expt_death</code>: Ratio between expected time to death
+for male vs expected time to death for female</li>
+<li><code>prob_death</code>: Probability of death before critical
+time</li>
+<li><code>sex_ratio</code>: Sex ratio</li>
+</ul>
+<p><br></p>
+</div>
+<div id="maturity" class="section level4">
+<h4>Maturity</h4>
+<ul>
+<li><code>expt_maturity</code>: Expected time to maturity</li>
+<li><code>maturity_shape</code>: Maturity shape parameter</li>
+<li><code>ratio_expt_maturity</code>: Ratio between expected time to
+maturity for male and expected time to maturity for female</li>
+</ul>
+<p><br></p>
+</div>
+<div id="reproduction" class="section level4">
+<h4>Reproduction</h4>
+<ul>
+<li><code>expt_reproduction</code>: Expected time before next
+reproduction</li>
+<li><code>reproduction_shape</code>: Reproduction shape parameter</li>
+<li><code>n_offspring</code>: Number of offsprings per reproduction
+event or fitness</li>
+<li><code>increase_death_hazard</code>: Increase in death hazard
+following a reproduction event</li>
+<li><code>tof_reduction_date</code>: Trade-off of reduction date</li>
+<li><code>increase_in_tof_proportional_to_number_of_offspring</code>:
+Increase in trade-off proportional to the number of offspring</li>
+<li><code>lin_decrease_hazard</code>: Linear decrease in hazard rate
+with time since maturity</li>
+<li><code>quad_senescence_of_interval_between_reproduction_events</code>:
+Quadratic senescence of interval between reproduction events.</li>
+<li><code>quad_decrease_hazard</code>: Quadratic decrease in hazard rate
+with time since maturity.</li>
+<li><code>lin_change_n_offspring</code>: Linear change in number of
+offspring with time since maturity</li>
+<li><code>quad_change_n_offspring</code>: Quadratic change in number of
+offsprings with time since maturity</li>
+<li><code>tof_n_offspring</code>: Trade-off between previous
+reproductive interval and current number of offspring</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="example" class="section level1">
+<h1>Example</h1>
+<hr />
+<pre class="yaml"><code>empty yaml</code></pre>
 </div>
 
 

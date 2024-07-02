@@ -21,37 +21,86 @@ editor_options:
 
 Since `lifelihood` allows for a large number of combinations on which parameters to estimate for a given dataset, it makes it easier to have a separate **configuration file** to specify what you want to fit. Under the hood, the program will use this file to only estimate what you have specified and returns the estimations.
 
-The needed configuration file must be in the `yaml` format, a convenient kind of file that is both easy to **read** (for humans) and to **parse** (for the program). It relies on **indentation** to represent structure.
+The needed configuration file must be in the `YAML` format, a convenient kind of file that is both easy to **read** (for humans) and to **parse** (for the program). It relies on **indentation** to represent structure. Learn more about [YAML](https://en.wikipedia.org/wiki/YAML).
+
+
+# Parameters
+***
+
+There are 2 main sections in the required `YAML` configuration file:
+
+- constants: some fixed parameters, set by design
+- estimations:
+  - mortality: parameters related to mortality
+  - maturity: parameters related to maturity
+  - reproduction: parameters related to reproduction
+
+### Constants
+
+- `right_censoring_date` (integer): time point at which a subject's data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data.
+
+- `critical_age` (integer): critical age below which life histories are not followed individually.
+
+- `ratiomax` (integer): maximum ratio between number of offspring of last and first reproduction events. Cannot be greater than ratiomax.
+
+
+### Estimations
+
+#### Possible values
+
+Assuming you have 2 covariables in your dataset (named `covar1` and `covar2`), for each of the estimation parameters, the following values are possible:
+
+- `not_fitted`: do not estimate this parameter.
+- `1`: only fit the intercept.
+- `1 + covar1`: fit the intercept and the parameter of `covar1`.
+- `1 + covar1 + covar2`: fit the intercept, the parameter of `covar1` and the parameter of `covar1`.
+- `1 + covar1 + covar2 + covar1*covar2`: fit the intercept, the parameter of `covar1`, the parameter of `covar1` and the interaction between `covar1` and `covar2`.
+
+_Note: `covar1` and `covar2` are arbitrary names. The only rule is that they should be the name of one of your columns in your dataset._
+
+_Note 2: interaction effect, noted with `*` can also be written with the `:` symbol._
+
+<br>
+
+#### Mortality
+
+- `expt_death`: Expected time to death
+- `survival_shape`: Survival shape parameter
+- `ratio_expt_death`: Ratio between expected time to death for male vs expected time to death for female
+- `prob_death`: Probability of death before critical time
+- `sex_ratio`: Sex ratio
+
+<br>
+
+#### Maturity
+
+- `expt_maturity`: Expected time to maturity
+- `maturity_shape`: Maturity shape parameter
+- `ratio_expt_maturity`: Ratio between expected time to maturity for male and expected time to maturity for female
+
+<br>
+
+#### Reproduction
+
+- `expt_reproduction`: Expected time before next reproduction
+- `reproduction_shape`: Reproduction shape parameter
+- `n_offspring`: Number of offsprings per reproduction event or fitness
+- `increase_death_hazard`: Increase in death hazard following a reproduction event
+- `tof_reduction_date`: Trade-off of reduction date
+- `increase_in_tof_proportional_to_number_of_offspring`: Increase in trade-off proportional to the number of offspring
+- `lin_decrease_hazard`: Linear decrease in hazard rate with time since maturity
+- `quad_senescence_of_interval_between_reproduction_events`: Quadratic senescence of interval between reproduction events
+- `quad_decrease_hazard`: Quadratic decrease in hazard rate with time since maturity
+- `lin_change_n_offspring`: Linear change in number of offspring with time since maturity
+- `quad_change_n_offspring`: Quadratic change in number of offsprings with time since maturity
+- `tof_n_offspring`: Trade-off between previous reproductive interval and current number of offspring
+
+
+
+
+# Example
+***
 
 ```yaml
-constants:
-  right_censoring_date: 1000
-  critical_age: 20
-  ratiomax: 10
-estimations:
-  mortality:
-    expected_time_to_death: [0,1,21]
-    survival_shape_parameter: [0,1,21]
-    ratio_expected_time_to_death_male_vs_female: [0,1,21]
-    probability_of_death_before_critical_time: [0,1,21]
-    sex_ratio: [0,1,21]
-  maturity:
-    expected_time_to_maturity: [0,1,21]
-    maturity_shape_parameter: [0,1,21]
-    ratio_expected_time_to_maturity_male_vs_female: [0,1,21]
-  reproduction:
-    expected_time_next_reproduction: [0,1,21]
-    reproduction_shape_parameter: [0,1,21]
-    number_offspring_per_reproduction_or_fitness: [0,1,21]
-    increase_in_death_hazard_following_a_reproduction_event (=tof): [0,1,21]
-    tof_reduction_date: exponential_rate_of_decrease_of_tof_with_time: [0,1,21]
-    increase_in_tof_proportional_to_number_of_offspring:
-    (=tof_number_of_offspring): [0,1,21]
-    linear_decrease_in_hazard_rate_with_time_since_maturity: [0,1,21]
-    (=linear_senescence_of_interval_between_reproduction_events): [0,1,21]
-    quadratic_senescence_of_interval_between_reproduction_events:
-    quadratic_decrease_in_hazard_rate_with_time_since_maturity: [0,1,21]
-    linear_change_in_number_of_offspring_with_time_since_maturity: [0,1,21]
-    quadratic_change_in_number_of_offspring_with_time_since_maturity: [0,1,21]
-    tof_between_previous_reproductive_interval_and_current_number_of_offspring: [0,1,21]
+empty yaml
 ```
