@@ -10,9 +10,7 @@
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param extra1 Column name of the first column to add in the input data file
-#' @param extra2 Column name of the second column to add in the input data file
-#' @param extra3 Column name of the third column to add in the input data file
+#' @param covariates Vector containing the names of the covariates.
 #' @return A string of the well formated row
 #' @export
 format_row <- function(
@@ -25,37 +23,28 @@ format_row <- function(
    clutchs,
    death_start,
    death_end,
-   extra1,
-   extra2,
-   extra3
+   covariates
 ){
 
-   # add variables from extra column
-   extra_columns = ""
-   for (extra in c(extra1, extra2, extra3)) {
-      extra_val <- ifelse(is.null(extra), "", row[extra])
-      extra_columns <- paste(extra_columns, extra_val)
+   # add variables from covariates column
+   cov_columns = ""
+   for (cov in covariates) {
+      cov_columns <- paste(cov_columns, row[cov])
    }
 
    # add the sex col and maturity event
-   sex_value <- row[sex]
-   sex_start_value <- row[sex_start]
-   sex_end_value <- row[sex_end]
-   mat_start_value <- row[maturity_start]
-   mat_end_value <- row[maturity_end]
    formatted_row <- paste(
       extra_columns,
       "sex",
-      sex_start_value,
-      sex_end_value,
-      sex_value,
+      row[sex_start],
+      row[sex_end],
+      row[sex],
       "mat",
-      mat_start_value,
-      mat_end_value
+      row[maturity_start],
+      row[maturity_end]
    )
 
    # extract clutch columns dynamically
-   clutch_cols <- names(row)[grep("pon_", names(row))]
    clutch_cols <- clutchs
    for (i in seq(1, length(clutch_cols), by = 3)) {
       clutch_start <- gsub("[[:space:]]", "", row[[clutch_cols[i]]])
@@ -92,9 +81,7 @@ format_row <- function(
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param extra1 Column name of the first column to add in the input data file
-#' @param extra2 Column name of the second column to add in the input data file
-#' @param extra3 Column name of the third column to add in the input data file
+#' @param covariates Vector containing the names of the covariates.
 #' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @details The number of extra column is **currently limited** to 3 for simplicity, but we definitly should **change** this accept an unlimited number of extra columns
 #' @return NULL
@@ -111,14 +98,12 @@ format_dataframe_to_txt <- function(
    clutchs,
    death_start,
    death_end,
-   extra1,
-   extra2,
-   extra3,
+   covariates,
    models
 ){
 
    # create vector with all column names
-   all_column_names <- c(sex, sex_start, sex_end, maturity_start, maturity_end, death_start, death_end, clutchs)
+   all_column_names <- c(sex, sex_start, sex_end, covariates, maturity_start, maturity_end, death_start, death_end, clutchs)
 
    # test the presence of the columns in the dataframe
    for (column_name in all_column_names){
