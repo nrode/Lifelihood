@@ -34,7 +34,7 @@ get_seeds <- function(lines, group_by_group=FALSE){
 
       # ensure that the number of groups is an integer
       if (n_groups != round(n_groups)){
-         message(glue::glue("Number of groups seems weird: ", n_groups))
+         message(paste("Number of groups seems weird:", n_groups))
       }
 
       # reshape the seeds into a matrix

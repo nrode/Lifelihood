@@ -26,15 +26,15 @@ format_row <- function(
    covariates
 ){
 
-   # add variables from covariates column
-   cov_columns = ""
+   # add variables from covariate columns
+   cov_values = ""
    for (cov in covariates) {
-      cov_columns <- paste(cov_columns, row[cov])
+      cov_values <- paste(cov_values, row[cov])
    }
 
    # add the sex col and maturity event
    formatted_row <- paste(
-      extra_columns,
+      cov_values,
       "sex",
       row[sex_start],
       row[sex_end],
@@ -83,7 +83,7 @@ format_row <- function(
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
 #' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
-#' @details The number of extra column is **currently limited** to 3 for simplicity, but we definitly should **change** this accept an unlimited number of extra columns
+#' @param path_config Path to the configuration file (YAML).
 #' @return NULL
 #' @export
 format_dataframe_to_txt <- function(
@@ -99,7 +99,8 @@ format_dataframe_to_txt <- function(
    death_start,
    death_end,
    covariates,
-   models
+   models,
+   path_config
 ){
 
    # create vector with all column names
@@ -129,7 +130,7 @@ format_dataframe_to_txt <- function(
       df, 1,
       function(row) format_row(
          row, sex, sex_start, sex_end, maturity_start, maturity_end,
-         clutchs, death_start, death_end, extra1, extra2, extra3
+         clutchs, death_start, death_end, covariates
       )
    )
 
@@ -138,6 +139,7 @@ format_dataframe_to_txt <- function(
    formatted_rows <- c(header_line, formatted_rows)
    
    # add model info (DEFAULT ABITRARY VALUES)
+   config_file_info <- format_config(path_config = path_config, covariates = covariates)
    model_info <- c(
       "****modele******",
       paste(models, collapse = " "),
@@ -165,14 +167,15 @@ format_dataframe_to_txt <- function(
 
    # add data structure info
    matclutch <- ifelse(matclutch, "true", "false")
-   if (is.null(extra1)){n_cat_extra1 <- NULL} else {n_cat_extra1 <- nrow(unique(df[extra1]))}
-   if (is.null(extra2)){n_cat_extra2 <- NULL} else {n_cat_extra2 <- nrow(unique(df[extra2]))}
-   if (is.null(extra3)){n_cat_extra3 <- NULL} else {n_cat_extra3 <- nrow(unique(df[extra3]))}
+   n_cat_covariates <- c()
+   for (cov in covariates){
+      n_cat_covariates <- c(nrow(unique(df[cov])))
+   }
    data_struct_info <- c(
       "*******data struct****",
       paste("matclutch", matclutch),
-      paste(c(extra1, extra2, extra3), collapse = " "),
-      paste(c(n_cat_extra1, n_cat_extra2, n_cat_extra3), collapse = " ")
+      paste(covariates, collapse = " "),
+      paste(n_cat_covariates, collapse = " ")
    )
    formatted_rows <- c(data_struct_info, formatted_rows)
 

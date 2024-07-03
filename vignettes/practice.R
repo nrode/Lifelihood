@@ -31,10 +31,10 @@ results <- lifelihood(
    clutchs = clutchs,
    death_start = "mor_start",
    death_end = "mor_end",
-   extra1 = "geno",
+   covariates = c("geno"),
    matclutch = FALSE,
    param_range_df = param_ranges,
    seeds = c(1, 2, 3, 4),
    models = c("gam", "lgn", "wei")
 )
-#summary(results)
+summary(results)
