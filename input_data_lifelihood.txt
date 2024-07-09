@@ -1,7 +1,7 @@
 *******data struct****
 matclutch false
 geno
-1
+2
 ****modele******
 gam lgn wei
 mortuf 0
@@ -26,7 +26,7 @@ to(pupn) -1
 *******data*********
 0 sex 0 1000 0 mat 0 1000 mor 0 1
 0 sex 0 1000 0 mat 2 3 pon 4 3 4 pon 2 4 5 mor 9 10
-0 sex 0 1000 0 mat 3 4 pon 2 4 5 mor 5 6
+1 sex 0 1000 0 mat 3 4 pon 2 4 5 mor 5 6
 0 sex 0 1000 0 mat 0 1000 mor 0 1
-0 sex 0 1000 0 mat 1 2 pon 2 2 3 pon 5 3 4 mor 11 12
+1 sex 0 1000 0 mat 1 2 pon 2 2 3 pon 5 3 4 mor 11 12
 0 sex 0 1000 0 mat 0 1000 mor 0 1

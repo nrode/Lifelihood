@@ -1617,14 +1617,14 @@ event or fitness</li>
 <li><code>increase_death_hazard</code>: Increase in death hazard
 following a reproduction event</li>
 <li><code>tof_reduction_date</code>: Trade-off of reduction date</li>
-<li><code>increase_in_tof_proportional_to_number_of_offspring</code>:
-Increase in trade-off proportional to the number of offspring</li>
+<li><code>increase_tof_n_offspring</code>: Increase in trade-off
+proportional to the number of offspring</li>
 <li><code>lin_decrease_hazard</code>: Linear decrease in hazard rate
 with time since maturity</li>
-<li><code>quad_senescence_of_interval_between_reproduction_events</code>:
-Quadratic senescence of interval between reproduction events.</li>
+<li><code>quad_senescence</code>: Quadratic senescence of interval
+between reproduction events</li>
 <li><code>quad_decrease_hazard</code>: Quadratic decrease in hazard rate
-with time since maturity.</li>
+with time since maturity</li>
 <li><code>lin_change_n_offspring</code>: Linear change in number of
 offspring with time since maturity</li>
 <li><code>quad_change_n_offspring</code>: Quadratic change in number of
@@ -1638,7 +1638,34 @@ reproductive interval and current number of offspring</li>
 <div id="example" class="section level1">
 <h1>Example</h1>
 <hr />
-<pre class="yaml"><code>empty yaml</code></pre>
+<pre class="yaml"><code>constants:
+  right_censoring_date: 1000
+  critical_age: 20
+  ratiomax: 10
+estimations:
+  mortality:
+    expt_death: not_fitted
+    survival_shape: not_fitted
+    ratio_expt_death: not_fitted
+    prob_death: not_fitted
+    sex_ratio: not_fitted
+  maturity:
+    expt_maturity: not_fitted
+    maturity_shape: not_fitted
+    ratio_expt_maturity: not_fitted
+  reproduction:
+    expt_reproduction: not_fitted
+    reproduction_shape: not_fitted
+    n_offspring: not_fitted
+    increase_death_hazard: not_fitted
+    tof_reduction_date: not_fitted
+    increase_tof_n_offspring: not_fitted
+    lin_decrease_hazard: not_fitted
+    quad_senescence: not_fitted
+    quad_decrease_hazard: not_fitted
+    lin_change_n_offspring: not_fitted
+    quad_change_n_offspring: not_fitted
+    tof_n_offspring: not_fitted</code></pre>
 </div>
 
 
