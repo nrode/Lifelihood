@@ -1,6 +1,7 @@
 #' Main function of the lifelihood program
 #' @name lifelihood
 #' @param df Dataframe with the data of life history. It should have one row per life history / observation.
+#' @param path_config Path to the configuration file (YAML).
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
 #' @param sex_end Column name containing the second date of the interval in which the sex was determined.
@@ -17,7 +18,7 @@
 #' @param group_by_group Option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
-#' @param SEcal Compute the standard error of eahc parameter using the Hessian matrix
+#' @param SEcal Compute the standard error of each parameter using the Hessian matrix
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
@@ -31,6 +32,7 @@
 #' @export
 lifelihood <- function(
    df,
+   path_config,
    sex,
    sex_start,
    sex_end,
@@ -105,7 +107,8 @@ lifelihood <- function(
       death_end = death_end,
       covariates = covariates,
       matclutch = matclutch,
-      models = models
+      models = models,
+      path_config = path_config
    )
    data_path <- here::here(path_to_txt)
 

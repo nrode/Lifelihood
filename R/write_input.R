@@ -138,30 +138,12 @@ format_dataframe_to_txt <- function(
    header_line <- "*******data*********"
    formatted_rows <- c(header_line, formatted_rows)
    
-   # add model info (DEFAULT ABITRARY VALUES)
+   # add model info
    config_file_info <- format_config(path_config = path_config, covariates = covariates)
    model_info <- c(
       "****modele******",
       paste(models, collapse = " "),
-      "mortuf 0",
-      "morta 0",
-      "Rmortum -1",
-      "mortp -1",
-      "propmal -1",
-      "matuf 0",
-      "mata 0",
-      "Rmatum -1",
-      "pontu 0",
-      "ponta 0",
-      "(W)pontn 0",
-      "to(ps)int -1",
-      "to(ps)am -1",
-      "to(ps)tp -1",
-      "sen(pu)t -1",
-      "sen(pu)t2 -1",
-      "sen(pn)t -1",
-      "sen(pn)t2 -1",
-      "to(pupn) -1"
+      config_file_info
    )
    formatted_rows <- c(model_info, formatted_rows)
 
@@ -169,7 +151,7 @@ format_dataframe_to_txt <- function(
    matclutch <- ifelse(matclutch, "true", "false")
    n_cat_covariates <- c()
    for (cov in covariates){
-      n_cat_covariates <- c(nrow(unique(df[cov])))
+      n_cat_covariates <- c(n_cat_covariates, nrow(unique(df[cov])))
    }
    data_struct_info <- c(
       "*******data struct****",
@@ -183,5 +165,6 @@ format_dataframe_to_txt <- function(
    path_to_data <- "input_data_lifelihood.txt"
    writeLines(formatted_rows, con = path_to_data)
 
+   print("Input written.")
    return(path_to_data)
 }

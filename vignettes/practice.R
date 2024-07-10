@@ -23,6 +23,7 @@ param_ranges <- data.frame(
 
 results <- lifelihood(
    df = df,
+   path_config = "config.yaml",
    sex = "sex",
    sex_start = "sex_start",
    sex_end = "sex_end",
@@ -31,7 +32,7 @@ results <- lifelihood(
    clutchs = clutchs,
    death_start = "mor_start",
    death_end = "mor_end",
-   covariates = c("geno"),
+   covariates = c("geno", "type"),
    matclutch = FALSE,
    param_range_df = param_ranges,
    seeds = c(1, 2, 3, 4),

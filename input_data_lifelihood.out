@@ -2,15 +2,56 @@
 
 datafile= /Users/josephbarbier/Desktop/Lifelihood/input_data_lifelihood.txt
 seed1= 1 seed2= 2 seed3= 3 seed4= 4
-#parameters= 7
-Likelihood_max= -1937.530791
-int_E(tmort)f -0.53177716 0.00000000
-int_morta -2.21304532 0.00000000
-int_E(tmat)f -3.67410161 0.00000000
-int_mata -6.34627243 0.00000000
-int_E(tpon) 1.57675288 0.00000000
-int_ponta -3.91445219 0.00000000
-int_pontn -2.42470103 0.00000000
+#parameters= 48
+Likelihood_max= -249.155632
+int_E(tmort)f -6.32938002 0.00000000
+eff_E(tmort)f_geno1 0.97071989 0.00000000
+int_morta -2.91895902 0.00000000
+eff_morta_geno1 -0.90331577 0.00000000
+eff_morta_type1 -0.62569002 0.00000000
+eff_morta_type2 1.69984340 0.00000000
+eff_morta_type1:geno1 0.14597372 0.00000000
+eff_morta_type2:geno1 0.02656990 0.00000000
+int_RE(tmort)m -0.52993259 0.00000000
+eff_RE(tmort)m_geno1 0.44813735 0.00000000
+int_mortp -6.13133789 0.00000000
+eff_mortp_geno1 0.55936151 0.00000000
+int_E(tmat)f -2.59068937 0.00000000
+eff_E(tmat)f_geno1 -1.07787270 0.00000000
+eff_E(tmat)f_type1 -1.25005911 0.00000000
+eff_E(tmat)f_type2 -1.60921926 0.00000000
+int_mata -5.93635716 0.00000000
+eff_mata_geno1 -2.01047326 0.00000000
+int_RE(tmat)m -0.40028522 0.00000000
+eff_RE(tmat)m_geno1 -0.33017100 0.00000000
+eff_RE(tmat)m_type1 -1.10757815 0.00000000
+eff_RE(tmat)m_type2 -0.45440082 0.00000000
+int_E(tpon) -3.54966893 0.00000000
+eff_E(tpon)_geno1 -0.29596424 0.00000000
+int_pontn -2.84713492 0.00000000
+eff_pontn_geno1 -0.24121161 0.00000000
+int_to(ps)int -0.11823133 0.00000000
+eff_to(ps)int_geno1 0.24367955 0.00000000
+eff_to(ps)int_type1 0.84250607 0.00000000
+eff_to(ps)int_type2 0.13179372 0.00000000
+eff_to(ps)int_type1:geno1 1.01935108 0.00000000
+eff_to(ps)int_type2:geno1 0.00324107 0.00000000
+int_to(ps)am -1.18590191 0.00000000
+eff_to(ps)am_geno1 -0.88867951 0.00000000
+int_to(ps)tp 0.93376566 0.00000000
+eff_to(ps)tp_geno1 0.40524418 0.00000000
+int_sen(pu)t 0.29108481 0.00000000
+eff_sen(pu)t_geno1 0.05440281 0.00000000
+eff_sen(pu)t_type1 -0.30369396 0.00000000
+eff_sen(pu)t_type2 0.97727339 0.00000000
+eff_sen(pu)t_type1:geno1 0.80709428 0.00000000
+eff_sen(pu)t_type2:geno1 0.60594325 0.00000000
+int_sen(pu)t2 0.32303744 0.00000000
+eff_sen(pu)t2_geno1 -0.49538226 0.00000000
+int_sen(pn)t 0.00856835 0.00000000
+eff_sen(pn)t_geno1 -0.32001217 0.00000000
+int_sen(pn)t2 -0.38449802 0.00000000
+eff_sen(pn)t2_geno1 0.46107539 0.00000000
 
 
 Parameter_Range_Table

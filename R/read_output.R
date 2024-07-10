@@ -35,5 +35,6 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results$ratiomax <- ratiomax
 
   class(results) <- "LifelihoodResults"
+  print("Output read.")
   return(results)
 }
