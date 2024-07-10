@@ -46,11 +46,14 @@ format_config <- function(path_config, covariates){
 
 
 #' @name R_to_lifelihood
+#' @description (internal function) Function which transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, `"geno + type"` will become `1 2` if `"geno"` is the first element of `covariables` and `"type"` is the second. This function is used to create the model part of the input file.
+#' @param R_format String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.
+#' @param covariates Vector containing the names of covariates.
 #' @export
 R_to_lifelihood <- function(R_format, covariates) {
+   
    # ensure input is a string
    R_format <- as.character(R_format)
-   
 
    if (R_format == "not_fitted") {
       return("-1")

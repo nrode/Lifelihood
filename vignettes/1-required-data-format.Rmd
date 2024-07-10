@@ -26,8 +26,6 @@ In this vignette, we'll look at how the dataframe containing your data needs to 
 # Data preparation
 ***
 
-But in order for this to work properly, it requires a specific format.
-
 Let's create a simple dataset with just 7 observations and the following columns:
 
 - `sex` Column name containing the sex of the observations.
@@ -72,4 +70,4 @@ As you can see, some observations made more ponts, leading to the presence of NU
 
 *One* row of the dataset should represent the **life history** of *one* observation.
 
-TODO: finish this vignette
+Once our dataframe has the right format, we now have to [create a configuration file](2-setting-up-the-configuration-file.html).

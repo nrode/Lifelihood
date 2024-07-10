@@ -6,6 +6,7 @@
 \usage{
 lifelihood(
   df,
+  path_config,
   sex,
   sex_start,
   sex_end,
@@ -15,9 +16,7 @@ lifelihood(
   death_start,
   death_end,
   models,
-  extra1 = NULL,
-  extra2 = NULL,
-  extra3 = NULL,
+  covariates,
   matclutch = FALSE,
   matclutch_size = NULL,
   param_range_df = NULL,
@@ -40,6 +39,8 @@ lifelihood(
 \arguments{
 \item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
 
+\item{path_config}{Path to the configuration file (YAML).}
+
 \item{sex}{Column name containing the sex of the observations.}
 
 \item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
@@ -56,13 +57,9 @@ lifelihood(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
-\item{extra1}{(facultative) Column name of the first column to add in the input data file}
-
-\item{extra2}{(facultative) Column name of the second column to add in the input data file}
-
-\item{extra3}{(facultative) Column name of the third column to add in the input data file}
+\item{covariates}{Vector containing the names of the covariates.}
 
 \item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
 
@@ -76,7 +73,7 @@ lifelihood(
 
 \item{interval}{TBD - Check the actual meaning}
 
-\item{SEcal}{Compute the standard error of eahc parameter using the Hessian matrix}
+\item{SEcal}{Compute the standard error of each parameter using the Hessian matrix}
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 

@@ -16,6 +16,11 @@ editor_options:
 
 <br>
 
+If you haven't already check it, have a look at:
+
+- [what is the required data format to work with lifelihood?](1-required-data-format.html)
+- [setting up the configuration file](2-setting-up-the-configuration-file.html)
+
 # Load libraries
 ***
 
@@ -27,8 +32,6 @@ library(lifelihood)
 
 # Data preparation
 ***
-
-If you haven't already check it, have a look at [what is the required data format to work with lifelihood?](1_required_data_format.html)
 
 Load the dataset from `.csv` file:
 
@@ -65,6 +68,7 @@ seeds <- c(1, 2, 3, 4)
 # run the analysis
 results <- lifelihood(
   df = df,
+  path_config = "../config.yaml",
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -73,7 +77,7 @@ results <- lifelihood(
   clutchs = clutchs,
   death_start = "mor_start",
   death_end = "mor_end",
-  extra1 = "geno",
+  covariates = c("geno", "type"),
   seeds = seeds,
   matclutch = FALSE,
   models = c("gam", "lgn", "wei")
@@ -101,6 +105,7 @@ DT::datatable(param_ranges, options = list(scrollX = TRUE), class = "cell-border
 # run the analysis
 results <- lifelihood(
   df = df,
+  path_config = "../config.yaml",
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -109,7 +114,7 @@ results <- lifelihood(
   clutchs = clutchs,
   death_start = "mor_start",
   death_end = "mor_end",
-  extra1 = "geno",
+  covariates = c("geno", "type"),
   seeds = seeds,
   param_range_df = param_ranges,
   matclutch = FALSE,
@@ -125,5 +130,5 @@ summary(results)
 ***
 
 ```{r}
-results$effects$Value1
+results$effects$Estimation1
 ```
