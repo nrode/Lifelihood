@@ -16,10 +16,9 @@ format_dataframe_to_txt(
   clutchs,
   death_start,
   death_end,
-  extra1,
-  extra2,
-  extra3,
-  models
+  covariates,
+  models,
+  path_config
 )
 }
 \arguments{
@@ -45,17 +44,12 @@ format_dataframe_to_txt(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{extra1}{Column name of the first column to add in the input data file}
-
-\item{extra2}{Column name of the second column to add in the input data file}
-
-\item{extra3}{Column name of the third column to add in the input data file}
+\item{covariates}{Vector containing the names of the covariates.}
 
 \item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+
+\item{path_config}{Path to the configuration file (YAML).}
 }
 \description{
 (internal function) Takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
-}
-\details{
-The number of extra column is \strong{currently limited} to 3 for simplicity, but we definitly should \strong{change} this accept an unlimited number of extra columns
 }

@@ -17,27 +17,28 @@ format_config <- function(path_config, covariates){
    ratiomax <- config$constants$ratiomax
 
    # get mortality, maturity and reproduction config
+   est <- config$estimations
    formatted_config = c(
-      paste("expt_death", config$mortality$expt_death),
-      paste("survival_shape", config$mortality$survival_shape),
-      paste("ratio_expt_death", config$mortality$ratio_expt_death),
-      paste("prob_death", config$mortality$prob_death),
-      paste("sex_ratio", config$mortality$sex_ratio),
-      paste("expt_maturity", config$maturity$expt_maturity),
-      paste("maturity_shape", config$maturity$maturity_shape),
-      paste("ratio_expt_maturity", config$maturity$ratio_expt_maturity),
-      paste("expt_reproduction", config$reproduction$expt_reproduction),
-      paste("reproduction_shape", config$reproduction$reproduction_shape),
-      paste("n_offspring", config$reproduction$n_offspring),
-      paste("increase_death_hazard", config$reproduction$increase_death_hazard),
-      paste("tof_reduction_date", config$reproduction$tof_reduction_date),
-      paste("increase_tof_n_offspring", config$reproduction$increase_tof_n_offspring),
-      paste("lin_decrease_hazard", config$reproduction$lin_decrease_hazard),
-      paste("quad_senescence", config$reproduction$quad_senescence),
-      paste("quad_decrease_hazard", config$reproduction$quad_decrease_hazard),
-      paste("lin_change_n_offspring", config$reproduction$lin_change_n_offspring),
-      paste("quad_change_n_offspring", config$reproduction$quad_change_n_offspring),
-      paste("tof_n_offspring", config$reproduction$tof_n_offspring),
+      paste("expt_death", R_to_lifelihood(est$mortality$expt_death, covariates)),
+      paste("survival_shape", R_to_lifelihood(est$mortality$survival_shape, covariates)),
+      paste("ratio_expt_death", R_to_lifelihood(est$mortality$ratio_expt_death, covariates)),
+      paste("prob_death", R_to_lifelihood(est$mortality$prob_death, covariates)),
+      paste("sex_ratio", R_to_lifelihood(est$mortality$sex_ratio, covariates)),
+      paste("expt_maturity", R_to_lifelihood(est$maturity$expt_maturity, covariates)),
+      paste("maturity_shape", R_to_lifelihood(est$maturity$maturity_shape, covariates)),
+      paste("ratio_expt_maturity", R_to_lifelihood(est$maturity$ratio_expt_maturity, covariates)),
+      paste("expt_reproduction", R_to_lifelihood(est$reproduction$expt_reproduction, covariates)),
+      paste("reproduction_shape", R_to_lifelihood(est$reproduction$reproduction_shape, covariates)),
+      paste("n_offspring", R_to_lifelihood(est$reproduction$n_offspring, covariates)),
+      paste("increase_death_hazard", R_to_lifelihood(est$reproduction$increase_death_hazard, covariates)),
+      paste("tof_reduction_date", R_to_lifelihood(est$reproduction$tof_reduction_date, covariates)),
+      paste("increase_tof_n_offspring", R_to_lifelihood(est$reproduction$increase_tof_n_offspring, covariates)),
+      paste("lin_decrease_hazard", R_to_lifelihood(est$reproduction$lin_decrease_hazard, covariates)),
+      paste("quad_senescence", R_to_lifelihood(est$reproduction$quad_senescence, covariates)),
+      paste("quad_decrease_hazard", R_to_lifelihood(est$reproduction$quad_decrease_hazard, covariates)),
+      #paste("lin_change_n_offspring", R_to_lifelihood(est$reproduction$lin_change_n_offspring, covariates)),
+      paste("quad_change_n_offspring", R_to_lifelihood(est$reproduction$quad_change_n_offspring, covariates)),
+      paste("tof_n_offspring", R_to_lifelihood(est$reproduction$tof_n_offspring, covariates))
    )
 
    return(formatted_config)
@@ -45,17 +46,58 @@ format_config <- function(path_config, covariates){
 
 
 #' @name R_to_lifelihood
+#' @description (internal function) Function which transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, `"geno + type"` will become `1 2` if `"geno"` is the first element of `covariables` and `"type"` is the second. This function is used to create the model part of the input file.
+#' @param R_format String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.
+#' @param covariates Vector containing the names of covariates.
 #' @export
-R_to_lifelihood <- function(R_format, covariates){
+R_to_lifelihood <- function(R_format, covariates) {
    
    # ensure input is a string
    R_format <- as.character(R_format)
-   
-   if (R_format == 'not_fitted'){
-      lifelihood_format <- '-1'
-   } else if (R_format == '1'){
-      lifelihood_format <- '0'
+
+   if (R_format == "not_fitted") {
+      return("-1")
+   } else if (R_format == "1") {
+      return("0")
+   } else {
+      # get a list of each covariable (separated by '+')
+      used_covariables <- trimws(unlist(strsplit(R_format, split = "\\+")))
+
+      # initiate a list of all covariables
+      all_covariables <- c()
+
+      # create a list of all covariables used
+      for (cov in used_covariables) {
+         if (grepl("*", cov, fixed = TRUE)) {
+            interaction_covs <- trimws(unlist(strsplit(cov, split = "\\*")))
+            all_covariables <- c(all_covariables, interaction_covs)
+         } else {
+            all_covariables <- c(all_covariables, cov)
+         }
+      }
+      all_covariables <- unique(all_covariables)
+
+      # ensure that all provided covariables are valid ones
+      for (cov in all_covariables) {
+         if (!(cov %in% covariates)) {
+            stop("Unknow covariable: `", cov, "`")
+         }
+      }
+
+      # create the lifelihood format output
+      lifelihood_format <- "0"
+      for (cov in used_covariables) {
+         if (grepl("*", cov, fixed = TRUE)) {
+            interaction_terms <- strsplit(cov, split = "\\*")
+            first_term <- which(covariates == interaction_terms[[1]][1])
+            second_term <- which(covariates == interaction_terms[[1]][2])
+            position <- paste(first_term, second_term, sep = "")
+         } else {
+            position <- which(covariates == cov)
+         }
+         lifelihood_format <- paste(lifelihood_format, position)
+      }
    }
-   
+
    return(lifelihood_format)
 }

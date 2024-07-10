@@ -2,8 +2,10 @@
 
 S3method(summary,LifelihoodResults)
 export("%>%")
+export(R_to_lifelihood)
 export(detect_os)
 export(execute_bin)
+export(format_config)
 export(format_dataframe_to_txt)
 export(format_row)
 export(lifelihood)

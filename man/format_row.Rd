@@ -14,9 +14,7 @@ format_row(
   clutchs,
   death_start,
   death_end,
-  extra1,
-  extra2,
-  extra3
+  covariates
 )
 }
 \arguments{
@@ -38,11 +36,7 @@ format_row(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{extra1}{Column name of the first column to add in the input data file}
-
-\item{extra2}{Column name of the second column to add in the input data file}
-
-\item{extra3}{Column name of the third column to add in the input data file}
+\item{covariates}{Vector containing the names of the covariates.}
 }
 \value{
 A string of the well formated row

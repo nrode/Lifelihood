@@ -16,6 +16,8 @@ editor_options:
 
 <br>
 
+_Note: this vignette assumes that you already have your data in the right format. If not, check the [vignette about the required data format](1-required-data-format.html)_
+
 # Introduction
 ***
 
@@ -100,32 +102,36 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 ***
 
 ```yaml
+---
 constants:
   right_censoring_date: 1000
   critical_age: 20
   ratiomax: 10
 estimations:
   mortality:
-    expt_death: not_fitted
-    survival_shape: not_fitted
-    ratio_expt_death: not_fitted
-    prob_death: not_fitted
+    expt_death: geno
+    survival_shape: geno + type + geno*type
+    ratio_expt_death: geno
+    prob_death: geno
     sex_ratio: not_fitted
   maturity:
-    expt_maturity: not_fitted
-    maturity_shape: not_fitted
-    ratio_expt_maturity: not_fitted
+    expt_maturity: geno + type
+    maturity_shape: geno
+    ratio_expt_maturity: geno + type
   reproduction:
-    expt_reproduction: not_fitted
+    expt_reproduction: geno
     reproduction_shape: not_fitted
-    n_offspring: not_fitted
-    increase_death_hazard: not_fitted
-    tof_reduction_date: not_fitted
-    increase_tof_n_offspring: not_fitted
-    lin_decrease_hazard: not_fitted
-    quad_senescence: not_fitted
-    quad_decrease_hazard: not_fitted
-    lin_change_n_offspring: not_fitted
-    quad_change_n_offspring: not_fitted
+    n_offspring: geno
+    increase_death_hazard: geno + type + geno*type
+    tof_reduction_date: geno
+    increase_tof_n_offspring: geno
+    lin_decrease_hazard: geno + type + geno*type
+    quad_senescence: geno
+    quad_decrease_hazard: geno
+    lin_change_n_offspring: geno
+    quad_change_n_offspring: geno
     tof_n_offspring: not_fitted
+
 ```
+
+The next step is to actually [use the package](3-how-to-use-lifelihood.html).
