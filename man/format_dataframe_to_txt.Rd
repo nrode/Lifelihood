@@ -63,3 +63,4 @@ If the observation with the most clutches is for example 10, then the vector mus
 \description{
 Takes a dataframe (\code{df} argument in \code{\link[=lifelihood]{lifelihood()}} function) and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
 }
+\keyword{internal}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lifelihood.R
 \name{lifelihood}
 \alias{lifelihood}
-\title{Main function of the lifelihood program}
+\title{Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).}
 \usage{
 lifelihood(
   df,
@@ -33,13 +33,16 @@ lifelihood(
   To = 50,
   Tf = 1,
   climbrate = 1,
-  precision = 0.001
+  precision = 0.001,
+  right_censoring_date = 1000,
+  critical_age = 20,
+  ratiomax = 10
 )
 }
 \arguments{
 \item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
 
-\item{path_config}{Path to the configuration file (YAML).}
+\item{path_config}{Path to the configuration file (YAML format).}
 
 \item{sex}{Column name containing the sex of the observations.}
 
@@ -94,7 +97,13 @@ lifelihood(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
+
+\item{right_censoring_date}{Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)}
+
+\item{critical_age}{Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)}
+
+\item{ratiomax}{Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)}
 }
 \description{
-Main function of the lifelihood program
+Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).
 }

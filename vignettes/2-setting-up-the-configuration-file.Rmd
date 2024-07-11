@@ -29,21 +29,11 @@ The needed configuration file must be in the `YAML` format, a convenient kind of
 # Parameters
 ***
 
-There are 2 main sections in the required `YAML` configuration file:
+There are 3 main sections in the required `YAML` configuration file:
 
-- constants: some fixed parameters, set by design
-- estimations:
-  - mortality: parameters related to mortality
-  - maturity: parameters related to maturity
-  - reproduction: parameters related to reproduction
-
-### Constants
-
-- `right_censoring_date` (integer): time point at which a subject's data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data.
-
-- `critical_age` (integer): critical age below which life histories are not followed individually.
-
-- `ratiomax` (integer): maximum ratio between number of offspring of last and first reproduction events. Cannot be greater than ratiomax.
+- mortality: parameters related to mortality
+- maturity: parameters related to maturity
+- reproduction: parameters related to reproduction
 
 
 ### Estimations
@@ -89,7 +79,6 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 - `tof_reduction_date`: Trade-off of reduction date
 - `increase_tof_n_offspring`: Increase in trade-off proportional to the number of offspring
 - `lin_decrease_hazard`: Linear decrease in hazard rate with time since maturity
-- `quad_senescence`: Quadratic senescence of interval between reproduction events
 - `quad_decrease_hazard`: Quadratic decrease in hazard rate with time since maturity
 - `lin_change_n_offspring`: Linear change in number of offspring with time since maturity
 - `quad_change_n_offspring`: Quadratic change in number of offsprings with time since maturity
@@ -103,34 +92,28 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 
 ```yaml
 ---
-constants:
-  right_censoring_date: 1000
-  critical_age: 20
-  ratiomax: 10
-estimations:
-  mortality:
-    expt_death: geno
-    survival_shape: geno + type + geno*type
-    ratio_expt_death: geno
-    prob_death: geno
-    sex_ratio: not_fitted
-  maturity:
-    expt_maturity: geno + type
-    maturity_shape: geno
-    ratio_expt_maturity: geno + type
-  reproduction:
-    expt_reproduction: geno
-    reproduction_shape: not_fitted
-    n_offspring: geno
-    increase_death_hazard: geno + type + geno*type
-    tof_reduction_date: geno
-    increase_tof_n_offspring: geno
-    lin_decrease_hazard: geno + type + geno*type
-    quad_senescence: geno
-    quad_decrease_hazard: geno
-    lin_change_n_offspring: geno
-    quad_change_n_offspring: geno
-    tof_n_offspring: not_fitted
+mortality:
+  expt_death: geno
+  survival_shape: geno + type + geno*type
+  ratio_expt_death: geno
+  prob_death: geno
+  sex_ratio: not_fitted
+maturity:
+  expt_maturity: geno + type
+  maturity_shape: geno
+  ratio_expt_maturity: geno + type
+reproduction:
+  expt_reproduction: geno
+  reproduction_shape: not_fitted
+  n_offspring: geno
+  increase_death_hazard: geno + type + geno*type
+  tof_reduction_date: geno
+  increase_tof_n_offspring: geno
+  lin_decrease_hazard: geno + type + geno*type
+  quad_decrease_hazard: geno
+  lin_change_n_offspring: geno
+  quad_change_n_offspring: geno
+  tof_n_offspring: not_fitted
 
 ```
 

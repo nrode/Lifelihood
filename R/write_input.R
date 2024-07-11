@@ -2,6 +2,8 @@
 #' 
 #' @description Takes a dataframe (`df` argument in [lifelihood()] function) and apply to each row the [format_row()] function to create the input data file.
 #' 
+#' @keywords internal
+#' 
 #' @name format_dataframe_to_txt
 #' @param df The dataframe object of the input data.
 #' @param sex Column name containing the sex of the observations.
@@ -111,6 +113,7 @@ format_dataframe_to_txt <- function(
 }
 
 
+#' @keywords internal
 #' @name format_row
 #' @title Format a dataframe row for the input data file
 #' @description Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file).

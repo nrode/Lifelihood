@@ -71,3 +71,4 @@ execute_bin(
 \details{
 Execute compiled files of the lifelihood program
 }
+\keyword{internal}

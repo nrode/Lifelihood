@@ -4007,15 +4007,19 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">3 - How to use the lifelihood package</h1>
 <h4 class="author">Nicolas RODE, Thomas LENORMAND</h4>
-<h4 class="date">10-July-2024</h4>
+<h4 class="date">11-July-2024</h4>
 
 </div>
 
 
 <p><br></p>
-<p>If you haven’t already check it, have a look at: - <a href="1-required-data-format.html">what is the required data format to
-work with lifelihood?</a> - <a href="2-setting-up-the-configuration-file.html">setting up the
-configuration file</a></p>
+<p>If you haven’t already check it, have a look at:</p>
+<ul>
+<li><a href="1-required-data-format.html">what is the required data
+format to work with lifelihood?</a></li>
+<li><a href="2-setting-up-the-configuration-file.html">setting up the
+configuration file</a></li>
+</ul>
 <div id="load-libraries" class="section level1">
 <h1>Load libraries</h1>
 <hr />
@@ -4028,8 +4032,8 @@ configuration file</a></p>
 <p>Load the dataset from <code>.csv</code> file:</p>
 <pre class="r"><code># input data
 df &lt;- read.csv(here::here(&#39;data/fake_sample.csv&#39;))</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-ca041356598abed733f8" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca041356598abed733f8">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[1,2,0,1,2,1],[0,0,1,0,1,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-820bc06629cb266aa825" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-820bc06629cb266aa825">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[1,2,0,1,2,1],[0,0,1,0,1,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>Prepare input parameters for the <code>lifelihood()</code>
 function:</p>
 <pre class="r"><code># name of the columns of the clutchs into a single vector
@@ -4163,8 +4167,8 @@ param_ranges &lt;- data.frame(
           0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
   max = c(301, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
 )</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-0b78fa42ee3d04a51d51" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-0b78fa42ee3d04a51d51">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-9c1af0f983cefbc90935" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9c1af0f983cefbc90935">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre><code>## [1] &quot;Input written.&quot;
 ## [1] &quot;Output read.&quot;</code></pre>
 <pre><code>## LIFELIHOODIZATION

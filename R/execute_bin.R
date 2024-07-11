@@ -1,5 +1,6 @@
 #' Execute compiled files of the lifelihood program
 #' @name execute_bin
+#' @keywords internal
 #' @title (internal function) Execution of the compiled files
 #' @description (internal function) Run lifelihood program in console mode
 #' @param infile File with the model and data to be fitted
