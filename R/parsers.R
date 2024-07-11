@@ -1,11 +1,27 @@
-#' List of parsing functions use to read the output file of the lifelihood program
-#' 
-#' @name get_seeds
-#' @title (internal function) Get the seeds in the output file
-#' @description (internal function) Find the seeds value in the output file of the lifelihood program
-#' @param lines Vector of the output file, where each element is a line of the file
-#' @param group_by_group Boolean indicating whether the analysis should be made group by group or not (default to false)
-#' @return A vector of the parsed seeds 
+#' @title Parsing functions used to read the output file of the program
+
+
+#' @keywords internal
+#' @name parse_output
+#' @description `parse_output()`: Find specific result in the output file of the lifelihood program, according to the `element` argument. This function is an aggregator of all the `get_*()` functions described below.
+#' @param lines Vector of the output file (`.out`), where each element is a line of the file.
+#' @param element Name of the result to parse. Must be in one of 'seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max'.
+#' @param group_by_group Boolean indicating whether parsing should be performed group by group or not (`FALSE` by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).
+#' @return The parsed element
+parse_output <- function(lines, element, group_by_group = FALSE) {
+   switch(element,
+      seeds = get_seeds(lines, group_by_group),
+      likelihood = get_likelihood(lines, group_by_group),
+      effects = get_effects(lines, group_by_group),
+      parameter_ranges = get_param_ranges(lines),
+      ratio_max = get_ratio_max(lines)
+   )
+}
+
+
+#' @rdname parse_output
+#' @inheritParams parse_output
+#' @description `get_seeds()`: find the seeds value in the output file of the lifelihood program.
 get_seeds <- function(lines, group_by_group=FALSE){
 
    # find the line starting with pattern "seed1="
@@ -44,12 +60,9 @@ get_seeds <- function(lines, group_by_group=FALSE){
    } else {return(seeds)}
 }
 
-#' @name get_likelihood
-#' @title (internal function) get the likelihood in the output file
-#' @description (internal function) find the likelihood value (optimum found) in the output file of the lifelihood program
-#' @param lines vector of the output file, where each element is a line of the file
-#' @param group_by_group boolean indicating whether the analysis should be made group by group or not (default to false)
-#' @return The parsed likelihood
+#' @rdname parse_output
+#' @inheritParams parse_output
+#' @description `get_likelihood()`: find the likelihood value (optimum found) in the output file of the lifelihood program.
 get_likelihood <- function(lines, group_by_group=FALSE){
 
    if (group_by_group){
@@ -93,11 +106,9 @@ get_likelihood <- function(lines, group_by_group=FALSE){
    }
 }
 
-#' @name get_param_ranges
-#' @title (internal function) Get the parameter ranges/boundaries in the output file
-#' @description (internal function) Find the parameter ranges/boundaries in the output file of the lifelihood program
-#' @param lines Vector of the output file, where each element is a line of the file
-#' @return A dataframe of the parsed parameter ranges/boundaries
+#' @rdname parse_output
+#' @inheritParams parse_output
+#' @description `get_param_ranges()`: find the parameter ranges/boundaries in the output file of the lifelihood program.
 get_param_ranges <- function(lines){
 
    # find start and end of the parameter range table
@@ -119,11 +130,9 @@ get_param_ranges <- function(lines){
    return(parameter_ranges)
 }
 
-#' @name get_ratio_max
-#' @title (internal function) Get the ratio max in the output file
-#' @description (internal function) Find the ratio max value in the output file of the lifelihood program
-#' @param lines Vector of the output file, where each element is a line of the file
-#' @return The parsed ratio max
+#' @rdname parse_output
+#' @inheritParams parse_output
+#' @description `get_ratio_max()`: find the ratio max value in the output file of the lifelihood program.
 get_ratio_max <- function(lines){
 
    # find the line containing the ratiomax value
@@ -135,12 +144,9 @@ get_ratio_max <- function(lines){
    return(ratiomax)
 }
 
-#' @name get_effects
-#' @title (internal function) Get the estimation in the output file
-#' @description (internal function) Find the estimated effects in the output file of the lifelihood program
-#' @param lines Vector of the output file, where each element is a line of the file
-#' @param group_by_group Boolean indicating whether the analysis should be made group by group or not (default to false)
-#' @return A dataframe of the parsed effects estimation
+#' @rdname parse_output
+#' @inheritParams parse_output
+#' @description `get_effects()`: find the estimated effects in the output file of the lifelihood program.
 get_effects <- function(lines, group_by_group=FALSE){
    
    if (group_by_group){
@@ -185,22 +191,4 @@ get_effects <- function(lines, group_by_group=FALSE){
       )
       return(all_effects)
    }
-}
-
-#' @name parse_output
-#' @title (internal function) Parse results from the output file
-#' @description (internal function) Find specific result in the output file of the lifelihood program, according to the `element` argument
-#' @param lines Vector of the output file, where each element is a line of the file
-#' @param element Name of the result to parse. Must be in `c('seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max')`
-#' @param group_by_group Boolean indicating whether the analysis should be made group by group or not (default to false)
-#' @return The parsed element
-parse_output <- function(lines, element, group_by_group=FALSE){
-   switch(
-      element,
-      seeds = get_seeds(lines, group_by_group),
-      likelihood = get_likelihood(lines, group_by_group),
-      effects = get_effects(lines, group_by_group),
-      parameter_ranges = get_param_ranges(lines),
-      ratio_max = get_ratio_max(lines)
-   )
 }

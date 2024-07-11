@@ -2,20 +2,46 @@
 % Please edit documentation in R/parsers.R
 \name{parse_output}
 \alias{parse_output}
-\title{(internal function) Parse results from the output file}
+\alias{get_seeds}
+\alias{get_likelihood}
+\alias{get_param_ranges}
+\alias{get_ratio_max}
+\alias{get_effects}
+\title{Parsing functions used to read the output file of the program}
 \usage{
 parse_output(lines, element, group_by_group = FALSE)
+
+get_seeds(lines, group_by_group = FALSE)
+
+get_likelihood(lines, group_by_group = FALSE)
+
+get_param_ranges(lines)
+
+get_ratio_max(lines)
+
+get_effects(lines, group_by_group = FALSE)
 }
 \arguments{
-\item{lines}{Vector of the output file, where each element is a line of the file}
+\item{lines}{Vector of the output file (\code{.out}), where each element is a line of the file.}
 
-\item{element}{Name of the result to parse. Must be in \code{c('seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max')}}
+\item{element}{Name of the result to parse. Must be in one of 'seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max'.}
 
-\item{group_by_group}{Boolean indicating whether the analysis should be made group by group or not (default to false)}
+\item{group_by_group}{Boolean indicating whether parsing should be performed group by group or not (\code{FALSE} by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).}
 }
 \value{
 The parsed element
 }
 \description{
-(internal function) Find specific result in the output file of the lifelihood program, according to the \code{element} argument
+\code{parse_output()}: Find specific result in the output file of the lifelihood program, according to the \code{element} argument. This function is an aggregator of all the \verb{get_*()} functions described below.
+
+\code{get_seeds()}: find the seeds value in the output file of the lifelihood program.
+
+\code{get_likelihood()}: find the likelihood value (optimum found) in the output file of the lifelihood program.
+
+\code{get_param_ranges()}: find the parameter ranges/boundaries in the output file of the lifelihood program.
+
+\code{get_ratio_max()}: find the ratio max value in the output file of the lifelihood program.
+
+\code{get_effects()}: find the estimated effects in the output file of the lifelihood program.
 }
+\keyword{internal}
