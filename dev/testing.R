@@ -1,9 +1,6 @@
 rm(list = ls())
 devtools::load_all() # load the package
 
-source('dev/compile.R')
-compile()
-
 df <- read.csv(here::here("data/fake_sample.csv"))
 
 clutchs <- c(

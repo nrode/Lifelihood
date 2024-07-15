@@ -8,10 +8,10 @@
         <Filename Value="lifelihoodC2023.lpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="-1"/>
         <TopLine Value="47"/>
         <CursorPos X="13" Y="83"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -20,35 +20,35 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1009"/>
         <CursorPos X="43" Y="1008"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Alea.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="fmath.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="fspec.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="mathromb.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -57,14 +57,72 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="216"/>
         <CursorPos X="36" Y="246"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="34"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="-1"/>
-    </General>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="14">
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="7" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="30" Column="15" TopLine="8"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="72" Column="20" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="73" Column="3" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="73" Column="10" TopLine="54"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="67" Column="3" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="66" Column="58" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="60" Column="57" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="5" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="5" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="10" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="32" Column="38" TopLine="21"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="32" Column="38" TopLine="21"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="11" Column="11"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="76" Column="39" TopLine="51"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode="Default">

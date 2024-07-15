@@ -78,7 +78,6 @@
     <Other>
       <Verbosity>
         <ShoLineNum Value="True"/>
-        <ShowAll Value="True"/>
         <ShowDebugInfo Value="True"/>
       </Verbosity>
       <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>

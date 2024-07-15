@@ -81,6 +81,7 @@ TRY
    writeparamdescript(LL_D);
 
   list.Free;
+  writeln('Lifelihoodization terminated');
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
