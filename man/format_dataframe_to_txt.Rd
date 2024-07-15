@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_input.R
 \name{format_dataframe_to_txt}
 \alias{format_dataframe_to_txt}
-\title{(internal function) Create the input data file from a dataframe}
+\title{Create the input data file from a dataframe}
 \usage{
 format_dataframe_to_txt(
   df,
@@ -22,7 +22,7 @@ format_dataframe_to_txt(
 )
 }
 \arguments{
-\item{df}{The dataframe of the input data.}
+\item{df}{The dataframe object of the input data.}
 
 \item{sex}{Column name containing the sex of the observations.}
 
@@ -38,7 +38,17 @@ format_dataframe_to_txt(
 
 \item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 
-\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
+\item{clutchs}{Vector containing the names of the clutch columns. The order should be:
+\itemize{
+\item first date of the first clutch
+\item second date of first clutch
+\item clutch size of the first clutch
+\item second clutch first date
+\item first clutch second date
+\item second clutch clutch size
+\item and so on.
+If the observation with the most clutches is for example 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
+}}
 
 \item{death_start}{Column name containing the first date of the interval in which the death was determined.}
 
@@ -51,5 +61,6 @@ format_dataframe_to_txt(
 \item{path_config}{Path to the configuration file (YAML).}
 }
 \description{
-(internal function) Takes a dataframe and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
+Takes a dataframe (\code{df} argument in \code{\link[=lifelihood]{lifelihood()}} function) and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
 }
+\keyword{internal}

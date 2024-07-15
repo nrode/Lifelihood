@@ -3,7 +3,7 @@
 \name{summary}
 \alias{summary}
 \alias{summary.LifelihoodResults}
-\title{Custom summary function for lifelihood}
+\title{Custom summary function}
 \usage{
 \method{summary}{LifelihoodResults}(object, ...)
 }
@@ -11,5 +11,11 @@
 \item{object}{\code{LifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
 }
 \description{
-Creates a custom summary method for the LifelihoodResults object
+Display main results of the lifelihood program:
+\itemize{
+\item seeds
+\item likelihood
+\item effects (estimation)
+\item parameter ranges
+}
 }

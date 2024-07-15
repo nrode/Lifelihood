@@ -1,11 +1,10 @@
-#' Functions used to read the output file and create an object with results
+#' @title Read and format the output file of the program
+#' @description Takes the file path of the output file and read the results using parsers from [lifelihood::parse_output()].
+#' @keywords internal
 #' 
 #' @name read_output_from_file
-#' @title (internal function) Read and format the output file of the program
-#' @description (internal function) Takes the file path of the output file and read the results using parsers from [lifelihood::parse_output()]
-#' @param file_path Location of the output file from the programme
-#' @param group_by_group Boolean indicating whether the analysis should be made group by group or not (default to false)
-#' @return An object of class `LifelihoodResults` with all results from the output file
+#' @param file_path Location of the output file of the program
+#' @param group_by_group Boolean indicating whether parsing should be performed group by group or not (`FALSE` by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).#' @return An object of class `LifelihoodResults` with all results from the output file
 #' @export 
 read_output_from_file <- function(file_path, group_by_group = FALSE){
 

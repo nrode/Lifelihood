@@ -7,9 +7,9 @@
 format_config(path_config, covariates)
 }
 \arguments{
-\item{path_config}{Location of the configuration file}
+\item{path_config}{Location of the configuration file.}
 
-\item{covariates}{Vector containing the names of the covariates}
+\item{covariates}{Vector containing the names of the covariates.}
 }
 \value{
 Vector of string to add in the input file
@@ -17,3 +17,4 @@ Vector of string to add in the input file
 \description{
 Use the configuration file to create the well formatted vector of strings that will be put under "\emph{\strong{modele}}" in the input file, excluding the distribution law.
 }
+\keyword{internal}

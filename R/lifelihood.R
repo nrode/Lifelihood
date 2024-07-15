@@ -1,7 +1,8 @@
-#' Main function of the lifelihood program
+#' @title Individual life history modelling
+#' @description Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).
 #' @name lifelihood
 #' @param df Dataframe with the data of life history. It should have one row per life history / observation.
-#' @param path_config Path to the configuration file (YAML).
+#' @param path_config Path to the configuration file (YAML format).
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
 #' @param sex_end Column name containing the second date of the interval in which the sex was determined.
@@ -29,6 +30,9 @@
 #' @param Tf Initial temperature for the simulated annealing
 #' @param climbrate Rate for the simulated annealing ?
 #' @param precision TBD - Check the actual meaning
+#' @param right_censoring_date Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)
+#' @param critical_age Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)
+#' @param ratiomax Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)
 #' @export
 lifelihood <- function(
    df,
@@ -59,13 +63,16 @@ lifelihood <- function(
    To=50,
    Tf=1,
    climbrate=1,
-   precision=0.001
+   precision=0.001,
+   right_censoring_date=1000,
+   critical_age=20,
+   ratiomax=10
 ){
 
    # ensure `models` has the right format and values
    valid_models <- c("wei", "gam", "lgn", "exp")
    if (length(models) != 3 || !all(models %in% valid_models)) {
-      stop("'models' must be a vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
+      stop("'models' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
    }
 
    # ensure that `matclutch_size` is defined when `matclutch` is `TRUE`
@@ -135,17 +142,17 @@ lifelihood <- function(
 }
 
 #' @name summary
-#' @title Custom summary function for lifelihood
-#' @description Creates a custom summary method for the LifelihoodResults object
+#' @title Custom summary function
+#' @description Display main results of the lifelihood program:
+#' - seeds
+#' - likelihood
+#' - effects (estimation)
+#' - parameter ranges
 #' @param object `LifelihoodResults` object from [lifelihood::lifelihood()]
 #' @return NULL
 #' @export
 summary.LifelihoodResults <- function(object, ...) {
    cat("LIFELIHOODIZATION\n\n")
-
-   cat("seeds:\n")
-   print(object$seeds)
-   cat("\n")
 
    cat("likelihood:\n")
    print(object$likelihood)
@@ -157,9 +164,5 @@ summary.LifelihoodResults <- function(object, ...) {
 
    cat("parameter ranges/boundaries:\n")
    print(object$parameter_ranges)
-   cat("\n")
-
-   cat("ratiomax:\n")
-   print(object$ratiomax)
    cat("\n")
 }

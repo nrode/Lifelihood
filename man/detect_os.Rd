@@ -2,16 +2,14 @@
 % Please edit documentation in R/utils.R
 \name{detect_os}
 \alias{detect_os}
-\title{(internal function) Find the operating system of the user}
+\title{Find the operating system of the user}
 \usage{
 detect_os()
 }
 \value{
-String of the operatin system
+String with the name of the operating system
 }
 \description{
-(internal function) \code{detect_os()} finds the OS name
+\code{detect_os()} finds the operating system name
 }
-\details{
-Group of internal functions used in the lifelihood programme
-}
+\keyword{internal}

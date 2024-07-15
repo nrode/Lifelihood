@@ -1,76 +1,11 @@
-#' @name format_row
-#' @title (internal function) Format a single row for the input data file
-#' @description (internal function) Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file)
-#' @param row A row of a dataframe object
-#' @param sex Column name containing the sex of the observations.
-#' @param sex_start Column name containing the first date of the interval in which the sex was determined.
-#' @param sex_end Column name containing the second date of the interval in which the sex was determined.
-#' @param maturity_start Column name containing the first date of the interval in which the maturity was determined.
-#' @param maturity_end Column name containing the second date of the interval in which the maturity was determined.
-#' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
-#' @param death_start Column name containing the first date of the interval in which the death was determined.
-#' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param covariates Vector containing the names of the covariates.
-#' @return A string of the well formated row
-#' @export
-format_row <- function(
-   row,
-   sex,
-   sex_start,
-   sex_end,
-   maturity_start,
-   maturity_end,
-   clutchs,
-   death_start,
-   death_end,
-   covariates
-){
-
-   # add variables from covariate columns
-   cov_values = ""
-   for (cov in covariates) {
-      cov_values <- paste(cov_values, row[cov])
-   }
-
-   # add the sex col and maturity event
-   formatted_row <- paste(
-      cov_values,
-      "sex",
-      row[sex_start],
-      row[sex_end],
-      row[sex],
-      "mat",
-      row[maturity_start],
-      row[maturity_end]
-   )
-
-   # extract clutch columns dynamically
-   clutch_cols <- clutchs
-   for (i in seq(1, length(clutch_cols), by = 3)) {
-      clutch_start <- gsub("[[:space:]]", "", row[[clutch_cols[i]]])
-      clutch_end <- gsub("[[:space:]]", "", row[[clutch_cols[i + 1]]])
-      clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])
-      if (clutch_start != 'NA' & clutch_end != 'NA' & clutch_size != 'NA') {
-         formatted_row <- paste(formatted_row, "pon", clutch_start, clutch_end, clutch_size)
-      }
-   }
-
-   # add the death events
-   death_start_value <- row[death_start]
-   death_end_value <- row[death_end]
-   formatted_row <- paste(formatted_row, "mor", death_start_value, death_end_value)
-
-   formatted_row <- gsub("\\s+", " ", formatted_row)
-   formatted_row <- sub("^\\s+", "", formatted_row)
-
-   # return the well formatted row
-   return(formatted_row)
-}
-
+#' @title Create the input data file from a dataframe
+#' 
+#' @description Takes a dataframe (`df` argument in [lifelihood()] function) and apply to each row the [format_row()] function to create the input data file.
+#' 
+#' @keywords internal
+#' 
 #' @name format_dataframe_to_txt
-#' @title (internal function) Create the input data file from a dataframe
-#' @description (internal function) Takes a dataframe and apply to each row the [format_row()] function to create the input data file.
-#' @param df The dataframe of the input data.
+#' @param df The dataframe object of the input data.
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
 #' @param sex_end Column name containing the second date of the interval in which the sex was determined.
@@ -78,7 +13,15 @@ format_row <- function(
 #' @param maturity_end Column name containing the second date of the interval in which the maturity was determined.
 #' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument.
 #' @param matclutch_size Column name containing the size of the clutch for the maturity event. Only used (and required) if `matclutch` is `TRUE`.
-#' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
+#' @param clutchs Vector containing the names of the clutch columns. The order should be:
+#' - first date of the first clutch
+#' - second date of first clutch
+#' - clutch size of the first clutch
+#' - second clutch first date
+#' - first clutch second date
+#' - second clutch clutch size
+#' - and so on.
+#' If the observation with the most clutches is for example 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
@@ -167,4 +110,84 @@ format_dataframe_to_txt <- function(
 
    print("Input written.")
    return(path_to_data)
+}
+
+
+#' @keywords internal
+#' @name format_row
+#' @title Format a dataframe row for the input data file
+#' @description Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file).
+#' @param row A row of the dataframe object provided by the user (`df` argument in [lifelihood()] function).
+#' @param sex Column name containing the sex of the observations.
+#' @param sex_start Column name containing the first date of the interval in which the sex was determined.
+#' @param sex_end Column name containing the second date of the interval in which the sex was determined.
+#' @param maturity_start Column name containing the first date of the interval in which the maturity was determined.
+#' @param maturity_end Column name containing the second date of the interval in which the maturity was determined.
+#' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument.
+#' @param matclutch_size Column name containing the size of the clutch for the maturity event. Only used (and required) if `matclutch` is `TRUE`.
+#' @param clutchs Vector containing the names of the clutch columns. The order should be:
+#' - first date of the first clutch
+#' - second date of first clutch
+#' - clutch size of the first clutch
+#' - second clutch first date
+#' - first clutch second date
+#' - second clutch clutch size
+#' - and so on.
+#' 
+#' If the observation with the most clutches is for example 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
+#' @param death_start Column name containing the first date of the interval in which the death was determined.
+#' @param death_end Column name containing the second date of the interval in which the death was determined.
+#' @param covariates Vector containing the names of the covariates.
+#' @return A string of the well formated row.
+#' @export
+format_row <- function(
+    row,
+    sex,
+    sex_start,
+    sex_end,
+    maturity_start,
+    maturity_end,
+    clutchs,
+    death_start,
+    death_end,
+    covariates) {
+   # add variables from covariate columns
+   cov_values <- ""
+   for (cov in covariates) {
+      cov_values <- paste(cov_values, row[cov])
+   }
+
+   # add the sex col and maturity event
+   formatted_row <- paste(
+      cov_values,
+      "sex",
+      row[sex_start],
+      row[sex_end],
+      row[sex],
+      "mat",
+      row[maturity_start],
+      row[maturity_end]
+   )
+
+   # extract clutch columns dynamically
+   clutch_cols <- clutchs
+   for (i in seq(1, length(clutch_cols), by = 3)) {
+      clutch_start <- gsub("[[:space:]]", "", row[[clutch_cols[i]]])
+      clutch_end <- gsub("[[:space:]]", "", row[[clutch_cols[i + 1]]])
+      clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])
+      if (clutch_start != "NA" & clutch_end != "NA" & clutch_size != "NA") {
+         formatted_row <- paste(formatted_row, "pon", clutch_start, clutch_end, clutch_size)
+      }
+   }
+
+   # add the death events
+   death_start_value <- row[death_start]
+   death_end_value <- row[death_end]
+   formatted_row <- paste(formatted_row, "mor", death_start_value, death_end_value)
+
+   formatted_row <- gsub("\\s+", " ", formatted_row)
+   formatted_row <- sub("^\\s+", "", formatted_row)
+
+   # return the well formatted row
+   return(formatted_row)
 }

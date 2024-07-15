@@ -1,9 +1,10 @@
-#' Group of internal functions used in the lifelihood programme
+#' @title Find the operating system of the user
 #' 
+#' @description `detect_os()` finds the operating system name
+#' 
+#' @keywords internal
 #' @name detect_os
-#' @title (internal function) Find the operating system of the user
-#' @description (internal function) `detect_os()` finds the OS name
-#' @return String of the operatin system
+#' @return String with the name of the operating system
 #' @export
 detect_os <- function() {
    os <- Sys.info()["sysname"]
@@ -16,11 +17,15 @@ detect_os <- function() {
    }
 }
 
+
+#' @title Write the `.txt` file containing the parameter ranges (historically known as `custom.txt`)
+#' 
+#' @description write_param_range()` takes a data frame of parameter ranges and writes it as a .txt file to the given path (argument `file_name`). These values are used by lifelihood to find out which range to optimise for a given parameter.
+#' 
+#' @keywords internal
 #' @name write_param_range
-#' @title (internal function) Write parameter ranges/boundaries to a file
-#' @description (internal function) `write_param_range()` takes a dataframe of parameter ranges/boundaries and write it as .txt file
 #' @param data A dataframe with 3 columns: parameter names, minimum value and maximum value
-#' @param file_name Path of where the .txt file will be stored
+#' @param file_name Path (string) of where the `.txt` file will be stored
 #' @export
 write_param_range <- function(data, file_name = "param_range.txt"){
   write.table(

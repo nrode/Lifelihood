@@ -1507,7 +1507,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">2 - Setting up the configuration file</h1>
 <h4 class="author">Nicolas RODE, Thomas LENORMAND</h4>
-<h4 class="date">10-July-2024</h4>
+<h4 class="date">11-July-2024</h4>
 
 </div>
 
@@ -1534,32 +1534,13 @@ structure. Learn more about <a href="https://en.wikipedia.org/wiki/YAML">YAML</a
 <div id="parameters" class="section level1">
 <h1>Parameters</h1>
 <hr />
-<p>There are 2 main sections in the required <code>YAML</code>
+<p>There are 3 main sections in the required <code>YAML</code>
 configuration file:</p>
-<ul>
-<li>constants: some fixed parameters, set by design</li>
-<li>estimations:
 <ul>
 <li>mortality: parameters related to mortality</li>
 <li>maturity: parameters related to maturity</li>
 <li>reproduction: parameters related to reproduction</li>
-</ul></li>
 </ul>
-<div id="constants" class="section level3">
-<h3>Constants</h3>
-<ul>
-<li><p><code>right_censoring_date</code> (integer): time point at which
-a subject’s data is censored. This means that for subjects who do not
-experience the event of interest (e.g., death, failure) by this date,
-their data is considered censored. In practice, choose a value much
-larger than the maximum longevity seen in the data.</p></li>
-<li><p><code>critical_age</code> (integer): critical age below which
-life histories are not followed individually.</p></li>
-<li><p><code>ratiomax</code> (integer): maximum ratio between number of
-offspring of last and first reproduction events. Cannot be greater than
-ratiomax.</p></li>
-</ul>
-</div>
 <div id="estimations" class="section level3">
 <h3>Estimations</h3>
 <div id="possible-values" class="section level4">
@@ -1622,8 +1603,6 @@ following a reproduction event</li>
 proportional to the number of offspring</li>
 <li><code>lin_decrease_hazard</code>: Linear decrease in hazard rate
 with time since maturity</li>
-<li><code>quad_senescence</code>: Quadratic senescence of interval
-between reproduction events</li>
 <li><code>quad_decrease_hazard</code>: Quadratic decrease in hazard rate
 with time since maturity</li>
 <li><code>lin_change_n_offspring</code>: Linear change in number of
@@ -1640,35 +1619,30 @@ reproductive interval and current number of offspring</li>
 <h1>Example</h1>
 <hr />
 <pre class="yaml"><code>---
-constants:
-  right_censoring_date: 1000
-  critical_age: 20
-  ratiomax: 10
-estimations:
-  mortality:
-    expt_death: geno
-    survival_shape: geno + type + geno*type
-    ratio_expt_death: geno
-    prob_death: geno
-    sex_ratio: not_fitted
-  maturity:
-    expt_maturity: geno + type
-    maturity_shape: geno
-    ratio_expt_maturity: geno + type
-  reproduction:
-    expt_reproduction: geno
-    reproduction_shape: not_fitted
-    n_offspring: geno
-    increase_death_hazard: geno + type + geno*type
-    tof_reduction_date: geno
-    increase_tof_n_offspring: geno
-    lin_decrease_hazard: geno + type + geno*type
-    quad_senescence: geno
-    quad_decrease_hazard: geno
-    lin_change_n_offspring: geno
-    quad_change_n_offspring: geno
-    tof_n_offspring: not_fitted
+mortality:
+  expt_death: geno
+  survival_shape: geno + type + geno*type
+  ratio_expt_death: geno
+  prob_death: geno
+  sex_ratio: not_fitted
+maturity:
+  expt_maturity: geno + type
+  maturity_shape: geno
+  ratio_expt_maturity: geno + type
+reproduction:
+  expt_reproduction: geno
+  reproduction_shape: not_fitted
+  n_offspring: geno
+  increase_death_hazard: geno + type + geno*type
+  tof_reduction_date: geno
+  increase_tof_n_offspring: geno
+  lin_decrease_hazard: geno + type + geno*type
+  quad_decrease_hazard: geno
+  lin_change_n_offspring: geno
+  quad_change_n_offspring: geno
+  tof_n_offspring: not_fitted
 </code></pre>
+<p>The next step is to actually <a href="3-how-to-use-lifelihood.html">use the package</a>.</p>
 </div>
 
 

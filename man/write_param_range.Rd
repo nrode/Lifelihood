@@ -2,15 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{write_param_range}
 \alias{write_param_range}
-\title{(internal function) Write parameter ranges/boundaries to a file}
+\title{Write the \code{.txt} file containing the parameter ranges (historically known as \code{custom.txt})}
 \usage{
 write_param_range(data, file_name = "param_range.txt")
 }
 \arguments{
 \item{data}{A dataframe with 3 columns: parameter names, minimum value and maximum value}
 
-\item{file_name}{Path of where the .txt file will be stored}
+\item{file_name}{Path (string) of where the \code{.txt} file will be stored}
 }
 \description{
-(internal function) \code{write_param_range()} takes a dataframe of parameter ranges/boundaries and write it as .txt file
+write_param_range()\verb{takes a data frame of parameter ranges and writes it as a .txt file to the given path (argument}file_name`). These values are used by lifelihood to find out which range to optimise for a given parameter.
 }
+\keyword{internal}
