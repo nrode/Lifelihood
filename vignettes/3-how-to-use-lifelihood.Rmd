@@ -129,6 +129,14 @@ summary(results)
 # Get specific results
 ***
 
+Get vector of estimation:
+
 ```{r}
-results$effects$Estimation1
+results$effects$estimation
+```
+
+Get maximum likelihood found:
+
+```{r}
+results$likelihood
 ```

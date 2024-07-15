@@ -123,9 +123,9 @@ get_param_ranges <- function(lines){
    
    # return the parameter ranges/boundaries as a data frame
    parameter_ranges <- data.frame(
-      Name = as.character(sapply(range_values, function(x) x[1])),
-      Min = as.numeric(sapply(range_values, function(x) x[2])),
-      Max = as.numeric(sapply(range_values, function(x) x[3]))
+      name = as.character(sapply(range_values, function(x) x[1])),
+      min = as.numeric(sapply(range_values, function(x) x[2])),
+      max = as.numeric(sapply(range_values, function(x) x[3]))
    )
    return(parameter_ranges)
 }
@@ -167,8 +167,8 @@ get_effects <- function(lines, group_by_group=FALSE){
          
          data.frame(
             Name = effect_names,
-            Estimation1 = estimation1,
-            Estimation2 = estimation2
+            estimation = estimation1,
+            var = estimation2
          )
       })
       return(all_effects_gbg)
@@ -186,8 +186,8 @@ get_effects <- function(lines, group_by_group=FALSE){
       # return the effects as a data frame
       all_effects <- data.frame(
          Name = as.character(sapply(effects, function(x) x[1])),
-         Estimation = as.numeric(sapply(effects, function(x) x[2])),
-         Estimation2 = as.numeric(sapply(effects, function(x) x[3]))
+         estimation = as.numeric(sapply(effects, function(x) x[2])),
+         var = as.numeric(sapply(effects, function(x) x[3]))
       )
       return(all_effects)
    }

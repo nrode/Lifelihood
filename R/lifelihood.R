@@ -142,7 +142,7 @@ lifelihood <- function(
 }
 
 #' @name summary
-#' @title Custom summary function
+#' @title Custom summary function to be used with the output of [lifelihood::lifelihood()]
 #' @description Display main results of the lifelihood program:
 #' - seeds
 #' - likelihood
@@ -153,6 +153,8 @@ lifelihood <- function(
 #' @export
 summary.LifelihoodResults <- function(object, ...) {
    cat("LIFELIHOODIZATION\n\n")
+
+   is_gbg <- object$group_by_group
 
    cat("likelihood:\n")
    print(object$likelihood)

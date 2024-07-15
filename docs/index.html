@@ -60,10 +60,41 @@
 <div class="row">
   <main id="main" class="col-md-9"><p><br><br></p>
 <div class="section level2">
-<h2 id="lifelihood">lifelihood<a class="anchor" aria-label="anchor" href="#lifelihood"></a>
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h2>
+<p><code>lifelihood</code> is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).</p>
 <p><br></p>
-<p>Lifelihood is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).</p>
+</div>
+<div class="section level2">
+<h2 id="project-progress">Project progress<a class="anchor" aria-label="anchor" href="#project-progress"></a>
+</h2>
+<ul>
+<li>✅ Transforming the dataframe into a <code>.txt</code> input file</li>
+<li>✅ Reading the output file to return estimations and other values</li>
+<li>✅ Simple way to provides
+<ul>
+<li>parameter ranges</li>
+<li>seeds</li>
+<li>which statistical law to use</li>
+<li>extra variables (geno, spore etc)</li>
+</ul>
+</li>
+<li>✅ Read a config file with all effects to fit</li>
+<li>❌ Make the input data file and output file temp file</li>
+<li>❌ Compile for Windows with Lazarus</li>
+<li>❌ Visualization</li>
+<li>❌ Simulation using estimation</li>
+<li>❌ Goodness of fit</li>
+</ul>
+<p>There currently are 2 functions for users:</p>
+<ul>
+<li>
+<code><a href="reference/lifelihood.html">lifelihood()</a></code>: main function that does most of the job that returns an object of class <code>LifelihoodResults</code>
+</li>
+<li>
+<code><a href="reference/summary.html">summary()</a></code>: to use on the output object of <code><a href="reference/lifelihood.html">lifelihood()</a></code> to display main results such as estimations, seeds used etc.</li>
+</ul>
+<p><br></p>
 </div>
 
   </main><aside class="col-md-3"><div class="license">

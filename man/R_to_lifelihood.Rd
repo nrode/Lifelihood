@@ -11,6 +11,10 @@ R_to_lifelihood(R_format, covariates)
 
 \item{covariates}{Vector containing the names of covariates.}
 }
-\description{
-(internal function) Function which transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of \code{covariables} and \code{"type"} is the second. This function is used to create the model part of the input file.
+\value{
+The formatted format for lifelihood to understand which parameter to fit.
 }
+\description{
+Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of \code{covariables} and \code{"type"} is the second. This function is used to create the model part of the input file.
+}
+\keyword{internal}
