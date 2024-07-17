@@ -3,7 +3,7 @@
 \name{summary}
 \alias{summary}
 \alias{summary.LifelihoodResults}
-\title{Custom summary function}
+\title{Custom summary function to be used with the output of \code{\link[=lifelihood]{lifelihood()}}}
 \usage{
 \method{summary}{LifelihoodResults}(object, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lifelihood.R
 \name{lifelihood}
 \alias{lifelihood}
-\title{Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).}
+\title{Individual life history modelling}
 \usage{
 lifelihood(
   df,

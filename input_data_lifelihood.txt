@@ -19,8 +19,8 @@ increase_death_hazard 0 1 2 12
 tof_reduction_date 0 1
 increase_tof_n_offspring 0 1
 lin_decrease_hazard 0 1 2 12
-quad_senescence 0 1
 quad_decrease_hazard 0 1
+lin_change_n_offspring 0 1
 quad_change_n_offspring 0 1
 tof_n_offspring -1
 *******data*********

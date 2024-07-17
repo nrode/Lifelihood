@@ -1,8 +1,8 @@
 #' Execute compiled files of the lifelihood program
 #' @name execute_bin
 #' @keywords internal
-#' @title (internal function) Execution of the compiled files
-#' @description (internal function) Run lifelihood program in console mode
+#' @title Execution of the compiled files
+#' @description Run lifelihood program in console mode
 #' @param infile File with the model and data to be fitted
 #' @param customfile File with the min and max boudaries for each parameter
 #' @param GbyG Option to fit the full factorail model with all the interactions between each of the factors

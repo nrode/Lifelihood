@@ -108,7 +108,6 @@ format_dataframe_to_txt <- function(
    path_to_data <- "input_data_lifelihood.txt"
    writeLines(formatted_rows, con = path_to_data)
 
-   print("Input written.")
    return(path_to_data)
 }
 

@@ -1,4 +1,4 @@
-rm(list=ls())
+rm(list = ls())
 devtools::load_all() # load the package
 
 df <- read.csv(here::here("data/fake_sample.csv"))
@@ -22,8 +22,7 @@ results <- lifelihood(
    covariates = c("geno", "type"),
    matclutch = FALSE,
    seeds = c(1, 2, 3, 4),
-   models = c("gam", "lgn", "wei"),
-   group_by_group = TRUE
+   models = c("gam", "lgn", "wei")
 )
 summary(results)
 results$likelihood

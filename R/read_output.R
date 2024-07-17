@@ -32,8 +32,8 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results$effects <- effects
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
+  results$group_by_group <- group_by_group
 
   class(results) <- "LifelihoodResults"
-  print("Output read.")
   return(results)
 }
