@@ -2,7 +2,7 @@
 % Please edit documentation in R/execute_bin.R
 \name{execute_bin}
 \alias{execute_bin}
-\title{(internal function) Execution of the compiled files}
+\title{Execution of the compiled files}
 \usage{
 execute_bin(
   input_file,
@@ -66,7 +66,7 @@ execute_bin(
 \item{GbyG}{Option to fit the full factorail model with all the interactions between each of the factors}
 }
 \description{
-(internal function) Run lifelihood program in console mode
+Run lifelihood program in console mode
 }
 \details{
 Execute compiled files of the lifelihood program

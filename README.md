@@ -18,14 +18,20 @@
    - which statistical law to use
    - extra variables (geno, spore etc)
 - ✅ Read a config file with all effects to fit
-- ❌ Make the input data file and output file temp file
+- ✅ Make the input data file and output file temp file
 - ❌ Compile for Windows with Lazarus
 - ❌ Visualization
 - ❌ Simulation using estimation
 - ❌ Goodness of fit
+- Additional potential features:
+   - include some built-in dataset
+   - a shiny app to
+      - play with parameters?
+      - generate config file
 
 There currently are 2 functions for users:
 - `lifelihood()`: main function that does most of the job that returns an object of class `LifelihoodResults`
 - `summary()`: to use on the output object of `lifelihood()` to display main results such as estimations, seeds used etc.
+- `plot_mortality_rate()`: display a line chart that represents the evolution of the mortality rate.
 
 <br>

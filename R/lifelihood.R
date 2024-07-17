@@ -33,6 +33,7 @@
 #' @param right_censoring_date Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)
 #' @param critical_age Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)
 #' @param ratiomax Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)
+#' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
 #' @export
 lifelihood <- function(
    df,
@@ -66,7 +67,8 @@ lifelihood <- function(
    precision=0.001,
    right_censoring_date=1000,
    critical_age=20,
-   ratiomax=10
+   ratiomax=10,
+   delete_temp_files=TRUE
 ){
 
    # ensure `models` has the right format and values
@@ -97,8 +99,8 @@ lifelihood <- function(
    group_by_group_int <- as.integer(group_by_group)
 
    # create parameters range file
-   path_param_range <- write_param_range(data = param_range_df)
-   file_param_range <- 'param_range.txt'
+   file_param_range <- 'temp_file_param_range.txt'
+   path_param_range <- write_param_range(data = param_range_df, file_name = file_param_range)
    path_param_range <- here::here(file_param_range)
 
    # create data file
@@ -133,9 +135,11 @@ lifelihood <- function(
    results <- read_output_from_file(path_to_output, group_by_group = group_by_group)
 
    # delete intermediate files after execution
-   # file.remove(file_param_range)
-   # file.remove(data_path)
-   # file.remove(path_to_output)
+   if (delete_temp_files){
+      file.remove(file_param_range)
+      file.remove(data_path)
+      file.remove(path_to_output)
+   }
 
    # give output to user
    return(results)
