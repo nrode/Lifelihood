@@ -20,7 +20,7 @@ parse_output <- function(lines, element, group_by_group = FALSE) {
 
 
 #' @rdname parse_output
-#' @inheritParams parse_output
+#' 
 #' @description `get_seeds()`: find the seeds value in the output file of the lifelihood program.
 get_seeds <- function(lines, group_by_group=FALSE){
 
@@ -61,7 +61,7 @@ get_seeds <- function(lines, group_by_group=FALSE){
 }
 
 #' @rdname parse_output
-#' @inheritParams parse_output
+#' 
 #' @description `get_likelihood()`: find the likelihood value (optimum found) in the output file of the lifelihood program.
 get_likelihood <- function(lines, group_by_group=FALSE){
 
@@ -107,7 +107,7 @@ get_likelihood <- function(lines, group_by_group=FALSE){
 }
 
 #' @rdname parse_output
-#' @inheritParams parse_output
+#' 
 #' @description `get_param_ranges()`: find the parameter ranges/boundaries in the output file of the lifelihood program.
 get_param_ranges <- function(lines){
 
@@ -131,7 +131,7 @@ get_param_ranges <- function(lines){
 }
 
 #' @rdname parse_output
-#' @inheritParams parse_output
+#' 
 #' @description `get_ratio_max()`: find the ratio max value in the output file of the lifelihood program.
 get_ratio_max <- function(lines){
 
@@ -145,7 +145,7 @@ get_ratio_max <- function(lines){
 }
 
 #' @rdname parse_output
-#' @inheritParams parse_output
+#' 
 #' @description `get_effects()`: find the estimated effects in the output file of the lifelihood program.
 get_effects <- function(lines, group_by_group=FALSE){
    

@@ -36,7 +36,8 @@ lifelihood(
   precision = 0.001,
   right_censoring_date = 1000,
   critical_age = 20,
-  ratiomax = 10
+  ratiomax = 10,
+  delete_temp_files = TRUE
 )
 }
 \arguments{
@@ -103,6 +104,8 @@ lifelihood(
 \item{critical_age}{Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)}
 
 \item{ratiomax}{Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)}
+
+\item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
 }
 \description{
 Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).

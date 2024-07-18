@@ -4,6 +4,7 @@ compile <- function(
    output_dir_bin = "src/compiled/",
    output_dir_other = "-FUsrc/source_pascal/lazarus/"
 ){
+   stop('Fonction not available yet')
 
    # additional fpc params
    params <- "-gl -godwarfsets -vl -vd"
@@ -18,5 +19,6 @@ compile <- function(
    
    # print and run command in console
    print(command)
-   system(command)
+   #system(command)
 }
+compile()

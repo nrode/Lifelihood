@@ -27,7 +27,7 @@ detect_os <- function() {
 #' @param data A dataframe with 3 columns: parameter names, minimum value and maximum value
 #' @param file_name Path (string) of where the `.txt` file will be stored
 #' @export
-write_param_range <- function(data, file_name = "param_range.txt"){
+write_param_range <- function(data, file_name){
   write.table(
    data,
    file = file_name,

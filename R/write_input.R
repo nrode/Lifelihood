@@ -105,7 +105,7 @@ format_dataframe_to_txt <- function(
    formatted_rows <- c(data_struct_info, formatted_rows)
 
    # write the formatted rows to the output file
-   path_to_data <- "input_data_lifelihood.txt"
+   path_to_data <- "temp_file_data_lifelihood.txt"
    writeLines(formatted_rows, con = path_to_data)
 
    return(path_to_data)

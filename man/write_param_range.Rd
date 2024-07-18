@@ -4,7 +4,7 @@
 \alias{write_param_range}
 \title{Write the \code{.txt} file containing the parameter ranges (historically known as \code{custom.txt})}
 \usage{
-write_param_range(data, file_name = "param_range.txt")
+write_param_range(data, file_name)
 }
 \arguments{
 \item{data}{A dataframe with 3 columns: parameter names, minimum value and maximum value}
