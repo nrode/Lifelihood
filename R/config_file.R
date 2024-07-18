@@ -77,7 +77,7 @@ R_to_lifelihood <- function(R_format, covariates) {
       # ensure that all provided covariables are valid ones
       for (cov in all_covariables) {
          if (!(cov %in% covariates)) {
-            stop("Unknow covariable: `", cov, "`")
+            stop("Unknown covariate: `", cov, "`")
          }
       }
 
