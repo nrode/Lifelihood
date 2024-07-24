@@ -16,8 +16,11 @@ txt_to_csv <- function(txt_path, csv_path = NULL){
    data <- txt_file[(data_tag_index+1):length(txt_file)]
 
 
-
-   return(line_to_row(data[1], covariates = covariates))
+   formatted_rows <- lapply(
+      data,
+      FUN = function(line){line_to_row(line, covariates)}
+   )
+   return(formatted_rows)
 }
 
 line_to_row <- function(line, covariates){
@@ -49,8 +52,7 @@ line_to_row <- function(line, covariates){
       splitted_line[mat_end]
    )
 
-   for (i in seq(mat_end, length(splitted_line), by=3)){
-      print(i)
+   for (i in seq(mat_end, length(splitted_line))){
       if (splitted_line[i]=="mor"){
          row <- c(row, splitted_line[i + 1], splitted_line[i + 2])
          return(row)
@@ -63,5 +65,5 @@ line_to_row <- function(line, covariates){
    return(row)
 }
 
-txt_to_csv("data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt")
+
 txt_to_csv("temp_file_data_lifelihood.txt")
