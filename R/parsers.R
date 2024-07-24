@@ -162,13 +162,13 @@ get_effects <- function(lines, group_by_group=FALSE){
 
          # get name, first and second value, with a step of 3
          effect_names <- effects[seq(5, length(effects) - 1, by = 3)]
-         estimation1 <- as.numeric(effects[seq(6, length(effects) - 1, by = 3)])
-         estimation2 <- as.numeric(effects[seq(7, length(effects), by = 3)])
+         est <- as.numeric(effects[seq(6, length(effects) - 1, by = 3)])
+         stderr <- as.numeric(effects[seq(7, length(effects), by = 3)])
          
          data.frame(
-            Name = effect_names,
-            estimation = estimation1,
-            var = estimation2
+            name = effect_names,
+            estimation = est,
+            stderror = stderr
          )
       })
       return(all_effects_gbg)
@@ -185,9 +185,9 @@ get_effects <- function(lines, group_by_group=FALSE){
 
       # return the effects as a data frame
       all_effects <- data.frame(
-         Name = as.character(sapply(effects, function(x) x[1])),
+         name = as.character(sapply(effects, function(x) x[1])),
          estimation = as.numeric(sapply(effects, function(x) x[2])),
-         var = as.numeric(sapply(effects, function(x) x[3]))
+         stderror = as.numeric(sapply(effects, function(x) x[3]))
       )
       return(all_effects)
    }

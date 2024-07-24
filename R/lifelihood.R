@@ -99,12 +99,12 @@ lifelihood <- function(
    group_by_group_int <- as.integer(group_by_group)
 
    # create parameters range file
-   file_param_range <- 'temp_file_param_range.txt'
-   path_param_range <- write_param_range(data = param_range_df, file_name = file_param_range)
-   path_param_range <- here::here(file_param_range)
+   param_range_path <- 'temp_param_range_path.txt'
+   path_param_range <- write_param_range(data = param_range_df, file_name = param_range_path)
+   path_param_range <- here::here(param_range_path)
 
    # create data file
-   path_to_txt <- format_dataframe_to_txt(
+   input_path <- format_dataframe_to_txt(
       df = df,
       sex = sex,
       sex_start = sex_start,
@@ -119,7 +119,7 @@ lifelihood <- function(
       models = models,
       path_config = path_config
    )
-   data_path <- here::here(path_to_txt)
+   data_path <- here::here(input_path)
 
    # create output file
    execute_bin(
@@ -129,16 +129,17 @@ lifelihood <- function(
 
    # get path to output file
    filename_output <- sub("\\.txt$", "", data_path)
-   path_to_output <- paste0(filename_output, ".out")
+   output_path <- paste0(filename_output, ".out")
 
    # read output file
-   results <- read_output_from_file(path_to_output, group_by_group = group_by_group)
+   results <- read_output_from_file(output_path, group_by_group = group_by_group)
 
    # delete intermediate files after execution
    if (delete_temp_files){
-      file.remove(file_param_range)
-      file.remove(data_path)
-      file.remove(path_to_output)
+      print('here')
+      # file.remove(param_range_path)
+      # file.remove(data_path)
+      # file.remove(output_path)
    }
 
    # give output to user

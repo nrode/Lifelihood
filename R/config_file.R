@@ -3,9 +3,9 @@ format_config <- function(path_config, covariates) {
    if (!file.exists(path_config)) {
       stop(paste("Configuration file", path_config, "not found"))
    }
-   config <- yaml::yaml.load_file(path_config)
+   config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
-   # function to safely access nested elements
+   # function to safely access elements in config file
    safe_access <- function(config, path) {
       result <- tryCatch(
          {
