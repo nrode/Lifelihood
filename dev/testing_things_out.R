@@ -102,3 +102,10 @@ plot_mortality_rate(
    covariates = c("type", "geno"),
    interval_width = 1
 )
+
+
+
+
+############################
+file <- yaml::yaml.load_file('config.yaml')
+file$mortalitt
