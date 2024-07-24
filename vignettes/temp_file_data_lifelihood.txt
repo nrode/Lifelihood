@@ -1,0 +1,32 @@
+*******data struct****
+matclutch false
+geno type
+2 3
+****modele******
+gam lgn wei
+expt_death 0 1
+survival_shape 0 1 2 12
+ratio_expt_death 0 1
+prob_death 0 1
+sex_ratio -1
+expt_maturity 0 1 2
+maturity_shape 0 1
+ratio_expt_maturity 0 1 2
+expt_reproduction 0 1
+reproduction_shape -1
+n_offspring 0 1
+increase_death_hazard 0 1 2 12
+tof_reduction_date 0 1
+increase_tof_n_offspring 0 1
+lin_decrease_hazard 0 1 2 12
+quad_decrease_hazard 0 1
+lin_change_n_offspring 0 1
+quad_change_n_offspring 0 1
+tof_n_offspring -1
+*******data*********
+0 1 sex 0 1000 0 mat 0 1000 mor 0 1
+0 2 sex 0 1000 0 mat 2 3 pon 4 3 4 pon 2 4 5 mor 9 10
+1 0 sex 0 1000 0 mat 3 4 pon 2 4 5 mor 5 6
+0 1 sex 0 1000 0 mat 0 1000 mor 0 1
+1 2 sex 0 1000 0 mat 1 2 pon 2 2 3 pon 5 3 4 mor 11 12
+0 1 sex 0 1000 0 mat 0 1000 mor 0 1

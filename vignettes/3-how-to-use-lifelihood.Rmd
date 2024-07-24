@@ -25,7 +25,8 @@ If you haven't already check it, have a look at:
 ***
 
 ```{r}
-library(lifelihood)
+#library(lifelihood)
+devtools::load_all()
 ```
 
 <br>
@@ -80,7 +81,8 @@ results <- lifelihood(
   covariates = c("geno", "type"),
   seeds = seeds,
   matclutch = FALSE,
-  models = c("gam", "lgn", "wei")
+  models = c("gam", "lgn", "wei"),
+  delete_temp_files = FALSE
 )
 summary(results)
 ```
@@ -118,7 +120,8 @@ results <- lifelihood(
   seeds = seeds,
   param_range_df = param_ranges,
   matclutch = FALSE,
-  models = c("gam", "lgn", "wei")
+  models = c("gam", "lgn", "wei"),
+
 )
 summary(results)
 ```
@@ -132,7 +135,7 @@ summary(results)
 Get vector of estimation:
 
 ```{r}
-results$effects$estimation
+results$effects
 ```
 
 Get maximum likelihood found:
