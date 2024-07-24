@@ -4041,8 +4041,8 @@ devtools::load_all()</code></pre>
 <p>Load the dataset from <code>.csv</code> file:</p>
 <pre class="r"><code># input data
 df &lt;- read.csv(here::here(&#39;data/fake_sample.csv&#39;))</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-2d7366f356d57e026808" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2d7366f356d57e026808">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[1,2,0,1,2,1],[0,0,1,0,1,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0db72cc2267b02462ce8" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0db72cc2267b02462ce8">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[1,2,0,1,2,1],[0,0,1,0,1,0],[0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0],[0,2,3,0,1,0],[1000,3,4,1000,2,1000],[" NA"," 4"," 2"," NA"," 2"," NA"],[" NA"," 3"," 4"," NA"," 2"," NA"],[" NA"," 4"," 5"," NA"," 3"," NA"],[" NA"," 2"," NA"," NA"," 5"," NA"],[" NA"," 4"," NA"," NA"," 3"," NA"],[" NA"," 5"," NA"," NA"," 4"," NA"],[0,9,5,0,11,0],[1,10,6,1,12,1]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 <p>Prepare input parameters for the <code>lifelihood()</code>
 function:</p>
 <pre class="r"><code># name of the columns of the clutchs into a single vector
@@ -4079,7 +4079,8 @@ results &lt;- lifelihood(
   delete_temp_files = FALSE
 )</code></pre>
 <pre><code>## Using default parameter ranges/boundaries</code></pre>
-<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/temp_file_data_lifelihood.out&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/temp_file_data_lifelihood.txt&quot;
+## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/temp_file_data_lifelihood.out&quot;</code></pre>
 <pre class="r"><code>summary(results)</code></pre>
 <pre><code>## LIFELIHOODIZATION
 ## 
@@ -4172,77 +4173,77 @@ param_ranges &lt;- data.frame(
           0.0000001, 0.0000001, -20, -20, -8, -8, -8, 0.001),
   max = c(301, 20, 4, 1, 0.99999, 100, 15, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1200)
 )</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-54aa25bbac529d31bd49" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-54aa25bbac529d31bd49">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
-<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/temp_file_data_lifelihood.out&quot;
-## [1] &quot;here&quot;</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-587a4c539e9dcd5ab732" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-587a4c539e9dcd5ab732">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["E(tmort)f","morta","RE(tmort)m","mortp","propmal","E(tmat)f","mata","RE(tmat)m","E(tpon)","ponta","pontn","to(ps)int","to(ps)am","to(ps)tp","sen(pu)t","sen(pu)t2","sen(pn)t","sen(pn)t2","to(pupn)","W"],[1,0.001,0.1,0.0001,1e-05,1,0.0001,0.1,0.1,0.001,1,1e-05,1e-07,1e-07,-20,-20,-8,-8,-8,0.001],[301,20,4,1,0.99999,100,15,10,200,12,50,10,10,10,20,20,10,10,10,1200]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<pre><code>## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/temp_file_data_lifelihood.txt&quot;
+## [1] &quot;/Users/josephbarbier/Desktop/Lifelihood/temp_file_data_lifelihood.out&quot;</code></pre>
 <pre><code>## LIFELIHOODIZATION
 ## 
 ## likelihood:
-## [1] -249.1557
+## [1] -249.156
 ## 
 ## effects:
-##                         name  estimation stderror
-## 1              int_E(tmort)f -3.38657460        0
-## 2        eff_E(tmort)f_geno1 -1.24158258        0
-## 3        eff_E(tmort)f_type1 -1.88395945        0
-## 4        eff_E(tmort)f_type2  1.25538757        0
-## 5                  int_morta -3.10362893        0
-## 6            eff_morta_geno1 -0.73123630        0
-## 7            eff_morta_type1 -1.24336397        0
-## 8            eff_morta_type2  0.07804682        0
-## 9      eff_morta_type1:geno1  0.21538453        0
-## 10     eff_morta_type2:geno1 -0.68092476        0
-## 11            int_RE(tmort)m  0.55750670        0
-## 12      eff_RE(tmort)m_geno1  0.47566210        0
-## 13                 int_mortp -2.31200946        0
-## 14           eff_mortp_geno1 -2.06144080        0
-## 15              int_E(tmat)f -2.99276921        0
-## 16        eff_E(tmat)f_geno1 -0.67597149        0
-## 17        eff_E(tmat)f_type1  0.47633050        0
-## 18        eff_E(tmat)f_type2 -1.21263620        0
-## 19                  int_mata -5.87801749        0
-## 20            eff_mata_geno1 -1.43110840        0
-## 21             int_RE(tmat)m -0.72223817        0
-## 22       eff_RE(tmat)m_geno1 -0.64528414        0
-## 23       eff_RE(tmat)m_type1  0.19909594        0
-## 24       eff_RE(tmat)m_type2  0.03745313        0
-## 25               int_E(tpon) -2.54289859        0
-## 26         eff_E(tpon)_geno1  0.18154853        0
-## 27                 int_pontn -2.78593927        0
-## 28           eff_pontn_geno1 -0.19533623        0
-## 29             int_to(ps)int -0.64853751        0
-## 30       eff_to(ps)int_geno1  0.42751918        0
-## 31       eff_to(ps)int_type1  0.15124852        0
-## 32       eff_to(ps)int_type2  0.77910887        0
-## 33 eff_to(ps)int_type1:geno1 -0.06326410        0
-## 34 eff_to(ps)int_type2:geno1  1.20679034        0
-## 35              int_to(ps)am -1.28042971        0
-## 36        eff_to(ps)am_geno1  0.06503640        0
-## 37              int_to(ps)tp  0.84971531        0
-## 38        eff_to(ps)tp_geno1  1.31476064        0
-## 39              int_sen(pu)t  0.12261922        0
-## 40        eff_sen(pu)t_geno1 -0.21428702        0
-## 41        eff_sen(pu)t_type1 -0.16199708        0
-## 42        eff_sen(pu)t_type2  0.27326384        0
-## 43  eff_sen(pu)t_type1:geno1 -0.17433855        0
-## 44  eff_sen(pu)t_type2:geno1 -0.38772685        0
-## 45             int_sen(pu)t2  0.19504100        0
-## 46       eff_sen(pu)t2_geno1 -0.12665863        0
-## 47              int_sen(pn)t -0.17601916        0
-## 48        eff_sen(pn)t_geno1  0.38990873        0
-## 49             int_sen(pn)t2  0.59813078        0
-## 50       eff_sen(pn)t2_geno1  0.23126643        0
+##                         name   estimation stderror
+## 1              int_E(tmort)f  -1.61407225        0
+## 2        eff_E(tmort)f_geno1   1.76924690        0
+## 3        eff_E(tmort)f_type1   3.09375312        0
+## 4        eff_E(tmort)f_type2  -2.01975305        0
+## 5                  int_morta  -2.85979164        0
+## 6            eff_morta_geno1  -0.11709775        0
+## 7            eff_morta_type1  -0.11227553        0
+## 8            eff_morta_type2  -1.44167994        0
+## 9      eff_morta_type1:geno1  -1.23114783        0
+## 10     eff_morta_type2:geno1  -3.09239994        0
+## 11            int_RE(tmort)m   2.44840658        0
+## 12      eff_RE(tmort)m_geno1   0.47196430        0
+## 13                 int_mortp -11.17739166        0
+## 14           eff_mortp_geno1   0.77330862        0
+## 15              int_E(tmat)f  -3.49659884        0
+## 16        eff_E(tmat)f_geno1  -0.29600219        0
+## 17        eff_E(tmat)f_type1  -0.97126050        0
+## 18        eff_E(tmat)f_type2  -0.87890631        0
+## 19                  int_mata  -6.53200736        0
+## 20            eff_mata_geno1  -1.60242210        0
+## 21             int_RE(tmat)m  -0.78999412        0
+## 22       eff_RE(tmat)m_geno1  -2.23594222        0
+## 23       eff_RE(tmat)m_type1   0.22830285        0
+## 24       eff_RE(tmat)m_type2  -0.93856832        0
+## 25               int_E(tpon)  -1.46373216        0
+## 26         eff_E(tpon)_geno1   0.75753021        0
+## 27                 int_pontn  -1.70104705        0
+## 28           eff_pontn_geno1   0.92463730        0
+## 29             int_to(ps)int   2.39943963        0
+## 30       eff_to(ps)int_geno1   1.52002569        0
+## 31       eff_to(ps)int_type1  -1.31010124        0
+## 32       eff_to(ps)int_type2  -0.30124458        0
+## 33 eff_to(ps)int_type1:geno1  -0.91785124        0
+## 34 eff_to(ps)int_type2:geno1   3.89127282        0
+## 35              int_to(ps)am  -1.82879639        0
+## 36        eff_to(ps)am_geno1  -0.01768054        0
+## 37              int_to(ps)tp  -1.00065625        0
+## 38        eff_to(ps)tp_geno1   2.25162815        0
+## 39              int_sen(pu)t  -0.09797267        0
+## 40        eff_sen(pu)t_geno1  -0.25129721        0
+## 41        eff_sen(pu)t_type1  -0.12895472        0
+## 42        eff_sen(pu)t_type2  -1.00757632        0
+## 43  eff_sen(pu)t_type1:geno1  -1.51448212        0
+## 44  eff_sen(pu)t_type2:geno1  -4.39532588        0
+## 45             int_sen(pu)t2   2.36903700        0
+## 46       eff_sen(pu)t2_geno1   0.68606195        0
+## 47              int_sen(pn)t  -0.21548907        0
+## 48        eff_sen(pn)t_geno1   0.26013613        0
+## 49             int_sen(pn)t2  -0.79838532        0
+## 50       eff_sen(pn)t2_geno1  -0.06707355        0
 ## 
 ## parameter ranges/boundaries:
 ##          name    min       max
-## 1   E(tmort)f  1e+00 201.00000
-## 2       morta  1e-03  30.00000
+## 1   E(tmort)f  1e+00 301.00000
+## 2       morta  1e-03  20.00000
 ## 3  RE(tmort)m  1e-01   4.00000
 ## 4       mortp  1e-04   1.00000
 ## 5     propmal  1e-05   0.99999
 ## 6    E(tmat)f  1e+00 100.00000
-## 7        mata  1e-04  12.00000
+## 7        mata  1e-04  15.00000
 ## 8   RE(tmat)m  1e-01  10.00000
 ## 9     E(tpon)  1e-01 200.00000
 ## 10      ponta  1e-03  12.00000
@@ -4252,9 +4253,9 @@ param_ranges &lt;- data.frame(
 ## 14   to(ps)tp  1e-07  10.00000
 ## 15   sen(pu)t -2e+01  20.00000
 ## 16  sen(pu)t2 -2e+01  20.00000
-## 17   sen(pn)t -1e+01  10.00000
-## 18  sen(pn)t2 -1e+01  10.00000
-## 19   to(pupn) -1e+01  10.00000</code></pre>
+## 17   sen(pn)t -8e+00  10.00000
+## 18  sen(pn)t2 -8e+00  10.00000
+## 19   to(pupn) -8e+00  10.00000</code></pre>
 <p><br></p>
 </div>
 </div>
@@ -4263,60 +4264,60 @@ param_ranges &lt;- data.frame(
 <hr />
 <p>Get vector of estimation:</p>
 <pre class="r"><code>results$effects</code></pre>
-<pre><code>##                         name  estimation stderror
-## 1              int_E(tmort)f -3.38657460        0
-## 2        eff_E(tmort)f_geno1 -1.24158258        0
-## 3        eff_E(tmort)f_type1 -1.88395945        0
-## 4        eff_E(tmort)f_type2  1.25538757        0
-## 5                  int_morta -3.10362893        0
-## 6            eff_morta_geno1 -0.73123630        0
-## 7            eff_morta_type1 -1.24336397        0
-## 8            eff_morta_type2  0.07804682        0
-## 9      eff_morta_type1:geno1  0.21538453        0
-## 10     eff_morta_type2:geno1 -0.68092476        0
-## 11            int_RE(tmort)m  0.55750670        0
-## 12      eff_RE(tmort)m_geno1  0.47566210        0
-## 13                 int_mortp -2.31200946        0
-## 14           eff_mortp_geno1 -2.06144080        0
-## 15              int_E(tmat)f -2.99276921        0
-## 16        eff_E(tmat)f_geno1 -0.67597149        0
-## 17        eff_E(tmat)f_type1  0.47633050        0
-## 18        eff_E(tmat)f_type2 -1.21263620        0
-## 19                  int_mata -5.87801749        0
-## 20            eff_mata_geno1 -1.43110840        0
-## 21             int_RE(tmat)m -0.72223817        0
-## 22       eff_RE(tmat)m_geno1 -0.64528414        0
-## 23       eff_RE(tmat)m_type1  0.19909594        0
-## 24       eff_RE(tmat)m_type2  0.03745313        0
-## 25               int_E(tpon) -2.54289859        0
-## 26         eff_E(tpon)_geno1  0.18154853        0
-## 27                 int_pontn -2.78593927        0
-## 28           eff_pontn_geno1 -0.19533623        0
-## 29             int_to(ps)int -0.64853751        0
-## 30       eff_to(ps)int_geno1  0.42751918        0
-## 31       eff_to(ps)int_type1  0.15124852        0
-## 32       eff_to(ps)int_type2  0.77910887        0
-## 33 eff_to(ps)int_type1:geno1 -0.06326410        0
-## 34 eff_to(ps)int_type2:geno1  1.20679034        0
-## 35              int_to(ps)am -1.28042971        0
-## 36        eff_to(ps)am_geno1  0.06503640        0
-## 37              int_to(ps)tp  0.84971531        0
-## 38        eff_to(ps)tp_geno1  1.31476064        0
-## 39              int_sen(pu)t  0.12261922        0
-## 40        eff_sen(pu)t_geno1 -0.21428702        0
-## 41        eff_sen(pu)t_type1 -0.16199708        0
-## 42        eff_sen(pu)t_type2  0.27326384        0
-## 43  eff_sen(pu)t_type1:geno1 -0.17433855        0
-## 44  eff_sen(pu)t_type2:geno1 -0.38772685        0
-## 45             int_sen(pu)t2  0.19504100        0
-## 46       eff_sen(pu)t2_geno1 -0.12665863        0
-## 47              int_sen(pn)t -0.17601916        0
-## 48        eff_sen(pn)t_geno1  0.38990873        0
-## 49             int_sen(pn)t2  0.59813078        0
-## 50       eff_sen(pn)t2_geno1  0.23126643        0</code></pre>
+<pre><code>##                         name   estimation stderror
+## 1              int_E(tmort)f  -1.61407225        0
+## 2        eff_E(tmort)f_geno1   1.76924690        0
+## 3        eff_E(tmort)f_type1   3.09375312        0
+## 4        eff_E(tmort)f_type2  -2.01975305        0
+## 5                  int_morta  -2.85979164        0
+## 6            eff_morta_geno1  -0.11709775        0
+## 7            eff_morta_type1  -0.11227553        0
+## 8            eff_morta_type2  -1.44167994        0
+## 9      eff_morta_type1:geno1  -1.23114783        0
+## 10     eff_morta_type2:geno1  -3.09239994        0
+## 11            int_RE(tmort)m   2.44840658        0
+## 12      eff_RE(tmort)m_geno1   0.47196430        0
+## 13                 int_mortp -11.17739166        0
+## 14           eff_mortp_geno1   0.77330862        0
+## 15              int_E(tmat)f  -3.49659884        0
+## 16        eff_E(tmat)f_geno1  -0.29600219        0
+## 17        eff_E(tmat)f_type1  -0.97126050        0
+## 18        eff_E(tmat)f_type2  -0.87890631        0
+## 19                  int_mata  -6.53200736        0
+## 20            eff_mata_geno1  -1.60242210        0
+## 21             int_RE(tmat)m  -0.78999412        0
+## 22       eff_RE(tmat)m_geno1  -2.23594222        0
+## 23       eff_RE(tmat)m_type1   0.22830285        0
+## 24       eff_RE(tmat)m_type2  -0.93856832        0
+## 25               int_E(tpon)  -1.46373216        0
+## 26         eff_E(tpon)_geno1   0.75753021        0
+## 27                 int_pontn  -1.70104705        0
+## 28           eff_pontn_geno1   0.92463730        0
+## 29             int_to(ps)int   2.39943963        0
+## 30       eff_to(ps)int_geno1   1.52002569        0
+## 31       eff_to(ps)int_type1  -1.31010124        0
+## 32       eff_to(ps)int_type2  -0.30124458        0
+## 33 eff_to(ps)int_type1:geno1  -0.91785124        0
+## 34 eff_to(ps)int_type2:geno1   3.89127282        0
+## 35              int_to(ps)am  -1.82879639        0
+## 36        eff_to(ps)am_geno1  -0.01768054        0
+## 37              int_to(ps)tp  -1.00065625        0
+## 38        eff_to(ps)tp_geno1   2.25162815        0
+## 39              int_sen(pu)t  -0.09797267        0
+## 40        eff_sen(pu)t_geno1  -0.25129721        0
+## 41        eff_sen(pu)t_type1  -0.12895472        0
+## 42        eff_sen(pu)t_type2  -1.00757632        0
+## 43  eff_sen(pu)t_type1:geno1  -1.51448212        0
+## 44  eff_sen(pu)t_type2:geno1  -4.39532588        0
+## 45             int_sen(pu)t2   2.36903700        0
+## 46       eff_sen(pu)t2_geno1   0.68606195        0
+## 47              int_sen(pn)t  -0.21548907        0
+## 48        eff_sen(pn)t_geno1   0.26013613        0
+## 49             int_sen(pn)t2  -0.79838532        0
+## 50       eff_sen(pn)t2_geno1  -0.06707355        0</code></pre>
 <p>Get maximum likelihood found:</p>
 <pre class="r"><code>results$likelihood</code></pre>
-<pre><code>## [1] -249.1557</code></pre>
+<pre><code>## [1] -249.156</code></pre>
 </div>
 
 

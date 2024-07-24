@@ -15,7 +15,6 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   if (!is.logical(group_by_group)){stop("group_by_group must be a boolean")}
 
   # initialize results
-  print(file_path)
   lines <- readLines(file_path)
   results <- list()
 

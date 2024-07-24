@@ -1,7 +1,3 @@
-
-
-
-
 ##################################################################
 # MINIMALIST USE CASE
 ##################################################################
@@ -10,10 +6,7 @@ devtools::load_all() # load the package
 df <- read.csv(here::here("data/fake_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
-
-n <- ifelse(nlevels(df$type) == 0, 1, nlevels(df$type))
-nlevels(df$type)
-str(df$type)
+df$continuous <- as.numeric(df$continuous)
 
 clutchs <- c(
    "clutch_start1", "clutch_end1", "clutch_size1",
@@ -37,8 +30,13 @@ results <- lifelihood(
    delete_temp_files = FALSE
 )
 summary(results)
-results$likelihood
-results$effects$estimation
+#results$likelihood
+#results$effects$estimation
+
+
+
+
+##########################################
 
 fitted_data <- expand.grid(geno = factor(levels(df$geno)), type = factor(levels(df$type)))
 mat_expt_death <- model.matrix(~ geno + type, fitted_data)

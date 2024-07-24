@@ -121,7 +121,7 @@ results <- lifelihood(
   param_range_df = param_ranges,
   matclutch = FALSE,
   models = c("gam", "lgn", "wei"),
-
+  delete_temp_files = TRUE
 )
 summary(results)
 ```

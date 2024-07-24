@@ -95,11 +95,8 @@ lifelihood <- function(
       )
    }
 
-   # change group by group to 0 or 1
-   group_by_group_int <- as.integer(group_by_group)
-
    # create parameters range file
-   param_range_path <- 'temp_param_range_path.txt'
+   param_range_path <- here::here('temp_param_range_path.txt')
    path_param_range <- write_param_range(data = param_range_df, file_name = param_range_path)
    path_param_range <- here::here(param_range_path)
 
@@ -122,6 +119,7 @@ lifelihood <- function(
    data_path <- here::here(input_path)
 
    # create output file
+   group_by_group_int <- as.integer(group_by_group)
    execute_bin(
       data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
       fitness, r, seeds[1], seeds[2], seeds[3], seeds[4], ntr, nst, To, Tf, climbrate, precision
@@ -136,10 +134,9 @@ lifelihood <- function(
 
    # delete intermediate files after execution
    if (delete_temp_files){
-      print('here')
-      # file.remove(param_range_path)
-      # file.remove(data_path)
-      # file.remove(output_path)
+      file.remove(param_range_path)
+      file.remove(data_path)
+      file.remove(output_path)
    }
 
    # give output to user

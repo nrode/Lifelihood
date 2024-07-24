@@ -94,7 +94,8 @@ format_dataframe_to_txt <- function(
    matclutch <- ifelse(matclutch, "true", "false")
    n_cat_covariates <- c()
    for (cov in covariates){
-      n_cat_covariates <- c(n_cat_covariates, nrow(unique(df[cov])))
+      n_cat <- ifelse(nlevels(df[[cov]]) == 0, 1, nlevels(df[[cov]]))
+      n_cat_covariates <- c(n_cat_covariates, n_cat)
    }
    data_struct_info <- c(
       "*******data struct****",
@@ -105,7 +106,7 @@ format_dataframe_to_txt <- function(
    formatted_rows <- c(data_struct_info, formatted_rows)
 
    # write the formatted rows to the output file
-   path_to_data <- "temp_file_data_lifelihood.txt"
+   path_to_data <- here::here("temp_file_data_lifelihood.txt")
    writeLines(formatted_rows, con = path_to_data)
 
    return(path_to_data)
