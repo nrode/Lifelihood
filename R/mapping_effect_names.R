@@ -2,6 +2,7 @@
 #'
 #' @title Get Mapping for Element
 #'
+#' @keywords internal
 #' @description This function takes an element as input and returns its corresponding mapping from a predefined list. If the element is not found in the mapping, it throws an error.
 #' @param element A character string representing the element to be mapped.
 #' @return A named list containing the mapped value for the input element.

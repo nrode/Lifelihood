@@ -120,6 +120,8 @@ lifelihood <- function(
 
    # create output file
    group_by_group_int <- as.integer(group_by_group)
+   print(data_path)
+   print(path_param_range)
    execute_bin(
       data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
       fitness, r, seeds[1], seeds[2], seeds[3], seeds[4], ntr, nst, To, Tf, climbrate, precision
