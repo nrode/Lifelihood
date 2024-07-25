@@ -1330,7 +1330,7 @@ begin
 setlength(suaux.vp,11);
 with FD.paramdescript[0] do
       begin
-        name := 'E(tmort)f';
+        name := 'expt_death'; // 'E(tmort)f'
         minBound := 1;
         maxBound := 200;
      //   value := 15;
@@ -1338,7 +1338,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[1] do                 { faire distingo entre weibull et ln }
       begin
-        name := 'morta';
+        name := 'survival_shape'; // 'morta'
         minBound := 0.001;
         maxBound := 30;
      //   value := 1;
@@ -1347,7 +1347,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[2] do
       begin
-        name := 'RE(tmort)m';
+        name := 'ratio_expt_death'; // 'RE(tmort)m'
         minBound := 0.1;
         maxBound := 4;
       //  value := 1;
@@ -1355,7 +1355,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[3] do
       begin
-        name := 'mortp';
+        name := 'prob_death'; // 'mortp'
         minBound := 0.0001;
         maxBound := 1;
       //  value := (minBound + maxBound) / 2;
@@ -1363,7 +1363,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[4] do
       begin
-        name := 'propmal';
+        name := 'sex_ratio'; // 'propmal'
         minBound := 0.00001;
         maxBound := 0.99999;
      //   value := 0.5;
@@ -1371,7 +1371,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[5] do
       begin
-        name := 'E(tmat)f';
+        name := 'expt_maturity'; // 'E(tmat)f'
         minBound := 1;
         maxBound := 100;
       //  value := 30;
@@ -1379,7 +1379,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[6] do
       begin
-        name := 'mata';
+        name := 'maturity_shape'; // 'mata'
         minBound := 0.0001;
         maxBound := 12;
      //   value := 1;
@@ -1387,7 +1387,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[7] do
       begin
-        name := 'RE(tmat)m';
+        name := 'ratio_expt_maturity'; // 'RE(tmat)m'
         minBound := 0.1;
         maxBound := 10;
       //  value := 1;
@@ -1395,7 +1395,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[8] do
       begin
-        name := 'E(tpon)';
+        name := 'expt_reproduction'; // 'E(tpon)'
         minBound := 0.1;
         maxBound := 200;
      //   value := 40;
@@ -1403,7 +1403,7 @@ with FD.paramdescript[0] do
 
       with FD.paramdescript[9] do
       begin
-        name := 'ponta';
+        name := 'reproduction_shape'; // 'ponta'
         minBound := 0.001;
         maxBound := 12;
     //    value := 1;
@@ -1427,7 +1427,7 @@ if fitness_repar=1
 
   with FD.paramdescript[11] do
       begin
-        name := 'to(ps)int';            //tradeoff ponte -> surv intercept (evenement ponte augmente le hazard de survie de cette quantité)
+        name := 'increase_death_hazard'; // 'to(ps)int'            //tradeoff ponte -> surv intercept (evenement ponte augmente le hazard de survie de cette quantité)
         minBound := 0.00001;
         maxBound := 10;
      //   value := 0.5;
@@ -1435,7 +1435,7 @@ if fitness_repar=1
 
   with FD.paramdescript[12] do         //tradeoff ponte -> surv amortissement du precedent avec le temps
       begin
-        name := 'to(ps)am';
+        name := 'tof_reduction_date'; // 'to(ps)am'
         minBound := 0.0000001;
         maxBound := 10;
      //   value := 0.5;
@@ -1443,7 +1443,7 @@ if fitness_repar=1
 
   with FD.paramdescript[13] do          //tradeoff ponte -> surv , augmentation du tradeoff en fonction linéaire de la taille ponte en question
       begin
-        name := 'to(ps)tp';
+        name := 'increase_tof_n_offspring'; // 'to(ps)tp'
         minBound := 0.0000001;
         maxBound := 10;
      //   value := 0.5;
@@ -1451,7 +1451,7 @@ if fitness_repar=1
 
   with FD.paramdescript[14] do
       begin
-        name := 'sen(pu)t';             //senescence de hazard ponte, effet lineaire du temps post-maturité
+        name := 'lin_decrease_hazard';  // 'sen(pu)t'           //senescence de hazard ponte, effet lineaire du temps post-maturité
         minBound := -20;
         maxBound := 20;
      //   value := 0.5;
@@ -1459,7 +1459,7 @@ if fitness_repar=1
 
   with FD.paramdescript[15] do          //senescence de hazard ponte, effet quadratique du temps post-maturité
       begin
-        name := 'sen(pu)t2';
+        name := 'quad_senescence'; // 'sen(pu)t2'
         minBound := -20;
         maxBound := 20;
      //   value := 0.5;
@@ -1467,7 +1467,7 @@ if fitness_repar=1
 
   with FD.paramdescript[16] do        //senescence de taille ponte, effet linéaire du temps post-maturité
       begin
-        name := 'sen(pn)t';
+        name := 'quad_decrease_hazard'; // 'sen(pn)t'
         minBound := -10;
         maxBound := 10;
      //   value := 0.5;
@@ -1475,7 +1475,7 @@ if fitness_repar=1
 
   with FD.paramdescript[17] do       //senescence de taille ponte, effet quadratique du temps post-maturité
       begin
-        name := 'sen(pn)t2';
+        name := 'quad_change_n_offspring'; // 'sen(pn)t2'
         minBound := -10;
         maxBound := 10;
      //   value := 0.5;
@@ -1483,7 +1483,7 @@ if fitness_repar=1
 
  with FD.paramdescript[18] do         //tradeoff intervale ponte i-1 qui change taille ponte i
       begin
-        name := 'to(pupn)';
+        name := 'tof_n_offspring'; // 'to(pupn)'
         minBound := -10;
         maxBound := 10;
      //   value := 0.5;

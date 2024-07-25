@@ -30,7 +30,7 @@ execute_bin <- function(
    group_by_group=0,
    MCMC=0,
    interval=25,
-   SEcal=0,
+   SEcal=1,
    saveprobevent=0,
    fitness=0,
    r=0,

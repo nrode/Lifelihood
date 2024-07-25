@@ -44,9 +44,9 @@ Assuming you have 2 covariables in your dataset (named `covar1` and `covar2`), f
 
 - `not_fitted`: do not estimate this parameter.
 - `1`: only fit the intercept.
-- `1 + covar1`: fit the intercept and the parameter of `covar1`.
-- `1 + covar1 + covar2`: fit the intercept, the parameter of `covar1` and the parameter of `covar1`.
-- `1 + covar1 + covar2 + covar1*covar2`: fit the intercept, the parameter of `covar1`, the parameter of `covar1` and the interaction between `covar1` and `covar2`.
+- `covar1`: fit the intercept and the parameter of `covar1`.
+- `covar1 + covar2`: fit the intercept, the parameter of `covar1` and the parameter of `covar1`.
+- `covar1 + covar2 + covar1*covar2`: fit the intercept, the parameter of `covar1`, the parameter of `covar1` and the interaction between `covar1` and `covar2`.
 
 _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they should be the name of one of your columns in your dataset._
 

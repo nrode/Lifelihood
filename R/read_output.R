@@ -26,7 +26,6 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   ratiomax <- parse_output(lines, "ratio_max", group_by_group)
 
   # store results
-  results$datafile <- file_path
   results$seeds <- seeds
   results$likelihood <- likelihood
   results$effects <- effects

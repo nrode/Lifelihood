@@ -3,7 +3,7 @@
 ##################################################################
 rm(list = ls())
 devtools::load_all() # load the package
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data/fake_sample_numeric.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 
@@ -28,6 +28,7 @@ results <- lifelihood(
    models = c("wei", "lgn", "gam"),
    delete_temp_files = FALSE
 )
+results$effects
 
 link <- function(estimate, min_and_max) {
    min <- min_and_max[1]
