@@ -39,6 +39,8 @@ Load the dataset from `.csv` file:
 ```{r}
 # input data
 df <- read.csv(here::here('data/fake_sample.csv'))
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
 ```
 
 ```{r, echo=FALSE}
@@ -121,7 +123,7 @@ results <- lifelihood(
   param_range_df = param_ranges,
   matclutch = FALSE,
   models = c("gam", "lgn", "wei"),
-
+  delete_temp_files = TRUE
 )
 summary(results)
 ```

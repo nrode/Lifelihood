@@ -1,38 +1,47 @@
-#' @name format_config
-#' @keywords internal
-#' @title (internal function) Read the configuration file and format it for the input file.
-#' @description Use the configuration file to create the well formatted vector of strings that will be put under "***modele***" in the input file, excluding the distribution law.
-#' @param path_config Location of the configuration file.
-#' @param covariates Vector containing the names of the covariates.
-#' @return Vector of string to add in the input file
-#' @export
-format_config <- function(path_config, covariates){
-   
+format_config <- function(path_config, covariates) {
    # read the yaml file
-   if (!file.exists(path_config)){stop(paste("Configuration file", path_config, "not found"))}
-   config <- yaml::yaml.load_file(path_config)
+   if (!file.exists(path_config)) {
+      stop(paste("Configuration file", path_config, "not found"))
+   }
+   config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
+
+   # function to safely access elements in config file
+   safe_access <- function(config, path) {
+      result <- tryCatch(
+         {
+            Reduce(`[[`, path, config)
+         },
+         error = function(e) {
+            stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
+         }
+      )
+      if (is.null(result)) {
+         stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
+      }
+      result
+   }
 
    # get mortality, maturity and reproduction config
-   formatted_config = c(
-      paste("expt_death", R_to_lifelihood(config$mortality$expt_death, covariates)),
-      paste("survival_shape", R_to_lifelihood(config$mortality$survival_shape, covariates)),
-      paste("ratio_expt_death", R_to_lifelihood(config$mortality$ratio_expt_death, covariates)),
-      paste("prob_death", R_to_lifelihood(config$mortality$prob_death, covariates)),
-      paste("sex_ratio", R_to_lifelihood(config$mortality$sex_ratio, covariates)),
-      paste("expt_maturity", R_to_lifelihood(config$maturity$expt_maturity, covariates)),
-      paste("maturity_shape", R_to_lifelihood(config$maturity$maturity_shape, covariates)),
-      paste("ratio_expt_maturity", R_to_lifelihood(config$maturity$ratio_expt_maturity, covariates)),
-      paste("expt_reproduction", R_to_lifelihood(config$reproduction$expt_reproduction, covariates)),
-      paste("reproduction_shape", R_to_lifelihood(config$reproduction$reproduction_shape, covariates)),
-      paste("n_offspring", R_to_lifelihood(config$reproduction$n_offspring, covariates)),
-      paste("increase_death_hazard", R_to_lifelihood(config$reproduction$increase_death_hazard, covariates)),
-      paste("tof_reduction_date", R_to_lifelihood(config$reproduction$tof_reduction_date, covariates)),
-      paste("increase_tof_n_offspring", R_to_lifelihood(config$reproduction$increase_tof_n_offspring, covariates)),
-      paste("lin_decrease_hazard", R_to_lifelihood(config$reproduction$lin_decrease_hazard, covariates)),
-      paste("quad_decrease_hazard", R_to_lifelihood(config$reproduction$quad_decrease_hazard, covariates)),
-      paste("lin_change_n_offspring", R_to_lifelihood(config$reproduction$lin_change_n_offspring, covariates)),
-      paste("quad_change_n_offspring", R_to_lifelihood(config$reproduction$quad_change_n_offspring, covariates)),
-      paste("tof_n_offspring", R_to_lifelihood(config$reproduction$tof_n_offspring, covariates))
+   formatted_config <- c(
+      paste("expt_death", R_to_lifelihood(safe_access(config, c("mortality", "expt_death")), covariates)[1]),
+      paste("survival_shape", R_to_lifelihood(safe_access(config, c("mortality", "survival_shape")), covariates)[1]),
+      paste("ratio_expt_death", R_to_lifelihood(safe_access(config, c("mortality", "ratio_expt_death")), covariates)[1]),
+      paste("prob_death", R_to_lifelihood(safe_access(config, c("mortality", "prob_death")), covariates)[1]),
+      paste("sex_ratio", R_to_lifelihood(safe_access(config, c("mortality", "sex_ratio")), covariates)[1]),
+      paste("expt_maturity", R_to_lifelihood(safe_access(config, c("maturity", "expt_maturity")), covariates)[1]),
+      paste("maturity_shape", R_to_lifelihood(safe_access(config, c("maturity", "maturity_shape")), covariates)[1]),
+      paste("ratio_expt_maturity", R_to_lifelihood(safe_access(config, c("maturity", "ratio_expt_maturity")), covariates)[1]),
+      paste("expt_reproduction", R_to_lifelihood(safe_access(config, c("reproduction", "expt_reproduction")), covariates)[1]),
+      paste("reproduction_shape", R_to_lifelihood(safe_access(config, c("reproduction", "reproduction_shape")), covariates)[1]),
+      paste("n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "n_offspring")), covariates)[1]),
+      paste("increase_death_hazard", R_to_lifelihood(safe_access(config, c("reproduction", "increase_death_hazard")), covariates)[1]),
+      paste("tof_reduction_date", R_to_lifelihood(safe_access(config, c("reproduction", "tof_reduction_date")), covariates)[1]),
+      paste("increase_tof_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "increase_tof_n_offspring")), covariates)[1]),
+      paste("lin_decrease_hazard", R_to_lifelihood(safe_access(config, c("reproduction", "lin_decrease_hazard")), covariates)[1]),
+      paste("quad_decrease_hazard", R_to_lifelihood(safe_access(config, c("reproduction", "quad_decrease_hazard")), covariates)[1]),
+      paste("lin_change_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "lin_change_n_offspring")), covariates)[1]),
+      paste("quad_change_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "quad_change_n_offspring")), covariates)[1]),
+      paste("tof_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "tof_n_offspring")), covariates)[1])
    )
 
    return(formatted_config)
@@ -59,6 +68,7 @@ R_to_lifelihood <- function(R_format, covariates) {
    } else {
       # get a list of each covariable (separated by '+')
       used_covariables <- trimws(unlist(strsplit(R_format, split = "\\+")))
+      n_element_parameter <- length(used_covariables)
 
       # initiate a list of all covariables
       all_covariables <- c()
@@ -96,5 +106,5 @@ R_to_lifelihood <- function(R_format, covariates) {
       }
    }
 
-   return(lifelihood_format)
+   return(c(lifelihood_format, n_element_parameter))
 }

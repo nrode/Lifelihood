@@ -54,7 +54,7 @@ lifelihood <- function(
    group_by_group=FALSE,
    MCMC=0,
    interval=25,
-   SEcal=0,
+   SEcal=1,
    saveprobevent=0,
    fitness=0,
    r=0,
@@ -86,25 +86,22 @@ lifelihood <- function(
    if(is.null(param_range_df)){
       message("Using default parameter ranges/boundaries")
       param_range_df <- data.frame(
-         param = c("E(tmort)f", "morta", "RE(tmort)m", "mortp", "propmal", "E(tmat)f", "mata", 
-                     "RE(tmat)m", "E(tpon)", "ponta", "pontn", "to(ps)int", "to(ps)am", "to(ps)tp", 
-                     "sen(pu)t", "sen(pu)t2", "sen(pn)t", "sen(pn)t2", "to(pupn)", "W"),
+         param = c("expt_death", "survival_shape", "ratio_expt_death", "prob_death", "sex_ratio", "expt_maturity", "maturity_shape", 
+                     "ratio_expt_maturity", "expt_reproduction", "reproduction_shape", "pontn", "increase_death_hazard", "tof_reduction_date", "increase_tof_n_offspring", 
+                     "lin_decrease_hazard", "quad_senescence", "quad_decrease_hazard", "quad_change_n_offspring", "tof_n_offspring", "W"),
          min = c(1, 0.001, 0.1, 0.0001, 0.00001, 1, 0.0001, 0.1, 0.1, 0.001, 1, 0.00001, 
                   0.0000001, 0.0000001, -20, -20, -10, -10, -10, 0.001),
          max = c(201, 30, 4, 1, 0.99999, 100, 12, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1000)
       )
    }
 
-   # change group by group to 0 or 1
-   group_by_group_int <- as.integer(group_by_group)
-
    # create parameters range file
-   file_param_range <- 'temp_file_param_range.txt'
-   path_param_range <- write_param_range(data = param_range_df, file_name = file_param_range)
-   path_param_range <- here::here(file_param_range)
+   param_range_path <- here::here('temp_param_range_path.txt')
+   path_param_range <- write_param_range(data = param_range_df, file_name = param_range_path)
+   path_param_range <- here::here(param_range_path)
 
    # create data file
-   path_to_txt <- format_dataframe_to_txt(
+   input_path <- format_dataframe_to_txt(
       df = df,
       sex = sex,
       sex_start = sex_start,
@@ -119,9 +116,10 @@ lifelihood <- function(
       models = models,
       path_config = path_config
    )
-   data_path <- here::here(path_to_txt)
+   data_path <- here::here(input_path)
 
    # create output file
+   group_by_group_int <- as.integer(group_by_group)
    execute_bin(
       data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
       fitness, r, seeds[1], seeds[2], seeds[3], seeds[4], ntr, nst, To, Tf, climbrate, precision
@@ -129,16 +127,16 @@ lifelihood <- function(
 
    # get path to output file
    filename_output <- sub("\\.txt$", "", data_path)
-   path_to_output <- paste0(filename_output, ".out")
+   output_path <- paste0(filename_output, ".out")
 
    # read output file
-   results <- read_output_from_file(path_to_output, group_by_group = group_by_group)
+   results <- read_output_from_file(output_path, group_by_group = group_by_group)
 
    # delete intermediate files after execution
    if (delete_temp_files){
-      file.remove(file_param_range)
+      file.remove(param_range_path)
       file.remove(data_path)
-      file.remove(path_to_output)
+      file.remove(output_path)
    }
 
    # give output to user

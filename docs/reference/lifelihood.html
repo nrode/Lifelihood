@@ -82,7 +82,8 @@
 <span>  precision <span class="op">=</span> <span class="fl">0.001</span>,</span>
 <span>  right_censoring_date <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  critical_age <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  ratiomax <span class="op">=</span> <span class="fl">10</span></span>
+<span>  ratiomax <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  delete_temp_files <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -214,6 +215,10 @@
 
 <dt>ratiomax</dt>
 <dd><p>Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)</p></dd>
+
+
+<dt>delete_temp_files</dt>
+<dd><p>Indicates whether temporary files should be deleted. TRUE by default and recommended.</p></dd>
 
 </dl></div>
 

@@ -37,7 +37,16 @@
     <loc>/reference/R_to_lifelihood.html</loc>
   </url>
   <url>
+    <loc>/reference/SurvWei.html</loc>
+  </url>
+  <url>
+    <loc>/reference/compute_mortality_rate.html</loc>
+  </url>
+  <url>
     <loc>/reference/delete_param_range.html</loc>
+  </url>
+  <url>
+    <loc>/reference/delink.html</loc>
   </url>
   <url>
     <loc>/reference/detect_os.html</loc>
@@ -61,6 +70,9 @@
     <loc>/reference/get_likelihood.html</loc>
   </url>
   <url>
+    <loc>/reference/get_mapping.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_param_ranges.html</loc>
   </url>
   <url>
@@ -76,6 +88,12 @@
     <loc>/reference/lifelihood.html</loc>
   </url>
   <url>
+    <loc>/reference/link.html</loc>
+  </url>
+  <url>
+    <loc>/reference/make_design_matrix.html</loc>
+  </url>
+  <url>
     <loc>/reference/parse_output.html</loc>
   </url>
   <url>
@@ -83,6 +101,12 @@
   </url>
   <url>
     <loc>/reference/plot_life_history.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_mortality_rate.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pred_mortality_rate.html</loc>
   </url>
   <url>
     <loc>/reference/read_output_from_file.html</loc>
