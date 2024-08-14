@@ -1,3 +1,5 @@
+#' @name format_config
+#' @export
 format_config <- function(path_config, covariates) {
    # read the yaml file
    if (!file.exists(path_config)) {

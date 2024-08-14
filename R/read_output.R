@@ -29,6 +29,8 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results$seeds <- seeds
   results$likelihood <- likelihood
   results$effects <- effects
+  results$effects$metric <- sapply(results$effects$name, map_metric_name)
+  results$effects$kind <- sapply(results$effects$name, find_parameter_kind)
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group

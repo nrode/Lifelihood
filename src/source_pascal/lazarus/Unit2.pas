@@ -1412,7 +1412,7 @@ with FD.paramdescript[0] do
 if fitness_repar=1
   then  with FD.paramdescript[10] do
         begin
-        name := 'W';
+        name := 'fitness'; // 'W'
         minBound := 0.0001;
         maxBound := 1000;
      //   value := 20;

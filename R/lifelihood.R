@@ -11,7 +11,7 @@
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
+#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param covariates Vector containing the names of the covariates.
 #' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument.
 #' @param matclutch_size Column name containing the size of the clutch for the maturity event. Only used (and required) if `matclutch` is `TRUE`.
@@ -19,7 +19,7 @@
 #' @param group_by_group Option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
-#' @param SEcal Compute the standard error of each parameter using the Hessian matrix
+#' @param SEcal If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
@@ -46,7 +46,7 @@ lifelihood <- function(
    clutchs,
    death_start,
    death_end,
-   models,
+   model_specs,
    covariates,
    matclutch=FALSE,
    matclutch_size=NULL,
@@ -54,7 +54,7 @@ lifelihood <- function(
    group_by_group=FALSE,
    MCMC=0,
    interval=25,
-   SEcal=1,
+   SEcal=FALSE,
    saveprobevent=0,
    fitness=0,
    r=0,
@@ -71,10 +71,10 @@ lifelihood <- function(
    delete_temp_files=TRUE
 ){
 
-   # ensure `models` has the right format and values
-   valid_models <- c("wei", "gam", "lgn", "exp")
-   if (length(models) != 3 || !all(models %in% valid_models)) {
-      stop("'models' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
+   # ensure `model_specs` has the right format and values
+   valid_model_specs <- c("wei", "gam", "lgn", "exp")
+   if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
+      stop("'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
    }
 
    # ensure that `matclutch_size` is defined when `matclutch` is `TRUE`
@@ -84,20 +84,29 @@ lifelihood <- function(
 
    # if param_range_df is NULL, use default values
    if(is.null(param_range_df)){
-      message("Using default parameter ranges/boundaries")
-      param_range_df <- data.frame(
-         param = c("expt_death", "survival_shape", "ratio_expt_death", "prob_death", "sex_ratio", "expt_maturity", "maturity_shape", 
-                     "ratio_expt_maturity", "expt_reproduction", "reproduction_shape", "pontn", "increase_death_hazard", "tof_reduction_date", "increase_tof_n_offspring", 
-                     "lin_decrease_hazard", "quad_senescence", "quad_decrease_hazard", "quad_change_n_offspring", "tof_n_offspring", "W"),
-         min = c(1, 0.001, 0.1, 0.0001, 0.00001, 1, 0.0001, 0.1, 0.1, 0.001, 1, 0.00001, 
-                  0.0000001, 0.0000001, -20, -20, -10, -10, -10, 0.001),
-         max = c(201, 30, 4, 1, 0.99999, 100, 12, 10, 200, 12, 50, 10, 10, 10, 20, 20, 10, 10, 10, 1000)
+
+      max_death <- max(df[death_end], na.rm = TRUE) * 2
+      max_maturity <- max(df[maturity_end], na.rm = TRUE) * 2
+      max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs])))), na.rm = TRUE) * 2
+
+      param_range_df <- create_default_boundaries(
+         model_specs = model_specs,
+         max_death = max_death,
+         max_maturity = max_maturity,
+         max_clutch = max_clutch
       )
    }
 
    # create parameters range file
    param_range_path <- here::here('temp_param_range_path.txt')
-   path_param_range <- write_param_range(data = param_range_df, file_name = param_range_path)
+   write.table(
+      param_range_df,
+      file = param_range_path,
+      sep = "\t",
+      row.names = FALSE,
+      col.names = FALSE,
+      quote = FALSE
+   )
    path_param_range <- here::here(param_range_path)
 
    # create data file
@@ -113,7 +122,7 @@ lifelihood <- function(
       death_end = death_end,
       covariates = covariates,
       matclutch = matclutch,
-      models = models,
+      model_specs = model_specs,
       path_config = path_config
    )
    data_path <- here::here(input_path)
@@ -138,6 +147,9 @@ lifelihood <- function(
       file.remove(data_path)
       file.remove(output_path)
    }
+
+   # check if estimation are too close from boundaries
+   check_valid_estimation(results_lifelihood = results)
 
    # give output to user
    return(results)
@@ -164,9 +176,5 @@ summary.LifelihoodResults <- function(object, ...) {
 
    cat("effects:\n")
    print(object$effects)
-   cat("\n")
-
-   cat("parameter ranges/boundaries:\n")
-   print(object$parameter_ranges)
    cat("\n")
 }

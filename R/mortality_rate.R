@@ -1,33 +1,3 @@
-#'@title Compute and visualize predicted mortality rate
-#' 
-#' @name link
-#' @keywords internal
-#' @export
-link <- function(estimate, min_and_max) {
-   min <- min_and_max[1]
-   max <- min_and_max[2]
-   return(min + (max - min) / (1 + exp(-estimate)))
-}
-
-#' @title Compute and visualize predicted mortality rate
-#' @name delink
-#' @keywords internal
-#' @export
-delink <- function(obs, min_and_max) {
-   min <- min_and_max[1]
-   max <- min_and_max[2]
-   return(log((obs - min) / (max - obs)))
-}
-
-#' @title Compute and visualize predicted mortality rate
-#' @name SurvWei
-#' @keywords internal
-#' @export
-SurvWei <- function(t, ExpLong, Shape) {
-   Scale <- ExpLong / gamma(1 + 1 / Shape)
-   exp(-(t / Scale)^Shape)
-}
-
 #' @title Compute and visualize predicted mortality rate
 #' @name make_design_matrix
 #' @keywords internal
@@ -70,12 +40,18 @@ make_design_matrix <- function(covariates, data) {
 #' @name pred_mortality_rate
 #' @export
 pred_mortality_rate <- function(
-    results_lifelihood,
-    covariates,
-    data,
-    intervals = seq(0, 20, 5)) {
+   results_lifelihood,
+   covariates,
+   newdata,
+   intervals
+) {
+
+   if (!inherits(results, "LifelihoodResults")){
+      stop("Error: 'results_lifelihood' must be of class 'LifelihoodResults'.")
+   }
+
    # get the design matrices
-   design_matrices <- make_design_matrix(covariates, df)
+   design_matrices <- make_design_matrix(covariates, newdata)
    fitted_data <- design_matrices$fitted_data
    mat_expt_death <- design_matrices$mat_expt_death
    mat_survival_shape <- design_matrices$mat_survival_shape
@@ -138,16 +114,17 @@ pred_mortality_rate <- function(
 #' @name plot_mortality_rate
 #' @export
 plot_mortality_rate <- function(
-    results_lifelihood,
-    covariates,
-    data,
-    intervals,
-    use_log_x = FALSE,
-    use_log_y = FALSE) {
+   results_lifelihood,
+   covariates,
+   newdata,
+   intervals,
+   use_log_x = FALSE,
+   use_log_y = FALSE
+) {
    predicted_mortality_rate <- pred_mortality_rate(
       results_lifelihood = results_lifelihood,
       covariates = covariates,
-      data = df,
+      newdata = newdata,
       intervals = intervals
    )
    intervals <- predicted_mortality_rate$mid_interval
@@ -165,5 +142,5 @@ plot_mortality_rate <- function(
       y_values <- mortality_rate
    }
 
-   plot(x = intervals, y = mortality_rate, type = "l")
+   plot(x = intervals, y = mortality_rate, type = "pch")
 }

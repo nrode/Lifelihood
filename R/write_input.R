@@ -25,7 +25,7 @@
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
-#' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
+#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param path_config Path to the configuration file (YAML).
 #' @return NULL
 #' @export
@@ -42,7 +42,7 @@ format_dataframe_to_txt <- function(
    death_start,
    death_end,
    covariates,
-   models,
+   model_specs,
    path_config
 ){
 
@@ -85,7 +85,7 @@ format_dataframe_to_txt <- function(
    config_file_info <- format_config(path_config = path_config, covariates = covariates)
    model_info <- c(
       "****modele******",
-      paste(models, collapse = " "),
+      paste(model_specs, collapse = " "),
       config_file_info
    )
    formatted_rows <- c(model_info, formatted_rows)

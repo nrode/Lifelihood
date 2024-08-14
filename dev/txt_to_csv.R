@@ -24,7 +24,7 @@ txt_to_csv <- function(txt_path, csv_path = NULL){
    if (!is.null(csv_path)){
       csv_path <- paste(sub("\\.txt$", "", txt_path), ".out")
    }
-   #write.csv(formatted_rows)
+   write.csv(formatted_rows)
    return(formatted_rows)
 }
 
@@ -71,4 +71,4 @@ line_to_row <- function(line, covariates){
 }
 
 
-x <- txt_to_csv("temp_file_data_lifelihood.txt")
+txt_to_csv("temp_file_data_lifelihood.txt")
