@@ -27,7 +27,7 @@ lifelihood(
   saveprobevent = 0,
   fitness = 0,
   r = 0,
-  seeds = c(12, 13, 14, 15),
+  seeds = NULL,
   ntr = 2,
   nst = 2,
   To = 50,
@@ -85,7 +85,7 @@ lifelihood(
 
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
-\item{seeds}{Numbers used to reproduce results (same seeds = same results)}
+\item{seeds}{Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.}
 
 \item{ntr}{Number of thread for the paralelisation ?}
 

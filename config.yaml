@@ -16,7 +16,7 @@ reproduction:
   quad_decrease_hazard: geno
   lin_change_n_offspring: geno
   quad_change_n_offspring: geno
-  tof_n_offspring: not_fitted
+  tof_n_offspring: 1
 maturity:
   expt_maturity: geno + type
   maturity_shape: geno

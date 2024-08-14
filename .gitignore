@@ -7,4 +7,5 @@
 .httr-oauth
 .quarto
 *.tar.gz
+lifelihood_*/
 sandbox.R
