@@ -24,7 +24,6 @@ results <- lifelihood(
    seeds = c(11, 22, 33, 44),
    model_specs = c("wei", "lgn", "exp"),
    delete_temp_files = FALSE,
-   SEcal = FALSE
 )
 results$effects
 summary(results)

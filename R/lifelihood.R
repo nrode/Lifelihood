@@ -23,7 +23,7 @@
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
-#' @param seeds Numbers used to reproduce results (same seeds = same results)
+#' @param seeds Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.
 #' @param ntr Number of thread for the paralelisation ?
 #' @param nst TBD - Check the actual meaning
 #' @param To Initial temperature for the simulated annealing
@@ -36,41 +36,39 @@
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
 #' @export
 lifelihood <- function(
-   df,
-   path_config,
-   sex,
-   sex_start,
-   sex_end,
-   maturity_start,
-   maturity_end,
-   clutchs,
-   death_start,
-   death_end,
-   model_specs,
-   covariates,
-   matclutch=FALSE,
-   matclutch_size=NULL,
-   param_range_df=NULL,
-   group_by_group=FALSE,
-   MCMC=0,
-   interval=25,
-   SEcal=FALSE,
-   saveprobevent=0,
-   fitness=0,
-   r=0,
-   seeds=c(12, 13, 14, 15),
-   ntr=2,
-   nst=2,
-   To=50,
-   Tf=1,
-   climbrate=1,
-   precision=0.001,
-   right_censoring_date=1000,
-   critical_age=20,
-   ratiomax=10,
-   delete_temp_files=TRUE
-){
-
+    df,
+    path_config,
+    sex,
+    sex_start,
+    sex_end,
+    maturity_start,
+    maturity_end,
+    clutchs,
+    death_start,
+    death_end,
+    model_specs,
+    covariates,
+    matclutch = FALSE,
+    matclutch_size = NULL,
+    param_range_df = NULL,
+    group_by_group = FALSE,
+    MCMC = 0,
+    interval = 25,
+    SEcal = FALSE,
+    saveprobevent = 0,
+    fitness = 0,
+    r = 0,
+    seeds = NULL,
+    ntr = 2,
+    nst = 2,
+    To = 50,
+    Tf = 1,
+    climbrate = 1,
+    precision = 0.001,
+    right_censoring_date = 1000,
+    critical_age = 20,
+    ratiomax = 10,
+    delete_temp_files = TRUE) {
    # ensure `model_specs` has the right format and values
    valid_model_specs <- c("wei", "gam", "lgn", "exp")
    if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
@@ -78,13 +76,21 @@ lifelihood <- function(
    }
 
    # ensure that `matclutch_size` is defined when `matclutch` is `TRUE`
-   if (isTRUE(matclutch) & is.null(matclutch_size)){
+   if (isTRUE(matclutch) & is.null(matclutch_size)) {
       stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
    }
 
-   # if param_range_df is NULL, use default values
-   if(is.null(param_range_df)){
+   # generate seeds
+   if (is.null(seeds)) {
+      seeds <- sample(1:100, 4, replace = T)
+   }
 
+   # Create temporary directory
+   temp_dir <- file.path(getwd(), paste0("lifelihood_", paste(seeds, collapse = "_")))
+   dir.create(temp_dir)
+
+   # if param_range_df is NULL, use default values
+   if (is.null(param_range_df)) {
       max_death <- max(df[death_end], na.rm = TRUE) * 2
       max_maturity <- max(df[maturity_end], na.rm = TRUE) * 2
       max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs])))), na.rm = TRUE) * 2
@@ -98,7 +104,7 @@ lifelihood <- function(
    }
 
    # create parameters range file
-   param_range_path <- here::here('temp_param_range_path.txt')
+   param_range_path <- file.path(temp_dir, "temp_param_range_path.txt")
    write.table(
       param_range_df,
       file = param_range_path,
@@ -107,10 +113,10 @@ lifelihood <- function(
       col.names = FALSE,
       quote = FALSE
    )
-   path_param_range <- here::here(param_range_path)
+   path_param_range <- param_range_path
 
    # create data file
-   input_path <- format_dataframe_to_txt(
+   data_path <- format_dataframe_to_txt(
       df = df,
       sex = sex,
       sex_start = sex_start,
@@ -123,9 +129,10 @@ lifelihood <- function(
       covariates = covariates,
       matclutch = matclutch,
       model_specs = model_specs,
-      path_config = path_config
+      path_config = path_config,
+      temp_dir = temp_dir
    )
-   data_path <- here::here(input_path)
+   print(data_path)
 
    # create output file
    group_by_group_int <- as.integer(group_by_group)
@@ -135,17 +142,15 @@ lifelihood <- function(
    )
 
    # get path to output file
-   filename_output <- sub("\\.txt$", "", data_path)
-   output_path <- paste0(filename_output, ".out")
+   filename_output <- sub("\\.txt$", "", basename(data_path))
+   output_path <- file.path(temp_dir, paste0(filename_output, ".out"))
 
    # read output file
    results <- read_output_from_file(output_path, group_by_group = group_by_group)
 
-   # delete intermediate files after execution
-   if (delete_temp_files){
-      file.remove(param_range_path)
-      file.remove(data_path)
-      file.remove(output_path)
+   # delete intermediate files and temp directory after execution
+   if (delete_temp_files) {
+      unlink(temp_dir, recursive = TRUE)
    }
 
    # check if estimation are too close from boundaries

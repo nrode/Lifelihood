@@ -27,6 +27,7 @@
 #' @param covariates Vector containing the names of the covariates.
 #' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param path_config Path to the configuration file (YAML).
+#' @param temp_dir Name of the temporary directory with temporary files
 #' @return NULL
 #' @export
 format_dataframe_to_txt <- function(
@@ -43,7 +44,8 @@ format_dataframe_to_txt <- function(
    death_end,
    covariates,
    model_specs,
-   path_config
+   path_config,
+   temp_dir
 ){
 
    # create vector with all column names
@@ -115,7 +117,7 @@ format_dataframe_to_txt <- function(
    formatted_rows <- c(data_struct_info, formatted_rows)
 
    # write the formatted rows to the output file
-   path_to_data <- here::here("temp_file_data_lifelihood.txt")
+   path_to_data <- file.path(temp_dir, "temp_file_data_lifelihood.txt")
    writeLines(formatted_rows, con = path_to_data)
 
    return(path_to_data)
