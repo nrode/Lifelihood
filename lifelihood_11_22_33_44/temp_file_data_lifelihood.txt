@@ -3,7 +3,7 @@ matclutch false
 geno type
 2 3
 ****modele******
-wei lgn exp
+lgn lgn exp
 expt_death 0 1 2
 survival_shape 0 1 2 12
 ratio_expt_death 0 1

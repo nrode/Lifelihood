@@ -132,7 +132,6 @@ lifelihood <- function(
       path_config = path_config,
       temp_dir = temp_dir
    )
-   print(data_path)
 
    # create output file
    group_by_group_int <- as.integer(group_by_group)
@@ -151,6 +150,9 @@ lifelihood <- function(
    # delete intermediate files and temp directory after execution
    if (delete_temp_files) {
       unlink(temp_dir, recursive = TRUE)
+   }
+   else {
+      print(paste("Temporary files stored at:", temp_dir))
    }
 
    # check if estimation are too close from boundaries

@@ -4,7 +4,7 @@ ratio_expt_death	0.01	100
 prob_death	1e-05	0.99999
 sex_ratio	1e-05	0.99999
 expt_maturity	0.001	2000
-maturity_shape	0.05	500
+maturity_shape	0.0025	10
 ratio_expt_maturity	0.01	100
 expt_reproduction	0.001	10
 reproduction_shape	0.0025	10

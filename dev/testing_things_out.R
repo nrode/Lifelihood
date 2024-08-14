@@ -22,7 +22,7 @@ results <- lifelihood(
    covariates = c("geno", "type"),
    matclutch = FALSE,
    seeds = c(11, 22, 33, 44),
-   model_specs = c("wei", "lgn", "exp"),
+   model_specs = c("lgn", "lgn", "exp"),
    delete_temp_files = FALSE,
 )
 results$effects
