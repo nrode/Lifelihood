@@ -17,7 +17,7 @@ format_dataframe_to_txt(
   death_start,
   death_end,
   covariates,
-  models,
+  model_specs,
   path_config
 )
 }
@@ -56,7 +56,7 @@ If the observation with the most clutches is for example 10, then the vector mus
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
 \item{path_config}{Path to the configuration file (YAML).}
 }

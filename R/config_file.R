@@ -1,4 +1,5 @@
 #' @name format_config
+#' @title formating config
 #' @export
 format_config <- function(path_config, covariates) {
    # read the yaml file

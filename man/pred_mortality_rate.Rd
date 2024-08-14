@@ -4,12 +4,7 @@
 \alias{pred_mortality_rate}
 \title{Compute and visualize predicted mortality rate}
 \usage{
-pred_mortality_rate(
-  results_lifelihood,
-  covariates,
-  data,
-  intervals = seq(0, 20, 5)
-)
+pred_mortality_rate(results_lifelihood, covariates, newdata, intervals)
 }
 \description{
 Compute and visualize predicted mortality rate

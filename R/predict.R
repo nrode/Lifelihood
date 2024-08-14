@@ -1,5 +1,6 @@
 
 #' @name predict
+#' @title prediction
 predict.LifelihoodResults <- function(
    object,
    newdata = NULL,

@@ -2,18 +2,19 @@
 % Please edit documentation in R/mortality_rate.R, R/visualization.R
 \name{plot_mortality_rate}
 \alias{plot_mortality_rate}
+\alias{plot_mortality_rate_emp}
 \title{Compute and visualize predicted mortality rate}
 \usage{
 plot_mortality_rate(
-  data,
-  start_col,
-  end_col,
+  results_lifelihood,
   covariates,
-  interval_width = 2,
-  max_time = NULL
+  newdata,
+  intervals,
+  use_log_x = FALSE,
+  use_log_y = FALSE
 )
 
-plot_mortality_rate(
+plot_mortality_rate_emp(
   data,
   start_col,
   end_col,
