@@ -96,13 +96,13 @@ format_dataframe_to_txt <- function(
    matclutch <- ifelse(matclutch, "true", "false")
    n_cat_covariates <- c()
    for (cov in covariates){
-      if (is.numeric(df[[cov]]) || is.integer(df[[cov]])) {
+      if (is.numeric(df[[cov]])) {
          stop(paste(
             "Error: The column",
             cov,
-            "is numeric or integer.",
+            "is numeric.",
             "This feature is currently not supported.",
-            "Try converting your covariates into factors or discretising them into categories."
+            "Try converting your covariates into factors/integers or discretising them into categories."
          ))
       }
       n_cat <- ifelse(nlevels(df[[cov]]) == 0, 1, nlevels(df[[cov]]))

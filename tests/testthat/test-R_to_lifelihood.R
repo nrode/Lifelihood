@@ -1,3 +1,5 @@
+
+
 test_that("Conversion config file to valid input format for lifelihood.", {
   result <- lifelihood:::R_to_lifelihood(
     "geno + type + geno*type",

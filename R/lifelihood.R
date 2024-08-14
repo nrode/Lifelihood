@@ -68,7 +68,9 @@ lifelihood <- function(
     right_censoring_date = 1000,
     critical_age = 20,
     ratiomax = 10,
-    delete_temp_files = TRUE) {
+    delete_temp_files = TRUE
+) {
+   
    # ensure `model_specs` has the right format and values
    valid_model_specs <- c("wei", "gam", "lgn", "exp")
    if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
@@ -152,7 +154,7 @@ lifelihood <- function(
       unlink(temp_dir, recursive = TRUE)
    }
    else {
-      print(paste("Temporary files stored at:", temp_dir))
+      print(paste("Intermediate files are stored at:", temp_dir))
    }
 
    # check if estimation are too close from boundaries
