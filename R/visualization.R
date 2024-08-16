@@ -5,7 +5,7 @@
 #' @name plot_mortality_rate
 #' @return none
 #' @export
-plot_mortality_rate <- function(
+plot_mortality_rate_emp <- function(
    data,
    start_col,
    end_col,

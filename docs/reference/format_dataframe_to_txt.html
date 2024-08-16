@@ -63,8 +63,9 @@
 <span>  <span class="va">death_start</span>,</span>
 <span>  <span class="va">death_end</span>,</span>
 <span>  <span class="va">covariates</span>,</span>
-<span>  <span class="va">models</span>,</span>
-<span>  <span class="va">path_config</span></span>
+<span>  <span class="va">model_specs</span>,</span>
+<span>  <span class="va">path_config</span>,</span>
+<span>  <span class="va">temp_dir</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -126,12 +127,16 @@ If the observation with the most clutches is for example 10, then the vector mus
 <dd><p>Vector containing the names of the covariates.</p></dd>
 
 
-<dt>models</dt>
+<dt>model_specs</dt>
 <dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.</p></dd>
 
 
 <dt>path_config</dt>
 <dd><p>Path to the configuration file (YAML).</p></dd>
+
+
+<dt>temp_dir</dt>
+<dd><p>Name of the temporary directory with temporary files</p></dd>
 
 </dl></div>
 

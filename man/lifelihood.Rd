@@ -15,7 +15,7 @@ lifelihood(
   clutchs,
   death_start,
   death_end,
-  models,
+  model_specs,
   covariates,
   matclutch = FALSE,
   matclutch_size = NULL,
@@ -23,11 +23,11 @@ lifelihood(
   group_by_group = FALSE,
   MCMC = 0,
   interval = 25,
-  SEcal = 0,
+  SEcal = FALSE,
   saveprobevent = 0,
   fitness = 0,
   r = 0,
-  seeds = c(12, 13, 14, 15),
+  seeds = NULL,
   ntr = 2,
   nst = 2,
   To = 50,
@@ -61,7 +61,7 @@ lifelihood(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{models}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
@@ -77,7 +77,7 @@ lifelihood(
 
 \item{interval}{TBD - Check the actual meaning}
 
-\item{SEcal}{Compute the standard error of each parameter using the Hessian matrix}
+\item{SEcal}{If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)}
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 
@@ -85,7 +85,7 @@ lifelihood(
 
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
-\item{seeds}{Numbers used to reproduce results (same seeds = same results)}
+\item{seeds}{Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.}
 
 \item{ntr}{Number of thread for the paralelisation ?}
 

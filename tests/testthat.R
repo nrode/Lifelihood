@@ -1,3 +1,2 @@
-library(testthat)
-library(lifelihood)
-test_package("lifelihood")
+devtools::load_all()
+devtools::test(stop_on_failure = TRUE)

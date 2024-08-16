@@ -1,3 +1,33 @@
+#' @title Compute and visualize predicted mortality rate
+#'
+#' @name link
+#' @keywords internal
+#' @export
+link <- function(estimate, min_and_max) {
+   min <- min_and_max[1]
+   max <- min_and_max[2]
+   return(min + (max - min) / (1 + exp(-estimate)))
+}
+
+#' @title Compute and visualize predicted mortality rate
+#' @name delink
+#' @keywords internal
+#' @export
+delink <- function(obs, min_and_max) {
+   min <- min_and_max[1]
+   max <- min_and_max[2]
+   return(log((obs - min) / (max - obs)))
+}
+
+#' @title Compute and visualize predicted mortality rate
+#' @name SurvWei
+#' @keywords internal
+#' @export
+SurvWei <- function(t, ExpLong, Shape) {
+   Scale <- ExpLong / gamma(1 + 1 / Shape)
+   exp(-(t / Scale)^Shape)
+}
+
 #' @title Find the operating system of the user
 #' 
 #' @description `detect_os()` finds the operating system name
@@ -15,26 +45,4 @@ detect_os <- function() {
    } else {
       return("Unknown")
    }
-}
-
-
-#' @title Write the `.txt` file containing the parameter ranges (historically known as `custom.txt`)
-#' 
-#' @description write_param_range()` takes a data frame of parameter ranges and writes it as a .txt file to the given path (argument `file_name`). These values are used by lifelihood to find out which range to optimise for a given parameter.
-#' 
-#' @keywords internal
-#' @name write_param_range
-#' @param data A dataframe with 3 columns: parameter names, minimum value and maximum value
-#' @param file_name Path (string) of where the `.txt` file will be stored
-#' @export
-write_param_range <- function(data, file_name){
-  write.table(
-   data,
-   file = file_name,
-   sep = "\t",
-   row.names = FALSE,
-   col.names = FALSE,
-   quote = FALSE
-)
-   return(file_name)
 }

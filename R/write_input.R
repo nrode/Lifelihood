@@ -25,8 +25,9 @@
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
-#' @param models Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
+#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param path_config Path to the configuration file (YAML).
+#' @param temp_dir Name of the temporary directory with temporary files
 #' @return NULL
 #' @export
 format_dataframe_to_txt <- function(
@@ -42,8 +43,9 @@ format_dataframe_to_txt <- function(
    death_start,
    death_end,
    covariates,
-   models,
-   path_config
+   model_specs,
+   path_config,
+   temp_dir
 ){
 
    # create vector with all column names
@@ -85,7 +87,7 @@ format_dataframe_to_txt <- function(
    config_file_info <- format_config(path_config = path_config, covariates = covariates)
    model_info <- c(
       "****modele******",
-      paste(models, collapse = " "),
+      paste(model_specs, collapse = " "),
       config_file_info
    )
    formatted_rows <- c(model_info, formatted_rows)
@@ -94,13 +96,13 @@ format_dataframe_to_txt <- function(
    matclutch <- ifelse(matclutch, "true", "false")
    n_cat_covariates <- c()
    for (cov in covariates){
-      if (is.numeric(df[[cov]]) || is.integer(df[[cov]])) {
+      if (is.numeric(df[[cov]])) {
          stop(paste(
             "Error: The column",
             cov,
-            "is numeric or integer.",
+            "is numeric.",
             "This feature is currently not supported.",
-            "Try converting your covariates into factors or discretising them into categories."
+            "Try converting your covariates into factors/integers or discretising them into categories."
          ))
       }
       n_cat <- ifelse(nlevels(df[[cov]]) == 0, 1, nlevels(df[[cov]]))
@@ -115,7 +117,7 @@ format_dataframe_to_txt <- function(
    formatted_rows <- c(data_struct_info, formatted_rows)
 
    # write the formatted rows to the output file
-   path_to_data <- here::here("temp_file_data_lifelihood.txt")
+   path_to_data <- file.path(temp_dir, "temp_file_data_lifelihood.txt")
    writeLines(formatted_rows, con = path_to_data)
 
    return(path_to_data)

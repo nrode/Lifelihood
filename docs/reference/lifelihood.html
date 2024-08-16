@@ -61,7 +61,7 @@
 <span>  <span class="va">clutchs</span>,</span>
 <span>  <span class="va">death_start</span>,</span>
 <span>  <span class="va">death_end</span>,</span>
-<span>  <span class="va">models</span>,</span>
+<span>  <span class="va">model_specs</span>,</span>
 <span>  <span class="va">covariates</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  matclutch_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -69,11 +69,11 @@
 <span>  group_by_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  interval <span class="op">=</span> <span class="fl">25</span>,</span>
-<span>  SEcal <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  SEcal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  saveprobevent <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  fitness <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ntr <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  nst <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  To <span class="op">=</span> <span class="fl">50</span>,</span>
@@ -129,7 +129,7 @@
 <dd><p>Column name containing the second date of the interval in which the death was determined.</p></dd>
 
 
-<dt>models</dt>
+<dt>model_specs</dt>
 <dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.</p></dd>
 
 
@@ -162,7 +162,7 @@
 
 
 <dt>SEcal</dt>
-<dd><p>Compute the standard error of each parameter using the Hessian matrix</p></dd>
+<dd><p>If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)</p></dd>
 
 
 <dt>saveprobevent</dt>
@@ -178,7 +178,7 @@
 
 
 <dt>seeds</dt>
-<dd><p>Numbers used to reproduce results (same seeds = same results)</p></dd>
+<dd><p>Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.</p></dd>
 
 
 <dt>ntr</dt>
