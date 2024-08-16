@@ -2,20 +2,22 @@
 % Please edit documentation in R/mapping_effect_names.R
 \name{find_parameter_kind}
 \alias{find_parameter_kind}
-\title{Get Mapping for Element}
+\title{Deducting the type of parameter from an estimate}
 \usage{
 find_parameter_kind(name)
 }
 \arguments{
-\item{element}{A character string representing the element to be mapped.}
+\item{name}{A character string representing the parameter name.}
 }
 \value{
-A named list containing the mapped value for the input element.
+The kind of parameter: either intercept or coefficient/slope
 }
 \description{
-This function takes an element as input and returns its corresponding mapping from a predefined list. If the element is not found in the mapping, it throws an error.
+This function takes an estimate name as input and returns whether it is a intercept or a coefficient/slope. If the element is not found in the possible match, it returns an error. This function is used to add information about the type of estimate to the output of the \code{\link[=lifelihood]{lifelihood()}} function.
 }
-\details{
-Get Mapping for Element
+\examples{
+find_parameter_kind("eff_expt_death_geno1")
+find_parameter_kind("eff_ratio_expt_death_geno1")
+find_parameter_kind("int_sex_ratio")
 }
 \keyword{internal}

@@ -6,6 +6,11 @@
 \usage{
 create_default_boundaries(model_specs, max_death, max_clutch, max_maturity)
 }
+\arguments{
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+
+\item{max_death}{Maximum value}
+}
 \description{
 Dataframe with default boundaries
 }

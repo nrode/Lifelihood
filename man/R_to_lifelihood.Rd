@@ -2,19 +2,23 @@
 % Please edit documentation in R/config_file.R
 \name{R_to_lifelihood}
 \alias{R_to_lifelihood}
-\title{Convert model description to lifelihod format}
+\title{Convert R formula to lifelihood formula}
 \usage{
 R_to_lifelihood(R_format, covariates)
 }
 \arguments{
 \item{R_format}{String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.}
 
-\item{covariates}{Vector containing the names of covariates.}
+\item{covariates}{Vector containing the names of the covariates.}
 }
 \value{
 The formatted format for lifelihood to understand which parameter to fit.
 }
 \description{
-Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of \code{covariables} and \code{"type"} is the second. This function is used to create the model part of the input file.
+Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of \code{covariables} and \code{"type"} is the second. This function is used to create the model part of the input text file.
+}
+\examples{
+R_to_lifelihood("geno + type", c("geno", "type"))
+R_to_lifelihood("geno + type + geno*type", c("geno", "type"))
 }
 \keyword{internal}

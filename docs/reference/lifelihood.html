@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary" data-bs-theme="dark"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">lifelihood</a>
 
@@ -65,7 +65,7 @@
 <span>  <span class="va">covariates</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  matclutch_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  param_range_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  param_bounds_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group_by_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  interval <span class="op">=</span> <span class="fl">25</span>,</span>
@@ -80,6 +80,7 @@
 <span>  Tf <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  climbrate <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  precision <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  raise_estimation_warning <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  right_censoring_date <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  critical_age <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  ratiomax <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -94,7 +95,7 @@
 
 
 <dt>path_config</dt>
-<dd><p>Path to the configuration file (YAML format).</p></dd>
+<dd><p>A character string specifying the file path to the YAML configuration file.</p></dd>
 
 
 <dt>sex</dt>
@@ -145,7 +146,7 @@
 <dd><p>Column name containing the size of the clutch for the maturity event. Only used (and required) if <code>matclutch</code> is <code>TRUE</code>.</p></dd>
 
 
-<dt>param_range_df</dt>
+<dt>param_bounds_df</dt>
 <dd><p>Dataframe with the parameter ranges/boundaries/boundaries</p></dd>
 
 
@@ -203,6 +204,10 @@
 
 <dt>precision</dt>
 <dd><p>TBD - Check the actual meaning</p></dd>
+
+
+<dt>raise_estimation_warning</dt>
+<dd><p>Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound.</p></dd>
 
 
 <dt>right_censoring_date</dt>

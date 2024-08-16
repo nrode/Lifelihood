@@ -1,5 +1,9 @@
+#' @title Read and parse the configuration file (YAML). 
 #' @name format_config
-#' @title formating config
+#' @description Safely access the configuration file to use for lifelihood. This function is used in [lifelihood()] when creating the input text file.
+#' @inheritParams lifelihood
+#' @keywords internal
+#' @return A character vector that will be used under the model tag in the input text file.
 #' @export
 format_config <- function(path_config, covariates) {
    # read the yaml file
@@ -51,13 +55,16 @@ format_config <- function(path_config, covariates) {
 }
 
 
-#' @title Convert model description to lifelihod format
-#' @keywords internal
+#' @title Convert R formula to lifelihood formula
 #' @name R_to_lifelihood
-#' @description Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, `"geno + type"` will become `1 2` if `"geno"` is the first element of `covariables` and `"type"` is the second. This function is used to create the model part of the input file.
+#' @description Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, `"geno + type"` will become `1 2` if `"geno"` is the first element of `covariables` and `"type"` is the second. This function is used to create the model part of the input text file.
 #' @param R_format String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.
-#' @param covariates Vector containing the names of covariates.
+#' @inheritParams lifelihood
+#' @keywords internal
 #' @return The formatted format for lifelihood to understand which parameter to fit.
+#' @examples 
+#' R_to_lifelihood("geno + type", c("geno", "type"))
+#' R_to_lifelihood("geno + type + geno*type", c("geno", "type"))
 #' @export
 R_to_lifelihood <- function(R_format, covariates) {
    

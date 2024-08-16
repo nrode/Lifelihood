@@ -1,5 +1,7 @@
 url: ~
 template:
   bootstrap: 5
+  bootswatch: yeti
+  light-switch: true
 pkgdown:
   as_is: true
