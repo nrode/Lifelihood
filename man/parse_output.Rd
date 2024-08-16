@@ -32,16 +32,6 @@ get_effects(lines, group_by_group = FALSE)
 The parsed element
 }
 \description{
-\code{parse_output()}: Find specific result in the output file of the lifelihood program, according to the \code{element} argument. This function is an aggregator of all the \verb{get_*()} functions described below.
-
-\code{get_seeds()}: find the seeds value in the output file of the lifelihood program.
-
-\code{get_likelihood()}: find the likelihood value (optimum found) in the output file of the lifelihood program.
-
-\code{get_param_ranges()}: find the parameter ranges/boundaries in the output file of the lifelihood program.
-
-\code{get_ratio_max()}: find the ratio max value in the output file of the lifelihood program.
-
-\code{get_effects()}: find the estimated effects in the output file of the lifelihood program.
+Find specific result in the output file of the lifelihood program, according to the \code{element} argument. This function is an aggregator of all the \verb{get_*()} functions described below.
 }
 \keyword{internal}
