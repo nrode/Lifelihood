@@ -21,11 +21,13 @@ results <- lifelihood(
    death_end = "mor_end",
    covariates = c("geno", "type"),
    matclutch = FALSE,
-   seeds = c(11, 22, 33, 44),
+   seeds = c(11, 22, 34, 44),
    model_specs = c("lgn", "lgn", "exp"),
    delete_temp_files = FALSE,
+   raise_estimation_warning = TRUE
 )
 results$effects
+results$parameter_ranges
 summary(results)
 head(results$effects)
 

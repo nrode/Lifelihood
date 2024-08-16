@@ -19,7 +19,7 @@ lifelihood(
   covariates,
   matclutch = FALSE,
   matclutch_size = NULL,
-  param_range_df = NULL,
+  param_bounds_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
   interval = 25,
@@ -34,6 +34,7 @@ lifelihood(
   Tf = 1,
   climbrate = 1,
   precision = 0.001,
+  raise_estimation_warning = TRUE,
   right_censoring_date = 1000,
   critical_age = 20,
   ratiomax = 10,
@@ -43,7 +44,7 @@ lifelihood(
 \arguments{
 \item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
 
-\item{path_config}{Path to the configuration file (YAML format).}
+\item{path_config}{A character string specifying the file path to the YAML configuration file.}
 
 \item{sex}{Column name containing the sex of the observations.}
 
@@ -69,7 +70,7 @@ lifelihood(
 
 \item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 
-\item{param_range_df}{Dataframe with the parameter ranges/boundaries/boundaries}
+\item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
 \item{group_by_group}{Option to fit the full factorail model with all the interactions between each of the factors}
 
@@ -98,6 +99,8 @@ lifelihood(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
+
+\item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound.}
 
 \item{right_censoring_date}{Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)}
 

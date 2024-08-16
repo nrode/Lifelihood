@@ -2,7 +2,7 @@
 #' @description Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).
 #' @name lifelihood
 #' @param df Dataframe with the data of life history. It should have one row per life history / observation.
-#' @param path_config Path to the configuration file (YAML format).
+#' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
 #' @param sex_end Column name containing the second date of the interval in which the sex was determined.
@@ -15,7 +15,7 @@
 #' @param covariates Vector containing the names of the covariates.
 #' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument.
 #' @param matclutch_size Column name containing the size of the clutch for the maturity event. Only used (and required) if `matclutch` is `TRUE`.
-#' @param param_range_df Dataframe with the parameter ranges/boundaries/boundaries
+#' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
 #' @param group_by_group Option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
@@ -30,6 +30,7 @@
 #' @param Tf Initial temperature for the simulated annealing
 #' @param climbrate Rate for the simulated annealing ?
 #' @param precision TBD - Check the actual meaning
+#' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound.
 #' @param right_censoring_date Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)
 #' @param critical_age Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)
 #' @param ratiomax Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)
@@ -50,7 +51,7 @@ lifelihood <- function(
    covariates,
    matclutch = FALSE,
    matclutch_size = NULL,
-   param_range_df = NULL,
+   param_bounds_df = NULL,
    group_by_group = FALSE,
    MCMC = 0,
    interval = 25,
@@ -65,6 +66,7 @@ lifelihood <- function(
    Tf = 1,
    climbrate = 1,
    precision = 0.001,
+   raise_estimation_warning = TRUE,
    right_censoring_date = 1000,
    critical_age = 20,
    ratiomax = 10,
@@ -83,21 +85,26 @@ lifelihood <- function(
    }
 
    # generate seeds
+   if ((length(seeds) != 4) & !is.null(seeds)){
+      stop("`seeds` must be an integer vector of length 4.")
+   }
    if (is.null(seeds)) {
-      seeds <- sample(1:100, 4, replace = T)
+      seeds <- sample(1:10000, 4, replace = T)
    }
 
-   # Create temporary directory
-   temp_dir <- file.path(getwd(), paste0("lifelihood_", paste(seeds, collapse = "_")))
+   # create temporary directory
+   set.seed(prod(seeds))
+   run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
+   temp_dir <- file.path(getwd(), paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id)))
    dir.create(temp_dir)
 
-   # if param_range_df is NULL, use default values
-   if (is.null(param_range_df)) {
+   # if param_bounds_df is NULL, use default values
+   if (is.null(param_bounds_df)) {
       max_death <- max(df[death_end], na.rm = TRUE) * 2
       max_maturity <- max(df[maturity_end], na.rm = TRUE) * 2
       max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs])))), na.rm = TRUE) * 2
 
-      param_range_df <- create_default_boundaries(
+      param_bounds_df <- create_default_boundaries(
          model_specs = model_specs,
          max_death = max_death,
          max_maturity = max_maturity,
@@ -108,7 +115,7 @@ lifelihood <- function(
    # create parameters range file
    param_range_path <- file.path(temp_dir, "temp_param_range_path.txt")
    write.table(
-      param_range_df,
+      param_bounds_df,
       file = param_range_path,
       sep = "\t",
       row.names = FALSE,
@@ -158,20 +165,22 @@ lifelihood <- function(
    }
 
    # check if estimation are too close from boundaries
-   check_valid_estimation(results_lifelihood = results)
+   if (raise_estimation_warning){
+      check_valid_estimation(results_lifelihood = results)
+   }
 
    # give output to user
    return(results)
 }
 
 #' @name summary
-#' @title Custom summary function to be used with the output of [lifelihood::lifelihood()]
+#' @title Custom summary function to be used with the output of [lifelihood()]
 #' @description Display main results of the lifelihood program:
 #' - seeds
 #' - likelihood
 #' - effects (estimation)
 #' - parameter ranges
-#' @param object `LifelihoodResults` object from [lifelihood::lifelihood()]
+#' @param object `LifelihoodResults` object from [lifelihood()]
 #' @return NULL
 #' @export
 summary.LifelihoodResults <- function(object, ...) {

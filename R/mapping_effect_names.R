@@ -1,11 +1,12 @@
-#' Get Mapping for Element
-#'
-#' @title Get Mapping for Element
-#'
+#' @title Associate the parameter name with the associated metric
 #' @keywords internal
 #' @name map_metric_name
-#' @description This function takes an element as input and returns its corresponding mapping from a predefined list. If the element is not found in the mapping, it throws an error.
-#' @param element A character string representing the element to be mapped.
+#' @description This function takes a name as input and returns its match from a predefined list. If the element is not found in the match, an error is generated. This function is used to determine which metric a parameter estimate is based on.
+#' @param name A character string representing the element to be mapped.
+#' @examples
+#' map_metric_name("eff_expt_death_geno1")
+#' map_metric_name("eff_ratio_expt_death_geno1")
+#' map_metric_name("int_sex_ratio")
 #' @return A named list containing the mapped value for the input element.
 #' @export
 map_metric_name <- function(name) {
@@ -26,15 +27,16 @@ map_metric_name <- function(name) {
 }
 
 
-#' Get Mapping for Element
-#'
-#' @title Get Mapping for Element
-#'
+#' @title Deducting the type of parameter from an estimate
 #' @keywords internal
 #' @name find_parameter_kind
-#' @description This function takes an element as input and returns its corresponding mapping from a predefined list. If the element is not found in the mapping, it throws an error.
-#' @param element A character string representing the element to be mapped.
-#' @return A named list containing the mapped value for the input element.
+#' @description This function takes an estimate name as input and returns whether it is a intercept or a coefficient/slope. If the element is not found in the possible match, it returns an error. This function is used to add information about the type of estimate to the output of the [lifelihood()] function.
+#' @param name A character string representing the parameter name.
+#' @examples 
+#' find_parameter_kind("eff_expt_death_geno1")
+#' find_parameter_kind("eff_ratio_expt_death_geno1")
+#' find_parameter_kind("int_sex_ratio")
+#' @return The kind of parameter: either intercept or coefficient/slope
 #' @export
 find_parameter_kind <- function(name) {
    if (startsWith(name, "int_")) {

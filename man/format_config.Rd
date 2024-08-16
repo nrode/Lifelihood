@@ -2,10 +2,19 @@
 % Please edit documentation in R/config_file.R
 \name{format_config}
 \alias{format_config}
-\title{formating config}
+\title{Read and parse the configuration file (YAML).}
 \usage{
 format_config(path_config, covariates)
 }
-\description{
-formating config
+\arguments{
+\item{path_config}{A character string specifying the file path to the YAML configuration file.}
+
+\item{covariates}{Vector containing the names of the covariates.}
 }
+\value{
+A character vector that will be used under the model tag in the input text file.
+}
+\description{
+Safely access the configuration file to use for lifelihood. This function is used in \code{\link[=lifelihood]{lifelihood()}} when creating the input text file.
+}
+\keyword{internal}

@@ -5,33 +5,39 @@
 \title{Execution of the compiled files}
 \usage{
 execute_bin(
-  input_file,
-  custom_file,
-  group_by_group = 0,
-  MCMC = 0,
-  interval = 25,
-  SEcal = 1,
-  saveprobevent = 0,
-  fitness = 0,
-  r = 0,
-  seed1 = 12,
-  seed2 = 13,
-  seed3 = 14,
-  seed4 = 15,
-  ntr = 2,
-  nst = 2,
-  To = 50,
-  Tf = 1,
-  climbrate = 1,
-  precision = 0.001
+  path_input_data,
+  path_param_bounds,
+  group_by_group,
+  MCMC,
+  interval,
+  SEcal,
+  saveprobevent,
+  fitness,
+  r,
+  seed1,
+  seed2,
+  seed3,
+  seed4,
+  ntr,
+  nst,
+  To,
+  Tf,
+  climbrate,
+  precision
 )
 }
 \arguments{
+\item{path_input_data}{Path to the input text file with the model and data to be fitted.}
+
+\item{path_param_bounds}{Path to the parameter boundaries text file with the min and max boudaries for each parameter.}
+
+\item{group_by_group}{Option to fit the full factorail model with all the interactions between each of the factors}
+
 \item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
 
 \item{interval}{TBD - Check the actual meaning}
 
-\item{SEcal}{Compute the standard error of eahc parameter using the Hessian matrix}
+\item{SEcal}{If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)}
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 
@@ -39,13 +45,13 @@ execute_bin(
 
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
-\item{seed1}{First seed used so that random values can found again}
+\item{seed1}{First seed number used to reproduce results (same seed = same results).}
 
-\item{seed2}{Second seed used so that random values can found again}
+\item{seed2}{Second seed number used to reproduce results (same seed = same results).}
 
-\item{seed3}{Third seed used so that random values can found again}
+\item{seed3}{Third seed number used to reproduce results (same seed = same results).}
 
-\item{seed4}{Fourth seed used so that random values can found again}
+\item{seed4}{4th seed number used to reproduce results (same seed = same results).}
 
 \item{ntr}{Number of thread for the paralelisation ?}
 
@@ -58,17 +64,11 @@ execute_bin(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
-
-\item{infile}{File with the model and data to be fitted}
-
-\item{customfile}{File with the min and max boudaries for each parameter}
-
-\item{GbyG}{Option to fit the full factorail model with all the interactions between each of the factors}
+}
+\value{
+NULL. This function writes an output file, that will then be parsed by \code{\link[=parse_output]{parse_output()}}.
 }
 \description{
-Run lifelihood program in console mode
-}
-\details{
-Execute compiled files of the lifelihood program
+Run lifelihood program in console mode.
 }
 \keyword{internal}

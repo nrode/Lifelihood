@@ -1,7 +1,7 @@
 
 compile <- function(
    input_file = "src/source_pascal/lazarus/lifelihoodC2023.lpr",
-   output_dir_bin = "src/compiled/",
+   output_dir_bin = "src/bin/",
    output_dir_other = "-FUsrc/source_pascal/lazarus/"
 ){
    stop('Fonction not available yet')

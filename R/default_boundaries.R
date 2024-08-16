@@ -1,5 +1,7 @@
 #' @title Dataframe with default boundaries
 #' @name create_default_boundaries
+#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
+#' @param max_death Maximum value 
 #' @export 
 create_default_boundaries <- function(
    model_specs,
