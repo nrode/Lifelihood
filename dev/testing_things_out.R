@@ -1,5 +1,5 @@
 rm(list = ls())
-devtools::load_all() # load the package
+devtools::load_all(compile = FALSE) # load the package
 df <- read.csv(here::here("data/fake_re_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
