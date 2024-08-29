@@ -1,8 +1,9 @@
-name: Lifelihood Tests
+name: R Package Tests
 
 on:
   pull_request:
-    branches: main
+    branches: [main, master]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,7 +17,8 @@ jobs:
       
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck", "testthat"))
+          install.packages(c("remotes", "testthat"))
+          remotes::install_github("nrode/Lifelihood")
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       

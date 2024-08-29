@@ -10,6 +10,8 @@
 
 ## Project progress
 
+`install_github("nrode/Lifelihood")`
+
 - ✅ Transforming the dataframe into a `.txt` input file
 - ✅ Reading the output file to return estimations and other values
 - ✅ Simple way to provides
