@@ -11,4 +11,3 @@ pkgdown::build_site() # build documentation site
 
 devtools::build(path = ".") # create bundled file of the pkg
 devtools::install() # install local development of the pkg (to allow `library(lifelihood)`)
-

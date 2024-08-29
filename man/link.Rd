@@ -2,11 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{link}
 \alias{link}
-\title{Compute and visualize predicted mortality rate}
+\title{Link function}
 \usage{
 link(estimate, min_and_max)
 }
+\arguments{
+\item{estimate}{Numeric. The estimate of the parameter}
+
+\item{min_and_max}{Numeric vector of length 2. The minimum and maximum values of the parameter}
+}
+\value{
+Numeric. The transformed parameter
+}
 \description{
-Compute and visualize predicted mortality rate
+Link function to transform the parameters to the original scale
 }
 \keyword{internal}

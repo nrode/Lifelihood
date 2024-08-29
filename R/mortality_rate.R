@@ -1,14 +1,15 @@
 #' @title Compute and visualize predicted mortality rate
 #' @name make_design_matrix
 #' @keywords internal
+#' @description Create the design matrix for the expected death and the survival shape.
+#' @inheritParams lifelihood
+#' @inheritParams pred_mortality_rate
 #' @export
 make_design_matrix <- function(covariates, data) {
-   # check if all covariate names are present in the data
    if (!all(covariates %in% names(data))) {
       stop("Some covariate names are not present in the data.")
    }
 
-   # create a list of factor levels for each covariate
    factor_levels <- lapply(covariates, function(cov) {
       if (is.factor(data[[cov]])) {
          levels(data[[cov]])
@@ -18,17 +19,14 @@ make_design_matrix <- function(covariates, data) {
    })
    factor_levels
 
-   # create the formula
    names(factor_levels) <- covariates
    fitted_data <- do.call(expand.grid, factor_levels)
    formula_str <- paste("~", paste(covariates, collapse = " + "))
    formula <- as.formula(formula_str)
 
-   # create design matrices
    mat_expt_death <- model.matrix(formula, fitted_data)
    mat_survival_shape <- model.matrix(formula, fitted_data)
 
-   # return the results as a list
    return(list(
       fitted_data = fitted_data,
       mat_expt_death = mat_expt_death,
@@ -38,10 +36,13 @@ make_design_matrix <- function(covariates, data) {
 
 #' @title Compute and visualize predicted mortality rate
 #' @name pred_mortality_rate
+#' @description Compute the predicted mortality rate using the fitted values of the expected death and the survival shape.
+#' @param newdata Dataframe with the values of the covariates to predict the mortality rate
+#' @param intervals Vector of the intervals (x-axis, same unit as the data) to compute the mortality rate
+#' @inheritParams check_valid_estimation
 #' @export
 pred_mortality_rate <- function(
    results_lifelihood,
-   covariates,
    newdata,
    intervals
 ) {
@@ -51,6 +52,7 @@ pred_mortality_rate <- function(
    }
 
    # get the design matrices
+   covariates <- results_lifelihood$covariates
    design_matrices <- make_design_matrix(covariates, newdata)
    fitted_data <- design_matrices$fitted_data
    mat_expt_death <- design_matrices$mat_expt_death
@@ -112,15 +114,20 @@ pred_mortality_rate <- function(
 
 #' @title Compute and visualize predicted mortality rate
 #' @name plot_mortality_rate
+#' @description Simple plot of the predicted mortality rate. To access the values, use the output of [pred_mortality_rate()].
+#' @param use_log_x Boolean to use log scale for the x-axis (default: FALSE)
+#' @param use_log_y Boolean to use log scale for the y-axis (default: FALSE)
+#' @inheritParams pred_mortality_rate
 #' @export
 plot_mortality_rate <- function(
    results_lifelihood,
-   covariates,
    newdata,
    intervals,
    use_log_x = FALSE,
    use_log_y = FALSE
 ) {
+
+   covariates <- results_lifelihood$covariates
    predicted_mortality_rate <- pred_mortality_rate(
       results_lifelihood = results_lifelihood,
       covariates = covariates,
@@ -142,5 +149,5 @@ plot_mortality_rate <- function(
       y_values <- mortality_rate
    }
 
-   plot(x = intervals, y = mortality_rate, type = "pch")
+   plot(x = x_values, y = y_values, type = "pch")
 }

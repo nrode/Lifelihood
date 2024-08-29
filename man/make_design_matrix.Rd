@@ -7,6 +7,6 @@
 make_design_matrix(covariates, data)
 }
 \description{
-Compute and visualize predicted mortality rate
+Create the design matrix for the expected death and the survival shape.
 }
 \keyword{internal}

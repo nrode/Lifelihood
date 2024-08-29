@@ -2,11 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{delink}
 \alias{delink}
-\title{Compute and visualize predicted mortality rate}
+\title{Delink function}
 \usage{
 delink(obs, min_and_max)
 }
+\arguments{
+\item{obs}{Numeric. The observed value of the parameter}
+
+\item{min_and_max}{Numeric vector of length 2. The minimum and maximum values of the parameter}
+}
+\value{
+Numeric. The transformed parameter
+}
 \description{
-Compute and visualize predicted mortality rate
+Delink function to transform the parameters to the original scale
 }
 \keyword{internal}

@@ -31,7 +31,7 @@ execute_bin(
 
 \item{path_param_bounds}{Path to the parameter boundaries text file with the min and max boudaries for each parameter.}
 
-\item{group_by_group}{Option to fit the full factorail model with all the interactions between each of the factors}
+\item{group_by_group}{Boolean option to fit the full factorail model with all the interactions between each of the factors}
 
 \item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
 

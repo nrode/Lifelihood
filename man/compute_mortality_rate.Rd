@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{compute_mortality_rate}
 \alias{compute_mortality_rate}
-\title{good function}
+\title{Compute empirical mortality rate}
 \usage{
 compute_mortality_rate(
   data,
@@ -13,9 +13,22 @@ compute_mortality_rate(
   max_time = NULL
 )
 }
+\arguments{
+\item{data}{Dataframe with the data of life history. It should have one row per life history / observation.}
+
+\item{start_col}{Column name containing the first date of the interval in which the event was determined.}
+
+\item{end_col}{Column name containing the second date of the interval in which the event was determined.}
+
+\item{covariates}{Vector containing the names of the covariates.}
+
+\item{interval_width}{Width of the interval to compute the mortality rate.}
+
+\item{max_time}{Maximum time to compute the mortality rate.}
+}
 \value{
 none
 }
 \description{
-do something
+Compute the empirical mortality rate
 }

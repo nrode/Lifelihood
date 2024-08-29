@@ -8,9 +8,8 @@ clutchs <- c(
    "clutch_start1", "clutch_end1", "clutch_size1",
    "clutch_start2", "clutch_end2", "clutch_size2"
 )
-results <- lifelihood(
+data <- lifelihoodData(
    df = df,
-   path_config = "config2.yaml",
    sex = "sex",
    sex_start = "sex_start",
    sex_end = "sex_end",
@@ -20,11 +19,11 @@ results <- lifelihood(
    death_start = "mor_start",
    death_end = "mor_end",
    covariates = c("geno", "type"),
-   matclutch = FALSE,
-   seeds = c(11, 22, 34, 44),
-   model_specs = c("lgn", "lgn", "exp"),
-   delete_temp_files = FALSE,
-   raise_estimation_warning = TRUE
+   model_specs = c("gam", "lgn", "wei")
+)
+results <- lifelihood(
+   lifelihoodData = data,
+   path_config = here::here("config.yaml")
 )
 results$effects
 results$parameter_ranges

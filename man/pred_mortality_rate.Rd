@@ -4,8 +4,15 @@
 \alias{pred_mortality_rate}
 \title{Compute and visualize predicted mortality rate}
 \usage{
-pred_mortality_rate(results_lifelihood, covariates, newdata, intervals)
+pred_mortality_rate(results_lifelihood, newdata, intervals)
+}
+\arguments{
+\item{results_lifelihood}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
+
+\item{newdata}{Dataframe with the values of the covariates to predict the mortality rate}
+
+\item{intervals}{Vector of the intervals (x-axis, same unit as the data) to compute the mortality rate}
 }
 \description{
-Compute and visualize predicted mortality rate
+Compute the predicted mortality rate using the fitted values of the expected death and the survival shape.
 }
