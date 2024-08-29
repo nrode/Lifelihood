@@ -57,7 +57,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_output_from_file</span><span class="op">(</span><span class="va">file_path</span>, group_by_group <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_output_from_file</span><span class="op">(</span><span class="va">file_path</span>, group_by_group <span class="op">=</span> <span class="cn">FALSE</span>, covariates <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,9 +67,15 @@
 
 
 <dt>group_by_group</dt>
-<dd><p>Boolean indicating whether parsing should be performed group by group or not (<code>FALSE</code> by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).#' @return An object of class <code>LifelihoodResults</code> with all results from the output file</p></dd>
+<dd><p>Boolean option to fit the full factorail model with all the interactions between each of the factors</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>An object of class <code>LifelihoodResults</code> with all results from the output file</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

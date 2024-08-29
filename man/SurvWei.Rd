@@ -2,11 +2,21 @@
 % Please edit documentation in R/utils.R
 \name{SurvWei}
 \alias{SurvWei}
-\title{Compute and visualize predicted mortality rate}
+\title{Weibull survival function}
 \usage{
 SurvWei(t, ExpLong, Shape)
 }
+\arguments{
+\item{t}{Numeric. The time to event}
+
+\item{ExpLong}{Numeric. The expected longevity}
+
+\item{Shape}{Numeric. The shape parameter}
+}
+\value{
+Numeric. The survival probability
+}
 \description{
-Compute and visualize predicted mortality rate
+Weibull survival function
 }
 \keyword{internal}

@@ -2,15 +2,26 @@
 % Please edit documentation in R/lifelihood.R
 \name{summary}
 \alias{summary}
+\alias{summary.lifelihoodData}
 \alias{summary.LifelihoodResults}
-\title{Custom summary function to be used with the output of \code{\link[=lifelihood]{lifelihood()}}}
+\title{Custom summary function to be used with the output of \code{\link[=lifelihoodData]{lifelihoodData()}}}
 \usage{
+\method{summary}{lifelihoodData}(object, ...)
+
 \method{summary}{LifelihoodResults}(object, ...)
 }
 \arguments{
 \item{object}{\code{LifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
 }
 \description{
+Display main information of the \code{lifelihoodData} object:
+\itemize{
+\item number of observations
+\item number of covariates
+\item number of clutches
+\item number of events (maturity, reproductive, death)
+}
+
 Display main results of the lifelihood program:
 \itemize{
 \item seeds

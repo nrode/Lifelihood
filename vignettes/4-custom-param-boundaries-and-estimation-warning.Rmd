@@ -69,6 +69,7 @@ data <- lifelihoodData(
   covariates = c("geno", "type"),
   model_specs = c("gam", "lgn", "wei")
 )
+summary(data)
 ```
 
 # Get the results

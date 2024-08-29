@@ -68,7 +68,23 @@ lifelihoodData <- function(
    class(dataObject) <- "lifelihoodData"
    return(dataObject)
 }
-   
+
+#' @name summary
+#' @title Custom summary function to be used with the output of [lifelihoodData()]
+#' @description Display main information of the `lifelihoodData` object:
+#' - number of observations
+#' - number of covariates
+#' - number of clutches
+#' - number of events (maturity, reproductive, death)
+#' @param object `lifelihoodData` object from [lifelihoodData()]
+#' @return NULL
+#' @export
+summary.lifelihoodData <- function(object, ...) {
+   cat("LIFELIHOOD DATA\n\n")
+   cat("Number of observations:", nrow(object$df), "\n")
+   cat("Number of covariates:", length(object$covariates), "\n")
+   cat("Number of clutches:", length(object$clutchs), "\n")
+}
 
 
 #' @title Individual life history modelling
@@ -119,18 +135,14 @@ lifelihood <- function(
    if ((length(seeds) != 4) & !is.null(seeds)) {
       stop("`seeds` must be an integer vector of length 4.")
    }
-   if (is.null(seeds)) {
-      seeds <- sample(1:10000, 4, replace = T)
-   }
+   if (is.null(seeds)) {seeds <- sample(1:10000, 4, replace = T)}
 
    set.seed(sum(seeds))
    run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
    temp_dir <- file.path(getwd(), paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id)))
    dir.create(temp_dir)
 
-   if (is.null(param_bounds_df)) {
-      param_bounds_df <- default_bounds_df(lifelihoodData)
-   }
+   if (is.null(param_bounds_df)) {param_bounds_df <- default_bounds_df(lifelihoodData)}
 
    path_param_range <- file.path(temp_dir, "temp_param_range_path.txt")
    write.table(
@@ -199,15 +211,13 @@ lifelihood <- function(
 #' @return NULL
 #' @export
 summary.LifelihoodResults <- function(object, ...) {
-   cat("LIFELIHOODIZATION\n\n")
+   cat("LIFELIHOOD RESULTS\n\n")
 
-   is_gbg <- object$group_by_group
-
-   cat("likelihood:\n")
+   cat("Likelihood:\n")
    print(object$likelihood)
    cat("\n")
 
-   cat("effects:\n")
+   cat("Effects:\n")
    print(object$effects)
    cat("\n")
 }

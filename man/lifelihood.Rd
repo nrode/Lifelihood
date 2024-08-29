@@ -27,13 +27,13 @@ lifelihood(
 )
 }
 \arguments{
-\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}}
+\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
 
 \item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
-\item{group_by_group}{Option to fit the full factorail model with all the interactions between each of the factors}
+\item{group_by_group}{Boolean option to fit the full factorail model with all the interactions between each of the factors}
 
 \item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
 
@@ -66,5 +66,5 @@ lifelihood(
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
 }
 \description{
-Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).
+Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
 }

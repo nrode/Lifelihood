@@ -23,7 +23,7 @@ format_dataframe_to_txt(
 )
 }
 \arguments{
-\item{df}{The dataframe object of the input data.}
+\item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
 
 \item{sex}{Column name containing the sex of the observations.}
 
@@ -39,17 +39,7 @@ format_dataframe_to_txt(
 
 \item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 
-\item{clutchs}{Vector containing the names of the clutch columns. The order should be:
-\itemize{
-\item first date of the first clutch
-\item second date of first clutch
-\item clutch size of the first clutch
-\item second clutch first date
-\item first clutch second date
-\item second clutch clutch size
-\item and so on.
-If the observation with the most clutches is for example 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
-}}
+\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
 
 \item{death_start}{Column name containing the first date of the interval in which the death was determined.}
 
@@ -57,13 +47,13 @@ If the observation with the most clutches is for example 10, then the vector mus
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull), "exp" (Exponential), "gam" (Gamma) or "lgn" (Log-normal). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
-\item{path_config}{Path to the configuration file (YAML).}
+\item{path_config}{A character string specifying the file path to the YAML configuration file.}
 
 \item{temp_dir}{Name of the temporary directory with temporary files}
 }
 \description{
-Takes a dataframe (\code{df} argument in \code{\link[=lifelihood]{lifelihood()}} function) and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
+Takes a dataframe (\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function) and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
 }
 \keyword{internal}

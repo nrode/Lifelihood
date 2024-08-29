@@ -74,7 +74,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>row</dt>
-<dd><p>A row of the dataframe object provided by the user (<code>df</code> argument in <code><a href="lifelihood.html">lifelihood()</a></code> function).</p></dd>
+<dd><p>A row of the dataframe object provided by the user (<code>df</code> argument in <code><a href="lifelihoodData.html">lifelihoodData()</a></code> function).</p></dd>
 
 
 <dt>sex</dt>
@@ -98,14 +98,7 @@
 
 
 <dt>clutchs</dt>
-<dd><p>Vector containing the names of the clutch columns. The order should be:</p><ul><li><p>first date of the first clutch</p></li>
-<li><p>second date of first clutch</p></li>
-<li><p>clutch size of the first clutch</p></li>
-<li><p>second clutch first date</p></li>
-<li><p>first clutch second date</p></li>
-<li><p>second clutch clutch size</p></li>
-<li><p>and so on.</p></li>
-</ul><p>If the observation with the most clutches is for example 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</p></dd>
+<dd><p>Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</p></dd>
 
 
 <dt>death_start</dt>
@@ -118,14 +111,6 @@
 
 <dt>covariates</dt>
 <dd><p>Vector containing the names of the covariates.</p></dd>
-
-
-<dt>matclutch</dt>
-<dd><p>Whether the maturity event (designated by <code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not. If <code>TRUE</code>, must specify the <code>matclutch_size</code> argument.</p></dd>
-
-
-<dt>matclutch_size</dt>
-<dd><p>Column name containing the size of the clutch for the maturity event. Only used (and required) if <code>matclutch</code> is <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

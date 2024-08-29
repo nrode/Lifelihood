@@ -7,7 +7,7 @@
 default_bounds_df(lifelihoodData)
 }
 \arguments{
-\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}}
+\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 }
 \description{
 Dataframe with default boundaries
