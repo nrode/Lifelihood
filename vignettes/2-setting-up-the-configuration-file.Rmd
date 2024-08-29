@@ -5,7 +5,6 @@ date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
   html_document:
     theme: journal
-    css: style.css
     toc: yes
     toc_float:
       collapsed: no
@@ -14,9 +13,10 @@ editor_options:
   chunk_output_type: console
 ---
 
-<br>
 
-_Note: this vignette assumes that you already have your data in the right format. If not, check the [vignette about the required data format](1-required-data-format.html)_
+<div class="topVignette">If you haven't already check it, have a look at:</div>
+
+- [What is the required data format](1-required-data-format.html)
 
 # Introduction
 ***
@@ -50,8 +50,6 @@ Assuming you have 2 covariables in your dataset (named `covar1` and `covar2`), f
 
 _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they should be the name of one of your columns in your dataset._
 
-<br>
-
 #### Mortality
 
 - `expt_death`: Expected time to death
@@ -60,15 +58,11 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 - `prob_death`: Probability of death before critical time
 - `sex_ratio`: Sex ratio
 
-<br>
-
 #### Maturity
 
 - `expt_maturity`: Expected time to maturity
 - `maturity_shape`: Maturity shape parameter
 - `ratio_expt_maturity`: Ratio between expected time to maturity for male and expected time to maturity for female
-
-<br>
 
 #### Reproduction
 
@@ -116,5 +110,8 @@ reproduction:
   tof_n_offspring: not_fitted
 
 ```
+
+# Next step
+***
 
 The next step is to actually [use the package](3-how-to-use-lifelihood.html).

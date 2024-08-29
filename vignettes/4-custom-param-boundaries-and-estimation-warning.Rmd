@@ -5,7 +5,6 @@ date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
   html_document:
     theme: journal
-    css: style.css
     toc: yes
     toc_float:
       collapsed: no
@@ -14,9 +13,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-<br>
-
-If you haven't already check it, have a look at:
+<div class="topVignette">If you haven't already check it, have a look at:</div>
 
 - [What is the required data format to work with lifelihood?](1-required-data-format.html)
 - [Setting up the configuration file](2-setting-up-the-configuration-file.html)
@@ -26,11 +23,9 @@ If you haven't already check it, have a look at:
 ***
 
 ```{r}
-library(lifelihood)
-#devtools::load_all(compile = FALSE)
+#library(lifelihood)
+devtools::load_all(compile = FALSE)
 ```
-
-<br>
 
 # Data preparation
 ***
@@ -56,23 +51,13 @@ clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
-
-# seeds value (must be of length 4!)
-seeds <- c(1, 2, 3, 4)
 ```
 
-<br>
-
-# Get the results
-***
-
-Let's run the analysis with default parameters.
+# Create the `lifelihoodData` object
 
 ```{r}
-# run the analysis
-results <- lifelihood(
+data <- lifelihoodData(
   df = df,
-  path_config = here::here("config.yaml"),
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -82,13 +67,21 @@ results <- lifelihood(
   death_start = "mor_start",
   death_end = "mor_end",
   covariates = c("geno", "type"),
-  seeds = seeds,
-  matclutch = FALSE,
-  model_specs = c("gam", "lgn", "wei"),
+  model_specs = c("gam", "lgn", "wei")
 )
 ```
 
-<br>
+# Get the results
+***
+
+Let's run the analysis with default parameters.
+
+```{r}
+results <- lifelihood(
+  lifelihoodData = data,
+  path_config = here::here("config.yaml")
+)
+```
 
 # Warning
 ***
@@ -111,10 +104,10 @@ To address this warning, you can consider increasing the maximum bound of the `i
 
 ## Customize parameter boundaries
 
-The parameter boundaries are stored in `parameter_ranges`:
+You can get the parameter boundaries with the `default_bounds_df()` function and by passing the `lifelihoodData` object:
 
 ```{r}
-bounds_df <- results$parameter_ranges
+bounds_df <- default_bounds_df(data)
 ```
 
 ```{r, echo=FALSE}
@@ -132,21 +125,9 @@ Once it's changed, you just have to call `lifelihood()` again with the `param_bo
 
 ```{r}
 results <- lifelihood(
-  df = df,
+  lifelihoodData = data,
   path_config = here::here("config.yaml"),
-  sex = "sex",
-  sex_start = "sex_start",
-  sex_end = "sex_end",
-  maturity_start = "mat_start",
-  maturity_end = "mat_end",
-  clutchs = clutchs,
-  death_start = "mor_start",
-  death_end = "mor_end",
-  covariates = c("geno", "type"),
-  seeds = seeds,
-  matclutch = FALSE,
-  model_specs = c("gam", "lgn", "wei"),
-  param_bounds_df = bounds_df,
+  param_bounds_df = bounds_df
 )
 ```
 

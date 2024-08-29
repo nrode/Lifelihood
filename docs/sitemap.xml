@@ -25,6 +25,9 @@
     <loc>/articles/4-custom-param-boundaries-and-estimation-warning.html</loc>
   </url>
   <url>
+    <loc>/articles/4-custom-param-boundaries-and-estimation-warning_files/jqueryui-1.13.2/index.html</loc>
+  </url>
+  <url>
     <loc>/articles/how_to_use_lifelihood.html</loc>
   </url>
   <url>
@@ -56,6 +59,9 @@
   </url>
   <url>
     <loc>/reference/create_default_boundaries.html</loc>
+  </url>
+  <url>
+    <loc>/reference/default_bounds_df.html</loc>
   </url>
   <url>
     <loc>/reference/delete_param_range.html</loc>
@@ -104,6 +110,9 @@
   </url>
   <url>
     <loc>/reference/lifelihood.html</loc>
+  </url>
+  <url>
+    <loc>/reference/lifelihoodData.html</loc>
   </url>
   <url>
     <loc>/reference/link.html</loc>

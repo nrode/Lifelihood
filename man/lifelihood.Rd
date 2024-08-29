@@ -5,20 +5,8 @@
 \title{Individual life history modelling}
 \usage{
 lifelihood(
-  df,
+  lifelihoodData,
   path_config,
-  sex,
-  sex_start,
-  sex_end,
-  maturity_start,
-  maturity_end,
-  clutchs,
-  death_start,
-  death_end,
-  model_specs,
-  covariates,
-  matclutch = FALSE,
-  matclutch_size = NULL,
   param_bounds_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -35,40 +23,13 @@ lifelihood(
   climbrate = 1,
   precision = 0.001,
   raise_estimation_warning = TRUE,
-  right_censoring_date = 1000,
-  critical_age = 20,
-  ratiomax = 10,
   delete_temp_files = TRUE
 )
 }
 \arguments{
-\item{df}{Dataframe with the data of life history. It should have one row per life history / observation.}
+\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}}
 
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
-
-\item{sex}{Column name containing the sex of the observations.}
-
-\item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
-
-\item{sex_end}{Column name containing the second date of the interval in which the sex was determined.}
-
-\item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
-
-\item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
-
-\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
-
-\item{death_start}{Column name containing the first date of the interval in which the death was determined.}
-
-\item{death_end}{Column name containing the second date of the interval in which the death was determined.}
-
-\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.}
-
-\item{covariates}{Vector containing the names of the covariates.}
-
-\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
-
-\item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 
 \item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
@@ -100,13 +61,7 @@ lifelihood(
 
 \item{precision}{TBD - Check the actual meaning}
 
-\item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound.}
-
-\item{right_censoring_date}{Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)}
-
-\item{critical_age}{Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)}
-
-\item{ratiomax}{Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)}
+\item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.}
 
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
 }

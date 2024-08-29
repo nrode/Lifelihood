@@ -1,14 +1,25 @@
 #' @title Dataframe with default boundaries
-#' @name create_default_boundaries
-#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei", "exp", "gam" or "lgn". The first one is used for maturity, the second one is used for clutchs and the third one for death.
-#' @param max_death Maximum value 
+#' @name default_bounds_df
+#' @inheritParams lifelihood
 #' @export 
-create_default_boundaries <- function(
-   model_specs,
-   max_death,
-   max_clutch,
-   max_maturity
+default_bounds_df <- function(
+   lifelihoodData
 ) {
+
+   if (!inherits(lifelihoodData, "lifelihoodData")) {
+      stop("lifelihoodData must be of class lifelihoodData")
+   }
+
+   df <- lifelihoodData$df
+   death_end <- lifelihoodData$death_end
+   maturity_end <- lifelihoodData$maturity_end
+   clutchs <- lifelihoodData$clutchs
+   model_specs <- lifelihoodData$model_specs
+
+   max_death <- max(df[death_end], na.rm = TRUE) * 2
+   max_maturity <- max(df[maturity_end], na.rm = TRUE) * 2
+   max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs])))), na.rm = TRUE) * 2
+
    models_bounds <- data.frame(
       name = c("wei", "gam", "lgn", "exp"),
       min_default = c(0.05, 0.005, 0.0025, 0.05),

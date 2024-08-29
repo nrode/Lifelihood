@@ -11,7 +11,8 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="4 - Custom parameter boundaries and estimation warning">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="4 - Custom parameter boundaries and estimation warning">
 <meta property="og:description" content="lifelihood">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -52,7 +53,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/nrode/Lifelihood/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -72,16 +80,17 @@
                         <h4 data-toc-skip class="author">Nicolas RODE,
 Thomas LENORMAND</h4>
             
-            <h4 data-toc-skip class="date">28-August-2024</h4>
+            <h4 data-toc-skip class="date">29-August-2024</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/HEAD/vignettes/4-custom-param-boundaries-and-estimation-warning.Rmd" class="external-link"><code>vignettes/4-custom-param-boundaries-and-estimation-warning.Rmd</code></a></small>
       <div class="d-none name"><code>4-custom-param-boundaries-and-estimation-warning.Rmd</code></div>
     </div>
 
     
     
-<p><br></p>
-<p>If you haven’t already check it, have a look at:</p>
+<div class="topVignette">
+If you haven’t already check it, have a look at:
+</div>
 <ul>
 <li><a href="1-required-data-format.html">What is the required data
 format to work with lifelihood?</a></li>
@@ -95,44 +104,36 @@ package</a></li>
 </h2>
 <hr>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lifelihood</span><span class="op">)</span></span>
-<span><span class="co">#devtools::load_all(compile = FALSE)</span></span></code></pre></div>
-<p><br></p>
+<code class="sourceCode R"><span><span class="co">#library(lifelihood)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span>compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Loading <span style="color: #0000BB;">lifelihood</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <hr>
 <p>Load the dataset from <code>.csv</code> file:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># input data</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'data/fake_sample.csv'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span></span></code></pre></div>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],["1","2","0","1","2","2","1","1"],["0","0","1","0","1","1","0","0"],[0,0,0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0,0,0],[0,2,3,0,1,1,0,0],[1000,3,4,1000,2,2,1000,1000],[" NA"," 4"," 2"," NA"," 2"," 2"," NA"," NA"],[" NA"," 3"," 4"," NA"," 2"," 2"," NA"," NA"],[" NA"," 4"," 5"," NA"," 3"," 1"," NA"," NA"],[" NA"," 2"," NA"," NA"," 5"," 5"," NA"," NA"],[" NA"," 4"," NA"," NA"," 3"," 8"," NA"," NA"],[" NA"," 5"," NA"," NA"," 4"," 3"," NA"," NA"],[0,9,5,0,11,14,0,0],[1,10,6,1,12,20,1,5]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Prepare input parameters for the <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],["1","2","0","1","2","2","1","1"],["0","0","1","0","1","1","0","0"],[0,0,0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0,0,0],[0,2,3,0,1,1,0,0],[1000,3,4,1000,2,2,1000,1000],[" NA"," 4"," 2"," NA"," 2"," 2"," NA"," NA"],[" NA"," 3"," 4"," NA"," 2"," 2"," NA"," NA"],[" NA"," 4"," 5"," NA"," 3"," 1"," NA"," NA"],[" NA"," 2"," NA"," NA"," 5"," 5"," NA"," NA"],[" NA"," 4"," NA"," NA"," 3"," 8"," NA"," NA"],[" NA"," 5"," NA"," NA"," 4"," 3"," NA"," NA"],[0,9,5,0,11,14,0,0],[1,10,6,1,12,20,1,5]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Prepare input parameters for the <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
 function:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
 <span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span>
 <span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># seeds value (must be of length 4!)</span></span>
-<span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="get-the-results">Get the results<a class="anchor" aria-label="anchor" href="#get-the-results"></a>
+<h2 id="create-the-lifelihooddata-object">Create the <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-the-lifelihooddata-object"></a>
 </h2>
-<hr>
-<p>Let’s run the analysis with default parameters.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># run the analysis</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
@@ -142,23 +143,19 @@ function:</p>
 <span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
-<span>  seeds <span class="op">=</span> <span class="va">seeds</span>,</span>
-<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span>,</span>
+<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'expt_death' is close to the minimum bound: expt_death≃0.00100014343619715.</span></span>
-<span><span class="co">## Consider decreasing minimum bound.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'survival_shape' is close to the maximum bound:</span></span>
-<span><span class="co">## survival_shape≃499.985763688386. Consider increasing maximum bound.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'prob_death' is close to the minimum bound: prob_death≃1.00007118813149e-05.</span></span>
-<span><span class="co">## Consider decreasing minimum bound.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'increase_death_hazard' is close to the maximum bound:</span></span>
-<span><span class="co">## increase_death_hazard≃9.9864992332278. Consider increasing maximum bound.</span></span></code></pre>
-<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="get-the-results">Get the results<a class="anchor" aria-label="anchor" href="#get-the-results"></a>
+</h2>
+<hr>
+<p>Let’s run the analysis with default parameters.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
@@ -169,7 +166,7 @@ function:</p>
 </h3>
 <p>When runnning <code><a href="../reference/lifelihood.html">lifelihood()</a></code> function, you might encounter
 the following warning:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
 <span><span class="co">## 'increase_death_hazard' is close to the maximum bound:</span></span>
 <span><span class="co">## increase_death_hazard≃9.9864992332278. Consider increasing maximum bound.</span></span></code></pre></div>
@@ -189,95 +186,93 @@ estimate.</p>
 <div class="section level3">
 <h3 id="customize-parameter-boundaries">Customize parameter boundaries<a class="anchor" aria-label="anchor" href="#customize-parameter-boundaries"></a>
 </h3>
-<p>The parameter boundaries are stored in
-<code>parameter_ranges</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">parameter_ranges</span></span></code></pre></div>
+<p>You can get the parameter boundaries with the
+<code><a href="../reference/default_bounds_df.html">default_bounds_df()</a></code> function and by passing the
+<code>lifelihoodData</code> object:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/default_bounds_df.html">default_bounds_df</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],["expt_death","survival_shape","ratio_expt_death","prob_death","sex_ratio","expt_maturity","maturity_shape","ratio_expt_maturity","expt_reproduction","reproduction_shape","pontn","increase_death_hazard","tof_reduction_date","increase_tof_n_offspring","lin_decrease_hazard","quad_senescence","quad_decrease_hazard","quad_change_n_offspring","tof_n_offspring"],[0.001,0.05,0.01,1e-05,1e-05,0.001,0.005,0.01,0.001,0.0025,1,1e-05,1e-07,1e-07,-20,-20,-10,-10,-10],[40,500,100,0.99999,0.99999,2000,600,100,16,10,50,10,10,10,20,20,10,10,10]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Since 10 seems to not be high enough, let’s try with 80:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["expt_death","survival_shape","ratio_expt_death","prob_death","sex_ratio","expt_maturity","maturity_shape","ratio_expt_maturity","expt_reproduction","reproduction_shape","pontn","increase_death_hazard","tof_reduction_date","increase_tof_n_offspring","lin_decrease_hazard","quad_senescence","quad_decrease_hazard","quad_change_n_offspring","tof_n_offspring","fitness"],["0.001","0.05","0.01","1e-05","1e-05","0.001","0.005","0.01","0.001","0.0025","1","1e-05","1e-07","1e-07","-20","-20","-10","-10","-10","0.001"],["40","500","100","0.99999","0.99999","2000","600","100","16","10","50","10","10","10","20","20","10","10","10","1000"]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Since 10 seems to not be high enough, let’s try with 80:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bounds_df</span><span class="op">[</span><span class="va">bounds_df</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"increase_death_hazard"</span>, <span class="st">"max"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">80</span></span></code></pre></div>
 <p>Once it’s changed, you just have to call <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
 again with the <code>param_bounds_df</code> argument:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
-<span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span>
-<span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
-<span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
-<span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
-<span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
-<span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
-<span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
-<span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
-<span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
-<span>  seeds <span class="op">=</span> <span class="va">seeds</span>,</span>
-<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span>,</span>
-<span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span>,</span>
+<span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
+<span><span class="co">## 'expt_death' is close to the minimum bound: expt_death≃0.00100000339237898.</span></span>
+<span><span class="co">## Consider decreasing minimum bound.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
+<span><span class="co">## 'prob_death' is close to the minimum bound: prob_death≃1.00000268824537e-05.</span></span>
+<span><span class="co">## Consider decreasing minimum bound.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
+<span><span class="co">## 'increase_death_hazard' is close to the maximum bound:</span></span>
+<span><span class="co">## increase_death_hazard≃9.99937818791201. Consider increasing maximum bound.</span></span></code></pre>
 <p>Now we don’t get any warning!</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## likelihood:</span></span>
-<span><span class="co">## [1] -651.9123</span></span>
+<span><span class="co">## [1] -454.9326</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## effects:</span></span>
-<span><span class="co">##                                     name  estimation stderror</span></span>
-<span><span class="co">## 1                         int_expt_death -4.12172641        0</span></span>
-<span><span class="co">## 2                   eff_expt_death_geno1 -0.17155505        0</span></span>
-<span><span class="co">## 3                   eff_expt_death_type1 -2.52072026        0</span></span>
-<span><span class="co">## 4                   eff_expt_death_type2  2.24913431        0</span></span>
-<span><span class="co">## 5                     int_survival_shape -3.65469684        0</span></span>
-<span><span class="co">## 6               eff_survival_shape_geno1  0.24240868        0</span></span>
-<span><span class="co">## 7               eff_survival_shape_type1 -3.02086577        0</span></span>
-<span><span class="co">## 8               eff_survival_shape_type2  0.47055653        0</span></span>
-<span><span class="co">## 9         eff_survival_shape_type1:geno1 -0.99774403        0</span></span>
-<span><span class="co">## 10        eff_survival_shape_type2:geno1 -2.78271655        0</span></span>
-<span><span class="co">## 11                  int_ratio_expt_death  1.97757519        0</span></span>
-<span><span class="co">## 12            eff_ratio_expt_death_geno1 -1.96996607        0</span></span>
-<span><span class="co">## 13                        int_prob_death -1.98701963        0</span></span>
-<span><span class="co">## 14                  eff_prob_death_geno1 -2.58212169        0</span></span>
-<span><span class="co">## 15                     int_expt_maturity -3.93531468        0</span></span>
-<span><span class="co">## 16               eff_expt_maturity_geno1 -2.44252634        0</span></span>
-<span><span class="co">## 17               eff_expt_maturity_type1  1.41495201        0</span></span>
-<span><span class="co">## 18               eff_expt_maturity_type2 -1.14311026        0</span></span>
-<span><span class="co">## 19                    int_maturity_shape -6.08612973        0</span></span>
-<span><span class="co">## 20              eff_maturity_shape_geno1 -4.76067782        0</span></span>
-<span><span class="co">## 21               int_ratio_expt_maturity -1.79554796        0</span></span>
-<span><span class="co">## 22         eff_ratio_expt_maturity_geno1 -0.93777341        0</span></span>
-<span><span class="co">## 23         eff_ratio_expt_maturity_type1 -0.34706147        0</span></span>
-<span><span class="co">## 24         eff_ratio_expt_maturity_type2  0.64566903        0</span></span>
-<span><span class="co">## 25                 int_expt_reproduction -3.60894875        0</span></span>
-<span><span class="co">## 26           eff_expt_reproduction_geno1 -0.45374931        0</span></span>
-<span><span class="co">## 27                             int_pontn -2.38149562        0</span></span>
-<span><span class="co">## 28                       eff_pontn_geno1 -0.07353181        0</span></span>
-<span><span class="co">## 29             int_increase_death_hazard  0.17978485        0</span></span>
-<span><span class="co">## 30       eff_increase_death_hazard_geno1  2.43197908        0</span></span>
-<span><span class="co">## 31       eff_increase_death_hazard_type1  0.63390433        0</span></span>
-<span><span class="co">## 32       eff_increase_death_hazard_type2  0.25734948        0</span></span>
-<span><span class="co">## 33 eff_increase_death_hazard_type1:geno1  0.43373460        0</span></span>
-<span><span class="co">## 34 eff_increase_death_hazard_type2:geno1  1.16079857        0</span></span>
-<span><span class="co">## 35                int_tof_reduction_date -0.43884763        0</span></span>
-<span><span class="co">## 36          eff_tof_reduction_date_geno1 -0.40776952        0</span></span>
-<span><span class="co">## 37          int_increase_tof_n_offspring -0.57859882        0</span></span>
-<span><span class="co">## 38    eff_increase_tof_n_offspring_geno1  1.15968464        0</span></span>
-<span><span class="co">## 39               int_lin_decrease_hazard -0.97898084        0</span></span>
-<span><span class="co">## 40         eff_lin_decrease_hazard_geno1  0.47049308        0</span></span>
-<span><span class="co">## 41         eff_lin_decrease_hazard_type1  2.18886031        0</span></span>
-<span><span class="co">## 42         eff_lin_decrease_hazard_type2 -0.81495319        0</span></span>
-<span><span class="co">## 43   eff_lin_decrease_hazard_type1:geno1  0.15395041        0</span></span>
-<span><span class="co">## 44   eff_lin_decrease_hazard_type2:geno1 -0.53753846        0</span></span>
-<span><span class="co">## 45                   int_quad_senescence  0.83129459        0</span></span>
-<span><span class="co">## 46             eff_quad_senescence_geno1 -1.88195580        0</span></span>
-<span><span class="co">## 47              int_quad_decrease_hazard -0.25144736        0</span></span>
-<span><span class="co">## 48        eff_quad_decrease_hazard_geno1  0.90183575        0</span></span>
-<span><span class="co">## 49           int_quad_change_n_offspring -0.48008025        0</span></span>
-<span><span class="co">## 50     eff_quad_change_n_offspring_geno1  0.81669087        0</span></span>
-<span><span class="co">## 51                   int_tof_n_offspring -0.48053641        0</span></span>
+<span><span class="co">##                                     name   estimation stderror</span></span>
+<span><span class="co">## 1                         int_expt_death -12.43571240        0</span></span>
+<span><span class="co">## 2                   eff_expt_death_geno1  -0.28015479        0</span></span>
+<span><span class="co">## 3                   eff_expt_death_type1  -8.40794180        0</span></span>
+<span><span class="co">## 4                   eff_expt_death_type2  -2.06677986        0</span></span>
+<span><span class="co">## 5                     int_survival_shape   2.82195726        0</span></span>
+<span><span class="co">## 6               eff_survival_shape_geno1  -3.38968425        0</span></span>
+<span><span class="co">## 7               eff_survival_shape_type1   5.99309886        0</span></span>
+<span><span class="co">## 8               eff_survival_shape_type2  -2.98598559        0</span></span>
+<span><span class="co">## 9         eff_survival_shape_type1:geno1   3.01606628        0</span></span>
+<span><span class="co">## 10        eff_survival_shape_type2:geno1  -1.46572849        0</span></span>
+<span><span class="co">## 11                  int_ratio_expt_death  -3.19462159        0</span></span>
+<span><span class="co">## 12            eff_ratio_expt_death_geno1   1.20981730        0</span></span>
+<span><span class="co">## 13                        int_prob_death -19.95564530        0</span></span>
+<span><span class="co">## 14                  eff_prob_death_geno1  -4.38388202        0</span></span>
+<span><span class="co">## 15                     int_expt_maturity  -3.99341185        0</span></span>
+<span><span class="co">## 16               eff_expt_maturity_geno1  -2.23945031        0</span></span>
+<span><span class="co">## 17               eff_expt_maturity_type1   0.97183391        0</span></span>
+<span><span class="co">## 18               eff_expt_maturity_type2  -1.34534611        0</span></span>
+<span><span class="co">## 19                    int_maturity_shape  -6.23656348        0</span></span>
+<span><span class="co">## 20              eff_maturity_shape_geno1 -10.48411387        0</span></span>
+<span><span class="co">## 21               int_ratio_expt_maturity  -0.75994928        0</span></span>
+<span><span class="co">## 22         eff_ratio_expt_maturity_geno1  -1.21528400        0</span></span>
+<span><span class="co">## 23         eff_ratio_expt_maturity_type1  -0.03997176        0</span></span>
+<span><span class="co">## 24         eff_ratio_expt_maturity_type2  -1.32260040        0</span></span>
+<span><span class="co">## 25                 int_expt_reproduction  -2.32101473        0</span></span>
+<span><span class="co">## 26           eff_expt_reproduction_geno1  -1.37811055        0</span></span>
+<span><span class="co">## 27                             int_pontn  -2.47434859        0</span></span>
+<span><span class="co">## 28                       eff_pontn_geno1  -0.89418291        0</span></span>
+<span><span class="co">## 29             int_increase_death_hazard   3.34181806        0</span></span>
+<span><span class="co">## 30       eff_increase_death_hazard_geno1   3.69330730        0</span></span>
+<span><span class="co">## 31       eff_increase_death_hazard_type1   0.00863126        0</span></span>
+<span><span class="co">## 32       eff_increase_death_hazard_type2   1.26364356        0</span></span>
+<span><span class="co">## 33 eff_increase_death_hazard_type1:geno1   0.80126674        0</span></span>
+<span><span class="co">## 34 eff_increase_death_hazard_type2:geno1   0.57672761        0</span></span>
+<span><span class="co">## 35                int_tof_reduction_date  -0.35572067        0</span></span>
+<span><span class="co">## 36          eff_tof_reduction_date_geno1  -0.41143853        0</span></span>
+<span><span class="co">## 37          int_increase_tof_n_offspring   1.86684188        0</span></span>
+<span><span class="co">## 38    eff_increase_tof_n_offspring_geno1   1.26935315        0</span></span>
+<span><span class="co">## 39               int_lin_decrease_hazard  -0.11482862        0</span></span>
+<span><span class="co">## 40         eff_lin_decrease_hazard_geno1  -0.59582263        0</span></span>
+<span><span class="co">## 41         eff_lin_decrease_hazard_type1  -1.35102013        0</span></span>
+<span><span class="co">## 42         eff_lin_decrease_hazard_type2   0.10522771        0</span></span>
+<span><span class="co">## 43   eff_lin_decrease_hazard_type1:geno1   0.03489075        0</span></span>
+<span><span class="co">## 44   eff_lin_decrease_hazard_type2:geno1   0.88352617        0</span></span>
+<span><span class="co">## 45                   int_quad_senescence   0.15416887        0</span></span>
+<span><span class="co">## 46             eff_quad_senescence_geno1  -0.03973226        0</span></span>
+<span><span class="co">## 47              int_quad_decrease_hazard  -0.37154474        0</span></span>
+<span><span class="co">## 48        eff_quad_decrease_hazard_geno1   0.00269250        0</span></span>
+<span><span class="co">## 49           int_quad_change_n_offspring  -0.01459328        0</span></span>
+<span><span class="co">## 50     eff_quad_change_n_offspring_geno1  -0.97555960        0</span></span>
+<span><span class="co">## 51                   int_tof_n_offspring  -0.39596153        0</span></span>
 <span><span class="co">##                      metric        kind</span></span>
 <span><span class="co">## 1                expt_death   intercept</span></span>
 <span><span class="co">## 2                expt_death coefficient</span></span>

@@ -9,6 +9,7 @@
 #' @param seed3 Third seed number used to reproduce results (same seed = same results).
 #' @param seed4 4th seed number used to reproduce results (same seed = same results).
 #' @inheritParams lifelihood
+#' @inheritParams lifelihoodData
 #' @return NULL. This function writes an output file, that will then be parsed by [parse_output()].
 #' @export
 execute_bin <- function(

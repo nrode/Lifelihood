@@ -5,7 +5,6 @@ date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
   html_document:
     theme: journal
-    css: style.css
     toc: yes
     toc_float:
       collapsed: no
@@ -14,9 +13,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-<br>
-
-If you haven't already check it, have a look at:
+<div class="topVignette">If you haven't already check it, have a look at:</div>
 
 - [what is the required data format to work with lifelihood?](1-required-data-format.html)
 - [setting up the configuration file](2-setting-up-the-configuration-file.html)
@@ -28,8 +25,6 @@ If you haven't already check it, have a look at:
 #library(lifelihood)
 devtools::load_all(compile = FALSE)
 ```
-
-<br>
 
 # Data preparation
 ***
@@ -55,23 +50,13 @@ clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
-
-# seeds value (must be of length 4!)
-seeds <- c(1, 2, 3, 4)
 ```
 
-<br>
-
-# Get the results
-***
-
-## All default parameters
+# Create the `lifelihoodData` object
 
 ```{r}
-# run the analysis
-results <- lifelihood(
+data <- lifelihoodData(
   df = df,
-  path_config = "../config.yaml",
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -81,19 +66,28 @@ results <- lifelihood(
   death_start = "mor_start",
   death_end = "mor_end",
   covariates = c("geno", "type"),
-  seeds = seeds,
-  matclutch = FALSE,
-  model_specs = c("gam", "lgn", "wei"),
+  model_specs = c("gam", "lgn", "wei")
+)
+```
+
+# Get the results
+***
+
+## All default parameters
+
+```{r}
+results <- lifelihood(
+  lifelihoodData = data,
+  path_config = here::here("config.yaml"),
+  seeds = c(1, 2, 3, 4)
 )
 summary(results)
 ```
 
-
-
 # Get specific results
 ***
 
-Get vector of estimation:
+Get estimations:
 
 ```{r}
 results$effects
@@ -104,3 +98,8 @@ Get maximum likelihood found:
 ```{r}
 results$likelihood
 ```
+
+# Next step
+***
+
+Now that you have seen how to use the package, you can go further and [customise your parameter boundaries and deal with estimation warnings](4-custom-param-boundaries-and-estimation-warning.html).

@@ -5,7 +5,6 @@ date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
   html_document:
     theme: journal
-    css: style.css
     toc: yes
     toc_float:
       collapsed: no
@@ -13,8 +12,6 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
-
-<br>
 
 # Introduction
 ***
@@ -69,5 +66,8 @@ DT::datatable(df, options = list(scrollX = TRUE), class = "cell-border stripe ho
 As you can see, some observations made more ponts, leading to the presence of NULL values.
 
 *One* row of the dataset should represent the **life history** of *one* observation.
+
+# Next step
+***
 
 Once our dataframe has the right format, we now have to [create a configuration file](2-setting-up-the-configuration-file.html).
