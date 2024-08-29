@@ -15,8 +15,9 @@ default_bounds_df <- function(
    maturity_end <- lifelihoodData$maturity_end
    clutchs <- lifelihoodData$clutchs
    model_specs <- lifelihoodData$model_specs
+   right_censoring_date <- lifelihoodData$right_censoring_date
 
-   max_death <- max(df[death_end], na.rm = TRUE) * 2
+   max_death <- max(df[df[[death_end]] < right_censoring_date, death_end], na.rm = TRUE) * 2
    max_maturity <- max(df[maturity_end], na.rm = TRUE) * 2
    max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs])))), na.rm = TRUE) * 2
 
@@ -26,7 +27,7 @@ default_bounds_df <- function(
       max_default = c(500, 600, 10, 1000)
    )
 
-   maturity_model <- model_specs[1]
+   maturity_model <- model_specs[1] 
    maturity_specs <- subset(models_bounds, name == maturity_model)
    maturity_shape_min <- maturity_specs$min_default
    maturity_shape_max <- maturity_specs$max_default
