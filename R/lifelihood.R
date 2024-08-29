@@ -168,7 +168,11 @@ lifelihood <- function(
    filename_output <- sub("\\.txt$", "", basename(data_path))
    output_path <- file.path(temp_dir, paste0(filename_output, ".out"))
 
-   results <- read_output_from_file(output_path, group_by_group = group_by_group)
+   results <- read_output_from_file(
+      output_path,
+      group_by_group = group_by_group,
+      covariates = lifelihoodData$covariates
+   )
 
    if (delete_temp_files) {
       unlink(temp_dir, recursive = TRUE)

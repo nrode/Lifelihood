@@ -6,12 +6,11 @@
 #' @inheritParams lifelihood
 #' @return An object of class `LifelihoodResults` with all results from the output file
 #' @export 
-read_output_from_file <- function(file_path, group_by_group = FALSE){
-
-  if (!file.exists(file_path)){stop(paste("File", file_path  ,"not found"))}
-  if (!grepl(".out$", file_path)){stop("File is not a .out file")}
-  if (file.size(file_path) == 0){stop("File is empty")}
-  if (!is.logical(group_by_group)){stop("group_by_group must be a boolean")}
+read_output_from_file <- function(
+  file_path,
+  group_by_group = FALSE,
+  covariates = NULL
+){
 
   lines <- readLines(file_path)
   results <- list()
@@ -30,7 +29,7 @@ read_output_from_file <- function(file_path, group_by_group = FALSE){
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
-
+  results$covariates <- covariates
   class(results) <- "LifelihoodResults"
   return(results)
 }

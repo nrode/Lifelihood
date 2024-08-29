@@ -6,13 +6,14 @@
 #' @return A character vector that will be used under the model tag in the input text file.
 #' @export
 format_config <- function(path_config, covariates) {
-   # read the yaml file
    if (!file.exists(path_config)) {
       stop(paste("Configuration file", path_config, "not found"))
    }
    config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
-   # function to safely access elements in config file
+   # function to safely access elements in config file.
+   # this function exists because yaml.load_file() returns NULL
+   # when a value is not found instead of raising an error
    safe_access <- function(config, path) {
       result <- tryCatch(
          {
@@ -28,7 +29,6 @@ format_config <- function(path_config, covariates) {
       result
    }
 
-   # get mortality, maturity and reproduction config
    formatted_config <- c(
       paste("expt_death", R_to_lifelihood(safe_access(config, c("mortality", "expt_death")), covariates)[1]),
       paste("survival_shape", R_to_lifelihood(safe_access(config, c("mortality", "survival_shape")), covariates)[1]),
