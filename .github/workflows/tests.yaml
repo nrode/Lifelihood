@@ -2,8 +2,7 @@ name: R Package Tests
 
 on:
   pull_request:
-    branches: [main, master]
-
+    branches: main
 jobs:
   test:
     runs-on: ubuntu-latest
