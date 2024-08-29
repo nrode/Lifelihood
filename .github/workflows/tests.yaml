@@ -1,4 +1,4 @@
-name: R Package Tests
+name: Lifelihood Tests
 
 on:
   pull_request:
