@@ -26,7 +26,7 @@ If you haven't already check it, have a look at:
 
 ```{r}
 #library(lifelihood)
-devtools::load_all()
+devtools::load_all(compile = FALSE)
 ```
 
 <br>
@@ -56,7 +56,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-# seeds value (must of length 4!)
+# seeds value (must be of length 4!)
 seeds <- c(1, 2, 3, 4)
 ```
 
@@ -88,54 +88,7 @@ results <- lifelihood(
 summary(results)
 ```
 
-<br>
 
-## Customize parameter boundaries
-
-The parameter boundaries are stored in `parameter_ranges`:
-
-```{r}
-bounds_df <- results$parameter_ranges
-```
-
-```{r, echo=FALSE}
-DT::datatable(bounds_df, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
-```
-
-If you want to customize them for your analysis, just do:
-
-```{r}
-bounds_df[bounds_df$name == "survival_shape", "min"] <- 2.0e-02
-
-bounds_df[bounds_df$name == "expt_death", "max"] <- 30.0
-```
-
-```{r, echo=FALSE}
-DT::datatable(bounds_df, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
-```
-
-Once it's changed, you just have to call `lifelihood()` again with the `param_bounds_df` argument:
-
-```{r}
-results <- lifelihood(
-  df = df,
-  path_config = "../config.yaml",
-  sex = "sex",
-  sex_start = "sex_start",
-  sex_end = "sex_end",
-  maturity_start = "mat_start",
-  maturity_end = "mat_end",
-  clutchs = clutchs,
-  death_start = "mor_start",
-  death_end = "mor_end",
-  covariates = c("geno", "type"),
-  seeds = seeds,
-  matclutch = FALSE,
-  model_specs = c("gam", "lgn", "wei"),
-  param_bounds_df = bounds_df,
-)
-summary(results)
-```
 
 # Get specific results
 ***

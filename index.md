@@ -16,8 +16,8 @@
    - which statistical law to use
    - extra variables (geno, spore etc)
 - ✅ Read a config file with all effects to fit
-- ❌ Make the input data file and output file temp file
-- ❌ Compile for Windows with Lazarus
+- ✅ Make the input data file and output file temp file
+- ✅ Compile for Windows with Lazarus
 - ❌ Visualization
 - ❌ Simulation using estimation
 - ❌ Goodness of fit

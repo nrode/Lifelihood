@@ -44,6 +44,7 @@
     <a class="dropdown-item" href="../articles/1-required-data-format.html">1 - What is the required data format</a>
     <a class="dropdown-item" href="../articles/2-setting-up-the-configuration-file.html">2 - Setting up the configuration file</a>
     <a class="dropdown-item" href="../articles/3-how-to-use-lifelihood.html">3 - How to use the lifelihood package</a>
+    <a class="dropdown-item" href="../articles/4-custom-param-boundaries-and-estimation-warning.html">4 - Custom parameter boundaries and estimation warning</a>
   </div>
 </li>
       </ul>
@@ -71,7 +72,7 @@
                         <h4 data-toc-skip class="author">Nicolas RODE,
 Thomas LENORMAND</h4>
             
-            <h4 data-toc-skip class="date">16-August-2024</h4>
+            <h4 data-toc-skip class="date">28-August-2024</h4>
       
       
       <div class="d-none name"><code>3-how-to-use-lifelihood.Rmd</code></div>
@@ -93,15 +94,8 @@ configuration file</a></li>
 <hr>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#library(lifelihood)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Loading <span style="color: #0000BB;">lifelihood</span></span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Re-compiling <span style="color: #0000BB;">lifelihood</span> (debug build)</span></span></code></pre>
-<pre><code><span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD INSTALL</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">## * installing *source* package ‘lifelihood’ ...</span></span>
-<span><span class="co">## ** using staged installation</span></span>
-<span><span class="co">## ** libs</span></span>
-<span><span class="co">## Warning: no source files found</span></span>
-<span><span class="co">## * DONE (lifelihood)</span></span></code></pre>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span>compile <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Loading <span style="color: #0000BB;">lifelihood</span></span></span></code></pre>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -109,7 +103,7 @@ configuration file</a></li>
 </h2>
 <hr>
 <p>Load the dataset from <code>.csv</code> file:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># input data</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'data/fake_sample.csv'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
@@ -117,14 +111,14 @@ configuration file</a></li>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8"],["1","2","0","1","2","2","1","1"],["0","0","1","0","1","1","0","0"],[0,0,0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0,0,0],[0,2,3,0,1,1,0,0],[1000,3,4,1000,2,2,1000,1000],[" NA"," 4"," 2"," NA"," 2"," 2"," NA"," NA"],[" NA"," 3"," 4"," NA"," 2"," 2"," NA"," NA"],[" NA"," 4"," 5"," NA"," 3"," 1"," NA"," NA"],[" NA"," 2"," NA"," NA"," 5"," 5"," NA"," NA"],[" NA"," 4"," NA"," NA"," 3"," 8"," NA"," NA"],[" NA"," 5"," NA"," NA"," 4"," 3"," NA"," NA"],[0,9,5,0,11,14,0,0],[1,10,6,1,12,20,1,5]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>mor_start<\/th>\n      <th>mor_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"mor_start","targets":14},{"name":"mor_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Prepare input parameters for the <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
 function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
 <span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span>
 <span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># seeds value (must of length 4!)</span></span>
+<span><span class="co"># seeds value (must be of length 4!)</span></span>
 <span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
@@ -135,7 +129,7 @@ function:</p>
 <div class="section level3">
 <h3 id="all-default-parameters">All default parameters<a class="anchor" aria-label="anchor" href="#all-default-parameters"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># run the analysis</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
@@ -165,7 +159,7 @@ function:</p>
 <pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
 <span><span class="co">## 'increase_death_hazard' is close to the maximum bound:</span></span>
 <span><span class="co">## increase_death_hazard≃9.9864992332278. Consider increasing maximum bound.</span></span></code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
 <span><span class="co">## </span></span>
@@ -277,163 +271,6 @@ function:</p>
 <span><span class="co">## 49  quad_change_n_offspring   intercept</span></span>
 <span><span class="co">## 50  quad_change_n_offspring coefficient</span></span>
 <span><span class="co">## 51          tof_n_offspring   intercept</span></span></code></pre>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="customize-parameter-boundaries">Customize parameter boundaries<a class="anchor" aria-label="anchor" href="#customize-parameter-boundaries"></a>
-</h3>
-<p>The parameter boundaries are stored in
-<code>parameter_ranges</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">parameter_ranges</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],["expt_death","survival_shape","ratio_expt_death","prob_death","sex_ratio","expt_maturity","maturity_shape","ratio_expt_maturity","expt_reproduction","reproduction_shape","pontn","increase_death_hazard","tof_reduction_date","increase_tof_n_offspring","lin_decrease_hazard","quad_senescence","quad_decrease_hazard","quad_change_n_offspring","tof_n_offspring"],[0.001,0.05,0.01,1e-05,1e-05,0.001,0.005,0.01,0.001,0.0025,1,1e-05,1e-07,1e-07,-20,-20,-10,-10,-10],[40,500,100,0.99999,0.99999,2000,600,100,16,10,50,10,10,10,20,20,10,10,10]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>If you want to customize them for your analysis, just do:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bounds_df</span><span class="op">[</span><span class="va">bounds_df</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"survival_shape"</span>, <span class="st">"min"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2.0e-02</span></span>
-<span></span>
-<span><span class="va">bounds_df</span><span class="op">[</span><span class="va">bounds_df</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"expt_death"</span>, <span class="st">"max"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">30.0</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-36aa3d2a04d42bbc2145" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],["expt_death","survival_shape","ratio_expt_death","prob_death","sex_ratio","expt_maturity","maturity_shape","ratio_expt_maturity","expt_reproduction","reproduction_shape","pontn","increase_death_hazard","tof_reduction_date","increase_tof_n_offspring","lin_decrease_hazard","quad_senescence","quad_decrease_hazard","quad_change_n_offspring","tof_n_offspring"],[0.001,0.02,0.01,1e-05,1e-05,0.001,0.005,0.01,0.001,0.0025,1,1e-05,1e-07,1e-07,-20,-20,-10,-10,-10],[30,500,100,0.99999,0.99999,2000,600,100,16,10,50,10,10,10,20,20,10,10,10]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Once it’s changed, you just have to call <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
-again with the <code>param_bounds_df</code> argument:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
-<span>  df <span class="op">=</span> <span class="va">df</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="st">"../config.yaml"</span>,</span>
-<span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
-<span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
-<span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
-<span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
-<span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
-<span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
-<span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
-<span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
-<span>  seeds <span class="op">=</span> <span class="va">seeds</span>,</span>
-<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span>,</span>
-<span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span>,</span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'expt_death' is close to the minimum bound: expt_death≃0.00100001581502463.</span></span>
-<span><span class="co">## Consider decreasing minimum bound.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'survival_shape' is close to the maximum bound: survival_shape≃499.9996358153.</span></span>
-<span><span class="co">## Consider increasing maximum bound.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
-<span><span class="co">## 'prob_death' is close to the minimum bound: prob_death≃1.00032046810965e-05.</span></span>
-<span><span class="co">## Consider decreasing minimum bound.</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## likelihood:</span></span>
-<span><span class="co">## [1] -649.1907</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## effects:</span></span>
-<span><span class="co">##                                     name   estimation stderror</span></span>
-<span><span class="co">## 1                         int_expt_death  -8.69707607        0</span></span>
-<span><span class="co">## 2                   eff_expt_death_geno1  -0.86761615        0</span></span>
-<span><span class="co">## 3                   eff_expt_death_type1 -10.26735407        0</span></span>
-<span><span class="co">## 4                   eff_expt_death_type2  -1.53142318        0</span></span>
-<span><span class="co">## 5                     int_survival_shape   4.21736850        0</span></span>
-<span><span class="co">## 6               eff_survival_shape_geno1   1.60449776        0</span></span>
-<span><span class="co">## 7               eff_survival_shape_type1   7.16201137        0</span></span>
-<span><span class="co">## 8               eff_survival_shape_type2   0.84419996        0</span></span>
-<span><span class="co">## 9         eff_survival_shape_type1:geno1  -0.09951692        0</span></span>
-<span><span class="co">## 10        eff_survival_shape_type2:geno1   0.40385610        0</span></span>
-<span><span class="co">## 11                  int_ratio_expt_death  -0.69707812        0</span></span>
-<span><span class="co">## 12            eff_ratio_expt_death_geno1  -0.09025045        0</span></span>
-<span><span class="co">## 13                        int_prob_death -18.67552412        0</span></span>
-<span><span class="co">## 14                  eff_prob_death_geno1  -0.88310913        0</span></span>
-<span><span class="co">## 15                     int_expt_maturity  -5.39575020        0</span></span>
-<span><span class="co">## 16               eff_expt_maturity_geno1  -0.90152320        0</span></span>
-<span><span class="co">## 17               eff_expt_maturity_type1   0.77155541        0</span></span>
-<span><span class="co">## 18               eff_expt_maturity_type2  -1.24893642        0</span></span>
-<span><span class="co">## 19                    int_maturity_shape -10.22528333        0</span></span>
-<span><span class="co">## 20              eff_maturity_shape_geno1  -4.23983719        0</span></span>
-<span><span class="co">## 21               int_ratio_expt_maturity  -0.11485356        0</span></span>
-<span><span class="co">## 22         eff_ratio_expt_maturity_geno1  -0.04693279        0</span></span>
-<span><span class="co">## 23         eff_ratio_expt_maturity_type1  -0.62945489        0</span></span>
-<span><span class="co">## 24         eff_ratio_expt_maturity_type2  -0.35463544        0</span></span>
-<span><span class="co">## 25                 int_expt_reproduction  -3.83442969        0</span></span>
-<span><span class="co">## 26           eff_expt_reproduction_geno1  -0.41612109        0</span></span>
-<span><span class="co">## 27                             int_pontn  -1.58613999        0</span></span>
-<span><span class="co">## 28                       eff_pontn_geno1   0.20454801        0</span></span>
-<span><span class="co">## 29             int_increase_death_hazard   1.52154469        0</span></span>
-<span><span class="co">## 30       eff_increase_death_hazard_geno1   1.05435602        0</span></span>
-<span><span class="co">## 31       eff_increase_death_hazard_type1  -0.30863847        0</span></span>
-<span><span class="co">## 32       eff_increase_death_hazard_type2   1.67608343        0</span></span>
-<span><span class="co">## 33 eff_increase_death_hazard_type1:geno1  -1.17051292        0</span></span>
-<span><span class="co">## 34 eff_increase_death_hazard_type2:geno1  -0.80497749        0</span></span>
-<span><span class="co">## 35                int_tof_reduction_date  -0.86468875        0</span></span>
-<span><span class="co">## 36          eff_tof_reduction_date_geno1  -1.66214376        0</span></span>
-<span><span class="co">## 37          int_increase_tof_n_offspring   1.21235437        0</span></span>
-<span><span class="co">## 38    eff_increase_tof_n_offspring_geno1   1.35105399        0</span></span>
-<span><span class="co">## 39               int_lin_decrease_hazard  -0.13569296        0</span></span>
-<span><span class="co">## 40         eff_lin_decrease_hazard_geno1  -0.30339721        0</span></span>
-<span><span class="co">## 41         eff_lin_decrease_hazard_type1   0.20584448        0</span></span>
-<span><span class="co">## 42         eff_lin_decrease_hazard_type2  -0.40064873        0</span></span>
-<span><span class="co">## 43   eff_lin_decrease_hazard_type1:geno1   0.57756038        0</span></span>
-<span><span class="co">## 44   eff_lin_decrease_hazard_type2:geno1  -0.76317370        0</span></span>
-<span><span class="co">## 45                   int_quad_senescence   0.17011198        0</span></span>
-<span><span class="co">## 46             eff_quad_senescence_geno1  -1.06170794        0</span></span>
-<span><span class="co">## 47              int_quad_decrease_hazard   0.00301476        0</span></span>
-<span><span class="co">## 48        eff_quad_decrease_hazard_geno1  -0.15731977        0</span></span>
-<span><span class="co">## 49           int_quad_change_n_offspring   0.43715333        0</span></span>
-<span><span class="co">## 50     eff_quad_change_n_offspring_geno1  -0.43558687        0</span></span>
-<span><span class="co">## 51                   int_tof_n_offspring   0.49894071        0</span></span>
-<span><span class="co">##                      metric        kind</span></span>
-<span><span class="co">## 1                expt_death   intercept</span></span>
-<span><span class="co">## 2                expt_death coefficient</span></span>
-<span><span class="co">## 3                expt_death coefficient</span></span>
-<span><span class="co">## 4                expt_death coefficient</span></span>
-<span><span class="co">## 5            survival_shape   intercept</span></span>
-<span><span class="co">## 6            survival_shape coefficient</span></span>
-<span><span class="co">## 7            survival_shape coefficient</span></span>
-<span><span class="co">## 8            survival_shape coefficient</span></span>
-<span><span class="co">## 9            survival_shape coefficient</span></span>
-<span><span class="co">## 10           survival_shape coefficient</span></span>
-<span><span class="co">## 11         ratio_expt_death   intercept</span></span>
-<span><span class="co">## 12         ratio_expt_death coefficient</span></span>
-<span><span class="co">## 13               prob_death   intercept</span></span>
-<span><span class="co">## 14               prob_death coefficient</span></span>
-<span><span class="co">## 15            expt_maturity   intercept</span></span>
-<span><span class="co">## 16            expt_maturity coefficient</span></span>
-<span><span class="co">## 17            expt_maturity coefficient</span></span>
-<span><span class="co">## 18            expt_maturity coefficient</span></span>
-<span><span class="co">## 19           maturity_shape   intercept</span></span>
-<span><span class="co">## 20           maturity_shape coefficient</span></span>
-<span><span class="co">## 21      ratio_expt_maturity   intercept</span></span>
-<span><span class="co">## 22      ratio_expt_maturity coefficient</span></span>
-<span><span class="co">## 23      ratio_expt_maturity coefficient</span></span>
-<span><span class="co">## 24      ratio_expt_maturity coefficient</span></span>
-<span><span class="co">## 25        expt_reproduction   intercept</span></span>
-<span><span class="co">## 26        expt_reproduction coefficient</span></span>
-<span><span class="co">## 27                    pontn   intercept</span></span>
-<span><span class="co">## 28                    pontn coefficient</span></span>
-<span><span class="co">## 29    increase_death_hazard   intercept</span></span>
-<span><span class="co">## 30    increase_death_hazard coefficient</span></span>
-<span><span class="co">## 31    increase_death_hazard coefficient</span></span>
-<span><span class="co">## 32    increase_death_hazard coefficient</span></span>
-<span><span class="co">## 33    increase_death_hazard coefficient</span></span>
-<span><span class="co">## 34    increase_death_hazard coefficient</span></span>
-<span><span class="co">## 35       tof_reduction_date   intercept</span></span>
-<span><span class="co">## 36       tof_reduction_date coefficient</span></span>
-<span><span class="co">## 37 increase_tof_n_offspring   intercept</span></span>
-<span><span class="co">## 38 increase_tof_n_offspring coefficient</span></span>
-<span><span class="co">## 39      lin_decrease_hazard   intercept</span></span>
-<span><span class="co">## 40      lin_decrease_hazard coefficient</span></span>
-<span><span class="co">## 41      lin_decrease_hazard coefficient</span></span>
-<span><span class="co">## 42      lin_decrease_hazard coefficient</span></span>
-<span><span class="co">## 43      lin_decrease_hazard coefficient</span></span>
-<span><span class="co">## 44      lin_decrease_hazard coefficient</span></span>
-<span><span class="co">## 45          quad_senescence   intercept</span></span>
-<span><span class="co">## 46          quad_senescence coefficient</span></span>
-<span><span class="co">## 47     quad_decrease_hazard   intercept</span></span>
-<span><span class="co">## 48     quad_decrease_hazard coefficient</span></span>
-<span><span class="co">## 49  quad_change_n_offspring   intercept</span></span>
-<span><span class="co">## 50  quad_change_n_offspring coefficient</span></span>
-<span><span class="co">## 51          tof_n_offspring   intercept</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -441,60 +278,60 @@ again with the <code>param_bounds_df</code> argument:</p>
 </h2>
 <hr>
 <p>Get vector of estimation:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">effects</span></span></code></pre></div>
 <pre><code><span><span class="co">##                                     name   estimation stderror</span></span>
-<span><span class="co">## 1                         int_expt_death  -8.69707607        0</span></span>
-<span><span class="co">## 2                   eff_expt_death_geno1  -0.86761615        0</span></span>
-<span><span class="co">## 3                   eff_expt_death_type1 -10.26735407        0</span></span>
-<span><span class="co">## 4                   eff_expt_death_type2  -1.53142318        0</span></span>
-<span><span class="co">## 5                     int_survival_shape   4.21736850        0</span></span>
-<span><span class="co">## 6               eff_survival_shape_geno1   1.60449776        0</span></span>
-<span><span class="co">## 7               eff_survival_shape_type1   7.16201137        0</span></span>
-<span><span class="co">## 8               eff_survival_shape_type2   0.84419996        0</span></span>
-<span><span class="co">## 9         eff_survival_shape_type1:geno1  -0.09951692        0</span></span>
-<span><span class="co">## 10        eff_survival_shape_type2:geno1   0.40385610        0</span></span>
-<span><span class="co">## 11                  int_ratio_expt_death  -0.69707812        0</span></span>
-<span><span class="co">## 12            eff_ratio_expt_death_geno1  -0.09025045        0</span></span>
-<span><span class="co">## 13                        int_prob_death -18.67552412        0</span></span>
-<span><span class="co">## 14                  eff_prob_death_geno1  -0.88310913        0</span></span>
-<span><span class="co">## 15                     int_expt_maturity  -5.39575020        0</span></span>
-<span><span class="co">## 16               eff_expt_maturity_geno1  -0.90152320        0</span></span>
-<span><span class="co">## 17               eff_expt_maturity_type1   0.77155541        0</span></span>
-<span><span class="co">## 18               eff_expt_maturity_type2  -1.24893642        0</span></span>
-<span><span class="co">## 19                    int_maturity_shape -10.22528333        0</span></span>
-<span><span class="co">## 20              eff_maturity_shape_geno1  -4.23983719        0</span></span>
-<span><span class="co">## 21               int_ratio_expt_maturity  -0.11485356        0</span></span>
-<span><span class="co">## 22         eff_ratio_expt_maturity_geno1  -0.04693279        0</span></span>
-<span><span class="co">## 23         eff_ratio_expt_maturity_type1  -0.62945489        0</span></span>
-<span><span class="co">## 24         eff_ratio_expt_maturity_type2  -0.35463544        0</span></span>
-<span><span class="co">## 25                 int_expt_reproduction  -3.83442969        0</span></span>
-<span><span class="co">## 26           eff_expt_reproduction_geno1  -0.41612109        0</span></span>
-<span><span class="co">## 27                             int_pontn  -1.58613999        0</span></span>
-<span><span class="co">## 28                       eff_pontn_geno1   0.20454801        0</span></span>
-<span><span class="co">## 29             int_increase_death_hazard   1.52154469        0</span></span>
-<span><span class="co">## 30       eff_increase_death_hazard_geno1   1.05435602        0</span></span>
-<span><span class="co">## 31       eff_increase_death_hazard_type1  -0.30863847        0</span></span>
-<span><span class="co">## 32       eff_increase_death_hazard_type2   1.67608343        0</span></span>
-<span><span class="co">## 33 eff_increase_death_hazard_type1:geno1  -1.17051292        0</span></span>
-<span><span class="co">## 34 eff_increase_death_hazard_type2:geno1  -0.80497749        0</span></span>
-<span><span class="co">## 35                int_tof_reduction_date  -0.86468875        0</span></span>
-<span><span class="co">## 36          eff_tof_reduction_date_geno1  -1.66214376        0</span></span>
-<span><span class="co">## 37          int_increase_tof_n_offspring   1.21235437        0</span></span>
-<span><span class="co">## 38    eff_increase_tof_n_offspring_geno1   1.35105399        0</span></span>
-<span><span class="co">## 39               int_lin_decrease_hazard  -0.13569296        0</span></span>
-<span><span class="co">## 40         eff_lin_decrease_hazard_geno1  -0.30339721        0</span></span>
-<span><span class="co">## 41         eff_lin_decrease_hazard_type1   0.20584448        0</span></span>
-<span><span class="co">## 42         eff_lin_decrease_hazard_type2  -0.40064873        0</span></span>
-<span><span class="co">## 43   eff_lin_decrease_hazard_type1:geno1   0.57756038        0</span></span>
-<span><span class="co">## 44   eff_lin_decrease_hazard_type2:geno1  -0.76317370        0</span></span>
-<span><span class="co">## 45                   int_quad_senescence   0.17011198        0</span></span>
-<span><span class="co">## 46             eff_quad_senescence_geno1  -1.06170794        0</span></span>
-<span><span class="co">## 47              int_quad_decrease_hazard   0.00301476        0</span></span>
-<span><span class="co">## 48        eff_quad_decrease_hazard_geno1  -0.15731977        0</span></span>
-<span><span class="co">## 49           int_quad_change_n_offspring   0.43715333        0</span></span>
-<span><span class="co">## 50     eff_quad_change_n_offspring_geno1  -0.43558687        0</span></span>
-<span><span class="co">## 51                   int_tof_n_offspring   0.49894071        0</span></span>
+<span><span class="co">## 1                         int_expt_death -11.59505630        0</span></span>
+<span><span class="co">## 2                   eff_expt_death_geno1  -1.55262908        0</span></span>
+<span><span class="co">## 3                   eff_expt_death_type1  -8.41403382        0</span></span>
+<span><span class="co">## 4                   eff_expt_death_type2   2.11548923        0</span></span>
+<span><span class="co">## 5                     int_survival_shape   5.30475003        0</span></span>
+<span><span class="co">## 6               eff_survival_shape_geno1   2.10262235        0</span></span>
+<span><span class="co">## 7               eff_survival_shape_type1   7.21481396        0</span></span>
+<span><span class="co">## 8               eff_survival_shape_type2   0.27215242        0</span></span>
+<span><span class="co">## 9         eff_survival_shape_type1:geno1  -1.33492422        0</span></span>
+<span><span class="co">## 10        eff_survival_shape_type2:geno1  -3.09297550        0</span></span>
+<span><span class="co">## 11                  int_ratio_expt_death   2.37280461        0</span></span>
+<span><span class="co">## 12            eff_ratio_expt_death_geno1  -1.10190791        0</span></span>
+<span><span class="co">## 13                        int_prob_death -19.70373299        0</span></span>
+<span><span class="co">## 14                  eff_prob_death_geno1  -1.35935692        0</span></span>
+<span><span class="co">## 15                     int_expt_maturity  -4.49798003        0</span></span>
+<span><span class="co">## 16               eff_expt_maturity_geno1  -1.74615603        0</span></span>
+<span><span class="co">## 17               eff_expt_maturity_type1  -0.21668362        0</span></span>
+<span><span class="co">## 18               eff_expt_maturity_type2  -1.33203386        0</span></span>
+<span><span class="co">## 19                    int_maturity_shape  -6.61925426        0</span></span>
+<span><span class="co">## 20              eff_maturity_shape_geno1 -10.36748935        0</span></span>
+<span><span class="co">## 21               int_ratio_expt_maturity  -2.47612432        0</span></span>
+<span><span class="co">## 22         eff_ratio_expt_maturity_geno1   1.54867134        0</span></span>
+<span><span class="co">## 23         eff_ratio_expt_maturity_type1  -2.78748095        0</span></span>
+<span><span class="co">## 24         eff_ratio_expt_maturity_type2  -1.24870052        0</span></span>
+<span><span class="co">## 25                 int_expt_reproduction  -3.38097042        0</span></span>
+<span><span class="co">## 26           eff_expt_reproduction_geno1  -1.47824860        0</span></span>
+<span><span class="co">## 27                             int_pontn  -3.33488129        0</span></span>
+<span><span class="co">## 28                       eff_pontn_geno1   1.37400816        0</span></span>
+<span><span class="co">## 29             int_increase_death_hazard  -0.23054258        0</span></span>
+<span><span class="co">## 30       eff_increase_death_hazard_geno1   3.99673001        0</span></span>
+<span><span class="co">## 31       eff_increase_death_hazard_type1  -0.09774684        0</span></span>
+<span><span class="co">## 32       eff_increase_death_hazard_type2   0.11817296        0</span></span>
+<span><span class="co">## 33 eff_increase_death_hazard_type1:geno1   0.44090438        0</span></span>
+<span><span class="co">## 34 eff_increase_death_hazard_type2:geno1   2.37872397        0</span></span>
+<span><span class="co">## 35                int_tof_reduction_date  -1.57239276        0</span></span>
+<span><span class="co">## 36          eff_tof_reduction_date_geno1  -1.75248888        0</span></span>
+<span><span class="co">## 37          int_increase_tof_n_offspring  -0.10610657        0</span></span>
+<span><span class="co">## 38    eff_increase_tof_n_offspring_geno1  -0.31464990        0</span></span>
+<span><span class="co">## 39               int_lin_decrease_hazard  -1.55342768        0</span></span>
+<span><span class="co">## 40         eff_lin_decrease_hazard_geno1   0.40007564        0</span></span>
+<span><span class="co">## 41         eff_lin_decrease_hazard_type1   1.45969437        0</span></span>
+<span><span class="co">## 42         eff_lin_decrease_hazard_type2  -1.09068350        0</span></span>
+<span><span class="co">## 43   eff_lin_decrease_hazard_type1:geno1  -0.56373313        0</span></span>
+<span><span class="co">## 44   eff_lin_decrease_hazard_type2:geno1  -0.54723874        0</span></span>
+<span><span class="co">## 45                   int_quad_senescence   1.45816455        0</span></span>
+<span><span class="co">## 46             eff_quad_senescence_geno1  -2.60994708        0</span></span>
+<span><span class="co">## 47              int_quad_decrease_hazard  -0.03615853        0</span></span>
+<span><span class="co">## 48        eff_quad_decrease_hazard_geno1   0.39424474        0</span></span>
+<span><span class="co">## 49           int_quad_change_n_offspring  -0.92577571        0</span></span>
+<span><span class="co">## 50     eff_quad_change_n_offspring_geno1  -0.32032121        0</span></span>
+<span><span class="co">## 51                   int_tof_n_offspring  -0.79568503        0</span></span>
 <span><span class="co">##                      metric        kind</span></span>
 <span><span class="co">## 1                expt_death   intercept</span></span>
 <span><span class="co">## 2                expt_death coefficient</span></span>
@@ -548,9 +385,9 @@ again with the <code>param_bounds_df</code> argument:</p>
 <span><span class="co">## 50  quad_change_n_offspring coefficient</span></span>
 <span><span class="co">## 51          tof_n_offspring   intercept</span></span></code></pre>
 <p>Get maximum likelihood found:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">likelihood</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] -649.1907</span></span></code></pre>
+<pre><code><span><span class="co">## [1] -651.4916</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
