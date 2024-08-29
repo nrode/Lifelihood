@@ -38,13 +38,11 @@ lifelihoodData <- function(
    ratiomax = 10
 ) {
 
-   # ensure `model_specs` has the right format and values
    valid_model_specs <- c("wei", "gam", "lgn", "exp")
    if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
       stop("'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
    }
 
-   # ensure that `matclutch_size` is defined when `matclutch` is `TRUE`
    if (isTRUE(matclutch) & is.null(matclutch_size)) {
       stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
    }
@@ -74,12 +72,12 @@ lifelihoodData <- function(
 
 
 #' @title Individual life history modelling
-#' @description Main function of the lifelihood program. Provides the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).
+#' @description Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
 #' @name lifelihood
-#' @param lifelihoodData `lifelihoodData` object created with [lifelihoodData()]
+#' @param lifelihoodData `lifelihoodData` object created with [lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
-#' @param group_by_group Option to fit the full factorail model with all the interactions between each of the factors
+#' @param group_by_group Boolean option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
 #' @param SEcal If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
