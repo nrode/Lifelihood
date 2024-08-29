@@ -18,8 +18,9 @@ default_bounds_df <- function(
    right_censoring_date <- lifelihoodData$right_censoring_date
 
    max_death <- max(df[df[[death_end]] < right_censoring_date, death_end], na.rm = TRUE) * 2
-   max_maturity <- max(df[maturity_end], na.rm = TRUE) * 2
-   max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs])))), na.rm = TRUE) * 2
+   max_maturity <- max(df[df[[maturity_end]] < right_censoring_date, maturity_end], na.rm = TRUE) * 2
+   clutchs_size_cols <- clutchs[seq(3, length(clutchs), 3)]
+   max_clutch <- max(suppressWarnings(as.numeric(trimws(unlist(df[clutchs_size_cols])))), na.rm = TRUE) * 2
 
    models_bounds <- data.frame(
       name = c("wei", "gam", "lgn", "exp"),
