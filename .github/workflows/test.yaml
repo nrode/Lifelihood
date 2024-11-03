@@ -28,7 +28,7 @@ jobs:
 
       - name: Install R package dependencies
         run: |
-          Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
+          Rscript -e 'install.packages("devtools")'
           Rscript -e 'devtools::install_deps(dependencies = TRUE)'
 
       - name: Load the package in development mode and run tests
