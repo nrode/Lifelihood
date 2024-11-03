@@ -23,7 +23,9 @@ jobs:
 
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: remotes
 
       - name: Run R CMD check
         run: |
-          R CMD check --no-manual --as-cran
+          R CMD check .
