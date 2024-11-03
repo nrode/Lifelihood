@@ -1,8 +1,5 @@
 #' @title Display evolution of mortality rate
-#'
-#' @description do something
-#'
-#' @name plot_mortality_rate
+#' @name plot_mortality_rate_emp
 #' @return none
 #' @export
 plot_mortality_rate_emp <- function(
@@ -29,11 +26,15 @@ plot_mortality_rate_emp <- function(
 }
 
 
-#' @title good function
-#'
-#' @description do something
-#'
+#' @title Compute empirical mortality rate
 #' @name compute_mortality_rate
+#' @description Compute the empirical mortality rate
+#' @param data Dataframe with the data of life history. It should have one row per life history / observation.
+#' @param start_col Column name containing the first date of the interval in which the event was determined.
+#' @param end_col Column name containing the second date of the interval in which the event was determined.
+#' @param covariates Vector containing the names of the covariates.
+#' @param interval_width Width of the interval to compute the mortality rate.
+#' @param max_time Maximum time to compute the mortality rate.
 #' @return none
 #' @export
 compute_mortality_rate <- function(

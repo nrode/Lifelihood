@@ -4,12 +4,15 @@
 \alias{read_output_from_file}
 \title{Read and format the output file of the program}
 \usage{
-read_output_from_file(file_path, group_by_group = FALSE)
+read_output_from_file(file_path, group_by_group = FALSE, covariates = NULL)
 }
 \arguments{
 \item{file_path}{Location of the output file of the program}
 
-\item{group_by_group}{Boolean indicating whether parsing should be performed group by group or not (\code{FALSE} by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).#' @return An object of class \code{LifelihoodResults} with all results from the output file}
+\item{group_by_group}{Boolean option to fit the full factorail model with all the interactions between each of the factors}
+}
+\value{
+An object of class \code{LifelihoodResults} with all results from the output file
 }
 \description{
 Takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}.

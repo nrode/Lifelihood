@@ -7,8 +7,6 @@
 format_config(path_config, covariates)
 }
 \arguments{
-\item{path_config}{A character string specifying the file path to the YAML configuration file.}
-
 \item{covariates}{Vector containing the names of the covariates.}
 }
 \value{

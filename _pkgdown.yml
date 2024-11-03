@@ -1,7 +1,23 @@
 url: ~
 template:
   bootstrap: 5
-  bootswatch: yeti
-  light-switch: true
+  bootswatch: flatly
+  github: https://github.com/nrode/Lifelihood
+
 pkgdown:
   as_is: true
+
+articles:
+  - title: Tutorials
+    navbar: Tutorials
+    contents:
+      - articles/1-required-data-format
+      - articles/2-setting-up-the-configuration-file
+      - articles/3-how-to-use-lifelihood
+      - articles/4-custom-param-boundaries-and-estimation-warning
+
+  - title: Developer
+    navbar: Developer
+    contents:
+      - articles/overview
+      - articles/contributing

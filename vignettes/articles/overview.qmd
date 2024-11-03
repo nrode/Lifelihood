@@ -1,0 +1,83 @@
+---
+title: "Overview of Lifelihood (for developers)"
+author: "Nicolas RODE, Thomas LENORMAND"
+date: "`r format(Sys.Date(), '%d-%B-%Y')`"
+output: 
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+editor_options: 
+  chunk_output_type: console
+---
+
+# How Lifelihood Works
+
+This document provides an overview of the internal workings of the **Lifelihood** R package. It is intended for developers and contributors who wish to understand or extend the package's functionality.
+
+## Introduction
+
+**Lifelihood** is an R package designed for complex quantitative biology and survival analysis calculations. To achieve high computational performance, core calculations are performed using **Pascal** code, which is integrated into the R package through an interface layer.
+
+The package’s structure facilitates efficient interaction between R and Pascal, making it scalable for handling large datasets and complex survival analysis models.
+
+## Package Structure
+
+The **Lifelihood** package is organized into the following primary components:
+
+1. **R Interface**: Provides user-facing functions and a set of helper functions for input validation, data preprocessing, and postprocessing of results.
+2. **Pascal Backend**: Manages core computational tasks for survival analysis, allowing for performance-optimized calculations that would be challenging to achieve solely in R.
+3. **Interface Layer**: Facilitates communication between R and Pascal.
+
+### Directory Structure
+
+The key directories and files in the package are organized as follows:
+
+- `vignettes/`: Quarto files used for the documentation website.
+- `R/`: Contains all R functions, user interface code, and helper functions.
+- `src/`: Houses the Pascal source code and executables.
+- `man/`: Documentation files for each function, generated via Roxygen2.
+- `tests/`: Unit and integration tests for validating package functionality.
+- `DESCRIPTION`: Provides metadata about the package (authors, version, description, etc.).
+- `NAMESPACE`: Specifies the functions exported from Lifelihood.
+
+```
+lifelihood/
+├── vignettes/
+├── R/
+├── src/
+├── tests/
+├── man/
+├── DESCRIPTION
+├── NAMESPACE
+└── ...
+```
+
+## Integration with Pascal Code
+
+### Pascal to R Interface
+
+The core calculations in **Lifelihood** are implemented in **Pascal** to optimize computational efficiency. Here’s how the R and Pascal components interact.
+
+The Pascal program requires two different input `txt` files:
+
+- A configuration and data file, such as [this example file](https://github.com/nrode/Lifelihood/blob/main/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt).
+- A parameter boundaries file specifying the range of each parameter, like [this example file](https://github.com/nrode/Lifelihood/blob/main/data/custom.txt).
+
+The program outputs a results file containing estimates, likelihoods, etc. An example of the output format can be found [here](https://github.com/nrode/Lifelihood/blob/main/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.out).
+
+Since this program runs via the command line, **Lifelihood** simplifies the process by managing these steps. **Lifelihood** accepts a large set of arguments, generates the necessary `txt` input files, passes them to the program, reads the output, and formats it.
+
+### Pascal Code
+
+Unlike R, Pascal is a compiled programming language, meaning the code must first be compiled into a machine-readable format (binary) before execution. Additionally, it must be compiled separately for both macOS and Windows systems.
+
+The `src/` directory includes both the source (`.pas`) and compiled files:
+
+- `lifelihoodC2023` for Unix systems (macOS)
+- `lifelihoodC2023.exe` for Windows
+
+A utility function in **Lifelihood** determines the user’s operating system to run the appropriate executable.
+
+The Pascal program uses Lazarus, which supports cross-platform compilation, simplifying the process of building the code for both macOS and Windows.
