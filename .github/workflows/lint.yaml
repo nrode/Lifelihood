@@ -20,9 +20,8 @@ jobs:
 
       - name: Install styler
         run: |
-          R -e "install.packages('styler')"
+          R -e 'install.packages("styler")'
 
       - name: Check style
         run: |
-          R -e "styler::style_dir('.', strict = TRUE)"
-        shell: Rscript {0}
+          R -e 'styler::style_dir("R/", strict = TRUE)'

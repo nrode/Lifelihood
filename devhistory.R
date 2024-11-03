@@ -31,4 +31,3 @@ devtools::document()
 
 ## Load all required packages
 devtools::load_all()
-
