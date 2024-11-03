@@ -28,4 +28,4 @@ jobs:
 
       - name: Run R CMD check
         run: |
-          R CMD check .
+          R CMD check . --no-manual
