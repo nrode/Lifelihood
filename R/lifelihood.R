@@ -10,9 +10,9 @@
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull), "exp" (Exponential), "gam" (Gamma) or "lgn" (Log-normal). The first one is used for maturity, the second one is used for clutchs and the third one for death.
+#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param covariates Vector containing the names of the covariates.
-#' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument.
+#' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument. Default is `FALSE`.
 #' @param matclutch_size Column name containing the size of the clutch for the maturity event. Only used (and required) if `matclutch` is `TRUE`.
 #' @param right_censoring_date Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)
 #' @param critical_age Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)
@@ -109,6 +109,8 @@ summary.lifelihoodData <- function(object, ...) {
 #' @param precision TBD - Check the actual meaning
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
+#' @param ... Additional arguments (currently not used)
+#' @return `LifelihoodResults` object
 #' @export
 lifelihood <- function(
    lifelihoodData,
