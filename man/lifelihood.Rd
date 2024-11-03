@@ -64,6 +64,11 @@ lifelihood(
 \item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.}
 
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
+
+\item{...}{Additional arguments (currently not used)}
+}
+\value{
+\code{LifelihoodResults} object
 }
 \description{
 Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.

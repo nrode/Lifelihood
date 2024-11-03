@@ -2,7 +2,6 @@
 
 S3method(summary,LifelihoodResults)
 S3method(summary,lifelihoodData)
-export("%>%")
 export(R_to_lifelihood)
 export(SurvWei)
 export(check_valid_estimation)
@@ -24,4 +23,3 @@ export(plot_mortality_rate)
 export(plot_mortality_rate_emp)
 export(pred_mortality_rate)
 export(read_output_from_file)
-importFrom(magrittr,"%>%")

@@ -42,11 +42,11 @@ lifelihoodData(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull), "exp" (Exponential), "gam" (Gamma) or "lgn" (Log-normal). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument.}
+\item{matclutch}{Whether the maturity event (designated by \code{maturity_start} and \code{maturity_end}) is a clutch event or not. If \code{TRUE}, must specify the \code{matclutch_size} argument. Default is \code{FALSE}.}
 
 \item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 

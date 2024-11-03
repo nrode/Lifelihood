@@ -6,6 +6,10 @@
 .Rdata
 .httr-oauth
 .quarto
+..Rcheck/
 *.tar.gz
+
+# outputs
 lifelihood_*/
-sandbox.R
+vignettes/*.html
+
