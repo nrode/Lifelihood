@@ -1,12 +1,10 @@
-url: ~
+url: https://josephbarbierdarnal.github.io/Lifelihood/
 template:
   bootstrap: 5
   bootswatch: flatly
   github: https://github.com/nrode/Lifelihood
-
 pkgdown:
-  as_is: true
-
+  as_is: yes
 articles:
   - title: Tutorials
     navbar: Tutorials
@@ -15,7 +13,6 @@ articles:
       - articles/2-setting-up-the-configuration-file
       - articles/3-how-to-use-lifelihood
       - articles/4-custom-param-boundaries-and-estimation-warning
-
   - title: Developer
     navbar: Developer
     contents:
