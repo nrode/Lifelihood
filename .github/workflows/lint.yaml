@@ -1,4 +1,4 @@
-name: R Code Style Check
+name: R Code Linter
 
 on:
   pull_request:

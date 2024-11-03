@@ -30,6 +30,7 @@ To start contributing, you’ll need to set up a local development environment w
 ```bash
 git clone https://github.com/nrode/Lifelihood.git
 cd Lifelihood
+git remote add upstream https://github.com/nrode/Lifelihood
 git checkout -b feature-name
 ```
 
