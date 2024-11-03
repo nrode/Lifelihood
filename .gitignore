@@ -12,4 +12,5 @@
 # outputs
 lifelihood_*/
 vignettes/*.html
+docs/
 
