@@ -6,25 +6,37 @@
 
 <br>
 
-## Project progress
+## Quick start
 
-- ✅ Transforming the dataframe into a `.txt` input file
-- ✅ Reading the output file to return estimations and other values
-- ✅ Simple way to provides
-   - parameter ranges
-   - seeds
-   - which statistical law to use
-   - extra variables (geno, spore etc)
-- ✅ Read a config file with all effects to fit
-- ✅ Make the input data file and output file temp file
-- ✅ Compile for Windows with Lazarus
-- ❌ Visualization
-- ❌ Simulation using estimation
-- ❌ Goodness of fit
+```r
+df <- read.csv(here::here("data/fake_sample.csv"))
+head(df)
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
 
-There currently are 2 functions for users:
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
 
-- `lifelihood()`: main function that does most of the job that returns an object of class `LifelihoodResults`
-- `summary()`: to use on the output object of `lifelihood()` to display main results such as estimations, seeds used etc.
+data <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
 
-<br>
+results <- lifelihood(
+  lifelihoodData = data,
+  path_config = here::here("config.yaml"),
+  seeds = c(1, 2, 3, 4)
+)
+summary(results)
+```

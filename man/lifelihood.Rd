@@ -64,12 +64,43 @@ lifelihood(
 \item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.}
 
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
-
-\item{...}{Additional arguments (currently not used)}
 }
 \value{
 \code{LifelihoodResults} object
 }
 \description{
 Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
+}
+\examples{
+df <- read.csv(here::here("data/fake_sample.csv"))
+head(df)
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+data <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+results <- lifelihood(
+  lifelihoodData = data,
+  path_config = here::here("config.yaml"),
+  seeds = c(1, 2, 3, 4),
+  raise_estimation_warning = FALSE
+)
+summary(results)
 }

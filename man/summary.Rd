@@ -2,31 +2,47 @@
 % Please edit documentation in R/lifelihood.R
 \name{summary}
 \alias{summary}
-\alias{summary.lifelihoodData}
 \alias{summary.LifelihoodResults}
-\title{Custom summary function to be used with the output of \code{\link[=lifelihoodData]{lifelihoodData()}}}
+\title{Summary function to be used with the output of \code{\link[=lifelihood]{lifelihood()}}}
 \usage{
-\method{summary}{lifelihoodData}(object, ...)
-
 \method{summary}{LifelihoodResults}(object, ...)
 }
 \arguments{
 \item{object}{\code{LifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
 }
 \description{
-Display main information of the \code{lifelihoodData} object:
-\itemize{
-\item number of observations
-\item number of covariates
-\item number of clutches
-\item number of events (maturity, reproductive, death)
+Display main results of the lifelihood program.
 }
+\examples{
+df <- read.csv(here::here("data/fake_sample.csv"))
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+head(df)
 
-Display main results of the lifelihood program:
-\itemize{
-\item seeds
-\item likelihood
-\item effects (estimation)
-\item parameter ranges
-}
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+data <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+results <- lifelihood(
+  lifelihoodData = data,
+  path_config = here::here("config.yaml"),
+  seeds = c(1, 2, 3, 4),
+  raise_estimation_warning = FALSE
+)
+summary(results)
 }

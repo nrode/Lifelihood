@@ -42,7 +42,7 @@ lifelihoodData(
 
 \item{death_end}{Column name containing the second date of the interval in which the death was determined.}
 
-\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
@@ -50,15 +50,40 @@ lifelihoodData(
 
 \item{matclutch_size}{Column name containing the size of the clutch for the maturity event. Only used (and required) if \code{matclutch} is \code{TRUE}.}
 
-\item{right_censoring_date}{Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)}
+\item{right_censoring_date}{(CURRENTLY IGNORED) Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data.}
 
-\item{critical_age}{Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)}
+\item{critical_age}{(CURRENTLY IGNORED) Critical age (integer) below which life histories are not followed individually.}
 
-\item{ratiomax}{Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)}
+\item{ratiomax}{(CURRENTLY IGNORED) Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax.}
 }
 \value{
 \code{lifelihoodData} object
 }
 \description{
-Creates a \code{lifelihoodData} object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.
+Creates a \code{lifelihoodData} object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history. This function will mainly be used to pass to \code{\link[=lifelihood]{lifelihood()}} or for customizing parameter boundaries with \link{(default_bounds_df)}.
+}
+\examples{
+df <- read.csv(here::here("data/fake_sample.csv"))
+head(df)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+data <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+summary(data)
 }

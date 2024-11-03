@@ -80,35 +80,39 @@
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="project-progress">Project progress<a class="anchor" aria-label="anchor" href="#project-progress"></a>
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<ul>
-<li>✅ Transforming the dataframe into a <code>.txt</code> input file</li>
-<li>✅ Reading the output file to return estimations and other values</li>
-<li>✅ Simple way to provides
-<ul>
-<li>parameter ranges</li>
-<li>seeds</li>
-<li>which statistical law to use</li>
-<li>extra variables (geno, spore etc)</li>
-</ul>
-</li>
-<li>✅ Read a config file with all effects to fit</li>
-<li>✅ Make the input data file and output file temp file</li>
-<li>✅ Compile for Windows with Lazarus</li>
-<li>❌ Visualization</li>
-<li>❌ Simulation using estimation</li>
-<li>❌ Goodness of fit</li>
-</ul>
-<p>There currently are 2 functions for users:</p>
-<ul>
-<li>
-<code><a href="reference/lifelihood.html">lifelihood()</a></code>: main function that does most of the job that returns an object of class <code>LifelihoodResults</code>
-</li>
-<li>
-<code><a href="reference/summary.html">summary()</a></code>: to use on the output object of <code><a href="reference/lifelihood.html">lifelihood()</a></code> to display main results such as estimations, seeds used etc.</li>
-</ul>
-<p><br></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data/fake_sample.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span>
+<span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span>
+<span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
+<span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
+<span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
+<span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
+<span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
+<span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
+<span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
+<span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
+<span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
+<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
