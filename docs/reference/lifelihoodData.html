@@ -116,7 +116,7 @@
 
 
 <dt>model_specs</dt>
-<dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull), "exp" (Exponential), "gam" (Gamma) or "lgn" (Log-normal). The first one is used for maturity, the second one is used for clutchs and the third one for death.</p></dd>
+<dd><p>Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.</p></dd>
 
 
 <dt>covariates</dt>
@@ -124,7 +124,7 @@
 
 
 <dt>matclutch</dt>
-<dd><p>Whether the maturity event (designated by <code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not. If <code>TRUE</code>, must specify the <code>matclutch_size</code> argument.</p></dd>
+<dd><p>Whether the maturity event (designated by <code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not. If <code>TRUE</code>, must specify the <code>matclutch_size</code> argument. Default is <code>FALSE</code>.</p></dd>
 
 
 <dt>matclutch_size</dt>

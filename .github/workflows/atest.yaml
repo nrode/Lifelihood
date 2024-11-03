@@ -1,4 +1,4 @@
-name: R Package Unit Tests
+name: Unit Tests
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: remotes
+          extra-packages: remotes,devtools
 
       - name: Run R CMD check
         run: |

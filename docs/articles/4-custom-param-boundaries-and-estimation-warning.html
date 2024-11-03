@@ -80,7 +80,7 @@
                         <h4 data-toc-skip class="author">Nicolas RODE,
 Thomas LENORMAND</h4>
             
-            <h4 data-toc-skip class="date">29-August-2024</h4>
+            <h4 data-toc-skip class="date">03-November-2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/HEAD/vignettes/4-custom-param-boundaries-and-estimation-warning.Rmd" class="external-link"><code>vignettes/4-custom-param-boundaries-and-estimation-warning.Rmd</code></a></small>
       <div class="d-none name"><code>4-custom-param-boundaries-and-estimation-warning.Rmd</code></div>
@@ -144,14 +144,20 @@ function:</p>
 <span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
 <span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## LIFELIHOOD DATA</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Number of observations: 8 </span></span>
+<span><span class="co">## Number of covariates: 2 </span></span>
+<span><span class="co">## Number of clutches: 6</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="get-the-results">Get the results<a class="anchor" aria-label="anchor" href="#get-the-results"></a>
 </h2>
 <hr>
 <p>Let’s run the analysis with default parameters.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span></span>
@@ -166,7 +172,7 @@ function:</p>
 </h3>
 <p>When runnning <code><a href="../reference/lifelihood.html">lifelihood()</a></code> function, you might encounter
 the following warning:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Warning in check_valid_estimation(results_lifelihood = results): Estimation of</span></span>
 <span><span class="co">## 'increase_death_hazard' is close to the maximum bound:</span></span>
 <span><span class="co">## increase_death_hazard≃9.9864992332278. Consider increasing maximum bound.</span></span></code></pre></div>
@@ -189,15 +195,15 @@ estimate.</p>
 <p>You can get the parameter boundaries with the
 <code><a href="../reference/default_bounds_df.html">default_bounds_df()</a></code> function and by passing the
 <code>lifelihoodData</code> object:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/default_bounds_df.html">default_bounds_df</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"],["expt_death","survival_shape","ratio_expt_death","prob_death","sex_ratio","expt_maturity","maturity_shape","ratio_expt_maturity","expt_reproduction","reproduction_shape","pontn","increase_death_hazard","tof_reduction_date","increase_tof_n_offspring","lin_decrease_hazard","quad_senescence","quad_decrease_hazard","quad_change_n_offspring","tof_n_offspring","fitness"],["0.001","0.05","0.01","1e-05","1e-05","0.001","0.005","0.01","0.001","0.0025","1","1e-05","1e-07","1e-07","-20","-20","-10","-10","-10","0.001"],["40","500","100","0.99999","0.99999","8","600","100","10","10","50","10","10","10","20","20","10","10","10","1000"]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>param<\/th>\n      <th>min<\/th>\n      <th>max<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"param","targets":1},{"name":"min","targets":2},{"name":"max","targets":3}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Since 10 seems to not be high enough, let’s try with 80:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bounds_df</span><span class="op">[</span><span class="va">bounds_df</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"increase_death_hazard"</span>, <span class="st">"max"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">80</span></span></code></pre></div>
 <p>Once it’s changed, you just have to call <code><a href="../reference/lifelihood.html">lifelihood()</a></code>
 again with the <code>param_bounds_df</code> argument:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span>
@@ -207,14 +213,14 @@ again with the <code>param_bounds_df</code> argument:</p>
 <span><span class="co">## 'survival_shape' is close to the maximum bound:</span></span>
 <span><span class="co">## survival_shape≃497.896305099501. Consider increasing maximum bound.</span></span></code></pre>
 <p>Now we don’t get any warning!</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## LIFELIHOODIZATION</span></span>
+<pre><code><span><span class="co">## LIFELIHOOD RESULTS</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## likelihood:</span></span>
+<span><span class="co">## Likelihood:</span></span>
 <span><span class="co">## [1] -814.2714</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## effects:</span></span>
+<span><span class="co">## Effects:</span></span>
 <span><span class="co">##                                     name  estimation stderror</span></span>
 <span><span class="co">## 1                         int_expt_death -3.80773183        0</span></span>
 <span><span class="co">## 2                   eff_expt_death_geno1 -0.72646608        0</span></span>

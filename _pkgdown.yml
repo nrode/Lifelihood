@@ -1,7 +1,9 @@
 url: ~
 template:
   bootstrap: 5
-  bootswatch: yeti
+  bootswatch: flatly
   light-switch: true
+  theme: gruvbox-light
+  theme-dark: gruvbox-dark
 pkgdown:
   as_is: true
