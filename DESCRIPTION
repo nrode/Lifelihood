@@ -10,7 +10,7 @@ Author: Nicolas Rode, Thomas Lenormand
 Maintainer: Nicolas Rode <nicolas.rode@inrae.fr>
 Description: Lifelihood is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death). 
 License: MIT + file LICENSE
-URL: https://github.com/nrode/Lifelihood
+URL: https://nrode.github.io/Lifelihood/
 BugReports: https://github.com/nrode/Lifelihood/issues
 ByteCompile: true
 Encoding: UTF-8

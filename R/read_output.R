@@ -5,13 +5,11 @@
 #' @param file_path Location of the output file of the program
 #' @inheritParams lifelihood
 #' @return An object of class `LifelihoodResults` with all results from the output file
-#' @export 
+#' @export
 read_output_from_file <- function(
-  file_path,
-  group_by_group = FALSE,
-  covariates = NULL
-){
-
+    file_path,
+    group_by_group = FALSE,
+    covariates = NULL) {
   lines <- readLines(file_path)
   results <- list()
 

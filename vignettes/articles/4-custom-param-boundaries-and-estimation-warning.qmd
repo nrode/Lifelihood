@@ -23,7 +23,7 @@ editor_options:
 ***
 
 ```{r}
-#library(lifelihood)
+# library(lifelihood)
 devtools::load_all(compile = FALSE)
 ```
 
@@ -34,7 +34,7 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- read.csv(here::here('data/fake_sample.csv'))
+df <- read.csv(here::here("data/fake_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 ```

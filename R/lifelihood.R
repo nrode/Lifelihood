@@ -20,53 +20,51 @@
 #' @return `lifelihoodData` object
 #' @export
 lifelihoodData <- function(
-   df,
-   sex,
-   sex_start,
-   sex_end,
-   maturity_start,
-   maturity_end,
-   clutchs,
-   death_start,
-   death_end,
-   model_specs,
-   covariates,
-   matclutch = FALSE,
-   matclutch_size = NULL,
-   right_censoring_date = 1000,
-   critical_age = 20,
-   ratiomax = 10
-) {
+    df,
+    sex,
+    sex_start,
+    sex_end,
+    maturity_start,
+    maturity_end,
+    clutchs,
+    death_start,
+    death_end,
+    model_specs,
+    covariates,
+    matclutch = FALSE,
+    matclutch_size = NULL,
+    right_censoring_date = 1000,
+    critical_age = 20,
+    ratiomax = 10) {
+  valid_model_specs <- c("wei", "gam", "lgn", "exp")
+  if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
+    stop("'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
+  }
 
-   valid_model_specs <- c("wei", "gam", "lgn", "exp")
-   if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
-      stop("'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
-   }
+  if (isTRUE(matclutch) & is.null(matclutch_size)) {
+    stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
+  }
 
-   if (isTRUE(matclutch) & is.null(matclutch_size)) {
-      stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
-   }
-
-   dataObject <- list(
-      df = df,
-      sex = sex,
-      sex_start = sex_start,
-      sex_end = sex_end,
-      maturity_start = maturity_start,
-      maturity_end = maturity_end,
-      clutchs = clutchs,
-      death_start = death_start,
-      death_end = death_end,
-      model_specs = model_specs,
-      covariates = covariates,
-      matclutch = matclutch,
-      matclutch_size = matclutch_size,
-      right_censoring_date = right_censoring_date,
-      critical_age = critical_age,
-      ratiomax = ratiomax
-   )
-   class(dataObject) <- "lifelihoodData"
-   return(dataObject)
+  dataObject <- list(
+    df = df,
+    sex = sex,
+    sex_start = sex_start,
+    sex_end = sex_end,
+    maturity_start = maturity_start,
+    maturity_end = maturity_end,
+    clutchs = clutchs,
+    death_start = death_start,
+    death_end = death_end,
+    model_specs = model_specs,
+    covariates = covariates,
+    matclutch = matclutch,
+    matclutch_size = matclutch_size,
+    right_censoring_date = right_censoring_date,
+    critical_age = critical_age,
+    ratiomax = ratiomax
+  )
+  class(dataObject) <- "lifelihoodData"
+  return(dataObject)
 }
 
 #' @name summary
@@ -80,10 +78,10 @@ lifelihoodData <- function(
 #' @return NULL
 #' @export
 summary.lifelihoodData <- function(object, ...) {
-   cat("LIFELIHOOD DATA\n\n")
-   cat("Number of observations:", nrow(object$df), "\n")
-   cat("Number of covariates:", length(object$covariates), "\n")
-   cat("Number of clutches:", length(object$clutchs), "\n")
+  cat("LIFELIHOOD DATA\n\n")
+  cat("Number of observations:", nrow(object$df), "\n")
+  cat("Number of covariates:", length(object$covariates), "\n")
+  cat("Number of clutches:", length(object$clutchs), "\n")
 }
 
 
@@ -113,93 +111,94 @@ summary.lifelihoodData <- function(object, ...) {
 #' @return `LifelihoodResults` object
 #' @export
 lifelihood <- function(
-   lifelihoodData,
-   path_config,
-   param_bounds_df = NULL,
-   group_by_group = FALSE,
-   MCMC = 0,
-   interval = 25,
-   SEcal = FALSE,
-   saveprobevent = 0,
-   fitness = 0,
-   r = 0,
-   seeds = NULL,
-   ntr = 2,
-   nst = 2,
-   To = 50,
-   Tf = 1,
-   climbrate = 1,
-   precision = 0.001,
-   raise_estimation_warning = TRUE,
-   delete_temp_files = TRUE
-) {
+    lifelihoodData,
+    path_config,
+    param_bounds_df = NULL,
+    group_by_group = FALSE,
+    MCMC = 0,
+    interval = 25,
+    SEcal = FALSE,
+    saveprobevent = 0,
+    fitness = 0,
+    r = 0,
+    seeds = NULL,
+    ntr = 2,
+    nst = 2,
+    To = 50,
+    Tf = 1,
+    climbrate = 1,
+    precision = 0.001,
+    raise_estimation_warning = TRUE,
+    delete_temp_files = TRUE) {
+  if ((length(seeds) != 4) & !is.null(seeds)) {
+    stop("`seeds` must be an integer vector of length 4.")
+  }
+  if (is.null(seeds)) {
+    seeds <- sample(1:10000, 4, replace = T)
+  }
 
-   if ((length(seeds) != 4) & !is.null(seeds)) {
-      stop("`seeds` must be an integer vector of length 4.")
-   }
-   if (is.null(seeds)) {seeds <- sample(1:10000, 4, replace = T)}
+  set.seed(sum(seeds))
+  run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
+  temp_dir <- file.path(getwd(), paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id)))
+  dir.create(temp_dir)
 
-   set.seed(sum(seeds))
-   run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
-   temp_dir <- file.path(getwd(), paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id)))
-   dir.create(temp_dir)
+  if (is.null(param_bounds_df)) {
+    param_bounds_df <- default_bounds_df(lifelihoodData)
+  }
 
-   if (is.null(param_bounds_df)) {param_bounds_df <- default_bounds_df(lifelihoodData)}
+  path_param_range <- file.path(temp_dir, "temp_param_range_path.txt")
+  write.table(
+    param_bounds_df,
+    file = path_param_range,
+    sep = "\t",
+    row.names = FALSE,
+    col.names = FALSE,
+    quote = FALSE
+  )
 
-   path_param_range <- file.path(temp_dir, "temp_param_range_path.txt")
-   write.table(
-      param_bounds_df,
-      file = path_param_range,
-      sep = "\t",
-      row.names = FALSE,
-      col.names = FALSE,
-      quote = FALSE
-   )
+  data_path <- format_dataframe_to_txt(
+    df = lifelihoodData$df,
+    sex = lifelihoodData$sex,
+    sex_start = lifelihoodData$sex_start,
+    sex_end = lifelihoodData$sex_end,
+    maturity_start = lifelihoodData$maturity_start,
+    maturity_end = lifelihoodData$maturity_end,
+    clutchs = lifelihoodData$clutchs,
+    death_start = lifelihoodData$death_start,
+    death_end = lifelihoodData$death_end,
+    covariates = lifelihoodData$covariates,
+    matclutch = lifelihoodData$matclutch,
+    model_specs = lifelihoodData$model_specs,
+    path_config = path_config,
+    temp_dir = temp_dir
+  )
 
-   data_path <- format_dataframe_to_txt(
-      df = lifelihoodData$df,
-      sex = lifelihoodData$sex,
-      sex_start = lifelihoodData$sex_start,
-      sex_end = lifelihoodData$sex_end,
-      maturity_start = lifelihoodData$maturity_start,
-      maturity_end = lifelihoodData$maturity_end,
-      clutchs = lifelihoodData$clutchs,
-      death_start = lifelihoodData$death_start,
-      death_end = lifelihoodData$death_end,
-      covariates = lifelihoodData$covariates,
-      matclutch = lifelihoodData$matclutch,
-      model_specs = lifelihoodData$model_specs,
-      path_config = path_config,
-      temp_dir = temp_dir
-   )
+  group_by_group_int <- as.integer(group_by_group)
+  execute_bin(
+    data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
+    fitness, r, seeds[1], seeds[2], seeds[3], seeds[4], ntr, nst, To, Tf, climbrate, precision
+  )
 
-   group_by_group_int <- as.integer(group_by_group)
-   execute_bin(
-      data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
-      fitness, r, seeds[1], seeds[2], seeds[3], seeds[4], ntr, nst, To, Tf, climbrate, precision
-   )
+  filename_output <- sub("\\.txt$", "", basename(data_path))
+  output_path <- file.path(temp_dir, paste0(filename_output, ".out"))
 
-   filename_output <- sub("\\.txt$", "", basename(data_path))
-   output_path <- file.path(temp_dir, paste0(filename_output, ".out"))
+  results <- read_output_from_file(
+    output_path,
+    group_by_group = group_by_group,
+    covariates = lifelihoodData$covariates
+  )
 
-   results <- read_output_from_file(
-      output_path,
-      group_by_group = group_by_group,
-      covariates = lifelihoodData$covariates
-   )
+  if (delete_temp_files) {
+    unlink(temp_dir, recursive = TRUE)
+  } else {
+    print(paste("Intermediate files are stored at:", temp_dir))
+  }
 
-   if (delete_temp_files) {
-      unlink(temp_dir, recursive = TRUE)
-   }
-   else {
-      print(paste("Intermediate files are stored at:", temp_dir))
-   }
+  if (raise_estimation_warning) {
+    check_valid_estimation(results_lifelihood = results)
+  }
 
-   if (raise_estimation_warning){
-      check_valid_estimation(results_lifelihood = results)
-   }
-
-   return(results)
+  return(results)
 }
 
 #' @name summary
@@ -213,13 +212,13 @@ lifelihood <- function(
 #' @return NULL
 #' @export
 summary.LifelihoodResults <- function(object, ...) {
-   cat("LIFELIHOOD RESULTS\n\n")
+  cat("LIFELIHOOD RESULTS\n\n")
 
-   cat("Likelihood:\n")
-   print(object$likelihood)
-   cat("\n")
+  cat("Likelihood:\n")
+  print(object$likelihood)
+  cat("\n")
 
-   cat("Effects:\n")
-   print(object$effects)
-   cat("\n")
+  cat("Effects:\n")
+  print(object$effects)
+  cat("\n")
 }
