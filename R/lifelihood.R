@@ -226,6 +226,8 @@ lifelihood <- function(
     covariates = lifelihoodData$covariates
   )
 
+  results$lifelihoodData <- lifelihoodData
+
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)
   } else {
