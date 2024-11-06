@@ -1,10 +1,10 @@
 ---
 mortality:
-  expt_death: geno + type
-  survival_shape: geno + type + geno*type
-  ratio_expt_death: geno
-  prob_death: geno
-  sex_ratio: type
+  expt_death: geno
+  survival_shape: not_fitted
+  ratio_expt_death: not_fitted
+  prob_death: not_fitted
+  sex_ratio: not_fitted
 reproduction:
   expt_reproduction: not_fitted
   reproduction_shape: not_fitted
@@ -18,6 +18,6 @@ reproduction:
   quad_change_n_offspring: not_fitted
   tof_n_offspring: not_fitted
 maturity:
-  expt_maturity: geno + type
-  maturity_shape: geno
-  ratio_expt_maturity: geno + type
+  expt_maturity: not_fitted
+  maturity_shape: not_fitted
+  ratio_expt_maturity: not_fitted
