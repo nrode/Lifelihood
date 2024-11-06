@@ -36,7 +36,7 @@ make_design_matrix <- function(covariates, data) {
 
 #' @title Link function
 #' @name link
-#' @description Link function to transform the parameters to the original scale
+#' @description Link function to transform the parameters from the lifelihood scale to the original scale
 #' @keywords internal
 #' @param estimate Numeric. The estimate of the parameter
 #' @param min_and_max Numeric vector of length 2. The minimum and maximum values of the parameter
@@ -50,7 +50,7 @@ link <- function(estimate, min_and_max) {
 
 #' @title Delink function
 #' @name delink
-#' @description Delink function to transform the parameters to the original scale
+#' @description Delink function to transform the parameters from original scale to lifelihood scale.
 #' @keywords internal
 #' @param obs Numeric. The observed value of the parameter
 #' @param min_and_max Numeric vector of length 2. The minimum and maximum values of the parameter
