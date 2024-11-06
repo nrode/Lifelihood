@@ -28,7 +28,6 @@ results <- lifelihood(
 results$effects
 results$parameter_ranges
 summary(results)
-head(results$effects)
 
 plot_mortality_rate(
   results_lifelihood = results,

@@ -47,7 +47,7 @@ format_dataframe_to_txt(
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
+\item{model_specs}{Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.}
 
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
 

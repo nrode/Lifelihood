@@ -1,7 +1,49 @@
-#' @title Dataframe with default boundaries
+#' @title Get dataframe with default parameter boundaries
+#' @description Once you have created your `lifelihoodData` object with [lifelihoodData()], you can call the `default_bounds_df()` function to generate (and load) a dataframe with default parameter bounds.
+#'
+#' This is useful when you want to customise these bounds and then pass this dataframe to the [lifelihood()] function via the `param_bounds_df` argument (if not, it will automatically generate it and keep the default values).
 #' @name default_bounds_df
 #' @inheritParams lifelihood
+#' @return A dataframe with the default parameter boundaries.
 #' @export
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#' head(df)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' data <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' bounds_df <- default_bounds_df(data)
+#' head(bounds_df)
+#'
+#' # for example, we want to change this value
+#' bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
+#'
+#' # then we pass it to lifelihood()
+#' results <- lifelihood(
+#'   lifelihoodData = data,
+#'   path_config = here::here("config.yaml"),
+#'   param_bounds_df = bounds_df,
+#'   raise_estimation_warning = FALSE
+#' )
 default_bounds_df <- function(
     lifelihoodData) {
   if (!inherits(lifelihoodData, "lifelihoodData")) {

@@ -1,14 +1,11 @@
 ---
 title: "2 - Setting up the configuration file"
-author: "Nicolas RODE, Thomas LENORMAND"
-date: "`r format(Sys.Date(), '%d-%B-%Y')`"
 output: 
   html_document:
     theme: journal
     toc: yes
     toc_float:
       collapsed: no
-      smooth_scroll: no
 editor_options: 
   chunk_output_type: console
 ---

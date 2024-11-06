@@ -2,13 +2,57 @@
 % Please edit documentation in R/default_boundaries.R
 \name{default_bounds_df}
 \alias{default_bounds_df}
-\title{Dataframe with default boundaries}
+\title{Get dataframe with default parameter boundaries}
 \usage{
 default_bounds_df(lifelihoodData)
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 }
+\value{
+A dataframe with the default parameter boundaries.
+}
 \description{
-Dataframe with default boundaries
+Once you have created your \code{lifelihoodData} object with \code{\link[=lifelihoodData]{lifelihoodData()}}, you can call the \code{default_bounds_df()} function to generate (and load) a dataframe with default parameter bounds.
+
+This is useful when you want to customise these bounds and then pass this dataframe to the \code{\link[=lifelihood]{lifelihood()}} function via the \code{param_bounds_df} argument (if not, it will automatically generate it and keep the default values).
+}
+\examples{
+df <- read.csv(here::here("data/fake_sample.csv"))
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+head(df)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+data <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+bounds_df <- default_bounds_df(data)
+head(bounds_df)
+
+# for example, we want to change this value
+bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
+
+# then we pass it to lifelihood()
+results <- lifelihood(
+  lifelihoodData = data,
+  path_config = here::here("config.yaml"),
+  param_bounds_df = bounds_df,
+  raise_estimation_warning = FALSE
+)
 }

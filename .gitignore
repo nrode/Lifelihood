@@ -8,6 +8,7 @@
 .quarto
 ..Rcheck/
 *.tar.gz
+.vscode/
 
 # outputs
 lifelihood_*/

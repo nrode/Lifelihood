@@ -1,5 +1,5 @@
 #' @title Data object for lifelihood
-#' @description Creates a `lifelihoodData` object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.
+#' @description Creates a `lifelihoodData` object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history. This function will mainly be used to pass to [lifelihood()] or for customizing parameter boundaries with [(default_bounds_df)].
 #' @name lifelihoodData
 #' @param df Dataframe with the data of life history. It should have one row per life history / observation.
 #' @param sex Column name containing the sex of the observations.
@@ -10,15 +10,39 @@
 #' @param clutchs Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 #' @param death_start Column name containing the first date of the interval in which the death was determined.
 #' @param death_end Column name containing the second date of the interval in which the death was determined.
-#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be in "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.
+#' @param model_specs Vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of "wei" (Weibull law), "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law). The first one is used for maturity, the second one is used for clutchs and the third one for death.
 #' @param covariates Vector containing the names of the covariates.
 #' @param matclutch Whether the maturity event (designated by `maturity_start` and `maturity_end`) is a clutch event or not. If `TRUE`, must specify the `matclutch_size` argument. Default is `FALSE`.
 #' @param matclutch_size Column name containing the size of the clutch for the maturity event. Only used (and required) if `matclutch` is `TRUE`.
-#' @param right_censoring_date Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data. (CURRENTLY IGNORED)
-#' @param critical_age Critical age (integer) below which life histories are not followed individually. (CURRENTLY IGNORED)
-#' @param ratiomax Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax. (CURRENTLY IGNORED)
+#' @param right_censoring_date (CURRENTLY IGNORED) Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data.
+#' @param critical_age (CURRENTLY IGNORED) Critical age (integer) below which life histories are not followed individually.
+#' @param ratiomax (CURRENTLY IGNORED) Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax.
 #' @return `lifelihoodData` object
 #' @export
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' head(df)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' data <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' summary(data)
 lifelihoodData <- function(
     df,
     sex,
@@ -67,23 +91,6 @@ lifelihoodData <- function(
   return(dataObject)
 }
 
-#' @name summary
-#' @title Custom summary function to be used with the output of [lifelihoodData()]
-#' @description Display main information of the `lifelihoodData` object:
-#' - number of observations
-#' - number of covariates
-#' - number of clutches
-#' - number of events (maturity, reproductive, death)
-#' @param object `lifelihoodData` object from [lifelihoodData()]
-#' @return NULL
-#' @export
-summary.lifelihoodData <- function(object, ...) {
-  cat("LIFELIHOOD DATA\n\n")
-  cat("Number of observations:", nrow(object$df), "\n")
-  cat("Number of covariates:", length(object$covariates), "\n")
-  cat("Number of clutches:", length(object$clutchs), "\n")
-}
-
 
 #' @title Individual life history modelling
 #' @description Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
@@ -107,9 +114,40 @@ summary.lifelihoodData <- function(object, ...) {
 #' @param precision TBD - Check the actual meaning
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
-#' @param ... Additional arguments (currently not used)
 #' @return `LifelihoodResults` object
 #' @export
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' head(df)
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' data <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = data,
+#'   path_config = here::here("config.yaml"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' summary(results)
 lifelihood <- function(
     lifelihoodData,
     path_config,
@@ -188,6 +226,8 @@ lifelihood <- function(
     covariates = lifelihoodData$covariates
   )
 
+  results$lifelihoodData <- lifelihoodData
+
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)
   } else {
@@ -202,15 +242,43 @@ lifelihood <- function(
 }
 
 #' @name summary
-#' @title Custom summary function to be used with the output of [lifelihood()]
-#' @description Display main results of the lifelihood program:
-#' - seeds
-#' - likelihood
-#' - effects (estimation)
-#' - parameter ranges
+#' @title Summary function to be used with the output of [lifelihood()]
+#' @description Display main results of the lifelihood program.
 #' @param object `LifelihoodResults` object from [lifelihood()]
 #' @return NULL
 #' @export
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#' head(df)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' data <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = data,
+#'   path_config = here::here("config.yaml"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' summary(results)
 summary.LifelihoodResults <- function(object, ...) {
   cat("LIFELIHOOD RESULTS\n\n")
 
@@ -219,6 +287,6 @@ summary.LifelihoodResults <- function(object, ...) {
   cat("\n")
 
   cat("Effects:\n")
-  print(object$effects)
+  print(head(object$effects))
   cat("\n")
 }
