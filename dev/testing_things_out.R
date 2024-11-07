@@ -1,5 +1,5 @@
 rm(list = ls())
-devtools::load_all(compile = FALSE) # load the package
+devtools::load_all(compile = FALSE)
 df <- read.csv(here::here("data/fake_re_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
@@ -8,7 +8,7 @@ clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
-dataLH <- lifelihoodData(
+dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -22,16 +22,13 @@ dataLH <- lifelihoodData(
   model_specs = c("wei", "lgn", "wei")
 )
 results <- lifelihood(
-  lifelihoodData = dataLF,
+  lifelihoodData = dataLFH,
   path_config = here::here("config2.yaml")
 )
-summary(results)
-results$effects
+predict(results, "expt_death", type = "response")
 
 
-
-
-
+df$geno
 # aller chercher dnas results les formulas associées à chaque paramètre
 # Predict de expt_death sur échelle lifelihood
 m <- model.frame(~ geno * type, data = df)
@@ -96,3 +93,76 @@ plot_mortality_rate(
 )
 
 stats::predict.glm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+df <- read.csv(here::here("data/fake_sample.csv"))
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+head(df)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+dataLFH <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+bounds_df <- default_bounds_df(dataLFH)
+head(bounds_df)
+
+# for example, we want to change this value
+bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
+
+# then we pass it to lifelihood()
+results <- lifelihood(
+  lifelihoodData = dataLFH,
+  path_config = here::here("config.yaml"),
+  param_bounds_df = bounds_df,
+  raise_estimation_warning = FALSE
+)

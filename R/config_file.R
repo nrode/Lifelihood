@@ -1,3 +1,24 @@
+#' @title safe access
+#' @name safe_access
+#' @param config configuration object
+#' @param path event and metric to read
+#' @description Safely access elements in config file. This function exists because yaml.load_file() returns NULL when a value is not found instead of raising an error.
+#' @return the read value
+safe_access <- function(config, path) {
+  result <- tryCatch(
+    {
+      Reduce(`[[`, path, config)
+    },
+    error = function(e) {
+      stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
+    }
+  )
+  if (is.null(result)) {
+    stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
+  }
+  result
+}
+
 #' @title Read and parse the configuration file (YAML).
 #' @name format_config
 #' @description Safely access the configuration file to use for lifelihood. This function is used in [lifelihood()] when creating the input text file.
@@ -10,24 +31,6 @@ format_config <- function(path_config, covariates) {
     stop(paste("Configuration file", path_config, "not found"))
   }
   config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
-
-  # function to safely access elements in config file.
-  # this function exists because yaml.load_file() returns NULL
-  # when a value is not found instead of raising an error
-  safe_access <- function(config, path) {
-    result <- tryCatch(
-      {
-        Reduce(`[[`, path, config)
-      },
-      error = function(e) {
-        stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
-      }
-    )
-    if (is.null(result)) {
-      stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
-    }
-    result
-  }
 
   formatted_config <- c(
     paste("expt_death", R_to_lifelihood(safe_access(config, c("mortality", "expt_death")), covariates)[1]),
@@ -54,10 +57,22 @@ format_config <- function(path_config, covariates) {
   return(formatted_config)
 }
 
+#' @title Read formula from config file
+#' @name read_formula
+#' @inheritParams lifelihoodData
+#' @param metric name of the metric
+#' @return Formula
+read_formula <- function(config, metric) {
+  event <- find_event_type(metric_name = metric)
+  formula <- safe_access(config, c(event, metric))
+  return(formula)
+}
+
 
 #' @title Convert R formula to lifelihood formula
 #' @name R_to_lifelihood
-#' @description Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, `"geno + type"` will become `1 2` if `"geno"` is the first element of `covariables` and `"type"` is the second. This function is used to create the model part of the input text file.
+#' @description Transforms a character string describing the covariates to be included into a format which the compiled program can understand.
+#' For example, `"geno + type"` will become `1 2` if `"geno"` is the first element of `covariables` and `"type"` is the second. This function is used to create the model part of the input text file.
 #' @param R_format String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.
 #' @inheritParams lifelihoodData
 #' @keywords internal

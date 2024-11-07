@@ -58,7 +58,7 @@ clutchs <- c(
 # Create the `lifelihoodData` object
 
 ```{r}
-dataLH <- lifelihoodData(
+dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -71,7 +71,6 @@ dataLH <- lifelihoodData(
   covariates = c("geno", "type"),
   model_specs = c("gam", "lgn", "wei")
 )
-summary(data)
 ```
 
 # Get the results
@@ -81,7 +80,7 @@ summary(data)
 
 ```{r}
 results <- lifelihood(
-  lifelihoodData = dataLF,
+  lifelihoodData = dataLFH,
   path_config = here::here("config.yaml"),
   seeds = c(1, 2, 3, 4)
 )

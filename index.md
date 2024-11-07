@@ -19,7 +19,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-dataLH <- lifelihoodData(
+dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -34,7 +34,7 @@ dataLH <- lifelihoodData(
 )
 
 results <- lifelihood(
-  lifelihoodData = dataLF,
+  lifelihoodData = dataLFH,
   path_config = here::here("config.yaml"),
   seeds = c(1, 2, 3, 4)
 )

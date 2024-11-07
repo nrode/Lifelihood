@@ -6,7 +6,6 @@ test_that("Finding parameter kind.", {
   result <- lifelihood:::find_parameter_kind("int_quad_senescence")
   expect_equal(result, "intercept")
 
-
   result <- lifelihood:::find_parameter_kind("eff_ratio_expt_death_geno1")
   expect_equal(result, "coefficient")
 

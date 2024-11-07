@@ -7,7 +7,7 @@ test_that("Default bounds df.", {
     "clutch_start1", "clutch_end1", "clutch_size1",
     "clutch_start2", "clutch_end2", "clutch_size2"
   )
-  dataLH <- lifelihoodData(
+  dataLFH <- lifelihoodData(
     df = df,
     sex = "sex",
     sex_start = "sex_start",
@@ -21,7 +21,7 @@ test_that("Default bounds df.", {
     model_specs = c("gam", "lgn", "wei")
   )
 
-  bounds_df <- default_bounds_df(data)
+  bounds_df <- default_bounds_df(dataLFH)
 
   max_death <- as.numeric(bounds_df[bounds_df$param == "expt_death", "max"])
   expect_equal(max_death, 40.0)

@@ -13,6 +13,7 @@ reproduction:
   tof_reduction_date: geno
   increase_tof_n_offspring: geno
   lin_decrease_hazard: geno + type + geno*type
+  quad_senescence: geno + type
   quad_decrease_hazard: geno
   lin_change_n_offspring: geno
   quad_change_n_offspring: geno

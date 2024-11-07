@@ -26,6 +26,23 @@ map_metric_name <- function(name) {
   stop(paste("Impossible to find matching metric for:", name))
 }
 
+#' @title find event type
+#' @name find_event_type
+#' @param metric_name Name of the metric
+#' @return Event type: either "reproduction", "maturity" or "mortality"
+find_event_type <- function(metric_name) {
+  if (metric_name %in% c("expt_death", "survival_shape", "ratio_expt_death", "prob_death", "sex_ratio")) {
+    event_type <- "mortality"
+  } else if (metric_name %in% c("expt_reproduction", "reproduction_shape", "n_offspring", "increase_death_hazard", "tof_reduction_date", "increase_tof_n_offspring", "lin_decrease_hazard", "quad_decrease_hazard", "lin_change_n_offspring", "quad_change_n_offspring", "tof_n_offspring", "pontn", "quad_senescence")) {
+    event_type <- "reproduction"
+  } else if (metric_name %in% c("expt_maturity", "maturity_shape", "ratio_expt_maturity")) {
+    event_type <- "maturity"
+  } else {
+    stop("Invalid metric_name: ", metric_name)
+  }
+  return(event_type)
+}
+
 
 #' @title Deducting the type of parameter from an estimate
 #' @keywords internal
