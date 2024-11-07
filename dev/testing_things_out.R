@@ -1,6 +1,6 @@
 rm(list = ls())
 devtools::load_all(compile = FALSE) # load the package
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data/fake_re_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 
@@ -19,39 +19,71 @@ data <- lifelihoodData(
   death_start = "mor_start",
   death_end = "mor_end",
   covariates = c("geno", "type"),
-  model_specs = c("exp", "lgn", "wei")
+  model_specs = c("wei", "lgn", "wei")
 )
 results <- lifelihood(
   lifelihoodData = data,
   path_config = here::here("config2.yaml")
 )
 summary(results)
+results$effects
 
-delink(3.1, min_and_max = c(0.001, 40))
-delink(12.17, min_and_max = c(0.001, 40))
+
+
+
+
+# aller chercher dnas results les formulas associées à chaque paramètre
+# Predict de expt_death sur échelle lifelihood
+m <- model.frame(~ geno * type, data = df)
+Terms <- terms(m)
+predicted <- model.matrix(Terms, m) %*% results$effects$estimation[1:6] # on prend les 6 premiers car ils concernent geno
+pred_expdeath <- link(predicted, min_and_max = c(0.001, 40)) # original scale
+# equivalent predict survival
+
+# aller chercher dnas results les formulas associées à chaque paramètre
+# Predict de survival_shape sur échelle lifelihood
+# m <- model.frame(~ geno * type, data = df)
+# Terms <- terms(m)
+# predicted <- model.matrix(Terms, m) %*% results$effects$estimation[3:8] # on prend les 3 à 8 car ils concernent geno + type
+# pred_survivalshape <- link(predicted, min_and_max = c(0.05, 500)) # original scale
+
 
 
 library(survival)
 # m <- lm((df$mor_start + df$mor_end) / 2 ~ df$geno)
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data/fake_re_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 df$event <- rep(1, nrow(df))
+df$geno_type <- as.factor(paste(df$geno, df$type, sep = "_"))
 m <- survreg(Surv(
   time = mor_start,
   time2 = mor_end,
   event = event,
   type = "interval"
-) ~ geno, dist = "exponential", data = df)
+) ~ geno * type, dist = "weibull", data = df)
+predict(m)
 
 summary(m)
 exp(m$coefficients)
+survival::predict(m)
+
+survival::predict.survreg
+
+predict.lm
 
 
-delink(6.5, min_and_max = c(0.001, 40))
 
+# si niveau de référence alors link de intercept,
+# sinon intercept
 link(results$effects$estimation, min_and_max = c(0.001, 40))
 default_bounds_df(data)
+
+
+
+
+
+
 
 
 plot_mortality_rate(

@@ -13,6 +13,8 @@ pred_mortality_rate <- function(
     stop("Error: 'results_lifelihood' must be of class 'LifelihoodResults'.")
   }
 
+  results_lifelihood <- results
+  newdata <- df
   # get the design matrices
   covariates <- results_lifelihood$covariates
   design_matrices <- make_design_matrix(covariates, newdata)
