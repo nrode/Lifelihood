@@ -1,32 +1,48 @@
+#' @title Prediction with lifelihood
 #' @name predict
 #' @param newdata jeu de données avec une ou plusieurs lignes à prédire, avec les mêmes nom de variables. Si facteur, il faut les mêmes les niveaux de facteurs (renvoyer erreur si inconnu: pas présent de base dans les données d'entrainement/initiales).
 #' @param type Si "link": format de lifelihood, si "response": format original.
-#' @title prediction
+#' @return prediction
+#' @export
 predict.LifelihoodResults <- function(
     lifelihoodResults,
+    metric_name,
     newdata = NULL,
     type = c("link", "response"),
     se.fit = FALSE) {
-  if (!inherits(lifelihoodResults, "lifelihoodResults")) {
-    stop("lifelihoodResults must be of class lifelihoodResults")
+  if (!inherits(lifelihoodResults, "LifelihoodResults")) {
+    stop("lifelihoodResults must be of class LifelihoodResults")
   }
 
   type <- match.arg(type)
-  data <- ifelse(is.null(newdata), lifelihoodResults$lifelihoodData, newdata)
+
+
+  df <- if (is.null(newdata)) lifelihoodResults$lifelihoodData$df else newdata
 
   effects <- lifelihoodResults$effects
-  fitted_metrics <- unique(effects$metric)
+  n_estimated <- nrow(subset(effects, metric == metric_name))
 
-  break_points <- c()
-  for (metric_name in fitted_metrics) {
-    break_points <- c(break_points, nrow(subset(effects, metric == metric_name)))
+  metric_data <- which(effects$metric == metric_name)
+  start <- metric_data[1]
+  end <- tail(metric_data, n = 1)
+  if (start == end) {
+    range <- start
+  } else {
+    range <- start:end
   }
-  print(break_points)
 
-  m <- model.frame(~ geno * type, data = df)
-  Terms <- terms(m)
-  predicted <- model.matrix(Terms, m) %*% results$effects$estimation[1:6]
-  pred_expdeath <- link(predicted, min_and_max = c(0.001, 40))
+  fml <- read_formula(lifelihoodResults$config, metric_name)
+  fml <- formula(paste("~ ", fml))
+  m <- model.frame(fml, data = df)
+  Terms <- stats::terms(m)
+  predictions <- stats::model.matrix(Terms, m) %*% effects$estimation[range]
+
+  if (type == "link") {
+    pred <- predictions
+  } else if (type == "response") {
+    pred <- link(predictions, min_and_max = c(0.001, 40))
+  }
+  return(pred)
 }
 
 # produit matriciel matrice de design et coefficients (échelle lifelihood)

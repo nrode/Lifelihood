@@ -133,6 +133,7 @@ lifelihood <- function(
   )
 
   results$lifelihoodData <- lifelihoodData
+  results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)

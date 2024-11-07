@@ -91,23 +91,23 @@ This is useful when you want to customise these bounds and then pass this datafr
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    1    0         0    1000   0         0    1000            NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    2    0         0    1000   0         2       3             4           3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    0    1         0    1000   0         3       4             2           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1    0         0    1000   0         0    1000            NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    2    1         0    1000   0         1       2             2           2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    2    1         0    1000   0         1       2             2           2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0    1         0    1000   0         3       4             2           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0    1         0    1000   0         3       4             2           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    1    0         0    1000   0         0    1000            NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   clutch_size1 clutch_start2 clutch_end2 clutch_size2 mor_start mor_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA         0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5         9      10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA         5       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           NA            NA          NA           NA         0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            3             5           3            4        11      12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            1             5           8            3        14      20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA       0.1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5       9.0      10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           NA            NA          NA           NA       0.1       1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  df <span class="op">=</span> <span class="va">df</span>,</span></span>
 <span class="r-in"><span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
 <span class="r-in"><span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span></span>
@@ -122,25 +122,23 @@ This is useful when you want to customise these bounds and then pass this datafr
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="fu">default_bounds_df</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in default_bounds_df(data):</span> lifelihoodData must be of class lifelihoodData</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bounds_df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              param   min     max</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       expt_death 0.001      40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   survival_shape  0.05     500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 ratio_expt_death  0.01     100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       prob_death 1e-05 0.99999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        sex_ratio 1e-05 0.99999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    expt_maturity 0.001       8</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'bounds_df' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for example, we want to change this value</span></span></span>
 <span class="r-in"><span><span class="va">bounds_df</span><span class="op">[</span><span class="va">bounds_df</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"increase_death_hazard"</span>, <span class="st">"max"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">80</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'bounds_df' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># then we pass it to lifelihood()</span></span></span>
 <span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihood.html">lifelihood</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span></span>
+<span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span></span>
 <span class="r-in"><span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'/Users/josephbarbier/Desktop/Lifelihood/docs/reference/lifelihood_5293_5527_6604_485_id=b69ffp' already exists</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'bounds_df' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

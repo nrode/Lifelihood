@@ -66,7 +66,6 @@ dataLFH <- lifelihoodData(
   covariates = c("geno", "type"),
   model_specs = c("gam", "lgn", "wei")
 )
-summary(data)
 ```
 
 # Get the results
@@ -105,7 +104,7 @@ To address this warning, you can consider increasing the maximum bound of the `i
 You can get the parameter boundaries with the `default_bounds_df()` function and by passing the `lifelihoodData` object:
 
 ```{r}
-bounds_df <- default_bounds_df(data)
+bounds_df <- default_bounds_df(dataLFH)
 ```
 
 ```{r, echo=FALSE}

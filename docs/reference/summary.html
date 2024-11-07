@@ -83,23 +83,23 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    1    0         0    1000   0         0    1000            NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    2    0         0    1000   0         2       3             4           3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    0    1         0    1000   0         3       4             2           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1    0         0    1000   0         0    1000            NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    2    1         0    1000   0         1       2             2           2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    2    1         0    1000   0         1       2             2           2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0    1         0    1000   0         3       4             2           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0    1         0    1000   0         3       4             2           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    1    0         0    1000   0         0    1000            NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   clutch_size1 clutch_start2 clutch_end2 clutch_size2 mor_start mor_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA         0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5         9      10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA         5       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           NA            NA          NA           NA         0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            3             5           3            4        11      12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            1             5           8            3        14      20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA       0.1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5       9.0      10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           NA            NA          NA           NA       0.1       1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  df <span class="op">=</span> <span class="va">df</span>,</span></span>
 <span class="r-in"><span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
 <span class="r-in"><span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span></span>
@@ -114,7 +114,7 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihood.html">lifelihood</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span></span>
+<span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span></span>
 <span class="r-in"><span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -123,16 +123,23 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> LIFELIHOOD RESULTS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Likelihood:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -452.7831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -829.0578</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Effects:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       name estimation stderror         metric        kind</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           int_expt_death -2.2970350        0     expt_death   intercept</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     eff_expt_death_geno1 -2.7198670        0     expt_death coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     eff_expt_death_type1 -2.8256645        0     expt_death coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     eff_expt_death_type2 -0.6237211        0     expt_death coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       int_survival_shape -3.1737311        0 survival_shape   intercept</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 eff_survival_shape_geno1  2.7688133        0 survival_shape coefficient</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       name  estimation stderror         metric        kind</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           int_expt_death -14.9533770        0     expt_death   intercept</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     eff_expt_death_geno1   2.2706453        0     expt_death coefficient</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     eff_expt_death_type1  -9.5537176        0     expt_death coefficient</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     eff_expt_death_type2   0.5331565        0     expt_death coefficient</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       int_survival_shape  10.2879238        0 survival_shape   intercept</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 eff_survival_shape_geno1  -1.9396319        0 survival_shape coefficient</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       event</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 mortality</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

@@ -28,7 +28,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-data <- lifelihoodData(
+dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -50,7 +50,7 @@ bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
 
 # then we pass it to lifelihood()
 results <- lifelihood(
-  lifelihoodData = data,
+  lifelihoodData = dataLFH,
   path_config = here::here("config.yaml"),
   param_bounds_df = bounds_df,
   raise_estimation_warning = FALSE

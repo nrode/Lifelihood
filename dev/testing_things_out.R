@@ -1,5 +1,5 @@
 rm(list = ls())
-devtools::load_all(compile = FALSE) # load the package
+devtools::load_all(compile = FALSE)
 df <- read.csv(here::here("data/fake_re_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
@@ -25,13 +25,10 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config2.yaml")
 )
-summary(results)
-unique(results$effects$metric)
-effects <- results$effects
+predict(results, "expt_death", type = "response")
 
 
-
-
+df$geno
 # aller chercher dnas results les formulas associées à chaque paramètre
 # Predict de expt_death sur échelle lifelihood
 m <- model.frame(~ geno * type, data = df)
