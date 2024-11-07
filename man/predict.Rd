@@ -7,7 +7,7 @@
 \usage{
 \method{predict}{LifelihoodResults}(
   lifelihoodResults,
-  metric,
+  metric_name,
   newdata = NULL,
   type = c("link", "response"),
   se.fit = FALSE

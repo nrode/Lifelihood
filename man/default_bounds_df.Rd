@@ -42,7 +42,7 @@ dataLFH <- lifelihoodData(
   model_specs = c("gam", "lgn", "wei")
 )
 
-bounds_df <- default_bounds_df(data)
+bounds_df <- default_bounds_df(dataLFH)
 head(bounds_df)
 
 # for example, we want to change this value
