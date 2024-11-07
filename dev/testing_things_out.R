@@ -8,7 +8,7 @@ clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
-dataLH <- lifelihoodData(
+dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -22,12 +22,12 @@ dataLH <- lifelihoodData(
   model_specs = c("wei", "lgn", "wei")
 )
 results <- lifelihood(
-  lifelihoodData = dataLF,
+  lifelihoodData = dataLFH,
   path_config = here::here("config2.yaml")
 )
 summary(results)
-results$effects
-
+unique(results$effects$metric)
+effects <- results$effects
 
 
 

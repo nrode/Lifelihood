@@ -53,7 +53,7 @@ clutchs <- c(
 # Create the `lifelihoodData` object
 
 ```{r}
-dataLH <- lifelihoodData(
+dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -76,7 +76,7 @@ Let's run the analysis with default parameters.
 
 ```{r}
 results <- lifelihood(
-  lifelihoodData = dataLF,
+  lifelihoodData = dataLFH,
   path_config = here::here("config.yaml")
 )
 ```
@@ -123,7 +123,7 @@ Once it's changed, you just have to call `lifelihood()` again with the `param_bo
 
 ```{r}
 results <- lifelihood(
-  lifelihoodData = dataLF,
+  lifelihoodData = dataLFH,
   path_config = here::here("config.yaml"),
   param_bounds_df = bounds_df
 )

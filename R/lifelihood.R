@@ -33,7 +33,7 @@
 #'   "clutch_start2", "clutch_end2", "clutch_size2"
 #' )
 #'
-#' dataLH <- lifelihoodData(
+#' dataLFH <- lifelihoodData(
 #'   df = df,
 #'   sex = "sex",
 #'   sex_start = "sex_start",
@@ -48,7 +48,7 @@
 #' )
 #'
 #' results <- lifelihood(
-#'   lifelihoodData = dataLF,
+#'   lifelihoodData = dataLFH,
 #'   path_config = here::here("config.yaml"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
@@ -132,7 +132,7 @@ lifelihood <- function(
     covariates = lifelihoodData$covariates
   )
 
-  results$lifelihooddataLH <- lifelihoodData
+  results$lifelihoodData <- lifelihoodData
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)
@@ -164,7 +164,7 @@ lifelihood <- function(
 #'   "clutch_start2", "clutch_end2", "clutch_size2"
 #' )
 #'
-#' dataLH <- lifelihoodData(
+#' dataLFH <- lifelihoodData(
 #'   df = df,
 #'   sex = "sex",
 #'   sex_start = "sex_start",
@@ -179,7 +179,7 @@ lifelihood <- function(
 #' )
 #'
 #' results <- lifelihood(
-#'   lifelihoodData = dataLF,
+#'   lifelihoodData = dataLFH,
 #'   path_config = here::here("config.yaml"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE

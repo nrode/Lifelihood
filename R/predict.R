@@ -13,6 +13,20 @@ predict.LifelihoodResults <- function(
 
   type <- match.arg(type)
   data <- ifelse(is.null(newdata), lifelihoodResults$lifelihoodData, newdata)
+
+  effects <- lifelihoodResults$effects
+  fitted_metrics <- unique(effects$metric)
+
+  break_points <- c()
+  for (metric_name in fitted_metrics) {
+    break_points <- c(break_points, nrow(subset(effects, metric == metric_name)))
+  }
+  print(break_points)
+
+  m <- model.frame(~ geno * type, data = df)
+  Terms <- terms(m)
+  predicted <- model.matrix(Terms, m) %*% results$effects$estimation[1:6]
+  pred_expdeath <- link(predicted, min_and_max = c(0.001, 40))
 }
 
 # produit matriciel matrice de design et coefficients (échelle lifelihood)

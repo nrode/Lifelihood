@@ -17,7 +17,7 @@
 #'   "clutch_start2", "clutch_end2", "clutch_size2"
 #' )
 #'
-#' dataLH <- lifelihoodData(
+#' dataLFH <- lifelihoodData(
 #'   df = df,
 #'   sex = "sex",
 #'   sex_start = "sex_start",
@@ -39,7 +39,7 @@
 #'
 #' # then we pass it to lifelihood()
 #' results <- lifelihood(
-#'   lifelihoodData = dataLF,
+#'   lifelihoodData = dataLFH,
 #'   path_config = here::here("config.yaml"),
 #'   param_bounds_df = bounds_df,
 #'   raise_estimation_warning = FALSE
