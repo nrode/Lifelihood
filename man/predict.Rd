@@ -3,7 +3,7 @@
 \name{predict}
 \alias{predict}
 \alias{predict.LifelihoodResults}
-\title{Prediction with lifelihood}
+\title{Prediction with lifelihood estimations}
 \usage{
 \method{predict}{LifelihoodResults}(
   lifelihoodResults,
@@ -14,13 +14,49 @@
 )
 }
 \arguments{
-\item{newdata}{jeu de données avec une ou plusieurs lignes à prédire, avec les mêmes nom de variables. Si facteur, il faut les mêmes les niveaux de facteurs (renvoyer erreur si inconnu: pas présent de base dans les données d'entrainement/initiales).}
+\item{lifelihoodResults}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
 
-\item{type}{Si "link": format de lifelihood, si "response": format original.}
+\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit}
+
+\item{type}{The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the likelihood scale.}
 }
 \value{
 prediction
 }
 \description{
-Prediction with lifelihood
+Prediction with lifelihood estimations
+}
+\examples{
+df <- read.csv(here::here("data/fake_sample.csv"))
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+dataLFH <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+results <- lifelihood(
+  lifelihoodData = dataLFH,
+  path_config = here::here("config2.yaml"),
+  seeds = c(1, 2, 3, 4),
+  raise_estimation_warning = FALSE
+)
+
+predict(results, "expt_death")
+predict(results, "expt_death", type = "response")
 }

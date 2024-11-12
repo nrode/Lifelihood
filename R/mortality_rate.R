@@ -6,25 +6,25 @@
 #' @inheritParams check_valid_estimation
 #' @export
 pred_mortality_rate <- function(
-    results_lifelihood,
+    lifelihoodResults,
     newdata,
     intervals) {
   if (!inherits(results, "LifelihoodResults")) {
-    stop("Error: 'results_lifelihood' must be of class 'LifelihoodResults'.")
+    stop("Error: 'lifelihoodResults' must be of class 'LifelihoodResults'.")
   }
 
-  results_lifelihood <- results
+  lifelihoodResults <- results
   newdata <- df
   # get the design matrices
-  covariates <- results_lifelihood$covariates
+  covariates <- lifelihoodResults$covariates
   design_matrices <- make_design_matrix(covariates, newdata)
   fitted_data <- design_matrices$fitted_data
   mat_expt_death <- design_matrices$mat_expt_death
   mat_survival_shape <- design_matrices$mat_survival_shape
 
   # values per combination of factor
-  expt_death <- results_lifelihood$effects$estimation[1:ncol(mat_expt_death)]
-  survival_shape <- results_lifelihood$effects$estimation[(ncol(mat_expt_death) + 1):(ncol(mat_expt_death) + ncol(mat_survival_shape))]
+  expt_death <- lifelihoodResults$effects$estimation[1:ncol(mat_expt_death)]
+  survival_shape <- lifelihoodResults$effects$estimation[(ncol(mat_expt_death) + 1):(ncol(mat_expt_death) + ncol(mat_survival_shape))]
 
   # fitted values per combination of factor
   fitted_data$fitted_expt_death <- mat_expt_death %*% expt_death
@@ -35,8 +35,8 @@ pred_mortality_rate <- function(
     fitted_data$fitted_expt_death,
     link,
     min_and_max = c(
-      results_lifelihood$parameter_ranges$min[1],
-      results_lifelihood$parameter_ranges$max[1]
+      lifelihoodResults$parameter_ranges$min[1],
+      lifelihoodResults$parameter_ranges$max[1]
     )
   )
 
@@ -45,8 +45,8 @@ pred_mortality_rate <- function(
     fitted_data$fitted_survival_shape,
     link,
     min_and_max = c(
-      results_lifelihood$parameter_ranges$min[2],
-      results_lifelihood$parameter_ranges$max[2]
+      lifelihoodResults$parameter_ranges$min[2],
+      lifelihoodResults$parameter_ranges$max[2]
     )
   )
 
@@ -84,14 +84,14 @@ pred_mortality_rate <- function(
 #' @inheritParams pred_mortality_rate
 #' @export
 plot_mortality_rate <- function(
-    results_lifelihood,
+    lifelihoodResults,
     newdata,
     intervals,
     use_log_x = FALSE,
     use_log_y = FALSE) {
-  covariates <- results_lifelihood$covariates
+  covariates <- lifelihoodResults$covariates
   predicted_mortality_rate <- pred_mortality_rate(
-    results_lifelihood = results_lifelihood,
+    lifelihoodResults = lifelihoodResults,
     covariates = covariates,
     newdata = newdata,
     intervals = intervals

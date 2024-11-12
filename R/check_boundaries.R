@@ -1,12 +1,12 @@
 #' @title Check if estimation are too close from boundaries.
 #' @description Since the parameter boundaries are from [default_bounds_df()] (or customized by user), this function checks is the estimation of each parameter is "too close" (0.5% tolerance) from one of its boundaries (either min or max). If so, it raises a warning that tries to be explicit. This function can be ignored thanks to the `raise_estimation_warning` argument (boolean) in [lifelihood()].
 #' @name check_valid_estimation
-#' @param results_lifelihood Output object of the [lifelihood()] function.
+#' @param lifelihoodResults Output object of the [lifelihood()] function.
 #' @keywords internal
 #' @export
-check_valid_estimation <- function(results_lifelihood) {
-  estimations <- results_lifelihood$effects
-  boundaries <- results_lifelihood$parameter_ranges
+check_valid_estimation <- function(lifelihoodResults) {
+  estimations <- lifelihoodResults$effects
+  boundaries <- lifelihoodResults$parameter_ranges
   metric_names <- unique(estimations$metric)
   for (metric_name in metric_names) {
     metric_values <- subset(estimations, metric == metric_name)

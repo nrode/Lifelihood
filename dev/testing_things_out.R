@@ -25,7 +25,15 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config2.yaml")
 )
-predict(results, "expt_death", type = "response")
+predict(results, "expt_death", type = "responsse")
+
+
+
+
+
+
+
+
 
 
 df$geno

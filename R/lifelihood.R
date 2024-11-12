@@ -142,7 +142,7 @@ lifelihood <- function(
   }
 
   if (raise_estimation_warning) {
-    check_valid_estimation(results_lifelihood = results)
+    check_valid_estimation(lifelihoodResults = results)
   }
 
   return(results)
@@ -150,7 +150,7 @@ lifelihood <- function(
 
 #' @name summary
 #' @title Summary function to be used with the output of [lifelihood()]
-#' @description Display main results of the lifelihood program.
+#' @description S3 method to display main results of the lifelihood program.
 #' @param object `LifelihoodResults` object from [lifelihood()]
 #' @return NULL
 #' @export

@@ -5,7 +5,7 @@
 \title{Compute and visualize predicted mortality rate}
 \usage{
 plot_mortality_rate(
-  results_lifelihood,
+  lifelihoodResults,
   newdata,
   intervals,
   use_log_x = FALSE,
@@ -13,7 +13,7 @@ plot_mortality_rate(
 )
 }
 \arguments{
-\item{results_lifelihood}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
+\item{lifelihoodResults}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
 
 \item{newdata}{Dataframe with the values of the covariates to predict the mortality rate}
 
