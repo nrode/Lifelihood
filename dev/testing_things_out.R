@@ -36,6 +36,8 @@ newdata$geno <- factor(newdata$geno)
 predict(results, "expt_death", newdata = newdata)
 
 
+results$covariates
+
 
 
 

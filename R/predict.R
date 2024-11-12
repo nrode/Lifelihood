@@ -63,29 +63,67 @@ predict.LifelihoodResults <- function(
   type <- match.arg(type)
 
   df <- if (is.null(newdata)) lifelihoodResults$lifelihoodData$df else newdata
+  df_train <- lifelihoodResults$lifelihoodData$df
 
-  effects <- lifelihoodResults$effects
-  n_estimated <- nrow(subset(effects, metric == metric_name))
+  covariates <- lifelihoodResults$covariates
 
-  metric_data <- which(effects$metric == metric_name)
-  start <- metric_data[1]
-  end <- tail(metric_data, n = 1)
-  if (start == end) {
-    range <- start
+  if (!has_valid_factor_levels(df_train, df, covariates)) {
+    stop("Invalid factor levels in newdata.")
   } else {
-    range <- start:end
-  }
+    effects <- lifelihoodResults$effects
+    n_estimated <- nrow(subset(effects, metric == metric_name))
 
-  fml <- read_formula(lifelihoodResults$config, metric_name)
-  fml <- formula(paste("~ ", fml))
-  m <- model.frame(fml, data = df)
-  Terms <- stats::terms(m)
-  predictions <- stats::model.matrix(Terms, m) %*% effects$estimation[range]
+    metric_data <- which(effects$metric == metric_name)
+    start <- metric_data[1]
+    end <- tail(metric_data, n = 1)
+    if (start == end) {
+      range <- start
+    } else {
+      range <- start:end
+    }
 
-  if (type == "link") {
-    pred <- predictions
-  } else if (type == "response") {
-    pred <- link(predictions, min_and_max = c(0.001, 40))
+    fml <- read_formula(lifelihoodResults$config, metric_name)
+    fml <- formula(paste("~ ", fml))
+    m <- model.frame(fml, data = df)
+    Terms <- stats::terms(m)
+    predictions <- stats::model.matrix(Terms, m) %*% effects$estimation[range]
+
+    if (type == "link") {
+      pred <- predictions
+    } else if (type == "response") {
+      pred <- link(predictions, min_and_max = c(0.001, 40))
+    }
   }
   return(pred)
+}
+
+#' @title Check for valid factor levels
+#' @description The purpose of this function is to ensure that when a user makes a prediction with [lifelihood::predict()], the `newdata` contains the same factor levels for its covariates as the training data.
+#'
+#' If any levels are missing or mismatched, it raises an error and displays a warning.
+#' @keywords internal
+#' @param df_train Training set passed to [lifelihoodData()] (`df` arg).
+#' @param newdata New data passed to [lifelihood::predict()] (`newdata` arg).
+#' @param covariates Covariates passed to [lifelihoodData()] (`covariates` arg).
+#' @name has_valid_factor_levels
+#' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.
+has_valid_factor_levels <- function(df_train, newdata, covariates) {
+  for (covariate in covariates) {
+    if (covariate %in% names(df_train) && covariate %in% names(newdata)) {
+      if (is.factor(df_train[[covariate]]) && is.factor(newdata[[covariate]])) {
+        levels_train <- levels(df_train[[covariate]])
+        levels_newdata <- levels(newdata[[covariate]])
+
+        if (!all(levels_train %in% levels_newdata)) {
+          return(FALSE)
+        }
+      } else {
+        warning(paste("Column", covariate, "is not a factor in one of the dataframes."))
+      }
+    } else {
+      warning(paste("Covariate", covariate, "not found in both dataframes."))
+    }
+  }
+
+  return(TRUE)
 }
