@@ -108,20 +108,21 @@ predict.LifelihoodResults <- function(
 #' @name has_valid_factor_levels
 #' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.
 has_valid_factor_levels <- function(df_train, newdata, covariates) {
+  if (length(covariates) == 0) {
+    warning("covariates argument is empty")
+    return(FALSE)
+  }
   for (covariate in covariates) {
     if (covariate %in% names(df_train) && covariate %in% names(newdata)) {
-      if (is.factor(df_train[[covariate]]) && is.factor(newdata[[covariate]])) {
-        levels_train <- levels(df_train[[covariate]])
-        levels_newdata <- levels(newdata[[covariate]])
+      levels_train <- levels(df_train[[covariate]])
+      levels_newdata <- levels(newdata[[covariate]])
 
-        if (!all(levels_train %in% levels_newdata)) {
-          return(FALSE)
-        }
-      } else {
-        warning(paste("Column", covariate, "is not a factor in one of the dataframes."))
+      if (!all(levels_newdata %in% levels_train)) {
+        return(FALSE)
       }
     } else {
-      warning(paste("Covariate", covariate, "not found in both dataframes."))
+      warning(paste("Covariate", covariate, "not found in newdata"))
+      return(FALSE)
     }
   }
 

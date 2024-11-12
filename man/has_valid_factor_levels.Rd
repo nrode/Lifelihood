@@ -14,7 +14,7 @@ has_valid_factor_levels(df_train, newdata, covariates)
 \item{covariates}{Covariates passed to \code{\link[=lifelihoodData]{lifelihoodData()}} (\code{covariates} arg).}
 }
 \value{
-Check whether all factor levels of each covariate in \code{newdata} passed to \code{\link[=predict]{predict()}} are present in the training data.
+TRUE if all factor levels of each covariate in \code{newdata} passed to \code{\link[=predict]{predict()}} are present in the training data, FALSE otherwise.
 }
 \description{
 The purpose of this function is to ensure that when a user makes a prediction with \code{\link[=predict]{predict()}}, the \code{newdata} contains the same factor levels for its covariates as the training data.
