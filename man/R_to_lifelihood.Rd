@@ -15,7 +15,8 @@ R_to_lifelihood(R_format, covariates)
 The formatted format for lifelihood to understand which parameter to fit.
 }
 \description{
-Transforms a character string describing the covariates to be included into a format which the compiled program can understand. For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of \code{covariables} and \code{"type"} is the second. This function is used to create the model part of the input text file.
+Transforms a character string describing the covariates to be included into a format which the compiled program can understand.
+For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of \code{covariables} and \code{"type"} is the second. This function is used to create the model part of the input text file.
 }
 \examples{
 R_to_lifelihood("geno + type", c("geno", "type"))

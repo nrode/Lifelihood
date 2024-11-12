@@ -93,7 +93,7 @@
 <span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span>
+<span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lifelihoodData.html">lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
@@ -108,7 +108,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
-<span>  lifelihoodData <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"config.yaml"</span><span class="op">)</span>,</span>
 <span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>

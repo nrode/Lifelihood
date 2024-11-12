@@ -76,6 +76,9 @@
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/execute_bin.html</loc>
   </url>
   <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/find_event_type.html</loc>
+  </url>
+  <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/find_parameter_kind.html</loc>
   </url>
   <url>
@@ -121,7 +124,13 @@
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/predict.html</loc>
   </url>
   <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/read_formula.html</loc>
+  </url>
+  <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/read_output_from_file.html</loc>
+  </url>
+  <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/safe_access.html</loc>
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/summary.html</loc>

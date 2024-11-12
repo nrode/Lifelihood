@@ -52,7 +52,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Data object for lifelihood</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/HEAD/R/lifelihood.R" class="external-link"><code>R/lifelihood.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/HEAD/R/lifelihoodData.R" class="external-link"><code>R/lifelihoodData.R</code></a></small>
       <div class="d-none name"><code>lifelihoodData.Rd</code></div>
     </div>
 
@@ -163,23 +163,23 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    1    0         0    1000   0         0    1000            NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    2    0         0    1000   0         2       3             4           3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    0    1         0    1000   0         3       4             2           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    1    0         0    1000   0         0    1000            NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    2    1         0    1000   0         1       2             2           2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    2    1         0    1000   0         1       2             2           2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0    1         0    1000   0         3       4             2           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0    1         0    1000   0         3       4             2           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    1    0         0    1000   0         0    1000            NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   clutch_size1 clutch_start2 clutch_end2 clutch_size2 mor_start mor_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA         0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5         9      10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA         5       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           NA            NA          NA           NA         0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            3             5           3            4        11      12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            1             5           8            3        14      20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA       0.1       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5       9.0      10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            5            NA          NA           NA       5.0       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           NA            NA          NA           NA       0.1       1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">lifelihoodData</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu">lifelihoodData</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  df <span class="op">=</span> <span class="va">df</span>,</span></span>
 <span class="r-in"><span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
 <span class="r-in"><span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span></span>
@@ -194,23 +194,7 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="summary.html">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      Length Class      Mode     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> df                   15     data.frame list     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sex                   1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sex_start             1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sex_end               1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> maturity_start        1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> maturity_end          1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clutchs               6     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> death_start           1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> death_end             1     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> model_specs           3     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> covariates            2     -none-     character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> matclutch             1     -none-     logical  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> matclutch_size        0     -none-     NULL     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> right_censoring_date  1     -none-     numeric  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> critical_age          1     -none-     numeric  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ratiomax              1     -none-     numeric  </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in object[[i]]:</span> object of type 'closure' is not subsettable</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
