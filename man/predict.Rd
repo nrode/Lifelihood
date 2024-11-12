@@ -2,10 +2,10 @@
 % Please edit documentation in R/predict.R
 \name{predict}
 \alias{predict}
-\alias{predict.LifelihoodResults}
+\alias{predict.lifelihoodResults}
 \title{Prediction with lifelihood estimations}
 \usage{
-\method{predict}{LifelihoodResults}(
+\method{predict}{lifelihoodResults}(
   lifelihoodResults,
   metric_name,
   newdata = NULL,
@@ -69,6 +69,6 @@ newdata <- data.frame(
 )
 newdata$type <- factor(newdata$type)
 newdata$geno <- factor(newdata$geno)
-predict(results, "expt_death", newdata = newdata)
-predict(results, "expt_death", newdata = newdata, type = "response")
+predict(results, "expt_death", newdata)
+predict(results, "expt_death", newdata, type = "response")
 }

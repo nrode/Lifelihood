@@ -9,8 +9,8 @@ pred_mortality_rate <- function(
     lifelihoodResults,
     newdata,
     intervals) {
-  if (!inherits(results, "LifelihoodResults")) {
-    stop("Error: 'lifelihoodResults' must be of class 'LifelihoodResults'.")
+  if (!inherits(results, "lifelihoodResults")) {
+    stop("Error: 'lifelihoodResults' must be of class 'lifelihoodResults'.")
   }
 
   lifelihoodResults <- results

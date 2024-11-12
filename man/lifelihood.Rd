@@ -66,7 +66,7 @@ lifelihood(
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
 }
 \value{
-\code{LifelihoodResults} object
+\code{lifelihoodResults} object
 }
 \description{
 Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.

@@ -47,17 +47,17 @@
 #' )
 #' newdata$type <- factor(newdata$type)
 #' newdata$geno <- factor(newdata$geno)
-#' predict(results, "expt_death", newdata = newdata)
-#' predict(results, "expt_death", newdata = newdata, type = "response")
+#' predict(results, "expt_death", newdata)
+#' predict(results, "expt_death", newdata, type = "response")
 #' @export
-predict.LifelihoodResults <- function(
+predict.lifelihoodResults <- function(
     lifelihoodResults,
     metric_name,
     newdata = NULL,
     type = c("link", "response"),
     se.fit = FALSE) {
-  if (!inherits(lifelihoodResults, "LifelihoodResults")) {
-    stop("lifelihoodResults must be of class LifelihoodResults")
+  if (!inherits(lifelihoodResults, "lifelihoodResults")) {
+    stop("lifelihoodResults must be of class lifelihoodResults")
   }
 
   type <- match.arg(type)
@@ -68,7 +68,12 @@ predict.LifelihoodResults <- function(
   covariates <- lifelihoodResults$covariates
 
   if (!has_valid_factor_levels(df_train, df, covariates)) {
-    stop("Invalid factor levels in newdata.")
+    stop(
+      "Invalid factor levels in new data.
+      This error occurs when the factor levels in the
+      covariate columns of the new data differ from
+      those in the data used to fit the model."
+    )
   } else {
     effects <- lifelihoodResults$effects
     n_estimated <- nrow(subset(effects, metric == metric_name))
@@ -91,7 +96,9 @@ predict.LifelihoodResults <- function(
     if (type == "link") {
       pred <- predictions
     } else if (type == "response") {
-      pred <- link(predictions, min_and_max = c(0.001, 40))
+      bounds_df <- default_bounds_df(lifelihoodResults$lifelihoodData)
+      metric_bounds <- subset(bounds_df, param == metric_name)
+      pred <- link(predictions, min = as.numeric(metric_bounds$min), max = as.numeric(metric_bounds$max))
     }
   }
   return(pred)

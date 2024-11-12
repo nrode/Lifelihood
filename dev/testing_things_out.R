@@ -33,12 +33,16 @@ newdata <- data.frame(
 )
 newdata$type <- factor(newdata$type)
 newdata$geno <- factor(newdata$geno)
-predict(results, "expt_death", newdata = newdata)
+predict(results, "expt_death", newdata)
+predict(results, "expt_death", newdata, type = "response")
 
+default_bounds_df(dataLFH)
 
 results$covariates
 
 
+
+devtools::dev_package_deps("../Lifelihood")
 
 
 
@@ -52,7 +56,7 @@ df$geno
 m <- model.frame(~ geno * type, data = df)
 Terms <- terms(m)
 predicted <- model.matrix(Terms, m) %*% results$effects$estimation[1:6] # on prend les 6 premiers car ils concernent geno
-pred_expdeath <- link(predicted, min_and_max = c(0.001, 40)) # original scale
+pred_expdeath <- link(predicted, min = 0.001, max = 40) # original scale
 # equivalent predict survival
 
 # aller chercher dnas results les formulas associées à chaque paramètre

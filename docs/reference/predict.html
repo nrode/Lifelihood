@@ -62,7 +62,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for LifelihoodResults</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for lifelihoodResults</span></span>
 <span><span class="fu">predict</span><span class="op">(</span></span>
 <span>  <span class="va">lifelihoodResults</span>,</span>
 <span>  <span class="va">metric_name</span>,</span>
@@ -167,7 +167,7 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">newdata</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">newdata</span><span class="op">$</span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, <span class="va">newdata</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 -3.496165</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.456446</span>
@@ -175,7 +175,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 -3.529937</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 -1.212887</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 -1.775329</span>
-<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.177833</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 15.513782</span>

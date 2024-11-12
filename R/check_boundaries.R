@@ -14,7 +14,7 @@ check_valid_estimation <- function(lifelihoodResults) {
     min_bound <- metric_bounds$min
     max_bound <- metric_bounds$max
     sum_estimations <- sum(metric_values$estimation)
-    sum_estimations_linked <- link(sum_estimations, min_and_max = c(min_bound, max_bound))
+    sum_estimations_linked <- link(sum_estimations, min = min_bound, max = max_bound)
 
     tolerance <- 0.005 # 0.5% tolerance
     min_threshold <- min_bound + (min_bound * tolerance)
