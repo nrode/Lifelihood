@@ -11,7 +11,7 @@
 \item{object}{\code{LifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
 }
 \description{
-Display main results of the lifelihood program.
+S3 method to display main results of the lifelihood program.
 }
 \examples{
 df <- read.csv(here::here("data/fake_sample.csv"))

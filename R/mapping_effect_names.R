@@ -27,6 +27,7 @@ map_metric_name <- function(name) {
 }
 
 #' @title find event type
+#' @keywords internal
 #' @name find_event_type
 #' @param metric_name Name of the metric
 #' @return Event type: either "reproduction", "maturity" or "mortality"

@@ -16,15 +16,17 @@
 \arguments{
 \item{lifelihoodResults}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
 
-\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit}
+\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
 
-\item{type}{The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the likelihood scale.}
+\item{type}{The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.}
+
+\item{se.fit}{Whether or not to include standard errors in the prediction.}
 }
 \value{
 prediction
 }
 \description{
-Prediction with lifelihood estimations
+S3 method to use to make prediction using fitted results from \code{\link[=lifelihood]{lifelihood()}}.
 }
 \examples{
 df <- read.csv(here::here("data/fake_sample.csv"))
@@ -59,4 +61,14 @@ results <- lifelihood(
 
 predict(results, "expt_death")
 predict(results, "expt_death", type = "response")
+
+# predict on new data
+newdata <- data.frame(
+  type = c(1, 2, 0, 1, 2, 0),
+  geno = c(0, 1, 0, 1, 0, 1)
+)
+newdata$type <- factor(newdata$type)
+newdata$geno <- factor(newdata$geno)
+predict(results, "expt_death", newdata = newdata)
+predict(results, "expt_death", newdata = newdata, type = "response")
 }
