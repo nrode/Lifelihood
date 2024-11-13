@@ -4,7 +4,7 @@
 #' @name read_output_from_file
 #' @param file_path Location of the output file of the program
 #' @inheritParams lifelihood
-#' @return An object of class `LifelihoodResults` with all results from the output file
+#' @return An object of class `lifelihoodResults` with all results from the output file
 #' @export
 read_output_from_file <- function(
     file_path,
@@ -29,6 +29,6 @@ read_output_from_file <- function(
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
   results$covariates <- covariates
-  class(results) <- "LifelihoodResults"
+  class(results) <- "lifelihoodResults"
   return(results)
 }

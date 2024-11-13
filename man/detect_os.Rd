@@ -7,9 +7,12 @@
 detect_os()
 }
 \value{
-String with the name of the operating system
+String with the name of the operating system, either "Windows" or "Unix-like"
 }
 \description{
 \code{detect_os()} finds the operating system name
+}
+\examples{
+detect_os()
 }
 \keyword{internal}

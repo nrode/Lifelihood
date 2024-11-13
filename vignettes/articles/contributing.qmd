@@ -23,10 +23,10 @@ To start contributing, you’ll need to set up a local development environment w
 
 - **Fork the Repository**
 
-- **Clone Your Fork Locally**: run the following command in your terminal, replacing `nrode` with your GitHub username:
+- **Clone Your Fork Locally**: run the following command in your terminal, replacing `yourusername` with your GitHub username:
 
 ```bash
-git clone https://github.com/nrode/Lifelihood.git
+git clone https://github.com/yourusername/Lifelihood.git
 cd Lifelihood
 git remote add upstream https://github.com/nrode/Lifelihood
 git checkout -b feature-name
@@ -35,9 +35,22 @@ git checkout -b feature-name
 - **Install Development Dependencies**: install all necessary dependencies for development, including **Lifelihood** itself, by running:
 
 ```r
-install.packages("devtools")
 devtools::install()
 ```
+
+## Make changes
+
+All R source code resides in the `R/` directory, and only these files are included in the package.
+
+After making changes, you can verify that everything works as expected by running:
+
+```r
+devtools::load_all(compile = FALSE)
+```
+
+This allows you to work with `lifelihood` functions using your latest local modifications.
+
+_Note: Setting `compile = FALSE` ensures that code in the `src/` directory is not compiled. This option is typically used when working with packages that include C++ code. Learn more [here](https://forum.posit.co/t/devtools-load-all-works-on-mac-but-not-on-windows-for-a-given-package/190503)_
 
 ## Documenting
 
@@ -69,5 +82,7 @@ git add -A
 git commit -m 'commit description'
 git push
 ```
+
+Then go to your project fork and click on the "Open a pull request" pop-up.
 
 When a pull request (PR) is opened, GitHub Actions will **automatically run checks** to validate your changes. These checks include testing the codebase, ensuring consistent documentation, and verifying cross-platform compatibility. You can view the status of these checks directly in the pull request interface.

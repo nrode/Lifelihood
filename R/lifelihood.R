@@ -20,7 +20,7 @@
 #' @param precision TBD - Check the actual meaning
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
-#' @return `LifelihoodResults` object
+#' @return `lifelihoodResults` object
 #' @export
 #' @examples
 #' df <- read.csv(here::here("data/fake_sample.csv"))
@@ -142,7 +142,7 @@ lifelihood <- function(
   }
 
   if (raise_estimation_warning) {
-    check_valid_estimation(results_lifelihood = results)
+    check_valid_estimation(lifelihoodResults = results)
   }
 
   return(results)
@@ -150,8 +150,8 @@ lifelihood <- function(
 
 #' @name summary
 #' @title Summary function to be used with the output of [lifelihood()]
-#' @description Display main results of the lifelihood program.
-#' @param object `LifelihoodResults` object from [lifelihood()]
+#' @description S3 method to display main results of the lifelihood program.
+#' @param object `lifelihoodResults` object from [lifelihood()]
 #' @return NULL
 #' @export
 #' @examples
@@ -186,7 +186,7 @@ lifelihood <- function(
 #'   raise_estimation_warning = FALSE
 #' )
 #' summary(results)
-summary.LifelihoodResults <- function(object, ...) {
+summary.lifelihoodResults <- function(object, ...) {
   cat("LIFELIHOOD RESULTS\n\n")
 
   cat("Likelihood:\n")

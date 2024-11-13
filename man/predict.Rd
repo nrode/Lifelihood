@@ -2,10 +2,10 @@
 % Please edit documentation in R/predict.R
 \name{predict}
 \alias{predict}
-\alias{predict.LifelihoodResults}
-\title{Prediction with lifelihood}
+\alias{predict.lifelihoodResults}
+\title{Prediction with lifelihood estimations}
 \usage{
-\method{predict}{LifelihoodResults}(
+\method{predict}{lifelihoodResults}(
   lifelihoodResults,
   metric_name,
   newdata = NULL,
@@ -14,13 +14,61 @@
 )
 }
 \arguments{
-\item{newdata}{jeu de données avec une ou plusieurs lignes à prédire, avec les mêmes nom de variables. Si facteur, il faut les mêmes les niveaux de facteurs (renvoyer erreur si inconnu: pas présent de base dans les données d'entrainement/initiales).}
+\item{lifelihoodResults}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
 
-\item{type}{Si "link": format de lifelihood, si "response": format original.}
+\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
+
+\item{type}{The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.}
+
+\item{se.fit}{Whether or not to include standard errors in the prediction.}
 }
 \value{
 prediction
 }
 \description{
-Prediction with lifelihood
+S3 method to use to make prediction using fitted results from \code{\link[=lifelihood]{lifelihood()}}.
+}
+\examples{
+df <- read.csv(here::here("data/fake_sample.csv"))
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+dataLFH <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "mor_start",
+  death_end = "mor_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+results <- lifelihood(
+  lifelihoodData = dataLFH,
+  path_config = here::here("config2.yaml"),
+  seeds = c(1, 2, 3, 4),
+  raise_estimation_warning = FALSE
+)
+
+predict(results, "expt_death")
+predict(results, "expt_death", type = "response")
+
+# predict on new data
+newdata <- data.frame(
+  type = c(1, 2, 0, 1, 2, 0),
+  geno = c(0, 1, 0, 1, 0, 1)
+)
+newdata$type <- factor(newdata$type)
+newdata$geno <- factor(newdata$geno)
+predict(results, "expt_death", newdata)
+predict(results, "expt_death", newdata, type = "response")
 }

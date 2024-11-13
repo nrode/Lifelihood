@@ -4,10 +4,10 @@
 \alias{check_valid_estimation}
 \title{Check if estimation are too close from boundaries.}
 \usage{
-check_valid_estimation(results_lifelihood)
+check_valid_estimation(lifelihoodResults)
 }
 \arguments{
-\item{results_lifelihood}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
+\item{lifelihoodResults}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
 }
 \description{
 Since the parameter boundaries are from \code{\link[=default_bounds_df]{default_bounds_df()}} (or customized by user), this function checks is the estimation of each parameter is "too close" (0.5\% tolerance) from one of its boundaries (either min or max). If so, it raises a warning that tries to be explicit. This function can be ignored thanks to the \code{raise_estimation_warning} argument (boolean) in \code{\link[=lifelihood]{lifelihood()}}.

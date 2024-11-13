@@ -15,3 +15,4 @@ Formula
 \description{
 Read formula from config file
 }
+\keyword{internal}

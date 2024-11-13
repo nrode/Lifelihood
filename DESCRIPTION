@@ -1,5 +1,5 @@
 Package: lifelihood
-Title: This Package Estimates The Likelihood Of An Individual's Life History
+Title: Likelihood of life history of individuals
 Version: 0.0.0.9
 Authors@R: 
         c(
