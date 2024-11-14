@@ -7,7 +7,7 @@
 \usage{
 \method{predict}{lifelihoodResults}(
   lifelihoodResults,
-  metric_name,
+  parameter_name,
   newdata = NULL,
   type = c("link", "response"),
   se.fit = FALSE
@@ -15,6 +15,8 @@
 }
 \arguments{
 \item{lifelihoodResults}{Output object of the \code{\link[=lifelihood]{lifelihood()}} function.}
+
+\item{parameter_name}{A string specifying the name of the parameter for which to make the prediction. Must be one of \code{unique(lifelihoodResults$effects$parameter)}.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
 

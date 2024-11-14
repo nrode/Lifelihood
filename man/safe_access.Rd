@@ -9,7 +9,7 @@ safe_access(config, path)
 \arguments{
 \item{config}{configuration object}
 
-\item{path}{event and metric to read}
+\item{path}{event and parameter to read}
 }
 \value{
 the read value

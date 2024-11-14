@@ -4,10 +4,10 @@
 \alias{read_formula}
 \title{Read formula from config file}
 \usage{
-read_formula(config, metric)
+read_formula(config, parameter)
 }
 \arguments{
-\item{metric}{name of the metric}
+\item{parameter}{name of the parameter}
 }
 \value{
 Formula

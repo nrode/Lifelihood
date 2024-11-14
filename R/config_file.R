@@ -2,7 +2,7 @@
 #' @name safe_access
 #' @keywords internal
 #' @param config configuration object
-#' @param path event and metric to read
+#' @param path event and parameter to read
 #' @description Safely access elements in config file. This function exists because yaml.load_file() returns NULL when a value is not found instead of raising an error.
 #' @return the read value
 safe_access <- function(config, path) {
@@ -62,11 +62,11 @@ format_config <- function(path_config, covariates) {
 #' @name read_formula
 #' @keywords internal
 #' @inheritParams lifelihoodData
-#' @param metric name of the metric
+#' @param parameter name of the parameter
 #' @return Formula
-read_formula <- function(config, metric) {
-  event <- find_event_type(metric_name = metric)
-  formula <- safe_access(config, c(event, metric))
+read_formula <- function(config, parameter) {
+  event <- find_event_type(parameter_name = parameter)
+  formula <- safe_access(config, c(event, parameter))
   return(formula)
 }
 

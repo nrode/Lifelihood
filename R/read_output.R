@@ -22,9 +22,9 @@ read_output_from_file <- function(
   results$seeds <- seeds
   results$likelihood <- likelihood
   results$effects <- effects
-  results$effects$metric <- sapply(results$effects$name, map_metric_name)
+  results$effects$parameter <- sapply(results$effects$name, map_parameter_name)
   results$effects$kind <- sapply(results$effects$name, find_parameter_kind)
-  results$effects$event <- sapply(results$effects$metric, find_event_type)
+  results$effects$event <- sapply(results$effects$parameter, find_event_type)
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group

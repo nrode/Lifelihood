@@ -2,10 +2,11 @@
 #' @description S3 method to use to make prediction using fitted results from [lifelihood()].
 #' @name predict
 #' @inheritParams check_valid_estimation
+#' @param parameter_name A string specifying the name of the parameter for which to make the prediction. Must be one of `unique(lifelihoodResults$effects$parameter)`.
 #' @param newdata Data for prediction. If absent, predictions are for the subjects used in the original fit.
 #' @param type The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.
 #' @param se.fit Whether or not to include standard errors in the prediction.
-#' @return prediction
+#' @return A vector containing the predicted values for the parameter.
 #' @examples
 #' df <- read.csv(here::here("data/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
@@ -52,7 +53,7 @@
 #' @export
 predict.lifelihoodResults <- function(
     lifelihoodResults,
-    metric_name,
+    parameter_name,
     newdata = NULL,
     type = c("link", "response"),
     se.fit = FALSE) {
@@ -63,11 +64,11 @@ predict.lifelihoodResults <- function(
   type <- match.arg(type)
 
   df <- if (is.null(newdata)) lifelihoodResults$lifelihoodData$df else newdata
-  df_train <- lifelihoodResults$lifelihoodData$df
+  original_df <- lifelihoodResults$lifelihoodData$df
 
   covariates <- lifelihoodResults$covariates
 
-  if (!has_valid_factor_levels(df_train, df, covariates)) {
+  if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
       "Invalid factor levels in new data.
       This error occurs when the factor levels in the
@@ -76,18 +77,11 @@ predict.lifelihoodResults <- function(
     )
   } else {
     effects <- lifelihoodResults$effects
-    n_estimated <- nrow(subset(effects, metric == metric_name))
 
-    metric_data <- which(effects$metric == metric_name)
-    start <- metric_data[1]
-    end <- tail(metric_data, n = 1)
-    if (start == end) {
-      range <- start
-    } else {
-      range <- start:end
-    }
+    parameter_data <- which(effects$parameter == parameter_name)
+    range <- parameter_data[1]:parameter_data[length(parameter_data)]
 
-    fml <- read_formula(lifelihoodResults$config, metric_name)
+    fml <- read_formula(lifelihoodResults$config, parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- stats::terms(m)
@@ -96,9 +90,9 @@ predict.lifelihoodResults <- function(
     if (type == "link") {
       pred <- predictions
     } else if (type == "response") {
-      bounds_df <- default_bounds_df(lifelihoodResults$lifelihoodData)
-      metric_bounds <- subset(bounds_df, param == metric_name)
-      pred <- link(predictions, min = as.numeric(metric_bounds$min), max = as.numeric(metric_bounds$max))
+      bounds_df <- lifelihoodResults$param_bounds_df
+      parameter_bounds <- subset(bounds_df, param == parameter_name)
+      pred <- link(predictions, min = as.numeric(parameter_bounds$min), max = as.numeric(parameter_bounds$max))
     }
   }
   return(pred)
@@ -109,26 +103,27 @@ predict.lifelihoodResults <- function(
 #'
 #' If any levels are missing or mismatched, it raises an error and displays a warning.
 #' @keywords internal
-#' @param df_train Training set passed to [lifelihoodData()] (`df` arg).
+#' @param original_df Training set passed to [lifelihoodData()] (`df` arg).
 #' @param newdata New data passed to [lifelihood::predict()] (`newdata` arg).
 #' @param covariates Covariates passed to [lifelihoodData()] (`covariates` arg).
 #' @name has_valid_factor_levels
 #' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.
-has_valid_factor_levels <- function(df_train, newdata, covariates) {
+has_valid_factor_levels <- function(original_df, newdata, covariates) {
   if (length(covariates) == 0) {
     warning("covariates argument is empty")
     return(FALSE)
   }
-  for (covariate in covariates) {
-    if (covariate %in% names(df_train) && covariate %in% names(newdata)) {
-      levels_train <- levels(df_train[[covariate]])
-      levels_newdata <- levels(newdata[[covariate]])
 
-      if (!all(levels_newdata %in% levels_train)) {
-        return(FALSE)
-      }
-    } else {
-      warning(paste("Covariate", covariate, "not found in newdata"))
+  # for (colname in names(newdata)) {
+  #   if (!(colname %in% covariates)) {
+  #     stop(paste("Unknown column in newdata: ", colname))
+  #   }
+  # }
+
+  for (covariate in covariates) {
+    levels_train <- levels(original_df[[covariate]])
+    levels_newdata <- levels(newdata[[covariate]])
+    if (!all(levels_newdata %in% levels_train)) {
       return(FALSE)
     }
   }
