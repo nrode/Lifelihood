@@ -1,70 +1,95 @@
-txt_to_csv <- function(txt_path, csv_path = NULL) {
-  txt_file <- readLines(txt_path)
+parse_row <- function(row, covariate_names) {
+  elements <- strsplit(row, " ")[[1]]
+  covariates <- elements[1:length(covariate_names)]
+  sex <- elements[(length(covariate_names) + 2):(length(covariate_names) + 4)]
+  mat <- elements[(length(covariate_names) + 6):(length(covariate_names) + 8)]
 
-  # get number of covariates and their names
+  pon_indices <- grep("^pon$", elements)
+  mor_indices <- grep("^mor$", elements)
+
+  if (length(pon_indices) > 0) {
+    pon_data <- lapply(pon_indices, function(idx) elements[(idx + 1):(idx + 3)])
+  } else {
+    pon_data <- c(NA, NA, NA)
+  }
+
+  mor_data <- elements[(mor_indices + 1):(mor_indices + 2)]
+
+  list(
+    covariates = covariates,
+    sex_start = sex[1],
+    sex_end = sex[2],
+    sex = sex[3],
+    mat_start = mat[1],
+    mat_end = mat[2],
+    mat = mat[3],
+    pon = pon_data,
+    mor = mor_data
+  )
+}
+
+create_row <- function(parsed_row, max_clutches) {
+  covariates <- parsed_row$covariates
+  sex <- parsed_row$sex
+  sex_start <- parsed_row$sex_start
+  sex_end <- parsed_row$sex_end
+  mat <- parsed_row$mat
+  mat_start <- parsed_row$mat_start
+  mat_end <- parsed_row$mat_end
+  pon <- parsed_row$pon
+  mor <- parsed_row$mor
+
+  if (length(pon) > 0) {
+    pon_corrected <- lapply(pon, function(p) {
+      if (length(p) != 3) {
+        return(c(p, rep(NA, 3 - length(p)))) # Pad with NAs if fewer than 3 elements
+      }
+      return(p)
+    })
+    padded_pon <- do.call(rbind, pon_corrected) # Combine into a matrix
+
+    if (nrow(padded_pon) < max_clutches) {
+      padded_pon <- rbind(padded_pon, matrix(NA, nrow = max_clutches - nrow(padded_pon), ncol = 3))
+    }
+  } else {
+    padded_pon <- matrix(NA, nrow = max_clutches, ncol = 3)
+  }
+
+  c(covariates, sex_start, sex_end, sex, mat_start, mat_end, mat, as.vector(t(padded_pon)), mor)
+}
+
+txt_to_csv <- function(txt_path) {
+  txt_file <- readLines(txt_path)
   model_tag_index <- which(grepl("****modele******", txt_file, fixed = TRUE))
   line_with_cov <- txt_file[model_tag_index - 2]
-  covariates <- strsplit(line_with_cov, "\\s+")[[1]]
-
-  # isolate the data part of the input file
+  covariate_names <- strsplit(line_with_cov, "\\s+")[[1]]
   data_tag_index <- which(grepl("*******data*********", txt_file, fixed = TRUE))
   data <- txt_file[(data_tag_index + 1):length(txt_file)]
 
 
-  formatted_rows <- lapply(
-    data,
-    FUN = function(line) {
-      line_to_row(line, covariates)
-    }
+  parsed_data <- lapply(data, parse_row, covariate_names)
+  max_clutches <- max(sapply(parsed_data, function(row) length(row$pon)))
+
+  print(paste("Found", length(covariate_names), "covariates"))
+  print(paste("Highest clutch size:", max_clutches))
+
+  rows <- lapply(parsed_data, create_row, max_clutches)
+  final_data <- do.call(rbind, rows)
+
+  column_names <- c(
+    covariate_names,
+    "sex_start", "sex_end", "sex",
+    "mat_start", "mat_end", "mat",
+    unlist(lapply(1:max_clutches, function(i) paste0(c("pon_start_", "pon_end_", "pon_size_"), i))),
+    "mor_start", "mor_end"
   )
 
-  if (!is.null(csv_path)) {
-    csv_path <- paste(sub("\\.txt$", "", txt_path), ".out")
-  }
-  write.csv(formatted_rows)
-  return(formatted_rows)
+  colnames(final_data) <- column_names
+  final_dataframe <- as.data.frame(final_data)
+  write.csv(final_dataframe, sub("\\.txt$", ".csv", txt_path), row.names = FALSE)
 }
 
-line_to_row <- function(line, covariates) {
-  splitted_line <- strsplit(line, "\\s+")[[1]]
-
-  row <- c()
-  n_covariates <- length(covariates)
-  for (i in 1:n_covariates) {
-    row <- c(row, splitted_line[i])
-  }
-
-  sex_index <- n_covariates + 1
-  sex_start <- sex_index + 1
-  sex_end <- sex_start + 1
-  sex_value <- sex_end + 1
-  row <- c(
-    row,
-    splitted_line[sex_start],
-    splitted_line[sex_end],
-    splitted_line[sex_value]
-  )
-
-  mat_index <- sex_value + 1
-  mat_start <- mat_index + 1
-  mat_end <- mat_start + 1
-  row <- c(
-    row,
-    splitted_line[mat_start],
-    splitted_line[mat_end]
-  )
-
-  for (i in seq(mat_end, length(splitted_line))) {
-    if (splitted_line[i] == "mor") {
-      row <- c(row, splitted_line[i + 1], splitted_line[i + 2])
-      return(row)
-    } else if (splitted_line[i] == "pon") {
-      row <- c(row, splitted_line[i + 1], splitted_line[i + 2], splitted_line[i + 3])
-    }
-  }
-
-  return(row)
-}
-
-
-txt_to_csv("data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt")
+txt_path <- "data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt"
+txt_to_csv(txt_path)
+txt_path <- "data/raw_data/DataPierrick/100%mort_Pierrick211genoparinteraction.txt"
+txt_to_csv(txt_path)

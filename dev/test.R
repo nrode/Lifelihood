@@ -66,8 +66,12 @@ txt_to_csv <- function(txt_path) {
   data_tag_index <- which(grepl("*******data*********", txt_file, fixed = TRUE))
   data <- txt_file[(data_tag_index + 1):length(txt_file)]
 
+
   parsed_data <- lapply(data, parse_row, covariate_names)
   max_clutches <- max(sapply(parsed_data, function(row) length(row$pon)))
+
+  print(paste("Found", length(covariate_names), "covariates"))
+  print(paste("Highest clutch size:", max_clutches))
 
   rows <- lapply(parsed_data, create_row)
   final_data <- do.call(rbind, rows)
@@ -86,4 +90,6 @@ txt_to_csv <- function(txt_path) {
 }
 
 txt_path <- "data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt"
+txt_to_csv(txt_path)
+txt_path <- "data/raw_data/DataPierrick/100%mort_Pierrick211genoparinteraction.txt"
 txt_to_csv(txt_path)
