@@ -1,7 +1,4 @@
 txt_to_csv <- function(txt_path, csv_path = NULL) {
-  if (!file.exists(txt_path)) {
-    stop(paste("File", txt_path, "not found"))
-  }
   txt_file <- readLines(txt_path)
 
   # get number of covariates and their names
@@ -70,4 +67,4 @@ line_to_row <- function(line, covariates) {
 }
 
 
-txt_to_csv("temp_file_data_lifelihood.txt")
+txt_to_csv("data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt")

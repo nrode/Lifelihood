@@ -3,12 +3,14 @@
 #' @return none
 #' @export
 plot_mortality_rate_emp <- function(
-    data,
-    start_col,
-    end_col,
-    covariates,
+    dataLifelihood,
     interval_width = 2,
     max_time = NULL) {
+  data <- dataLifelihood$df
+  start_col <- dataLifelihood$death_start
+  end_col <- dataLifelihood$death_end
+  covariates <- dataLifelihood$covariates
+
   mortality_rate_df <- compute_mortality_rate(
     data,
     start_col = start_col,
@@ -16,6 +18,7 @@ plot_mortality_rate_emp <- function(
     covariates = covariates,
     interval_width = interval_width
   )
+
   ggplot2::ggplot(mortality_rate_df, ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate, color = Group)) +
     ggplot2::geom_line() +
     ggplot2::labs(title = "Mortality Rate Over Time", x = "Time Interval", y = "Mortality Rate") +
@@ -42,7 +45,6 @@ compute_mortality_rate <- function(
     covariates,
     interval_width = 2,
     max_time = NULL) {
-  # Input validation
   missing_cols <- setdiff(c(start_col, end_col, covariates), names(data))
   if (length(missing_cols) > 0) {
     print(names(data))

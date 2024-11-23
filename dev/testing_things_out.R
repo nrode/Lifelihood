@@ -38,7 +38,7 @@ predict(results, "expt_death", newdata, type = "response")
 
 default_bounds_df(dataLFH)
 
-results$covariates
+plot_mortality_rate_emp(dataLFH)
 
 
 
