@@ -7,13 +7,13 @@
 check_valid_estimation <- function(lifelihoodResults) {
   estimations <- lifelihoodResults$effects
   boundaries <- lifelihoodResults$parameter_ranges
-  metric_names <- unique(estimations$metric)
-  for (metric_name in metric_names) {
-    metric_values <- subset(estimations, metric == metric_name)
-    metric_bounds <- subset(boundaries, name == metric_name)
-    min_bound <- metric_bounds$min
-    max_bound <- metric_bounds$max
-    sum_estimations <- sum(metric_values$estimation)
+  parameter_names <- unique(estimations$parameter)
+  for (parameter_name in parameter_names) {
+    parameter_values <- subset(estimations, parameter == parameter_name)
+    parameter_bounds <- subset(boundaries, name == parameter_name)
+    min_bound <- parameter_bounds$min
+    max_bound <- parameter_bounds$max
+    sum_estimations <- sum(parameter_values$estimation)
     sum_estimations_linked <- link(sum_estimations, min = min_bound, max = max_bound)
 
     tolerance <- 0.005 # 0.5% tolerance
@@ -22,18 +22,18 @@ check_valid_estimation <- function(lifelihoodResults) {
     if (sum_estimations_linked <= min_threshold) {
       warning(paste(
         "Estimation of '",
-        metric_name,
+        parameter_name,
         "' is close to the minimum bound: ",
-        metric_name, "≃", sum_estimations_linked, ". ",
+        parameter_name, "≃", sum_estimations_linked, ". ",
         "Consider decreasing minimum bound.",
         sep = ""
       ))
     } else if (sum_estimations_linked >= max_threshold) {
       warning(paste(
         "Estimation of '",
-        metric_name,
+        parameter_name,
         "' is close to the maximum bound: ",
-        metric_name, "≃", sum_estimations_linked, ". ",
+        parameter_name, "≃", sum_estimations_linked, ". ",
         "Consider increasing maximum bound.",
         sep = ""
       ))

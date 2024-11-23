@@ -4,10 +4,10 @@
 \alias{has_valid_factor_levels}
 \title{Check for valid factor levels}
 \usage{
-has_valid_factor_levels(df_train, newdata, covariates)
+has_valid_factor_levels(original_df, newdata, covariates)
 }
 \arguments{
-\item{df_train}{Training set passed to \code{\link[=lifelihoodData]{lifelihoodData()}} (\code{df} arg).}
+\item{original_df}{Training set passed to \code{\link[=lifelihoodData]{lifelihoodData()}} (\code{df} arg).}
 
 \item{newdata}{New data passed to \code{\link[=predict]{predict()}} (\code{newdata} arg).}
 

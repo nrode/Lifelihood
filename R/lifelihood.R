@@ -133,6 +133,7 @@ lifelihood <- function(
   )
 
   results$lifelihoodData <- lifelihoodData
+  results$param_bounds_df <- param_bounds_df
   results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
   if (delete_temp_files) {
@@ -194,6 +195,6 @@ summary.lifelihoodResults <- function(object, ...) {
   cat("\n")
 
   cat("Effects:\n")
-  print(head(object$effects))
+  print(object$effects)
   cat("\n")
 }

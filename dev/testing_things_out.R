@@ -25,7 +25,7 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config2.yaml")
 )
-
+unique(results$effects$parameter)
 head(predict(results, "expt_death", type = "response"))
 newdata <- data.frame(
   type = c(1, 2, 0, 1, 2, 0),
@@ -46,7 +46,7 @@ devtools::dev_package_deps("../Lifelihood")
 
 
 
-
+predict.lm
 
 
 
