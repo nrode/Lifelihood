@@ -1,13 +1,19 @@
 rm(list = ls())
 devtools::load_all(compile = FALSE)
-df <- read.csv(here::here("data/fake_re_sample.csv"))
-df$type <- as.factor(df$type)
+df <- read.csv(here::here("data/raw_data/DataPierrick/100%mort_Pierrick211genoparinteraction.csv"))
 df$geno <- as.factor(df$geno)
+df$par <- as.factor(df$par)
+df$spore <- as.factor(df$spore)
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
+generate_clutch_vector <- function(N) {
+  return(paste("pon", rep(c("start", "end", "size"), N), rep(1:N, each = 3), sep = "_"))
+}
+clutchs <- generate_clutch_vector(28)
+
 dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
@@ -18,27 +24,29 @@ dataLFH <- lifelihoodData(
   clutchs = clutchs,
   death_start = "mor_start",
   death_end = "mor_end",
-  covariates = c("geno", "type"),
+  covariates = c("par", "geno", "spore"),
   model_specs = c("wei", "lgn", "wei")
 )
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config2.yaml")
+  path_config = here::here("config_pierrick.yaml")
 )
-unique(results$effects$parameter)
+summary(results)
 head(predict(results, "expt_death", type = "response"))
 newdata <- data.frame(
-  type = c(1, 2, 0, 1, 2, 0),
-  geno = c(0, 1, 0, 1, 0, 1)
+  geno = c(0, 1, 2, 3, 0, 1),
+  par = c(0, 1, 2, 0, 1, 2),
+  spore = c(0, 1, 2, 3, 0, 1)
 )
-newdata$type <- factor(newdata$type)
 newdata$geno <- factor(newdata$geno)
+newdata$par <- factor(newdata$par)
+newdata$spore <- factor(newdata$spore)
 predict(results, "expt_death", newdata)
 predict(results, "expt_death", newdata, type = "response")
 
 default_bounds_df(dataLFH)
 
-results$covariates
+plot_mortality_rate_emp(dataLFH)
 
 
 

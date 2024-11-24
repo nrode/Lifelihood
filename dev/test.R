@@ -28,7 +28,7 @@ parse_row <- function(row, covariate_names) {
   )
 }
 
-create_row <- function(parsed_row, max_clutches) {
+create_row <- function(parsed_row) {
   covariates <- parsed_row$covariates
   sex <- parsed_row$sex
   sex_start <- parsed_row$sex_start
@@ -73,14 +73,14 @@ txt_to_csv <- function(txt_path) {
   print(paste("Found", length(covariate_names), "covariates"))
   print(paste("Highest clutch size:", max_clutches))
 
-  rows <- lapply(parsed_data, create_row, max_clutches)
+  rows <- lapply(parsed_data, create_row)
   final_data <- do.call(rbind, rows)
 
   column_names <- c(
     covariate_names,
     "sex_start", "sex_end", "sex",
     "mat_start", "mat_end", "mat",
-    unlist(lapply(1:max_clutches, function(i) paste0(c("pon_start_", "pon_end_", "pon_size_"), i))),
+    unlist(lapply(1:max_clutches, function(i) paste0(c("pon_start_", "pon_end_", "pon_"), i))),
     "mor_start", "mor_end"
   )
 

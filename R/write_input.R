@@ -143,8 +143,10 @@ format_row <- function(
     clutch_start <- gsub("[[:space:]]", "", row[[clutch_cols[i]]])
     clutch_end <- gsub("[[:space:]]", "", row[[clutch_cols[i + 1]]])
     clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])
-    if (clutch_start != "NA" & clutch_end != "NA" & clutch_size != "NA") {
-      formatted_row <- paste(formatted_row, "pon", clutch_start, clutch_end, clutch_size)
+    if (!(is.na(clutch_start) || is.na(clutch_end) || is.na(clutch_size))) {
+      if (clutch_start != "NA" & clutch_end != "NA" & clutch_size != "NA") {
+        formatted_row <- paste(formatted_row, "pon", clutch_start, clutch_end, clutch_size)
+      }
     }
   }
 
