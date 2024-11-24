@@ -1,99 +1,66 @@
-#' @title Display evolution of mortality rate
-#' @name plot_mortality_rate_emp
+#' @title Display evolution of empirical mortality rate
+#' @description Useful function for creating a good-quality line graph of changes in the empirical mortality rate.
+#' @name plot_emp_mortality_rate
+#' @inheritParams lifelihood
+#' @inheritParams mortality_rate
+#' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale.
+#' @param log_y Determine whether the y-axis should be displayed on a logarithmic scale.
+#' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
 #' @return none
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' plot_emp_mortality_rate(dataLFH, interval_width = 2)
 #' @export
-plot_mortality_rate_emp <- function(
-    dataLifelihood,
-    interval_width = 2,
-    max_time = NULL) {
-  data <- dataLifelihood$df
-  start_col <- dataLifelihood$death_start
-  end_col <- dataLifelihood$death_end
-  covariates <- dataLifelihood$covariates
-
-  mortality_rate_df <- compute_mortality_rate(
-    data,
-    start_col = start_col,
-    end_col = end_col,
-    covariates = covariates,
-    interval_width = interval_width
+plot_emp_mortality_rate <- function(
+    lifelihoodData,
+    interval_width,
+    min_time = 0,
+    max_time = NULL,
+    log_x = FALSE,
+    log_y = FALSE) {
+  mortality_rate_df <- mortality_rate(
+    lifelihoodData,
+    interval_width = interval_width,
+    max_time = max_time
   )
 
-  ggplot2::ggplot(mortality_rate_df, ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate, color = Group)) +
+  plot <- ggplot2::ggplot(mortality_rate_df, ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate, color = Group)) +
     ggplot2::geom_line() +
-    ggplot2::labs(title = "Mortality Rate Over Time", x = "Time Interval", y = "Mortality Rate") +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(legend.position = "none")
-}
+    ggplot2::labs(title = "Mortality Rate Over Time", x = "Time", y = "Mortality Rate") +
+    ggplot2::theme_minimal()
 
-
-#' @title Compute empirical mortality rate
-#' @name compute_mortality_rate
-#' @description Compute the empirical mortality rate
-#' @param data Dataframe with the data of life history. It should have one row per life history / observation.
-#' @param start_col Column name containing the first date of the interval in which the event was determined.
-#' @param end_col Column name containing the second date of the interval in which the event was determined.
-#' @param covariates Vector containing the names of the covariates.
-#' @param interval_width Width of the interval to compute the mortality rate.
-#' @param max_time Maximum time to compute the mortality rate.
-#' @return none
-#' @export
-compute_mortality_rate <- function(
-    data,
-    start_col,
-    end_col,
-    covariates,
-    interval_width = 2,
-    max_time = NULL) {
-  missing_cols <- setdiff(c(start_col, end_col, covariates), names(data))
-  if (length(missing_cols) > 0) {
-    print(names(data))
-    stop(paste(
-      "The following specified column(s) not found in the data:",
-      paste(missing_cols, collapse = ", ")
-    ))
+  if (log_x) {
+    plot <- plot + ggplot2::scale_x_log10()
+  }
+  if (log_y) {
+    plot <- plot + ggplot2::scale_y_log10()
   }
 
-  # Determine maximum time if not provided
-  if (is.null(max_time)) {
-    max_time <- max(data[[end_col]], na.rm = TRUE)
+  if (!is.null(max_time)) {
+    plot <- plot + ggplot2::xlim(min_time, max_time)
   }
 
-  # Calculate number of intervals
-  n_intervals <- ceiling(max_time / interval_width)
-
-  # Create grouping variable
-  data$group <- do.call(interaction, data[covariates])
-  groups <- sort(unique(data$group))
-
-  # Initialize mortality rate matrix
-  mortality_rate <- matrix(0, nrow = n_intervals, ncol = length(groups))
-  colnames(mortality_rate) <- groups
-  rownames(mortality_rate) <- seq(interval_width, n_intervals * interval_width, by = interval_width)
-
-  # Compute mortality rates
-  for (grp in groups) {
-    group_data <- data[data$group == grp, ]
-
-    for (i in 1:n_intervals) {
-      interval_start <- (i - 1) * interval_width
-      interval_end <- i * interval_width
-
-      # Count alive at interval start
-      alive_start <- sum(group_data[[start_col]] >= interval_start | is.na(group_data[[start_col]]))
-
-      # Count deaths during interval
-      deaths <- sum(group_data[[start_col]] >= interval_start &
-        group_data[[start_col]] < interval_end &
-        !is.na(group_data[[end_col]]))
-
-      # Calculate mortality rate
-      mortality_rate[i, grp] <- if (alive_start > 0) deaths / alive_start else NA
-    }
-  }
-
-  mortality_rate_df <- reshape2::melt(mortality_rate)
-  colnames(mortality_rate_df) <- c("Interval", "Group", "MortalityRate")
-
-  return(mortality_rate_df)
+  plot
 }

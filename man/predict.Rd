@@ -25,7 +25,7 @@
 \item{se.fit}{Whether or not to include standard errors in the prediction.}
 }
 \value{
-prediction
+A vector containing the predicted values for the parameter.
 }
 \description{
 S3 method to use to make prediction using fitted results from \code{\link[=lifelihood]{lifelihood()}}.

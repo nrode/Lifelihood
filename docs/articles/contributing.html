@@ -47,6 +47,7 @@
     <a class="dropdown-item" href="../articles/2-setting-up-the-configuration-file.html">2 - Setting up the configuration file</a>
     <a class="dropdown-item" href="../articles/3-how-to-use-lifelihood.html">3 - How to use the lifelihood package</a>
     <a class="dropdown-item" href="../articles/4-custom-param-boundaries-and-estimation-warning.html">4 - Custom parameter boundaries and estimation warning</a>
+    <a class="dropdown-item" href="../articles/mortality-rate-visualization.html">Mortality rate visualization</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Developer</h6>
     <a class="dropdown-item" href="../articles/overview.html">Overview of Lifelihood (for developers)</a>
@@ -124,7 +125,8 @@ necessary dependencies for development, including
 <strong>Lifelihood</strong> itself, by running:</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"roxygen2"</span>, <span class="st">"pkgdown"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html" class="external-link">install_local</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="make-changes">Make changes<a class="anchor" aria-label="anchor" href="#make-changes"></a>
@@ -171,7 +173,7 @@ repository:</p>
 <p>Add, commit and push your branch to your fork on GitHub:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">'commit description'</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div>
 <p>Then go to your project fork and click on the “Open a pull request”
 pop-up.</p>
 <p>When a pull request (PR) is opened, GitHub Actions will
