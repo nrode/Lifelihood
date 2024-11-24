@@ -4,7 +4,7 @@
 \alias{mortality_rate}
 \title{Compute empirical mortality rate}
 \usage{
-mortality_rate(lifelihoodData, interval_width, max_time = NULL)
+mortality_rate(lifelihoodData, interval_width, max_time = NULL, bygroup = TRUE)
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
@@ -12,9 +12,11 @@ mortality_rate(lifelihoodData, interval_width, max_time = NULL)
 \item{interval_width}{The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and \code{interval_width} is set to 10, the mortality rate will be calculated every 10 days for each group.}
 
 \item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
+
+\item{bygroup}{Whether to calculate mortality rates by subgroup (default is TRUE). If FALSE, calculates a single overall mortality rate.}
 }
 \value{
-A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup) and MortalityRate (mortality rate of this sub group at this time).
+A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
 }
 \description{
 Calculate the empirical mortality rate over a given interval.
@@ -43,6 +45,14 @@ dataLFH <- lifelihoodData(
   model_specs = c("gam", "lgn", "wei")
 )
 
-mort_df <- mortality_rate(dataLFH, interval_width = 5)
+mort_df <- mortality_rate(dataLFH, interval_width = 2)
+head(mort_df)
+
+mort_df <- mortality_rate(
+  dataLFH,
+  interval_width = 2,
+  bygroup = FALSE,
+  max_time = 170
+)
 head(mort_df)
 }

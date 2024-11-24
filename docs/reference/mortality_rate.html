@@ -63,7 +63,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mortality_rate</span><span class="op">(</span><span class="va">lifelihoodData</span>, <span class="va">interval_width</span>, max_time <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mortality_rate</span><span class="op">(</span><span class="va">lifelihoodData</span>, <span class="va">interval_width</span>, max_time <span class="op">=</span> <span class="cn">NULL</span>, bygroup <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,12 +79,16 @@
 <dt>max_time</dt>
 <dd><p>The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.</p></dd>
 
+
+<dt>bygroup</dt>
+<dd><p>Whether to calculate mortality rates by subgroup (default is TRUE). If FALSE, calculates a single overall mortality rate.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A dataframe with 3 columns: Interval (time interval, based on <code>interval_width</code> value), Group (identifier of a given subgroup) and MortalityRate (mortality rate of this sub group at this time).</p>
+<p>A dataframe with 3 columns: Interval (time interval, based on <code>interval_width</code> value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).</p>
     </div>
 
     <div class="section level2">
@@ -112,15 +116,30 @@
 <span class="r-in"><span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">mort_df</span> <span class="op">&lt;-</span> <span class="fu">mortality_rate</span><span class="op">(</span><span class="va">dataLFH</span>, interval_width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mort_df</span> <span class="op">&lt;-</span> <span class="fu">mortality_rate</span><span class="op">(</span><span class="va">dataLFH</span>, interval_width <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mort_df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Interval Group MortalityRate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        5   1.0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       10   1.0             1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       15   1.0             1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       20   1.0             1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        5   0.1             1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       10   0.1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        2     1             0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        4     1             0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        6     1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        8     1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       10     1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       12     1             1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mort_df</span> <span class="op">&lt;-</span> <span class="fu">mortality_rate</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">dataLFH</span>,</span></span>
+<span class="r-in"><span>  interval_width <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  bygroup <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  max_time <span class="op">=</span> <span class="fl">170</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mort_df</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Interval MortalityRate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        2     0.2307692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        4     0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        6     0.4000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        8     0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       10     0.1666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       12     0.2000000</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

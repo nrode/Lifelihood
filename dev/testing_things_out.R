@@ -32,7 +32,7 @@ results <- lifelihood(
   path_config = here::here("config_pierrick.yaml")
 )
 summary(results)
-head(predict(results, "expt_death", type = "response"))
+
 newdata <- data.frame(
   geno = c(0, 1, 2, 3, 0, 1),
   par = c(0, 1, 2, 0, 1, 2),
@@ -44,11 +44,24 @@ newdata$spore <- factor(newdata$spore)
 predict(results, "expt_death", newdata)
 predict(results, "expt_death", newdata, type = "response")
 
-default_bounds_df(dataLFH)
-
-plot_emp_mortality_rate(dataLFH, interval_width = 20, max_time = 170, log_y = TRUE)
+plot_mortality_rate(dataLFH, interval_width = 15, max_time = 170, bygroup = FALSE, log_y = TRUE)
+plot_mortality_rate(dataLFH, interval_width = 25, max_time = 170, bygroup = TRUE, log_y = TRUE)
+plot_mortality_rate(dataLFH, interval_width = 25, max_time = 170, bygroup = TRUE, log_y = TRUE, prediction = TRUE)
 
 mortality_rate(dataLFH, interval_width = 10)
+mortality_rate(dataLFH, interval_width = 10, bygroup = FALSE, max_time = 170)
+
+devtools::load_all(compile = FALSE)
+pred_mortality_rate(results, interval_width = 10)
+
+
+
+
+
+
+
+
+
 
 
 

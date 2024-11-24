@@ -50,7 +50,7 @@ dataLFH <- lifelihoodData(
 # Plot mortality rate
 
 ```{r}
-plot_emp_mortality_rate(dataLFH, interval_width = 20, max_time = 170, log_y = TRUE)
+plot_mortality_rate(dataLFH, interval_width = 20, max_time = 170, log_y = TRUE)
 ```
 
 # Get mortality rate
