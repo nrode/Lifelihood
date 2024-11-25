@@ -35,7 +35,8 @@ git checkout -b feature-name
 - **Install Development Dependencies**: install all necessary dependencies for development, including **Lifelihood** itself, by running:
 
 ```r
-devtools::install()
+install.packages(c("devtools", "testthat", "roxygen2", "pkgdown"))
+remotes::install_local(dependencies = TRUE)
 ```
 
 ## Make changes
@@ -80,7 +81,7 @@ Add, commit and push your branch to your fork on GitHub:
 ```bash
 git add -A
 git commit -m 'commit description'
-git push
+git push origin main
 ```
 
 Then go to your project fork and click on the "Open a pull request" pop-up.

@@ -34,6 +34,9 @@
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/articles/articles/contributing.html</loc>
   </url>
   <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/articles/articles/mortality-rate-visualization.html</loc>
+  </url>
+  <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/articles/articles/overview.html</loc>
   </url>
   <url>
@@ -41,6 +44,9 @@
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/articles/mortality-rate-visualization.html</loc>
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/articles/overview.html</loc>
@@ -115,7 +121,13 @@
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/map_parameter_name.html</loc>
   </url>
   <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/mortality_rate.html</loc>
+  </url>
+  <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/parse_output.html</loc>
+  </url>
+  <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/plot_emp_mortality_rate.html</loc>
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/plot_mortality_rate.html</loc>

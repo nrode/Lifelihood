@@ -32,7 +32,7 @@ results <- lifelihood(
   path_config = here::here("config_pierrick.yaml")
 )
 summary(results)
-head(predict(results, "expt_death", type = "response"))
+
 newdata <- data.frame(
   geno = c(0, 1, 2, 3, 0, 1),
   par = c(0, 1, 2, 0, 1, 2),
@@ -44,46 +44,34 @@ newdata$spore <- factor(newdata$spore)
 predict(results, "expt_death", newdata)
 predict(results, "expt_death", newdata, type = "response")
 
-default_bounds_df(dataLFH)
+plot_mortality_rate(dataLFH, interval_width = 15, max_time = 170, bygroup = FALSE, log_y = TRUE)
+plot_mortality_rate(dataLFH, interval_width = 25, max_time = 170, bygroup = TRUE, log_y = TRUE)
+plot_mortality_rate(dataLFH, interval_width = 25, max_time = 170, bygroup = TRUE, log_y = TRUE, prediction = TRUE)
 
-plot_mortality_rate_emp(dataLFH)
+mortality_rate(dataLFH, interval_width = 10)
+mortality_rate(dataLFH, interval_width = 10, bygroup = FALSE, max_time = 170)
 
-
-
-devtools::dev_package_deps("../Lifelihood")
-
-
-
-predict.lm
+devtools::load_all(compile = FALSE)
+pred_mortality_rate(results, interval_width = 10)
 
 
 
-df$geno
-# aller chercher dnas results les formulas associées à chaque paramètre
-# Predict de expt_death sur échelle lifelihood
-m <- model.frame(~ geno * type, data = df)
-Terms <- terms(m)
-predicted <- model.matrix(Terms, m) %*% results$effects$estimation[1:6] # on prend les 6 premiers car ils concernent geno
-pred_expdeath <- link(predicted, min = 0.001, max = 40) # original scale
-# equivalent predict survival
-
-# aller chercher dnas results les formulas associées à chaque paramètre
-# Predict de survival_shape sur échelle lifelihood
-# m <- model.frame(~ geno * type, data = df)
-# Terms <- terms(m)
-# predicted <- model.matrix(Terms, m) %*% results$effects$estimation[3:8] # on prend les 3 à 8 car ils concernent geno + type
-# pred_survivalshape <- link(predicted, min_and_max = c(0.05, 500)) # original scale
 
 
 
-library(survival)
-# m <- lm((df$mor_start + df$mor_end) / 2 ~ df$geno)
+
+
+
+
+
+
+
 df <- read.csv(here::here("data/fake_re_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 df$event <- rep(1, nrow(df))
 df$geno_type <- as.factor(paste(df$geno, df$type, sep = "_"))
-m <- survreg(Surv(
+m <- survival::survreg(Surv(
   time = mor_start,
   time2 = mor_end,
   event = event,
@@ -94,38 +82,6 @@ predict(m)
 summary(m)
 exp(m$coefficients)
 survival::predict(m)
-
-survival::predict.survreg
-
-predict.lm
-
-
-
-# si niveau de référence alors link de intercept,
-# sinon intercept
-link(results$effects$estimation, min_and_max = c(0.001, 40))
-default_bounds_df(data)
-
-
-
-
-
-
-
-
-plot_mortality_rate(
-  results_lifelihood = results,
-  newdata = df,
-  covariates = c("geno", "type"),
-  intervals = seq(0, 20, 5),
-  use_log_x = TRUE,
-  use_log_y = TRUE
-)
-
-stats::predict.glm
-
-
-
 
 
 
