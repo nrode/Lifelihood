@@ -45,5 +45,6 @@ execute_bin <- function(
     "Unix-like" = file.path(here::here("src", "bin"), "lifelihoodC2023"),
     stop("Unknown OS")
   )
+  print(arg_string)
   system(path, input = arg_string)
 }

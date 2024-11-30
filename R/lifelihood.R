@@ -149,8 +149,94 @@ lifelihood <- function(
   return(results)
 }
 
-#' @name summary
+#' @title Coefficient estimates
+#' @name coef
+#' @description S3 method to retrieve coefficients from the output of [lifelihood()]
+#' @inheritParams summary
+#' @return A list of coefficient estimates
+#' @export
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = here::here("config.yaml"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' coef(results, "expt_death")
+coef.lifelihoodResults <- function(object, parameter_name) {
+  effects <- object$effects
+  parameter_data <- which(effects$parameter == parameter_name)
+  range <- parameter_data[1]:parameter_data[length(parameter_data)]
+  coefs <- effects$estimation[range]
+  return(coefs)
+}
+
+#' @title Likelihood
+#' @name logLik
+#' @description S3 method to retrieve likelihood from the output of [lifelihood()]
+#' @inheritParams summary
+#' @return A number with the value of maximum likelihood found.
+#' @export
+#' @examples
+#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "mor_start",
+#'   death_end = "mor_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = here::here("config.yaml"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' logLik(results)
+logLik.lifelihoodResults <- function(object, ...) {
+  return(object$likelihood)
+}
+
 #' @title Summary function to be used with the output of [lifelihood()]
+#' @name summary
 #' @description S3 method to display main results of the lifelihood program.
 #' @param object `lifelihoodResults` object from [lifelihood()]
 #' @return NULL

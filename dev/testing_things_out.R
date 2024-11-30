@@ -32,6 +32,8 @@ results <- lifelihood(
   path_config = here::here("config_pierrick.yaml")
 )
 summary(results)
+coef(results, "survival_shape")
+logLik(results)
 
 newdata <- data.frame(
   geno = c(0, 1, 2, 3, 0, 1),
