@@ -73,11 +73,11 @@ TRY
                               promenade(LL_D, The_Met_D);   // a verifier
                               end;
   //standard errors
-  if list[5]='true' then calcSE(LL_D);
+  if list[5]='TRUE' then calcSE(LL_D);
 
   //ecriture outfile
    printout_FD(LL_D,nomf1,StrToInt(list[3]));           // OK passer en argument de printout le nb de point de mcmc
-   if list[6]='true' then GetAndWriteprobevents(LL_D);
+   if list[6]='TRUE' then GetAndWriteprobevents(LL_D);
    writeparamdescript(LL_D);
 
   list.Free;

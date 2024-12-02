@@ -13,4 +13,4 @@
 # outputs
 lifelihood_*/
 vignettes/*.html
-
+src/compiled*

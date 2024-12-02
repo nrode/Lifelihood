@@ -29,11 +29,13 @@ dataLFH <- lifelihoodData(
 )
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config_pierrick.yaml")
+  path_config = here::here("config_pierrick.yaml"),
+  SEcal = TRUE
 )
 summary(results)
 coef(results, "survival_shape")
 logLik(results)
+results$effects
 
 newdata <- data.frame(
   geno = c(0, 1, 2, 3, 0, 1),

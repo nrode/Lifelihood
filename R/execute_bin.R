@@ -32,19 +32,16 @@ execute_bin <- function(
     Tf,
     climbrate,
     precision) {
-  # concatenate the inputs and other parameters
   arg_string <- paste(
     path_input_data, path_param_bounds, group_by_group, MCMC, interval, SEcal, saveprobevent,
     fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
   )
 
-  # get the path to the compiled program and execute it
   os <- detect_os()
   path <- switch(os,
     "Windows" = file.path(here::here("src", "bin"), "lifelihoodC2023.exe"),
-    "Unix-like" = file.path(here::here("src", "bin"), "lifelihoodC2023"),
+    "Unix-like" = file.path(here::here("src", "bin"), "lifelihood"),
     stop("Unknown OS")
   )
-  print(arg_string)
   system(path, input = arg_string)
 }
