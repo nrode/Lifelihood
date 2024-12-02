@@ -39,7 +39,7 @@ execute_bin <- function(
 
   os <- detect_os()
   path <- switch(os,
-    "Windows" = file.path(here::here("src", "bin"), "lifelihoodC2023.exe"),
+    "Windows" = file.path(here::here("src", "bin"), "lifelihood.exe"),
     "Unix-like" = file.path(here::here("src", "bin"), "lifelihood"),
     stop("Unknown OS")
   )
