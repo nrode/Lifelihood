@@ -29,5 +29,6 @@ jobs:
       - name: Run unit tests
         shell: pwsh # Use PowerShell for compatibility
         run: |
-          Rscript -e "devtools::load_all(compile = FALSE)"
-          Rscript -e "testthat::test_dir('tests/testthat')"
+          Rscript -e "devtools::load_all(); 
+                 print('Loaded package: ', packageVersion('your_package_name'));
+                 testthat::test_dir('tests/testthat')"
