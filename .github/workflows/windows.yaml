@@ -27,6 +27,6 @@ jobs:
           extra-packages: remotes,devtools,testthat
 
       - name: Run unit tests
-        shell: pwsh # Use PowerShell shell for compatibility
+        shell: pwsh # Use PowerShell for compatibility
         run: |
-          R -e 'devtools::test()'
+          Rscript -e "devtools::test()"
