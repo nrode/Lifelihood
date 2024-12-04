@@ -20,7 +20,6 @@ S3 method to retrieve coefficients from the output of \code{\link[=lifelihood]{l
 df <- read.csv(here::here("data/fake_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
-head(df)
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",

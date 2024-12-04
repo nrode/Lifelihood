@@ -86,4 +86,8 @@ git push origin main
 
 Then go to your project fork and click on the "Open a pull request" pop-up.
 
-When a pull request (PR) is opened, GitHub Actions will **automatically run checks** to validate your changes. These checks include testing the codebase, ensuring consistent documentation, and verifying cross-platform compatibility. You can view the status of these checks directly in the pull request interface.
+When a pull request (PR) is opened, GitHub Actions will **automatically run checks** to validate your changes. These checks include testing the codebase, ensuring consistent documentation, and verifying cross-platform compatibility.
+
+![](../man/figures/githubactions.png)
+
+You can view the status of these checks directly in the pull request interface.
