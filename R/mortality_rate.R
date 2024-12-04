@@ -50,9 +50,15 @@ mortality_rate <- function(
   start_col <- lifelihoodData$death_start
   end_col <- lifelihoodData$death_end
   covariates <- lifelihoodData$covariates
+  right_censoring_date <- lifelihoodData$right_censoring_date
 
   if (is.null(max_time)) {
-    max_time <- max(data[[end_col]], na.rm = TRUE)
+    sorted_values <- sort(unique(data[[end_col]]), decreasing = TRUE, na.last = NA)
+    if (sorted_values[1] == right_censoring_date) {
+      max_time <- sorted_values[2]
+    } else {
+      max_time <- sorted_values[1]
+    }
   }
 
   n_intervals <- ceiling(max_time / interval_width)

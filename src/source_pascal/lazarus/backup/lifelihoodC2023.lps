@@ -11,45 +11,45 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="47"/>
         <CursorPos X="13" Y="83"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Unit2.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="-1"/>
         <TopLine Value="1947"/>
-        <CursorPos X="7" Y="1969"/>
-        <UsageCount Value="38"/>
+        <CursorPos X="15" Y="1970"/>
+        <UsageCount Value="39"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Alea.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="fmath.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="fspec.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="mathromb.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -58,14 +58,32 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="216"/>
         <CursorPos X="36" Y="246"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="39"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="-1"/>
-    </General>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="4">
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1299" Column="7" TopLine="1280"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1702" Column="6" TopLine="1683"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1747" Column="88" TopLine="1715"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1986" Column="20" TopLine="1948"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1982" Column="48" TopLine="1947"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode="Default">

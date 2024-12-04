@@ -67,6 +67,9 @@
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/check_valid_estimation.html</loc>
   </url>
   <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/coef.html</loc>
+  </url>
+  <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/compute_mortality_rate.html</loc>
   </url>
   <url>
@@ -74,6 +77,9 @@
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/delink.html</loc>
+  </url>
+  <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/derivtrans.html</loc>
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/detect_os.html</loc>
@@ -110,6 +116,9 @@
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/link.html</loc>
+  </url>
+  <url>
+    <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/logLik.html</loc>
   </url>
   <url>
     <loc>https://josephbarbierdarnal.github.io/Lifelihood/reference/make_design_matrix.html</loc>

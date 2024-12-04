@@ -85,7 +85,17 @@ predict.lifelihoodResults <- function(
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- stats::terms(m)
-    predictions <- stats::model.matrix(Terms, m) %*% effects$estimation[range]
+    x <- stats::model.matrix(Terms, m)
+    predictions <- x %*% effects$estimation[range]
+
+    if (se.fit) {
+      vcov <- lifelihoodResults$vcov
+      if (se.fit && type == "link") {
+        se <- sqrt(diag(x %*% vcov %*% t(x)))
+      } else {
+        se <- sqrt(diag(x %*% vv %*% t(x)) * (derivtrans(estimate, min, max)^2))
+      }
+    }
 
     if (type == "link") {
       pred <- predictions
