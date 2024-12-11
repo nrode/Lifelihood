@@ -1726,6 +1726,16 @@ begin
         write(outfile, var_info[i].name,' ',var_info[i].value:10:8,' ',var_info[i].se:10:8);
         writeln(outfile);
         end;
+  if list[5]='TRUE' then
+     begin
+     writeln(outfile,'inverse of Hessian Matrix')
+      For i :=1 to fd.number_of_variables do
+      begin
+      for j := 1 to fd.number_of_variables do write(outfile, H[i,j]:10:8,' ');
+      writeln(outfile);
+      end;
+     end;
+
   if nbrun>0 then
   BEGIN
   writeln(outfile);
