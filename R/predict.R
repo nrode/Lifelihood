@@ -90,10 +90,10 @@ predict.lifelihoodResults <- function(
 
     if (se.fit) {
       vcov <- lifelihoodResults$vcov
-      if (se.fit && type == "link") {
+      if (type == "link") {
         se <- sqrt(diag(x %*% vcov %*% t(x)))
       } else {
-        se <- sqrt(diag(x %*% vv %*% t(x)) * (derivtrans(estimate, min, max)^2))
+        se <- sqrt(diag(x %*% vv %*% t(x)) * (derivLink(estimate, min, max)^2))
       }
     }
 
