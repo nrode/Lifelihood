@@ -3,7 +3,7 @@ devtools::load_all(compile = FALSE)
 df <- read.csv(here::here("data/raw_data/DataPierrick/100%mort_Pierrick211genoparinteraction.csv"))
 df$geno <- as.factor(df$geno)
 df$par <- as.factor(df$par)
-df$spore <- as.factor(df$spore)
+df$spore <- as.factor(df$par)
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -18,24 +18,36 @@ dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
-  sex_end = "sex_end",
+  sex_end = "sex_end",xz
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
   death_start = "mor_start",
   death_end = "mor_end",
-  covariates = c("par", "geno", "spore"),
+  covariates = c("par", "spore"),
   model_specs = c("wei", "lgn", "wei")
 )
 results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config_pierrick.yaml"),
-  SEcal = TRUE
+  delete_temp_files = FALSE,
+  SEcal = FALSE
 )
 summary(results)
-coef(results, "survival_shape")
+coef(results, "expt_death") # penser à ajouter names() au vecteur
 logLik(results)
 results$effects
+
+
+# fonction lifelihood()
+mat <- matrix(c(as.numeric(df$par), as.numeric(df$spore)), ncol = 2)
+mat <- model.matrix(~ par + spore, data = df)
+z <- .Call(stats:::C_Cdqrls, mat, df$mor_start, 10e-3, FALSE)
+z$rank < ncol(mat)
+colnames(mat)[z$coefficients == 0] # raise error: model is not identifiable. check effect1, effect2 are redundants with other effects in the model!!
+data(iris)
+iris$Sepal.Width2 <- iris$Sepal.Width
+lm(Sepal.Length ~ Sepal.Width + Sepal.Width2, data = iris, singular.ok = FALSE)
 
 newdata <- data.frame(
   geno = c(0, 1, 2, 3, 0, 1),
@@ -50,7 +62,7 @@ predict(results, "expt_death", newdata, type = "response")
 
 plot_mortality_rate(dataLFH, interval_width = 15, max_time = 170, bygroup = FALSE, log_y = TRUE)
 plot_mortality_rate(dataLFH, interval_width = 25, max_time = 170, bygroup = TRUE, log_y = TRUE)
-plot_mortality_rate(dataLFH, interval_width = 25, max_time = 170, bygroup = TRUE, log_y = TRUE, prediction = TRUE)
+plot_mortality_rate(lifelihoodResults = results, interval_width = 25, max_time = 170, log_y = TRUE, prediction = TRUE)
 
 mortality_rate(dataLFH, interval_width = 10)
 mortality_rate(dataLFH, interval_width = 10, bygroup = FALSE, max_time = 170)

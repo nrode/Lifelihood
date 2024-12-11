@@ -81,6 +81,8 @@ lifelihood <- function(
     seeds <- sample(1:10000, 4, replace = T)
   }
 
+  # ajouter check code dans testing_things_out
+
   set.seed(sum(seeds))
   run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
   temp_dir <- file.path(getwd(), paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id)))

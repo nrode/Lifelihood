@@ -18,11 +18,10 @@
         <Filename Value="Unit2.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1947"/>
+        <TopLine Value="1714"/>
         <CursorPos X="15" Y="1970"/>
         <UsageCount Value="39"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Alea.pas"/>
