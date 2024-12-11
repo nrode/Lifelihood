@@ -18,7 +18,7 @@ dataLFH <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
-  sex_end = "sex_end",xz
+  sex_end = "sex_end",
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
@@ -27,12 +27,14 @@ dataLFH <- lifelihoodData(
   covariates = c("par", "spore"),
   model_specs = c("wei", "lgn", "wei")
 )
+
 results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config_pierrick.yaml"),
   delete_temp_files = FALSE,
   SEcal = FALSE
 )
+
 summary(results)
 coef(results, "expt_death") # penser à ajouter names() au vecteur
 logLik(results)
