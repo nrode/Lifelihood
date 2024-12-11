@@ -1727,11 +1727,12 @@ begin
         writeln(outfile);
         end;
   if exportinvhessian='TRUE' then
+     with FD do
      begin
      writeln(outfile,'inverse of Hessian Matrix');
-      For i :=1 to fd.number_of_variables do
+      For i :=1 to FD.number_of_variables do
       begin
-      for j := 1 to fd.number_of_variables do write(outfile, H[i,j]:10:8,' ');
+      for j := 1 to FD.number_of_variables do write(outfile, H[i-1,j-1]:10:8,' ');
       writeln(outfile);
       end;
      end;
