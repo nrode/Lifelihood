@@ -76,7 +76,7 @@ TRY
   if list[5]='TRUE' then calcSE(LL_D);
 
   //ecriture outfile
-   printout_FD(LL_D,nomf1,StrToInt(list[3]));           // OK passer en argument de printout le nb de point de mcmc
+   printout_FD(LL_D,nomf1,StrToInt(list[3]),list[5]);           // OK passer en argument de printout le nb de point de mcmc
    if list[6]='TRUE' then GetAndWriteprobevents(LL_D);
    writeparamdescript(LL_D);
 

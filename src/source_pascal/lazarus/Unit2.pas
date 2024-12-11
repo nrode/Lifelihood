@@ -1709,7 +1709,7 @@ begin
 end;
 
 { ************************************************************************ }
-procedure printout_FD(var FD: function_D;nomf:string;nbrun:integer);
+procedure printout_FD(var FD: function_D;nomf:string;nbrun:integer;exportinvhessian:String);
 var
   i,j: integer;
 begin
@@ -1726,7 +1726,7 @@ begin
         write(outfile, var_info[i].name,' ',var_info[i].value:10:8,' ',var_info[i].se:10:8);
         writeln(outfile);
         end;
-  if list[5]='TRUE' then
+  if exportinvhessian='TRUE' then
      begin
      writeln(outfile,'inverse of Hessian Matrix')
       For i :=1 to fd.number_of_variables do
