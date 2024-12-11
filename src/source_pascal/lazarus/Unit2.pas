@@ -156,7 +156,7 @@ var
 
 
 function max(x, y: double): double;
-procedure printout_FD(var FD: function_D;nomf:string;nbrun:integer);
+procedure printout_FD(var FD: function_D;nomf:string;nbrun:integer;exportinvhessian:String);
 procedure automatic_met(var function_des: function_D; var Metrop_des: Metropolis_D);
 procedure Init_f_D(var FD: function_D);
 procedure interpretation(var fitrep:byte);
@@ -1728,7 +1728,7 @@ begin
         end;
   if exportinvhessian='TRUE' then
      begin
-     writeln(outfile,'inverse of Hessian Matrix')
+     writeln(outfile,'inverse of Hessian Matrix');
       For i :=1 to fd.number_of_variables do
       begin
       for j := 1 to fd.number_of_variables do write(outfile, H[i,j]:10:8,' ');
