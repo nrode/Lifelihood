@@ -1729,6 +1729,7 @@ begin
   if exportinvhessian='TRUE' then
      with FD do
      begin
+     writeln(outfile);
      writeln(outfile,'inverse of Hessian Matrix');
       For i :=1 to FD.number_of_variables do
       begin

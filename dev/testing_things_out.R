@@ -32,7 +32,7 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config_pierrick.yaml"),
   delete_temp_files = FALSE,
-  SEcal = FALSE
+  MCMC = 10
 )
 
 summary(results)
