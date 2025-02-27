@@ -41,21 +41,24 @@
 #' )
 #' @export
 plot_mortality_rate <- function(
-    interval_width,
-    lifelihoodData = NULL,
-    lifelihoodResults = NULL,
-    prediction = FALSE,
-    newdata = NULL,
-    max_time = NULL,
-    bygroup = TRUE,
-    log_x = FALSE,
-    log_y = FALSE) {
+  interval_width,
+  lifelihoodData = NULL,
+  lifelihoodResults = NULL,
+  prediction = FALSE,
+  newdata = NULL,
+  max_time = NULL,
+  bygroup = TRUE,
+  log_x = FALSE,
+  log_y = FALSE
+) {
   if (prediction) {
     if (is.null(lifelihoodResults)) {
       stop("`lifelihoodResults` cannot be `NULL` when `prediction` is `TRUE`.")
     }
     if (!is.null(lifelihoodData)) {
-      warning("`lifelihoodData` argument is ignored when `prediction` is `TRUE`.")
+      warning(
+        "`lifelihoodData` argument is ignored when `prediction` is `TRUE`."
+      )
     }
     rate_df <- pred_mortality_rate(
       lifelihoodResults,
@@ -69,7 +72,9 @@ plot_mortality_rate <- function(
       stop("`lifelihoodData` cannot be `NULL` when `prediction` is `FALSE`.")
     }
     if (!is.null(lifelihoodResults)) {
-      warning("`lifelihoodResults` argument is ignored when `prediction` is `FALSE`.")
+      warning(
+        "`lifelihoodResults` argument is ignored when `prediction` is `FALSE`."
+      )
     }
     rate_df <- mortality_rate(
       lifelihoodData,
@@ -80,14 +85,28 @@ plot_mortality_rate <- function(
   }
 
   if (bygroup) {
-    plot <- ggplot2::ggplot(rate_df, ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate, color = Group))
+    plot <- ggplot2::ggplot(
+      rate_df,
+      ggplot2::aes(
+        x = as.numeric(as.character(Interval)),
+        y = MortalityRate,
+        color = Group
+      )
+    )
   } else {
-    plot <- ggplot2::ggplot(rate_df, ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate))
+    plot <- ggplot2::ggplot(
+      rate_df,
+      ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate)
+    )
   }
 
   plot <- plot +
     ggplot2::geom_line() +
-    ggplot2::labs(title = "Mortality Rate Over Time", x = "Time", y = "Mortality Rate") +
+    ggplot2::labs(
+      title = "Mortality Rate Over Time",
+      x = "Time",
+      y = "Mortality Rate"
+    ) +
     ggplot2::theme_minimal()
 
   if (log_x) {

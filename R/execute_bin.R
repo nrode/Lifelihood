@@ -13,6 +13,27 @@
 #' @return NULL. This function writes an output file, that will then be parsed by [parse_output()].
 #' @export
 execute_bin <- function(
+  path_input_data,
+  path_param_bounds,
+  group_by_group,
+  MCMC,
+  interval,
+  SEcal,
+  saveprobevent,
+  fitness,
+  r,
+  seed1,
+  seed2,
+  seed3,
+  seed4,
+  ntr,
+  nst,
+  To,
+  Tf,
+  climbrate,
+  precision
+) {
+  arg_string <- paste(
     path_input_data,
     path_param_bounds,
     group_by_group,
@@ -31,14 +52,12 @@ execute_bin <- function(
     To,
     Tf,
     climbrate,
-    precision) {
-  arg_string <- paste(
-    path_input_data, path_param_bounds, group_by_group, MCMC, interval, SEcal, saveprobevent,
-    fitness, r, seed1, seed2, seed3, seed4, ntr, nst, To, Tf, climbrate, precision
+    precision
   )
 
   os <- detect_os()
-  path <- switch(os,
+  path <- switch(
+    os,
     "Windows" = file.path(here::here("src", "bin"), "lifelihood.exe"),
     "Unix-like" = file.path(here::here("src", "bin"), "lifelihood"),
     stop("Unknown OS")

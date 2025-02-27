@@ -44,25 +44,28 @@
 #'
 #' summary(data)
 lifelihoodData <- function(
-    df,
-    sex,
-    sex_start,
-    sex_end,
-    maturity_start,
-    maturity_end,
-    clutchs,
-    death_start,
-    death_end,
-    model_specs,
-    covariates,
-    matclutch = FALSE,
-    matclutch_size = NULL,
-    right_censoring_date = 1000,
-    critical_age = 20,
-    ratiomax = 10) {
+  df,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  clutchs,
+  death_start,
+  death_end,
+  model_specs,
+  covariates,
+  matclutch = FALSE,
+  matclutch_size = NULL,
+  right_censoring_date = 1000,
+  critical_age = 20,
+  ratiomax = 10
+) {
   valid_model_specs <- c("wei", "gam", "lgn", "exp")
   if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
-    stop("'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'")
+    stop(
+      "'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'"
+    )
   }
 
   if (isTRUE(matclutch) & is.null(matclutch_size)) {

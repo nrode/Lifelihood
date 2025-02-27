@@ -52,11 +52,12 @@
 #' predict(results, "expt_death", newdata, type = "response")
 #' @export
 predict.lifelihoodResults <- function(
-    lifelihoodResults,
-    parameter_name,
-    newdata = NULL,
-    type = c("link", "response"),
-    se.fit = FALSE) {
+  lifelihoodResults,
+  parameter_name,
+  newdata = NULL,
+  type = c("link", "response"),
+  se.fit = FALSE
+) {
   if (!inherits(lifelihoodResults, "lifelihoodResults")) {
     stop("lifelihoodResults must be of class lifelihoodResults")
   }
@@ -102,7 +103,11 @@ predict.lifelihoodResults <- function(
     } else if (type == "response") {
       bounds_df <- lifelihoodResults$param_bounds_df
       parameter_bounds <- subset(bounds_df, param == parameter_name)
-      pred <- link(predictions, min = as.numeric(parameter_bounds$min), max = as.numeric(parameter_bounds$max))
+      pred <- link(
+        predictions,
+        min = as.numeric(parameter_bounds$min),
+        max = as.numeric(parameter_bounds$max)
+      )
     }
   }
   return(pred)

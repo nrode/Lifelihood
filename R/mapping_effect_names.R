@@ -11,12 +11,28 @@
 #' @export
 map_parameter_name <- function(name) {
   keys <- c(
-    "survival_shape", "ratio_expt_death", "prob_death", "sex_ratio",
-    "reproduction_shape", "increase_death_hazard", "pontn",
-    "tof_reduction_date", "increase_tof_n_offspring", "lin_decrease_hazard",
-    "quad_decrease_hazard", "lin_change_n_offspring", "quad_change_n_offspring",
-    "tof_n_offspring", "maturity_shape", "ratio_expt_maturity",
-    "quad_senescence", "expt_reproduction", "expt_maturity", "expt_death", "n_offspring", "fitness"
+    "survival_shape",
+    "ratio_expt_death",
+    "prob_death",
+    "sex_ratio",
+    "reproduction_shape",
+    "increase_death_hazard",
+    "pontn",
+    "tof_reduction_date",
+    "increase_tof_n_offspring",
+    "lin_decrease_hazard",
+    "quad_decrease_hazard",
+    "lin_change_n_offspring",
+    "quad_change_n_offspring",
+    "tof_n_offspring",
+    "maturity_shape",
+    "ratio_expt_maturity",
+    "quad_senescence",
+    "expt_reproduction",
+    "expt_maturity",
+    "expt_death",
+    "n_offspring",
+    "fitness"
   )
   for (key in keys) {
     if (grepl(key, name)) {
@@ -32,11 +48,40 @@ map_parameter_name <- function(name) {
 #' @param parameter_name Name of the parameter
 #' @return Event type: either "reproduction", "maturity" or "mortality"
 find_event_type <- function(parameter_name) {
-  if (parameter_name %in% c("expt_death", "survival_shape", "ratio_expt_death", "prob_death", "sex_ratio")) {
+  if (
+    parameter_name %in%
+      c(
+        "expt_death",
+        "survival_shape",
+        "ratio_expt_death",
+        "prob_death",
+        "sex_ratio"
+      )
+  ) {
     event_type <- "mortality"
-  } else if (parameter_name %in% c("expt_reproduction", "reproduction_shape", "n_offspring", "increase_death_hazard", "tof_reduction_date", "increase_tof_n_offspring", "lin_decrease_hazard", "quad_decrease_hazard", "lin_change_n_offspring", "quad_change_n_offspring", "tof_n_offspring", "pontn", "quad_senescence")) {
+  } else if (
+    parameter_name %in%
+      c(
+        "expt_reproduction",
+        "reproduction_shape",
+        "n_offspring",
+        "increase_death_hazard",
+        "tof_reduction_date",
+        "increase_tof_n_offspring",
+        "lin_decrease_hazard",
+        "quad_decrease_hazard",
+        "lin_change_n_offspring",
+        "quad_change_n_offspring",
+        "tof_n_offspring",
+        "pontn",
+        "quad_senescence"
+      )
+  ) {
     event_type <- "reproduction"
-  } else if (parameter_name %in% c("expt_maturity", "maturity_shape", "ratio_expt_maturity")) {
+  } else if (
+    parameter_name %in%
+      c("expt_maturity", "maturity_shape", "ratio_expt_maturity")
+  ) {
     event_type <- "maturity"
   } else {
     stop("Invalid parameter_name: ", parameter_name)
