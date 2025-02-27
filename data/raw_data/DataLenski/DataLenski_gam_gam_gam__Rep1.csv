@@ -1,4 +1,4 @@
-Group,sex_start,sex_end,sex,mat_start,mat_end,mat,pon_start_1,pon_end_1,pon_size_1,pon_start_2,pon_end_2,pon_size_2,pon_start_3,pon_end_3,pon_size_3,pon_start_4,pon_end_4,pon_size_4,pon_start_5,pon_end_5,pon_size_5,pon_start_6,pon_end_6,pon_size_6,mor_start,mor_end
+Group,sex_start,sex_end,sex,mat_start,mat_end,mat,pon_start_1,pon_end_1,pon_size_1,pon_start_2,pon_end_2,pon_size_2,pon_start_3,pon_end_3,pon_size_3,pon_start_4,pon_end_4,pon_size_4,pon_start_5,pon_end_5,pon_size_5,pon_start_6,pon_end_6,pon_size_6,death_start,death_end
 0,0,1000,0,2,3,3,3,4,4,4,5,5,5,6,2,6,7,1,7,8,1,NA,NA,NA,8,9
 0,0,1000,0,1,2,2,2,3,6,3,4,1,4,5,1,5,6,3,6,7,2,NA,NA,NA,11,12
 0,0,1000,0,0,1000,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,1

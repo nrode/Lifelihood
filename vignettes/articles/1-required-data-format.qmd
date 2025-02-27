@@ -51,8 +51,8 @@ df <- data.frame(
   clutch_start3 = c(7, NA, NA, 6, NA, NA, 5),
   clutch_end3 = c(8, NA, NA, 7, NA, NA, 6),
   clutch_size3 = c(1, NA, NA, 1, NA, NA, 2),
-  mor_start = c(8, 11, 0, 11, 0, 7, 9),
-  mor_end = c(12, 11, 1, 12, 1, 8, 10)
+  death_start = c(8, 11, 0, 11, 0, 7, 9),
+  death_end = c(12, 11, 1, 12, 1, 8, 10)
 )
 ```
 
