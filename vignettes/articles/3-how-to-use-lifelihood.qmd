@@ -36,13 +36,13 @@ df$geno <- as.factor(df$geno)
 ```
 
 ```{r}
-#| echo: FALSE
+#| echo=FALSE
 
-library(kableExtra)
-head(df) %>%
-  kbl() %>%
-  kable_styling() %>%
-  kable_material_dark(c("striped", "hover"))
+DT::datatable(
+  df,
+  options = list(scrollX = TRUE),
+  class = "cell-border stripe hover compact"
+)
 ```
 
 Prepare input parameters for the `lifelihoodData()` function:
