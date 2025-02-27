@@ -18,7 +18,6 @@ test_that("Parsing the seed values.", {
   result <- lifelihood:::get_seeds(lines)
   expect_equal(result, c(11, 22, 33, 44))
 
-
   lines <- c(
     "---------------------------",
     "",
@@ -37,7 +36,6 @@ test_that("Parsing the seed values.", {
   )
   result <- lifelihood:::get_seeds(lines)
   expect_equal(result, c(11, 4, 1, 5))
-
 
   lines <- c(
     "---------------------------",
