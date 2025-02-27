@@ -42,10 +42,11 @@
 #' head(mort_df)
 #' @export
 mortality_rate <- function(
-    lifelihoodData,
-    interval_width,
-    max_time = NULL,
-    bygroup = TRUE) {
+  lifelihoodData,
+  interval_width,
+  max_time = NULL,
+  bygroup = TRUE
+) {
   data <- lifelihoodData$df
   start_col <- lifelihoodData$death_start
   end_col <- lifelihoodData$death_end
@@ -53,7 +54,11 @@ mortality_rate <- function(
   right_censoring_date <- lifelihoodData$right_censoring_date
 
   if (is.null(max_time)) {
-    sorted_values <- sort(unique(data[[end_col]]), decreasing = TRUE, na.last = NA)
+    sorted_values <- sort(
+      unique(data[[end_col]]),
+      decreasing = TRUE,
+      na.last = NA
+    )
     if (sorted_values[1] == right_censoring_date) {
       max_time <- sorted_values[2]
     } else {
@@ -73,7 +78,11 @@ mortality_rate <- function(
 
   mortality_rate <- matrix(0, nrow = n_intervals, ncol = length(groups))
   colnames(mortality_rate) <- groups
-  rownames(mortality_rate) <- seq(interval_width, n_intervals * interval_width, by = interval_width)
+  rownames(mortality_rate) <- seq(
+    interval_width,
+    n_intervals * interval_width,
+    by = interval_width
+  )
 
   for (grp in groups) {
     group_data <- data[data$group == grp, ]
@@ -82,13 +91,19 @@ mortality_rate <- function(
       interval_start <- (i - 1) * interval_width
       interval_end <- i * interval_width
 
-      alive_start <- sum(group_data[[start_col]] >= interval_start | is.na(group_data[[start_col]]))
+      alive_start <- sum(
+        group_data[[start_col]] >= interval_start |
+          is.na(group_data[[start_col]])
+      )
 
-      deaths <- sum(group_data[[start_col]] >= interval_start &
-        group_data[[start_col]] < interval_end &
-        !is.na(group_data[[end_col]]))
+      deaths <- sum(
+        group_data[[start_col]] >= interval_start &
+          group_data[[start_col]] < interval_end &
+          !is.na(group_data[[end_col]])
+      )
 
-      mortality_rate[i, grp] <- if (alive_start > 0) deaths / alive_start else NA
+      mortality_rate[i, grp] <- if (alive_start > 0) deaths / alive_start else
+        NA
     }
   }
 

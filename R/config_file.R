@@ -11,11 +11,17 @@ safe_access <- function(config, path) {
       Reduce(`[[`, path, config)
     },
     error = function(e) {
-      stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
+      stop(paste(
+        "Missing configuration element:",
+        paste(path, collapse = " -> ")
+      ))
     }
   )
   if (is.null(result)) {
-    stop(paste("Missing configuration element:", paste(path, collapse = " -> ")))
+    stop(paste(
+      "Missing configuration element:",
+      paste(path, collapse = " -> ")
+    ))
   }
   result
 }
@@ -34,25 +40,139 @@ format_config <- function(path_config, covariates) {
   config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
   formatted_config <- c(
-    paste("expt_death", R_to_lifelihood(safe_access(config, c("mortality", "expt_death")), covariates)[1]),
-    paste("survival_shape", R_to_lifelihood(safe_access(config, c("mortality", "survival_shape")), covariates)[1]),
-    paste("ratio_expt_death", R_to_lifelihood(safe_access(config, c("mortality", "ratio_expt_death")), covariates)[1]),
-    paste("prob_death", R_to_lifelihood(safe_access(config, c("mortality", "prob_death")), covariates)[1]),
-    paste("sex_ratio", R_to_lifelihood(safe_access(config, c("mortality", "sex_ratio")), covariates)[1]),
-    paste("expt_maturity", R_to_lifelihood(safe_access(config, c("maturity", "expt_maturity")), covariates)[1]),
-    paste("maturity_shape", R_to_lifelihood(safe_access(config, c("maturity", "maturity_shape")), covariates)[1]),
-    paste("ratio_expt_maturity", R_to_lifelihood(safe_access(config, c("maturity", "ratio_expt_maturity")), covariates)[1]),
-    paste("expt_reproduction", R_to_lifelihood(safe_access(config, c("reproduction", "expt_reproduction")), covariates)[1]),
-    paste("reproduction_shape", R_to_lifelihood(safe_access(config, c("reproduction", "reproduction_shape")), covariates)[1]),
-    paste("n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "n_offspring")), covariates)[1]),
-    paste("increase_death_hazard", R_to_lifelihood(safe_access(config, c("reproduction", "increase_death_hazard")), covariates)[1]),
-    paste("tof_reduction_date", R_to_lifelihood(safe_access(config, c("reproduction", "tof_reduction_date")), covariates)[1]),
-    paste("increase_tof_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "increase_tof_n_offspring")), covariates)[1]),
-    paste("lin_decrease_hazard", R_to_lifelihood(safe_access(config, c("reproduction", "lin_decrease_hazard")), covariates)[1]),
-    paste("quad_decrease_hazard", R_to_lifelihood(safe_access(config, c("reproduction", "quad_decrease_hazard")), covariates)[1]),
-    paste("lin_change_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "lin_change_n_offspring")), covariates)[1]),
-    paste("quad_change_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "quad_change_n_offspring")), covariates)[1]),
-    paste("tof_n_offspring", R_to_lifelihood(safe_access(config, c("reproduction", "tof_n_offspring")), covariates)[1])
+    paste(
+      "expt_death",
+      R_to_lifelihood(
+        safe_access(config, c("mortality", "expt_death")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "survival_shape",
+      R_to_lifelihood(
+        safe_access(config, c("mortality", "survival_shape")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "ratio_expt_death",
+      R_to_lifelihood(
+        safe_access(config, c("mortality", "ratio_expt_death")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "prob_death",
+      R_to_lifelihood(
+        safe_access(config, c("mortality", "prob_death")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "sex_ratio",
+      R_to_lifelihood(
+        safe_access(config, c("mortality", "sex_ratio")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "expt_maturity",
+      R_to_lifelihood(
+        safe_access(config, c("maturity", "expt_maturity")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "maturity_shape",
+      R_to_lifelihood(
+        safe_access(config, c("maturity", "maturity_shape")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "ratio_expt_maturity",
+      R_to_lifelihood(
+        safe_access(config, c("maturity", "ratio_expt_maturity")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "expt_reproduction",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "expt_reproduction")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "reproduction_shape",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "reproduction_shape")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "n_offspring",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "n_offspring")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "increase_death_hazard",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "increase_death_hazard")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "tof_reduction_date",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "tof_reduction_date")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "increase_tof_n_offspring",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "increase_tof_n_offspring")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "lin_decrease_hazard",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "lin_decrease_hazard")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "quad_decrease_hazard",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "quad_decrease_hazard")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "lin_change_n_offspring",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "lin_change_n_offspring")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "quad_change_n_offspring",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "quad_change_n_offspring")),
+        covariates
+      )[1]
+    ),
+    paste(
+      "tof_n_offspring",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "tof_n_offspring")),
+        covariates
+      )[1]
+    )
   )
 
   return(formatted_config)

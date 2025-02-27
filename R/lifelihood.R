@@ -55,25 +55,26 @@
 #' )
 #' summary(results)
 lifelihood <- function(
-    lifelihoodData,
-    path_config,
-    param_bounds_df = NULL,
-    group_by_group = FALSE,
-    MCMC = 0,
-    interval = 25,
-    SEcal = FALSE,
-    saveprobevent = 0,
-    fitness = 0,
-    r = 0,
-    seeds = NULL,
-    ntr = 2,
-    nst = 2,
-    To = 50,
-    Tf = 1,
-    climbrate = 1,
-    precision = 0.001,
-    raise_estimation_warning = TRUE,
-    delete_temp_files = TRUE) {
+  lifelihoodData,
+  path_config,
+  param_bounds_df = NULL,
+  group_by_group = FALSE,
+  MCMC = 0,
+  interval = 25,
+  SEcal = FALSE,
+  saveprobevent = 0,
+  fitness = 0,
+  r = 0,
+  seeds = NULL,
+  ntr = 2,
+  nst = 2,
+  To = 50,
+  Tf = 1,
+  climbrate = 1,
+  precision = 0.001,
+  raise_estimation_warning = TRUE,
+  delete_temp_files = TRUE
+) {
   if ((length(seeds) != 4) & !is.null(seeds)) {
     stop("`seeds` must be an integer vector of length 4.")
   }
@@ -85,7 +86,10 @@ lifelihood <- function(
 
   set.seed(sum(seeds))
   run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
-  temp_dir <- file.path(getwd(), paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id)))
+  temp_dir <- file.path(
+    getwd(),
+    paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id))
+  )
   dir.create(temp_dir)
 
   if (is.null(param_bounds_df)) {
@@ -121,8 +125,25 @@ lifelihood <- function(
 
   group_by_group_int <- as.integer(group_by_group)
   execute_bin(
-    data_path, path_param_range, group_by_group_int, MCMC, interval, SEcal, saveprobevent,
-    fitness, r, seeds[1], seeds[2], seeds[3], seeds[4], ntr, nst, To, Tf, climbrate, precision
+    data_path,
+    path_param_range,
+    group_by_group_int,
+    MCMC,
+    interval,
+    SEcal,
+    saveprobevent,
+    fitness,
+    r,
+    seeds[1],
+    seeds[2],
+    seeds[3],
+    seeds[4],
+    ntr,
+    nst,
+    To,
+    Tf,
+    climbrate,
+    precision
   )
 
   filename_output <- sub("\\.txt$", "", basename(data_path))

@@ -7,7 +7,8 @@
 #' @param group_by_group Boolean indicating whether parsing should be performed group by group or not (`FALSE` by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).
 #' @return The parsed element
 parse_output <- function(lines, element, group_by_group = FALSE) {
-  switch(element,
+  switch(
+    element,
     seeds = get_seeds(lines, group_by_group),
     likelihood = get_likelihood(lines, group_by_group),
     effects = get_effects(lines, group_by_group),
@@ -26,7 +27,6 @@ get_seeds <- function(lines, group_by_group = FALSE) {
   # retrieve the seeds
   seeds <- as.numeric(unlist(strsplit(
     sub(
-
       # pattern of seed1=, seed2=, seed3=, seed4=
       ".*seed1=\\s*(\\d+) seed2=\\s*(\\d+) seed3=\\s*(\\d+) seed4=\\s*(\\d+).*",
 
@@ -68,12 +68,12 @@ get_likelihood <- function(lines, group_by_group = FALSE) {
     # retrive the likelihood values
     likelihood_gbg <- as.numeric(unlist(strsplit(
       sub(
-
         # pattern of group \d+ Likelihood_max=
         ".*group \\d+ Likelihood_max=\\s*(-?\\d+\\.\\d+).*",
 
         # replacement pattern
-        "\\1", likelihood_lines
+        "\\1",
+        likelihood_lines
       ),
 
       # split by
@@ -90,12 +90,12 @@ get_likelihood <- function(lines, group_by_group = FALSE) {
 
     # retrieve the likelihood value
     likelihood <- as.numeric(sub(
-
       # pattern of Likelihood_max=
       "Likelihood_max=\\s*(-?\\d+\\.\\d+)",
 
       # replacement pattern
-      "\\1", likelihood_line
+      "\\1",
+      likelihood_line
     ))
     return(likelihood)
   }

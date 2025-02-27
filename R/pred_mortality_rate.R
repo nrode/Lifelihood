@@ -6,14 +6,20 @@
 #' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
 #' @export
 pred_mortality_rate <- function(
-    lifelihoodResults,
-    interval_width,
-    newdata = NULL,
-    max_time = NULL,
-    bygroup = TRUE) {
+  lifelihoodResults,
+  interval_width,
+  newdata = NULL,
+  max_time = NULL,
+  bygroup = TRUE
+) {
   lifelihoodData <- lifelihoodResults$lifelihoodData
   data <- if (is.null(newdata)) lifelihoodData$df else newdata
-  data$pred_death <- predict(lifelihoodResults, "expt_death", type = "response", newdata = data)
+  data$pred_death <- predict(
+    lifelihoodResults,
+    "expt_death",
+    type = "response",
+    newdata = data
+  )
   end_col <- "pred_death"
   covariates <- lifelihoodData$covariates
 
@@ -41,20 +47,30 @@ pred_mortality_rate <- function(
       interval_end <- i * interval_width
 
       at_risk <- sum(group_data[[end_col]] > interval_start, na.rm = TRUE)
-      events <- sum(group_data[[end_col]] >= interval_start & group_data[[end_col]] < interval_end, na.rm = TRUE)
+      events <- sum(
+        group_data[[end_col]] >= interval_start &
+          group_data[[end_col]] < interval_end,
+        na.rm = TRUE
+      )
 
       rates[i] <- if (at_risk > 0) events / at_risk else NA
     }
 
     result[[grp]] <- data.frame(
-      Interval = seq(interval_width, n_intervals * interval_width, by = interval_width),
+      Interval = seq(
+        interval_width,
+        n_intervals * interval_width,
+        by = interval_width
+      ),
       Group = grp,
       MortalityRate = rates
     )
   }
 
   pred_mortality_rate_df <- do.call(rbind, result)
-  pred_mortality_rate_df$MortalityRate[is.na(pred_mortality_rate_df$MortalityRate)] <- 1
+  pred_mortality_rate_df$MortalityRate[is.na(
+    pred_mortality_rate_df$MortalityRate
+  )] <- 1
 
   if (!bygroup) {
     pred_mortality_rate_df <- subset(pred_mortality_rate_df, select = -c(Group))

@@ -8,21 +8,22 @@
 #' @return NULL
 #' @export
 format_dataframe_to_txt <- function(
-    df,
-    sex,
-    sex_start,
-    sex_end,
-    maturity_start,
-    maturity_end,
-    matclutch,
-    matclutch_size,
-    clutchs,
-    death_start,
-    death_end,
-    covariates,
-    model_specs,
-    path_config,
-    temp_dir) {
+  df,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  matclutch,
+  matclutch_size,
+  clutchs,
+  death_start,
+  death_end,
+  covariates,
+  model_specs,
+  path_config,
+  temp_dir
+) {
   all_column_names <- c(
     sex,
     sex_start,
@@ -37,13 +38,22 @@ format_dataframe_to_txt <- function(
 
   for (column_name in all_column_names) {
     if (!(column_name %in% colnames(df))) {
-      matches <- agrep(column_name, colnames(df), value = TRUE, max.distance = 0.2)
+      matches <- agrep(
+        column_name,
+        colnames(df),
+        value = TRUE,
+        max.distance = 0.2
+      )
       match <- ifelse(length(matches) > 1, matches[1], matches)
 
       message_display <- paste(
-        "'", column_name, "'",
+        "'",
+        column_name,
+        "'",
         " is not a column in the passed dataframe.",
-        " Did you mean: ", match, "?\n",
+        " Did you mean: ",
+        match,
+        "?\n",
         sep = ""
       )
       warning(message_display)
@@ -51,11 +61,20 @@ format_dataframe_to_txt <- function(
   }
 
   formatted_rows <- apply(
-    df, 1,
+    df,
+    1,
     function(row) {
       format_row(
-        row, sex, sex_start, sex_end, maturity_start, maturity_end,
-        clutchs, death_start, death_end, covariates
+        row,
+        sex,
+        sex_start,
+        sex_end,
+        maturity_start,
+        maturity_end,
+        clutchs,
+        death_start,
+        death_end,
+        covariates
       )
     }
   )
@@ -63,7 +82,10 @@ format_dataframe_to_txt <- function(
   header_line <- "*******data*********"
   formatted_rows <- c(header_line, formatted_rows)
 
-  config_file_info <- format_config(path_config = path_config, covariates = covariates)
+  config_file_info <- format_config(
+    path_config = path_config,
+    covariates = covariates
+  )
   model_info <- c(
     "****modele******",
     paste(model_specs, collapse = " "),
@@ -109,16 +131,17 @@ format_dataframe_to_txt <- function(
 #' @return A string of the well formated row.
 #' @export
 format_row <- function(
-    row,
-    sex,
-    sex_start,
-    sex_end,
-    maturity_start,
-    maturity_end,
-    clutchs,
-    death_start,
-    death_end,
-    covariates) {
+  row,
+  sex,
+  sex_start,
+  sex_end,
+  maturity_start,
+  maturity_end,
+  clutchs,
+  death_start,
+  death_end,
+  covariates
+) {
   # add variables from covariate columns
   cov_values <- ""
   for (cov in covariates) {
@@ -145,7 +168,13 @@ format_row <- function(
     clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])
     if (!(is.na(clutch_start) || is.na(clutch_end) || is.na(clutch_size))) {
       if (clutch_start != "NA" & clutch_end != "NA" & clutch_size != "NA") {
-        formatted_row <- paste(formatted_row, "pon", clutch_start, clutch_end, clutch_size)
+        formatted_row <- paste(
+          formatted_row,
+          "pon",
+          clutch_start,
+          clutch_end,
+          clutch_size
+        )
       }
     }
   }
@@ -153,7 +182,12 @@ format_row <- function(
   # add the death events
   death_start_value <- row[death_start]
   death_end_value <- row[death_end]
-  formatted_row <- paste(formatted_row, "mor", death_start_value, death_end_value)
+  formatted_row <- paste(
+    formatted_row,
+    "mor",
+    death_start_value,
+    death_end_value
+  )
 
   formatted_row <- gsub("\\s+", " ", formatted_row)
   formatted_row <- sub("^\\s+", "", formatted_row)

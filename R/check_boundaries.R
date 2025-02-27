@@ -14,7 +14,11 @@ check_valid_estimation <- function(lifelihoodResults) {
     min_bound <- parameter_bounds$min
     max_bound <- parameter_bounds$max
     sum_estimations <- sum(parameter_values$estimation)
-    sum_estimations_linked <- link(sum_estimations, min = min_bound, max = max_bound)
+    sum_estimations_linked <- link(
+      sum_estimations,
+      min = min_bound,
+      max = max_bound
+    )
 
     tolerance <- 0.005 # 0.5% tolerance
     min_threshold <- min_bound + (min_bound * tolerance)
@@ -24,7 +28,10 @@ check_valid_estimation <- function(lifelihoodResults) {
         "Estimation of '",
         parameter_name,
         "' is close to the minimum bound: ",
-        parameter_name, "≃", sum_estimations_linked, ". ",
+        parameter_name,
+        "≃",
+        sum_estimations_linked,
+        ". ",
         "Consider decreasing minimum bound.",
         sep = ""
       ))
@@ -33,7 +40,10 @@ check_valid_estimation <- function(lifelihoodResults) {
         "Estimation of '",
         parameter_name,
         "' is close to the maximum bound: ",
-        parameter_name, "≃", sum_estimations_linked, ". ",
+        parameter_name,
+        "≃",
+        sum_estimations_linked,
+        ". ",
         "Consider increasing maximum bound.",
         sep = ""
       ))
