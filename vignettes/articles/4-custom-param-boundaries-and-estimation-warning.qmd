@@ -143,7 +143,3 @@ results <- lifelihood(
 ```
 
 Now we don't get any warning!
-
-```{r}
-summary(results)
-```
