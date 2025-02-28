@@ -50,6 +50,7 @@ summary(results)
 coef(results, "expt_death")
 logLik(results)
 results$effects
+results$mcmc
 
 
 # fonction lifelihood()
