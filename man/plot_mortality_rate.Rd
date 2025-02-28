@@ -59,8 +59,8 @@ dataLFH <- lifelihoodData(
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
-  death_start = "mor_start",
-  death_end = "mor_end",
+  death_start = "death_start",
+  death_end = "death_end",
   covariates = c("par", "geno", "spore"),
   model_specs = c("gam", "lgn", "wei")
 )

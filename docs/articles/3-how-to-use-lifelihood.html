@@ -74,8 +74,12 @@
 
 
 
-<script src="3-how-to-use-lifelihood_files/kePrint-0.0.1/kePrint.js"></script><link href="3-how-to-use-lifelihood_files/lightable-0.0.1/lightable.css" rel="stylesheet">
-<div class="row">
+<link href="3-how-to-use-lifelihood_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="3-how-to-use-lifelihood_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="3-how-to-use-lifelihood_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="3-how-to-use-lifelihood_files/datatables-binding-0.33/datatables.js"></script><link href="3-how-to-use-lifelihood_files/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="3-how-to-use-lifelihood_files/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="3-how-to-use-lifelihood_files/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="3-how-to-use-lifelihood_files/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="3-how-to-use-lifelihood_files/crosstalk-1.2.1/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>3 - How to use the lifelihood package</h1>
             
@@ -114,346 +118,18 @@ configuration file</a></li>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data/fake_sample.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span></span></code></pre></div>
-<table class="table table lightable-material-dark lightable-striped lightable-hover" style='margin-left: auto; margin-right: auto; font-family: "Source Sans Pro", helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
-<thead><tr>
-<th style="text-align:left;">
-type
-</th>
-<th style="text-align:left;">
-geno
-</th>
-<th style="text-align:right;">
-sex_start
-</th>
-<th style="text-align:right;">
-sex_end
-</th>
-<th style="text-align:right;">
-sex
-</th>
-<th style="text-align:right;">
-mat_start
-</th>
-<th style="text-align:right;">
-mat_end
-</th>
-<th style="text-align:left;">
-clutch_start1
-</th>
-<th style="text-align:left;">
-clutch_end1
-</th>
-<th style="text-align:left;">
-clutch_size1
-</th>
-<th style="text-align:left;">
-clutch_start2
-</th>
-<th style="text-align:left;">
-clutch_end2
-</th>
-<th style="text-align:left;">
-clutch_size2
-</th>
-<th style="text-align:right;">
-mor_start
-</th>
-<th style="text-align:right;">
-mor_end
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-0.1
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:right;">
-9.0
-</td>
-<td style="text-align:right;">
-10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1000
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-0.1
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-</tbody>
-</table>
-<p>Prepare input parameters for the <code><a href="../reference/lifelihoodData.html">lifelihoodData()</a></code>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["1","2","0","0","0","1","2","2","2","2","2","1","1"],["0","0","1","1","1","0","1","1","1","1","1","0","0"],[0,0,0,0,0,0,0,0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,2,3,3,3,0,1,1,1,1,1,0,0],[1000,3,4,4,4,1000,2,2,2,2,2,1000,1000],[" NA"," 4"," 2"," 2"," 2"," NA"," 2"," 2"," 2"," 2"," 2"," NA"," NA"],[" NA"," 3"," 4"," 4"," 4"," NA"," 2"," 2"," 2"," 2"," 2"," NA"," NA"],[" NA"," 4"," 5"," 5"," 5"," NA"," 3"," 1"," 1"," 1"," 1"," NA"," NA"],[" NA"," 2"," NA"," NA"," NA"," NA"," 5"," 5"," 5"," 5"," 5"," NA"," NA"],[" NA"," 4"," NA"," NA"," NA"," NA"," 3"," 8"," 8"," 8"," 8"," NA"," NA"],[" NA"," 5"," NA"," NA"," NA"," NA"," 4"," 3"," 3"," 3"," 3"," NA"," NA"],[0.1,9,5,5,5,0.1,11,19,12,14,19,0.1,4],[1,10,6,6,6,1,12,20,13,15,20,1,5]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>death_start<\/th>\n      <th>death_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"death_start","targets":14},{"name":"death_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Prepare input parameters for the <code><a href="../reference/lifelihoodData.html">lifelihoodData()</a></code>
 function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
 <span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span>
-<span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
+<span>  <span class="st">"clutch_start1"</span>,</span>
+<span>  <span class="st">"clutch_end1"</span>,</span>
+<span>  <span class="st">"clutch_size1"</span>,</span>
+<span>  <span class="st">"clutch_start2"</span>,</span>
+<span>  <span class="st">"clutch_end2"</span>,</span>
+<span>  <span class="st">"clutch_size2"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -468,8 +144,8 @@ function:</p>
 <span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
 <span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
 <span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  death_start <span class="op">=</span> <span class="st">"mor_start"</span>,</span>
-<span>  death_end <span class="op">=</span> <span class="st">"mor_end"</span>,</span>
+<span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
+<span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
 <span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>

@@ -3,8 +3,12 @@ df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 
 clutchs <- c(
-  "clutch_start1", "clutch_end1", "clutch_size1",
-  "clutch_start2", "clutch_end2", "clutch_size2"
+  "clutch_start1",
+  "clutch_end1",
+  "clutch_size1",
+  "clutch_start2",
+  "clutch_end2",
+  "clutch_size2"
 )
 
 dataLFH <- lifelihoodData(
@@ -15,8 +19,8 @@ dataLFH <- lifelihoodData(
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
-  death_start = "mor_start",
-  death_end = "mor_end",
+  death_start = "death_start",
+  death_end = "death_end",
   covariates = c("geno", "type"),
   model_specs = c("gam", "lgn", "wei")
 )

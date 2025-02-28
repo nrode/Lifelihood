@@ -41,8 +41,8 @@
 #'   maturity_start = "mat_start",
 #'   maturity_end = "mat_end",
 #'   clutchs = clutchs,
-#'   death_start = "mor_start",
-#'   death_end = "mor_end",
+#'   death_start = "death_start",
+#'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
@@ -196,8 +196,8 @@ lifelihood <- function(
 #'   maturity_start = "mat_start",
 #'   maturity_end = "mat_end",
 #'   clutchs = clutchs,
-#'   death_start = "mor_start",
-#'   death_end = "mor_end",
+#'   death_start = "death_start",
+#'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
@@ -241,8 +241,8 @@ coef.lifelihoodResults <- function(object, parameter_name) {
 #'   maturity_start = "mat_start",
 #'   maturity_end = "mat_end",
 #'   clutchs = clutchs,
-#'   death_start = "mor_start",
-#'   death_end = "mor_end",
+#'   death_start = "death_start",
+#'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
@@ -283,8 +283,8 @@ logLik.lifelihoodResults <- function(object, ...) {
 #'   maturity_start = "mat_start",
 #'   maturity_end = "mat_end",
 #'   clutchs = clutchs,
-#'   death_start = "mor_start",
-#'   death_end = "mor_end",
+#'   death_start = "death_start",
+#'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
 #'   model_specs = c("gam", "lgn", "wei")
 #' )

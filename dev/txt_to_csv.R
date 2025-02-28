@@ -49,13 +49,26 @@ create_row <- function(parsed_row, max_clutches) {
     padded_pon <- do.call(rbind, pon_corrected) # Combine into a matrix
 
     if (nrow(padded_pon) < max_clutches) {
-      padded_pon <- rbind(padded_pon, matrix(NA, nrow = max_clutches - nrow(padded_pon), ncol = 3))
+      padded_pon <- rbind(
+        padded_pon,
+        matrix(NA, nrow = max_clutches - nrow(padded_pon), ncol = 3)
+      )
     }
   } else {
     padded_pon <- matrix(NA, nrow = max_clutches, ncol = 3)
   }
 
-  c(covariates, sex_start, sex_end, sex, mat_start, mat_end, mat, as.vector(t(padded_pon)), mor)
+  c(
+    covariates,
+    sex_start,
+    sex_end,
+    sex,
+    mat_start,
+    mat_end,
+    mat,
+    as.vector(t(padded_pon)),
+    mor
+  )
 }
 
 txt_to_csv <- function(txt_path) {
@@ -65,7 +78,6 @@ txt_to_csv <- function(txt_path) {
   covariate_names <- strsplit(line_with_cov, "\\s+")[[1]]
   data_tag_index <- which(grepl("*******data*********", txt_file, fixed = TRUE))
   data <- txt_file[(data_tag_index + 1):length(txt_file)]
-
 
   parsed_data <- lapply(data, parse_row, covariate_names)
   max_clutches <- max(sapply(parsed_data, function(row) length(row$pon)))
@@ -78,15 +90,27 @@ txt_to_csv <- function(txt_path) {
 
   column_names <- c(
     covariate_names,
-    "sex_start", "sex_end", "sex",
-    "mat_start", "mat_end", "mat",
-    unlist(lapply(1:max_clutches, function(i) paste0(c("pon_start_", "pon_end_", "pon_size_"), i))),
-    "mor_start", "mor_end"
+    "sex_start",
+    "sex_end",
+    "sex",
+    "mat_start",
+    "mat_end",
+    "mat",
+    unlist(lapply(
+      1:max_clutches,
+      function(i) paste0(c("pon_start_", "pon_end_", "pon_size_"), i)
+    )),
+    "death_start",
+    "death_end"
   )
 
   colnames(final_data) <- column_names
   final_dataframe <- as.data.frame(final_data)
-  write.csv(final_dataframe, sub("\\.txt$", ".csv", txt_path), row.names = FALSE)
+  write.csv(
+    final_dataframe,
+    sub("\\.txt$", ".csv", txt_path),
+    row.names = FALSE
+  )
 }
 
 txt_path <- "data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt"

@@ -18,7 +18,6 @@ test_that("Parsing the likelihood value.", {
   result <- lifelihood:::get_likelihood(lines)
   expect_equal(result, -34138.741217)
 
-
   lines <- c(
     "---------------------------",
     "",
@@ -38,7 +37,6 @@ test_that("Parsing the likelihood value.", {
   result <- lifelihood:::get_likelihood(lines)
   expect_equal(result, -1)
 
-
   lines <- c(
     "---------------------------",
     "",
@@ -57,7 +55,6 @@ test_that("Parsing the likelihood value.", {
   )
   result <- lifelihood:::get_likelihood(lines)
   expect_equal(result, 42.3333)
-
 
   lines <- c(
     "---------------------------",
