@@ -109,15 +109,15 @@ plot_mortality_rate <- function(
     ) +
     ggplot2::theme_minimal()
 
+  if (!is.null(max_time) & !log_x) {
+    plot <- plot + ggplot2::xlim(0, max_time)
+  }
+
   if (log_x) {
     plot <- plot + ggplot2::scale_x_log10()
   }
   if (log_y) {
     plot <- plot + ggplot2::scale_y_log10()
-  }
-
-  if (!is.null(max_time)) {
-    plot <- plot + ggplot2::xlim(0, max_time)
   }
 
   plot

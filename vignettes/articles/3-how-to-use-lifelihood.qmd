@@ -59,7 +59,15 @@ clutchs <- c(
 )
 ```
 
+*Note: If you have a large number of clutches, it is easier to generate this vector programmatically, particularly if your dataset contains a large number of clutches. See the [Generate clutch names](generate-clutch-names.html) vignette.*
+
 # Create the `lifelihoodData` object
+
+`lifelihoodData()` creates a `lifelihoodData` object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.
+
+This function mostly takes as input your dataset, your column names.
+
+It also has the `model_specs` argument, which is a vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of `"wei"` (Weibull law), `"exp"` (Exponential law), `"gam"` (Gamma law) or `"lgn"` (Log-normal law). The first one is used for **maturity**, the second one is used for **clutchs** and the third one for **death**.
 
 ```{r}
 dataLFH <- lifelihoodData(
@@ -82,11 +90,18 @@ dataLFH <- lifelihoodData(
 
 ## All default parameters
 
+Once you have created your `lifelihoodData` object with `lifelihoodData()`, you can call the `lifelihood()` function to run the lifelihood program.
+
+It returns a `lifelihoodResults` object, which is a list containing all the results of the analysis.
+
+Here it's a minimalist usage of the function, where we only specify the `lifelihoodData` object, the path to the [configuration file](2-setting-up-the-configuration-file.html) and the seeds to use. The `raise_estimation_warning` argument will be the focus of the [next vignette](4-custom-param-boundaries-and-estimation-warning.html).
+
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config.yaml"),
-  seeds = c(1, 2, 3, 4)
+  seeds = c(1, 2, 3, 4),
+  raise_estimation_warning = FALSE
 )
 summary(results)
 ```
@@ -94,10 +109,22 @@ summary(results)
 # Get specific results
 ***
 
+The `lifelihoodResults` object is a list containing all the results of the analysis. We can get specific results by calling the list element.
+
 Get estimations:
 
 ```{r}
+#| eval: false
 results$effects
+```
+
+```{r}
+#| echo=FALSE
+DT::datatable(
+  results$effects,
+  options = list(scrollX = TRUE),
+  class = "cell-border stripe hover compact"
+)
 ```
 
 Get maximum likelihood found:

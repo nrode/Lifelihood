@@ -43,13 +43,14 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = here::here("config_pierrick.yaml"),
   delete_temp_files = FALSE,
-  MCMC = 10
+  MCMC = 3
 )
 
 summary(results)
-coef(results, "expt_death") # penser à ajouter names() au vecteur
+coef(results, "expt_death")
 logLik(results)
 results$effects
+results$mcmc
 
 
 # fonction lifelihood()
@@ -63,11 +64,11 @@ iris$Sepal.Width2 <- iris$Sepal.Width
 lm(Sepal.Length ~ Sepal.Width + Sepal.Width2, data = iris, singular.ok = FALSE)
 
 newdata <- data.frame(
-  geno = c(0, 1, 2, 3, 0, 1),
+  #geno = c(0, 1, 2, 3, 0, 1),
   par = c(0, 1, 2, 0, 1, 2),
-  spore = c(0, 1, 2, 3, 0, 1)
+  spore = c(0, 1, 2, 1, 0, 1)
 )
-newdata$geno <- factor(newdata$geno)
+#newdata$geno <- factor(newdata$geno)
 newdata$par <- factor(newdata$par)
 newdata$spore <- factor(newdata$spore)
 predict(results, "expt_death", newdata)

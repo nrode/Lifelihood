@@ -13,6 +13,10 @@ articles:
       - articles/2-setting-up-the-configuration-file
       - articles/3-how-to-use-lifelihood
       - articles/4-custom-param-boundaries-and-estimation-warning
+  - title: Miscellaneous
+    navbar: Miscellaneous
+    contents:
+      - articles/generate-clutch-names
   - title: Developer
     navbar: Developer
     contents:

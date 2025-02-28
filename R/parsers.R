@@ -3,7 +3,7 @@
 #' @name parse_output
 #' @description Find specific result in the output file of the lifelihood program, according to the `element` argument. This function is an aggregator of all the `get_*()` functions described below.
 #' @param lines Vector of the output file (`.out`), where each element is a line of the file.
-#' @param element Name of the result to parse. Must be in one of 'seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max'.
+#' @param element Name of the result to parse. Must be in one of 'seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max', 'mcmc'.
 #' @param group_by_group Boolean indicating whether parsing should be performed group by group or not (`FALSE` by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).
 #' @return The parsed element
 parse_output <- function(lines, element, group_by_group = FALSE) {
@@ -13,7 +13,8 @@ parse_output <- function(lines, element, group_by_group = FALSE) {
     likelihood = get_likelihood(lines, group_by_group),
     effects = get_effects(lines, group_by_group),
     parameter_ranges = get_param_ranges(lines),
-    ratio_max = get_ratio_max(lines)
+    ratio_max = get_ratio_max(lines),
+    mcmc = get_mcmc(lines)
   )
 }
 
@@ -177,4 +178,42 @@ get_effects <- function(lines, group_by_group = FALSE) {
     )
     return(all_effects)
   }
+}
+
+#' @rdname parse_output
+#' @name get_mcmc
+get_mcmc <- function(lines) {
+  mcmc_start_idx <- which(lines == "MCMCsamples")
+  mcmc_end_idx <- which(grepl("Parameter_Range_Table", lines))
+
+  if (length(mcmc_start_idx) == 0) {
+    return(NULL)
+  }
+
+  mcmc_lines <- lines[(mcmc_start_idx + 1):(mcmc_end_idx - 1)]
+  mcmc_lines <- mcmc_lines[mcmc_lines != ""]
+  mcmc_data <- list()
+
+  for (i in 1:length(mcmc_lines)) {
+    line_parts <- strsplit(mcmc_lines[i], "\\s+")[[1]]
+
+    line_parts <- line_parts[line_parts != ""]
+
+    param_name <- line_parts[1]
+    param_values <- as.numeric(line_parts[2:length(line_parts)])
+
+    mcmc_data[[param_name]] <- param_values
+  }
+
+  result_df <- as.data.frame(mcmc_data, stringsAsFactors = FALSE)
+  result_df <- data.frame(t(result_df))
+  colnames(result_df) <- paste0("Sample_", 1:ncol(result_df))
+  result_df$Parameter <- rownames(result_df)
+  result_df <- result_df[, c(
+    "Parameter",
+    colnames(result_df)[colnames(result_df) != "Parameter"]
+  )]
+
+  rownames(result_df) <- NULL
+  return(result_df)
 }

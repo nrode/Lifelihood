@@ -19,6 +19,25 @@ read_output_from_file <- function(
   effects <- parse_output(lines, "effects", group_by_group)
   parameter_ranges <- parse_output(lines, "parameter_ranges", group_by_group)
   ratiomax <- parse_output(lines, "ratio_max", group_by_group)
+  mcmc_raw <- parse_output(lines, "mcmc")
+
+  if (!is.null(mcmc_raw)) {
+    mcmc_long <- pivot_longer(
+      data = mcmc_raw,
+      cols = starts_with("Sample_"),
+      names_to = "Sample",
+      values_to = "Value"
+    )
+
+    mcmc_pivoted <- pivot_wider(
+      data = mcmc_long,
+      names_from = Parameter,
+      values_from = Value
+    )
+
+    mcmc_pivoted <- mcmc_pivoted[, -1]
+    results$mcmc <- coda::mcmc(mcmc_pivoted)
+  }
 
   results$seeds <- seeds
   results$likelihood <- likelihood
