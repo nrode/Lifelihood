@@ -129,9 +129,17 @@ function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
 <span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span>
-<span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span>
+<span>  <span class="st">"clutch_start1"</span>,</span>
+<span>  <span class="st">"clutch_end1"</span>,</span>
+<span>  <span class="st">"clutch_size1"</span>,</span>
+<span>  <span class="st">"clutch_start2"</span>,</span>
+<span>  <span class="st">"clutch_end2"</span>,</span>
+<span>  <span class="st">"clutch_size2"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p><em>Note: If you have a large number of clutches, it is easier to
+generate this vector programmatically, particularly if your dataset
+contains a large number of clutches. See the <a href="generate-clutch-names.html">Generate clutch names</a>
+vignette.</em></p>
 </div>
 <div class="section level2">
 <h2 id="create-the-lifelihooddata-object">Create the <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-the-lifelihooddata-object"></a>
