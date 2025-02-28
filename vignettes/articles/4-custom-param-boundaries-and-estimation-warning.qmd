@@ -37,7 +37,11 @@ df$geno <- as.factor(df$geno)
 ```
 
 ```{r, echo=FALSE}
-DT::datatable(df, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
+DT::datatable(
+  df,
+  options = list(scrollX = TRUE),
+  class = "cell-border stripe hover compact"
+)
 ```
 
 Prepare input parameters for the `lifelihood()` function:
@@ -45,10 +49,16 @@ Prepare input parameters for the `lifelihood()` function:
 ```{r}
 # name of the columns of the clutchs into a single vector
 clutchs <- c(
-  "clutch_start1", "clutch_end1", "clutch_size1",
-  "clutch_start2", "clutch_end2", "clutch_size2"
+  "clutch_start1",
+  "clutch_end1",
+  "clutch_size1",
+  "clutch_start2",
+  "clutch_end2",
+  "clutch_size2"
 )
 ```
+
+*Note: If you have a large number of clutches, it is easier to generate this vector programmatically, particularly if your dataset contains a large number of clutches. See the [Generate clutch names](generate-clutch-names.html) vignette.*
 
 # Create the `lifelihoodData` object
 
@@ -108,7 +118,11 @@ bounds_df <- default_bounds_df(dataLFH)
 ```
 
 ```{r, echo=FALSE}
-DT::datatable(bounds_df, options = list(scrollX = TRUE), class = "cell-border stripe hover compact")
+DT::datatable(
+  bounds_df,
+  options = list(scrollX = TRUE),
+  class = "cell-border stripe hover compact"
+)
 ```
 
 Since 10 seems to not be high enough, let's try with 80:

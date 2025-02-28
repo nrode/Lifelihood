@@ -59,6 +59,8 @@ clutchs <- c(
 )
 ```
 
+*Note: If you have a large number of clutches, it is easier to generate this vector programmatically, particularly if your dataset contains a large number of clutches. See the [Generate clutch names](generate-clutch-names.html) vignette.*
+
 # Create the `lifelihoodData` object
 
 ```{r}
