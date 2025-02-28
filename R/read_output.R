@@ -19,9 +19,11 @@ read_output_from_file <- function(
   effects <- parse_output(lines, "effects", group_by_group)
   parameter_ranges <- parse_output(lines, "parameter_ranges", group_by_group)
   ratiomax <- parse_output(lines, "ratio_max", group_by_group)
+  mcmc <- parse_output(lines, "mcmc")
 
   results$seeds <- seeds
   results$likelihood <- likelihood
+  results$mcmc <- mcmc
   results$effects <- effects
   results$effects$parameter <- sapply(results$effects$name, map_parameter_name)
   results$effects$kind <- sapply(results$effects$name, find_parameter_kind)
