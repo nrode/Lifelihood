@@ -214,6 +214,7 @@ coef.lifelihoodResults <- function(object, parameter_name) {
   parameter_data <- which(effects$parameter == parameter_name)
   range <- parameter_data[1]:parameter_data[length(parameter_data)]
   coefs <- effects$estimation[range]
+  names(coefs) <- effects$name[range]
   return(coefs)
 }
 
