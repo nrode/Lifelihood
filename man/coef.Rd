@@ -9,6 +9,8 @@
 }
 \arguments{
 \item{object}{\code{lifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
+
+\item{parameter_name}{Name of the parameter. All parameters can be found \href{/articles/2-setting-up-the-configuration-file.html#parameters}{here}.}
 }
 \value{
 A list of coefficient estimates

@@ -22,14 +22,14 @@ read_output_from_file <- function(
   mcmc_raw <- parse_output(lines, "mcmc")
 
   if (!is.null(mcmc_raw)) {
-    mcmc_long <- pivot_longer(
+    mcmc_long <- tidyr::pivot_longer(
       data = mcmc_raw,
       cols = starts_with("Sample_"),
       names_to = "Sample",
       values_to = "Value"
     )
 
-    mcmc_pivoted <- pivot_wider(
+    mcmc_pivoted <- tidyr::pivot_wider(
       data = mcmc_long,
       names_from = Parameter,
       values_from = Value
@@ -37,6 +37,7 @@ read_output_from_file <- function(
 
     mcmc_pivoted <- mcmc_pivoted[, -1]
     results$mcmc <- coda::mcmc(mcmc_pivoted)
+    results$vcov <- mcmc_pivoted |> dplyr::select(-LL)
   }
 
   results$seeds <- seeds
