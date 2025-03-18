@@ -156,6 +156,7 @@ lifelihood <- function(
   )
 
   results$lifelihoodData <- lifelihoodData
+  results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df
   results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
@@ -175,6 +176,7 @@ lifelihood <- function(
 #' @title Coefficient estimates
 #' @name coef
 #' @description S3 method to retrieve coefficients from the output of [lifelihood()]
+#' @param parameter_name Name of the parameter. All parameters can be found [here](/articles/2-setting-up-the-configuration-file.html#parameters).
 #' @inheritParams summary
 #' @return A list of coefficient estimates
 #' @export
@@ -257,6 +259,37 @@ coef.lifelihoodResults <- function(object, parameter_name) {
 #' logLik(results)
 logLik.lifelihoodResults <- function(object, ...) {
   return(object$likelihood)
+}
+
+#' @title AIC
+#' @name AIC
+#' @description S3 method to compute AIC (Akaike information criterion).
+#' @inheritParams summary
+#' @inheritParams coef
+#' @return The AIC.
+#' @seealso \code{\link{BIC}}
+#' @export
+AIC.lifelihoodResults <- function(object, parameter_name) {
+  k <- length(coef(object, parameter_name)) + 1
+  L <- object$likelihood
+  AIC <- 2 * k - 2 * L
+  return(AIC)
+}
+
+#' @title BIC
+#' @name BIC
+#' @description S3 method to compute BIC (Akaike information criterion).
+#' @inheritParams summary
+#' @inheritParams coef
+#' @return The BIC.
+#' @seealso \code{\link{AIC}}
+#' @export
+BIC.lifelihoodResults <- function(object, parameter_name) {
+  k <- length(coef(object, parameter_name)) + 1
+  L <- object$likelihood
+  n <- object$sample_size
+  BIC <- k * log(n) - 2 * L
+  return(BIC)
 }
 
 #' @title Summary function to be used with the output of [lifelihood()]

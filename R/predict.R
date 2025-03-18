@@ -91,6 +91,14 @@ predict.lifelihoodResults <- function(
 
     if (se.fit) {
       vcov <- lifelihoodResults$vcov
+      print("dim vcov")
+      print(dim(vcov))
+      cat("\n")
+      print("dim x")
+      print(dim(x))
+      cat("\n")
+      print("x")
+      print(x)
       if (type == "link") {
         se <- sqrt(diag(x %*% vcov %*% t(x)))
       } else {

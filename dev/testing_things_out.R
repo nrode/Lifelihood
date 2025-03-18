@@ -46,12 +46,24 @@ results <- lifelihood(
   MCMC = 3
 )
 
-summary(results)
-coef(results, "expt_death")
-logLik(results)
-results$effects
-results$mcmc
+AIC(results, "expt_death")
+BIC(results, "expt_death")
 
+# summary(results)
+coef(results, "expt_death")
+# logLik(results)
+# results$effects
+# results$mcmc
+# results$vcov
+
+newdata <- data.frame(
+  par = c(0, 1, 2, 0, 1, 2),
+  spore = c(0, 1, 2, 1, 0, 1)
+)
+newdata$par <- factor(newdata$par)
+newdata$spore <- factor(newdata$spore)
+predict(results, "expt_death", newdata, se.fit = FALSE)
+predict(results, "expt_death", newdata, type = "response")
 
 # fonction lifelihood()
 mat <- matrix(c(as.numeric(df$par), as.numeric(df$spore)), ncol = 2)
@@ -62,17 +74,6 @@ colnames(mat)[z$coefficients == 0] # raise error: model is not identifiable. che
 data(iris)
 iris$Sepal.Width2 <- iris$Sepal.Width
 lm(Sepal.Length ~ Sepal.Width + Sepal.Width2, data = iris, singular.ok = FALSE)
-
-newdata <- data.frame(
-  #geno = c(0, 1, 2, 3, 0, 1),
-  par = c(0, 1, 2, 0, 1, 2),
-  spore = c(0, 1, 2, 1, 0, 1)
-)
-#newdata$geno <- factor(newdata$geno)
-newdata$par <- factor(newdata$par)
-newdata$spore <- factor(newdata$spore)
-predict(results, "expt_death", newdata)
-predict(results, "expt_death", newdata, type = "response")
 
 plot_mortality_rate(
   dataLFH,
