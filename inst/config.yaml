@@ -1,0 +1,24 @@
+---
+mortality:
+  expt_death: geno + type
+  survival_shape: geno + type + geno*type
+  ratio_expt_death: geno
+  prob_death: geno
+  sex_ratio: not_fitted
+reproduction:
+  expt_reproduction: geno
+  reproduction_shape: not_fitted
+  n_offspring: geno
+  increase_death_hazard: geno + type + geno*type
+  tof_reduction_date: geno
+  increase_tof_n_offspring: geno
+  lin_decrease_hazard: geno + type + geno*type
+  quad_senescence: geno + type
+  quad_decrease_hazard: geno
+  lin_change_n_offspring: geno
+  quad_change_n_offspring: geno
+  tof_n_offspring: 1
+maturity:
+  expt_maturity: geno + type
+  maturity_shape: geno
+  ratio_expt_maturity: geno + type

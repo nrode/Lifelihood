@@ -30,7 +30,7 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 ```
@@ -85,7 +85,7 @@ Let's run the analysis with default parameters.
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config.yaml")
+  path_config = system.file("config.yaml", package = "lifelihood")
 )
 ```
 
@@ -136,7 +136,7 @@ Once it's changed, you just have to call `lifelihood()` again with the `param_bo
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config.yaml"),
+  path_config = system.file("config.yaml", package = "lifelihood"),
   param_bounds_df = bounds_df
 )
 ```

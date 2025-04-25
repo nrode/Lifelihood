@@ -23,7 +23,7 @@
 #' @return `lifelihoodResults` object
 #' @export
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' head(df)
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
@@ -181,7 +181,7 @@ lifelihood <- function(
 #' @return A list of coefficient estimates
 #' @export
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
@@ -227,7 +227,7 @@ coef.lifelihoodResults <- function(object, parameter_name) {
 #' @return A number with the value of maximum likelihood found.
 #' @export
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
@@ -299,7 +299,7 @@ BIC.lifelihoodResults <- function(object, parameter_name) {
 #' @return NULL
 #' @export
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #' head(df)

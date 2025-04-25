@@ -8,7 +8,7 @@
 #' @param se.fit Whether or not to include standard errors in the prediction.
 #' @return A vector containing the predicted values for the parameter.
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'

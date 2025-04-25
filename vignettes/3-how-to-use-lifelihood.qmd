@@ -29,7 +29,7 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 ```
@@ -98,7 +98,7 @@ Here it's a minimalist usage of the function, where we only specify the `lifelih
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config.yaml"),
+  path_config = system.file("config.yaml", package = "lifelihood"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

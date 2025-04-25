@@ -9,7 +9,9 @@
 ## Quick start
 
 ```r
-df <- read.csv(here::here("data/fake_sample.csv"))
+library(lifelihood)
+
+df <- read.csv(here::here("data_internals/fake_sample.csv"))
 head(df)
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)

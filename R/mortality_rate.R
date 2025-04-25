@@ -7,7 +7,7 @@
 #' @param bygroup Whether to calculate mortality rates by subgroup (default is TRUE). If FALSE, calculates a single overall mortality rate.
 #' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
