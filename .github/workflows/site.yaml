@@ -29,7 +29,10 @@ jobs:
       - name: Install R package dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown
+          # Installs all dependencies from DESCRIPTION plus pkgdown
+          extra-packages: |
+            any::pkgdown
+          cache: true
 
       - name: Build pkgdown site
         run: |
@@ -39,4 +42,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: docs # pkgdown outputs here by default
+          folder: docs

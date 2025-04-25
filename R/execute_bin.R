@@ -58,8 +58,8 @@ execute_bin <- function(
   os <- detect_os()
   path <- switch(
     os,
-    "Windows" = system.file("src/bin/lifelihood.exe", package = "lifelihood"),
-    "Unix-like" = system.file("src/bin/lifelihood", package = "lifelihood"),
+    "Windows" = system.file("bin/lifelihood.exe", package = "lifelihood"),
+    "Unix-like" = system.file("bin/lifelihood", package = "lifelihood"),
     stop("Unknown OS")
   )
   system(path, input = arg_string)
