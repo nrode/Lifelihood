@@ -85,7 +85,7 @@ Let's run the analysis with default parameters.
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("config.yaml", package = "lifelihood")
+  path_config = system.file("configs/config.yaml", package = "lifelihood")
 )
 ```
 
@@ -136,7 +136,7 @@ Once it's changed, you just have to call `lifelihood()` again with the `param_bo
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("config.yaml", package = "lifelihood"),
+  path_config = system.file("configs/config.yaml", package = "lifelihood"),
   param_bounds_df = bounds_df
 )
 ```

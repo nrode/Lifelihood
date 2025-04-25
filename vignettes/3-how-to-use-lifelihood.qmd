@@ -98,7 +98,7 @@ Here it's a minimalist usage of the function, where we only specify the `lifelih
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("config.yaml", package = "lifelihood"),
+  path_config = system.file("configs/config.yaml", package = "lifelihood"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

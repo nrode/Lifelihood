@@ -1,4 +1,6 @@
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+library(lifelihood)
+
+df <- fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 
@@ -27,7 +29,7 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config2.yaml"),
+  path_config = system.file("configs/config2.yaml", package = "lifelihood"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
