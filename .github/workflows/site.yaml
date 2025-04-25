@@ -26,12 +26,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
 
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
       - name: Install R package dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          # Installs all dependencies from DESCRIPTION plus pkgdown
           extra-packages: |
             any::pkgdown
+            any::quarto
           cache: true
 
       - name: Build pkgdown site
