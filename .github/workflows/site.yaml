@@ -2,15 +2,17 @@ name: Deploy pkgdown site
 
 on:
   push:
-    branches: [main] # Or your default branch
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   deploy-pkgdown:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write # Needed to push to gh-pages
-      pages: write # Optional: only if using GitHub Pages build and deployment
+      contents: write
+      pages: write
 
     steps:
       - name: Checkout repository
