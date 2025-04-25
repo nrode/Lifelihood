@@ -16,3 +16,8 @@ vignettes/*.html
 src/compiled*
 src/source_pascal/lazarus/*/
 docs/
+
+*cache*
+*.html
+*_files/
+data_internals/

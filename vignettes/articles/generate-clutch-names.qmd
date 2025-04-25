@@ -18,9 +18,6 @@ For practical reasons, it is easier to generate this vector programmatically, pa
 ***
 
 ```{r}
-# library(lifelihood)
-devtools::load_all(compile = FALSE)
-
 # input data
 df <- read.csv(here::here("data/fake_sample.csv"))
 df$type <- as.factor(df$type)

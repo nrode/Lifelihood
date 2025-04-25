@@ -1,6 +1,6 @@
 ---
 title: "Overview of Lifelihood (for developers)"
-date: "`r format(Sys.Date(), '%d-%B-%Y')`"
+date: today
 output: 
   html_document:
     toc: yes
