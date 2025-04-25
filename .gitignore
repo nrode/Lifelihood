@@ -15,3 +15,4 @@ lifelihood_*/
 vignettes/*.html
 src/compiled*
 src/source_pascal/lazarus/*/
+docs/
