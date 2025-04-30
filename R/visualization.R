@@ -36,7 +36,7 @@
 #'   dataLFH,
 #'   interval_width = 10,
 #'   max_time = 170,
-#'   bygroup = FALSE,
+#'   groupby = FALSE,
 #'   log_y = TRUE
 #' )
 #' @export
@@ -47,10 +47,13 @@ plot_mortality_rate <- function(
   prediction = FALSE,
   newdata = NULL,
   max_time = NULL,
-  bygroup = TRUE,
+  groupby = FALSE,
   log_x = FALSE,
   log_y = FALSE
 ) {
+  if (groupby!=FALSE&!groupby %in% covariates) {
+    stop("`groupby` argument should be among the covariates of the `lifelihoodData` object provided.")
+  }
   if (prediction) {
     if (is.null(lifelihoodResults)) {
       stop("`lifelihoodResults` cannot be `NULL` when `prediction` is `TRUE`.")
@@ -65,7 +68,7 @@ plot_mortality_rate <- function(
       interval_width,
       newdata = newdata,
       max_time = max_time,
-      bygroup = bygroup
+      groupby = groupby
     )
   } else {
     if (is.null(lifelihoodData)) {
@@ -80,11 +83,11 @@ plot_mortality_rate <- function(
       lifelihoodData,
       interval_width,
       max_time = max_time,
-      bygroup = bygroup
+      groupby = groupby
     )
   }
 
-  if (bygroup) {
+  if (groupby) {
     plot <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
