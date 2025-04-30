@@ -36,7 +36,7 @@
 #'   dataLFH,
 #'   interval_width = 10,
 #'   max_time = 170,
-#'   groupby = FALSE,
+#'   groupby = NULL,
 #'   log_y = TRUE
 #' )
 #' @export
@@ -47,13 +47,17 @@ plot_mortality_rate <- function(
   prediction = FALSE,
   newdata = NULL,
   max_time = NULL,
-  groupby = FALSE,
+  groupby = NULL,
   log_x = FALSE,
-  log_y = FALSE
+  log_y = FALSE,
+  plot_title = "Mortality rate over time",
+  xlab = "Time",
+  ylab = "Mortality Rate"
 ) {
-  if (groupby!=FALSE&!groupby %in% covariates) {
-    stop("`groupby` argument should be among the covariates of the `lifelihoodData` object provided.")
-  }
+  if (!is.null(groupby)) {
+    if (!groupby %in% lifelihoodData$covariates) {
+      stop("`groupby` argument should be among the covariates of the `lifelihoodData` object provided.")
+    }}
   if (prediction) {
     if (is.null(lifelihoodResults)) {
       stop("`lifelihoodResults` cannot be `NULL` when `prediction` is `TRUE`.")
@@ -87,7 +91,7 @@ plot_mortality_rate <- function(
     )
   }
 
-  if (groupby) {
+  if (!is.null(groupby)) {
     plot <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
@@ -106,9 +110,9 @@ plot_mortality_rate <- function(
   plot <- plot +
     ggplot2::geom_line() +
     ggplot2::labs(
-      title = "Mortality Rate Over Time",
-      x = "Time",
-      y = "Mortality Rate"
+      title = plot_title,
+      x = xlab,
+      y = ylab
     ) +
     ggplot2::theme_minimal()
 
