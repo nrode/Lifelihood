@@ -4,8 +4,8 @@
 #' @inheritParams lifelihood
 #' @param interval_width The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and `interval_width` is set to 10, the mortality rate will be calculated every 10 days for each group.
 #' @param max_time The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.
-#' @param groupby covariate(s) over which mortality rate should be computed (default is FALSE). If FALSE, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the`lifelihoodData` object provided.
-#' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if groupby = FALSE), and MortalityRate (mortality rate at this time).
+#' @param groupby covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the`lifelihoodData` object provided.
+#' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
 #' @examples
 #' df <- read.csv(here::here("data/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
@@ -36,7 +36,7 @@
 #' mort_df <- mortality_rate(
 #'   dataLFH,
 #'   interval_width = 2,
-#'   groupby = FALSE,
+#'   groupby = NULL,
 #'   max_time = 170
 #' )
 #' head(mort_df)
@@ -45,7 +45,7 @@ mortality_rate <- function(
   lifelihoodData,
   interval_width,
   max_time = NULL,
-  groupby = FALSE
+  groupby = NULL
 ) {
   data <- lifelihoodData$df
   start_col <- lifelihoodData$death_start
@@ -68,7 +68,7 @@ mortality_rate <- function(
 
   n_intervals <- ceiling(max_time / interval_width)
 
-  if (groupby!=FALSE) {
+  if (!is.null(groupby)) {
     if (!groupby %in% covariates) {
       stop("`groupby` argument should be among the covariates of the `lifelihoodData` object provided.")
     }
@@ -116,10 +116,10 @@ mortality_rate <- function(
 
   mortality_rate_df <- reshape2::melt(mortality_rate)
   colnames(mortality_rate_df) <- c("Interval", "Group", "MortalityRate")
+  mortality_rate_df$Group <- as.factor(mortality_rate_df$Group)
+  ##mortality_rate_df$MortalityRate[is.na(mortality_rate_df$MortalityRate)] <- 1
 
-  mortality_rate_df$MortalityRate[is.na(mortality_rate_df$MortalityRate)] <- 1
-
-  if (!groupby) {
+  if (is.null(groupby)) {
     mortality_rate_df <- subset(mortality_rate_df, select = -c(Group))
   }
   return(mortality_rate_df)
