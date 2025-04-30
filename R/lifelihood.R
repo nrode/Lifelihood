@@ -3,6 +3,7 @@
 #' @name lifelihood
 #' @param lifelihoodData `lifelihoodData` object created with [lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
+#' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
 #' @param group_by_group Boolean option to fit the full factorail model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
@@ -57,6 +58,7 @@
 lifelihood <- function(
   lifelihoodData,
   path_config,
+  path_to_Lifelihood=NULL,
   param_bounds_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -125,6 +127,7 @@ lifelihood <- function(
 
   group_by_group_int <- as.integer(group_by_group)
   execute_bin(
+    path_to_Lifelihood=path_to_Lifelihood,
     data_path,
     path_param_range,
     group_by_group_int,
