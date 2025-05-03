@@ -89,7 +89,7 @@ lifelihood <- function(
   set.seed(sum(seeds))
   run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
   temp_dir <- file.path(
-    getwd(),
+    here::here(),
     paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id))
   )
   dir.create(temp_dir)
@@ -127,8 +127,8 @@ lifelihood <- function(
 
   group_by_group_int <- as.integer(group_by_group)
   execute_bin(
-    path_to_Lifelihood=path_to_Lifelihood,
-    data_path,
+    path_to_Lifelihood = path_to_Lifelihood,
+    path_input_data = data_path,
     path_param_range,
     group_by_group_int,
     MCMC,
