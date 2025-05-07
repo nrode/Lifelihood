@@ -179,7 +179,7 @@ lifelihood <- function(
 #' @title Coefficient estimates
 #' @name coef
 #' @description S3 method to retrieve coefficients from the output of [lifelihood()]
-#' @param parameter_name Name of the parameter. All parameters can be found [here](/articles/2-setting-up-the-configuration-file.html#parameters).
+#' @param parameter_name Optional: name of the parameters to extract the estimate from (default=NULL, to extract all parameter estimates). All parameters can be found [here](/articles/2-setting-up-the-configuration-file.html#parameters).
 #' @inheritParams summary
 #' @return A list of coefficient estimates
 #' @export
@@ -213,13 +213,20 @@ lifelihood <- function(
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
+#' coef(results)
 #' coef(results, "expt_death")
-coef.lifelihoodResults <- function(object, parameter_name) {
-  effects <- object$effects
-  parameter_data <- which(effects$parameter == parameter_name)
-  range <- parameter_data[1]:parameter_data[length(parameter_data)]
-  coefs <- effects$estimation[range]
-  names(coefs) <- effects$name[range]
+coef.lifelihoodResults <- function(object, parameter_name=NULL) {
+  if(is.null(parameter_name)){
+    coefs <- object$effects$estimation
+    names(coefs) <- object$effects$name
+  }else{
+    effects <- object$effects
+    parameter_data <- which(effects$parameter == parameter_name)
+    range <- parameter_data[1]:parameter_data[length(parameter_data)]
+    coefs <- effects$estimation[range]
+    names(coefs) <- effects$name[range]
+  }
+  
   return(coefs)
 }
 
@@ -272,13 +279,27 @@ logLik.lifelihoodResults <- function(object, ...) {
 #' @return The AIC.
 #' @seealso \code{\link{BIC}}
 #' @export
-AIC.lifelihoodResults <- function(object, parameter_name) {
-  k <- length(coef(object, parameter_name)) + 1
+AIC.lifelihoodResults <- function(object) {
+  k <- length(coef(object))
   L <- object$likelihood
-  AIC <- 2 * k - 2 * L
+  AIC <- - 2 * L + 2 * k
   return(AIC)
 }
-
+#' @title AICc
+#' @name AICc
+#' @description S3 method to compute AICc (Akaike information criterion corrected for small sample size, see Hurvich and Tsai 1989).
+#' @inheritParams summary
+#' @inheritParams coef
+#' @return The AICc.
+#' @seealso \code{\link{AIC}}
+#' @export
+AICc.lifelihoodResults <- function(object) {
+  k <- length(coef(object))
+  L <- object$likelihood
+  n <- object$sample_size
+  AICc <- - 2 * L + 2 * k + (2 * k *(k+1)) /(n-k-1)
+  return(AICc)
+}
 #' @title BIC
 #' @name BIC
 #' @description S3 method to compute BIC (Akaike information criterion).
@@ -287,8 +308,8 @@ AIC.lifelihoodResults <- function(object, parameter_name) {
 #' @return The BIC.
 #' @seealso \code{\link{AIC}}
 #' @export
-BIC.lifelihoodResults <- function(object, parameter_name) {
-  k <- length(coef(object, parameter_name)) + 1
+BIC.lifelihoodResults <- function(object) {
+  k <- length(coef(object))
   L <- object$likelihood
   n <- object$sample_size
   BIC <- k * log(n) - 2 * L
