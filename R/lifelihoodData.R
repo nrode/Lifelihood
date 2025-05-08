@@ -20,7 +20,7 @@
 #' @return `lifelihoodData` object
 #' @export
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' head(df)
 #'
 #' clutchs <- c(

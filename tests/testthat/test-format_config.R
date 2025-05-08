@@ -1,5 +1,10 @@
+library(lifelihood)
+
 test_that("format_config correctly reads and formats the config file", {
-  path_config <- test_path("test_config.yaml")
+  path_config <- test_path(system.file(
+    "configs/config.yaml",
+    package = "lifelihood"
+  ))
   covariates <- c("geno", "type")
 
   result <- format_config(path_config, covariates)

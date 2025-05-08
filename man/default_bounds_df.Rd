@@ -18,7 +18,7 @@ Once you have created your \code{lifelihoodData} object with \code{\link[=lifeli
 This is useful when you want to customise these bounds and then pass this dataframe to the \code{\link[=lifelihood]{lifelihood()}} function via the \code{param_bounds_df} argument (if not, it will automatically generate it and keep the default values).
 }
 \examples{
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data_internals/fake_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 head(df)

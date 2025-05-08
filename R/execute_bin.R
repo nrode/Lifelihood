@@ -60,8 +60,8 @@ if(is.null(path_to_Lifelihood)){
   os <- detect_os()
   path <- switch(
     os,
-    "Windows" = file.path(here::here("src", "bin"), "lifelihood.exe"),
-    "Unix-like" = file.path(here::here("src", "bin"), "lifelihood"),
+    "Windows" = system.file("bin/lifelihood.exe", package = "lifelihood"),
+    "Unix-like" = system.file("bin/lifelihood", package = "lifelihood"),
     stop("Unknown OS")
   )
 }else{

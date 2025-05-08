@@ -22,7 +22,7 @@ A dataframe with 3 columns: Interval (time interval, based on \code{interval_wid
 Calculate the empirical mortality rate over a given interval.
 }
 \examples{
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data_internals/fake_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 

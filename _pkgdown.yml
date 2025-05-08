@@ -1,4 +1,4 @@
-url: https://josephbarbierdarnal.github.io/Lifelihood/
+url: https://nrode.github.io/Lifelihood/
 template:
   bootstrap: 5
   bootswatch: flatly
@@ -9,16 +9,16 @@ articles:
   - title: Tutorials
     navbar: Tutorials
     contents:
-      - articles/1-required-data-format
-      - articles/2-setting-up-the-configuration-file
-      - articles/3-how-to-use-lifelihood
-      - articles/4-custom-param-boundaries-and-estimation-warning
+      - 1-required-data-format
+      - 2-setting-up-the-configuration-file
+      - 3-how-to-use-lifelihood
+      - 4-custom-param-boundaries-and-estimation-warning
   - title: Miscellaneous
     navbar: Miscellaneous
     contents:
-      - articles/generate-clutch-names
+      - generate-clutch-names
   - title: Developer
     navbar: Developer
     contents:
-      - articles/overview
-      - articles/contributing
+      - overview
+      - contributing

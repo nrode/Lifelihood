@@ -7,7 +7,7 @@
 #' @param groupby covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the`lifelihoodData` object provided.
 #' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
 #' @examples
-#' df <- read.csv(here::here("data/fake_sample.csv"))
+#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
