@@ -35,7 +35,12 @@ safe_access <- function(config, path) {
 #' @export
 format_config <- function(path_config, covariates) {
   if (!file.exists(path_config)) {
-    stop(paste("Configuration file", path_config, "not found"))
+    stop(paste(
+      "Configuration file",
+      path_config,
+      "not found. Current working directory: ",
+      getwd()
+    ))
   }
   config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 

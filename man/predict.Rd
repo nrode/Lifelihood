@@ -31,7 +31,7 @@ A vector containing the predicted values for the parameter.
 S3 method to use to make prediction using fitted results from \code{\link[=lifelihood]{lifelihood()}}.
 }
 \examples{
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data_internals/fake_sample.csv"))
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 

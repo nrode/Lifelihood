@@ -1,5 +1,7 @@
+library(lifelihood)
+
 test_that("Default bounds df.", {
-  df <- read.csv(here::here("data/fake_sample.csv"))
+  df <- fakesample
   df$type <- as.factor(df$type)
   df$geno <- as.factor(df$geno)
 

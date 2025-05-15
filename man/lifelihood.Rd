@@ -72,7 +72,7 @@ lifelihood(
 Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
 }
 \examples{
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data_internals/fake_sample.csv"))
 head(df)
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)

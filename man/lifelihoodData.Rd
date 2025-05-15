@@ -63,7 +63,7 @@ lifelihoodData(
 Creates a \code{lifelihoodData} object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history. This function will mainly be used to pass to \code{\link[=lifelihood]{lifelihood()}} or for customizing parameter boundaries with \link{(default_bounds_df)}.
 }
 \examples{
-df <- read.csv(here::here("data/fake_sample.csv"))
+df <- read.csv(here::here("data_internals/fake_sample.csv"))
 head(df)
 
 clutchs <- c(
