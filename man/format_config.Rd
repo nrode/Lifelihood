@@ -13,6 +13,8 @@ format_config(path_config, covariates)
 A character vector that will be used under the model tag in the input text file.
 }
 \description{
-Safely access the configuration file to use for lifelihood. This function is used in \code{\link[=lifelihood]{lifelihood()}} when creating the input text file.
+Safely access the configuration file to use for lifelihood.
+This function is used in \code{\link[=lifelihood]{lifelihood()}} when creating the
+input text file.
 }
 \keyword{internal}

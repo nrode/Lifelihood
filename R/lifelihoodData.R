@@ -1,6 +1,12 @@
 #' @title Data object for lifelihood
-#' @description Creates a `lifelihoodData` object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history. This function will mainly be used to pass to [lifelihood()] or for customizing parameter boundaries with [(default_bounds_df)].
-#' @name lifelihoodData
+#'
+#' @description
+#' Creates a `lifelihoodData` object, which is a list containing
+#' all the information needed to run the lifelihood program of a
+#' given dataset of individual life history. This function will
+#' mainly be used to pass to [lifelihood()] or for customizing
+#' parameter boundaries with [(default_bounds_df)].
+#'
 #' @param df Dataframe with the data of life history. It should have one row per life history / observation.
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the interval in which the sex was determined.
@@ -17,8 +23,11 @@
 #' @param right_censoring_date (CURRENTLY IGNORED) Time (integer) point at which a subject’s data is censored. This means that for subjects who do not experience the event of interest (e.g., death, failure) by this date, their data is considered censored. In practice, choose a value much larger than the maximum longevity seen in the data.
 #' @param critical_age (CURRENTLY IGNORED) Critical age (integer) below which life histories are not followed individually.
 #' @param ratiomax (CURRENTLY IGNORED) Maximum ratio (integer) between number of offspring of last and first reproduction events. Cannot be greater than ratiomax.
+#'
 #' @return `lifelihoodData` object
+#'
 #' @export
+#'
 #' @examples
 #' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' head(df)

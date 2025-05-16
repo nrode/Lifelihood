@@ -9,7 +9,7 @@
 #' @inheritParams lifelihood
 #' @inheritParams check_valid_estimation
 #' @inheritParams mortality_rate
-#' @inheritParams predict
+#' @inheritParams predict.lifelihoodResults
 #' @param prediction
 #' Decide whether the plotted mortality rate should be based on
 #' empirical data using [lifelihoodData()] or on predicted values

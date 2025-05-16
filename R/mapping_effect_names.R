@@ -1,14 +1,21 @@
 #' @title Associate the parameter name with the associated parameter
+#'
 #' @keywords internal
-#' @name map_parameter_name
-#' @description This function takes a name as input and returns its match from a predefined list. If the element is not found in the match, an error is generated. This function is used to determine which parameter a parameter estimate is based on.
+#'
+#' @description
+#' This function takes a name as input and returns its match
+#' from a predefined list. If the element is not found in the
+#' match, an error is generated. This function is used to
+#' determine which parameter a parameter estimate is based on.
+#'
 #' @param name A character string representing the element to be mapped.
+#'
 #' @examples
 #' map_parameter_name("eff_expt_death_geno1")
 #' map_parameter_name("eff_ratio_expt_death_geno1")
 #' map_parameter_name("int_sex_ratio")
+#'
 #' @return A named list containing the mapped value for the input element.
-#' @export
 map_parameter_name <- function(name) {
   keys <- c(
     "survival_shape",
@@ -43,9 +50,11 @@ map_parameter_name <- function(name) {
 }
 
 #' @title find event type
+#'
 #' @keywords internal
-#' @name find_event_type
+#'
 #' @param parameter_name Name of the parameter
+#'
 #' @return Event type: either "reproduction", "maturity" or "mortality"
 find_event_type <- function(parameter_name) {
   if (
@@ -91,16 +100,24 @@ find_event_type <- function(parameter_name) {
 
 
 #' @title Deducting the type of parameter from an estimate
+#'
 #' @keywords internal
-#' @name find_parameter_kind
-#' @description This function takes an estimate name as input and returns whether it is a intercept or a coefficient/slope. If the element is not found in the possible match, it returns an error. This function is used to add information about the type of estimate to the output of the [lifelihood()] function.
+#'
+#' @description
+#' This function takes an estimate name as input and returns
+#' whether it is a intercept or a coefficient/slope. If the
+#' element is not found in the possible match, it returns an
+#' error. This function is used to add information about the
+#' type of estimate to the output of the [lifelihood()] function.
+#'
 #' @param name A character string representing the parameter name.
+#'
 #' @examples
 #' find_parameter_kind("eff_expt_death_geno1")
 #' find_parameter_kind("eff_ratio_expt_death_geno1")
 #' find_parameter_kind("int_sex_ratio")
+#'
 #' @return The kind of parameter: either intercept or coefficient/slope
-#' @export
 find_parameter_kind <- function(name) {
   if (startsWith(name, "int_")) {
     return("intercept")

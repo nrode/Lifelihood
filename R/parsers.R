@@ -1,10 +1,16 @@
 #' @title Parsing functions used to read the output file of the program
+#'
 #' @keywords internal
-#' @name parse_output
-#' @description Find specific result in the output file of the lifelihood program, according to the `element` argument. This function is an aggregator of all the `get_*()` functions described below.
+#'
+#' @description
+#' Find specific result in the output file of the lifelihood
+#' program, according to the `element` argument. This function
+#' is an aggregator of all the `get_*()` functions described below.
+#'
 #' @param lines Vector of the output file (`.out`), where each element is a line of the file.
 #' @param element Name of the result to parse. Must be in one of 'seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max', 'mcmc'.
 #' @param group_by_group Boolean indicating whether parsing should be performed group by group or not (`FALSE` by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).
+#'
 #' @return The parsed element
 parse_output <- function(lines, element, group_by_group = FALSE) {
   switch(
@@ -20,7 +26,6 @@ parse_output <- function(lines, element, group_by_group = FALSE) {
 
 
 #' @rdname parse_output
-#' @name get_seeds
 get_seeds <- function(lines, group_by_group = FALSE) {
   # find the line starting with pattern "seed1="
   seeds_line <- lines[grepl("seed1=", lines)]
@@ -60,7 +65,6 @@ get_seeds <- function(lines, group_by_group = FALSE) {
 }
 
 #' @rdname parse_output
-#' @name get_likelihood
 get_likelihood <- function(lines, group_by_group = FALSE) {
   if (group_by_group) {
     # find the lines starting with pattern "group \d+ Likelihood_max="
@@ -103,7 +107,6 @@ get_likelihood <- function(lines, group_by_group = FALSE) {
 }
 
 #' @rdname parse_output
-#' @name get_param_ranges
 get_param_ranges <- function(lines) {
   # find start and end of the parameter range table
   start <- which(grepl("Parameter_Range_Table", lines))
@@ -125,7 +128,6 @@ get_param_ranges <- function(lines) {
 }
 
 #' @rdname parse_output
-#' @name get_ratio_max
 get_ratio_max <- function(lines) {
   # find the line containing the ratiomax value
   index <- which(grepl("ratiomax", lines))
@@ -137,7 +139,6 @@ get_ratio_max <- function(lines) {
 }
 
 #' @rdname parse_output
-#' @name get_effects
 get_effects <- function(lines, group_by_group = FALSE) {
   if (group_by_group) {
     # find all lines starting with "group"
@@ -181,7 +182,6 @@ get_effects <- function(lines, group_by_group = FALSE) {
 }
 
 #' @rdname parse_output
-#' @name get_mcmc
 get_mcmc <- function(lines) {
   mcmc_start_idx <- which(lines == "MCMCsamples")
   mcmc_end_idx <- which(grepl("Parameter_Range_Table", lines))

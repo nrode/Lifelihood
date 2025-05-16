@@ -35,6 +35,8 @@ get_mcmc(lines)
 The parsed element
 }
 \description{
-Find specific result in the output file of the lifelihood program, according to the \code{element} argument. This function is an aggregator of all the \verb{get_*()} functions described below.
+Find specific result in the output file of the lifelihood
+program, according to the \code{element} argument. This function
+is an aggregator of all the \verb{get_*()} functions described below.
 }
 \keyword{internal}

@@ -42,6 +42,8 @@ format_row(
 A string of the well formated row.
 }
 \description{
-Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file).
+Takes a row from a dataframe with input data (sex, maturity,
+clutch date and death) in interval format and transform it
+into a large string (required format for the data input file).
 }
 \keyword{internal}

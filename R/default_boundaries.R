@@ -1,11 +1,21 @@
 #' @title Get dataframe with default parameter boundaries
-#' @description Once you have created your `lifelihoodData` object with [lifelihoodData()], you can call the `default_bounds_df()` function to generate (and load) a dataframe with default parameter bounds.
 #'
-#' This is useful when you want to customise these bounds and then pass this dataframe to the [lifelihood()] function via the `param_bounds_df` argument (if not, it will automatically generate it and keep the default values).
-#' @name default_bounds_df
+#' @description
+#' Once you have created your `lifelihoodData` object with
+#' [lifelihoodData()], you can call the `default_bounds_df()`
+#' function to generate (and load) a dataframe with default
+#' parameter bounds.
+#' This is useful when you want to customise these bounds and
+#' then pass this dataframe to the [lifelihood()] function via
+#' the `param_bounds_df` argument (if not, it will automatically
+#' generate it and keep the default values).
+#'
 #' @inheritParams lifelihood
+#'
 #' @return A dataframe with the default parameter boundaries.
+#'
 #' @export
+#'
 #' @examples
 #' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)

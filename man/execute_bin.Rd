@@ -68,9 +68,6 @@ execute_bin(
 
 \item{precision}{TBD - Check the actual meaning}
 }
-\value{
-NULL. This function writes an output file, that will then be parsed by \code{\link[=parse_output]{parse_output()}}.
-}
 \description{
 Run lifelihood program in console mode.
 }

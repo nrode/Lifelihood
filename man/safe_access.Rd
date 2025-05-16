@@ -15,6 +15,8 @@ safe_access(config, path)
 the read value
 }
 \description{
-Safely access elements in config file. This function exists because yaml.load_file() returns NULL when a value is not found instead of raising an error.
+Safely access elements in config file. This function
+exists because yaml.load_file() returns NULL when a
+value is not found instead of raising an error.
 }
 \keyword{internal}

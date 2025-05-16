@@ -1,12 +1,16 @@
 #' @title Create the input data file from a dataframe
-#' @name format_dataframe_to_txt
-#' @description Takes a dataframe (`df` argument in [lifelihoodData()] function) and apply to each row the [format_row()] function to create the input data file.
+#'
+#' @description
+#' Takes a dataframe (`df` argument in [lifelihoodData()] function)
+#' and apply to each row the [format_row()] function to create the
+#' input data file.
+#'
 #' @keywords internal
+#'
 #' @inheritParams lifelihoodData
 #' @inheritParams lifelihood
 #' @param temp_dir Name of the temporary directory with temporary files
-#' @return NULL
-#' @export
+#'
 format_dataframe_to_txt <- function(
   df,
   sex,
@@ -122,14 +126,19 @@ format_dataframe_to_txt <- function(
 }
 
 
-#' @keywords internal
-#' @name format_row
 #' @title Format a dataframe row for the input data file
-#' @description Takes a row from a dataframe with input data (sex, maturity, clutch date and death) in interval format and transform it into a large string (required format for the data input file).
+#'
+#' @description
+#' Takes a row from a dataframe with input data (sex, maturity,
+#' clutch date and death) in interval format and transform it
+#' into a large string (required format for the data input file).
+#'
+#' @keywords internal
+#'
 #' @param row A row of the dataframe object provided by the user (`df` argument in [lifelihoodData()] function).
 #' @inheritParams lifelihoodData
+#'
 #' @return A string of the well formated row.
-#' @export
 format_row <- function(
   row,
   sex,

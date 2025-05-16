@@ -1,9 +1,14 @@
 #' @title Make the design matrix
-#' @name make_design_matrix
+#'
 #' @keywords internal
-#' @description Create the design matrix for the expected death and the survival shape.
+#'
+#' @description
+#' Create the design matrix for the expected death and
+#' the survival shape.
+#'
 #' @inheritParams lifelihood
 #' @inheritParams pred_mortality_rate
+#'
 #' @export
 make_design_matrix <- function(covariates, data) {
   if (!all(covariates %in% names(data))) {
@@ -35,13 +40,18 @@ make_design_matrix <- function(covariates, data) {
 }
 
 #' @title Weibull survival function
-#' @name SurvWei
-#' @description Weibull survival function
+#'
+#' @description
+#' Weibull survival function
+#'
 #' @keywords internal
+#'
 #' @param t Numeric. The time to event
 #' @param ExpLong Numeric. The expected longevity
 #' @param Shape Numeric. The shape parameter
-#' @return Numeric. The survival probability
+#'
+#' @return The survival probability (numeric)
+#'
 #' @export
 SurvWei <- function(t, ExpLong, Shape) {
   Scale <- ExpLong / gamma(1 + 1 / Shape)
@@ -49,12 +59,17 @@ SurvWei <- function(t, ExpLong, Shape) {
 }
 
 #' @title Find the operating system of the user
-#' @description `detect_os()` finds the operating system name
+#'
+#' @description
+#' `detect_os()` finds the operating system name
+#'
 #' @keywords internal
-#' @name detect_os
+#'
 #' @return String with the name of the operating system, either "Windows" or "Unix-like"
+#'
 #' @examples
 #' detect_os()
+#'
 #' @export
 detect_os <- function() {
   os <- Sys.info()["sysname"]

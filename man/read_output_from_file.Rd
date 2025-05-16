@@ -15,6 +15,7 @@ read_output_from_file(file_path, group_by_group = FALSE, covariates = NULL)
 An object of class \code{lifelihoodResults} with all results from the output file
 }
 \description{
-Takes the file path of the output file and read the results using parsers from \code{\link[=parse_output]{parse_output()}}.
+Takes the file path of the output file and read the
+results using parsers from \code{\link[=parse_output]{parse_output()}}.
 }
 \keyword{internal}

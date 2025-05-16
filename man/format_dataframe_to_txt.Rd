@@ -54,6 +54,8 @@ format_dataframe_to_txt(
 \item{temp_dir}{Name of the temporary directory with temporary files}
 }
 \description{
-Takes a dataframe (\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function) and apply to each row the \code{\link[=format_row]{format_row()}} function to create the input data file.
+Takes a dataframe (\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function)
+and apply to each row the \code{\link[=format_row]{format_row()}} function to create the
+input data file.
 }
 \keyword{internal}

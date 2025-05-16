@@ -1,11 +1,15 @@
 #' @title Compute empirical mortality rate
-#' @name mortality_rate
-#' @description Calculate the empirical mortality rate over a given interval.
+#'
+#' @description
+#' Calculate the empirical mortality rate over a given interval.
+#'
 #' @inheritParams lifelihood
 #' @param interval_width The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and `interval_width` is set to 10, the mortality rate will be calculated every 10 days for each group.
 #' @param max_time The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.
 #' @param groupby covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the`lifelihoodData` object provided.
+#'
 #' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
+#'
 #' @examples
 #' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
@@ -70,12 +74,14 @@ mortality_rate <- function(
 
   if (!is.null(groupby)) {
     if (!groupby %in% covariates) {
-      stop("`groupby` argument should be among the covariates of the `lifelihoodData` object provided.")
+      stop(
+        "`groupby` argument should be among the covariates of the `lifelihoodData` object provided."
+      )
     }
-    if (groupby=="all") {
-        data$group <- do.call(interaction, data[covariates])
-    }else{
-        data$group <- do.call(interaction, data[groupby])
+    if (groupby == "all") {
+      data$group <- do.call(interaction, data[covariates])
+    } else {
+      data$group <- do.call(interaction, data[groupby])
     }
     groups <- sort(unique(data$group))
   } else {

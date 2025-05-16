@@ -14,5 +14,6 @@ String with the name of the operating system, either "Windows" or "Unix-like"
 }
 \examples{
 detect_os()
+
 }
 \keyword{internal}
