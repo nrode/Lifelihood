@@ -11,9 +11,12 @@ plot_mortality_rate(
   prediction = FALSE,
   newdata = NULL,
   max_time = NULL,
-  bygroup = TRUE,
+  groupby = NULL,
   log_x = FALSE,
-  log_y = FALSE
+  log_y = FALSE,
+  plot_title = "Mortality rate over time",
+  xlab = "Time",
+  ylab = "Mortality Rate"
 )
 }
 \arguments{
@@ -29,7 +32,7 @@ plot_mortality_rate(
 
 \item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
 
-\item{bygroup}{Whether to calculate mortality rates by subgroup (default is TRUE). If FALSE, calculates a single overall mortality rate.}
+\item{groupby}{covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the\code{lifelihoodData} object provided.}
 
 \item{log_x}{Determine whether the x-axis should be displayed on a logarithmic scale.}
 
@@ -70,7 +73,7 @@ plot_mortality_rate(
   dataLFH,
   interval_width = 10,
   max_time = 170,
-  bygroup = FALSE,
+  groupby = NULL,
   log_y = TRUE
 )
 }

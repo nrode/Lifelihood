@@ -4,7 +4,7 @@
 \alias{mortality_rate}
 \title{Compute empirical mortality rate}
 \usage{
-mortality_rate(lifelihoodData, interval_width, max_time = NULL, bygroup = TRUE)
+mortality_rate(lifelihoodData, interval_width, max_time = NULL, groupby = NULL)
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
@@ -13,10 +13,10 @@ mortality_rate(lifelihoodData, interval_width, max_time = NULL, bygroup = TRUE)
 
 \item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
 
-\item{bygroup}{Whether to calculate mortality rates by subgroup (default is TRUE). If FALSE, calculates a single overall mortality rate.}
+\item{groupby}{covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the\code{lifelihoodData} object provided.}
 }
 \value{
-A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
+A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
 }
 \description{
 Calculate the empirical mortality rate over a given interval.
@@ -51,7 +51,7 @@ head(mort_df)
 mort_df <- mortality_rate(
   dataLFH,
   interval_width = 2,
-  bygroup = FALSE,
+  groupby = NULL,
   max_time = 170
 )
 head(mort_df)

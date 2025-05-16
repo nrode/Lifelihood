@@ -7,6 +7,7 @@
 lifelihood(
   lifelihoodData,
   path_config,
+  path_to_Lifelihood = NULL,
   param_bounds_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -30,6 +31,8 @@ lifelihood(
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
+
+\item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 
 \item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 

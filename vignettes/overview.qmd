@@ -34,7 +34,8 @@ The key directories and files in the package are organized as follows:
 
 - `vignettes/`: Quarto files used for the documentation website.
 - `R/`: Contains all R functions, user interface code, and helper functions.
-- `src/`: Houses the Pascal source code and executables.
+- `src/`: Houses the Pascal source code and executables. Only the one in `src/lazarus/` should be used.
+- `inst/`: Utility files used such as the binary files and config examples.
 - `man/`: Documentation files for each function, generated via Roxygen2.
 - `tests/`: Unit and integration tests for validating package functionality.
 - `DESCRIPTION`: Provides metadata about the package (authors, version, description, etc.).
@@ -45,6 +46,12 @@ lifelihood/
 ├── vignettes/
 ├── R/
 ├── src/
+│   └── source_pascal/
+│       ├── lazarus/
+│       └── delphi/
+├── inst/
+│   ├── bin/
+│   └── configs/
 ├── tests/
 ├── man/
 ├── DESCRIPTION
