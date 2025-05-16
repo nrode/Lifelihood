@@ -3,8 +3,17 @@ template:
   bootstrap: 5
   bootswatch: flatly
   github: https://github.com/nrode/Lifelihood
+  light-switch: true
+  theme: gruvbox-light
+  theme-dark: gruvbox-dark
+  bslib:
+    base_font: { google: "Roboto" }
+    heading_font: { google: "Roboto Slab" }
+    code_font: { google: "JetBrains Mono" }
+
 pkgdown:
   as_is: yes
+
 articles:
   - title: Tutorials
     navbar: Tutorials
