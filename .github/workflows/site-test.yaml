@@ -1,7 +1,7 @@
-name: Deploy pkgdown site
+name: Check pkgdown site works
 
 on:
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
@@ -39,9 +39,3 @@ jobs:
       - name: Build pkgdown site
         run: |
           Rscript -e 'pkgdown::build_site()'
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: docs
