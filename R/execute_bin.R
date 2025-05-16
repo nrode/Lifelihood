@@ -56,17 +56,17 @@ execute_bin <- function(
     climbrate,
     precision
   )
-if(is.null(path_to_Lifelihood)){
-  os <- detect_os()
-  path <- switch(
-    os,
-    "Windows" = system.file("bin/lifelihood.exe", package = "lifelihood"),
-    "Unix-like" = system.file("bin/lifelihood", package = "lifelihood"),
-    stop("Unknown OS")
-  )
-}else{
-  path <- path_to_Lifelihood
-}
+  if (is.null(path_to_Lifelihood)) {
+    os <- detect_os()
+    path <- switch(
+      os,
+      "Windows" = system.file("bin", "lifelihood.exe", package = "lifelihood"),
+      "Unix-like" = system.file("bin", "lifelihood", package = "lifelihood"),
+      stop("Unknown OS")
+    )
+  } else {
+    path <- path_to_Lifelihood
+  }
 
   system(path, input = arg_string)
 }
