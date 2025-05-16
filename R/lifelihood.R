@@ -58,7 +58,7 @@
 lifelihood <- function(
   lifelihoodData,
   path_config,
-  path_to_Lifelihood=NULL,
+  path_to_Lifelihood = NULL,
   param_bounds_df = NULL,
   group_by_group = FALSE,
   MCMC = 0,
@@ -215,18 +215,18 @@ lifelihood <- function(
 #' )
 #' coef(results)
 #' coef(results, "expt_death")
-coef.lifelihoodResults <- function(object, parameter_name=NULL) {
-  if(is.null(parameter_name)){
+coef.lifelihoodResults <- function(object, parameter_name = NULL) {
+  if (is.null(parameter_name)) {
     coefs <- object$effects$estimation
     names(coefs) <- object$effects$name
-  }else{
+  } else {
     effects <- object$effects
     parameter_data <- which(effects$parameter == parameter_name)
     range <- parameter_data[1]:parameter_data[length(parameter_data)]
     coefs <- effects$estimation[range]
     names(coefs) <- effects$name[range]
   }
-  
+
   return(coefs)
 }
 
@@ -271,7 +271,7 @@ logLik.lifelihoodResults <- function(object, ...) {
   return(object$likelihood)
 }
 
-#' @title AIC
+#' @title Akaike information criterion
 #' @name AIC
 #' @description S3 method to compute AIC (Akaike information criterion).
 #' @inheritParams summary
@@ -282,10 +282,11 @@ logLik.lifelihoodResults <- function(object, ...) {
 AIC.lifelihoodResults <- function(object) {
   k <- length(coef(object))
   L <- object$likelihood
-  AIC <- - 2 * L + 2 * k
+  AIC <- -2 * L + 2 * k
   return(AIC)
 }
-#' @title AICc
+
+#' @title Akaike information criterion for small sample size
 #' @name AICc
 #' @description S3 method to compute AICc (Akaike information criterion corrected for small sample size, see Hurvich and Tsai 1989).
 #' @inheritParams summary
@@ -297,10 +298,11 @@ AICc.lifelihoodResults <- function(object) {
   k <- length(coef(object))
   L <- object$likelihood
   n <- object$sample_size
-  AICc <- - 2 * L + 2 * k + (2 * k *(k+1)) /(n-k-1)
+  AICc <- -2 * L + 2 * k + (2 * k * (k + 1)) / (n - k - 1)
   return(AICc)
 }
-#' @title BIC
+
+#' @title Bayesian information criterion
 #' @name BIC
 #' @description S3 method to compute BIC (Akaike information criterion).
 #' @inheritParams summary
