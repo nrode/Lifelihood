@@ -72,7 +72,10 @@ lifelihood(
 \code{lifelihoodResults} object
 }
 \description{
-Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
+Computes the joined likelihood of all the events in
+an individual life-history (time of maturity, reproductive
+events, death) and estimates the parameters of the model
+using maximum likelihood.
 }
 \examples{
 df <- read.csv(here::here("data_internals/fake_sample.csv"))

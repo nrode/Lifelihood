@@ -3,7 +3,7 @@
 \name{AIC}
 \alias{AIC}
 \alias{AIC.lifelihoodResults}
-\title{AIC}
+\title{Akaike information criterion}
 \usage{
 \method{AIC}{lifelihoodResults}(object)
 }

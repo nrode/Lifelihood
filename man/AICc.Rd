@@ -3,7 +3,7 @@
 \name{AICc}
 \alias{AICc}
 \alias{AICc.lifelihoodResults}
-\title{AICc}
+\title{Akaike information criterion for small sample size}
 \usage{
 AICc.lifelihoodResults(object)
 }

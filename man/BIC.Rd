@@ -3,7 +3,7 @@
 \name{BIC}
 \alias{BIC}
 \alias{BIC.lifelihoodResults}
-\title{BIC}
+\title{Bayesian information criterion}
 \usage{
 \method{BIC}{lifelihoodResults}(object)
 }

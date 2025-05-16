@@ -1,6 +1,11 @@
 #' @title Individual life history modelling
-#' @description Computes the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death) and estimates the parameters of the model using maximum likelihood.
-#' @name lifelihood
+#'
+#' @description
+#' Computes the joined likelihood of all the events in
+#' an individual life-history (time of maturity, reproductive
+#' events, death) and estimates the parameters of the model
+#' using maximum likelihood.
+#'
 #' @param lifelihoodData `lifelihoodData` object created with [lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
@@ -21,8 +26,11 @@
 #' @param precision TBD - Check the actual meaning
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
+#'
 #' @return `lifelihoodResults` object
+#'
 #' @export
+#'
 #' @examples
 #' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' head(df)
