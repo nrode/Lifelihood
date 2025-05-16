@@ -17,6 +17,7 @@ derivLink(estimate, min, max)
 Numeric. Derivative of the link function at parameter estimate
 }
 \description{
-Derivative of the link function used to transform the parameters from lifelihood scale to original scale.
+Derivative of the link function used to transform the parameters from
+lifelihood scale to original scale.
 }
 \keyword{internal}

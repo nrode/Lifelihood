@@ -17,8 +17,11 @@ has_valid_factor_levels(original_df, newdata, covariates)
 TRUE if all factor levels of each covariate in \code{newdata} passed to \code{\link[=predict]{predict()}} are present in the training data, FALSE otherwise.
 }
 \description{
-The purpose of this function is to ensure that when a user makes a prediction with \code{\link[=predict]{predict()}}, the \code{newdata} contains the same factor levels for its covariates as the training data.
-
-If any levels are missing or mismatched, it raises an error and displays a warning.
+The purpose of this function is to ensure that when a user
+makes a prediction with \code{\link[=predict]{predict()}}, the \code{newdata}
+contains the same factor levels for its covariates as the
+training data.
+If any levels are missing or mismatched, it raises an error
+and displays a warning.
 }
 \keyword{internal}

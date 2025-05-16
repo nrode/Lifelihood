@@ -4,9 +4,10 @@ Version: 0.0.0.9
 Authors@R: 
         c(
             person(given = "Nicolas", family = "Rode", role = c("aut", "cre"), email = "nicolas.rode@inrae.fr"),
-            person(given = "Thomas", family = "Lenormand", role = c("aut"), email = "thomas.lenormand@cefe.cnrs.fr")
+            person(given = "Thomas", family = "Lenormand", role = c("aut"), email = "thomas.lenormand@cefe.cnrs.fr"),
+            person(given = "Joseph", family = "Barbier", role = c("aut"), email = "joseph.barbierdarnal@gmail.com")
         )
-Author: Nicolas Rode, Thomas Lenormand
+Author: Nicolas Rode, Thomas Lenormand, Joseph Barbier
 Maintainer: Nicolas Rode <nicolas.rode@inrae.fr>
 Description: Lifelihood is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death). 
 License: MIT + file LICENSE

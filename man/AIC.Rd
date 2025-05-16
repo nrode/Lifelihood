@@ -3,14 +3,12 @@
 \name{AIC}
 \alias{AIC}
 \alias{AIC.lifelihoodResults}
-\title{AIC}
+\title{Akaike information criterion}
 \usage{
-\method{AIC}{lifelihoodResults}(object, parameter_name)
+\method{AIC}{lifelihoodResults}(object)
 }
 \arguments{
 \item{object}{\code{lifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
-
-\item{parameter_name}{Name of the parameter. All parameters can be found \href{/articles/2-setting-up-the-configuration-file.html#parameters}{here}.}
 }
 \value{
 The AIC.

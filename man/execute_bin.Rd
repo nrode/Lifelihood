@@ -5,6 +5,7 @@
 \title{Execution of the compiled files}
 \usage{
 execute_bin(
+  path_to_Lifelihood,
   path_input_data,
   path_param_bounds,
   group_by_group,
@@ -27,6 +28,8 @@ execute_bin(
 )
 }
 \arguments{
+\item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
+
 \item{path_input_data}{Path to the input text file with the model and data to be fitted.}
 
 \item{path_param_bounds}{Path to the parameter boundaries text file with the min and max boudaries for each parameter.}
@@ -64,9 +67,6 @@ execute_bin(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
-}
-\value{
-NULL. This function writes an output file, that will then be parsed by \code{\link[=parse_output]{parse_output()}}.
 }
 \description{
 Run lifelihood program in console mode.

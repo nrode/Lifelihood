@@ -13,9 +13,14 @@ default_bounds_df(lifelihoodData)
 A dataframe with the default parameter boundaries.
 }
 \description{
-Once you have created your \code{lifelihoodData} object with \code{\link[=lifelihoodData]{lifelihoodData()}}, you can call the \code{default_bounds_df()} function to generate (and load) a dataframe with default parameter bounds.
-
-This is useful when you want to customise these bounds and then pass this dataframe to the \code{\link[=lifelihood]{lifelihood()}} function via the \code{param_bounds_df} argument (if not, it will automatically generate it and keep the default values).
+Once you have created your \code{lifelihoodData} object with
+\code{\link[=lifelihoodData]{lifelihoodData()}}, you can call the \code{default_bounds_df()}
+function to generate (and load) a dataframe with default
+parameter bounds.
+This is useful when you want to customise these bounds and
+then pass this dataframe to the \code{\link[=lifelihood]{lifelihood()}} function via
+the \code{param_bounds_df} argument (if not, it will automatically
+generate it and keep the default values).
 }
 \examples{
 df <- read.csv(here::here("data_internals/fake_sample.csv"))

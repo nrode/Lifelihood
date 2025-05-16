@@ -13,11 +13,15 @@ map_parameter_name(name)
 A named list containing the mapped value for the input element.
 }
 \description{
-This function takes a name as input and returns its match from a predefined list. If the element is not found in the match, an error is generated. This function is used to determine which parameter a parameter estimate is based on.
+This function takes a name as input and returns its match
+from a predefined list. If the element is not found in the
+match, an error is generated. This function is used to
+determine which parameter a parameter estimate is based on.
 }
 \examples{
 map_parameter_name("eff_expt_death_geno1")
 map_parameter_name("eff_ratio_expt_death_geno1")
 map_parameter_name("int_sex_ratio")
+
 }
 \keyword{internal}

@@ -7,9 +7,9 @@
       <Unit>
         <Filename Value="lifelihoodC2023.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="46"/>
-        <CursorPos X="53" Y="77"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="27"/>
+        <CursorPos X="51" Y="46"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -17,12 +17,10 @@
       <Unit>
         <Filename Value="Unit2.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1705"/>
         <CursorPos X="35" Y="1732"/>
         <UsageCount Value="41"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Alea.pas"/>
@@ -70,50 +68,14 @@
         <UsageCount Value="11"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="10">
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1299" Column="7" TopLine="1280"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1702" Column="6" TopLine="1683"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1747" Column="88" TopLine="1715"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1986" Column="20" TopLine="1948"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1982" Column="48" TopLine="1947"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1970" Column="15" TopLine="1714"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1405" Column="77" TopLine="1379"/>
-      </Position>
+    <JumpHistory HistoryIndex="1">
       <Position>
         <Filename Value="lifelihoodC2023.lpr"/>
         <Caret Line="77" Column="53" TopLine="46"/>
       </Position>
       <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1712" Column="11" TopLine="1693"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1702" Column="3" TopLine="1683"/>
-      </Position>
-      <Position>
-        <Filename Value="Unit2.pas"/>
-        <Caret Line="1299" Column="7" TopLine="1280"/>
+        <Filename Value="lifelihoodC2023.lpr"/>
+        <Caret Line="67" Column="75" TopLine="46"/>
       </Position>
     </JumpHistory>
     <RunParams>

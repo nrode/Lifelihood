@@ -5,12 +5,12 @@
 \alias{coef.lifelihoodResults}
 \title{Coefficient estimates}
 \usage{
-\method{coef}{lifelihoodResults}(object, parameter_name)
+\method{coef}{lifelihoodResults}(object, parameter_name = NULL)
 }
 \arguments{
 \item{object}{\code{lifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
 
-\item{parameter_name}{Name of the parameter. All parameters can be found \href{/articles/2-setting-up-the-configuration-file.html#parameters}{here}.}
+\item{parameter_name}{Optional: name of the parameters to extract the estimate from (default=NULL, to extract all parameter estimates). All parameters can be found \href{/articles/2-setting-up-the-configuration-file.html#parameters}{here}.}
 }
 \value{
 A list of coefficient estimates
@@ -48,5 +48,6 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
+coef(results)
 coef(results, "expt_death")
 }

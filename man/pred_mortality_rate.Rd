@@ -16,8 +16,6 @@ pred_mortality_rate(
 \item{interval_width}{The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and \code{interval_width} is set to 10, the mortality rate will be calculated every 10 days for each group.}
 
 \item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
-
-\item{bygroup}{Whether to calculate mortality rates by subgroup (default is TRUE). If FALSE, calculates a single overall mortality rate.}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).

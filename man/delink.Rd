@@ -15,6 +15,7 @@ delink(obs, min, max)
 Numeric. The transformed parameter
 }
 \description{
-Delink function to transform the parameters from original scale to lifelihood scale.
+Delink function to transform the parameters from original scale
+to lifelihood scale.
 }
 \keyword{internal}

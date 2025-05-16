@@ -7,6 +7,7 @@
 make_design_matrix(covariates, data)
 }
 \description{
-Create the design matrix for the expected death and the survival shape.
+Create the design matrix for the expected death and
+the survival shape.
 }
 \keyword{internal}

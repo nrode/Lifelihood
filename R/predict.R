@@ -1,12 +1,16 @@
 #' @title Prediction with lifelihood estimations
-#' @description S3 method to use to make prediction using fitted results from [lifelihood()].
-#' @name predict
+#'
+#' @description
+#' S3 method to use to make prediction using fitted results from [lifelihood()].
+#'
 #' @inheritParams check_valid_estimation
 #' @param parameter_name A string specifying the name of the parameter for which to make the prediction. Must be one of `unique(lifelihoodResults$effects$parameter)`.
 #' @param newdata Data for prediction. If absent, predictions are for the subjects used in the original fit.
 #' @param type The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.
 #' @param se.fit Whether or not to include standard errors in the prediction.
+#'
 #' @return A vector containing the predicted values for the parameter.
+#'
 #' @examples
 #' df <- read.csv(here::here("data_internals/fake_sample.csv"))
 #' df$type <- as.factor(df$type)
@@ -122,14 +126,21 @@ predict.lifelihoodResults <- function(
 }
 
 #' @title Check for valid factor levels
-#' @description The purpose of this function is to ensure that when a user makes a prediction with [lifelihood::predict()], the `newdata` contains the same factor levels for its covariates as the training data.
 #'
-#' If any levels are missing or mismatched, it raises an error and displays a warning.
+#' @description
+#' The purpose of this function is to ensure that when a user
+#' makes a prediction with [lifelihood::predict()], the `newdata`
+#' contains the same factor levels for its covariates as the
+#' training data.
+#' If any levels are missing or mismatched, it raises an error
+#' and displays a warning.
+#'
 #' @keywords internal
+#'
 #' @param original_df Training set passed to [lifelihoodData()] (`df` arg).
 #' @param newdata New data passed to [lifelihood::predict()] (`newdata` arg).
 #' @param covariates Covariates passed to [lifelihoodData()] (`covariates` arg).
-#' @name has_valid_factor_levels
+#'
 #' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.
 has_valid_factor_levels <- function(original_df, newdata, covariates) {
   if (length(covariates) == 0) {

@@ -1,7 +1,10 @@
 #' @title Execution of the compiled files
-#' @name execute_bin
+#'
 #' @keywords internal
-#' @description Run lifelihood program in console mode.
+#'
+#' @description
+#' Run lifelihood program in console mode.
+#'
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
 #' @param path_input_data Path to the input text file with the model and data to be fitted.
 #' @param path_param_bounds Path to the parameter boundaries text file with the min and max boudaries for each parameter.
@@ -11,8 +14,6 @@
 #' @param seed4 4th seed number used to reproduce results (same seed = same results).
 #' @inheritParams lifelihood
 #' @inheritParams lifelihoodData
-#' @return NULL. This function writes an output file, that will then be parsed by [parse_output()].
-#' @export
 execute_bin <- function(
   path_to_Lifelihood,
   path_input_data,
@@ -56,17 +57,17 @@ execute_bin <- function(
     climbrate,
     precision
   )
-if(is.null(path_to_Lifelihood)){
-  os <- detect_os()
-  path <- switch(
-    os,
-    "Windows" = system.file("bin/lifelihood.exe", package = "lifelihood"),
-    "Unix-like" = system.file("bin/lifelihood", package = "lifelihood"),
-    stop("Unknown OS")
-  )
-}else{
-  path <- path_to_Lifelihood
-}
+  if (is.null(path_to_Lifelihood)) {
+    os <- detect_os()
+    path <- switch(
+      os,
+      "Windows" = system.file("bin", "lifelihood.exe", package = "lifelihood"),
+      "Unix-like" = system.file("bin", "lifelihood", package = "lifelihood"),
+      stop("Unknown OS")
+    )
+  } else {
+    path <- path_to_Lifelihood
+  }
 
   system(path, input = arg_string)
 }

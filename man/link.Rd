@@ -15,6 +15,7 @@ link(estimate, min, max)
 Numeric. The transformed parameter
 }
 \description{
-Link function to transform the parameters from the lifelihood scale to the original scale
+Link function to transform the parameters from the
+lifelihood scale to the original scale
 }
 \keyword{internal}

@@ -1,10 +1,16 @@
 #' @title Read and format the output file of the program
-#' @description Takes the file path of the output file and read the results using parsers from [lifelihood::parse_output()].
+#'
+#' @description
+#' Takes the file path of the output file and read the
+#' results using parsers from [lifelihood::parse_output()].
+#'
 #' @keywords internal
-#' @name read_output_from_file
+#'
 #' @param file_path Location of the output file of the program
 #' @inheritParams lifelihood
+#'
 #' @return An object of class `lifelihoodResults` with all results from the output file
+#'
 #' @export
 read_output_from_file <- function(
   file_path,

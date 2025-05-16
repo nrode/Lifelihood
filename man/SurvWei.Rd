@@ -14,7 +14,7 @@ SurvWei(t, ExpLong, Shape)
 \item{Shape}{Numeric. The shape parameter}
 }
 \value{
-Numeric. The survival probability
+The survival probability (numeric)
 }
 \description{
 Weibull survival function

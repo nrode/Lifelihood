@@ -1,7 +1,7 @@
-name: Deploy pkgdown site
+name: Check pkgdown site works
 
 on:
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
@@ -27,10 +27,16 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Check Quarto install
+        run: |
+          which quarto
+          quarto check
+
       - name: Install R package dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
+            any::devtools
             any::pkgdown
             any::quarto
             any::DT
@@ -39,9 +45,3 @@ jobs:
       - name: Build pkgdown site
         run: |
           Rscript -e 'devtools::build_site(quiet=FALSE)'
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: docs
