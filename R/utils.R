@@ -63,6 +63,6 @@ detect_os <- function() {
   } else if (os == "Linux" || os == "Darwin") {
     return("Unix-like")
   } else {
-    return("Unknown")
+    stop(paste0("Unexpected OS: ", os))
   }
 }
