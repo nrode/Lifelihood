@@ -37,7 +37,7 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config.yaml"),
+  path_config = system.file("configs/config.yaml", package = "lifelihood"),
   seeds = c(1, 2, 3, 4)
 )
 summary(results)
