@@ -51,7 +51,7 @@ devtools::load_all(compile = FALSE)
 
 This allows you to work with `lifelihood` functions using your latest local modifications.
 
-_Note: Setting `compile = FALSE` ensures that code in the `src/` directory is not compiled. This option is typically used when working with packages that include C++ code. Learn more [here](https://forum.posit.co/t/devtools-load-all-works-on-mac-but-not-on-windows-for-a-given-package/190503)_
+_Note: Setting `compile = FALSE` ensures that code in the `/` directory is not compiled. This option is typically used when working with packages that include C++ code. Learn more [here](https://forum.posit.co/t/devtools-load-all-works-on-mac-but-not-on-windows-for-a-given-package/190503)_
 
 ## Documenting
 

@@ -5,3 +5,13 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+.github/*
+air.toml
+dev.R
+\*.zip
+^docs$
+^_pkgdown\.yaml$
+^pkgdown$
+^LICENSE\.md$
+^vignettes/\.quarto$
+^vignettes/*_files$

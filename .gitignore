@@ -13,11 +13,13 @@
 # outputs
 lifelihood_*/
 vignettes/*.html
-src/compiled*
-src/source_pascal/lazarus/*/
+/compiled*
+/source_pascal/lazarus/*/
 docs/
 
 *cache*
 *.html
 *_files/
 data_internals/
+inst/doc
+**/.quarto/
