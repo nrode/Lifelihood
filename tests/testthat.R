@@ -1,2 +1,2 @@
-devtools::load_all(compile = FALSE)
+devtools::load_all()
 devtools::test()

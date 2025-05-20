@@ -27,7 +27,7 @@
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
 #'
-#' @return `lifelihoodResults` object
+#' @return A `lifelihoodResults` object
 #'
 #' @export
 #'
@@ -178,21 +178,31 @@ lifelihood <- function(
   }
 
   if (raise_estimation_warning) {
-    check_valid_estimation(lifelihoodResults = results)
+    check_valid_estimation(results)
   }
 
   return(results)
 }
 
 #' @title Coefficient estimates
+#'
 #' @name coef
-#' @description S3 method to retrieve coefficients from the output of [lifelihood()]
-#' @param parameter_name Optional: name of the parameters to extract the estimate from (default=NULL, to extract all parameter estimates). All parameters can be found [here](/articles/2-setting-up-the-configuration-file.html#parameters).
-#' @inheritParams summary
+#'
+#' @description
+#' S3 method to retrieve coefficients from the output of [lifelihood()]
+#'
+#' @param lifelihoodResults output of [lifelihood()]
+#' @param parameter_name
+#' Name of the parameters to extract the estimate from to extract
+#' all parameter estimates). All parameters#' can be found
+#' [here](/articles/setting-up-the-configuration-file.html#parameters).
+#'
 #' @return A list of coefficient estimates
+#'
 #' @export
+#'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' df <- lifelihood::fakesample
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
@@ -223,12 +233,12 @@ lifelihood <- function(
 #' )
 #' coef(results)
 #' coef(results, "expt_death")
-coef.lifelihoodResults <- function(object, parameter_name = NULL) {
+coef.lifelihoodResults <- function(lifelihoodResults, parameter_name = NULL) {
   if (is.null(parameter_name)) {
-    coefs <- object$effects$estimation
-    names(coefs) <- object$effects$name
+    coefs <- lifelihoodResults$effects$estimation
+    names(coefs) <- lifelihoodResults$effects$name
   } else {
-    effects <- object$effects
+    effects <- lifelihoodResults$effects
     parameter_data <- which(effects$parameter == parameter_name)
     range <- parameter_data[1]:parameter_data[length(parameter_data)]
     coefs <- effects$estimation[range]
@@ -239,13 +249,19 @@ coef.lifelihoodResults <- function(object, parameter_name = NULL) {
 }
 
 #' @title Likelihood
-#' @name logLik
-#' @description S3 method to retrieve likelihood from the output of [lifelihood()]
-#' @inheritParams summary
+#'
+#' @description
+#' S3 method to retrieve likelihood from the output of [lifelihood()]
+#'
+#' @param object output of [lifelihood()]
+#' @param ... Ignored
+#'
 #' @return A number with the value of maximum likelihood found.
+#'
 #' @export
+#'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' df <- lifelihood::fakesample
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
@@ -280,30 +296,39 @@ logLik.lifelihoodResults <- function(object, ...) {
 }
 
 #' @title Akaike information criterion
-#' @name AIC
-#' @description S3 method to compute AIC (Akaike information criterion).
-#' @inheritParams summary
-#' @inheritParams coef
-#' @return The AIC.
+#'
+#' @description
+#' S3 method to compute AIC (Akaike information criterion).
+#'
+#' @param object output of [lifelihood()]
+#' @param k Number of estimated parameter of the modèle. Default to `length(coef(object))`
+#' @param ... Ignored
+#'
+#' @return The AIC
+#'
 #' @seealso \code{\link{BIC}}
+#'
 #' @export
-AIC.lifelihoodResults <- function(object) {
-  k <- length(coef(object))
+AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
   L <- object$likelihood
   AIC <- -2 * L + 2 * k
   return(AIC)
 }
 
 #' @title Akaike information criterion for small sample size
-#' @name AICc
-#' @description S3 method to compute AICc (Akaike information criterion corrected for small sample size, see Hurvich and Tsai 1989).
-#' @inheritParams summary
-#' @inheritParams coef
-#' @return The AICc.
+#'
+#' @description
+#' S3 method to compute AICc (Akaike information criterion
+#' corrected for small sample size, see Hurvich and Tsai 1989).
+#'
+#' @inheritParams AIC.lifelihoodResults
+#'
+#' @return The AICc
+#'
 #' @seealso \code{\link{AIC}}
+#'
 #' @export
-AICc.lifelihoodResults <- function(object) {
-  k <- length(coef(object))
+AICc.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
   L <- object$likelihood
   n <- object$sample_size
   AICc <- -2 * L + 2 * k + (2 * k * (k + 1)) / (n - k - 1)
@@ -311,14 +336,19 @@ AICc.lifelihoodResults <- function(object) {
 }
 
 #' @title Bayesian information criterion
-#' @name BIC
-#' @description S3 method to compute BIC (Akaike information criterion).
-#' @inheritParams summary
-#' @inheritParams coef
+#'
+#' @description
+#' S3 method to compute BIC (Akaike information criterion).
+#'
+#' @param object output of [lifelihood()]
+#' @param ... Ignored
+#'
 #' @return The BIC.
+#'
 #' @seealso \code{\link{AIC}}
+#'
 #' @export
-BIC.lifelihoodResults <- function(object) {
+BIC.lifelihoodResults <- function(object, ...) {
   k <- length(coef(object))
   L <- object$likelihood
   n <- object$sample_size
@@ -327,10 +357,17 @@ BIC.lifelihoodResults <- function(object) {
 }
 
 #' @title Summary function to be used with the output of [lifelihood()]
+#'
 #' @name summary
-#' @description S3 method to display main results of the lifelihood program.
-#' @param object `lifelihoodResults` object from [lifelihood()]
+#'
+#' @description
+#' S3 method to display main results of the lifelihood program.
+#'
+#' @param object output of [lifelihood()]
+#' @param ... Ignored
+#'
 #' @return NULL
+#'
 #' @export
 #' @examples
 #' df <- read.csv(here::here("data_internals/fake_sample.csv"))

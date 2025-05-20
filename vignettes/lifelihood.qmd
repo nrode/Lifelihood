@@ -1,6 +1,16 @@
 ---
-title: Get started
-date: today
+title: "lifelihood2"
+vignette: >
+  %\VignetteIndexEntry{lifelihood2}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
-## What is lifelihood?
+```{r}
+#| label: setup
+library(lifelihood)
+```

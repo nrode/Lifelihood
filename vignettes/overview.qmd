@@ -1,13 +1,13 @@
 ---
-title: "Overview of Lifelihood (for developers)"
-date: today
-output: 
-  html_document:
-    toc: yes
-    toc_float:
-      collapsed: no
-editor_options: 
-  chunk_output_type: console
+title: "overview2"
+vignette: >
+  %\VignetteIndexEntry{overview2}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 # How Lifelihood Works

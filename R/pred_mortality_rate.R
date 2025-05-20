@@ -4,6 +4,7 @@
 #' Calculate the predicted mortality rate over a given interval.
 #'
 #' @inheritParams lifelihood
+#' @inheritParams lifelihoodData
 #' @inheritParams mortality_rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).

@@ -6,6 +6,8 @@
 ^docs$
 ^pkgdown$
 .github/*
+.vscode/*
+_src/*
 air.toml
 dev.R
 \*.zip
@@ -15,3 +17,6 @@ dev.R
 ^LICENSE\.md$
 ^vignettes/\.quarto$
 ^vignettes/*_files$
+^dev/*
+lifelihood_\*/
+^data_internals/

@@ -5,12 +5,14 @@
 \alias{coef.lifelihoodResults}
 \title{Coefficient estimates}
 \usage{
-\method{coef}{lifelihoodResults}(object, parameter_name = NULL)
+\method{coef}{lifelihoodResults}(lifelihoodResults, parameter_name = NULL)
 }
 \arguments{
-\item{object}{\code{lifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
+\item{lifelihoodResults}{output of \code{\link[=lifelihood]{lifelihood()}}}
 
-\item{parameter_name}{Optional: name of the parameters to extract the estimate from (default=NULL, to extract all parameter estimates). All parameters can be found \href{/articles/2-setting-up-the-configuration-file.html#parameters}{here}.}
+\item{parameter_name}{Name of the parameters to extract the estimate from to extract
+all parameter estimates). All parameters#' can be found
+\href{/articles/setting-up-the-configuration-file.html#parameters}{here}.}
 }
 \value{
 A list of coefficient estimates
@@ -19,7 +21,7 @@ A list of coefficient estimates
 S3 method to retrieve coefficients from the output of \code{\link[=lifelihood]{lifelihood()}}
 }
 \examples{
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+df <- lifelihood::fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 

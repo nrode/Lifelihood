@@ -8,7 +8,9 @@
 \method{summary}{lifelihoodResults}(object, ...)
 }
 \arguments{
-\item{object}{\code{lifelihoodResults} object from \code{\link[=lifelihood]{lifelihood()}}}
+\item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}
+
+\item{...}{Ignored}
 }
 \description{
 S3 method to display main results of the lifelihood program.

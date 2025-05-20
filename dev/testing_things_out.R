@@ -1,8 +1,6 @@
 rm(list = ls())
-devtools::load_all(compile = FALSE)
-df <- read.csv(here::here(
-  "data/raw_data/DataPierrick/100%mort_Pierrick211genoparinteraction.csv"
-))
+devtools::load_all()
+df <- datapierrick
 df$geno <- as.factor(df$geno)
 df$par <- as.factor(df$par)
 df$spore <- as.factor(df$par)
@@ -100,7 +98,7 @@ plot_mortality_rate(
 mortality_rate(dataLFH, interval_width = 10)
 mortality_rate(dataLFH, interval_width = 10, bygroup = FALSE, max_time = 170)
 
-devtools::load_all(compile = FALSE)
+devtools::load_all()
 pred_mortality_rate(results, interval_width = 10)
 
 
