@@ -3,6 +3,9 @@
 #' @description
 #' Calculate the predicted mortality rate over a given interval.
 #'
+#' @param lifelihoodResults output of [lifelihood()]
+#' @param bygroup TODO
+#' @inheritParams prediction
 #' @inheritParams lifelihood
 #' @inheritParams lifelihoodData
 #' @inheritParams mortality_rate

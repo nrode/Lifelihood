@@ -1,7 +1,7 @@
 ---
 title: "Setting up configuration file"
 vignette: >
-  %\VignetteIndexEntry{setting-up-configuration-file}
+  %\VignetteIndexEntry{setting-up-the-configuration-file}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:

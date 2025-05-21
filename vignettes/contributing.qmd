@@ -1,7 +1,7 @@
 ---
-title: "contributing2"
+title: "Contributing"
 vignette: >
-  %\VignetteIndexEntry{contributing2}
+  %\VignetteIndexEntry{contributing}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:

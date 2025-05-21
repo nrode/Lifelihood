@@ -13,6 +13,8 @@ prediction(
 )
 }
 \arguments{
+\item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}
+
 \item{parameter_name}{A string specifying the name of the parameter for which to make the prediction. Must be one of \code{unique(lifelihoodResults$effects$parameter)}.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}

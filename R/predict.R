@@ -3,7 +3,7 @@
 #' @description
 #' S3 method to use to make prediction using fitted results from [lifelihood()].
 #'
-#' @inheritParams check_valid_estimation
+#' @param object output of [lifelihood()]
 #' @param parameter_name A string specifying the name of the parameter for which to make the prediction. Must be one of `unique(lifelihoodResults$effects$parameter)`.
 #' @param newdata Data for prediction. If absent, predictions are for the subjects used in the original fit.
 #' @param type The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.
@@ -151,12 +151,6 @@ has_valid_factor_levels <- function(original_df, newdata, covariates) {
     warning("covariates argument is empty")
     return(FALSE)
   }
-
-  # for (colname in names(newdata)) {
-  #   if (!(colname %in% covariates)) {
-  #     stop(paste("Unknown column in newdata: ", colname))
-  #   }
-  # }
 
   for (covariate in covariates) {
     levels_train <- levels(original_df[[covariate]])

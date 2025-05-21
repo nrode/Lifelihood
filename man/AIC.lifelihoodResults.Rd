@@ -4,7 +4,7 @@
 \alias{AIC.lifelihoodResults}
 \title{Akaike information criterion}
 \usage{
-\method{AIC}{lifelihoodResults}(object, ..., k = length(coef(object)))
+\method{AIC}{lifelihoodResults}(object, ..., k = length(coeff(object)))
 }
 \arguments{
 \item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}

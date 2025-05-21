@@ -4,7 +4,7 @@
 \alias{AICc.lifelihoodResults}
 \title{Akaike information criterion for small sample size}
 \usage{
-AICc.lifelihoodResults(object, ..., k = length(coef(object)))
+AICc.lifelihoodResults(object, ..., k = length(coeff(object)))
 }
 \arguments{
 \item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}

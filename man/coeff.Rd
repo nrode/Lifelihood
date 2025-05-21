@@ -7,11 +7,11 @@
 coeff(object, parameter_name = NULL)
 }
 \arguments{
+\item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}
+
 \item{parameter_name}{Name of the parameters to extract the estimate from to extract
 all parameter estimates). All parameters#' can be found
 \href{/articles/setting-up-the-configuration-file.html#parameters}{here}.}
-
-\item{lifelihoodResults}{output of \code{\link[=lifelihood]{lifelihood()}}}
 }
 \value{
 A list of coefficient estimates

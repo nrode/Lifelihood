@@ -1,2 +1,4 @@
-devtools::load_all()
-devtools::test()
+library(testthat)
+library(lifelihood)
+
+test_check("lifelihood")

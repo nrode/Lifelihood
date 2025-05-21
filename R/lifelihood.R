@@ -191,7 +191,7 @@ lifelihood <- function(
 #' @description
 #' Retrieve coefficients from the output of [lifelihood()]
 #'
-#' @param lifelihoodResults output of [lifelihood()]
+#' @param object output of [lifelihood()]
 #' @param parameter_name
 #' Name of the parameters to extract the estimate from to extract
 #' all parameter estimates). All parameters#' can be found
@@ -317,7 +317,7 @@ logLik.lifelihoodResults <- function(object, ...) {
 #' @seealso \code{\link{BIC}}
 #'
 #' @export
-AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
+AIC.lifelihoodResults <- function(object, ..., k = length(coeff(object))) {
   L <- object$likelihood
   AIC <- -2 * L + 2 * k
   return(AIC)
@@ -336,7 +336,7 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #' @seealso \code{\link{AIC}}
 #'
 #' @export
-AICc.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
+AICc.lifelihoodResults <- function(object, ..., k = length(coeff(object))) {
   L <- object$likelihood
   n <- object$sample_size
   AICc <- -2 * L + 2 * k + (2 * k * (k + 1)) / (n - k - 1)
@@ -357,7 +357,7 @@ AICc.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #'
 #' @export
 BIC.lifelihoodResults <- function(object, ...) {
-  k <- length(coef(object))
+  k <- length(coeff(object))
   L <- object$likelihood
   n <- object$sample_size
   BIC <- k * log(n) - 2 * L
