@@ -48,7 +48,7 @@ AIC(results, "expt_death")
 BIC(results, "expt_death")
 
 # summary(results)
-coef(results, "expt_death")
+coeff(results, "expt_death")
 # logLik(results)
 # results$effects
 # results$mcmc

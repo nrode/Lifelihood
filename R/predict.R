@@ -55,23 +55,27 @@
 #' predict(results, "expt_death", newdata)
 #' predict(results, "expt_death", newdata, type = "response")
 #' @export
-predict.lifelihoodResults <- function(
-  lifelihoodResults,
+prediction <- function(
+  object,
   parameter_name,
   newdata = NULL,
   type = c("link", "response"),
   se.fit = FALSE
 ) {
-  if (!inherits(lifelihoodResults, "lifelihoodResults")) {
-    stop("lifelihoodResults must be of class lifelihoodResults")
+  if (!(inherits(object, "lifelihoodResults"))) {
+    stop(paste0(
+      "`prediction` function expect a 'lifelihoodResults' object, not: '",
+      class(object),
+      "'"
+    ))
   }
 
   type <- match.arg(type)
 
-  df <- if (is.null(newdata)) lifelihoodResults$lifelihoodData$df else newdata
-  original_df <- lifelihoodResults$lifelihoodData$df
+  df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
+  original_df <- object$lifelihoodData$df
 
-  covariates <- lifelihoodResults$covariates
+  covariates <- object$covariates
 
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
@@ -81,12 +85,12 @@ predict.lifelihoodResults <- function(
       those in the data used to fit the model."
     )
   } else {
-    effects <- lifelihoodResults$effects
+    effects <- object$effects
 
     parameter_data <- which(effects$parameter == parameter_name)
     range <- parameter_data[1]:parameter_data[length(parameter_data)]
 
-    fml <- read_formula(lifelihoodResults$config, parameter_name)
+    fml <- read_formula(object$config, parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- stats::terms(m)
@@ -94,7 +98,7 @@ predict.lifelihoodResults <- function(
     predictions <- x %*% effects$estimation[range]
 
     if (se.fit) {
-      vcov <- lifelihoodResults$vcov
+      vcov <- object$vcov
       print("dim vcov")
       print(dim(vcov))
       cat("\n")
@@ -113,7 +117,7 @@ predict.lifelihoodResults <- function(
     if (type == "link") {
       pred <- predictions
     } else if (type == "response") {
-      bounds_df <- lifelihoodResults$param_bounds_df
+      bounds_df <- object$param_bounds_df
       parameter_bounds <- subset(bounds_df, param == parameter_name)
       pred <- link(
         predictions,
