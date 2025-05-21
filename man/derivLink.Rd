@@ -7,7 +7,7 @@
 derivLink(estimate, min, max)
 }
 \arguments{
-\item{estimate}{Numeric. The estimate of the parameter}
+\item{estimate}{The estimate of the parameter}
 
 \item{min}{The minimum value of the parameter}
 

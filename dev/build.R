@@ -1,4 +1,4 @@
-devtools::load_all(compile = FALSE) # load the package (to use for development mode)
+devtools::load_all() # load the package (to use for development mode)
 devtools::test() # run tests
 devtools::document() # create all .Rd files using source files
 Sys.setenv(RSTUDIO_PANDOC = "/opt/homebrew/bin/") # explicit pandoc location to avoid error

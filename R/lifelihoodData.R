@@ -5,7 +5,7 @@
 #' all the information needed to run the lifelihood program of a
 #' given dataset of individual life history. This function will
 #' mainly be used to pass to [lifelihood()] or for customizing
-#' parameter boundaries with [(default_bounds_df)].
+#' parameter boundaries with [default_bounds_df()].
 #'
 #' @param df Dataframe with the data of life history. It should have one row per life history / observation.
 #' @param sex Column name containing the sex of the observations.

@@ -1,20 +1,21 @@
 ---
-title: "4 - Custom parameter boundaries and estimation warning"
-output: 
-  html_document:
-    theme: journal
-    toc: yes
-    toc_float:
-      collapsed: no
-editor_options: 
-  chunk_output_type: console
+title: "Customize parameter boundaries and estimation warning"
+vignette: >
+  %\VignetteIndexEntry{customize-parameter-boundaries-and-estimation-warning}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
+
 
 <div class="topVignette">If you haven't already check it, have a look at:</div>
 
-- [What is the required data format to work with lifelihood?](1-required-data-format.html)
-- [Setting up the configuration file](2-setting-up-the-configuration-file.html)
-- [How to use the lifelihood package](3-how-to-use-lifelihood.html)
+- [What is the required data format to work with lifelihood?](required-data-format.html)
+- [Setting up the configuration file](setting-up-the-configuration-file.html)
+- [How to use the lifelihood package](how-to-use-lifelihood.html)
 
 # Load libraries
 ***

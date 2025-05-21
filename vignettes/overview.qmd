@@ -1,13 +1,13 @@
 ---
-title: "Overview of Lifelihood (for developers)"
-date: today
-output: 
-  html_document:
-    toc: yes
-    toc_float:
-      collapsed: no
-editor_options: 
-  chunk_output_type: console
+title: "overview2"
+vignette: >
+  %\VignetteIndexEntry{overview}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 # How Lifelihood Works
@@ -34,7 +34,7 @@ The key directories and files in the package are organized as follows:
 
 - `vignettes/`: Quarto files used for the documentation website.
 - `R/`: Contains all R functions, user interface code, and helper functions.
-- `src/`: Houses the Pascal source code and executables. Only the one in `src/lazarus/` should be used.
+- `/`: Houses the Pascal source code and executables. Only the one in `/lazarus/` should be used.
 - `inst/`: Utility files used such as the binary files and config examples.
 - `man/`: Documentation files for each function, generated via Roxygen2.
 - `tests/`: Unit and integration tests for validating package functionality.
@@ -45,7 +45,7 @@ The key directories and files in the package are organized as follows:
 lifelihood/
 ├── vignettes/
 ├── R/
-├── src/
+├── /
 │   └── source_pascal/
 │       ├── lazarus/
 │       └── delphi/
@@ -78,7 +78,7 @@ Since this program runs via the command line, **Lifelihood** simplifies the proc
 
 Unlike R, Pascal is a compiled programming language, meaning the code must first be compiled into a machine-readable format (binary) before execution. Additionally, it must be compiled separately for both macOS and Windows systems.
 
-The `src/` directory includes both the source (`.pas`) and compiled files:
+The `/` directory includes both the source (`.pas`) and compiled files:
 
 - `lifelihoodC2023` for Unix systems (macOS)
 - `lifelihoodC2023.exe` for Windows

@@ -18,10 +18,10 @@ articles:
   - title: Tutorials
     navbar: Tutorials
     contents:
-      - 1-required-data-format
-      - 2-setting-up-the-configuration-file
-      - 3-how-to-use-lifelihood
-      - 4-custom-param-boundaries-and-estimation-warning
+      - required-data-format
+      - setting-up-the-configuration-file
+      - how-to-use-lifelihood
+      - customize-parameter-boundaries-and-estimation-warning
   - title: Miscellaneous
     navbar: Miscellaneous
     contents:

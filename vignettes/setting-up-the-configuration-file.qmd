@@ -1,19 +1,24 @@
 ---
-title: "2 - Setting up the configuration file"
-output: 
-  html_document:
-    theme: journal
-    toc: yes
-    toc_float:
-      collapsed: no
-editor_options: 
-  chunk_output_type: console
+title: "Setting up configuration file"
+vignette: >
+  %\VignetteIndexEntry{setting-up-the-configuration-file}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
+
+```{r}
+#| label: setup
+library(lifelihood)
+```
 
 
 <div class="topVignette">If you haven't already check it, have a look at:</div>
 
-- [What is the required data format](1-required-data-format.html)
+- [What is the required data format](required-data-format.html)
 
 # Introduction
 ***
@@ -111,4 +116,4 @@ reproduction:
 # Next step
 ***
 
-The next step is to actually [use the package](3-how-to-use-lifelihood.html).
+The next step is to actually [use the package](how-to-use-lifelihood.html).

@@ -6,10 +6,11 @@
 #'
 #' @keywords internal
 #'
-#' @param estimate Numeric. The estimate of the parameter
-#' @param min_and_max Numeric vector of length 2. The minimum and maximum values of the parameter
+#' @param estimate The estimate of the parameter
+#' @param min The minimum value of the parameter
+#' @param max The maximum value of the parameter
 #'
-#' @return Numeric. The transformed parameter
+#' @return The transformed parameter
 link <- function(estimate, min, max) {
   return(min + (max - min) / (1 + exp(-estimate)))
 }
@@ -22,8 +23,9 @@ link <- function(estimate, min, max) {
 #'
 #' @keywords internal
 #'
-#' @param obs Numeric. The observed value of the parameter
-#' @param min_and_max Numeric vector of length 2. The minimum and maximum values of the parameter
+#' @param obs The observed value of the parameter
+#' @param min The minimum value of the parameter
+#' @param max The maximum value of the parameter
 #'
 #' @return Numeric. The transformed parameter
 delink <- function(obs, min, max) {
@@ -38,7 +40,7 @@ delink <- function(obs, min, max) {
 #'
 #' @keywords internal
 #'
-#' @param estimate Numeric. The estimate of the parameter
+#' @param estimate The estimate of the parameter
 #' @param min The minimum value of the parameter
 #' @param max The maximum value of the parameter
 #'
