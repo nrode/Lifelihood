@@ -2,7 +2,7 @@
 on:
   pull_request:
 
-name: format-suggest.yaml
+name: Is code well formated?
 
 permissions: read-all
 
