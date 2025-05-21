@@ -186,10 +186,10 @@ lifelihood <- function(
 
 #' @title Coefficient estimates
 #'
-#' @name coef
+#' @name coeff
 #'
 #' @description
-#' S3 method to retrieve coefficients from the output of [lifelihood()]
+#' Retrieve coefficients from the output of [lifelihood()]
 #'
 #' @param lifelihoodResults output of [lifelihood()]
 #' @param parameter_name
@@ -231,14 +231,22 @@ lifelihood <- function(
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
-#' coef(results)
-#' coef(results, "expt_death")
-coef.lifelihoodResults <- function(lifelihoodResults, parameter_name = NULL) {
+#' coeff(results)
+#' coeff(results, "expt_death")
+coeff <- function(object, parameter_name = NULL) {
+  if (!(inherits(object, "lifelihoodResults"))) {
+    stop(paste0(
+      "`coeff` function expect a 'lifelihoodResults' object, not: '",
+      class(object),
+      "'"
+    ))
+  }
+
   if (is.null(parameter_name)) {
-    coefs <- lifelihoodResults$effects$estimation
-    names(coefs) <- lifelihoodResults$effects$name
+    coefs <- object$effects$estimation
+    names(coefs) <- object$effects$name
   } else {
-    effects <- lifelihoodResults$effects
+    effects <- object$effects
     parameter_data <- which(effects$parameter == parameter_name)
     range <- parameter_data[1]:parameter_data[length(parameter_data)]
     coefs <- effects$estimation[range]
