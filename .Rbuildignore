@@ -20,3 +20,4 @@ dev.R
 ^dev/*
 lifelihood_\*/
 ^data_internals/
+^\.github$
