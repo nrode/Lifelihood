@@ -46,5 +46,8 @@ test_that("prediction raises an error with invalid type argument", {
 
 test_that("prediction raises an error with invalid object argument", {
   invalid_input <- c(1, 2, 3)
-  expect_error(prediction(invalid_input, "expt_death"))
+  expect_error(
+    prediction(invalid_input, "expt_death"),
+    regexp = "`prediction` function expect a 'lifelihoodResults' object, not:"
+  )
 })
