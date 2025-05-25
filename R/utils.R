@@ -120,3 +120,38 @@ get_config_path <- function(
 
   return(config_path)
 }
+
+#' @title Remove all lifelihood temporary files
+#'
+#' @description
+#' By default, [lifelihood()] deletes all the temp files
+#' it creates, but users can set `delete_temp_files=FALSE`
+#' to keep them.
+#'
+#' After multiple runs, there can be lots of temp files.
+#' This function will just remove them.
+#'
+#' @param path Where to look for. Default to current dir.
+#'
+#' @examples
+#' remove_lifelihood_tempfiles()
+#'
+#' @export
+remove_lifelihood_tempfiles <- function(path = ".") {
+  # regex pattern for the directory names
+  pattern <- "^lifelihood_\\d{4}_\\d{4}_\\d{4}_\\d{4}"
+
+  dirs <- list.dirs(path, full.names = TRUE, recursive = FALSE)
+  target_dirs <- dirs[grepl(pattern, basename(dirs))]
+
+  for (dir in target_dirs) {
+    # delete directory if it contains 3 or fewer files
+    files <- list.files(dir, full.names = TRUE)
+    file_count <- sum(!file.info(files)$isdir)
+
+    if (file_count <= 3) {
+      unlink(dir, recursive = TRUE)
+      message(sprintf("Deleted: %s (contained %d files)", dir, file_count))
+    }
+  }
+}
