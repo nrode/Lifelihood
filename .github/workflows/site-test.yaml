@@ -22,7 +22,7 @@ jobs:
       - name: Install system dependencies
         run: |
           # Install common dependencies via Homebrew
-          brew install curl openssl libxml2
+          brew install curl openssl libxml2 pandoc
           # Set environment variables for proper linking
           echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "LDFLAGS=-L/opt/homebrew/lib" >> $GITHUB_ENV
