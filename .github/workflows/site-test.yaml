@@ -34,11 +34,11 @@ jobs:
             any::devtools
             any::pkgdown
             any::quarto
+            any::tidyverse
             any::DT
           cache: true
 
       - name: Build pkgdown site
         run: |
-          Rscript -e 'devtools::install()'
           Rscript -e 'devtools::load_all()'
           Rscript -e 'devtools::build_site(quiet=FALSE)'

@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: remotes,devtools,testthat
+          extra-packages: remotes,devtools,testthat,tidyverse
 
       - name: Run unit tests
         shell: bash # Use bash shell for macOS
