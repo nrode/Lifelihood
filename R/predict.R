@@ -88,14 +88,26 @@ prediction <- function(
     effects <- object$effects
 
     parameter_data <- which(effects$parameter == parameter_name)
-    range <- parameter_data[1]:parameter_data[length(parameter_data)]
+    range <- which(effects$parameter == parameter_name)
 
     fml <- read_formula(object$config, parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- stats::terms(m)
     x <- stats::model.matrix(Terms, m)
-    predictions <- x %*% effects$estimation[range]
+    coef_vector <- effects$estimation[range]
+    if (ncol(x) != length(coef_vector)) {
+      stop(
+        paste0(
+          "Dimension mismatch: design matrix has ",
+          ncol(x),
+          " columns but coefficient vector has ",
+          length(coef_vector),
+          " elements."
+        )
+      )
+    }
+    predictions <- x %*% coef_vector
 
     if (se.fit) {
       vcov <- object$vcov

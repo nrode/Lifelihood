@@ -13,6 +13,7 @@
 #' @inheritParams pred_mortality_rate
 #' @inheritParams plot_mortality_rate
 #' @inheritParams prediction
+#' @inheritParams validate_groupby_arg
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
 #'
@@ -31,7 +32,7 @@ plot_fitted_mortality_rate <- function(
   xlab = "Time",
   ylab = "Mortality Rate"
 ) {
-  check_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
+  groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
   rate_df <- pred_mortality_rate(
     lifelihoodResults,
@@ -71,6 +72,7 @@ plot_fitted_mortality_rate <- function(
 #' @inheritParams lifelihood
 #' @inheritParams mortality_rate
 #' @inheritParams plot_mortality_rate
+#' @inheritParams validate_groupby_arg
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
 #'
@@ -88,7 +90,7 @@ plot_observed_mortality_rate <- function(
   xlab = "Time",
   ylab = "Mortality Rate"
 ) {
-  check_groupby_arg(lifelihoodData, groupby)
+  groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
   rate_df <- mortality_rate(
     lifelihoodData,
@@ -116,7 +118,7 @@ plot_observed_mortality_rate <- function(
 #' and [plot_fitted_mortality_rate()].
 #'
 #' @inheritParams mortality_rate
-#' @param groupby A character with one of the covariates passed to [lifelihoodData()]
+#' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate()]
 #' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale
 #' @param log_y Determine whether the y-axis should be displayed on a logarithmic scale
@@ -171,29 +173,4 @@ plot_mortality_rate <- function(
   }
 
   plot
-}
-
-#' @title Check that the `groupby` argument is valid for plots
-#'
-#' @inheritParams lifelihood
-#' @param groupby A character or character vector with one or more of the covariates passed to [lifelihoodData()]
-#'
-#' @keywords internal
-check_groupby_arg <- function(lifelihoodData, groupby) {
-  if (!is.null(groupby)) {
-    covariates <- lifelihoodData$covariates
-
-    # Check if groupby is a character or character vector
-    if (!all(groupby %in% covariates)) {
-      missing_vars <- groupby[!groupby %in% covariates]
-      stop(
-        "`groupby` argument contains invalid values. ",
-        "These are not in the covariates of the `lifelihoodData` object: ",
-        paste0(missing_vars, collapse = ", "),
-        ".\n",
-        "Valid covariates are: ",
-        paste0(covariates, collapse = ", ")
-      )
-    }
-  }
 }

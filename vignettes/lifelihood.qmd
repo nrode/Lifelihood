@@ -102,7 +102,7 @@ newdata <- tibble(
     spore = as.factor(spore)
   )
 
-prediction(results, "expt_death", newdata, se.fit = FALSE)
+prediction(results, "expt_death", newdata)
 prediction(results, "expt_death", newdata, type = "response")
 ```
 
@@ -131,7 +131,13 @@ plot_observed_mortality_rate(
 ```{r}
 plot_fitted_mortality_rate(
   results,
-  interval_width = 15,
-  log_y = TRUE
+  interval_width = 5,
+  groupby = c("spore", "par")
+)
+plot_fitted_mortality_rate(
+  results,
+  newdata = newdata,
+  interval_width = 5,
+  groupby = "spore"
 )
 ```

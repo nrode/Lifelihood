@@ -9,6 +9,7 @@
 #' @inheritParams lifelihood
 #' @inheritParams lifelihoodData
 #' @inheritParams mortality_rate
+#' @inheritParams validate_groupby_arg
 #'
 #' @return A dataframe with 3 columns:
 #' - Interval (time interval, based on `interval_width` value)
@@ -24,7 +25,7 @@ pred_mortality_rate <- function(
   groupby = NULL
 ) {
   lifelihoodData <- lifelihoodResults$lifelihoodData
-  check_groupby_arg(lifelihoodData, groupby)
+  groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
   data <- if (is.null(newdata)) lifelihoodData$df else newdata
   data$pred_death <- prediction(
@@ -43,8 +44,14 @@ pred_mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
-    data$group <- do.call(interaction, data[groupby])
-    groups <- sort(unique(data$group))
+    if (length(groupby) > 1) {
+      data$group <- interaction(data[groupby], drop = TRUE)
+      groups <- sort(unique(data$group))
+    } else {
+      group_var <- groupby[[1]]
+      data$group <- data[[group_var]]
+      groups <- sort(unique(data$group))
+    }
   } else {
     data$group <- "Overall"
     groups <- "Overall"
@@ -85,9 +92,6 @@ pred_mortality_rate <- function(
     pred_mortality_rate_df$MortalityRate
   )] <- 1
 
-  if (!groupby) {
-    pred_mortality_rate_df <- subset(pred_mortality_rate_df, select = -c(Group))
-  }
   rownames(pred_mortality_rate_df) <- NULL
   return(pred_mortality_rate_df)
 }
