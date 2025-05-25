@@ -4,13 +4,16 @@
 #' Calculate the predicted mortality rate over a given interval.
 #'
 #' @param lifelihoodResults output of [lifelihood()]
-#' @param bygroup TODO
+#' @inheritParams plot_mortality_rate
 #' @inheritParams prediction
 #' @inheritParams lifelihood
 #' @inheritParams lifelihoodData
 #' @inheritParams mortality_rate
 #'
-#' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
+#' @return A dataframe with 3 columns:
+#' - Interval (time interval, based on `interval_width` value)
+#' - Group (identifier of a given subgroup, or "Overall" if groupby = FALSE)
+#' - MortalityRate (mortality rate at this time).
 #'
 #' @export
 pred_mortality_rate <- function(
@@ -18,11 +21,13 @@ pred_mortality_rate <- function(
   interval_width,
   newdata = NULL,
   max_time = NULL,
-  bygroup = TRUE
+  groupby = FALSE
 ) {
   lifelihoodData <- lifelihoodResults$lifelihoodData
+  check_groupby_arg(lifelihoodData, groupby)
+
   data <- if (is.null(newdata)) lifelihoodData$df else newdata
-  data$pred_death <- predict(
+  data$pred_death <- prediction(
     lifelihoodResults,
     "expt_death",
     type = "response",
@@ -37,8 +42,8 @@ pred_mortality_rate <- function(
 
   n_intervals <- ceiling(max_time / interval_width)
 
-  if (bygroup) {
-    data$group <- do.call(interaction, data[covariates])
+  if (groupby) {
+    data$group <- do.call(interaction, data[groupby])
     groups <- sort(unique(data$group))
   } else {
     data$group <- "Overall"
@@ -80,7 +85,7 @@ pred_mortality_rate <- function(
     pred_mortality_rate_df$MortalityRate
   )] <- 1
 
-  if (!bygroup) {
+  if (!groupby) {
     pred_mortality_rate_df <- subset(pred_mortality_rate_df, select = -c(Group))
   }
   rownames(pred_mortality_rate_df) <- NULL

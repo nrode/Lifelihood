@@ -29,7 +29,7 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("configs/config2.yaml", package = "lifelihood"),
+  path_config = get_config_path("config2"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

@@ -9,7 +9,7 @@ pred_mortality_rate(
   interval_width,
   newdata = NULL,
   max_time = NULL,
-  bygroup = TRUE
+  groupby = TRUE
 )
 }
 \arguments{
@@ -21,10 +21,15 @@ pred_mortality_rate(
 
 \item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
 
-\item{bygroup}{TODO}
+\item{groupby}{A character with one of the covariates passed to \code{\link[=lifelihoodData]{lifelihoodData()}}}
 }
 \value{
-A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
+A dataframe with 3 columns:
+\itemize{
+\item Interval (time interval, based on \code{interval_width} value)
+\item Group (identifier of a given subgroup, or "Overall" if groupby = FALSE)
+\item MortalityRate (mortality rate at this time).
+}
 }
 \description{
 Calculate the predicted mortality rate over a given interval.
