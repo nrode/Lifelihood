@@ -92,15 +92,12 @@ lifelihood <- function(
     seeds <- sample(1:10000, 4, replace = T)
   }
 
-  # ajouter check code dans testing_things_out
-
   set.seed(sum(seeds))
-  run_id <- paste0(sample(c(letters, 0:9), 6, replace = TRUE), collapse = "")
   temp_dir <- file.path(
     here::here(),
-    paste0(paste0("lifelihood_", paste(seeds, collapse = "_"), "_id=", run_id))
+    paste0(paste0("lifelihood_", paste(seeds, collapse = "_")))
   )
-  dir.create(temp_dir)
+  dir.create(temp_dir, showWarnings = FALSE)
 
   if (is.null(param_bounds_df)) {
     param_bounds_df <- default_bounds_df(lifelihoodData)
@@ -157,8 +154,13 @@ lifelihood <- function(
     precision
   )
 
-  filename_output <- sub("\\.txt$", "", basename(data_path))
-  output_path <- file.path(temp_dir, paste0(filename_output, ".out"))
+  output_path <- file.path(
+    temp_dir,
+    paste0(
+      sub("\\.txt$", "", basename(data_path)),
+      ".out"
+    )
+  )
 
   results <- read_output_from_file(
     output_path,
