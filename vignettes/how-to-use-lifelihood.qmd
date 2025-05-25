@@ -1,19 +1,21 @@
 ---
-title: "3 - How to use the lifelihood package"
-output: 
-  html_document:
-    theme: journal
-    toc: yes
-    toc_float:
-      collapsed: no
-editor_options: 
-  chunk_output_type: console
+title: "How to use lifelihood"
+vignette: >
+  %\VignetteIndexEntry{how-to-use-lifelihood}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
+
+
 
 <div class="topVignette">If you haven't already check it, have a look at:</div>
 
-- [what is the required data format to work with lifelihood?](1-required-data-format.html)
-- [setting up the configuration file](2-setting-up-the-configuration-file.html)
+- [what is the required data format to work with lifelihood?](required-data-format.html)
+- [setting up the configuration file](setting-up-the-configuration-file.html)
 
 # Load libraries
 ***
@@ -137,4 +139,4 @@ results$likelihood
 # Next step
 ***
 
-Now that you have seen how to use the package, you can go further and [customise your parameter boundaries and deal with estimation warnings](4-custom-param-boundaries-and-estimation-warning.html).
+Now that you have seen how to use the package, you can go further and [customise your parameter boundaries and deal with estimation warnings](custom-param-boundaries-and-estimation-warning.html).

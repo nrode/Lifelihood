@@ -1,12 +1,13 @@
 ---
-title: "Contributing to Lifelihood"
-output: 
-  html_document:
-    toc: yes
-    toc_float:
-      collapsed: no
-editor_options: 
-  chunk_output_type: console
+title: "Contributing"
+vignette: >
+  %\VignetteIndexEntry{contributing}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 # How to Contribute
@@ -46,12 +47,11 @@ All R source code resides in the `R/` directory, and only these files are includ
 After making changes, you can verify that everything works as expected by running:
 
 ```r
-devtools::load_all(compile = FALSE)
+devtools::load_all()
 ```
 
 This allows you to work with `lifelihood` functions using your latest local modifications.
 
-_Note: Setting `compile = FALSE` ensures that code in the `src/` directory is not compiled. This option is typically used when working with packages that include C++ code. Learn more [here](https://forum.posit.co/t/devtools-load-all-works-on-mac-but-not-on-windows-for-a-given-package/190503)_
 
 ## Documenting
 
@@ -71,6 +71,10 @@ devtools::test()
 ```
 
 Ensure all tests pass before submitting a pull request. Adding new tests for new features or bug fixes is highly encouraged.
+
+## Code format
+
+In order to ensure consistent code style, it's recommend to install [Air](https://posit-dev.github.io/air/), an R formatter. The documentation with it has tutorials on how to set up it in your IDE (RStudio, Positron, VS Code, etc).
 
 ## Submitting a Pull Request (PR)
 

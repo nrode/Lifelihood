@@ -3,10 +3,18 @@
 #' @description
 #' Calculate the predicted mortality rate over a given interval.
 #'
+#' @param lifelihoodResults output of [lifelihood()]
+#' @inheritParams plot_mortality_rate
+#' @inheritParams prediction
 #' @inheritParams lifelihood
+#' @inheritParams lifelihoodData
 #' @inheritParams mortality_rate
+#' @inheritParams validate_groupby_arg
 #'
-#' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
+#' @return A dataframe with 3 columns:
+#' - Interval (time interval, based on `interval_width` value)
+#' - Group (identifier of a given subgroup, or "Overall" if groupby = FALSE)
+#' - MortalityRate (mortality rate at this time).
 #'
 #' @export
 pred_mortality_rate <- function(
@@ -14,11 +22,13 @@ pred_mortality_rate <- function(
   interval_width,
   newdata = NULL,
   max_time = NULL,
-  bygroup = TRUE
+  groupby = NULL
 ) {
   lifelihoodData <- lifelihoodResults$lifelihoodData
+  groupby <- validate_groupby_arg(lifelihoodData, groupby)
+
   data <- if (is.null(newdata)) lifelihoodData$df else newdata
-  data$pred_death <- predict(
+  data$pred_death <- prediction(
     lifelihoodResults,
     "expt_death",
     type = "response",
@@ -33,9 +43,15 @@ pred_mortality_rate <- function(
 
   n_intervals <- ceiling(max_time / interval_width)
 
-  if (bygroup) {
-    data$group <- do.call(interaction, data[covariates])
-    groups <- sort(unique(data$group))
+  if (!is.null(groupby)) {
+    if (length(groupby) > 1) {
+      data$group <- interaction(data[groupby], drop = TRUE)
+      groups <- sort(unique(data$group))
+    } else {
+      group_var <- groupby[[1]]
+      data$group <- data[[group_var]]
+      groups <- sort(unique(data$group))
+    }
   } else {
     data$group <- "Overall"
     groups <- "Overall"
@@ -76,9 +92,6 @@ pred_mortality_rate <- function(
     pred_mortality_rate_df$MortalityRate
   )] <- 1
 
-  if (!bygroup) {
-    pred_mortality_rate_df <- subset(pred_mortality_rate_df, select = -c(Group))
-  }
   rownames(pred_mortality_rate_df) <- NULL
   return(pred_mortality_rate_df)
 }

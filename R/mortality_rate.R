@@ -4,9 +4,13 @@
 #' Calculate the empirical mortality rate over a given interval.
 #'
 #' @inheritParams lifelihood
-#' @param interval_width The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and `interval_width` is set to 10, the mortality rate will be calculated every 10 days for each group.
-#' @param max_time The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.
-#' @param groupby covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the`lifelihoodData` object provided.
+#' @inheritParams validate_groupby_arg
+#' @param interval_width The interval width used to calculate the
+#' mortality rate. For instance, if the time unit for deaths in
+#' the original dataset is days and `interval_width` is set to 10,
+#' the mortality rate will be calculated every 10 days for each group.
+#' @param max_time The maximum time for calculating the mortality
+#' rate. If set to NULL, the time of the last observed death is used.
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
 #'
@@ -129,4 +133,45 @@ mortality_rate <- function(
     mortality_rate_df <- subset(mortality_rate_df, select = -c(Group))
   }
   return(mortality_rate_df)
+}
+
+
+#' @title Check that the `groupby` argument is valid
+#'
+#' @description
+#' Check that `groupby` has an expected value, and returns it
+#'
+#' @inheritParams lifelihood
+#' @param groupby covariate(s) over which mortality rate should be
+#' computed (default is `NULL`). If NULL, calculates a single overall
+#' mortality rate. If `"all"`, calculates mortality rate over each
+#' combination of covariates listed in the`lifelihoodData` object provided.
+#'
+#' @returns The valid `groupby` value
+#'
+#' @keywords internal
+validate_groupby_arg <- function(lifelihoodData, groupby) {
+  if (is.null(groupby)) {
+    return(NULL)
+  } else if (length(groupby) > 1) {
+    covariates <- lifelihoodData$covariates
+
+    if (!all(groupby %in% covariates)) {
+      missing_vars <- groupby[!groupby %in% covariates]
+      stop(
+        "`groupby` argument contains invalid values. ",
+        "These are not in the covariates of the `lifelihoodData` object: ",
+        paste0(missing_vars, collapse = ", "),
+        ".\n",
+        "Valid covariates are: ",
+        paste0(covariates, collapse = ", ")
+      )
+    } else {
+      return(covariates)
+    }
+  } else if (groupby == "all") {
+    return(lifelihoodData$covariates)
+  } else {
+    return(groupby)
+  }
 }

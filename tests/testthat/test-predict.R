@@ -1,8 +1,11 @@
 library(lifelihood)
+library(tidyverse)
 
-df <- fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- fakesample |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  )
 
 clutchs <- c(
   "clutch_start1",
@@ -29,17 +32,25 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("configs/config2.yaml", package = "lifelihood"),
+  path_config = get_config_path("config2"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
 
 
-test_that("predict works with expt_death", {
-  preds <- predict(results, "expt_death", type = "response")
+test_that("prediction works with expt_death", {
+  preds <- prediction(results, "expt_death", type = "response")
   expect_true(all(preds >= 0))
 })
 
-test_that("predict raises an error with invalid type argument", {
-  expect_error(predict(results, "expt_death", type = "invalid input"))
+test_that("prediction raises an error with invalid type argument", {
+  expect_error(prediction(results, "expt_death", type = "invalid input"))
+})
+
+test_that("prediction raises an error with invalid object argument", {
+  invalid_input <- c(1, 2, 3)
+  expect_error(
+    prediction(invalid_input, "expt_death"),
+    regexp = "`prediction` function expect a 'lifelihoodResults' object, not:"
+  )
 })

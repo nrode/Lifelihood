@@ -7,12 +7,14 @@
 link(estimate, min, max)
 }
 \arguments{
-\item{estimate}{Numeric. The estimate of the parameter}
+\item{estimate}{The estimate of the parameter}
 
-\item{min_and_max}{Numeric vector of length 2. The minimum and maximum values of the parameter}
+\item{min}{The minimum value of the parameter}
+
+\item{max}{The maximum value of the parameter}
 }
 \value{
-Numeric. The transformed parameter
+The transformed parameter
 }
 \description{
 Link function to transform the parameters from the

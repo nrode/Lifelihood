@@ -72,12 +72,88 @@ SurvWei <- function(t, ExpLong, Shape) {
 #'
 #' @export
 detect_os <- function() {
+  compatible_oses <- c("Windows", "Darwin")
   os <- Sys.info()["sysname"]
-  if (os == "Windows") {
-    return("Windows")
-  } else if (os == "Linux" || os == "Darwin") {
-    return("Unix-like")
+  if (os %in% compatible_oses) {
+    return(os)
   } else {
-    stop(paste0("Unexpected OS: ", os))
+    stop(
+      "lifelihood only works with MacOS and Windows at the moment, not: ",
+      os
+    )
+  }
+}
+
+#' @title Get the path to a built-in configuration file.
+#'
+#' @description
+#' `lifelihood` embeds a few configuration files, and
+#' this function is a simple tool to access one of them.
+#'
+#' It takes the name one of the available configuration
+#' and returns the path to it.
+#'
+#' For more info about configuration files, see
+#' \code{vignette("setting-up-the-configuration-file", package = "lifelihood")}
+#'
+#' @param config_name Configuration name. Currently available options:
+#' - config
+#' - config2
+#' - config_pierrick
+#' By default, it will use "config".
+#'
+#' @return Absolute path to the configuration file
+#'
+#' @examples
+#' get_config_path("config")
+#' get_config_path("config2")
+#'
+#' @export
+get_config_path <- function(
+  config_name = c("config", "config2", "config_pierrick")
+) {
+  config_name <- match.arg(config_name)
+
+  config_path <- system.file(
+    "configs",
+    paste0(config_name, ".yaml"),
+    package = "lifelihood"
+  )
+
+  return(config_path)
+}
+
+#' @title Remove all lifelihood temporary files
+#'
+#' @description
+#' By default, [lifelihood()] deletes all the temp files
+#' it creates, but users can set `delete_temp_files=FALSE`
+#' to keep them.
+#'
+#' After multiple runs, there can be lots of temp files.
+#' This function will just remove them.
+#'
+#' @param path Where to look for. Default to current dir.
+#'
+#' @examples
+#' remove_lifelihood_tempfiles()
+#'
+#' @export
+remove_lifelihood_tempfiles <- function(path = ".") {
+  # regex pattern for the directory names
+  pattern <- "^lifelihood_\\d+_\\d+_\\d+_\\d+"
+
+  dirs <- list.dirs(path, full.names = TRUE, recursive = FALSE)
+  target_dirs <- dirs[grepl(pattern, basename(dirs))]
+
+  for (dir in target_dirs) {
+    # delete directory if it contains 3 or fewer files
+    files <- list.files(dir, full.names = TRUE)
+    file_count <- sum(!file.info(files)$isdir)
+
+    if (file_count <= 3) {
+      unlink(dir, recursive = TRUE)
+      message(sprintf("Deleted: %s (contained %d files)", dir, file_count))
+    }
   }
 }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="/usr/local/bin/fpc" Date="1621181457"/>
+  <Params Value=" -MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -k-framework -kCocoa -l -vabq -Fi/Users/josephbarbier/Desktop/Lifelihood/src/compiled -Fu/Users/josephbarbier/.lazarus/lib/units/x86_64-darwin/cocoa -Fu/Users/josephbarbier/.lazarus/lib/LCLBase/units/x86_64-darwin -Fu/Users/josephbarbier/.lazarus/lib/freetypelaz/lib/x86_64-darwin -Fu/Users/josephbarbier/.lazarus/lib/LazUtils/lib/x86_64-darwin -Fu/Users/josephbarbier/.lazarus/lib/units/x86_64-darwin -Fu/Users/josephbarbier/Desktop/Lifelihood/src/source_pascal/lazarus/ -FE/Users/josephbarbier/Desktop/Lifelihood/src/compiled/ -o/Users/josephbarbier/Desktop/Lifelihood/src/compiled/lifelihoodC2023 -dLCL -dLCLcocoa -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL lifelihoodC2023.lpr"/>
+</CONFIG>

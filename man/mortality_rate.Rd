@@ -9,11 +9,18 @@ mortality_rate(lifelihoodData, interval_width, max_time = NULL, groupby = NULL)
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
-\item{interval_width}{The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and \code{interval_width} is set to 10, the mortality rate will be calculated every 10 days for each group.}
+\item{interval_width}{The interval width used to calculate the
+mortality rate. For instance, if the time unit for deaths in
+the original dataset is days and \code{interval_width} is set to 10,
+the mortality rate will be calculated every 10 days for each group.}
 
-\item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
+\item{max_time}{The maximum time for calculating the mortality
+rate. If set to NULL, the time of the last observed death is used.}
 
-\item{groupby}{covariate(s) over which mortality rate should be computed (default is NULL). If NULL, calculates a single overall mortality rate. If "all", calculates mortality rate over each combination of covariates listed in the\code{lifelihoodData} object provided.}
+\item{groupby}{covariate(s) over which mortality rate should be
+computed (default is \code{NULL}). If NULL, calculates a single overall
+mortality rate. If \code{"all"}, calculates mortality rate over each
+combination of covariates listed in the\code{lifelihoodData} object provided.}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).

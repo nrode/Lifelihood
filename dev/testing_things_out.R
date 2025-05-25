@@ -1,20 +1,10 @@
 rm(list = ls())
-devtools::load_all(compile = FALSE)
-df <- read.csv(here::here(
-  "data/raw_data/DataPierrick/100%mort_Pierrick211genoparinteraction.csv"
-))
+devtools::load_all()
+df <- datapierrick
 df$geno <- as.factor(df$geno)
 df$par <- as.factor(df$par)
 df$spore <- as.factor(df$par)
 
-clutchs <- c(
-  "clutch_start1",
-  "clutch_end1",
-  "clutch_size1",
-  "clutch_start2",
-  "clutch_end2",
-  "clutch_size2"
-)
 generate_clutch_vector <- function(N) {
   return(paste(
     "pon",
@@ -41,16 +31,17 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config_pierrick.yaml"),
+  path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
   MCMC = 3
 )
+
 
 AIC(results, "expt_death")
 BIC(results, "expt_death")
 
 # summary(results)
-coef(results, "expt_death")
+coeff(results, "expt_death")
 # logLik(results)
 # results$effects
 # results$mcmc
@@ -62,8 +53,8 @@ newdata <- data.frame(
 )
 newdata$par <- factor(newdata$par)
 newdata$spore <- factor(newdata$spore)
-predict(results, "expt_death", newdata, se.fit = FALSE)
-predict(results, "expt_death", newdata, type = "response")
+prediction(results, "expt_death", newdata, se.fit = FALSE)
+prediction(results, "expt_death", newdata, type = "response")
 
 # fonction lifelihood()
 mat <- matrix(c(as.numeric(df$par), as.numeric(df$spore)), ncol = 2)
@@ -79,14 +70,14 @@ plot_mortality_rate(
   dataLFH,
   interval_width = 15,
   max_time = 170,
-  bygroup = FALSE,
-  log_y = TRUE
+  log_y = TRUE,
+  log_x = TRUE
 )
 plot_mortality_rate(
   dataLFH,
   interval_width = 25,
   max_time = 170,
-  bygroup = TRUE,
+  groupby = TRUE,
   log_y = TRUE
 )
 plot_mortality_rate(
@@ -100,7 +91,7 @@ plot_mortality_rate(
 mortality_rate(dataLFH, interval_width = 10)
 mortality_rate(dataLFH, interval_width = 10, bygroup = FALSE, max_time = 170)
 
-devtools::load_all(compile = FALSE)
+devtools::load_all()
 pred_mortality_rate(results, interval_width = 10)
 
 

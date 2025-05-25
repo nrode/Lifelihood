@@ -3,7 +3,7 @@
 #' @description
 #' S3 method to use to make prediction using fitted results from [lifelihood()].
 #'
-#' @inheritParams check_valid_estimation
+#' @param object output of [lifelihood()]
 #' @param parameter_name A string specifying the name of the parameter for which to make the prediction. Must be one of `unique(lifelihoodResults$effects$parameter)`.
 #' @param newdata Data for prediction. If absent, predictions are for the subjects used in the original fit.
 #' @param type The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.
@@ -12,9 +12,11 @@
 #' @return A vector containing the predicted values for the parameter.
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -37,7 +39,7 @@
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config2.yaml"),
+#'   path_config = get_config_path("config2"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -55,23 +57,27 @@
 #' predict(results, "expt_death", newdata)
 #' predict(results, "expt_death", newdata, type = "response")
 #' @export
-predict.lifelihoodResults <- function(
-  lifelihoodResults,
+prediction <- function(
+  object,
   parameter_name,
   newdata = NULL,
   type = c("link", "response"),
   se.fit = FALSE
 ) {
-  if (!inherits(lifelihoodResults, "lifelihoodResults")) {
-    stop("lifelihoodResults must be of class lifelihoodResults")
+  if (!(inherits(object, "lifelihoodResults"))) {
+    stop(paste0(
+      "`prediction` function expect a 'lifelihoodResults' object, not: '",
+      class(object),
+      "'"
+    ))
   }
 
   type <- match.arg(type)
 
-  df <- if (is.null(newdata)) lifelihoodResults$lifelihoodData$df else newdata
-  original_df <- lifelihoodResults$lifelihoodData$df
+  df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
+  original_df <- object$lifelihoodData$df
 
-  covariates <- lifelihoodResults$covariates
+  covariates <- object$covariates
 
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
@@ -81,20 +87,45 @@ predict.lifelihoodResults <- function(
       those in the data used to fit the model."
     )
   } else {
-    effects <- lifelihoodResults$effects
+    effects <- object$effects
 
     parameter_data <- which(effects$parameter == parameter_name)
-    range <- parameter_data[1]:parameter_data[length(parameter_data)]
+    range <- which(effects$parameter == parameter_name)
 
-    fml <- read_formula(lifelihoodResults$config, parameter_name)
+    fml <- read_formula(object$config, parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- stats::terms(m)
     x <- stats::model.matrix(Terms, m)
-    predictions <- x %*% effects$estimation[range]
+    coef_vector <- effects$estimation[range]
+
+    # the case where newdata does not contain all
+    # possible factors: we add them and put to 0.
+    if (ncol(x) != length(coef_vector)) {
+      orig_m <- model.frame(fml, data = original_df)
+      orig_x <- stats::model.matrix(Terms, orig_m)
+      missing_cols <- setdiff(colnames(orig_x), colnames(x))
+      for (col in missing_cols) {
+        x <- cbind(x, rep(0, nrow(x)))
+        colnames(x)[ncol(x)] <- col
+      }
+      x <- x[, colnames(orig_x), drop = FALSE]
+      if (ncol(x) != length(coef_vector)) {
+        stop(
+          paste0(
+            "Dimension mismatch after adding missing factor levels: design matrix has ",
+            ncol(x),
+            " columns but coefficient vector has ",
+            length(coef_vector),
+            " elements."
+          )
+        )
+      }
+    }
+    predictions <- x %*% coef_vector
 
     if (se.fit) {
-      vcov <- lifelihoodResults$vcov
+      vcov <- object$vcov
       print("dim vcov")
       print(dim(vcov))
       cat("\n")
@@ -113,7 +144,7 @@ predict.lifelihoodResults <- function(
     if (type == "link") {
       pred <- predictions
     } else if (type == "response") {
-      bounds_df <- lifelihoodResults$param_bounds_df
+      bounds_df <- object$param_bounds_df
       parameter_bounds <- subset(bounds_df, param == parameter_name)
       pred <- link(
         predictions,
@@ -147,12 +178,6 @@ has_valid_factor_levels <- function(original_df, newdata, covariates) {
     warning("covariates argument is empty")
     return(FALSE)
   }
-
-  # for (colname in names(newdata)) {
-  #   if (!(colname %in% covariates)) {
-  #     stop(paste("Unknown column in newdata: ", colname))
-  #   }
-  # }
 
   for (covariate in covariates) {
     levels_train <- levels(original_df[[covariate]])

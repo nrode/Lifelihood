@@ -62,8 +62,8 @@ execute_bin <- function(
     path <- switch(
       os,
       "Windows" = system.file("bin", "lifelihood.exe", package = "lifelihood"),
-      "Unix-like" = system.file("bin", "lifelihood", package = "lifelihood"),
-      stop("Unknown OS")
+      "Darwin" = system.file("bin", "lifelihood", package = "lifelihood"),
+      stop("Unexpect OS: ", os)
     )
   } else {
     path <- path_to_Lifelihood

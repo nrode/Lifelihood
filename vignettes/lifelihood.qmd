@@ -1,6 +1,143 @@
 ---
-title: Get started
-date: today
+title: "lifelihood2"
+description: "Overview of all features in `lifelihood`"
+vignette: >
+  %\VignetteIndexEntry{lifelihood}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
-## What is lifelihood?
+### Load lifelihood
+
+```{r}
+#| label: setup
+#library(lifelihood)
+library(tidyverse)
+devtools::load_all()
+```
+
+### Data prepration
+
+```{r}
+#| label: data preparation
+df <- datapierrick |>
+  mutate(
+    geno = as.factor(geno),
+    par = as.factor(par),
+    spore = as.factor(spore)
+  )
+
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "pon",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(28)
+df |> head()
+```
+
+### Creata a data lifelihood object
+
+```{r}
+dataLFH <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("par", "spore"),
+  model_specs = c("wei", "lgn", "wei")
+)
+
+```
+
+### Estimation
+
+```{r}
+#| cache: true
+results <- dataLFH |>
+  lifelihood(
+    path_config = get_config_path("config_pierrick"),
+    MCMC = 3
+  )
+```
+
+### AIC & BIC
+
+```{r}
+AIC(results, "expt_death")
+BIC(results, "expt_death")
+```
+
+### Summary results
+
+```{r}
+coeff(results, "expt_death")
+logLik(results)
+results$effects
+results$mcmc
+results$vcov
+```
+
+### Prediction on new data
+
+```{r}
+newdata <- tibble(
+  par = c(0, 1, 2, 0, 1, 2, 1),
+  spore = c(0, 1, 2, 1, 0, 1, 1)
+) |>
+  mutate(
+    par = as.factor(par),
+    spore = as.factor(spore)
+  )
+
+prediction(results, "expt_death", newdata)
+prediction(results, "expt_death", newdata, type = "response")
+```
+
+### Visualization
+
+- Observed mortality rate
+
+```{r}
+plot_observed_mortality_rate(
+  dataLFH,
+  interval_width = 20,
+  max_time = 170,
+  log_y = TRUE
+)
+plot_observed_mortality_rate(
+  dataLFH,
+  interval_width = 15,
+  max_time = 170,
+  log_y = TRUE,
+  groupby = "spore"
+)
+```
+
+- Fitted mortality rate
+
+```{r}
+plot_fitted_mortality_rate(
+  results,
+  interval_width = 5,
+  groupby = c("spore", "par")
+)
+plot_fitted_mortality_rate(
+  results,
+  newdata = newdata,
+  interval_width = 5,
+  groupby = "spore"
+)
+```

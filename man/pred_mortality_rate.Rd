@@ -9,16 +9,34 @@ pred_mortality_rate(
   interval_width,
   newdata = NULL,
   max_time = NULL,
-  bygroup = TRUE
+  groupby = NULL
 )
 }
 \arguments{
-\item{interval_width}{The interval width used to calculate the mortality rate. For instance, if the time unit for deaths in the original dataset is days and \code{interval_width} is set to 10, the mortality rate will be calculated every 10 days for each group.}
+\item{lifelihoodResults}{output of \code{\link[=lifelihood]{lifelihood()}}}
 
-\item{max_time}{The maximum time for calculating the mortality rate. If set to NULL, the time of the last observed death is used.}
+\item{interval_width}{The interval width used to calculate the
+mortality rate. For instance, if the time unit for deaths in
+the original dataset is days and \code{interval_width} is set to 10,
+the mortality rate will be calculated every 10 days for each group.}
+
+\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
+
+\item{max_time}{The maximum time for calculating the mortality
+rate. If set to NULL, the time of the last observed death is used.}
+
+\item{groupby}{covariate(s) over which mortality rate should be
+computed (default is \code{NULL}). If NULL, calculates a single overall
+mortality rate. If \code{"all"}, calculates mortality rate over each
+combination of covariates listed in the\code{lifelihoodData} object provided.}
 }
 \value{
-A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if bygroup = FALSE), and MortalityRate (mortality rate at this time).
+A dataframe with 3 columns:
+\itemize{
+\item Interval (time interval, based on \code{interval_width} value)
+\item Group (identifier of a given subgroup, or "Overall" if groupby = FALSE)
+\item MortalityRate (mortality rate at this time).
+}
 }
 \description{
 Calculate the predicted mortality rate over a given interval.

@@ -1,13 +1,13 @@
-name: Check pkgdown site works
+name: Deploy pkgdown site
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   deploy-pkgdown:
-    runs-on: ubuntu-latest
-
+    runs-on: macos-latest
     permissions:
       contents: write
       pages: write
@@ -21,16 +21,15 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          # Install common dependencies via Homebrew
+          brew install curl openssl libxml2 pandoc
+          # Set environment variables for proper linking
+          echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
+          echo "LDFLAGS=-L/opt/homebrew/lib" >> $GITHUB_ENV
+          echo "CPPFLAGS=-I/opt/homebrew/include" >> $GITHUB_ENV
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Check Quarto install
-        run: |
-          which quarto
-          quarto check
 
       - name: Install R package dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
@@ -39,9 +38,18 @@ jobs:
             any::devtools
             any::pkgdown
             any::quarto
+            any::yaml
+            any::glue
+            any::tidyverse
             any::DT
           cache: true
 
       - name: Build pkgdown site
         run: |
           Rscript -e 'devtools::build_site(quiet=FALSE)'
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: docs
