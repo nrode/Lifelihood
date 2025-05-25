@@ -72,13 +72,15 @@ SurvWei <- function(t, ExpLong, Shape) {
 #'
 #' @export
 detect_os <- function() {
+  compatible_oses <- c("Windows", "Darwin")
   os <- Sys.info()["sysname"]
-  if (os == "Windows") {
-    return("Windows")
-  } else if (os == "Linux" || os == "Darwin") {
-    return("Unix-like")
+  if (os %in% compatible_oses) {
+    return(os)
   } else {
-    stop(paste0("Unexpected OS: ", os))
+    stop(
+      "lifelihood only works with MacOS and Windows at the moment, not: ",
+      os
+    )
   }
 }
 
@@ -139,7 +141,7 @@ get_config_path <- function(
 #' @export
 remove_lifelihood_tempfiles <- function(path = ".") {
   # regex pattern for the directory names
-  pattern <- "^lifelihood_\\d{4}_\\d{4}_\\d{4}_\\d{4}"
+  pattern <- "^lifelihood_\\d+_\\d+_\\d+_\\d+"
 
   dirs <- list.dirs(path, full.names = TRUE, recursive = FALSE)
   target_dirs <- dirs[grepl(pattern, basename(dirs))]

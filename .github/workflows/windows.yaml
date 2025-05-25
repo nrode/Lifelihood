@@ -1,9 +1,6 @@
 name: Windows - Unit Tests
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -30,5 +27,4 @@ jobs:
         shell: pwsh # Use PowerShell for compatibility
         run: |
           Rscript -e "devtools::load_all(compile=FALSE); 
-                 print('Loaded package: ', packageVersion('lifelihood'));
-                 testthat::test_dir('tests/testthat', stop_on_failure = TRUE)"
+                 devtools::test(stop_on_failure = TRUE)"
