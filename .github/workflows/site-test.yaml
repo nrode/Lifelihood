@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy-pkgdown:
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     permissions:
       contents: write
