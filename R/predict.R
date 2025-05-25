@@ -12,9 +12,11 @@
 #' @return A vector containing the predicted values for the parameter.
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -37,7 +39,7 @@
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config2.yaml"),
+#'   path_config = get_config_path("config2"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )

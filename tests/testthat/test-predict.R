@@ -1,8 +1,10 @@
 library(lifelihood)
 
-df <- fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- fakesample |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  )
 
 clutchs <- c(
   "clutch_start1",
