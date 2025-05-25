@@ -1,16 +1,16 @@
-name: Linux - Unit Tests
+name: Cross-Platform - Unit Tests
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Checkout repository
@@ -28,4 +28,4 @@ jobs:
 
       - name: Run unit tests
         run: |
-          R -e 'devtools::test()'
+          R -e 'devtools::test(stop_on_failure = TRUE)'

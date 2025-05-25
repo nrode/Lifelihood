@@ -1,4 +1,3 @@
----
 mortality:
   expt_death: geno + type
   survival_shape: geno + type + geno*type

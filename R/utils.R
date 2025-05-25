@@ -81,3 +81,42 @@ detect_os <- function() {
     stop(paste0("Unexpected OS: ", os))
   }
 }
+
+#' @title Get the path to a built-in configuration file.
+#'
+#' @description
+#' `lifelihood` embeds a few configuration files, and
+#' this function is a simple tool to access one of them.
+#'
+#' It takes the name one of the available configuration
+#' and returns the path to it.
+#'
+#' For more info about configuration files, see
+#' \code{vignette("setting-up-the-configuration-file", package = "lifelihood")}
+#'
+#' @param config_name Configuration name. Currently available options:
+#' - config
+#' - config2
+#' - config_pierrick
+#' By default, it will use "config".
+#'
+#' @return Absolute path to the configuration file
+#'
+#' @examples
+#' get_config_path("config")
+#' get_config_path("config2")
+#'
+#' @export
+get_config_path <- function(
+  config_name = c("config", "config2", "config_pierrick")
+) {
+  config_name <- match.arg(config_name)
+
+  config_path <- system.file(
+    "configs",
+    paste0(config_name, ".yaml"),
+    package = "lifelihood"
+  )
+
+  return(config_path)
+}

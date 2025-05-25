@@ -72,6 +72,10 @@ devtools::test()
 
 Ensure all tests pass before submitting a pull request. Adding new tests for new features or bug fixes is highly encouraged.
 
+## Code format
+
+In order to ensure consistent code style, it's recommend to install [Air](https://posit-dev.github.io/air/), an R formatter. The documentation with it has tutorials on how to set up it in your IDE (RStudio, Positron, VS Code, etc).
+
 ## Submitting a Pull Request (PR)
 
 Once your changes are complete and tested, submit a pull request to propose integrating them into the main **Lifelihood** repository:

@@ -73,9 +73,12 @@ plot_mortality_rate <- function(
   ylab = "Mortality Rate"
 ) {
   if (!is.null(groupby)) {
-    if (!groupby %in% lifelihoodData$covariates) {
+    covariates <- lifelihoodData$covariates
+    if (!groupby %in% covariates) {
       stop(
-        "`groupby` argument should be among the covariates of the `lifelihoodData` object provided."
+        "`groupby` argument should be among the covariates",
+        "of the `lifelihoodData` object provided: ",
+        paste0(covariates, collapse = ", ")
       )
     }
   }
