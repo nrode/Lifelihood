@@ -23,3 +23,5 @@ docs/
 data_internals/
 inst/doc
 **/.quarto/
+/doc/
+/Meta/

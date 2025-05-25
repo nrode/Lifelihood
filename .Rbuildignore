@@ -21,3 +21,5 @@ dev.R
 lifelihood_\*/
 ^data_internals/
 ^\.github$
+^doc$
+^Meta$

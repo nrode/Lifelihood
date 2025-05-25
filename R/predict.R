@@ -98,16 +98,29 @@ prediction <- function(
     Terms <- stats::terms(m)
     x <- stats::model.matrix(Terms, m)
     coef_vector <- effects$estimation[range]
+
+    # the case where newdata does not contain all
+    # possible factors: we add them and put to 0.
     if (ncol(x) != length(coef_vector)) {
-      stop(
-        paste0(
-          "Dimension mismatch: design matrix has ",
-          ncol(x),
-          " columns but coefficient vector has ",
-          length(coef_vector),
-          " elements."
+      orig_m <- model.frame(fml, data = original_df)
+      orig_x <- stats::model.matrix(Terms, orig_m)
+      missing_cols <- setdiff(colnames(orig_x), colnames(x))
+      for (col in missing_cols) {
+        x <- cbind(x, rep(0, nrow(x)))
+        colnames(x)[ncol(x)] <- col
+      }
+      x <- x[, colnames(orig_x), drop = FALSE]
+      if (ncol(x) != length(coef_vector)) {
+        stop(
+          paste0(
+            "Dimension mismatch after adding missing factor levels: design matrix has ",
+            ncol(x),
+            " columns but coefficient vector has ",
+            length(coef_vector),
+            " elements."
+          )
         )
-      )
+      }
     }
     predictions <- x %*% coef_vector
 
