@@ -1,16 +1,16 @@
-name: Cross-Platform - Unit Tests
+name: MacOS - Unit Tests
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: macos-latest
 
     steps:
       - name: Checkout repository
@@ -27,5 +27,6 @@ jobs:
           extra-packages: remotes,devtools,testthat
 
       - name: Run unit tests
+        shell: bash # Use bash shell for macOS
         run: |
           R -e 'devtools::test(stop_on_failure = TRUE)'

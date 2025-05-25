@@ -21,7 +21,7 @@ pred_mortality_rate <- function(
   interval_width,
   newdata = NULL,
   max_time = NULL,
-  groupby = FALSE
+  groupby = NULL
 ) {
   lifelihoodData <- lifelihoodResults$lifelihoodData
   check_groupby_arg(lifelihoodData, groupby)
@@ -42,7 +42,7 @@ pred_mortality_rate <- function(
 
   n_intervals <- ceiling(max_time / interval_width)
 
-  if (groupby) {
+  if (!is.null(groupby)) {
     data$group <- do.call(interaction, data[groupby])
     groups <- sort(unique(data$group))
   } else {

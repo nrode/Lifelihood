@@ -1,16 +1,13 @@
-name: Windows - Unit Tests
+name: Linux - Unit Tests
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -27,8 +24,5 @@ jobs:
           extra-packages: remotes,devtools,testthat
 
       - name: Run unit tests
-        shell: pwsh # Use PowerShell for compatibility
         run: |
-          Rscript -e "devtools::load_all(compile=FALSE); 
-                 print('Loaded package: ', packageVersion('lifelihood'));
-                 testthat::test_dir('tests/testthat', stop_on_failure = TRUE)"
+          R -e 'devtools::test(stop_on_failure = TRUE)'
