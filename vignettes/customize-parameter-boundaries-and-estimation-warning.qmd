@@ -32,7 +32,7 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- fakesample
+df <- lifelihood::fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 ```
