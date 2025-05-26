@@ -236,13 +236,7 @@ lifelihood <- function(
 #' coeff(results)
 #' coeff(results, "expt_death")
 coeff <- function(object, parameter_name = NULL) {
-  if (!(inherits(object, "lifelihoodResults"))) {
-    stop(paste0(
-      "`coeff` function expect a 'lifelihoodResults' object, not: '",
-      class(object),
-      "'"
-    ))
-  }
+  check_valid_lifelihoodResults(object)
 
   if (is.null(parameter_name)) {
     coefs <- object$effects$estimation
