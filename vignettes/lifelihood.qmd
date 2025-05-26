@@ -16,8 +16,8 @@ knitr:
 ```{r}
 #| label: setup
 #library(lifelihood)
-library(tidyverse)
 devtools::load_all()
+library(tidyverse)
 ```
 
 ### Data prepration
@@ -140,4 +140,12 @@ plot_fitted_mortality_rate(
   interval_width = 5,
   groupby = "spore"
 )
+```
+
+### Retrieve mortality rates
+
+You can get 
+
+```{r}
+df_mort_rates <- mortality_rate(dataLFH, interval_width = 10)
 ```

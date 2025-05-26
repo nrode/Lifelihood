@@ -88,10 +88,6 @@ pred_mortality_rate <- function(
   }
 
   pred_mortality_rate_df <- do.call(rbind, result)
-  pred_mortality_rate_df$MortalityRate[is.na(
-    pred_mortality_rate_df$MortalityRate
-  )] <- 1
 
-  rownames(pred_mortality_rate_df) <- NULL
   return(pred_mortality_rate_df)
 }

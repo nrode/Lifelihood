@@ -58,7 +58,7 @@
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -229,20 +229,14 @@ lifelihood <- function(
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
 #' coeff(results)
 #' coeff(results, "expt_death")
 coeff <- function(object, parameter_name = NULL) {
-  if (!(inherits(object, "lifelihoodResults"))) {
-    stop(paste0(
-      "`coeff` function expect a 'lifelihoodResults' object, not: '",
-      class(object),
-      "'"
-    ))
-  }
+  check_valid_lifelihoodResults(object)
 
   if (is.null(parameter_name)) {
     coefs <- object$effects$estimation
@@ -296,7 +290,7 @@ coeff <- function(object, parameter_name = NULL) {
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -406,7 +400,7 @@ BIC.lifelihoodResults <- function(object, ...) {
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )

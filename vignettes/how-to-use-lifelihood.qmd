@@ -21,7 +21,8 @@ knitr:
 ***
 
 ```{r}
-library(lifelihood)
+#library(lifelihood)
+devtools::load_all()
 ```
 
 # Data preparation
@@ -31,7 +32,7 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- lifelihood::fakesample
+df <- fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 
@@ -102,7 +103,7 @@ Here it's a minimalist usage of the function, where we only specify the `lifelih
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("configs/config.yaml", package = "lifelihood"),
+  path_config = get_config_path("config"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

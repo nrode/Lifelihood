@@ -64,13 +64,7 @@ prediction <- function(
   type = c("link", "response"),
   se.fit = FALSE
 ) {
-  if (!(inherits(object, "lifelihoodResults"))) {
-    stop(paste0(
-      "`prediction` function expect a 'lifelihoodResults' object, not: '",
-      class(object),
-      "'"
-    ))
-  }
+  check_valid_lifelihoodResults(object)
 
   type <- match.arg(type)
 

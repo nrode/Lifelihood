@@ -12,7 +12,8 @@ knitr:
 
 ```{r}
 #| label: setup
-library(lifelihood)
+#library(lifelihood)
+devtools::load_all()
 ```
 
 # Introduction

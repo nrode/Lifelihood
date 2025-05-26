@@ -43,7 +43,7 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = here::here("config.yaml"),
+  path_config = get_config_path("config"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

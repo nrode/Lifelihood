@@ -157,3 +157,36 @@ remove_lifelihood_tempfiles <- function(path = ".") {
     }
   }
 }
+
+#' @title Check that an object is of class `lifelihoodResults`
+#'
+#' @description
+#' Internally, `lifelihood` has to check multiple times
+#' that the passed object is the expected one.
+#'
+#' It basically raises an explicit error if the object
+#' is not of class `lifelihoodResults`.
+#'
+#' @param object An object to test.
+#'
+#' @examples
+#' \dontrun{
+#' # raise an error
+#' obj <- c(1,2,3)
+#' check_valid_lifelihoodResults(obj)
+#'
+#' # works (does nothing)
+#' class(obj) = "lifelihoodResults"
+#' check_valid_lifelihoodResults(obj)
+#' }
+#'
+#' @export
+check_valid_lifelihoodResults <- function(object) {
+  if (!(inherits(object, "lifelihoodResults"))) {
+    stop(paste0(
+      "`object` expects a 'lifelihoodResults' object, not: '",
+      class(object),
+      "'"
+    ))
+  }
+}
