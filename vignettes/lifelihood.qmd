@@ -141,3 +141,9 @@ plot_fitted_mortality_rate(
   groupby = "spore"
 )
 ```
+
+### Retrieve mortality rates
+
+```{r}
+mortality_rate(dataLFH, interval_width = 10)
+```

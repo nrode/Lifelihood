@@ -132,6 +132,17 @@ mortality_rate <- function(
   if (is.null(groupby)) {
     mortality_rate_df <- subset(mortality_rate_df, select = -c(Group))
   }
+
+  # remove times where mortality rate is 1
+  mortality_rate_df |>
+    mutate(
+      MortalityRate = if_else(
+        MortalityRate >= 1,
+        NA_real_,
+        MortalityRate
+      )
+    )
+
   return(mortality_rate_df)
 }
 
