@@ -50,7 +50,7 @@
 #' # then we pass it to lifelihood()
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   param_bounds_df = bounds_df,
 #'   raise_estimation_warning = FALSE
 #' )

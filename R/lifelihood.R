@@ -58,7 +58,7 @@
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -229,7 +229,7 @@ lifelihood <- function(
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -290,7 +290,7 @@ coeff <- function(object, parameter_name = NULL) {
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -400,7 +400,7 @@ BIC.lifelihoodResults <- function(object, ...) {
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = here::here("config.yaml"),
+#'   path_config = get_config_path("config"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )

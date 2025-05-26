@@ -10,12 +10,6 @@ knitr:
     comment: '#>'
 ---
 
-```{r}
-#| label: setup
-library(lifelihood)
-```
-
-
 <div class="topVignette">If you haven't already check it, have a look at:</div>
 
 - [What is the required data format](required-data-format.html)

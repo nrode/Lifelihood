@@ -19,7 +19,8 @@ For practical reasons, it is easier to generate this vector programmatically, pa
 ***
 
 ```{r}
-library(lifelihood)
+#library(lifelihood)
+devtools::load_all()
 
 df <- fakesample
 df$type <- as.factor(df$type)

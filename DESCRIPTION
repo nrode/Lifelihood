@@ -1,40 +1,40 @@
 Package: lifelihood
-Title: Likelihood Of Life History Of Individuals
+Title: Likelihood of Life History of Individuals
 Version: 0.0.0.9
-Authors@R: 
-        c(
-            person(given = "Nicolas", family = "Rode", role = c("aut", "cre"), email = "nicolas.rode@inrae.fr"),
-            person(given = "Thomas", family = "Lenormand", role = c("aut"), email = "thomas.lenormand@cefe.cnrs.fr"),
-            person(given = "Joseph", family = "Barbier", role = c("aut"), email = "joseph.barbierdarnal@gmail.com")
-        )
+Authors@R: c(
+    person("Nicolas", "Rode", email = "nicolas.rode@inrae.fr", role = c("aut", "cre")),
+    person("Thomas", "Lenormand", email = "thomas.lenormand@cefe.cnrs.fr", role = "aut"),
+    person("Joseph", "Barbier", email = "joseph.barbierdarnal@gmail.com", role = "aut")
+  )
 Author: Nicolas Rode, Thomas Lenormand, Joseph Barbier
 Maintainer: Nicolas Rode <nicolas.rode@inrae.fr>
-Description: Lifelihood is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death). 
+Description: Lifelihood is a class of continuous-time multi-event models
+    that provide the joint likelihood of all events in an individual's
+    life history (e.g., time of maturity, reproductive events, death).
 License: MIT + file LICENSE
 URL: https://nrode.github.io/Lifelihood/
 BugReports: https://github.com/nrode/Lifelihood/issues
+Depends: 
+    R (>= 4.1.0)
+Imports: 
+    coda,
+    here,
+    reshape2,
+    stats,
+    yaml
+Suggests: 
+    devtools,
+    DT,
+    ggplot2,
+    knitr,
+    quarto,
+    testthat
+VignetteBuilder: 
+    knitr,
+    quarto
 ByteCompile: true
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-VignetteBuilder: knitr, quarto
-BinaryFiles:
-    inst/bin/lifelihood
-    inst/bin/lifelihood.exe
-Imports: 
-    here,
-    yaml,
-    reshape2,
-    stats,
-    coda
-Suggests: 
-    devtools,
-    ggplot2,
-    knitr,
-    quarto,
-    testthat,
-    DT
-Config/testthat/edition: 3
-Depends: 
-    R (>= 4.1.0)
