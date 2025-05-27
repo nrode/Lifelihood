@@ -10,7 +10,13 @@ https://nrode.github.io/Lifelihood/
 
 It requires:
 
-- R 4.1.0
+- R 4.1.0 (or later)
 - macOS (ARM64) or Windows
+
+## Installation
+
+```r
+devtools::install_github("nrode/Lifelihood")
+```
 
 <br>

@@ -118,7 +118,7 @@ exp(m$coefficients)
 survival::predict(m)
 
 
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+df <- fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 head(df)

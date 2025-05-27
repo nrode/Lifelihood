@@ -23,13 +23,18 @@ mortality rate. If \code{"all"}, calculates mortality rate over each
 combination of covariates listed in the\code{lifelihoodData} object provided.}
 }
 \value{
-A dataframe with 3 columns: Interval (time interval, based on \code{interval_width} value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
+A dataframe with 3 columns: Interval (time interval, based
+on \code{interval_width} value), Group (identifier of a given subgroup,
+or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+at this time).
 }
 \description{
 Calculate the empirical mortality rate over a given interval.
 }
 \examples{
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+library(lifelihood)
+
+df <- fakesample
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)
 

@@ -125,6 +125,8 @@ plot_observed_mortality_rate <- function(
 #'
 #' @return a ggplot2 plot
 #'
+#' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal
+#'
 #' @keywords internal
 plot_mortality_rate <- function(
   rate_df,

@@ -11,6 +11,8 @@
 #'
 #' @return A vector containing the predicted values for the parameter.
 #'
+#' @importFrom stats as.formula formula model.frame model.matrix
+#'
 #' @examples
 #' df <- fakesample |>
 #'   mutate(
@@ -89,15 +91,15 @@ prediction <- function(
     fml <- read_formula(object$config, parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
-    Terms <- stats::terms(m)
-    x <- stats::model.matrix(Terms, m)
+    Terms <- terms(m)
+    x <- model.matrix(Terms, m)
     coef_vector <- effects$estimation[range]
 
     # the case where newdata does not contain all
     # possible factors: we add them and put to 0.
     if (ncol(x) != length(coef_vector)) {
       orig_m <- model.frame(fml, data = original_df)
-      orig_x <- stats::model.matrix(Terms, orig_m)
+      orig_x <- model.matrix(Terms, orig_m)
       missing_cols <- setdiff(colnames(orig_x), colnames(x))
       for (col in missing_cols) {
         x <- cbind(x, rep(0, nrow(x)))

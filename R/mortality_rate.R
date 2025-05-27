@@ -12,10 +12,17 @@
 #' @param max_time The maximum time for calculating the mortality
 #' rate. If set to NULL, the time of the last observed death is used.
 #'
-#' @return A dataframe with 3 columns: Interval (time interval, based on `interval_width` value), Group (identifier of a given subgroup, or "Overall" if groupby = NULL), and MortalityRate (mortality rate at this time).
+#' @return A dataframe with 3 columns: Interval (time interval, based
+#' on `interval_width` value), Group (identifier of a given subgroup,
+#' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+#' at this time).
+#'
+#' @importFrom dplyr mutate if_else
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' library(lifelihood)
+#'
+#' df <- fakesample
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #'
@@ -135,7 +142,7 @@ mortality_rate <- function(
 
   # remove times where mortality rate is 1
   mortality_rate_df |>
-    dplyr::mutate(
+    mutate(
       MortalityRate = if_else(
         MortalityRate >= 1,
         NA_real_,

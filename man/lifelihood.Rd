@@ -78,7 +78,9 @@ events, death) and estimates the parameters of the model
 using maximum likelihood.
 }
 \examples{
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+library(lifelihood)
+
+df <- fakesample
 head(df)
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)

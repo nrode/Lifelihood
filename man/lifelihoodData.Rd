@@ -67,7 +67,9 @@ mainly be used to pass to \code{\link[=lifelihood]{lifelihood()}} or for customi
 parameter boundaries with \code{\link[=default_bounds_df]{default_bounds_df()}}.
 }
 \examples{
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+library(lifelihood)
+
+df <- fakesample
 head(df)
 
 clutchs <- c(

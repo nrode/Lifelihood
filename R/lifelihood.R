@@ -29,10 +29,14 @@
 #'
 #' @return A `lifelihoodResults` object
 #'
+#' @importFrom utils write.table
+#'
 #' @export
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' library(lifelihood)
+#'
+#' df <- fakesample
 #' head(df)
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
@@ -353,6 +357,8 @@ AICc.lifelihoodResults <- function(object, ..., k = length(coeff(object))) {
 #'
 #' @seealso \code{\link{AIC}}
 #'
+#' @importFrom stats BIC
+#'
 #' @export
 BIC.lifelihoodResults <- function(object, ...) {
   k <- length(coeff(object))
@@ -376,7 +382,9 @@ BIC.lifelihoodResults <- function(object, ...) {
 #'
 #' @export
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' library(lifelihood)
+#'
+#' df <- fakesample
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #' head(df)

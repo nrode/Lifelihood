@@ -1,8 +1,5 @@
-library(lifelihood)
-library(tidyverse)
-
 df <- fakesample |>
-  mutate(
+  dplyr::mutate(
     geno = as.factor(geno),
     type = as.factor(type)
   )

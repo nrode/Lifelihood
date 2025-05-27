@@ -18,6 +18,8 @@ The AIC
 }
 \description{
 S3 method to compute AIC (Akaike information criterion).
+
+TODO
 }
 \seealso{
 \code{\link{BIC}}

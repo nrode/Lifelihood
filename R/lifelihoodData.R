@@ -29,7 +29,9 @@
 #' @export
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' library(lifelihood)
+#'
+#' df <- fakesample
 #' head(df)
 #'
 #' clutchs <- c(

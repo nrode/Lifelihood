@@ -17,7 +17,9 @@
 #' @export
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' library(lifelihood)
+#'
+#' df <- fakesample
 #' df$type <- as.factor(df$type)
 #' df$geno <- as.factor(df$geno)
 #' head(df)
