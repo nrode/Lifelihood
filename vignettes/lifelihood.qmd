@@ -24,7 +24,7 @@ library(tidyverse)
 
 ```{r}
 #| label: data preparation
-df <- read.csv("test.test/pierrick.csv") |>
+df <- datapierrick |>
   mutate(
     geno = as.factor(geno),
     par = as.factor(par),
