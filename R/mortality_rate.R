@@ -135,7 +135,7 @@ mortality_rate <- function(
 
   # remove times where mortality rate is 1
   mortality_rate_df |>
-    mutate(
+    dplyr::mutate(
       MortalityRate = if_else(
         MortalityRate >= 1,
         NA_real_,

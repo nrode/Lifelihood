@@ -304,6 +304,8 @@ logLik.lifelihoodResults <- function(object, ...) {
 #' @description
 #' S3 method to compute AIC (Akaike information criterion).
 #'
+#' TODO
+#'
 #' @param object output of [lifelihood()]
 #' @param k Number of estimated parameter of the modèle. Default to `length(coef(object))`
 #' @param ... Ignored

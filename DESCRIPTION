@@ -2,9 +2,9 @@ Package: lifelihood
 Title: Likelihood of Life History of Individuals
 Version: 0.0.0.9
 Authors@R: c(
-    person("Nicolas", "Rode", email = "nicolas.rode@inrae.fr", role = c("aut", "cre")),
-    person("Thomas", "Lenormand", email = "thomas.lenormand@cefe.cnrs.fr", role = "aut"),
-    person("Joseph", "Barbier", email = "joseph.barbierdarnal@gmail.com", role = "aut")
+    person("Nicolas", "Rode", , "nicolas.rode@inrae.fr", role = c("aut", "cre")),
+    person("Thomas", "Lenormand", , "thomas.lenormand@cefe.cnrs.fr", role = "aut"),
+    person("Joseph", "Barbier", , "joseph.barbierdarnal@gmail.com", role = "aut")
   )
 Author: Nicolas Rode, Thomas Lenormand, Joseph Barbier
 Maintainer: Nicolas Rode <nicolas.rode@inrae.fr>

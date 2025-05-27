@@ -123,6 +123,16 @@ get_config_path <- function(
   return(config_path)
 }
 
+load_data <- function(dataset) {
+  path <- system.file(
+    "data",
+    "fakesample.rda",
+    package = "lifelihood",
+    mustWork = TRUE
+  )
+  load(path)
+}
+
 #' @title Remove all lifelihood temporary files
 #'
 #' @description

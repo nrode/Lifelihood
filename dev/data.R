@@ -12,3 +12,7 @@ usethis::use_data(datapierrick)
 # Make `fakesample` available
 fakesample <- read.csv(here::here("data_internals/fake_sample.csv"))
 usethis::use_data(fakesample)
+
+
+devtools::load_all()
+lifelihood::datapierrick
