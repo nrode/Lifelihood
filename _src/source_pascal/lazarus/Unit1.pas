@@ -6,7 +6,7 @@ interface
 uses
   Unit2,Alea, SysUtils, Classes,fspec;
 var
-list,nominfile:TStringList;
+list:TStringList;
 lect:string;
 
 procedure readata;
