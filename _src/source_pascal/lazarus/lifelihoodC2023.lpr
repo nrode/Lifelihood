@@ -42,10 +42,10 @@ TRY
   readcustom(ll_d);         // = decrireparam code precedent
   //outfile
   Try
-  nominfile:=TStringList.Create;
-  nominfile.Delimiter :='.';
-  nominfile.DelimitedText:=nomf1;
-  nomoutfile:=nominfile[0]+'.out';
+  //nominfile:=TStringList.Create;
+  //nominfile.Delimiter :='.';
+  //nominfile.DelimitedText:=nomf1;
+  nomoutfile := ChangeFileExt(nomf1, '.out');
   assignfile(outfile,nomoutfile);
   rewrite(outfile);
   closefile(outfile);
