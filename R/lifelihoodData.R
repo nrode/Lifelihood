@@ -31,7 +31,11 @@
 #' @examples
 #' library(lifelihood)
 #'
-#' df <- fakesample
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #' head(df)
 #'
 #' clutchs <- c(

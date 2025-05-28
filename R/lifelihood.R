@@ -36,10 +36,12 @@
 #' @examples
 #' library(lifelihood)
 #'
-#' df <- fakesample
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #' head(df)
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -590,9 +592,11 @@ BIC.lifelihoodResults <- function(object, ...) {
 #' @examples
 #' library(lifelihood)
 #'
-#' df <- fakesample
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #' head(df)
 #'
 #' clutchs <- c(

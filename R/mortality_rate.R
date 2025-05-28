@@ -22,9 +22,11 @@
 #' @examples
 #' library(lifelihood)
 #'
-#' df <- fakesample
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -127,7 +129,6 @@ mortality_rate_data <- function(
   mortality_rate_df <- reshape2::melt(mortality_rate)
   colnames(mortality_rate_df) <- c("Interval", "Group", "MortalityRate")
   mortality_rate_df$Group <- as.factor(mortality_rate_df$Group)
-  ##mortality_rate_df$MortalityRate[is.na(mortality_rate_df$MortalityRate)] <- 1
 
   if (is.null(groupby)) {
     mortality_rate_df <- subset(mortality_rate_df, select = -c(Group))
@@ -154,9 +155,12 @@ mortality_rate_data <- function(
 #'
 #' @inheritParams lifelihood
 #' @param groupby covariate(s) over which mortality rate should be
-#' computed (default is `NULL`). If NULL, calculates a single overall
-#' mortality rate. If `"all"`, calculates mortality rate over each
-#' combination of covariates listed in the`lifelihoodData` object provided.
+#' computed (default is `NULL`).
+#' - If NULL, calculates a single overall mortality rate.
+#' - If `"all"`, calculates mortality rate over each combination
+#' of covariates listed in the`lifelihoodData` object provided.
+#' - Otherwise must be a character (`"covariate1"`) or a
+#' character vector (`c("covariate1", "covariate2")`).
 #'
 #' @returns The valid `groupby` value
 #'
