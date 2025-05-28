@@ -24,7 +24,7 @@ jobs:
       - name: Install system dependencies
         run: |
           brew update
-          brew install curl openssl libxml2
+          brew install curl openssl libxml2 pandoc
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
