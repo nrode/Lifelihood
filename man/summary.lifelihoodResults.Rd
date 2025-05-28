@@ -16,10 +16,13 @@ S3 method to display main results of the lifelihood program.
 }
 \examples{
 library(lifelihood)
+library(tidyverse)
 
-df <- fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- fakesample |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  )
 head(df)
 
 clutchs <- c(

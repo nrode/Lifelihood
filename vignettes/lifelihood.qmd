@@ -15,8 +15,7 @@ knitr:
 
 ```{r}
 #| label: setup
-#library(lifelihood)
-devtools::load_all()
+library(lifelihood)
 library(tidyverse)
 ```
 

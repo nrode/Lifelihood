@@ -1,4 +1,5 @@
 library(lifelihood)
+library(tidyverse)
 
 test_that("format_config correctly reads and formats the config file", {
   path_config <- test_path(system.file(

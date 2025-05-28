@@ -56,9 +56,14 @@ the mortality rate will be calculated every 10 days for each group.}
 rate. If set to NULL, the time of the last observed death is used.}
 
 \item{groupby}{covariate(s) over which mortality rate should be
-computed (default is \code{NULL}). If NULL, calculates a single overall
-mortality rate. If \code{"all"}, calculates mortality rate over each
-combination of covariates listed in the\code{lifelihoodData} object provided.}
+computed (default is \code{NULL}).
+\itemize{
+\item If NULL, calculates a single overall mortality rate.
+\item If \code{"all"}, calculates mortality rate over each combination
+of covariates listed in the\code{lifelihoodData} object provided.
+\item Otherwise must be a character (\code{"covariate1"}) or a
+character vector (\code{c("covariate1", "covariate2")}).
+}}
 
 \item{log_x}{Determine whether the x-axis should be displayed on a logarithmic scale}
 

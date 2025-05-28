@@ -23,9 +23,14 @@ the mortality rate will be calculated every 10 days for each group.}
 rate. If set to NULL, the time of the last observed death is used.}
 
 \item{groupby}{covariate(s) over which mortality rate should be
-computed (default is \code{NULL}). If NULL, calculates a single overall
-mortality rate. If \code{"all"}, calculates mortality rate over each
-combination of covariates listed in the\code{lifelihoodData} object provided.}
+computed (default is \code{NULL}).
+\itemize{
+\item If NULL, calculates a single overall mortality rate.
+\item If \code{"all"}, calculates mortality rate over each combination
+of covariates listed in the\code{lifelihoodData} object provided.
+\item Otherwise must be a character (\code{"covariate1"}) or a
+character vector (\code{c("covariate1", "covariate2")}).
+}}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based
@@ -38,10 +43,13 @@ Calculate the empirical mortality rate over a given interval.
 }
 \examples{
 library(lifelihood)
+library(tidyverse)
 
-df <- fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- fakesample |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  )
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",

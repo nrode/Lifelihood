@@ -11,7 +11,7 @@
 #'
 #' @return A vector containing the predicted values for the parameter.
 #'
-#' @importFrom stats as.formula formula model.frame model.matrix
+#' @importFrom stats as.formula formula model.frame model.matrix terms
 #'
 #' @examples
 #' df <- fakesample |>

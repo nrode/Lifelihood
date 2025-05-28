@@ -20,21 +20,34 @@ format_row(
 \arguments{
 \item{row}{A row of the dataframe object provided by the user (\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function).}
 
-\item{sex}{Column name containing the sex of the observations.}
+\item{sex}{Column name containing the sex of the
+observations.}
 
-\item{sex_start}{Column name containing the first date of the interval in which the sex was determined.}
+\item{sex_start}{Column name containing the first
+date of the interval in which the sex was determined.}
 
-\item{sex_end}{Column name containing the second date of the interval in which the sex was determined.}
+\item{sex_end}{Column name containing the second date
+of the interval in which the sex was determined.}
 
-\item{maturity_start}{Column name containing the first date of the interval in which the maturity was determined.}
+\item{maturity_start}{Column name containing the first
+date of the interval in which the maturity was determined.}
 
-\item{maturity_end}{Column name containing the second date of the interval in which the maturity was determined.}
+\item{maturity_end}{Column name containing the second
+date of the interval in which the maturity was determined.}
 
-\item{clutchs}{Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).}
+\item{clutchs}{Vector containing the names of the clutch
+columns. The order should be: first clutch first date, first
+clutch second date, first clutch clutch size, second clutch
+first date, first clutch second date, second clutch clutch
+size, and so on. If the observation with the most clutches
+is, for example, 10, then the vector must be of size 10 x 3 = 30
+(3 elements per clutch: first date, second date and size).}
 
-\item{death_start}{Column name containing the first date of the interval in which the death was determined.}
+\item{death_start}{Column name containing the first date of
+the interval in which the death was determined.}
 
-\item{death_end}{Column name containing the second date of the interval in which the death was determined.}
+\item{death_end}{Column name containing the second date of
+the interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 }

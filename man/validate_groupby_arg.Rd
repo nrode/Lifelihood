@@ -10,9 +10,14 @@ validate_groupby_arg(lifelihoodData, groupby)
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
 \item{groupby}{covariate(s) over which mortality rate should be
-computed (default is \code{NULL}). If NULL, calculates a single overall
-mortality rate. If \code{"all"}, calculates mortality rate over each
-combination of covariates listed in the\code{lifelihoodData} object provided.}
+computed (default is \code{NULL}).
+\itemize{
+\item If NULL, calculates a single overall mortality rate.
+\item If \code{"all"}, calculates mortality rate over each combination
+of covariates listed in the\code{lifelihoodData} object provided.
+\item Otherwise must be a character (\code{"covariate1"}) or a
+character vector (\code{c("covariate1", "covariate2")}).
+}}
 }
 \value{
 The valid \code{groupby} value

@@ -18,6 +18,7 @@
 #'
 #' @examples
 #' library(lifelihood)
+#' library(tidyverse)
 #'
 #' df <- fakesample |>
 #'   mutate(

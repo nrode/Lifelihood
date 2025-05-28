@@ -19,12 +19,14 @@ For practical reasons, it is easier to generate this vector programmatically, pa
 ***
 
 ```{r}
-#library(lifelihood)
-devtools::load_all()
+library(lifelihood)
+library(tidyverse)
 
-df <- fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- fakesample |>
+  mutate(
+    type = as.factor(type),
+    geno = as.factor(geno)
+  )
 ```
 
 ```{r}

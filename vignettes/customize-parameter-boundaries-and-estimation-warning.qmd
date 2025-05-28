@@ -21,8 +21,8 @@ knitr:
 ***
 
 ```{r}
-#library(lifelihood)
-devtools::load_all()
+library(lifelihood)
+library(tidyverse)
 ```
 
 # Data preparation
@@ -32,9 +32,11 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- lifelihood::fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- fakesample |>
+  mutate(
+    type = as.factor(type),
+    geno = as.factor(geno)
+  )
 ```
 
 ```{r, echo=FALSE}

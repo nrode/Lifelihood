@@ -35,6 +35,7 @@
 #'
 #' @examples
 #' library(lifelihood)
+#' library(tidyverse)
 #'
 #' df <- fakesample |>
 #'   mutate(
@@ -200,10 +201,13 @@ lifelihood <- function(
 #' `coef()` retrieve all coefficients from the output of [lifelihood()]
 #'
 #' @param object output of [lifelihood()]
+#' @param ... Ignored
 #'
 #' @return A nested list of coefficient estimates
 #'
 #' @export
+#'
+#' @importFrom stats coef
 #'
 #' @examples
 #' df <- lifelihood::fakesample |>
@@ -513,7 +517,7 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #'   raise_estimation_warning = FALSE
 #' )
 #' AICc(results)
-AICc.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
+AICc <- function(object, ..., k = length(coef(object))) {
   check_valid_lifelihoodResults(object)
 
   L <- object$likelihood
@@ -591,6 +595,7 @@ BIC.lifelihoodResults <- function(object, ...) {
 #'
 #' @examples
 #' library(lifelihood)
+#' library(tidyverse)
 #'
 #' df <- fakesample |>
 #'   mutate(
