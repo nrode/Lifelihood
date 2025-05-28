@@ -22,13 +22,9 @@ jobs:
         run: |
           brew install pandoc
 
-      - name: Install R packages
-        run: |
-          Rscript -e 'install.packages("any::pkgdown", repos = "https://cloud.r-project.org")'
-          Rscript -e 'install.packages("any::tidyverse", repos = "https://cloud.r-project.org")'
-
       - name: Build pkgdown site
         run: |
+          Rscript -e 'install.packages(c("devtools", "tidyverse"))'
           Rscript -e 'pkgdown::build_site()'
 
       - name: Deploy to gh-pages
