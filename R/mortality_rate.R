@@ -84,7 +84,7 @@ mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
-    if (!groupby %in% covariates) {
+    if (!any(groupby %in% covariates)) {
       stop(
         "`groupby` argument should be among the covariates of the `lifelihoodData` object provided."
       )

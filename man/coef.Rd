@@ -23,14 +23,17 @@ A nested list of coefficient estimates
 A list of coefficient estimates
 }
 \description{
-Retrieve coefficients from the output of \code{\link[=lifelihood]{lifelihood()}}
+\code{coef()} retrieve all coefficients from the output of \code{\link[=lifelihood]{lifelihood()}}
 
-Retrieve coefficients from the output of \code{\link[=lifelihood]{lifelihood()}}
+\code{coeff()} retrieve coefficients of one parameter
+from the output of \code{\link[=lifelihood]{lifelihood()}}
 }
 \examples{
-df <- lifelihood::fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- lifelihood::fakesample |>
+  mutate(
+    type = as.factor(type),
+    geno = as.factor(geno)
+  )
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -58,9 +61,11 @@ results <- lifelihood(
   raise_estimation_warning = FALSE
 )
 coef(results)
-df <- lifelihood::fakesample
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- lifelihood::fakesample |>
+  mutate(
+    type = as.factor(type),
+    geno = as.factor(geno)
+  )
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",

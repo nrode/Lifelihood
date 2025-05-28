@@ -38,23 +38,25 @@ results <- lifelihood(
 )
 
 
-#AIC(results, "expt_death")
-#BIC(results, "expt_death")
+AIC(results)
+BIC(results)
 
 coef(results)
 coeff(results, "expt_death")
 coeff(results, "survival_shape")
 logLik(results)
+vcov(results)
 # results$effects
 # results$mcmc
-# results$vcov
 
 newdata <- data.frame(
   par = c(0, 1, 2, 0, 1, 2),
   spore = c(0, 1, 2, 1, 0, 1)
-)
-newdata$par <- factor(newdata$par)
-newdata$spore <- factor(newdata$spore)
+) |>
+  mutate(
+    par = as.factor(par),
+    spore = as.factor(spore)
+  )
 prediction(results, "expt_death", newdata, se.fit = FALSE)
 prediction(results, "expt_death", newdata, type = "response")
 
@@ -68,33 +70,29 @@ data(iris)
 iris$Sepal.Width2 <- iris$Sepal.Width
 lm(Sepal.Length ~ Sepal.Width + Sepal.Width2, data = iris, singular.ok = FALSE)
 
-plot_mortality_rate(
+plot_observed_mortality_rate(
   dataLFH,
   interval_width = 15,
   max_time = 170,
-  log_y = TRUE,
-  log_x = TRUE
+  log_y = TRUE
 )
-plot_mortality_rate(
+plot_observed_mortality_rate(
   dataLFH,
   interval_width = 25,
   max_time = 170,
-  groupby = TRUE,
+  groupby = c("par", "spore"),
   log_y = TRUE
 )
-plot_mortality_rate(
-  lifelihoodResults = results,
-  interval_width = 25,
-  max_time = 170,
+plot_fitted_mortality_rate(
+  results,
+  interval_width = 5,
   log_y = TRUE,
-  prediction = TRUE
 )
 
 mortality_rate(dataLFH, interval_width = 10)
-mortality_rate(dataLFH, interval_width = 10, bygroup = FALSE, max_time = 170)
+mortality_rate(dataLFH, interval_width = 10, max_time = 170)
 
-devtools::load_all()
-pred_mortality_rate(results, interval_width = 10)
+pred_mortality_rate(results, interval_width = 15)
 
 
 df <- read.csv(here::here("data/fake_re_sample.csv"))
