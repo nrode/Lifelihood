@@ -1,49 +1,49 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+name: Deploy pkgdown site
+
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-  release:
-    types: [published]
-  workflow_dispatch:
-
-name: pkgdown.yaml
-
-permissions: read-all
+    branches: [main]
 
 jobs:
-  pkgdown:
+  deploy-pkgdown:
     runs-on: macos-latest
-    # Only restrict concurrency for non-PR jobs
-    concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     permissions:
       contents: write
+      pages: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Install system dependencies
+        run: |
+          brew update
+          brew install curl openssl libxml2 pandoc
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install R package dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          use-public-rspm: true
+          extra-packages: |
+            any::devtools
+            any::quarto
+            any::tidyverse
+          cache: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Build pkgdown site
+        run: |
+          Rscript -e 'devtools::build_site(quiet=FALSE)'
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          extra-packages: any::pkgdown, any::tidyverse, local::.
-          needs: website
-
-      - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
-        shell: Rscript {0}
-
-      - name: Deploy to GitHub pages 🚀
-        if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
-        with:
-          clean: false
           branch: gh-pages
           folder: docs
