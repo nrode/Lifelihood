@@ -45,10 +45,10 @@
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
 #'
-#' mort_df <- mortality_rate(dataLFH, interval_width = 2)
+#' mort_df <- mortality_rate_data(dataLFH, interval_width = 2)
 #' head(mort_df)
 #'
-#' mort_df <- mortality_rate(
+#' mort_df <- mortality_rate_data(
 #'   dataLFH,
 #'   interval_width = 2,
 #'   groupby = NULL,
@@ -56,7 +56,7 @@
 #' )
 #' head(mort_df)
 #' @export
-mortality_rate <- function(
+mortality_rate_data <- function(
   lifelihoodData,
   interval_width,
   max_time = NULL,

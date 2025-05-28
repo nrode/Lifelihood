@@ -66,7 +66,7 @@ combination of covariates listed in the\code{lifelihoodData} object provided.}
 
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
-\item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate]{mortality_rate()}}}
+\item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
 }
 \value{
 a ggplot2 plot
@@ -90,7 +90,7 @@ function, only to retrieve a lifelihood data object
 with \code{\link[=lifelihoodData]{lifelihoodData()}}
 
 If you want more control over the style of the graph,
-use the \code{\link[=mortality_rate]{mortality_rate()}} function to retrieve data.
+use the \code{\link[=mortality_rate_data]{mortality_rate_data()}} function to retrieve data.
 
 Convenient function used in \code{\link[=plot_observed_mortality_rate]{plot_observed_mortality_rate()}}
 and \code{\link[=plot_fitted_mortality_rate]{plot_fitted_mortality_rate()}}.

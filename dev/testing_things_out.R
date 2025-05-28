@@ -90,8 +90,8 @@ plot_fitted_mortality_rate(
   groupby = "all"
 )
 
-mortality_rate(dataLFH, interval_width = 10)
-mortality_rate(dataLFH, interval_width = 10, max_time = 170)
+mortality_rate_data(dataLFH, interval_width = 10)
+mortality_rate_data(dataLFH, interval_width = 10, max_time = 170)
 
 pred_mortality_rate(results, interval_width = 15)
 
