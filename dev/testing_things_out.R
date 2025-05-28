@@ -87,6 +87,7 @@ plot_fitted_mortality_rate(
   results,
   interval_width = 5,
   log_y = TRUE,
+  groupby = "all"
 )
 
 mortality_rate(dataLFH, interval_width = 10)

@@ -62,6 +62,8 @@ mortality_rate <- function(
   max_time = NULL,
   groupby = NULL
 ) {
+  groupby <- validate_groupby_arg(lifelihoodData, groupby)
+
   data <- lifelihoodData$df
   start_col <- lifelihoodData$death_start
   end_col <- lifelihoodData$death_end
@@ -84,16 +86,7 @@ mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
-    if (!any(groupby %in% covariates)) {
-      stop(
-        "`groupby` argument should be among the covariates of the `lifelihoodData` object provided."
-      )
-    }
-    if (groupby == "all") {
-      data$group <- do.call(interaction, data[covariates])
-    } else {
-      data$group <- do.call(interaction, data[groupby])
-    }
+    data$group <- do.call(interaction, data[groupby])
     groups <- sort(unique(data$group))
   } else {
     data$group <- "Overall"
