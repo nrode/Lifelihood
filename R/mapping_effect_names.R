@@ -112,11 +112,6 @@ find_event_type <- function(parameter_name) {
 #'
 #' @param name A character string representing the parameter name.
 #'
-#' @examples
-#' find_parameter_kind("eff_expt_death_geno1")
-#' find_parameter_kind("eff_ratio_expt_death_geno1")
-#' find_parameter_kind("int_sex_ratio")
-#'
 #' @return The kind of parameter: either intercept or coefficient/slope
 find_parameter_kind <- function(name) {
   if (startsWith(name, "int_")) {

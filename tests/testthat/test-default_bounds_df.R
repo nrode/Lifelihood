@@ -1,9 +1,12 @@
 library(lifelihood)
+library(tidyverse)
 
 test_that("Default bounds df.", {
-  df <- fakesample
-  df$type <- as.factor(df$type)
-  df$geno <- as.factor(df$geno)
+  df <- fakesample |>
+    mutate(
+      type = as.factor(type),
+      geno = as.factor(geno)
+    )
 
   clutchs <- c(
     "clutch_start1",

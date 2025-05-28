@@ -9,6 +9,8 @@
 #' @param file_path Location of the output file of the program
 #' @inheritParams lifelihood
 #'
+#' @importFrom tidyr starts_with
+#'
 #' @return An object of class `lifelihoodResults` with all results from the output file
 #'
 #' @export

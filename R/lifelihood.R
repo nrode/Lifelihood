@@ -29,13 +29,20 @@
 #'
 #' @return A `lifelihoodResults` object
 #'
+#' @importFrom utils write.table
+#'
 #' @export
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #' head(df)
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -188,25 +195,29 @@ lifelihood <- function(
 
 #' @title Coefficient estimates
 #'
-#' @name coeff
+#' @name coef
 #'
 #' @description
-#' Retrieve coefficients from the output of [lifelihood()]
+#' `coef()` retrieve all coefficients from the output of [lifelihood()]
 #'
 #' @param object output of [lifelihood()]
-#' @param parameter_name
-#' Name of the parameters to extract the estimate from to extract
-#' all parameter estimates). All parameters#' can be found
-#' [here](/articles/setting-up-the-configuration-file.html#parameters).
+#' @param ... Ignored
 #'
-#' @return A list of coefficient estimates
+#' @return A nested list of coefficient estimates
 #'
 #' @export
 #'
+#' @importFrom stats coef
+#'
 #' @examples
-#' df <- lifelihood::fakesample
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -233,21 +244,79 @@ lifelihood <- function(
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
-#' coeff(results)
-#' coeff(results, "expt_death")
-coeff <- function(object, parameter_name = NULL) {
+#' coef(results)
+coef.lifelihoodResults <- function(object, ...) {
   check_valid_lifelihoodResults(object)
 
-  if (is.null(parameter_name)) {
-    coefs <- object$effects$estimation
-    names(coefs) <- object$effects$name
-  } else {
-    effects <- object$effects
-    parameter_data <- which(effects$parameter == parameter_name)
-    range <- parameter_data[1]:parameter_data[length(parameter_data)]
-    coefs <- effects$estimation[range]
-    names(coefs) <- effects$name[range]
-  }
+  coefs <- object$effects$estimation
+  names(coefs) <- object$effects$name
+
+  return(coefs)
+}
+
+#' @title Coefficient estimates
+#'
+#' @name coef
+#'
+#' @description
+#' `coeff()` retrieve coefficients of one parameter
+#' from the output of [lifelihood()]
+#'
+#' @param object output of [lifelihood()]
+#' @param parameter_name
+#' Name of the parameters to extract the estimate from to extract
+#' all parameter estimates). All parameters#' can be found
+#' [here](/articles/setting-up-the-configuration-file.html#parameters).
+#'
+#' @return A list of coefficient estimates
+#'
+#' @export
+#'
+#' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "death_start",
+#'   death_end = "death_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = get_config_path("config"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#'
+#' coeff(results, "expt_death")
+coeff <- function(object, parameter_name) {
+  check_valid_lifelihoodResults(object)
+
+  effects <- object$effects
+  parameter_data <- which(effects$parameter == parameter_name)
+  range <- parameter_data[1]:parameter_data[length(parameter_data)]
+  coefs <- effects$estimation[range]
+  names(coefs) <- effects$name[range]
 
   return(coefs)
 }
@@ -265,9 +334,14 @@ coeff <- function(object, parameter_name = NULL) {
 #' @export
 #'
 #' @examples
-#' df <- lifelihood::fakesample
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
 #'
 #' clutchs <- c(
 #'   "clutch_start1", "clutch_end1", "clutch_size1",
@@ -296,66 +370,234 @@ coeff <- function(object, parameter_name = NULL) {
 #' )
 #' logLik(results)
 logLik.lifelihoodResults <- function(object, ...) {
+  check_valid_lifelihoodResults(object)
   return(object$likelihood)
 }
 
-#' @title Akaike information criterion
+#' @title Covariance matrix
 #'
 #' @description
-#' S3 method to compute AIC (Akaike information criterion).
-#'
-#' TODO
+#' S3 method to retrieve the covariance matrix
+#' from the output of [lifelihood()]
 #'
 #' @param object output of [lifelihood()]
-#' @param k Number of estimated parameter of the modèle. Default to `length(coef(object))`
 #' @param ... Ignored
+#'
+#' @return A covariance matrix
+#'
+#' @export
+#'
+#' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "death_start",
+#'   death_end = "death_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = get_config_path("config"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' vcov(results)
+vcov.lifelihoodResults <- function(object, ...) {
+  check_valid_lifelihoodResults(object)
+  return(object$vcov)
+}
+
+#' @title Akaike Information Criterion
+#'
+#' @description
+#' S3 method to compute AIC (Akaike Information Criterion).
+#'
+#' @param object output of [lifelihood()]
+#' @param ... Ignored
+#' @param k Number of estimated parameter of the modèle. Default to `length(coef(object))`.
 #'
 #' @return The AIC
 #'
-#' @seealso \code{\link{BIC}}
+#' @seealso [AICc()], [BIC()]
 #'
 #' @export
-AIC.lifelihoodResults <- function(object, ..., k = length(coeff(object))) {
+#'
+#' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "death_start",
+#'   death_end = "death_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = get_config_path("config"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' AIC(results)
+AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
   L <- object$likelihood
   AIC <- -2 * L + 2 * k
   return(AIC)
 }
 
-#' @title Akaike information criterion for small sample size
+#' @title Akaike Information Criterion for small sample size
 #'
 #' @description
-#' S3 method to compute AICc (Akaike information criterion
+#' S3 method to compute AICc (Akaike Information Criterion
 #' corrected for small sample size, see Hurvich and Tsai 1989).
 #'
 #' @inheritParams AIC.lifelihoodResults
 #'
 #' @return The AICc
 #'
-#' @seealso \code{\link{AIC}}
+#' @seealso [AIC()], [BIC()]
 #'
 #' @export
-AICc.lifelihoodResults <- function(object, ..., k = length(coeff(object))) {
+#'
+#' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "death_start",
+#'   death_end = "death_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = get_config_path("config"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' AICc(results)
+AICc <- function(object, ..., k = length(coef(object))) {
+  check_valid_lifelihoodResults(object)
+
   L <- object$likelihood
   n <- object$sample_size
   AICc <- -2 * L + 2 * k + (2 * k * (k + 1)) / (n - k - 1)
   return(AICc)
 }
 
-#' @title Bayesian information criterion
+#' @title Bayesian Information Criterion
 #'
 #' @description
-#' S3 method to compute BIC (Akaike information criterion).
+#' S3 method to compute BIC (Bayesian Information Criterion).
 #'
 #' @param object output of [lifelihood()]
 #' @param ... Ignored
 #'
-#' @return The BIC.
+#' @return The BIC
 #'
-#' @seealso \code{\link{AIC}}
+#' @seealso [AIC()], [AICc()]
+#'
+#' @importFrom stats BIC
 #'
 #' @export
+#'
+#' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- lifelihood::fakesample |>
+#'   mutate(
+#'     type = as.factor(type),
+#'     geno = as.factor(geno)
+#'   )
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "death_start",
+#'   death_end = "death_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = get_config_path("config"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' BIC(results)
 BIC.lifelihoodResults <- function(object, ...) {
-  k <- length(coeff(object))
+  k <- length(coef(object))
   L <- object$likelihood
   n <- object$sample_size
   BIC <- k * log(n) - 2 * L
@@ -364,21 +606,23 @@ BIC.lifelihoodResults <- function(object, ...) {
 
 #' @title Summary function to be used with the output of [lifelihood()]
 #'
-#' @name summary
-#'
 #' @description
 #' S3 method to display main results of the lifelihood program.
 #'
 #' @param object output of [lifelihood()]
 #' @param ... Ignored
 #'
-#' @return NULL
-#'
 #' @export
+#'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #' head(df)
 #'
 #' clutchs <- c(

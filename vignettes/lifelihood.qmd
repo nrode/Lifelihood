@@ -1,6 +1,5 @@
 ---
-title: "lifelihood2"
-description: "Overview of all features in `lifelihood`"
+title: "Overview of all features in `lifelihood`"
 vignette: >
   %\VignetteIndexEntry{lifelihood}
   %\VignetteEngine{quarto::html}
@@ -15,8 +14,7 @@ knitr:
 
 ```{r}
 #| label: setup
-#library(lifelihood)
-devtools::load_all()
+library(lifelihood)
 library(tidyverse)
 ```
 
@@ -148,5 +146,5 @@ plot_fitted_mortality_rate(
 You can get 
 
 ```{r}
-df_mort_rates <- mortality_rate(dataLFH, interval_width = 10)
+df_mort_rates <- mortality_rate_data(dataLFH, interval_width = 10)
 ```

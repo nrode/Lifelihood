@@ -8,6 +8,7 @@
 .github/*
 .vscode/*
 _src/*
+source/*
 air.toml
 dev.R
 \*.zip
@@ -18,8 +19,9 @@ dev.R
 ^vignettes/\.quarto$
 ^vignettes/*_files$
 ^dev/*
-lifelihood_\*/
+^lifelihood_
 ^data_internals/
 ^\.github$
 ^doc$
 ^Meta$
+^BinaryFiles

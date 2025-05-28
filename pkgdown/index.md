@@ -11,7 +11,7 @@
 ```r
 library(lifelihood)
 
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+df <- fakesample
 head(df)
 df$type <- as.factor(df$type)
 df$geno <- as.factor(df$geno)

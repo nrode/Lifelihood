@@ -17,9 +17,14 @@
 #' @export
 #'
 #' @examples
-#' df <- read.csv(here::here("data_internals/fake_sample.csv"))
-#' df$type <- as.factor(df$type)
-#' df$geno <- as.factor(df$geno)
+#' library(lifelihood)
+#' library(tidyverse)
+#'
+#' df <- fakesample |>
+#'   mutate(
+#'     geno = as.factor(geno),
+#'     type = as.factor(type)
+#'   )
 #' head(df)
 #'
 #' clutchs <- c(

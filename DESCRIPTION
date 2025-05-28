@@ -18,6 +18,9 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     coda,
+    dplyr,
+    tidyr,
+    ggplot2,
     here,
     reshape2,
     stats,
@@ -25,7 +28,6 @@ Imports:
 Suggests: 
     devtools,
     DT,
-    ggplot2,
     knitr,
     quarto,
     testthat

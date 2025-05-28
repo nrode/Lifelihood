@@ -65,12 +65,12 @@ plot_fitted_mortality_rate <- function(
 #' with [lifelihoodData()]
 #'
 #' If you want more control over the style of the graph,
-#' use the [mortality_rate()] function to retrieve data.
+#' use the [mortality_rate_data()] function to retrieve data.
 #'
 #' @name plot_mortality_rate
 #'
 #' @inheritParams lifelihood
-#' @inheritParams mortality_rate
+#' @inheritParams mortality_rate_data
 #' @inheritParams plot_mortality_rate
 #' @inheritParams validate_groupby_arg
 #'
@@ -92,7 +92,7 @@ plot_observed_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  rate_df <- mortality_rate(
+  rate_df <- mortality_rate_data(
     lifelihoodData,
     interval_width,
     max_time = max_time,
@@ -117,13 +117,15 @@ plot_observed_mortality_rate <- function(
 #' Convenient function used in [plot_observed_mortality_rate()]
 #' and [plot_fitted_mortality_rate()].
 #'
-#' @inheritParams mortality_rate
+#' @inheritParams mortality_rate_data
 #' @inheritParams validate_groupby_arg
-#' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate()]
+#' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
 #' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale
 #' @param log_y Determine whether the y-axis should be displayed on a logarithmic scale
 #'
 #' @return a ggplot2 plot
+#'
+#' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal
 #'
 #' @keywords internal
 plot_mortality_rate <- function(
@@ -154,6 +156,7 @@ plot_mortality_rate <- function(
 
   plot <- plot +
     ggplot2::geom_line() +
+    ggplot2::geom_point() +
     ggplot2::labs(
       title = title,
       x = xlab,

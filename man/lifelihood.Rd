@@ -78,10 +78,15 @@ events, death) and estimates the parameters of the model
 using maximum likelihood.
 }
 \examples{
-df <- read.csv(here::here("data_internals/fake_sample.csv"))
+library(lifelihood)
+library(tidyverse)
+
+df <- fakesample |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  )
 head(df)
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
 
 clutchs <- c(
   "clutch_start1", "clutch_end1", "clutch_size1",

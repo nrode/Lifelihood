@@ -28,3 +28,4 @@ check_valid_lifelihoodResults(obj)
 }
 
 }
+\keyword{internal}
