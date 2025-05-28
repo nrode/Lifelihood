@@ -21,6 +21,9 @@ S3 method to compute AICc (Akaike Information Criterion
 corrected for small sample size, see Hurvich and Tsai 1989).
 }
 \examples{
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),

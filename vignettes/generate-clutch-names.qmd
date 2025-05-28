@@ -1,5 +1,5 @@
 ---
-title: "generate-clutch-names2"
+title: "Generate clutch names"
 vignette: >
   %\VignetteIndexEntry{generate-clutch-names}
   %\VignetteEngine{quarto::html}

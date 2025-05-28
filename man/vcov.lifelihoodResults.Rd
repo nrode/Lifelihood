@@ -19,6 +19,9 @@ S3 method to retrieve the covariance matrix
 from the output of \code{\link[=lifelihood]{lifelihood()}}
 }
 \examples{
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),

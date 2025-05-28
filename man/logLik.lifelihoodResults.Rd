@@ -18,6 +18,9 @@ A number with the value of maximum likelihood found.
 S3 method to retrieve likelihood from the output of \code{\link[=lifelihood]{lifelihood()}}
 }
 \examples{
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),

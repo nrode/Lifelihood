@@ -1,6 +1,5 @@
 ---
-title: "lifelihood2"
-description: "Overview of all features in `lifelihood`"
+title: "Overview of all features in `lifelihood`"
 vignette: >
   %\VignetteIndexEntry{lifelihood}
   %\VignetteEngine{quarto::html}

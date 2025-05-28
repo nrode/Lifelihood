@@ -210,6 +210,9 @@ lifelihood <- function(
 #' @importFrom stats coef
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),
@@ -270,6 +273,9 @@ coef.lifelihoodResults <- function(object, ...) {
 #' @export
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),
@@ -328,6 +334,9 @@ coeff <- function(object, parameter_name) {
 #' @export
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),
@@ -379,6 +388,9 @@ logLik.lifelihoodResults <- function(object, ...) {
 #' @export
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),
@@ -432,6 +444,9 @@ vcov.lifelihoodResults <- function(object, ...) {
 #' @export
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),
@@ -485,6 +500,9 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #' @export
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),
@@ -543,6 +561,9 @@ AICc <- function(object, ..., k = length(coef(object))) {
 #' @export
 #'
 #' @examples
+#' library(lifelihood)
+#' library(tidyverse)
+#'
 #' df <- lifelihood::fakesample |>
 #'   mutate(
 #'     type = as.factor(type),

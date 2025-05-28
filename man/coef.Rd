@@ -31,6 +31,9 @@ A list of coefficient estimates
 from the output of \code{\link[=lifelihood]{lifelihood()}}
 }
 \examples{
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),
@@ -63,6 +66,9 @@ results <- lifelihood(
   raise_estimation_warning = FALSE
 )
 coef(results)
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),

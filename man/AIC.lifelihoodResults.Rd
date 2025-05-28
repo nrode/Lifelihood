@@ -20,6 +20,9 @@ The AIC
 S3 method to compute AIC (Akaike Information Criterion).
 }
 \examples{
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),

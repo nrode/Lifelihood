@@ -18,6 +18,9 @@ The BIC
 S3 method to compute BIC (Bayesian Information Criterion).
 }
 \examples{
+library(lifelihood)
+library(tidyverse)
+
 df <- lifelihood::fakesample |>
   mutate(
     type = as.factor(type),
