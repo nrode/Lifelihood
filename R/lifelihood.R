@@ -192,10 +192,64 @@ lifelihood <- function(
 
 #' @title Coefficient estimates
 #'
-#' @name coeff
+#' @name coef
 #'
 #' @description
-#' Retrieve coefficients from the output of [lifelihood()]
+#' `coef()` retrieve all coefficients from the output of [lifelihood()]
+#'
+#' @param object output of [lifelihood()]
+#'
+#' @return A nested list of coefficient estimates
+#'
+#' @export
+#'
+#' @examples
+#' df <- lifelihood::fakesample
+#' df$type <- as.factor(df$type)
+#' df$geno <- as.factor(df$geno)
+#'
+#' clutchs <- c(
+#'   "clutch_start1", "clutch_end1", "clutch_size1",
+#'   "clutch_start2", "clutch_end2", "clutch_size2"
+#' )
+#'
+#' dataLFH <- lifelihoodData(
+#'   df = df,
+#'   sex = "sex",
+#'   sex_start = "sex_start",
+#'   sex_end = "sex_end",
+#'   maturity_start = "mat_start",
+#'   maturity_end = "mat_end",
+#'   clutchs = clutchs,
+#'   death_start = "death_start",
+#'   death_end = "death_end",
+#'   covariates = c("geno", "type"),
+#'   model_specs = c("gam", "lgn", "wei")
+#' )
+#'
+#' results <- lifelihood(
+#'   lifelihoodData = dataLFH,
+#'   path_config = get_config_path("config"),
+#'   seeds = c(1, 2, 3, 4),
+#'   raise_estimation_warning = FALSE
+#' )
+#' coef(results)
+coef.lifelihoodResults <- function(object, ...) {
+  check_valid_lifelihoodResults(object)
+
+  coefs <- object$effects$estimation
+  names(coefs) <- object$effects$name
+
+  return(coefs)
+}
+
+#' @title Coefficient estimates
+#'
+#' @name coef
+#'
+#' @description
+#' `coeff()` retrieve coefficients of one parameter
+#' from the output of [lifelihood()]
 #'
 #' @param object output of [lifelihood()]
 #' @param parameter_name
@@ -237,21 +291,16 @@ lifelihood <- function(
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
-#' coeff(results)
+#'
 #' coeff(results, "expt_death")
-coeff <- function(object, parameter_name = NULL) {
+coeff <- function(object, parameter_name) {
   check_valid_lifelihoodResults(object)
 
-  if (is.null(parameter_name)) {
-    coefs <- object$effects$estimation
-    names(coefs) <- object$effects$name
-  } else {
-    effects <- object$effects
-    parameter_data <- which(effects$parameter == parameter_name)
-    range <- parameter_data[1]:parameter_data[length(parameter_data)]
-    coefs <- effects$estimation[range]
-    names(coefs) <- effects$name[range]
-  }
+  effects <- object$effects
+  parameter_data <- which(effects$parameter == parameter_name)
+  range <- parameter_data[1]:parameter_data[length(parameter_data)]
+  coefs <- effects$estimation[range]
+  names(coefs) <- effects$name[range]
 
   return(coefs)
 }

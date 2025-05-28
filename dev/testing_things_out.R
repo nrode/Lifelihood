@@ -1,9 +1,11 @@
 rm(list = ls())
 devtools::load_all()
-df <- datapierrick
-df$geno <- as.factor(df$geno)
-df$par <- as.factor(df$par)
-df$spore <- as.factor(df$par)
+df <- datapierrick |>
+  mutate(
+    geno = as.factor(geno),
+    par = as.factor(par),
+    spore = as.factor(spore)
+  )
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -13,7 +15,6 @@ generate_clutch_vector <- function(N) {
     sep = "_"
   ))
 }
-clutchs <- generate_clutch_vector(28)
 
 dataLFH <- lifelihoodData(
   df = df,
@@ -22,7 +23,7 @@ dataLFH <- lifelihoodData(
   sex_end = "sex_end",
   maturity_start = "mat_start",
   maturity_end = "mat_end",
-  clutchs = clutchs,
+  clutchs = generate_clutch_vector(28),
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
@@ -37,12 +38,13 @@ results <- lifelihood(
 )
 
 
-AIC(results, "expt_death")
-BIC(results, "expt_death")
+#AIC(results, "expt_death")
+#BIC(results, "expt_death")
 
-# summary(results)
+coef(results)
 coeff(results, "expt_death")
-# logLik(results)
+coeff(results, "survival_shape")
+logLik(results)
 # results$effects
 # results$mcmc
 # results$vcov

@@ -190,7 +190,7 @@ remove_lifelihood_tempfiles <- function(path = ".") {
 #' check_valid_lifelihoodResults(obj)
 #' }
 #'
-#' @export
+#' @keywords internal
 check_valid_lifelihoodResults <- function(object) {
   if (!(inherits(object, "lifelihoodResults"))) {
     stop(paste0(
