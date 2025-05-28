@@ -1,18 +1,19 @@
-name: Deploy Documentation
+name: Deploy pkgdown site
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
-  deploy-docs:
+  deploy-pkgdown:
     runs-on: macos-latest
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+
+    permissions:
+      contents: write
+      pages: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up R
@@ -20,21 +21,27 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          brew install pandoc
+          brew update
+          brew install curl openssl libxml2
 
-      - name: Install Quarto
+      - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install R package dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::devtools
+            any::quarto
+            any::tidyverse
+          cache: true
 
       - name: Build pkgdown site
         run: |
-          Rscript -e 'install.packages(c("devtools", "tidyverse", "quarto"))'
-          Rscript -e 'pkgdown::build_site()'
+          Rscript -e 'devtools::build_site(quiet=FALSE)'
 
-      - name: Deploy to gh-pages
-        if: github.event_name == 'push'
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: docs
-          clean: true
-          token: ${{ secrets.GITHUB_TOKEN }}
