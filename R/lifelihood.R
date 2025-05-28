@@ -349,6 +349,7 @@ coeff <- function(object, parameter_name) {
 #' )
 #' logLik(results)
 logLik.lifelihoodResults <- function(object, ...) {
+  check_valid_lifelihoodResults(object)
   return(object$likelihood)
 }
 
