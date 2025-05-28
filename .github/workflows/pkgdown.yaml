@@ -24,7 +24,7 @@ jobs:
 
       - name: Build pkgdown site
         run: |
-          Rscript -e 'install.packages(c("devtools", "tidyverse"))'
+          Rscript -e 'install.packages(c("devtools", "tidyverse", "quarto"))'
           Rscript -e 'pkgdown::build_site()'
 
       - name: Deploy to gh-pages
