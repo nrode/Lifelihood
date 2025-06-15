@@ -1,4 +1,4 @@
-name: Deploy pkgdown site
+name: Deploy documentation site
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  deploy-pkgdown:
+  pkgdown:
     runs-on: macos-latest
 
     permissions:
