@@ -124,7 +124,7 @@ plot_observed_mortality_rate <- function(
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
 #' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale
 #' @param log_y Determine whether the y-axis should be displayed on a logarithmic scale
-#' @param use_facet Use facet_wrap to plot one panel per group
+#' @param use_facet Use facet_wrap to plot one panel per group (default=FALSE)
 #'
 #' @return a ggplot2 plot
 #'
@@ -135,6 +135,7 @@ plot_mortality_rate <- function(
   rate_df,
   max_time,
   groupby,
+  use_facet = FALSE,
   log_x,
   log_y,
   title,
