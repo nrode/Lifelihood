@@ -76,6 +76,8 @@ character vector (\code{c("covariate1", "covariate2")}).
 at the beggining of a time interval for computing the observed mortality rate}
 
 \item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
+
+\item{use_facet}{Use facet_wrap to plot one panel per group}
 }
 \value{
 a ggplot2 plot
