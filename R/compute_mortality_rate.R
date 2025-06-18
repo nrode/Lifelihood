@@ -138,8 +138,8 @@ compute_mortality_rate <- function(
     mortality_rate_df <- subset(mortality_rate_df, select = -c(Group))
   }
 
-  # remove times where mortality rate is 1
-  mortality_rate_df |>
+  ## Add columns
+  mortality_rate_df <- mortality_rate_df |>
     dplyr::mutate(
       Interval_start = Interval_end-interval_width,
       Mean_Interval = Interval_end-interval_width/2
