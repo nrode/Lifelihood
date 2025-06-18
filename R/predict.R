@@ -88,7 +88,7 @@ prediction <- function(
     parameter_data <- which(effects$parameter == parameter_name)
     range <- which(effects$parameter == parameter_name)
 
-    fml <- read_formula(object$config, parameter_name)
+    fml <- read_formula(config=object$config, parameter=parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- terms(m)
