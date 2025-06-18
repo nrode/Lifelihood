@@ -8,7 +8,7 @@
 #' @inheritParams prediction
 #' @inheritParams lifelihood
 #' @inheritParams lifelihoodData
-#' @inheritParams mortality_rate
+#' @inheritParams compute_mortality_rate
 #' @inheritParams validate_groupby_arg
 #'
 #' @return A dataframe with 3 columns:

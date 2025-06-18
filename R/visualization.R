@@ -65,12 +65,12 @@ plot_fitted_mortality_rate <- function(
 #' with [lifelihoodData()]
 #'
 #' If you want more control over the style of the graph,
-#' use the [mortality_rate_data()] function to retrieve data.
+#' use the [compute_mortality_rate()] function to retrieve data.
 #'
 #' @name plot_mortality_rate
 #'
 #' @inheritParams lifelihood
-#' @inheritParams mortality_rate_data
+#' @inheritParams compute_mortality_rate
 #' @inheritParams plot_mortality_rate
 #' @inheritParams validate_groupby_arg
 #'
@@ -83,6 +83,7 @@ plot_observed_mortality_rate <- function(
   lifelihoodData,
   interval_width,
   max_time = NULL,
+  min_sample_size = 1,
   groupby = NULL,
   log_x = FALSE,
   log_y = FALSE,
@@ -92,11 +93,12 @@ plot_observed_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  rate_df <- mortality_rate_data(
+  rate_df <- compute_mortality_rate(
     lifelihoodData,
     interval_width,
     max_time = max_time,
-    groupby = groupby
+    groupby = groupby,
+    min_sample_size=min_sample_size
   )
 
   plot_mortality_rate(

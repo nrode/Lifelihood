@@ -11,7 +11,9 @@
 #' the mortality rate will be calculated every 10 days for each group.
 #' @param max_time The maximum time for calculating the mortality
 #' rate. If set to NULL, the time of the last observed death is used.
-#'
+#' @param min_sample_size The minimum number of individuals alive 
+#' at the beggining of a time interval for computing the observed mortality rate
+#' 
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), Group (identifier of a given subgroup,
 #' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
@@ -48,7 +50,7 @@
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
 #'
-#' mort_df <- mortality_rate_data(dataLFH, interval_width = 2)
+#' mort_df <- compute_mortality_rate(dataLFH, interval_width = 2)
 #' head(mort_df)
 #'
 #' mort_df <- mortality_rate_data(
@@ -59,10 +61,11 @@
 #' )
 #' head(mort_df)
 #' @export
-mortality_rate_data <- function(
+compute_mortality_rate <- function(
   lifelihoodData,
   interval_width,
   max_time = NULL,
+  min_sample_size = 1,
   groupby = NULL
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
@@ -122,13 +125,13 @@ mortality_rate_data <- function(
           !is.na(group_data[[end_col]])
       )
 
-      mortality_rate[i, grp] <- if (alive_start > 0) deaths / alive_start else
+      mortality_rate[i, grp] <- if (alive_start > min_sample_size) deaths / alive_start else
         NA
     }
   }
 
   mortality_rate_df <- reshape2::melt(mortality_rate)
-  colnames(mortality_rate_df) <- c("Interval", "Group", "MortalityRate")
+  colnames(mortality_rate_df) <- c("Interval_end", "Group", "MortalityRate")
   mortality_rate_df$Group <- as.factor(mortality_rate_df$Group)
 
   if (is.null(groupby)) {
@@ -137,12 +140,14 @@ mortality_rate_data <- function(
 
   # remove times where mortality rate is 1
   mortality_rate_df |>
-    mutate(
-      MortalityRate = if_else(
-        MortalityRate >= 1,
-        NA_real_,
-        MortalityRate
-      )
+    dplyr::mutate(
+      Interval_start = Interval_end-interval_width,
+      Mean_Interval = Interval_end-interval_width/2
+      ) |>
+    dplyr::relocate(Interval_start, .before = Interval_end) |>
+    dplyr::relocate(Mean_Interval, .before = Group)
+
+      
     )
 
   return(mortality_rate_df)
