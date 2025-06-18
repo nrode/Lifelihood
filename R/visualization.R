@@ -144,7 +144,7 @@ plot_mortality_rate <- function(
     plot <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
-        x = as.numeric(as.character(Interval)),
+        x = as.numeric(as.character(Mean_Interval)),
         y = MortalityRate,
         color = Group
       )
@@ -152,7 +152,7 @@ plot_mortality_rate <- function(
   } else {
     plot <- ggplot2::ggplot(
       rate_df,
-      ggplot2::aes(x = as.numeric(as.character(Interval)), y = MortalityRate)
+      ggplot2::aes(x = as.numeric(as.character(Mean_Interval)), y = MortalityRate)
     )
   }
 
