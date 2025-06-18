@@ -119,7 +119,7 @@ plot_observed_mortality_rate <- function(
 #' Convenient function used in [plot_observed_mortality_rate()]
 #' and [plot_fitted_mortality_rate()].
 #'
-#' @inheritParams mortality_rate_data
+#' @inheritParams compute_mortality_rate
 #' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
 #' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale

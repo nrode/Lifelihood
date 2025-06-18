@@ -23,6 +23,7 @@ plot_observed_mortality_rate(
   lifelihoodData,
   interval_width,
   max_time = NULL,
+  min_sample_size = 1,
   groupby = NULL,
   log_x = FALSE,
   log_y = FALSE,
@@ -71,6 +72,9 @@ character vector (\code{c("covariate1", "covariate2")}).
 
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
+\item{min_sample_size}{The minimum number of individuals alive
+at the beggining of a time interval for computing the observed mortality rate}
+
 \item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
 }
 \value{
@@ -95,7 +99,7 @@ function, only to retrieve a lifelihood data object
 with \code{\link[=lifelihoodData]{lifelihoodData()}}
 
 If you want more control over the style of the graph,
-use the \code{\link[=mortality_rate_data]{mortality_rate_data()}} function to retrieve data.
+use the \code{\link[=compute_mortality_rate]{compute_mortality_rate()}} function to retrieve data.
 
 Convenient function used in \code{\link[=plot_observed_mortality_rate]{plot_observed_mortality_rate()}}
 and \code{\link[=plot_fitted_mortality_rate]{plot_fitted_mortality_rate()}}.

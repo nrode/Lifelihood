@@ -19,10 +19,4 @@ element is not found in the possible match, it returns an
 error. This function is used to add information about the
 type of estimate to the output of the \code{\link[=lifelihood]{lifelihood()}} function.
 }
-\examples{
-find_parameter_kind("eff_expt_death_geno1")
-find_parameter_kind("eff_ratio_expt_death_geno1")
-find_parameter_kind("int_sex_ratio")
-
-}
 \keyword{internal}

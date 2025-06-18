@@ -53,7 +53,7 @@
 #' mort_df <- compute_mortality_rate(dataLFH, interval_width = 2)
 #' head(mort_df)
 #'
-#' mort_df <- mortality_rate_data(
+#' mort_df <- compute_mortality_rate(
 #'   dataLFH,
 #'   interval_width = 2,
 #'   groupby = NULL,
@@ -146,9 +146,6 @@ compute_mortality_rate <- function(
       ) |>
     dplyr::relocate(Interval_start, .before = Interval_end) |>
     dplyr::relocate(Mean_Interval, .before = Group)
-
-      
-    )
 
   return(mortality_rate_df)
 }
