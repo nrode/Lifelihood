@@ -40,8 +40,8 @@ plot_mortality_rate(
   log_x,
   log_y,
   title,
-  xlab,
-  ylab
+  xlab = "Time",
+  ylab = "Mortality rate"
 )
 }
 \arguments{

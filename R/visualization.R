@@ -98,7 +98,7 @@ plot_observed_mortality_rate <- function(
     interval_width,
     max_time = max_time,
     groupby = groupby,
-    min_sample_size=min_sample_size
+    min_sample_size = min_sample_size
   )
 
   plot_mortality_rate(
@@ -139,8 +139,8 @@ plot_mortality_rate <- function(
   log_x,
   log_y,
   title,
-  xlab,
-  ylab
+  xlab = "Time",
+  ylab = "Mortality rate"
 ) {
   if (!is.null(groupby)) {
     plot <- ggplot2::ggplot(
