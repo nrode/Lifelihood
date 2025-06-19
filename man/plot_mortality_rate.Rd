@@ -25,6 +25,7 @@ plot_observed_mortality_rate(
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL,
+  use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
   title = "Mortality rate over time",
@@ -76,9 +77,9 @@ character vector (\code{c("covariate1", "covariate2")}).
 \item{min_sample_size}{The minimum number of individuals alive
 at the beggining of a time interval for computing the observed mortality rate}
 
-\item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
-
 \item{use_facet}{Use facet_wrap to plot one panel per group (default=FALSE)}
+
+\item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
 }
 \value{
 a ggplot2 plot
