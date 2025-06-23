@@ -1,20 +1,10 @@
 rm(list = ls())
 devtools::load_all()
-df <- datapierrick |>
+df <- fakesample |>
   mutate(
     geno = as.factor(geno),
-    par = as.factor(par),
-    spore = as.factor(spore)
+    type = as.factor(type)
   )
-
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "pon",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 
 dataLFH <- lifelihoodData(
   df = df,
@@ -23,20 +13,26 @@ dataLFH <- lifelihoodData(
   sex_end = "sex_end",
   maturity_start = "mat_start",
   maturity_end = "mat_end",
-  clutchs = generate_clutch_vector(28),
+  clutchs = c(
+    "clutch_start1",
+    "clutch_end1",
+    "clutch_size1",
+    "clutch_start2",
+    "clutch_end2",
+    "clutch_size2"
+  ),
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("par", "spore"),
+  covariates = c("type", "geno"),
   model_specs = c("wei", "lgn", "wei")
 )
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config_pierrick"),
-  delete_temp_files = FALSE,
-  MCMC = 3
+  path_config = get_config_path("config2"),
+  group_by_group = TRUE,
 )
-
+results$config$mortality$expt_death
 
 AIC(results)
 BIC(results)

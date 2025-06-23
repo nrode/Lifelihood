@@ -141,8 +141,8 @@ lifelihood <- function(
   execute_bin(
     path_to_Lifelihood = path_to_Lifelihood,
     path_input_data = data_path,
-    path_param_range,
-    group_by_group_int,
+    path_param_bounds = path_param_range,
+    group_by_group = group_by_group_int,
     MCMC,
     interval,
     SEcal,
