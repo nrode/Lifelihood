@@ -127,9 +127,6 @@ decode_file_with_translator <- function(output_path, translator) {
             num_str <- sub(paste0("^", colname), "", m)
             num <- as.integer(num_str)
 
-            cat("Matched:", m, "-> index:", num, "\n")
-            cat("\n")
-
             levels_vec <- translator[[colname]]
 
             if (is.na(num) || num + 1 > length(levels_vec) || num < 0) {

@@ -61,9 +61,12 @@
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
+    <Target>
+      <Filename Value="lifelihood"/>
+    </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/Lifelihood/src/source_pascal/lazarus"/>
+      <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/Lifelihood/source/compiled/new"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -80,6 +83,8 @@
         <ShoLineNum Value="True"/>
         <ShowAll Value="True"/>
         <ShowDebugInfo Value="True"/>
+        <ShowCond Value="True"/>
+        <ShowExecInfo Value="True"/>
       </Verbosity>
       <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
     </Other>
