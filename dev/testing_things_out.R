@@ -30,7 +30,6 @@ dataLFH <- lifelihoodData(
 results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = get_config_path("config2"),
-  group_by_group = TRUE,
 )
 results$config$mortality$expt_death
 
@@ -42,8 +41,8 @@ coeff(results, "expt_death")
 coeff(results, "survival_shape")
 logLik(results)
 vcov(results)
-# results$effects
-# results$mcmc
+results$effects
+results$mcmc
 
 newdata <- data.frame(
   par = c(0, 1, 2, 0, 1, 2),
