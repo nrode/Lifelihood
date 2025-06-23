@@ -61,9 +61,6 @@
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <Target>
-      <Filename Value="lifelihood"/>
-    </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/Lifelihood/source/compiled/new"/>
@@ -73,6 +70,9 @@
         <SyntaxMode Value="Delphi"/>
       </SyntaxOptions>
     </Parsing>
+    <CodeGeneration>
+      <TargetOS Value="win64"/>
+    </CodeGeneration>
     <Linking>
       <Debugging>
         <DebugInfoType Value="dsDwarf2Set"/>
