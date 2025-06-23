@@ -1,5 +1,5 @@
-#rm(list = ls())
 devtools::load_all()
+library(tidyverse)
 
 
 df <- fakesample |>
@@ -7,7 +7,8 @@ df <- fakesample |>
     geno = as.factor(geno),
     type = as.factor(type)
   ) |>
-  mutate(geno = fct_recode(geno, "yes" = "1", "no" = "0"))
+  mutate(geno = fct_recode(geno, "Yes" = "1", "No" = "0")) |>
+  mutate(type = fct_recode(type, "Zero" = "0", "One" = "1", "Two" = "2"))
 
 lifelihoodData <- lifelihoodData(
   df = df,

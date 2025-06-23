@@ -175,7 +175,7 @@ lifelihood <- function(
   )
 
   # decod the encoded factor levels in output file
-  decode_file_with_translator(output_path, translator)
+  output_path <- decode_file_with_translator(output_path, translator)
 
   results <- read_output_from_file(
     output_path,
