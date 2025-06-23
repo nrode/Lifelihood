@@ -109,8 +109,14 @@ format_dataframe_to_txt <- function(
         "Try converting your covariates into factors/integers or discretising them into categories."
       ))
     }
-    n_cat <- ifelse(nlevels(df[[cov]]) == 0, 1, nlevels(df[[cov]]))
+    n_cat <- length(unique(df[[cov]]))
     n_cat_covariates <- c(n_cat_covariates, n_cat)
+    #print(cov)
+    #print(n_cat)
+    #print(nlevels(df[[cov]]))
+    #print(df[[cov]])
+    #print(length(unique(df[[cov]])))
+    #cat("\n")
   }
   data_struct_info <- c(
     "*******data struct****",

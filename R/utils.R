@@ -200,3 +200,25 @@ check_valid_lifelihoodResults <- function(object) {
     ))
   }
 }
+
+#' @title Convert a factor variable to integers
+#'
+#' @description
+#' Function necessary because the Pascal program
+#' expects integers for factor levels.
+#'
+#' @param x A column name
+#'
+#' @returns The integer
+#'
+#' @keywords internal
+factor_to_num <- function(x) {
+  if (is.factor(x)) {
+    levels <- levels(x)
+    num <- match(x, levels) - 1
+    levels(num) <- levels
+    num
+  } else {
+    x
+  }
+}

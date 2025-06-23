@@ -1,12 +1,15 @@
-rm(list = ls())
+#rm(list = ls())
 devtools::load_all()
+
+
 df <- fakesample |>
   mutate(
     geno = as.factor(geno),
     type = as.factor(type)
-  )
+  ) |>
+  mutate(geno = fct_recode(geno, "yes" = "1", "no" = "0"))
 
-dataLFH <- lifelihoodData(
+lifelihoodData <- lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -28,8 +31,9 @@ dataLFH <- lifelihoodData(
 )
 
 results <- lifelihood(
-  lifelihoodData = dataLFH,
+  lifelihoodData = lifelihoodData,
   path_config = get_config_path("config2"),
+  delete_temp_files = FALSE
 )
 results$config$mortality$expt_death
 
@@ -84,9 +88,6 @@ plot_fitted_mortality_rate(
   log_y = TRUE,
   groupby = "all"
 )
-
-mortality_rate_data(dataLFH, interval_width = 10)
-mortality_rate_data(dataLFH, interval_width = 10, max_time = 170)
 
 pred_mortality_rate(results, interval_width = 15)
 
