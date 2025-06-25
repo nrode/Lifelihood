@@ -27,10 +27,9 @@ create_translator <- function(df, cols) {
     if (!colname %in% colnames(df)) {
       stop(paste("Column", colname, "not found in data frame"))
     }
-    if (!is.factor(df[[colname]])) {
-      stop(paste("Column", colname, "is not a factor"))
+    if (is.factor(df[[colname]])) {
+      translator[[colname]] <- levels(df[[colname]])
     }
-    translator[[colname]] <- levels(df[[colname]])
   }
 
   class(translator) <- "translator"
@@ -55,9 +54,11 @@ encode <- function(translator, df) {
   df_encoded <- df
 
   for (colname in names(translator)) {
-    levels <- translator[[colname]]
-    df_encoded[[colname]] <- match(df[[colname]], levels) - 1
-    df_encoded[[colname]] <- as.character(df_encoded[[colname]])
+    if (is.factor(df[[colname]])) {
+      levels <- translator[[colname]]
+      df_encoded[[colname]] <- match(df[[colname]], levels) - 1
+      df_encoded[[colname]] <- as.character(df_encoded[[colname]])
+    }
   }
 
   df_encoded
@@ -81,9 +82,11 @@ decode <- function(translator, df_encoded) {
   df_decoded <- df_encoded
 
   for (colname in names(translator)) {
-    levels <- translator[[colname]]
-    codes <- df_encoded[[colname]] + 1
-    df_decoded[[colname]] <- factor(levels[codes], levels = levels)
+    if (is.factor(df[[colname]])) {
+      levels <- translator[[colname]]
+      codes <- df_encoded[[colname]] + 1
+      df_decoded[[colname]] <- factor(levels[codes], levels = levels)
+    }
   }
 
   df_decoded

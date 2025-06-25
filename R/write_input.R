@@ -101,22 +101,12 @@ format_dataframe_to_txt <- function(
   n_cat_covariates <- c()
   for (cov in covariates) {
     if (is.numeric(df[[cov]])) {
-      stop(paste(
-        "Error: The column",
-        cov,
-        "is numeric.",
-        "This feature is currently not supported.",
-        "Try converting your covariates into factors/integers or discretising them into categories."
-      ))
+      n_cat <- 1
+      print(glue::glue("{cov} is considered as a numerical column"))
+    } else {
+      n_cat <- length(unique(df[[cov]]))
     }
-    n_cat <- length(unique(df[[cov]]))
     n_cat_covariates <- c(n_cat_covariates, n_cat)
-    #print(cov)
-    #print(n_cat)
-    #print(nlevels(df[[cov]]))
-    #print(df[[cov]])
-    #print(length(unique(df[[cov]])))
-    #cat("\n")
   }
   data_struct_info <- c(
     "*******data struct****",
