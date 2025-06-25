@@ -8,7 +8,14 @@ df <- fakesample |>
     type = as.factor(type)
   ) |>
   mutate(geno = fct_recode(geno, "Yes" = "1", "No" = "0")) |>
-  mutate(type = fct_recode(type, "Zero" = "0", "One" = "1", "Two" = "2"))
+  mutate(type = fct_recode(type, "Zero" = "0", "One" = "1", "Two" = "2")) |>
+  mutate(
+    type = as.integer(round(rnorm(n = nrow(fakesample), sd = 10, mean = 100)))
+  ) |>
+  mutate(
+    type = as.factor(sample(c(0:3), size = nrow(fakesample), replace = TRUE))
+  ) |>
+  as.tibble()
 
 lifelihoodData <- lifelihoodData(
   df = df,
@@ -34,9 +41,9 @@ lifelihoodData <- lifelihoodData(
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config2"),
+  group_by_group = TRUE,
   delete_temp_files = FALSE
 )
-results$config$mortality$expt_death
 
 AIC(results)
 BIC(results)

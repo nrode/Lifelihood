@@ -1,5 +1,5 @@
 mortality:
-  expt_death: geno + type + geno*type
+  expt_death: type
   survival_shape: 1
   ratio_expt_death: not_fitted
   prob_death: not_fitted

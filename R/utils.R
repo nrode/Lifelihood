@@ -161,7 +161,7 @@ remove_lifelihood_tempfiles <- function(path = ".") {
     files <- list.files(dir, full.names = TRUE)
     file_count <- sum(!file.info(files)$isdir)
 
-    if (file_count <= 3) {
+    if (file_count <= 4) {
       unlink(dir, recursive = TRUE)
       message(sprintf("Deleted: %s (contained %d files)", dir, file_count))
     }
