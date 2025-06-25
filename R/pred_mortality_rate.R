@@ -29,8 +29,8 @@ pred_mortality_rate <- function(
 
   data <- if (is.null(newdata)) lifelihoodData$df else newdata
   data$pred_death <- prediction(
-    object=lifelihoodResults,
-    parameter_name="expt_death",
+    object = lifelihoodResults,
+    parameter_name = "expt_death",
     type = "response",
     newdata = data
   )
@@ -92,11 +92,11 @@ pred_mortality_rate <- function(
   ## Add columns
   pred_mortality_rate_df <- pred_mortality_rate_df |>
     dplyr::mutate(
-      Interval_start = Interval_end-interval_width,
-      Mean_Interval = Interval_end-interval_width/2
+      Interval_start = Interval_end - interval_width,
+      Mean_Interval = Interval_end - interval_width / 2
     ) |>
     dplyr::relocate(Interval_start, .before = Interval_end) |>
     dplyr::relocate(Mean_Interval, .before = Group)
-  
+
   return(pred_mortality_rate_df)
 }

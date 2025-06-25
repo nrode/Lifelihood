@@ -63,13 +63,16 @@
     <Version Value="11"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/Lifelihood/src/compiled"/>
+      <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/Lifelihood/source/compiled/new"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
       </SyntaxOptions>
     </Parsing>
+    <CodeGeneration>
+      <TargetOS Value="linux"/>
+    </CodeGeneration>
     <Linking>
       <Debugging>
         <DebugInfoType Value="dsDwarf2Set"/>
@@ -80,6 +83,8 @@
         <ShoLineNum Value="True"/>
         <ShowAll Value="True"/>
         <ShowDebugInfo Value="True"/>
+        <ShowCond Value="True"/>
+        <ShowExecInfo Value="True"/>
       </Verbosity>
       <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
     </Other>

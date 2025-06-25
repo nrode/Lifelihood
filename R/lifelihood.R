@@ -120,8 +120,13 @@ lifelihood <- function(
     quote = FALSE
   )
 
+  # encode covariates to integers
+  df <- lifelihoodData$df
+  translator <- create_translator(df, cols = lifelihoodData$covariates)
+  df_encoded <- encode(translator, df)
+
   data_path <- format_dataframe_to_txt(
-    df = lifelihoodData$df,
+    df = df_encoded,
     sex = lifelihoodData$sex,
     sex_start = lifelihoodData$sex_start,
     sex_end = lifelihoodData$sex_end,
@@ -168,6 +173,9 @@ lifelihood <- function(
       ".out"
     )
   )
+
+  # decod the encoded factor levels in output file
+  output_path <- decode_file_with_translator(output_path, translator)
 
   results <- read_output_from_file(
     output_path,
