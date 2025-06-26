@@ -142,12 +142,12 @@ lifelihood <- function(
     temp_dir = temp_dir
   )
 
-  group_by_group_int <- as.integer(group_by_group)
+  #group_by_group_int <- as.integer(group_by_group)
   execute_bin(
     path_to_Lifelihood = path_to_Lifelihood,
     path_input_data = data_path,
     path_param_bounds = path_param_range,
-    group_by_group = group_by_group_int,
+    group_by_group = group_by_group,
     MCMC,
     interval,
     SEcal,

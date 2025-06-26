@@ -41,7 +41,7 @@ lifelihoodData <- lifelihoodData(
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config2"),
-  group_by_group = TRUE,
+  group_by_group = "TRUE",
   delete_temp_files = FALSE
 )
 

@@ -7,19 +7,20 @@
       <Unit>
         <Filename Value="lifelihoodC2023.lpr"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="11"/>
-        <CursorPos X="30" Y="16"/>
-        <UsageCount Value="49"/>
+        <TopLine Value="17"/>
+        <CursorPos X="68" Y="34"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Unit2.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="1536"/>
-        <CursorPos X="105" Y="1563"/>
-        <UsageCount Value="49"/>
+        <TopLine Value="1697"/>
+        <CursorPos X="67" Y="1702"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
@@ -27,38 +28,37 @@
         <Filename Value="Alea.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="51"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="fmath.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="51"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="fspec.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="51"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="mathromb.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="51"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Unit1.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="36"/>
-        <CursorPos X="89" Y="59"/>
-        <UsageCount Value="49"/>
+        <CursorPos X="101" Y="44"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
@@ -68,11 +68,11 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="807"/>
         <CursorPos X="11" Y="822"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="3">
+    <JumpHistory HistoryIndex="6">
       <Position>
         <Filename Value="lifelihoodC2023.lpr"/>
         <Caret Line="77" Column="53" TopLine="46"/>
@@ -88,6 +88,18 @@
       <Position>
         <Filename Value="Unit2.pas"/>
         <Caret Line="1558" Column="9" TopLine="1536"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="44" Column="101" TopLine="36"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1705" Column="57" TopLine="1690"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="1707" Column="98" TopLine="1690"/>
       </Position>
     </JumpHistory>
     <RunParams>
