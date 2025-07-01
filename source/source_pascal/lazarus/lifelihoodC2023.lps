@@ -8,7 +8,7 @@
         <Filename Value="lifelihoodC2023.lpr"/>
         <IsPartOfProject Value="True"/>
         <TopLine Value="17"/>
-        <CursorPos X="68" Y="34"/>
+        <CursorPos X="51" Y="34"/>
         <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -19,7 +19,7 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="1697"/>
-        <CursorPos X="67" Y="1702"/>
+        <CursorPos X="17" Y="1702"/>
         <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -57,7 +57,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="36"/>
-        <CursorPos X="101" Y="44"/>
+        <CursorPos X="37" Y="44"/>
         <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
