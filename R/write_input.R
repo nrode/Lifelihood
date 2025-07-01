@@ -86,9 +86,18 @@ format_dataframe_to_txt <- function(
   header_line <- "*******data*********"
   formatted_rows <- c(header_line, formatted_rows)
 
+  covar_types <- c()
+  for (cov in covariates) {
+    if (is.numeric(df[[cov]])) {
+      covar_types <- c(covar_types, "num")
+    } else {
+      covar_types <- c(covar_types, "cat")
+    }
+  }
   config_file_info <- format_config(
     path_config = path_config,
-    covariates = covariates
+    covariates = covariates,
+    covar_types = covar_types
   )
   model_info <- c(
     "****modele******",

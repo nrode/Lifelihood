@@ -8,7 +8,9 @@ df <- fakesample |>
     type = as.factor(type)
   ) |>
   mutate(geno = fct_recode(geno, "Yes" = "1", "No" = "0")) |>
-  mutate(type = sample(c(0:3), size = nrow(fakesample), replace = TRUE)) |>
+  mutate(
+    type = sample(c(0:3), size = nrow(fakesample), replace = TRUE)
+  ) |>
   as_tibble()
 
 lifelihoodData <- lifelihoodData(

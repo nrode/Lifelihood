@@ -4,7 +4,7 @@
 \alias{format_config}
 \title{Read and parse the configuration file (YAML).}
 \usage{
-format_config(path_config, covariates)
+format_config(path_config, covariates, covar_types)
 }
 \arguments{
 \item{covariates}{Vector containing the names of the covariates.}

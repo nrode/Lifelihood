@@ -26,6 +26,7 @@ plot_fitted_mortality_rate <- function(
   newdata = NULL,
   max_time = NULL,
   groupby = NULL,
+  use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
   title = "Mortality rate over time",
@@ -43,14 +44,15 @@ plot_fitted_mortality_rate <- function(
   )
 
   plot_mortality_rate(
-    rate_df,
-    max_time,
-    groupby,
-    log_x,
-    log_y,
-    title,
-    xlab,
-    ylab
+    rate_df = rate_df,
+    max_time = max_time,
+    groupby = groupby,
+    use_facet = use_facet,
+    log_x = log_x,
+    log_y = log_y,
+    title = title,
+    xlab = xlab,
+    ylab = ylab
   )
 }
 
@@ -103,15 +105,15 @@ plot_observed_mortality_rate <- function(
   )
 
   plot_mortality_rate(
-    rate_df,
-    max_time,
-    groupby,
-    use_facet,
-    log_x,
-    log_y,
-    title,
-    xlab,
-    ylab
+    rate_df = rate_df,
+    max_time = max_time,
+    groupby = groupby,
+    use_facet = use_facet,
+    log_x = log_x,
+    log_y = log_y,
+    title = title,
+    xlab = xlab,
+    ylab = ylab
   )
 }
 
@@ -137,7 +139,7 @@ plot_mortality_rate <- function(
   rate_df,
   max_time,
   groupby,
-  use_facet = FALSE,
+  use_facet,
   log_x,
   log_y,
   title,
@@ -156,7 +158,10 @@ plot_mortality_rate <- function(
   } else {
     plot <- ggplot2::ggplot(
       rate_df,
-      ggplot2::aes(x = as.numeric(as.character(Mean_Interval)), y = MortalityRate)
+      ggplot2::aes(
+        x = as.numeric(as.character(Mean_Interval)),
+        y = MortalityRate
+      )
     )
   }
 
@@ -177,6 +182,7 @@ plot_mortality_rate <- function(
   if (log_x) {
     plot <- plot + ggplot2::scale_x_log10()
   }
+  print(log_y)
   if (log_y) {
     plot <- plot + ggplot2::scale_y_log10()
   }
@@ -184,6 +190,6 @@ plot_mortality_rate <- function(
   if (use_facet) {
     plot <- plot + facet_wrap(vars(Group))
   }
-  
+
   plot
 }
