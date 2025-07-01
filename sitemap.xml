@@ -21,12 +21,14 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/check_valid_estimation.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/check_valid_lifelihoodResults.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/coef.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/compute_mortality_rate.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/datapierrick.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/default_bounds_df.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/delink.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/derivLink.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/detect_os.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/execute_bin.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/factor_to_num.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/fakesample.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/find_event_type.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/find_parameter_kind.html</loc></url>
@@ -42,7 +44,6 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/make_design_matrix.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/map_parameter_name.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/mortality_rate_data.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/parse_output.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/plot_mortality_rate.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/pred_mortality_rate.html</loc></url>
@@ -52,6 +53,7 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/remove_lifelihood_tempfiles.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/safe_access.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/translator.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/validate_groupby_arg.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/vcov.lifelihoodResults.html</loc></url>
 </urlset>

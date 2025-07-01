@@ -9,7 +9,7 @@ You don't need to fit with lifelihood() to use this
 function, only to retrieve a lifelihood data object
 with lifelihoodData()
 If you want more control over the style of the graph,
-use the mortality_rate_data() function to retrieve data.
+use the compute_mortality_rate() function to retrieve data.
 Convenient function used in plot_observed_mortality_rate()
 and plot_fitted_mortality_rate()."><meta property="og:description" content="Useful function for creating a good-quality line graph
 of changes in the predicted mortality rate.
@@ -21,7 +21,7 @@ You don't need to fit with lifelihood() to use this
 function, only to retrieve a lifelihood data object
 with lifelihoodData()
 If you want more control over the style of the graph,
-use the mortality_rate_data() function to retrieve data.
+use the compute_mortality_rate() function to retrieve data.
 Convenient function used in plot_observed_mortality_rate()
 and plot_fitted_mortality_rate()."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -75,7 +75,7 @@ and plot_fitted_mortality_rate()."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Display evolution of predicted mortality rate</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/R/visualization.R" class="external-link"><code>R/visualization.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/varconts/R/visualization.R" class="external-link"><code>R/visualization.R</code></a></small>
       <div class="d-none name"><code>plot_mortality_rate.Rd</code></div>
     </div>
 
@@ -90,7 +90,7 @@ of changes in the empirical mortality rate.</p>
 function, only to retrieve a lifelihood data object
 with <code><a href="lifelihoodData.html">lifelihoodData()</a></code></p>
 <p>If you want more control over the style of the graph,
-use the <code><a href="mortality_rate_data.html">mortality_rate_data()</a></code> function to retrieve data.</p>
+use the <code><a href="compute_mortality_rate.html">compute_mortality_rate()</a></code> function to retrieve data.</p>
 <p>Convenient function used in <code>plot_observed_mortality_rate()</code>
 and <code>plot_fitted_mortality_rate()</code>.</p>
     </div>
@@ -114,7 +114,9 @@ and <code>plot_fitted_mortality_rate()</code>.</p>
 <span>  <span class="va">lifelihoodData</span>,</span>
 <span>  <span class="va">interval_width</span>,</span>
 <span>  max_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  min_sample_size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  groupby <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_facet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  log_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  log_y <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"Mortality rate over time"</span>,</span>
@@ -126,11 +128,12 @@ and <code>plot_fitted_mortality_rate()</code>.</p>
 <span>  <span class="va">rate_df</span>,</span>
 <span>  <span class="va">max_time</span>,</span>
 <span>  <span class="va">groupby</span>,</span>
+<span>  use_facet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">log_x</span>,</span>
 <span>  <span class="va">log_y</span>,</span>
 <span>  <span class="va">title</span>,</span>
-<span>  <span class="va">xlab</span>,</span>
-<span>  <span class="va">ylab</span></span>
+<span>  xlab <span class="op">=</span> <span class="st">"Time"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Mortality rate"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -180,8 +183,17 @@ character vector (<code>c("covariate1", "covariate2")</code>).</p></li>
 <dd><p><code>lifelihoodData</code> object created with <code><a href="lifelihoodData.html">lifelihoodData()</a></code>.</p></dd>
 
 
+<dt id="arg-min-sample-size">min_sample_size<a class="anchor" aria-label="anchor" href="#arg-min-sample-size"></a></dt>
+<dd><p>The minimum number of individuals alive
+at the beggining of a time interval for computing the observed mortality rate</p></dd>
+
+
+<dt id="arg-use-facet">use_facet<a class="anchor" aria-label="anchor" href="#arg-use-facet"></a></dt>
+<dd><p>Use facet_wrap to plot one panel per group (default=FALSE)</p></dd>
+
+
 <dt id="arg-rate-df">rate_df<a class="anchor" aria-label="anchor" href="#arg-rate-df"></a></dt>
-<dd><p>Dataframe with mortality rate, obtained via <code><a href="mortality_rate_data.html">mortality_rate_data()</a></code></p></dd>
+<dd><p>Dataframe with mortality rate, obtained via <code>mortality_rate_data()</code></p></dd>
 
 </dl></div>
     <div class="section level2">
