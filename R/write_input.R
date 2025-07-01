@@ -102,7 +102,6 @@ format_dataframe_to_txt <- function(
   for (cov in covariates) {
     if (is.numeric(df[[cov]])) {
       n_cat <- 1
-      print(glue::glue("{cov} is considered as a numerical column"))
     } else {
       n_cat <- length(unique(df[[cov]]))
     }
