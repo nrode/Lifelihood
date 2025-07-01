@@ -4,7 +4,7 @@
 \alias{R_to_lifelihood}
 \title{Convert R formula to lifelihood formula}
 \usage{
-R_to_lifelihood(R_format, covariates)
+R_to_lifelihood(R_format, covariates, covar_types)
 }
 \arguments{
 \item{R_format}{String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.}

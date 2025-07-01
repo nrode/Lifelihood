@@ -44,7 +44,7 @@ safe_access <- function(config, path) {
 #' @keywords internal
 #'
 #' @return A character vector that will be used under the model tag in the input text file.
-format_config <- function(path_config, covariates) {
+format_config <- function(path_config, covariates, covar_types) {
   if (!file.exists(path_config)) {
     stop(paste(
       "Configuration file",
@@ -60,133 +60,152 @@ format_config <- function(path_config, covariates) {
       "expt_death",
       R_to_lifelihood(
         safe_access(config, c("mortality", "expt_death")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "survival_shape",
       R_to_lifelihood(
         safe_access(config, c("mortality", "survival_shape")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "ratio_expt_death",
       R_to_lifelihood(
         safe_access(config, c("mortality", "ratio_expt_death")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "prob_death",
       R_to_lifelihood(
         safe_access(config, c("mortality", "prob_death")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "sex_ratio",
       R_to_lifelihood(
         safe_access(config, c("mortality", "sex_ratio")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "expt_maturity",
       R_to_lifelihood(
         safe_access(config, c("maturity", "expt_maturity")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "maturity_shape",
       R_to_lifelihood(
         safe_access(config, c("maturity", "maturity_shape")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "ratio_expt_maturity",
       R_to_lifelihood(
         safe_access(config, c("maturity", "ratio_expt_maturity")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "expt_reproduction",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "expt_reproduction")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "reproduction_shape",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "reproduction_shape")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "n_offspring",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "n_offspring")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "increase_death_hazard",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "increase_death_hazard")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "tof_reduction_date",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "tof_reduction_date")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "increase_tof_n_offspring",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "increase_tof_n_offspring")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "lin_decrease_hazard",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "lin_decrease_hazard")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "quad_decrease_hazard",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "quad_decrease_hazard")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "lin_change_n_offspring",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "lin_change_n_offspring")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "quad_change_n_offspring",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "quad_change_n_offspring")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     ),
     paste(
       "tof_n_offspring",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "tof_n_offspring")),
-        covariates
+        covariates,
+        covar_types
       )[1]
     )
   )
@@ -230,7 +249,7 @@ read_formula <- function(config, parameter) {
 #' R_to_lifelihood("geno + type + geno*type", c("geno", "type"))
 #'
 #' @export
-R_to_lifelihood <- function(R_format, covariates) {
+R_to_lifelihood <- function(R_format, covariates, covar_types) {
   # ensure input is a string
   R_format <- as.character(R_format)
 
@@ -274,6 +293,9 @@ R_to_lifelihood <- function(R_format, covariates) {
         position <- paste(first_term, second_term, sep = "")
       } else {
         position <- which(covariates == cov)
+        if (covar_types[which(cov == covariates)] == "num") {
+          position <- position + length(covariates) + 1
+        }
       }
       lifelihood_format <- paste(lifelihood_format, position)
     }

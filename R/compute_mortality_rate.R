@@ -11,9 +11,9 @@
 #' the mortality rate will be calculated every 10 days for each group.
 #' @param max_time The maximum time for calculating the mortality
 #' rate. If set to NULL, the time of the last observed death is used.
-#' @param min_sample_size The minimum number of individuals alive 
+#' @param min_sample_size The minimum number of individuals alive
 #' at the beggining of a time interval for computing the observed mortality rate
-#' 
+#'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), Group (identifier of a given subgroup,
 #' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
@@ -125,8 +125,11 @@ compute_mortality_rate <- function(
           !is.na(group_data[[end_col]])
       )
 
-      mortality_rate[i, grp] <- if (alive_start > min_sample_size) deaths / alive_start else
+      mortality_rate[i, grp] <- if (alive_start > min_sample_size) {
+        deaths / alive_start
+      } else {
         NA
+      }
     }
   }
 
@@ -134,18 +137,18 @@ compute_mortality_rate <- function(
   colnames(mortality_rate_df) <- c("Interval_end", "Group", "MortalityRate")
   mortality_rate_df$Group <- as.factor(mortality_rate_df$Group)
 
-  if (is.null(groupby)) {
-    mortality_rate_df <- subset(mortality_rate_df, select = -c(Group))
-  }
-
   ## Add columns
   mortality_rate_df <- mortality_rate_df |>
     dplyr::mutate(
-      Interval_start = Interval_end-interval_width,
-      Mean_Interval = Interval_end-interval_width/2
-      ) |>
+      Interval_start = Interval_end - interval_width,
+      Mean_Interval = Interval_end - interval_width / 2
+    ) |>
     dplyr::relocate(Interval_start, .before = Interval_end) |>
     dplyr::relocate(Mean_Interval, .before = Group)
+
+  if (is.null(groupby)) {
+    mortality_rate_df <- mortality_rate_df |> select(-Group)
+  }
 
   return(mortality_rate_df)
 }

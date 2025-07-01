@@ -9,7 +9,7 @@ df <- fakesample |>
   ) |>
   mutate(geno = fct_recode(geno, "Yes" = "1", "No" = "0")) |>
   mutate(
-    type = as.factor(sample(c(0:3), size = nrow(fakesample), replace = TRUE))
+    type = sample(c(0:3), size = nrow(fakesample), replace = TRUE)
   ) |>
   as_tibble()
 
@@ -37,7 +37,6 @@ lifelihoodData <- lifelihoodData(
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config2"),
-  group_by_group = "TRUE",
   delete_temp_files = FALSE
 )
 
