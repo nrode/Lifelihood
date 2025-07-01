@@ -294,12 +294,10 @@ R_to_lifelihood <- function(R_format, covariates, covar_types) {
       } else {
         position <- which(covariates == cov)
         if (covar_types[which(cov == covariates)] == "num") {
-          position <- position + length(covariates)
+          position <- position + length(covariates) + 1
         }
       }
       lifelihood_format <- paste(lifelihood_format, position)
-      print(cov)
-      print(position)
     }
   }
 

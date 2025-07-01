@@ -8,7 +8,11 @@ test_that("format_config correctly reads and formats the config file", {
   ))
   covariates <- c("geno", "type")
 
-  result <- format_config(path_config, covariates)
+  result <- format_config(
+    path_config,
+    covariates,
+    covar_types = c("cat", "cat")
+  )
 
   expect_equal(length(result), 19)
   expect_equal(result[1], "expt_death 0 1 2")
