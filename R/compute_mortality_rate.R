@@ -115,7 +115,10 @@ compute_mortality_rate <- function(
       interval_end <- i * interval_width
 
       alive_start <- sum(
-        group_data[[start_col]] >= interval_start
+        group_data[[start_col]] >= interval_start &
+          group_data[[end_col]] != right_censoring_date |
+          group_data[[start_col]] >= interval_end & ## Count censored individuals only if censoring date posterior to end of interval
+          group_data[[end_col]] == right_censoring_date
       )
 
       deaths <- sum(
