@@ -166,7 +166,7 @@ plot_mortality_rate <- function(
   }
 
   plot <- plot +
-    ggplot2::geom_line() +
+    #ggplot2::geom_line() +
     ggplot2::geom_point() +
     ggplot2::labs(
       title = title,

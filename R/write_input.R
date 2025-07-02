@@ -109,11 +109,7 @@ format_dataframe_to_txt <- function(
   matclutch <- ifelse(matclutch, "true", "false")
   n_cat_covariates <- c()
   for (cov in covariates) {
-    if (is.numeric(df[[cov]])) {
-      n_cat <- 1
-    } else {
-      n_cat <- length(unique(df[[cov]]))
-    }
+    n_cat <- length(unique(df[[cov]]))
     n_cat_covariates <- c(n_cat_covariates, n_cat)
   }
   data_struct_info <- c(

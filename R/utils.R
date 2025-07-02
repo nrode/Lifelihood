@@ -58,6 +58,78 @@ SurvWei <- function(t, ExpLong, Shape) {
   return(exp(-(t / Scale)^Shape))
 }
 
+#' @title Probability of dying between t and t+dt afer living until t.
+#'
+#' @keywords internal
+#'
+#' @param t Numeric. The time to event
+#' @param ExpLong Numeric. The expected longevity
+#' @param Shape Numeric. The shape parameter
+#'
+#' @return The survival probability (numeric)
+#'
+#' @export
+IntX1toX2MortWei <- function(t, dt, param1, param2, law) {
+  (SurvWei(t, param1, param2) - SurvWei(t + dt, param1, param2)) /
+    SurvWei(t, param1, param2)
+}
+
+#' @title Log-normal survival function
+#'
+#' @description
+#' Log-normal survival function
+#'
+#' @keywords internal
+#'
+#' @param t Numeric. The time to event
+#' @param ExpLong Numeric. The expected longevity
+#' @param Shape Numeric. The shape parameter
+#'
+#' @return The survival probability (numeric)
+#'
+#' @export
+SurvLgn <- function(t, ExpLong, scale) {
+  muln <- log(ExpLong) - scale^2 / 2
+  plnorm(t, meanlog = muln, sdlog = scale, lower.tail = F, log.p = FALSE)
+}
+
+#' @title Gamma survival function
+#'
+#' @description
+#' Gamma survival function
+#'
+#' @keywords internal
+#'
+#' @param t Numeric. The time to event
+#' @param ExpLong Numeric. The expected longevity
+#' @param Shape Numeric. The shape parameter
+#'
+#' @return The survival probability (numeric)
+#'
+#' @export
+SurvGam <- function(t, ExpLong, scale) {
+  mu <- ExpLong / scale
+  pgamma(t, shape = mu, scale = scale, lower.tail = F, log.p = FALSE)
+}
+
+#' @title Exponential survival function
+#'
+#' @description
+#' Exponential survival function
+#'
+#' @keywords internal
+#'
+#' @param t Numeric. The time to event
+#' @param ExpLong Numeric. The expected longevity
+#' @param Shape Numeric. The shape parameter
+#'
+#' @return The survival probability (numeric)
+#'
+#' @export
+SurvExp <- function(t, ExpLong) {
+  exp(-(t / ExpLong))
+}
+
 #' @title Find the operating system of the user
 #'
 #' @description

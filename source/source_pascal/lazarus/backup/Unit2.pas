@@ -1517,7 +1517,7 @@ intinit[16]:= 0     ;
 intinit[17]:= 0     ;
 intinit[18]:= 0     ;
 covar[3].valcont[0]:=0;
-covar[3].valcont[1]:=2.5;
+covar[3].valcont[1]:=2;
 
 covar[4].valcont[0]:=0;
 covar[4].valcont[1]:=1;
@@ -1535,9 +1535,9 @@ covar[6].valcont[5]:=30;
 covar[6].valcont[6]:=32.5;
 covar[6].valcont[7]:=35; }
 
-// for i := 1 to nbcov do
-//    for j := 0 to covar[i].lev-1
-//      do covar[nbcov+i].valcont[j]:=j;         //remplissage des valcont
+for i := 1 to nbcov do
+   for j := 0 to covar[i].lev-1
+     do covar[nbcov+i].valcont[j]:=j;         //remplissage des valcont
 
 //decrireparam(ll_d);
 count:=0     ;
