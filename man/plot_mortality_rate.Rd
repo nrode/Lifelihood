@@ -12,6 +12,7 @@ plot_fitted_mortality_rate(
   newdata = NULL,
   max_time = NULL,
   groupby = NULL,
+  use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
   title = "Mortality rate over time",
@@ -37,7 +38,7 @@ plot_mortality_rate(
   rate_df,
   max_time,
   groupby,
-  use_facet = FALSE,
+  use_facet,
   log_x,
   log_y,
   title,
@@ -68,6 +69,8 @@ of covariates listed in the\code{lifelihoodData} object provided.
 character vector (\code{c("covariate1", "covariate2")}).
 }}
 
+\item{use_facet}{Use facet_wrap to plot one panel per group (default=FALSE)}
+
 \item{log_x}{Determine whether the x-axis should be displayed on a logarithmic scale}
 
 \item{log_y}{Determine whether the y-axis should be displayed on a logarithmic scale}
@@ -76,8 +79,6 @@ character vector (\code{c("covariate1", "covariate2")}).
 
 \item{min_sample_size}{The minimum number of individuals alive
 at the beggining of a time interval for computing the observed mortality rate}
-
-\item{use_facet}{Use facet_wrap to plot one panel per group (default=FALSE)}
 
 \item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
 }

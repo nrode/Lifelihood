@@ -115,14 +115,12 @@ compute_mortality_rate <- function(
       interval_end <- i * interval_width
 
       alive_start <- sum(
-        group_data[[start_col]] >= interval_start |
-          is.na(group_data[[start_col]])
+        group_data[[start_col]] >= interval_start
       )
 
       deaths <- sum(
         group_data[[start_col]] >= interval_start &
-          group_data[[start_col]] < interval_end &
-          !is.na(group_data[[end_col]])
+          group_data[[end_col]] < interval_end
       )
 
       mortality_rate[i, grp] <- if (alive_start > min_sample_size) {
