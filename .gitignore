@@ -31,3 +31,5 @@ backup/
 inst/bin/new/*
 !inst/bin/new/lifelihoodC2023
 !inst/bin/new/lifelihoodC2023.exe
+
+*.log
