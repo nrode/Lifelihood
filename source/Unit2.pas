@@ -1516,11 +1516,12 @@ intinit[15]:= 0    ;
 intinit[16]:= 0     ;
 intinit[17]:= 0     ;
 intinit[18]:= 0     ;
-covar[3].valcont[0]:=0;
-covar[3].valcont[1]:=2;
 
-covar[4].valcont[0]:=0;
-covar[4].valcont[1]:=1;
+// covar[3].valcont[0]:=0;
+// covar[3].valcont[1]:=2.5;
+
+// covar[4].valcont[0]:=0;
+// covar[4].valcont[1]:=1;
 {covar[4].valcont[0]:=0;
 covar[4].valcont[3]:=9;
 covar[4].valcont[4]:=12;

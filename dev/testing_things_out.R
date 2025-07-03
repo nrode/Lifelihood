@@ -10,20 +10,20 @@ t1 <- rexp(n = n, rate = 1 / (longevity * toto))
 tapply(t1, toto, mean)
 
 
-# df <- fakesample |>
-#   head(12) |>
-#   mutate(
-#     geno = geno_l,
-#     type = as.factor(type)
-#   ) |>
-#   as_tibble()
-
 df <- datapierrick |>
   as_tibble() |>
   mutate(
     geno = as.factor(geno),
     par = as.factor(par)
   )
+
+df <- fakesample |>
+  head(12) |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  ) |>
+  as_tibble()
 
 dataLifelihood <- data.frame(geno_l = toto - 1, t1 = t1 - 0.5, t2 = t1 + 0.5) |>
   as_tibble() |>
@@ -47,7 +47,7 @@ dataLifelihood <- data.frame(geno_l = toto - 1, t1 = t1 - 0.5, t2 = t1 + 0.5) |>
   mutate(geno_l = as.factor(geno_l), toto = as.factor(geno_l))
 
 lifelihoodData <- lifelihoodData(
-  df = dataLifelihood,
+  df = df,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -56,11 +56,14 @@ lifelihoodData <- lifelihoodData(
   clutchs = c(
     "clutch_start1",
     "clutch_end1",
-    "clutch_size1"
+    "clutch_size1",
+    "clutch_start2",
+    "clutch_end2",
+    "clutch_size2"
   ),
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("geno_l", "toto"),
+  covariates = c("geno", "type"),
   model_specs = c("wei", "lgn", "wei")
 )
 
