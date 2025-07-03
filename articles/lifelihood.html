@@ -266,16 +266,16 @@
 <span>    MCMC <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>    delete_temp_files <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /private/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/RtmpenDY1P/pkgdown-quarto-1cd84e65bd3/lifelihood_5596_5817_1885_7486"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Intermediate files are stored at: /private/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/Rtmpd2hBI8/pkgdown-quarto-1f077b9e3f03/lifelihood_7912_3669_2220_4895"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="aic-bic">AIC &amp; BIC<a class="anchor" aria-label="anchor" href="#aic-bic"></a>
 </h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 690130.2</span></span>
+<span><span class="co">#&gt; [1] 690130.7</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 690160.4</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 690160.9</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="summary-results">Summary results<a class="anchor" aria-label="anchor" href="#summary-results"></a>
 </h3>
@@ -283,20 +283,20 @@
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         int_expt_death   eff_expt_death_par_1   eff_expt_death_par_2 </span></span>
-<span><span class="co">#&gt;            -2.04760337             0.38197873             0.38346603 </span></span>
+<span><span class="co">#&gt;            -2.07514516             0.47478068             0.05215459 </span></span>
 <span><span class="co">#&gt; eff_expt_death_spore_1 eff_expt_death_spore_2 eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;            -0.05815816             0.07069251            -0.02142314</span></span>
+<span><span class="co">#&gt;            -0.13121479            -0.13142985             0.30055130</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -345058.1</span></span>
+<span><span class="co">#&gt; [1] -345058.4</span></span>
 <span><span class="va">results</span><span class="op">$</span><span class="va">effects</span></span>
 <span><span class="co">#&gt;                     name  estimation stderror      parameter        kind</span></span>
-<span><span class="co">#&gt; 1         int_expt_death -2.04760337        0     expt_death   intercept</span></span>
-<span><span class="co">#&gt; 2   eff_expt_death_par_1  0.38197873        0     expt_death coefficient</span></span>
-<span><span class="co">#&gt; 3   eff_expt_death_par_2  0.38346603        0     expt_death coefficient</span></span>
-<span><span class="co">#&gt; 4 eff_expt_death_spore_1 -0.05815816        0     expt_death coefficient</span></span>
-<span><span class="co">#&gt; 5 eff_expt_death_spore_2  0.07069251        0     expt_death coefficient</span></span>
-<span><span class="co">#&gt; 6 eff_expt_death_spore_3 -0.02142314        0     expt_death coefficient</span></span>
-<span><span class="co">#&gt; 7     int_survival_shape -4.78775412        0 survival_shape   intercept</span></span>
+<span><span class="co">#&gt; 1         int_expt_death -2.07514516        0     expt_death   intercept</span></span>
+<span><span class="co">#&gt; 2   eff_expt_death_par_1  0.47478068        0     expt_death coefficient</span></span>
+<span><span class="co">#&gt; 3   eff_expt_death_par_2  0.05215459        0     expt_death coefficient</span></span>
+<span><span class="co">#&gt; 4 eff_expt_death_spore_1 -0.13121479        0     expt_death coefficient</span></span>
+<span><span class="co">#&gt; 5 eff_expt_death_spore_2 -0.13142985        0     expt_death coefficient</span></span>
+<span><span class="co">#&gt; 6 eff_expt_death_spore_3  0.30055130        0     expt_death coefficient</span></span>
+<span><span class="co">#&gt; 7     int_survival_shape -4.65115390        0 survival_shape   intercept</span></span>
 <span><span class="co">#&gt;       event</span></span>
 <span><span class="co">#&gt; 1 mortality</span></span>
 <span><span class="co">#&gt; 2 mortality</span></span>
@@ -311,24 +311,24 @@
 <span><span class="co">#&gt; End = 3 </span></span>
 <span><span class="co">#&gt; Thinning interval = 1 </span></span>
 <span><span class="co">#&gt;             LL int_expt_death eff_expt_death_par_1 eff_expt_death_par_2</span></span>
-<span><span class="co">#&gt; [1,] -345056.0      -2.073521            0.3005507            0.2620647</span></span>
-<span><span class="co">#&gt; [2,] -345059.4      -2.093594            0.3745664            0.3029157</span></span>
-<span><span class="co">#&gt; [3,] -345057.4      -2.047603            0.3819787            0.3834660</span></span>
+<span><span class="co">#&gt; [1,] -345057.5      -2.028049            0.3073841          -0.00815517</span></span>
+<span><span class="co">#&gt; [2,] -345058.4      -2.103782            0.4077028          -0.04817081</span></span>
+<span><span class="co">#&gt; [3,] -345061.7      -2.075145            0.4747807           0.05215459</span></span>
 <span><span class="co">#&gt;      eff_expt_death_spore_1 eff_expt_death_spore_2 eff_expt_death_spore_3</span></span>
-<span><span class="co">#&gt; [1,]             0.10928564             0.12270112             0.09635740</span></span>
-<span><span class="co">#&gt; [2,]             0.08157786             0.07228745             0.08413992</span></span>
-<span><span class="co">#&gt; [3,]            -0.05815816             0.07069251            -0.02142314</span></span>
+<span><span class="co">#&gt; [1,]             0.04521857             0.09861493              0.3047451</span></span>
+<span><span class="co">#&gt; [2,]            -0.04595108            -0.03997676              0.3907527</span></span>
+<span><span class="co">#&gt; [3,]            -0.13121479            -0.13142985              0.3005513</span></span>
 <span><span class="co">#&gt;      int_survival_shape</span></span>
-<span><span class="co">#&gt; [1,]          -4.720336</span></span>
-<span><span class="co">#&gt; [2,]          -4.571768</span></span>
-<span><span class="co">#&gt; [3,]          -4.787754</span></span>
+<span><span class="co">#&gt; [1,]          -4.735699</span></span>
+<span><span class="co">#&gt; [2,]          -4.786383</span></span>
+<span><span class="co">#&gt; [3,]          -4.651154</span></span>
 <span><span class="va">results</span><span class="op">$</span><span class="va">vcov</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 7</span></span>
 <span><span class="co">#&gt;   int_expt_death eff_expt_death_par_1 eff_expt_death_par_2</span></span>
 <span><span class="co">#&gt;            &lt;dbl&gt;                &lt;dbl&gt;                &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1          -2.07                0.301                0.262</span></span>
-<span><span class="co">#&gt; 2          -2.09                0.375                0.303</span></span>
-<span><span class="co">#&gt; 3          -2.05                0.382                0.383</span></span>
+<span><span class="co">#&gt; 1          -2.03                0.307             -0.00816</span></span>
+<span><span class="co">#&gt; 2          -2.10                0.408             -0.0482 </span></span>
+<span><span class="co">#&gt; 3          -2.08                0.475              0.0522 </span></span>
 <span><span class="co">#&gt; # ℹ 4 more variables: eff_expt_death_spore_1 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   eff_expt_death_spore_2 &lt;dbl&gt;, eff_expt_death_spore_3 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   int_survival_shape &lt;dbl&gt;</span></span></code></pre></div>
@@ -348,22 +348,22 @@
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, <span class="va">newdata</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        [,1]</span></span>
-<span><span class="co">#&gt; 1 -2.047603</span></span>
-<span><span class="co">#&gt; 2 -1.723783</span></span>
-<span><span class="co">#&gt; 3 -1.593445</span></span>
-<span><span class="co">#&gt; 4 -2.105762</span></span>
-<span><span class="co">#&gt; 5 -1.665625</span></span>
-<span><span class="co">#&gt; 6 -1.722295</span></span>
-<span><span class="co">#&gt; 7 -1.723783</span></span>
+<span><span class="co">#&gt; 1 -2.075145</span></span>
+<span><span class="co">#&gt; 2 -1.731579</span></span>
+<span><span class="co">#&gt; 3 -2.154420</span></span>
+<span><span class="co">#&gt; 4 -2.206360</span></span>
+<span><span class="co">#&gt; 5 -1.600364</span></span>
+<span><span class="co">#&gt; 6 -2.154205</span></span>
+<span><span class="co">#&gt; 7 -1.731579</span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       [,1]</span></span>
-<span><span class="co">#&gt; 1 37.03239</span></span>
-<span><span class="co">#&gt; 2 49.04944</span></span>
-<span><span class="co">#&gt; 3 54.72436</span></span>
-<span><span class="co">#&gt; 4 35.16723</span></span>
-<span><span class="co">#&gt; 5 51.51956</span></span>
-<span><span class="co">#&gt; 6 49.11138</span></span>
-<span><span class="co">#&gt; 7 49.04944</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 36.13860</span></span>
+<span><span class="co">#&gt; 2 48.72581</span></span>
+<span><span class="co">#&gt; 3 33.67061</span></span>
+<span><span class="co">#&gt; 4 32.13549</span></span>
+<span><span class="co">#&gt; 5 54.41037</span></span>
+<span><span class="co">#&gt; 6 33.67710</span></span>
+<span><span class="co">#&gt; 7 48.72581</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h3>
@@ -418,7 +418,7 @@
 <span>  groupby <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spore"</span>, <span class="st">"par"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span>
-<span><span class="co">#&gt; Warning: Removed 4 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
@@ -434,7 +434,7 @@
 <span>  groupby <span class="op">=</span> <span class="st">"spore"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; Warning: Removed 5 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
