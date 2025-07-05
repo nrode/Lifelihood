@@ -40,6 +40,17 @@ TRY
   nomfc:=list[1];
   assignfile(fc,nomfc);     // fc declaré ds unit2
   readcustom(ll_d);         // = decrireparam code precedent
+  
+  //customfilevalcont
+  if list[13]<>'' then valcontflag:=True else valcontflag:=False;    //If there is no valcont file then valcont are set automatically as ordinals, else the values are read in the file
+  if valcontflag then
+    begin
+	nomfcvalcont:=list[13];
+	assignfile(fcvalcont,nomfcvalcont);     // fcvalcont declaré ds unit2
+	end;
+  readcustomvalcont(ll_d,valcontflag);         
+  
+  
   //outfile
   Try
   nomoutfile := ChangeFileExt(nomf1, '.out');
