@@ -80,8 +80,8 @@ Unlike R, Pascal is a compiled programming language, meaning the code must first
 
 The `/` directory includes both the source (`.pas`) and compiled files:
 
-- `lifelihoodC2023` for Unix systems (macOS)
-- `lifelihoodC2023.exe` for Windows
+- `lifelihood` for Unix systems (macOS)
+- `lifelihood.exe` for Windows
 
 A utility function in **Lifelihood** determines the user’s operating system to run the appropriate executable.
 

@@ -11,8 +11,8 @@ lect:string;
 
 procedure readata;
 procedure readcustom(var FD: function_D);
-procedure readcustomvalcont(var FD: function_D;flag:boolean);
 procedure Init_met_D(var md: Metropolis_D);
+//procedure readcustomvalcont(var FD: function_D;flag:boolean);
 
 
 implementation
@@ -251,33 +251,33 @@ lal.free;
 closefile(fc);
 end;
 
-{----readcustom valcont------------------------------------------------------------------------------------------------}
-procedure readcustomvalcont(var FD: function_D;flag:boolean);
-var lal:TStringList;
-    check:string;
-    i,j:integer;
-begin
-If flag 
-then Begin
-	reset(fcvalcont);
-	lal := TStringList.Create;
-	lal.Delimiter := ' ';
+// {----readcustom valcont------------------------------------------------------------------------------------------------}
+// procedure readcustomvalcont(var FD: function_D;flag:boolean);
+// var lal:TStringList;
+//     check:string;
+//     i,j:integer;
+// begin
+// If flag 
+// then Begin
+// 	reset(fcvalcont);
+// 	lal := TStringList.Create;
+// 	lal.Delimiter := ' ';
 
-	For i:=1 to nbcov do
-        begin
-        readln(fc,check );
-        lal.DelimitedText:=check;
-        For j:=0 to covar[nbcov+i].lev do covar[nbcov+i].valcont[j]:=lal[j];
-        end;
-	end;
-else begin
-	 For i:=1 to nbcov do
-     For j:=0 to covar[nbcov+i].lev do covar[nbcov+i].valcont[j]:=j;
-     end;
+// 	For i:=1 to nbcov do
+//         begin
+//         readln(fc,check );
+//         lal.DelimitedText:=check;
+//         For j:=0 to covar[nbcov+i].lev do covar[nbcov+i].valcont[j]:=lal[j];
+//         end;
+// 	end;
+// else begin
+// 	 For i:=1 to nbcov do
+//      For j:=0 to covar[nbcov+i].lev do covar[nbcov+i].valcont[j]:=j;
+//      end;
 	
 
-lal.free;
-closefile(fcvalcont);
-end;
+// lal.free;
+// closefile(fcvalcont);
+// end;
 
 end.

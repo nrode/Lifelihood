@@ -1,4 +1,4 @@
-program lifelihoodC2023;
+program lifelihood;
 
 {$MODE Delphi}
 
@@ -48,7 +48,7 @@ TRY
 	nomfcvalcont:=list[13];
 	assignfile(fcvalcont,nomfcvalcont);     // fcvalcont declaré ds unit2
 	end;
-  readcustomvalcont(ll_d,valcontflag);         
+  //readcustomvalcont(ll_d,valcontflag);         
   
   
   //outfile
