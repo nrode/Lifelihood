@@ -69,5 +69,8 @@ execute_bin <- function(
     path <- path_to_Lifelihood
   }
 
-  system(path, input = arg_string)
+  status <- system(path, input = arg_string)
+  if (status == 0) {
+    stop("Error: lifelihood Pascal program failed with status code ", status)
+  }
 }

@@ -28,8 +28,8 @@ inst/doc
 docs
 backup/
 
-inst/bin/new/*
-!inst/bin/new/lifelihoodC2023
-!inst/bin/new/lifelihoodC2023.exe
+inst/bin/*
+!inst/bin/lifelihood
+!inst/bin/lifelihood.exe
 
 *.log

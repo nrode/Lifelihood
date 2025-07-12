@@ -9,7 +9,7 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="lifelihoodC2023"/>
+      <Title Value="lifelihood"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -30,7 +30,7 @@
     </RequiredPackages>
     <Units>
       <Unit>
-        <Filename Value="lifelihoodC2023.lpr"/>
+        <Filename Value="lifelihood.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

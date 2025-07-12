@@ -61,10 +61,10 @@ Duration: 4.8 s
 
 ## Open project in Lazarus
 
-Then, open Lazarus and select "Open project". You should select the file named `lifelihoodC2023.lpi` that should be in `Lifelihood/source/lifelihoodC2023.lpi`.
+Then, open Lazarus and select "Open project". You should select the file named `lifelihood.lpi` that should be in `Lifelihood/source/lifelihood.lpi`.
 
 Finally, we need to set the output directory for the compiled file. You need to go in `Project > Project Options > Compiler Options > Paths`. In the "Unit output directory (-FU)", set the path to `Lifelihood/inst/bin/new/`. In my case the full path is: `/Users/josephbarbier/Desktop/Lifelihood/inst/bin/new/`.
 
-This will output all files in this directory. Then, you need take the compiled file in the `new/` directory (`lifelihoodC2023.exe` if you compile on Windows, `lifelihoodC2023` if you compile on Mac.) Take that file, remove the `C2023` (which gives either `lifelihood.exe` or `lifelihood`) and put it inside `Lifelihood/inst/bin/`. You will need to remove/overwrite previous compiled files.
+This will output all files in this directory. Then, you need take the compiled file in the `new/` directory (`lifelihood.exe` if you compile on Windows, `lifelihood` if you compile on Mac.) Take that file, remove the `C2023` (which gives either `lifelihood.exe` or `lifelihood`) and put it inside `Lifelihood/inst/bin/`. You will need to remove/overwrite previous compiled files.
 
 You should now be able to compile the project with `Run > Compile`.

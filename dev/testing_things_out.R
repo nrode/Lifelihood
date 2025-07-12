@@ -7,7 +7,6 @@ longevity <- 10
 slope <- 1
 toto <- rep(1:2, each = n / 2)
 t1 <- rexp(n = n, rate = 1 / (longevity * toto))
-tapply(t1, toto, mean)
 
 
 df <- datapierrick |>
