@@ -138,8 +138,8 @@ okay, it should print many things and ends with something like this:</p>
 <h2 id="open-project-in-lazarus">Open project in Lazarus<a class="anchor" aria-label="anchor" href="#open-project-in-lazarus"></a>
 </h2>
 <p>Then, open Lazarus and select “Open project”. You should select the
-file named <code>lifelihoodC2023.lpi</code> that should be in
-<code>Lifelihood/source/lifelihoodC2023.lpi</code>.</p>
+file named <code>lifelihood.lpi</code> that should be in
+<code>Lifelihood/source/lifelihood.lpi</code>.</p>
 <p>Finally, we need to set the output directory for the compiled file.
 You need to go in
 <code>Project &gt; Project Options &gt; Compiler Options &gt; Paths</code>.
@@ -148,12 +148,12 @@ In the “Unit output directory (-FU)”, set the path to
 <code>/Users/josephbarbier/Desktop/Lifelihood/inst/bin/new/</code>.</p>
 <p>This will output all files in this directory. Then, you need take the
 compiled file in the <code>new/</code> directory
-(<code>lifelihoodC2023.exe</code> if you compile on Windows,
-<code>lifelihoodC2023</code> if you compile on Mac.) Take that file,
-remove the <code>C2023</code> (which gives either
-<code>lifelihood.exe</code> or <code>lifelihood</code>) and put it
-inside <code>Lifelihood/inst/bin/</code>. You will need to
-remove/overwrite previous compiled files.</p>
+(<code>lifelihood.exe</code> if you compile on Windows,
+<code>lifelihood</code> if you compile on Mac.) Take that file, remove
+the <code>C2023</code> (which gives either <code>lifelihood.exe</code>
+or <code>lifelihood</code>) and put it inside
+<code>Lifelihood/inst/bin/</code>. You will need to remove/overwrite
+previous compiled files.</p>
 <p>You should now be able to compile the project with
 <code>Run &gt; Compile</code>.</p>
 </div>
