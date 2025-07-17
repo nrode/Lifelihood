@@ -9,7 +9,7 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="lifelihood"/>
+      <Title Value="lifelihoodC2023"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -30,7 +30,7 @@
     </RequiredPackages>
     <Units>
       <Unit>
-        <Filename Value="lifelihood.lpr"/>
+        <Filename Value="lifelihoodC2023.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -63,7 +63,7 @@
     <Version Value="11"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/Lifelihood/inst/bin/new"/>
+      <UnitOutputDirectory Value="/Users/josephbarbier/Desktop/lifelihood/inst/bin"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

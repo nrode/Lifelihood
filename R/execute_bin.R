@@ -70,7 +70,5 @@ execute_bin <- function(
   }
 
   status <- system(path, input = arg_string)
-  if (status == 0) {
-    stop("Error: lifelihood Pascal program failed with status code ", status)
-  }
+  message("lifelihood Pascal program status code ", status)
 }

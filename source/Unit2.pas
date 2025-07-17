@@ -145,15 +145,14 @@ var
   The_Met_D: Metropolis_D;
   nb_group, nb_current_group, max_vars: integer;
   //f1:filetype;
-  f1,fc,outfile,fcvalcont: text;
-  nom, nomf1,nomfc,nomfcvalcont,nomoutfile, nommodfile: string;
+  f1,fc,outfile: text;
+  nom, nomf1,nomfc,nomoutfile, nommodfile: string;
   fitness_repar,matclutch:byte;
   r,xratiomax:double;
   H:mat;
   intervalp1p2:double; //intervale de temps entre 1ere et 2eme ponte pour tous les individus, utile quand matclutch=true pour avoir une idee moyenne de l'intervale entre maturite reelle et premiere ponte
   savedseed:array[1..4] of integer;
   suaux: survfunctype  ;
-  valcontflag:boolean; //tell if there is a file with valcont values
 
 
 function max(x, y: double): double;
@@ -1518,12 +1517,9 @@ intinit[16]:= 0     ;
 intinit[17]:= 0     ;
 intinit[18]:= 0     ;
 
-// covar[3].valcont[0]:=0;
-// covar[3].valcont[1]:=2.5;
-
-// covar[4].valcont[0]:=0;
-// covar[4].valcont[1]:=1;
 {covar[4].valcont[0]:=0;
+covar[4].valcont[1]:=0;
+covar[4].valcont[2]:=3;
 covar[4].valcont[3]:=9;
 covar[4].valcont[4]:=12;
 covar[4].valcont[5]:=23;
