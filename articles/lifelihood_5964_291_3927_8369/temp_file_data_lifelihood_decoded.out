@@ -1,0 +1,48 @@
+---------------------------
+
+datafile= /private/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/Rtmp5CdUCp/pkgdown-quarto-1d29b499d27/lifelihood_5964_291_3927_8369/temp_file_data_lifelihood.txt
+seed1= 5964 seed2= 291 seed3= 3927 seed4= 8369
+#parameters= 7
+Likelihood_max= -343781.403410
+int_expt_death -2.17826031 0.00000000
+eff_expt_death_par_1 0.57080473 0.00000000
+eff_expt_death_par_2 0.80054495 0.00000000
+eff_expt_death_spore_1 -0.18867545 0.00000000
+eff_expt_death_spore_2 -0.02379481 0.00000000
+eff_expt_death_spore_3 -0.40742233 0.00000000
+int_survival_shape -4.89573862 0.00000000
+
+MCMCsamples
+LL -343783.10198648 -343785.30293398 -343786.52511959 
+int_expt_death -2.06754542 -2.15139046 -2.17826031 
+eff_expt_death_par_1 0.38263623 0.48288813 0.57080473 
+eff_expt_death_par_2 0.71703520 0.71452341 0.80054495 
+eff_expt_death_spore_1 -0.04700038 -0.09777289 -0.18867545 
+eff_expt_death_spore_2 0.03770440 0.03847022 -0.02379481 
+eff_expt_death_spore_3 -0.28846133 -0.16160457 -0.40742233 
+int_survival_shape -4.79196662 -4.78484050 -4.89573862 
+
+
+Parameter_Range_Table
+expt_death 0.00100000 324.00000000
+survival_shape 0.05000000 500.00000000
+ratio_expt_death 0.01000000 100.00000000
+prob_death 0.00001000 0.99999000
+sex_ratio 0.00001000 0.99999000
+expt_maturity 0.00100000 70.00000000
+maturity_shape 0.05000000 500.00000000
+ratio_expt_maturity 0.01000000 100.00000000
+expt_reproduction 0.00100000 32.00000000
+reproduction_shape 0.00250000 10.00000000
+pontn 1.00000000 50.00000000
+increase_death_hazard 0.00001000 10.00000000
+tof_reduction_date 0.00000010 10.00000000
+increase_tof_n_offspring 0.00000010 10.00000000
+lin_decrease_hazard -20.00000000 20.00000000
+quad_senescence -20.00000000 20.00000000
+quad_decrease_hazard -10.00000000 10.00000000
+quad_change_n_offspring -10.00000000 10.00000000
+tof_n_offspring -10.00000000 10.00000000
+ratiomax  1.0000000000000000E+001
+tinf_(right_censoring)  1.0000000000000000E+003
+tc_(juvenile_period_length)  2.0000000000000000E+001
