@@ -18,6 +18,9 @@
 #' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
 #' @param seeds Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.
+#' @param ratiomax facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque
+#' @param tc critical time for the increase in juvenile survival mortality compared to later survival
+#' @param tinf maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)
 #' @param ntr Number of thread for the paralelisation ?
 #' @param nst TBD - Check the actual meaning
 #' @param To Initial temperature for the simulated annealing
@@ -89,6 +92,10 @@ lifelihood <- function(
   Tf = 1,
   climbrate = 1,
   precision = 0.001,
+  ratiomax = 10,
+  tc = 20,
+  tinf = 1000,
+  path_continuous_var = "",
   raise_estimation_warning = TRUE,
   delete_temp_files = TRUE
 ) {
@@ -142,28 +149,31 @@ lifelihood <- function(
     temp_dir = temp_dir
   )
 
-  #group_by_group_int <- as.integer(group_by_group)
   execute_bin(
     path_to_Lifelihood = path_to_Lifelihood,
     path_input_data = data_path,
     path_param_bounds = path_param_range,
     group_by_group = group_by_group,
-    MCMC,
-    interval,
-    SEcal,
-    saveprobevent,
-    fitness,
-    r,
-    seeds[1],
-    seeds[2],
-    seeds[3],
-    seeds[4],
-    ntr,
-    nst,
-    To,
-    Tf,
-    climbrate,
-    precision
+    MCMC = MCMC,
+    interval = interval,
+    SEcal = SEcal,
+    saveprobevent = saveprobevent,
+    fitness = fitness,
+    r = r,
+    seed1 = seeds[1],
+    seed2 = seeds[2],
+    seed3 = seeds[3],
+    seed4 = seeds[4],
+    ratiomax = ratiomax,
+    tc = tc,
+    tinf = tinf,
+    path_continuous_var = path_continuous_var,
+    ntr = ntr,
+    nst = nst,
+    To = To,
+    Tf = Tf,
+    climbrate = climbrate,
+    precision = precision
   )
 
   output_path <- file.path(

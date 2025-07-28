@@ -41,6 +41,15 @@ TRY
   assignfile(fc,nomfc);     // fc declaré ds unit2
   readcustom(ll_d);         // = decrireparam code precedent
   //outfile
+  
+  //customfilevalcont
+  //If there is no valcont file then valcont are set automatically as ordinals, else the values are read in the file
+  if list[16]<>'' then
+    valcontflag:=False
+  else
+    valcontflag:=True;
+  writeln('Continuous variable(s) detected: ', valcontflag);
+  
   Try
   nomoutfile := ChangeFileExt(nomf1, '.out');
   assignfile(outfile,nomoutfile);
@@ -55,6 +64,17 @@ TRY
   seed3:=StrToInt(list[11]);        savedseed[3]:=seed3;
   seed4:=StrToInt(list[12]);        savedseed[4]:=seed4;
   marsini(seed1,seed2,seed3,seed4);
+
+  // ratiomax for clutch size when senescence present
+  ratiomax := StrToFloat(list[13]);
+  
+  // critical time for the increase in juvenile survival mortality compared to later survival
+  tc := StrToFloat(list[14]);
+  writeln('tc: ', tc);
+  
+  // maximum censoring time
+  tinf := StrToFloat(list[15]);
+  writeln('tinf: ', tinf);
 
   //LL maximization                    //a maodifier ce bloc pour faire des fit gxgroup + remettre procedure ecriture correspondante...
   Init_met_D(The_Met_D);

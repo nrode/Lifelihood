@@ -47,15 +47,12 @@ const
   a1_erfra = 0.3480242;
   a2_erfra = -0.0958798;
   a3_erfra = 0.7478556;
-  tinf = 1000;               //attention date de censure      !!!!!!!!!!!!!!!!!!!!               // a ajouter option reglable par utilisateur!!!!
-  tc = 20;                    //attention date critique initiale      !!!!!!!!!!!!!!!!!!!!        // a ajouter option reglable par utilisateur!!!!
   intint=0.3;                 //ds generateur histoires de vies
   minus=0.00000000000000000000000000000000001;
   nbparposs=19;
   nbparmort= 5 ; {  mortuf  morta  Rmortum mortp propmal}
   nbparmat = 3 ; {  matuf mata Rmatum }
   nbparponte = 11; {pontu  ponta  (W)pontn  to(ps)int  to(ps)am  to(ps)tp  sen(pu)t  sen(pu)t2  sen(pn)t  sen(pn)t2  to(pnpu) }
-  ratiomax = 10;  //facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque
 
 type
   var_info_type = record
@@ -148,11 +145,12 @@ var
   f1,fc,outfile: text;
   nom, nomf1,nomfc,nomoutfile, nommodfile: string;
   fitness_repar,matclutch:byte;
-  r,xratiomax:double;
+  r,xratiomax,ratiomax,tc,tinf:double;
   H:mat;
   intervalp1p2:double; //intervale de temps entre 1ere et 2eme ponte pour tous les individus, utile quand matclutch=true pour avoir une idee moyenne de l'intervale entre maturite reelle et premiere ponte
   savedseed:array[1..4] of integer;
   suaux: survfunctype  ;
+  valcontflag:boolean; //tell if there is a file with valcont values
 
 
 function max(x, y: double): double;
