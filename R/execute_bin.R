@@ -32,6 +32,7 @@ execute_bin <- function(
   ratiomax,
   tc,
   tinf,
+  sub_interval,
   path_continuous_var,
   ntr,
   nst,
@@ -57,6 +58,7 @@ execute_bin <- function(
     ratiomax,
     tc,
     tinf,
+    sub_interval,
     path_continuous_var,
     ntr,
     nst,
@@ -77,6 +79,7 @@ execute_bin <- function(
     path <- path_to_Lifelihood
   }
 
+  print(paste0(path, arg_string))
   status <- system(path, input = arg_string)
   message("lifelihood Pascal program status code ", status)
 }

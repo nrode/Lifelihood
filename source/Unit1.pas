@@ -10,7 +10,8 @@ list:TStringList;
 lect:string;
 
 procedure readata;
-procedure readcustom(var FD: function_D);
+procedure read_custom(var FD: function_D);
+procedure read_custom_continuous_var(flag: boolean);
 procedure Init_met_D(var md: Metropolis_D);
 
 
@@ -23,12 +24,12 @@ var i:integer;
 begin
   with md do
     begin
-    ntr := StrToInt(list[13]);
-    nst := StrToInt(list[14]);
-    temp0 := StrToFloat(list[15]);
-    tempf :=StrToFloat(list[16]);
-    climbrate := StrToFloat(list[17]);
-    precision:=StrToFloat(list[18]);
+    ntr := StrToInt(list[18]);
+    nst := StrToInt(list[19]);
+    temp0 := StrToFloat(list[20]);
+    tempf :=StrToFloat(list[21]);
+    climbrate := StrToFloat(list[22]);
+    precision:=StrToFloat(list[23]);
     maxrep:=40;
     tT := 4;  t0 := 2;
     bgeup := 1/0.98;     //a voir si bdgeup doit etre + gd que l'inverse du bgdown pour accelerer convergence
@@ -204,8 +205,8 @@ closefile(f1);
 lal.free;
 END;
 
-{----readcustom------------------------------------------------------------------------------------------------}
-procedure readcustom(var FD: function_D);
+{----read_custom------------------------------------------------------------------------------------------------}
+procedure read_custom(var FD: function_D);
 var lal:TStringList;
     check:string;
     i,j:integer;
@@ -248,6 +249,39 @@ begin
 end;
 lal.free;
 closefile(fc);
+end;
+
+{----read_custom_continuous_var------------------------------------------------------------------------------------------------}
+procedure read_custom_continuous_var(flag:boolean);
+var lal:TStringList;
+    check:string;
+    i,j:integer;
+begin
+If flag then
+  Begin
+    reset(file_continuous_var);
+    lal := TStringList.Create;
+    lal.Delimiter := ' ';
+
+    For i:=1 to nbcov do
+          begin
+            readln(file_continuous_var,check );
+            lal.DelimitedText:=check;
+            
+            For j:=0 to covar[nbcov+i].lev-1 do
+              begin
+                covar[nbcov+i].valcont[j]:=StrToFloat(lal[j]);
+              end;
+          end;
+    lal.free;
+    closefile(file_continuous_var);
+	end
+else
+  begin
+    For i:=1 to nbcov do
+      For j:=0 to covar[nbcov+i].lev-1 do covar[nbcov+i].valcont[j]:=j;
+  end;
+
 end;
 
 end.

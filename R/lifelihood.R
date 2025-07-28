@@ -21,6 +21,7 @@
 #' @param ratiomax facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque
 #' @param tc critical time for the increase in juvenile survival mortality compared to later survival
 #' @param tinf maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)
+#' @param sub_interval sub-interval used to integrate the left and right censoring dates of each event
 #' @param ntr Number of thread for the paralelisation ?
 #' @param nst TBD - Check the actual meaning
 #' @param To Initial temperature for the simulated annealing
@@ -95,7 +96,7 @@ lifelihood <- function(
   ratiomax = 10,
   tc = 20,
   tinf = 1000,
-  path_continuous_var = "",
+  sub_interval = 0.3,
   raise_estimation_warning = TRUE,
   delete_temp_files = TRUE
 ) {
@@ -132,6 +133,27 @@ lifelihood <- function(
   translator <- create_translator(df, cols = lifelihoodData$covariates)
   df_encoded <- encode(translator, df)
 
+  # check is any numeric variable
+  numeric_vars <- df |>
+    select(any_of(lifelihoodData$covariates)) |>
+    select(where(is.numeric))
+  if (ncol(numeric_vars) > 0) {
+    print(glue::glue("Numeric variables detected: {colnames(numeric_vars)}"))
+    numeric_vec <- c()
+    for (col in colnames(df |> select(lifelihoodData$covariates))) {
+      unique_values <- df |>
+        pull(col) |>
+        unique() |>
+        sort() |>
+        paste0(collapse = " ")
+      numeric_vec <- c(numeric_vec, unique_values)
+    }
+    path_continuous_var <- file.path(temp_dir, "temp_continuous_variables.txt")
+    writeLines(numeric_vec, con = path_continuous_var)
+  } else {
+    path_continuous_var = "NULL"
+  }
+
   data_path <- format_dataframe_to_txt(
     df = df_encoded,
     sex = lifelihoodData$sex,
@@ -167,6 +189,7 @@ lifelihood <- function(
     ratiomax = ratiomax,
     tc = tc,
     tinf = tinf,
+    sub_interval = sub_interval,
     path_continuous_var = path_continuous_var,
     ntr = ntr,
     nst = nst,
