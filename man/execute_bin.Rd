@@ -19,6 +19,11 @@ execute_bin(
   seed2,
   seed3,
   seed4,
+  ratiomax,
+  tc,
+  tinf,
+  sub_interval,
+  path_continuous_var,
   ntr,
   nst,
   To,
@@ -55,6 +60,14 @@ execute_bin(
 \item{seed3}{Third seed number used to reproduce results (same seed = same results).}
 
 \item{seed4}{4th seed number used to reproduce results (same seed = same results).}
+
+\item{ratiomax}{facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque}
+
+\item{tc}{critical time for the increase in juvenile survival mortality compared to later survival}
+
+\item{tinf}{maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)}
+
+\item{sub_interval}{sub-interval used to integrate the left and right censoring dates of each event}
 
 \item{ntr}{Number of thread for the paralelisation ?}
 

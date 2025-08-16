@@ -1,3 +1,66 @@
+#' @title Compute fitted mortality rate
+#'
+#' @description
+#' Calculate the empirical mortality rate over a given interval
+#' on the original fit.
+#'
+#' @inheritParams compute_mortality_rate
+#'
+#' @return A dataframe with 3 columns: Interval (time interval, based
+#' on `interval_width` value), Group (identifier of a given subgroup,
+#' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+#' at this time).
+#'
+#' @export
+compute_fitted_mortality_rate <- function(
+  lifelihoodData,
+  interval_width,
+  max_time = NULL,
+  min_sample_size = 1,
+  groupby = NULL
+) {
+  return(compute_mortality_rate(
+    lifelihoodData = lifelihoodData,
+    interval_width = interval_width,
+    newdata = NULL,
+    max_time = max_time,
+    min_sample_size = min_sample_size,
+    groupby = groupby
+  ))
+}
+
+#' @title Compute observed mortality rate
+#'
+#' @description
+#' Calculate the empirical mortality rate over a given interval
+#' on some new data.
+#'
+#' @inheritParams compute_mortality_rate
+#'
+#' @return A dataframe with 3 columns: Interval (time interval, based
+#' on `interval_width` value), Group (identifier of a given subgroup,
+#' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+#' at this time).
+#'
+#' @export
+compute_observed_mortality_rate <- function(
+  lifelihoodData,
+  interval_width,
+  newdata,
+  max_time = NULL,
+  min_sample_size = 1,
+  groupby = NULL
+) {
+  return(compute_mortality_rate(
+    lifelihoodData = lifelihoodData,
+    interval_width = interval_width,
+    newdata = newdata,
+    max_time = max_time,
+    min_sample_size = min_sample_size,
+    groupby = groupby
+  ))
+}
+
 #' @title Compute empirical mortality rate
 #'
 #' @description
@@ -9,6 +72,8 @@
 #' mortality rate. For instance, if the time unit for deaths in
 #' the original dataset is days and `interval_width` is set to 10,
 #' the mortality rate will be calculated every 10 days for each group.
+#' @param newdata Data for computation. If absent, predictions are for
+#' the subjects used in the original fit.
 #' @param max_time The maximum time for calculating the mortality
 #' rate. If set to NULL, the time of the last observed death is used.
 #' @param min_sample_size The minimum number of individuals alive
@@ -19,7 +84,9 @@
 #' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
 #' at this time).
 #'
-#' @importFrom dplyr mutate if_else
+#' @importFrom dplyr mutate if_else select
+#'
+#' @keywords internal
 #'
 #' @examples
 #' library(lifelihood)
@@ -60,17 +127,21 @@
 #'   max_time = 170
 #' )
 #' head(mort_df)
-#' @export
 compute_mortality_rate <- function(
   lifelihoodData,
   interval_width,
+  newdata = NULL,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  data <- lifelihoodData$df
+  if (is.null(newdata)) {
+    data <- lifelihoodData$df
+  } else {
+    newdata <- data
+  }
   start_col <- lifelihoodData$death_start
   end_col <- lifelihoodData$death_end
   covariates <- lifelihoodData$covariates
@@ -118,7 +189,7 @@ compute_mortality_rate <- function(
         group_data[[start_col]] >= interval_start &
           group_data[[end_col]] != right_censoring_date |
           group_data[[start_col]] >= interval_end & ## Count censored individuals only if censoring date posterior to end of interval
-          group_data[[end_col]] == right_censoring_date
+            group_data[[end_col]] == right_censoring_date
       )
 
       deaths <- sum(

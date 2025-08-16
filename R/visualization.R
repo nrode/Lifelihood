@@ -132,7 +132,7 @@ plot_observed_mortality_rate <- function(
 #'
 #' @return a ggplot2 plot
 #'
-#' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal
+#' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal facet_wrap
 #'
 #' @keywords internal
 plot_mortality_rate <- function(
@@ -166,7 +166,6 @@ plot_mortality_rate <- function(
   }
 
   plot <- plot +
-    #ggplot2::geom_line() +
     ggplot2::geom_point() +
     ggplot2::labs(
       title = title,

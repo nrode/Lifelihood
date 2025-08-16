@@ -62,8 +62,8 @@ results <- lifelihood(
   raise_estimation_warning = FALSE
 )
 
-predict(results, "expt_death")
-predict(results, "expt_death", type = "response")
+prediction(results, "expt_death")
+prediction(results, "expt_death", type = "response")
 
 # predict on new data
 newdata <- data.frame(
@@ -72,6 +72,6 @@ newdata <- data.frame(
 )
 newdata$type <- factor(newdata$type)
 newdata$geno <- factor(newdata$geno)
-predict(results, "expt_death", newdata)
-predict(results, "expt_death", newdata, type = "response")
+prediction(results, "expt_death", newdata)
+prediction(results, "expt_death", newdata, type = "response")
 }

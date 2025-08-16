@@ -46,8 +46,8 @@
 #'   raise_estimation_warning = FALSE
 #' )
 #'
-#' predict(results, "expt_death")
-#' predict(results, "expt_death", type = "response")
+#' prediction(results, "expt_death")
+#' prediction(results, "expt_death", type = "response")
 #'
 #' # predict on new data
 #' newdata <- data.frame(
@@ -56,8 +56,8 @@
 #' )
 #' newdata$type <- factor(newdata$type)
 #' newdata$geno <- factor(newdata$geno)
-#' predict(results, "expt_death", newdata)
-#' predict(results, "expt_death", newdata, type = "response")
+#' prediction(results, "expt_death", newdata)
+#' prediction(results, "expt_death", newdata, type = "response")
 #' @export
 prediction <- function(
   object,
@@ -88,7 +88,7 @@ prediction <- function(
     parameter_data <- which(effects$parameter == parameter_name)
     range <- which(effects$parameter == parameter_name)
 
-    fml <- read_formula(config=object$config, parameter=parameter_name)
+    fml <- read_formula(config = object$config, parameter = parameter_name)
     fml <- formula(paste("~ ", fml))
     m <- model.frame(fml, data = df)
     Terms <- terms(m)
@@ -122,14 +122,6 @@ prediction <- function(
 
     if (se.fit) {
       vcov <- object$vcov
-      print("dim vcov")
-      print(dim(vcov))
-      cat("\n")
-      print("dim x")
-      print(dim(x))
-      cat("\n")
-      print("x")
-      print(x)
       if (type == "link") {
         se <- sqrt(diag(x %*% vcov %*% t(x)))
       } else {

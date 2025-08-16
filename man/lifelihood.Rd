@@ -23,6 +23,10 @@ lifelihood(
   Tf = 1,
   climbrate = 1,
   precision = 0.001,
+  ratiomax = 10,
+  tc = 20,
+  tinf = 1000,
+  sub_interval = 0.3,
   raise_estimation_warning = TRUE,
   delete_temp_files = TRUE
 )
@@ -63,6 +67,14 @@ lifelihood(
 \item{climbrate}{Rate for the simulated annealing ?}
 
 \item{precision}{TBD - Check the actual meaning}
+
+\item{ratiomax}{facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque}
+
+\item{tc}{critical time for the increase in juvenile survival mortality compared to later survival}
+
+\item{tinf}{maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)}
+
+\item{sub_interval}{sub-interval used to integrate the left and right censoring dates of each event}
 
 \item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.}
 
