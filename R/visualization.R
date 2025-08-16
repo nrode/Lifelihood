@@ -181,7 +181,7 @@ plot_mortality_rate <- function(
   if (log_x) {
     plot <- plot + ggplot2::scale_x_log10()
   }
-  print(log_y)
+
   if (log_y) {
     plot <- plot + ggplot2::scale_y_log10()
   }

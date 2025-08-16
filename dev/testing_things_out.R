@@ -10,6 +10,25 @@ df <- fakesample |>
   ) |>
   as_tibble()
 
+
+df <- datapierrick |>
+  as_tibble() |>
+  mutate(
+    par = as.factor(par),
+    geno = as.factor(geno),
+    spore = as.factor(spore)
+  )
+
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "pon",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(28)
+
 lifelihoodData <- lifelihoodData(
   df = df,
   sex = "sex",
@@ -17,23 +36,16 @@ lifelihoodData <- lifelihoodData(
   sex_end = "sex_end",
   maturity_start = "mat_start",
   maturity_end = "mat_end",
-  clutchs = c(
-    "clutch_start1",
-    "clutch_end1",
-    "clutch_size1",
-    "clutch_start2",
-    "clutch_end2",
-    "clutch_size2"
-  ),
+  clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("geno", "type"),
+  covariates = c("par", "geno", "spore"),
   model_specs = c("wei", "lgn", "wei")
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = get_config_path("config2"),
+  path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4)
 )
@@ -49,12 +61,12 @@ vcov(results)
 results$effects
 results$mcmc
 
-newdata <- expand.grid(
-  geno_l = levels(dataLifelihood$geno_l),
-  toto = levels(dataLifelihood$toto)
-)
-prediction(results, "expt_death", newdata, type = "response")
-prediction(results, "survival_shape", newdata, type = "response")
+# newdata <- expand.grid(
+#   geno = levels(lifelihoodData$df$geno),
+#   par = levels(lifelihoodData$df$par),
+# )
+prediction(results, "expt_death", type = "response")
+prediction(results, "survival_shape", type = "response")
 
 t <- 0:10
 dt <- 0.5
@@ -63,8 +75,9 @@ plot(
   IntX1toX2MortWei(
     t,
     dt,
-    ExpLong = prediction(results, "expt_death", newdata, type = "response")[1],
-    Shape = 1
+    param1 = prediction(results, "expt_death", type = "response")[1],
+    param2 = 1,
+    law = NULL
   )
 )
 

@@ -79,7 +79,6 @@ execute_bin <- function(
     path <- path_to_Lifelihood
   }
 
-  print(paste0(path, arg_string))
   status <- system(path, input = arg_string)
   message("lifelihood Pascal program status code ", status)
 }
