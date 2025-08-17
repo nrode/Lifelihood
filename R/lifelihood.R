@@ -138,7 +138,6 @@ lifelihood <- function(
     select(any_of(lifelihoodData$covariates)) |>
     select(where(is.numeric))
   if (ncol(numeric_vars) > 0) {
-    print(glue::glue("Numeric variables detected: {colnames(numeric_vars)}"))
     numeric_vec <- c()
     for (col in colnames(df |> select(lifelihoodData$covariates))) {
       unique_values <- df |>

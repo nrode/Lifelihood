@@ -14,7 +14,7 @@ df <- fakesample |>
 df <- datapierrick |>
   as_tibble() |>
   mutate(
-    par = as.factor(par),
+    par = as.numeric(par),
     geno = as.factor(geno),
     spore = as.factor(spore)
   )

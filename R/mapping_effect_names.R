@@ -117,7 +117,9 @@ find_parameter_kind <- function(name) {
   if (startsWith(name, "int_")) {
     return("intercept")
   } else if (startsWith(name, "eff_")) {
-    return("coefficient")
+    return("coefficient_category")
+  } else if (startsWith(name, "slo_")) {
+    return("coefficient_slope")
   } else {
     stop(paste("Impossible to find parameter kind for:", name))
   }
