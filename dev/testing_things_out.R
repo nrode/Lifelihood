@@ -91,17 +91,33 @@ data(iris)
 iris$Sepal.Width2 <- iris$Sepal.Width
 lm(Sepal.Length ~ Sepal.Width + Sepal.Width2, data = iris, singular.ok = FALSE)
 
-plot_observed_mortality_rate(
-  dataLFH,
+newdata <- expand.grid(
+  geno = levels(lifelihoodData$df$geno),
+  par = levels(lifelihoodData$df$par)
+)
+compute_observed_mortality_rate(
+  lifelihoodData,
   interval_width = 15,
-  max_time = 170,
-  log_y = TRUE
+  newdata = newdata
 )
 plot_observed_mortality_rate(
-  dataLFH,
+  lifelihoodData,
+  interval_width = 15,
+  newdata = newdata
+)
+plot_observed_mortality_rate(
+  lifelihoodData,
   interval_width = 25,
   max_time = 170,
   groupby = c("par", "spore"),
+  log_y = TRUE
+)
+plot_observed_mortality_rate(
+  lifelihoodData,
+  interval_width = 25,
+  max_time = 170,
+  groupby = "par",
+  use_facet = TRUE,
   log_y = TRUE
 )
 plot_fitted_mortality_rate(

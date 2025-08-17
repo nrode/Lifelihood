@@ -138,9 +138,9 @@ compute_mortality_rate <- function(
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
   if (is.null(newdata)) {
-    data <- lifelihoodData$df
+    newdata <- lifelihoodData$df
   } else {
-    newdata <- data
+    newdata <- newdata
   }
   start_col <- lifelihoodData$death_start
   end_col <- lifelihoodData$death_end
@@ -149,7 +149,7 @@ compute_mortality_rate <- function(
 
   if (is.null(max_time)) {
     sorted_values <- sort(
-      unique(data[[end_col]]),
+      unique(lifelihoodData$df[[end_col]]),
       decreasing = TRUE,
       na.last = NA
     )
@@ -163,10 +163,10 @@ compute_mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
-    data$group <- do.call(interaction, data[groupby])
-    groups <- sort(unique(data$group))
+    newdata$group <- interaction(newdata[groupby])
+    groups <- sort(unique(newdata$group))
   } else {
-    data$group <- "Overall"
+    newdata$group <- "Overall"
     groups <- "Overall"
   }
 
@@ -179,7 +179,7 @@ compute_mortality_rate <- function(
   )
 
   for (grp in groups) {
-    group_data <- data[data$group == grp, ]
+    group_data <- newdata[newdata$group == grp, ]
 
     for (i in 1:n_intervals) {
       interval_start <- (i - 1) * interval_width

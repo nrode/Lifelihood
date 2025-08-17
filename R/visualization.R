@@ -35,9 +35,9 @@ plot_fitted_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
-  rate_df <- pred_mortality_rate(
-    lifelihoodResults,
-    interval_width,
+  rate_df <- compute_fitted_mortality_rate(
+    lifelihoodData = lifelihoodResults$lifelihoodData,
+    interval_width = interval_width,
     newdata = newdata,
     max_time = max_time,
     groupby = groupby
@@ -84,6 +84,7 @@ plot_fitted_mortality_rate <- function(
 plot_observed_mortality_rate <- function(
   lifelihoodData,
   interval_width,
+  newdata = newdata,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL,
@@ -96,9 +97,10 @@ plot_observed_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  rate_df <- compute_mortality_rate(
+  rate_df <- compute_observed_mortality_rate(
     lifelihoodData,
     interval_width,
+    newdata = newdata,
     max_time = max_time,
     groupby = groupby,
     min_sample_size = min_sample_size
@@ -132,7 +134,7 @@ plot_observed_mortality_rate <- function(
 #'
 #' @return a ggplot2 plot
 #'
-#' @importFrom ggplot2 ggplot aes geom_line labs theme_minimal facet_wrap
+#' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap
 #'
 #' @keywords internal
 plot_mortality_rate <- function(
@@ -167,6 +169,7 @@ plot_mortality_rate <- function(
 
   plot <- plot +
     ggplot2::geom_point() +
+    ggplot2::geom_smooth(method = "lm") +
     ggplot2::labs(
       title = title,
       x = xlab,
@@ -175,7 +178,7 @@ plot_mortality_rate <- function(
     ggplot2::theme_minimal()
 
   if (!is.null(max_time) & !log_x) {
-    plot <- plot + ggplot2::xlim(0, max_time)
+    plot <- plot + ggplot2::xlim(0, max_time * 1.1)
   }
 
   if (log_x) {
