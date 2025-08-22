@@ -141,7 +141,7 @@ lifelihood <- function(
     numeric_vec <- c()
     for (col in colnames(df |> select(lifelihoodData$covariates))) {
       unique_values <- df |>
-        pull(col) |>
+        dplyr::pull(col) |>
         unique() |>
         sort() |>
         paste0(collapse = " ")
