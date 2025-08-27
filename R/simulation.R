@@ -1,110 +1,104 @@
 #' @title Simulate outcomes from a fitted lifelihood model
 #'
 #' @description This function generates simulated data from a fitted lifelihood model,
-#' based on the specified event type and the underlying distribution family
-#' (Weibull, Gamma, Lognormal, or Exponential). The parameters of the chosen
-#' distribution are derived from the model predictions.
+#' for one or several life history events. By default, all fitted events are simulated.
 #'
 #' @param object A fitted `lifelihoodResults` object.
-#' @param event Character string specifying the type of event to simulate.
-#'   Must be one of `"mortality"`, `"reproduction"`, or `"maturity"`.
+#' @param event Character string specifying the event(s) to simulate.
+#'   Must be one of `"mortality"`, `"reproduction"`, `"maturity"`, or `"all"`.
+#'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
+#' @param seed Optional integer. If provided, sets the random seed for reproducibility.
 #'
-#' @return A numeric vector of simulated values, with length equal to the number
-#'   of observations in the model data.
-#'
-#' @details
-#' The distribution used depends on the model specification:
-#' - `"wei"`: Weibull distribution
-#' - `"gam"`: Gamma distribution
-#' - `"lgn"`: Lognormal distribution
-#' - `"exp"`: Exponential distribution
-#'
-#' The scale/shape parameters are derived such that the mean of the simulated
-#' distribution matches the predicted expectation from the model.
+#' @return A `data.frame` with one column per simulated event.
+#'   Each column contains simulated values for that event.
 #'
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' # Assuming `results` is a lifelihoodResults object
-#' sims <- simulation(results, event = "mortality")
-#' hist(sims, breaks = 30)
-#' }
 simulation <- function(
   object,
-  event = c("mortality", "reproduction", "maturity"),
-  newdata = NULL
+  event = c("all", "mortality", "reproduction", "maturity"),
+  newdata = NULL,
+  seed = NULL
 ) {
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
   check_valid_lifelihoodResults(object)
 
-  event <- match.arg(event)
-  if (event == "mortality") {
-    expt_name <- "expt_death"
-    shape_name <- "survival_shape"
-  } else if (event == "reproduction") {
-    expt_name <- "expt_reproduction"
-    shape_name <- "reproduction_shape"
-  } else if (event == "maturity") {
-    expt_name <- "expt_maturity"
-    shape_name <- "maturity_shape"
-  }
+  event <- match.arg(event, c("all", "mortality", "reproduction", "maturity"))
 
-  expected <- tryCatch(
-    {
+  # Helper function: simulate one event
+  simulate_one <- function(ev) {
+    if (ev == "mortality") {
+      expt_name <- "expt_death"
+      shape_name <- "survival_shape"
+      fam_id <- 3
+    } else if (ev == "reproduction") {
+      expt_name <- "expt_reproduction"
+      shape_name <- "reproduction_shape"
+      fam_id <- 2
+    } else if (ev == "maturity") {
+      expt_name <- "expt_maturity"
+      shape_name <- "maturity_shape"
+      fam_id <- 1
+    }
+
+    expected <- tryCatch(
       prediction(object, expt_name, type = "response", newdata = newdata) |>
-        mean()
-    },
-    error = function(e) {
-      stop(
-        sprintf(
-          "Event '%s' has not been fitted. Check your configuration file.",
-          event
-        ),
-        call. = FALSE
-      )
-    }
-  )
-
-  shape <- tryCatch(
-    {
+        mean(),
+      error = function(e) return(NULL)
+    )
+    shape <- tryCatch(
       prediction(object, shape_name, type = "response", newdata = newdata) |>
-        mean()
-    },
-    error = function(e) {
+        mean(),
+      error = function(e) return(NULL)
+    )
+    if (is.null(expected) || is.null(shape)) {
+      return(NULL)
+    }
+
+    family <- object$lifelihoodData$model_specs[[fam_id]]
+    n <- nrow(object$lifelihoodData$df)
+
+    if (family == "wei") {
+      simulate_weibull(expected, shape, n)
+    } else if (family == "gam") {
+      simulate_gamma(expected, scale = shape, n)
+    } else if (family == "lgn") {
+      simulate_lognormal(expected, vp1 = shape, n)
+    } else if (family == "exp") {
+      simulate_exponential(expected, n)
+    } else {
       stop(
-        sprintf(
-          "Event '%s' has not been fitted. Check your configuration file.",
-          event
-        ),
+        sprintf("Unknown family '%s' for event '%s'.", family, ev),
         call. = FALSE
       )
     }
-  )
-
-  families <- results$lifelihoodData$model_specs
-
-  if (event == "mortality") {
-    family <- families[[3]]
-  } else if (event == "reproduction") {
-    family <- families[[2]]
-  } else if (event == "maturity") {
-    family <- families[[1]]
   }
 
-  n <- nrow(object$lifelihoodData$df)
-
-  if (family == "wei") {
-    simulate_weibull(expected = expected, shape = shape, n = n)
-  } else if (family == "gam") {
-    simulate_gamma(expected = expected, scale = shape, n = n)
-  } else if (family == "lgn") {
-    simulate_lognormal(expected = expected, vp1 = shape, n = n)
-  } else if (family == "exp") {
-    simulate_exponential(expected = expected, n = n)
+  # Events to simulate
+  events <- if (event == "all") {
+    c("maturity", "reproduction", "mortality")
+  } else {
+    event
   }
+
+  sims <- lapply(events, simulate_one)
+  sims <- sims[!vapply(sims, is.null, logical(1))] # drop unfitted events
+
+  if (length(sims) == 0) {
+    stop(
+      "No events could be simulated. Check your fitted model.",
+      call. = FALSE
+    )
+  }
+
+  out <- as.data.frame(sims)
+  names(out) <- names(sims) <- events[seq_along(sims)] # set column names
+  return(out)
 }
+
 
 #' @keywords internal
 simulate_weibull <- function(expected, shape, n) {

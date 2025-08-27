@@ -51,9 +51,10 @@ results <- lifelihood(
 )
 coef(results)
 
-simulation(results, event = "mortality")
-simulation(results, event = "maturity")
-simulation(results, event = "reproduction")
+simulation(results) |> head()
+simulation(results, event = "mortality") |> head()
+simulation(results, event = "maturity") |> head()
+simulation(results, event = "reproduction") |> head()
 
 AIC(results)
 BIC(results)

@@ -1,18 +1,11 @@
 on veut simuler les histoires de vie, à partir du fit de lifelihood.
 
 - on sait simuler un évènmenent donné (maturité, reproduction, mort)
-   - penser à ajuster les fonctions de simulations dans simulation.R (changer les param expt_death et survival_shape)
-   - chercher quelle loi utiliser (dans results$lifelihoodData$model_specs)
 - on veut automatiquement simuler les évènements qui ont été fitté (maturité, reproduction, mort)
-- penser à ajouter simule exp
-- option pour spécifier les graines (seed, reproductibilité)
 - option pour paralléliser ? https://r-dev-perf.borishejblum.science/parallelisation-du-code-r
 
 objectif final : jeu de données d'histoire de vies simulées
 - fonction style "simulation(results, newdata=NULL, events="all")"
-   - results --> lifelihood results
-   - newdata --> option pour passer d'autres données (à passer en argument de prediction())
-      - si absent, prendre jeu de données initiale
    - events --> quel events simuler
       - par défaut, 'all", on fait tout ce qui est fitté
       - sinon un parmi c("mortality", "maturity", "reproduction")
