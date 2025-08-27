@@ -1,14 +1,4 @@
-on veut simuler les histoires de vie, à partir du fit de lifelihood.
-
-- on sait simuler un évènmenent donné (maturité, reproduction, mort)
-- on veut automatiquement simuler les évènements qui ont été fitté (maturité, reproduction, mort)
 - option pour paralléliser ? https://r-dev-perf.borishejblum.science/parallelisation-du-code-r
-
-objectif final : jeu de données d'histoire de vies simulées
-- fonction style "simulation(results, newdata=NULL, events="all")"
-   - events --> quel events simuler
-      - par défaut, 'all", on fait tout ce qui est fitté
-      - sinon un parmi c("mortality", "maturity", "reproduction")
 
 
 ############

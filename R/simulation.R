@@ -28,7 +28,6 @@ simulation <- function(
 
   event <- match.arg(event, c("all", "mortality", "reproduction", "maturity"))
 
-  # Helper function: simulate one event
   simulate_one <- function(ev) {
     if (ev == "mortality") {
       expt_name <- "expt_death"
@@ -77,15 +76,18 @@ simulation <- function(
     }
   }
 
-  # Events to simulate
   events <- if (event == "all") {
     c("maturity", "reproduction", "mortality")
   } else {
     event
   }
 
-  sims <- lapply(events, simulate_one)
-  sims <- sims[!vapply(sims, is.null, logical(1))] # drop unfitted events
+  sims <- future.apply::future_lapply(
+    events,
+    simulate_one,
+    future.seed = if (!is.null(seed)) TRUE else NA
+  )
+  sims <- sims[!vapply(sims, is.null, logical(1))]
 
   if (length(sims) == 0) {
     stop(
@@ -95,8 +97,8 @@ simulation <- function(
   }
 
   out <- as.data.frame(sims)
-  names(out) <- names(sims) <- events[seq_along(sims)] # set column names
-  return(out)
+  names(out) <- names(sims) <- events[seq_along(sims)]
+  out
 }
 
 

@@ -6,45 +6,28 @@
 \usage{
 simulation(
   object,
-  event = c("mortality", "reproduction", "maturity"),
-  newdata = NULL
+  event = c("all", "mortality", "reproduction", "maturity"),
+  newdata = NULL,
+  seed = NULL
 )
 }
 \arguments{
 \item{object}{A fitted \code{lifelihoodResults} object.}
 
-\item{event}{Character string specifying the type of event to simulate.
-Must be one of \code{"mortality"}, \code{"reproduction"}, or \code{"maturity"}.}
+\item{event}{Character string specifying the event(s) to simulate.
+Must be one of \code{"mortality"}, \code{"reproduction"}, \code{"maturity"}, or \code{"all"}.
+Default is \code{"all"}, which simulates all fitted events.}
 
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
 If \code{NULL}, the original model data are used.}
+
+\item{seed}{Optional integer. If provided, sets the random seed for reproducibility.}
 }
 \value{
-A numeric vector of simulated values, with length equal to the number
-of observations in the model data.
+A \code{data.frame} with one column per simulated event.
+Each column contains simulated values for that event.
 }
 \description{
 This function generates simulated data from a fitted lifelihood model,
-based on the specified event type and the underlying distribution family
-(Weibull, Gamma, Lognormal, or Exponential). The parameters of the chosen
-distribution are derived from the model predictions.
-}
-\details{
-The distribution used depends on the model specification:
-\itemize{
-\item \code{"wei"}: Weibull distribution
-\item \code{"gam"}: Gamma distribution
-\item \code{"lgn"}: Lognormal distribution
-\item \code{"exp"}: Exponential distribution
-}
-
-The scale/shape parameters are derived such that the mean of the simulated
-distribution matches the predicted expectation from the model.
-}
-\examples{
-\dontrun{
-# Assuming `results` is a lifelihoodResults object
-sims <- simulation(results, event = "mortality")
-hist(sims, breaks = 30)
-}
+for one or several life history events. By default, all fitted events are simulated.
 }

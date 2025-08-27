@@ -40,7 +40,7 @@ lifelihoodData <- lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "geno", "spore"),
-  model_specs = c("wei", "lgn", "wei")
+  model_specs = c("wei", "gam", "exp")
 )
 
 results <- lifelihood(
