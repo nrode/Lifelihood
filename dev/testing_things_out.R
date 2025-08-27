@@ -51,9 +51,12 @@ results <- lifelihood(
 )
 coef(results)
 
+simulation(results, event = "mortality")
+simulation(results, event = "maturity")
+simulation(results, event = "reproduction")
+
 AIC(results)
 BIC(results)
-
 coeff(results, "expt_death")
 coeff(results, "survival_shape")
 logLik(results)
