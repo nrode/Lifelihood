@@ -131,11 +131,11 @@ simulate_exponential <- function(expected, n) {
 }
 
 #' @keywords internal
-simulate_truncPois <- function(expected, n) {
+simulate_truncPois <- function(expected, max_num_clutches) {
   zer<-0
   while (zer==0) {
-    datatp <- rpois(1, expected)
-    ifelse(all(datatp!=0), zer<-1, zer<-0)
+    data_num_offspring <- rpois(max_num_clutches, expected)
+    ifelse(all(data_num_offspring!=0), zer<-1, zer<-0)
   }
-  return(datatp)
+  return(data_num_offspring)
 }
