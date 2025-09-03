@@ -154,7 +154,8 @@ lifelihood <- function(
   } else {
     path_continuous_var = "NULL"
   }
-
+  
+  ## Convert numeric variables so that they start at 0
   convertTonum <- function(x) {
     as.numeric(as.factor(x)) - 1
   }
