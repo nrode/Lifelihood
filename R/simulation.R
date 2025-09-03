@@ -10,8 +10,9 @@
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.
+#' @param nsim Number of simulations per individual in newdata (default: nsim=1) 
 #'
-#' @return A `data.frame` with one column per simulated event.
+#' @return A list of `data.frame` with one column per simulated event.
 #'   Each column contains simulated values for that event.
 #'
 #' @export
