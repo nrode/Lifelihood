@@ -19,7 +19,8 @@ simulation <- function(
   object,
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
-  seed = NULL
+  seed = NULL,
+  nsim=1
 ) {
   if (!is.null(seed)) {
     set.seed(seed)
@@ -32,25 +33,23 @@ simulation <- function(
     if (ev == "mortality") {
       expt_name <- "expt_death"
       shape_name <- "survival_shape"
-      fam_id <- 3
+      fam_id <- 1
     } else if (ev == "reproduction") {
       expt_name <- "expt_reproduction"
       shape_name <- "reproduction_shape"
-      fam_id <- 2
+      fam_id <- 3
     } else if (ev == "maturity") {
       expt_name <- "expt_maturity"
       shape_name <- "maturity_shape"
-      fam_id <- 1
+      fam_id <- 2
     }
 
     expected <- tryCatch(
-      prediction(object, expt_name, type = "response", newdata = newdata) |>
-        mean(),
+      prediction(object, expt_name, type = "response", newdata = newdata),
       error = function(e) return(NULL)
     )
     shape <- tryCatch(
-      prediction(object, shape_name, type = "response", newdata = newdata) |>
-        mean(),
+      prediction(object, shape_name, type = "response", newdata = newdata),
       error = function(e) return(NULL)
     )
     if (is.null(expected) || is.null(shape)) {
@@ -58,16 +57,15 @@ simulation <- function(
     }
 
     family <- object$lifelihoodData$model_specs[[fam_id]]
-    n <- nrow(object$lifelihoodData$df)
 
     if (family == "wei") {
-      simulate_weibull(expected, shape, n)
+      simulate_weibull(expected, shape, nsim)
     } else if (family == "gam") {
-      simulate_gamma(expected, scale = shape, n)
+      simulate_gamma(expected, scale = shape, nsim)
     } else if (family == "lgn") {
-      simulate_lognormal(expected, vp1 = shape, n)
+      simulate_lognormal(expected, vp1 = shape, nsim)
     } else if (family == "exp") {
-      simulate_exponential(expected, n)
+      simulate_exponential(expected, nsim)
     } else {
       stop(
         sprintf("Unknown family '%s' for event '%s'.", family, ev),
@@ -106,25 +104,37 @@ simulation <- function(
 simulate_weibull <- function(expected, shape, n) {
   # expected = scale * gamma(1 + 1 / shape)
   scale <- expected / gamma(1 + 1 / shape)
-  return(rweibull(n = n, shape = shape, scale = scale))
+  return(mapply(rweibull, shape = shape, scale = scale, n=n))
 }
 
 #' @keywords internal
 simulate_gamma <- function(expected, scale, n) {
   # expected = shape * scale
   shape <- expected / scale
-  return(rgamma(n = n, shape = shape, scale = scale))
+  return(mapply(rgamma, shape = shape, scale = scale, n=n))
 }
 
 #' @keywords internal
 simulate_lognormal <- function(expected, vp1, n) {
   mu <- log(expected) - 0.5 * log(1 + vp1 / (expected^2))
   sigma <- sqrt(log(1 + vp1 / (expected^2)))
-  return(rlnorm(n = n, meanlog = mu, sdlog = sigma))
+  return(mapply(rlnorm, meanlog = mu, sdlog = sigma, n=n))
+  
 }
 
 #' @keywords internal
 simulate_exponential <- function(expected, n) {
   rate <- 1 / expected
-  rexp(n = n, rate = rate)
+  return(sapply(rate, rexp, n=n))
+  
+}
+
+#' @keywords internal
+simulate_truncPois <- function(expected, n) {
+  zer<-0
+  while (zer==0) {
+    datatp <- rpois(1, expected)
+    ifelse(all(datatp!=0), zer<-1, zer<-0)
+  }
+  return(datatp)
 }
