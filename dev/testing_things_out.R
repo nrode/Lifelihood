@@ -49,8 +49,9 @@ results <- lifelihood(
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4)
 )
-coef(results)
 
+coef(results)
+prediction(results, parameter_name="pontn")
 simulation(results) |> head()
 simulation(results, event = "mortality") |> head()
 simulation(results, event = "maturity") |> head()
