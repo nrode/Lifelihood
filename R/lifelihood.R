@@ -149,10 +149,19 @@ lifelihood <- function(
     }
     path_continuous_var <- file.path(temp_dir, "temp_continuous_variables.txt")
     writeLines(numeric_vec, con = path_continuous_var)
+    
+    
   } else {
     path_continuous_var = "NULL"
   }
 
+  convertTonum <- function(x) {
+    as.numeric(as.factor(x)) - 1
+  }
+  
+  df_encoded <- df_encoded |>
+    mutate(across(all_of(colnames(numeric_vars)), convertTonum))
+  
   data_path <- format_dataframe_to_txt(
     df = df_encoded,
     sex = lifelihoodData$sex,
