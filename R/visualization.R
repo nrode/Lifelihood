@@ -173,6 +173,7 @@ plot_mortality_rate <- function(
       x = xlab,
       y = ylab
     ) +
+    ylim(0, 1) + 
     ggplot2::theme_minimal()
 
   if (!is.null(max_time) & !log_x) {
