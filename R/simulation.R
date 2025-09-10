@@ -10,7 +10,7 @@
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.
-#' @param nsim Number of simulations per individual in newdata (default: nsim=1) 
+#' @param nsim Number of simulations per individual in newdata (default: nsim=1)
 #'
 #' @return A list of `data.frame` with one column per simulated event.
 #'   Each column contains simulated values for that event.
@@ -21,7 +21,7 @@ simulation <- function(
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
   seed = NULL,
-  nsim=1
+  nsim = 1
 ) {
   if (!is.null(seed)) {
     set.seed(seed)
@@ -105,37 +105,35 @@ simulation <- function(
 simulate_weibull <- function(expected, shape, n) {
   # expected = scale * gamma(1 + 1 / shape)
   scale <- expected / gamma(1 + 1 / shape)
-  return(mapply(rweibull, shape = shape, scale = scale, n=n))
+  return(mapply(rweibull, shape = shape, scale = scale, n = n))
 }
 
 #' @keywords internal
 simulate_gamma <- function(expected, scale, n) {
   # expected = shape * scale
   shape <- expected / scale
-  return(mapply(rgamma, shape = shape, scale = scale, n=n))
+  return(mapply(rgamma, shape = shape, scale = scale, n = n))
 }
 
 #' @keywords internal
 simulate_lognormal <- function(expected, vp1, n) {
   mu <- log(expected) - 0.5 * log(1 + vp1 / (expected^2))
   sigma <- sqrt(log(1 + vp1 / (expected^2)))
-  return(mapply(rlnorm, meanlog = mu, sdlog = sigma, n=n))
-  
+  return(mapply(rlnorm, meanlog = mu, sdlog = sigma, n = n))
 }
 
 #' @keywords internal
 simulate_exponential <- function(expected, n) {
   rate <- 1 / expected
-  return(sapply(rate, rexp, n=n))
-  
+  return(sapply(rate, rexp, n = n))
 }
 
 #' @keywords internal
 simulate_truncPois <- function(expected, max_num_clutches) {
-  zer<-0
-  while (zer==0) {
+  zer <- 0
+  while (zer == 0) {
     data_num_offspring <- rpois(max_num_clutches, expected)
-    ifelse(all(data_num_offspring!=0), zer<-1, zer<-0)
+    ifelse(all(data_num_offspring != 0), zer <- 1, zer <- 0)
   }
   return(data_num_offspring)
 }
