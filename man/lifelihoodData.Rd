@@ -60,8 +60,8 @@ the interval in which the death was determined.}
 statistical law to use. Must be of length 3 and each element
 must be one of "wei" (Weibull law), "exp" (Exponential law),
 "gam" (Gamma law) or "lgn" (Log-normal law). The first one is
-used for maturity, the second one is used for clutchs and the
-third one for death.}
+used for mortality, the second one is used for maturity and the
+third is used for reproduction.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 

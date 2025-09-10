@@ -23,7 +23,6 @@ plot_fitted_mortality_rate(
 plot_observed_mortality_rate(
   lifelihoodData,
   interval_width,
-  newdata = newdata,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL,

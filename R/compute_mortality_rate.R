@@ -44,21 +44,108 @@ compute_observed_mortality_rate <- function(
 #'
 #' @export
 compute_fitted_mortality_rate <- function(
-  lifelihoodData,
+  lifelihoodResults,
   interval_width,
-  newdata,
-  max_time = NULL,
-  min_sample_size = 1,
-  groupby = NULL
+  event = c("mortality", "maturity"),
+  newdata = NULL,
+  max_time = NULL
 ) {
-  return(compute_mortality_rate(
-    lifelihoodData = lifelihoodData,
-    interval_width = interval_width,
+  event <- match.arg(event)
+  check_valid_lifelihoodResults(lifelihoodResults)
+
+  lifelihoodData <- lifelihoodResults$lifelihoodData
+
+  if (event == "mortality") {
+    start_col <- lifelihoodData$death_start
+    end_col <- lifelihoodData$death_end
+    family <- lifelihoodData$model_specs[1]
+    covar <- c(
+      lifelihoodResults$formula$expt_death,
+      lifelihoodResults$formula$survival_shape
+    ) |>
+      unique() |>
+      setdiff("intercept")
+  } else if (event == "maturity") {
+    start_col <- lifelihoodData$maturity_start
+    end_col <- lifelihoodData$maturity_end
+    family <- lifelihoodData$model_specs[2]
+    covar <- c(
+      lifelihoodResults$formula$expt_maturity,
+      lifelihoodResults$formula$maturity_shape
+    ) |>
+      unique() |>
+      setdiff("intercept")
+  } else if (event == "reproduction") {
+    start_col <- NULL
+    end_col <- NULL
+    family <- lifelihoodData$model_specs[3]
+    covar <- c(
+      lifelihoodResults$formula$expt_reproduction,
+      lifelihoodResults$formula$reproduction_shape
+    ) |>
+      unique() |>
+      setdiff("intercept")
+  }
+
+  if (is.null(newdata)) {
+    params <- setNames(
+      lapply(covar, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
+      covar
+    )
+    params$time <- seq(
+      from = 0,
+      to = n_intervals * interval_width,
+      by = interval_width
+    )
+    newdata <- expand.grid(params) |> relocate(time)
+  }
+
+  if (is.null(max_time)) {
+    sorted_values <- sort(
+      unique(lifelihoodData$df[[end_col]]),
+      decreasing = TRUE,
+      na.last = NA
+    )
+    if (sorted_values[1] == lifelihoodData$right_censoring_date) {
+      max_time <- sorted_values[2]
+    } else {
+      max_time <- sorted_values[1]
+    }
+  }
+
+  n_intervals <- ceiling(max_time / interval_width) - 1
+
+  if (event == "mortality") {
+    parameter_name1 <- "expt_death"
+    parameter_name2 <- "survival_shape"
+  } else if (event == "maturity") {
+    parameter_name1 <- "expt_maturity"
+    parameter_name2 <- "maturity_shape"
+  } else if (event == "reproduction") {
+    parameter_name1 <- "expt_reproduction"
+    parameter_name2 <- "reproduction_shape"
+  }
+
+  param1 <- prediction(
+    object = lifelihoodResults,
+    parameter_name = parameter_name1,
     newdata = newdata,
-    max_time = max_time,
-    min_sample_size = min_sample_size,
-    groupby = groupby
-  ))
+    type = "response"
+  )
+  param2 <- prediction(
+    object = lifelihoodResults,
+    parameter_name = parameter_name2,
+    newdata = newdata,
+    type = "response"
+  )
+
+  newdata$prob_of_event <- prob_event_interval_dt(
+    t = newdata$time,
+    dt = interval_width,
+    param1 = param1,
+    param2 = param2,
+    family = family
+  )
 }
 
 #' @title Compute empirical mortality rate

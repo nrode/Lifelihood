@@ -34,8 +34,8 @@
 #' statistical law to use. Must be of length 3 and each element
 #' must be one of "wei" (Weibull law), "exp" (Exponential law),
 #' "gam" (Gamma law) or "lgn" (Log-normal law). The first one is
-#' used for maturity, the second one is used for clutchs and the
-#' third one for death.
+#' used for mortality, the second one is used for maturity and the
+#' third is used for reproduction.
 #' @param covariates Vector containing the names of the covariates.
 #' @param matclutch Whether the maturity event (designated by
 #' `maturity_start` and `maturity_end`) is a clutch event or not.

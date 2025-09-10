@@ -35,7 +35,7 @@ plot_fitted_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
-  rate_df <- compute_observed_mortality_rate(
+  rate_df <- compute_fitted_mortality_rate(
     lifelihoodData = lifelihoodResults$lifelihoodData,
     interval_width = interval_width,
     newdata = newdata,
@@ -84,7 +84,6 @@ plot_fitted_mortality_rate <- function(
 plot_observed_mortality_rate <- function(
   lifelihoodData,
   interval_width,
-  newdata = newdata,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL,
@@ -97,10 +96,9 @@ plot_observed_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  rate_df <- compute_fitted_mortality_rate(
+  rate_df <- compute_observed_mortality_rate(
     lifelihoodData,
     interval_width,
-    newdata = newdata,
     max_time = max_time,
     groupby = groupby,
     min_sample_size = min_sample_size
@@ -169,7 +167,7 @@ plot_mortality_rate <- function(
 
   plot <- plot +
     ggplot2::geom_point() +
-    ggplot2::geom_smooth(method = "lm") +
+    #ggplot2::geom_smooth(method = "lm") +
     ggplot2::labs(
       title = title,
       x = xlab,

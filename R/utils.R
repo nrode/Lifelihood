@@ -47,15 +47,15 @@ make_design_matrix <- function(covariates, data) {
 #' @keywords internal
 #'
 #' @param t Numeric. The time to event
-#' @param ExpLong Numeric. The expected longevity
-#' @param Shape Numeric. The shape parameter
+#' @param expt_time_to_event Numeric. The expected longevity or time to maturity.
+#' @param shape Numeric. The shape parameter
 #'
 #' @return The survival probability (numeric)
 #'
 #' @export
-SurvWei <- function(t, ExpLong, Shape) {
-  Scale <- ExpLong / gamma(1 + 1 / Shape)
-  return(exp(-(t / Scale)^Shape))
+SurvWei <- function(t, expt_time_to_event, shape) {
+  scale <- expt_time_to_event / gamma(1 + 1 / shape)
+  return(exp(-(t / scale)^shape))
 }
 
 #' @title Probability of dying between t and t+dt afer living until t.
@@ -63,15 +63,45 @@ SurvWei <- function(t, ExpLong, Shape) {
 #' @keywords internal
 #'
 #' @param t Numeric. The time to event
-#' @param ExpLong Numeric. The expected longevity
+#' @param expt_time_to_event Numeric. The expected longevity or time to maturity.
 #' @param Shape Numeric. The shape parameter
 #'
 #' @return The survival probability (numeric)
 #'
 #' @export
-IntX1toX2MortWei <- function(t, dt, param1, param2, law) {
-  (SurvWei(t, param1, param2) - SurvWei(t + dt, param1, param2)) /
-    SurvWei(t, param1, param2)
+prob_event_interval_dt <- function(t, dt, param1, param2, family) {
+  (surv(t, param1, param2, family) -
+    surv(t + dt, param1, param2, family)) /
+    surv(t, param1, param2, family)
+}
+
+#' @title Probability of dying between t and t+dt afer living until t.
+#'
+#' @keywords internal
+#'
+#' @param t Numeric. The time to event
+#' @param param1 Numeric. The expected longevity or time to maturity.
+#' @param param2 Numeric. The second parameter returned by lifelihood.
+#'
+#' @return The probability of event (being alive or not mature) at time t.
+#'
+#' @export
+surv <- function(
+  t,
+  param1,
+  param2,
+  family = c("exp", "wei", "gam", "lgn")
+) {
+  family <- match.arg(family)
+  if (family == "wei") {
+    return(SurvWei(t = t, expt_time_to_event = param1, shape = param2))
+  } else if (family == "gam") {
+    return(SurvGam(t = t, expt_time_to_event = param1, shape = param2))
+  } else if (family == "lgn") {
+    return(SurvLgn(t = t, expt_time_to_event = param1, shape = param2))
+  } else if (family == "exp") {
+    return(SurvExp(t = t, expt_time_to_event = param1))
+  }
 }
 
 #' @title Log-normal survival function
@@ -82,15 +112,16 @@ IntX1toX2MortWei <- function(t, dt, param1, param2, law) {
 #' @keywords internal
 #'
 #' @param t Numeric. The time to event
-#' @param ExpLong Numeric. The expected longevity
-#' @param Shape Numeric. The shape parameter
+#' @param expt_time_to_event Numeric. The expected longevity or time to maturity.
+#' @param vp1 Numeric. The vp1 parameter
 #'
 #' @return The survival probability (numeric)
 #'
 #' @export
-SurvLgn <- function(t, ExpLong, scale) {
-  muln <- log(ExpLong) - scale^2 / 2
-  plnorm(t, meanlog = muln, sdlog = scale, lower.tail = F, log.p = FALSE)
+SurvLgn <- function(t, expt_time_to_event, vp1) {
+  mu <- log(expt_time_to_event) - 0.5 * log(1 + vp1 / (expt_time_to_event^2))
+  sigma <- sqrt(log(1 + vp1 / (expt_time_to_event^2)))
+  plnorm(t, meanlog = mu, sdlog = sigma, lower.tail = F, log.p = FALSE)
 }
 
 #' @title Gamma survival function
@@ -101,15 +132,15 @@ SurvLgn <- function(t, ExpLong, scale) {
 #' @keywords internal
 #'
 #' @param t Numeric. The time to event
-#' @param ExpLong Numeric. The expected longevity
-#' @param Shape Numeric. The shape parameter
+#' @param expt_time_to_event Numeric. The expected longevity or time to maturity.
+#' @param scale Numeric. The scale parameter
 #'
 #' @return The survival probability (numeric)
 #'
 #' @export
-SurvGam <- function(t, ExpLong, scale) {
-  mu <- ExpLong / scale
-  pgamma(t, shape = mu, scale = scale, lower.tail = F, log.p = FALSE)
+SurvGam <- function(t, expt_time_to_event, scale) {
+  shape <- expt_time_to_event / scale
+  pgamma(t, shape = shape, scale = scale, lower.tail = F, log.p = FALSE)
 }
 
 #' @title Exponential survival function
@@ -120,14 +151,13 @@ SurvGam <- function(t, ExpLong, scale) {
 #' @keywords internal
 #'
 #' @param t Numeric. The time to event
-#' @param ExpLong Numeric. The expected longevity
-#' @param Shape Numeric. The shape parameter
+#' @param expt_time_to_event Numeric. The expected longevity or time to maturity.
 #'
 #' @return The survival probability (numeric)
 #'
 #' @export
-SurvExp <- function(t, ExpLong) {
-  exp(-(t / ExpLong))
+SurvExp <- function(t, expt_time_to_event) {
+  exp(-(t / expt_time_to_event))
 }
 
 #' @title Find the operating system of the user

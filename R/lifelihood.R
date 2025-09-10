@@ -149,20 +149,18 @@ lifelihood <- function(
     }
     path_continuous_var <- file.path(temp_dir, "temp_continuous_variables.txt")
     writeLines(numeric_vec, con = path_continuous_var)
-    
-    
   } else {
     path_continuous_var = "NULL"
   }
-  
+
   ## Convert numeric variables so that they start at 0
   convertTonum <- function(x) {
     as.numeric(as.factor(x)) - 1
   }
-  
+
   df_encoded <- df_encoded |>
     mutate(across(all_of(colnames(numeric_vars)), convertTonum))
-  
+
   data_path <- format_dataframe_to_txt(
     df = df_encoded,
     sex = lifelihoodData$sex,
@@ -222,13 +220,13 @@ lifelihood <- function(
   results <- read_output_from_file(
     output_path,
     group_by_group = group_by_group,
-    covariates = lifelihoodData$covariates
+    covariates = lifelihoodData$covariates,
+    path_config = path_config
   )
 
   results$lifelihoodData <- lifelihoodData
   results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df
-  results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)

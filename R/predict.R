@@ -73,7 +73,7 @@ prediction <- function(
   df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
   original_df <- object$lifelihoodData$df
 
-  covariates <- object$covariates
+  covariates <- object$formula[[parameter_name]]
 
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
@@ -168,7 +168,7 @@ has_valid_factor_levels <- function(original_df, newdata, covariates) {
   }
 
   for (covariate in covariates) {
-    levels_train <- levels(original_df[[covariate]])
+    levels_train <- levels(as.factor(original_df[[covariate]]))
     levels_newdata <- levels(newdata[[covariate]])
     if (!all(levels_newdata %in% levels_train)) {
       return(FALSE)

@@ -4,14 +4,14 @@
 \alias{SurvWei}
 \title{Weibull survival function}
 \usage{
-SurvWei(t, ExpLong, Shape)
+SurvWei(t, expt_time_to_event, shape)
 }
 \arguments{
 \item{t}{Numeric. The time to event}
 
-\item{ExpLong}{Numeric. The expected longevity}
+\item{expt_time_to_event}{Numeric. The expected longevity or time to maturity.}
 
-\item{Shape}{Numeric. The shape parameter}
+\item{shape}{Numeric. The shape parameter}
 }
 \value{
 The survival probability (numeric)

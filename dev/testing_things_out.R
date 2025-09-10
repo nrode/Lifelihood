@@ -50,6 +50,15 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4)
 )
 
+lifelihoodResults <- results
+
+plot_observed_mortality_rate(
+  lifelihoodData,
+  interval_width = 15,
+  groupby = "all",
+  use_facet = TRUE
+)
+
 coef(results)
 object <- results
 link(estimate = coef(results)[1], min = 0.001, max = 324)
@@ -60,7 +69,9 @@ prediction(
   newdata = data.frame(par = 0, geno = 0, spore = 0)
 )
 
+
 prediction(results, parameter_name = "pontn")
+prediction(results, parameter_name = "n_offspring")
 simulation(results) |> head()
 simulation(results, event = "mortality") |> head()
 simulation(results, event = "maturity") |> head()
@@ -117,7 +128,8 @@ compute_fitted_mortality_rate(
 plot_observed_mortality_rate(
   lifelihoodData,
   interval_width = 15,
-  newdata = newdata
+  groupby = "all",
+  use_facet = TRUE
 )
 plot_observed_mortality_rate(
   lifelihoodData,
@@ -137,8 +149,8 @@ plot_observed_mortality_rate(
 plot_fitted_mortality_rate(
   results,
   interval_width = 5,
-  log_y = TRUE,
-  groupby = "all"
+  groupby = "all",
+  use_facet = TRUE
 )
 
 pred_mortality_rate(results, interval_width = 15)

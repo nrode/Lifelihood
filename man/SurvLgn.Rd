@@ -4,14 +4,14 @@
 \alias{SurvLgn}
 \title{Log-normal survival function}
 \usage{
-SurvLgn(t, ExpLong, scale)
+SurvLgn(t, expt_time_to_event, vp1)
 }
 \arguments{
 \item{t}{Numeric. The time to event}
 
-\item{ExpLong}{Numeric. The expected longevity}
+\item{expt_time_to_event}{Numeric. The expected longevity or time to maturity.}
 
-\item{Shape}{Numeric. The shape parameter}
+\item{vp1}{Numeric. The vp1 parameter}
 }
 \value{
 The survival probability (numeric)

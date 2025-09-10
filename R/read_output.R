@@ -17,7 +17,8 @@
 read_output_from_file <- function(
   file_path,
   group_by_group = FALSE,
-  covariates = NULL
+  covariates = NULL,
+  path_config
 ) {
   lines <- readLines(file_path)
   results <- list()
@@ -48,6 +49,42 @@ read_output_from_file <- function(
     results$vcov <- mcmc_pivoted |> dplyr::select(-LL)
   }
 
+  get_event_covariates <- function(str_formula) {
+    if (trimws(as.character(str_formula)) == "1") {
+      covar_names <- c("intercept")
+    } else if (str_formula == "not_fitted") {
+      covar_names <- c()
+    } else {
+      covar_names <- strsplit(
+        str_formula,
+        split = "\\+"
+      ) |>
+        unlist() |>
+        trimws()
+    }
+    return(covar_names)
+  }
+
+  results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
+  results$formula$expt_death <- get_event_covariates(
+    results$config$mortality$expt_death
+  )
+  results$formula$survival_shape <- get_event_covariates(
+    results$config$mortality$survival_shape
+  )
+  results$formula$expt_maturity <- get_event_covariates(
+    results$config$maturity$expt_maturity
+  )
+  results$formula$maturity_shape <- get_event_covariates(
+    results$config$maturity$maturity_shape
+  )
+  results$formula$expt_reproduction <- get_event_covariates(
+    results$config$reproduction$expt_reproduction
+  )
+  results$formula$reproduction_shape <- get_event_covariates(
+    results$config$reproduction$reproduction_shape
+  )
+  results$covariates <- covariates
   results$seeds <- seeds
   results$likelihood <- likelihood
   results$effects <- effects
@@ -57,7 +94,6 @@ read_output_from_file <- function(
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
-  results$covariates <- covariates
   class(results) <- "lifelihoodResults"
   return(results)
 }

@@ -4,14 +4,14 @@
 \alias{SurvGam}
 \title{Gamma survival function}
 \usage{
-SurvGam(t, ExpLong, scale)
+SurvGam(t, expt_time_to_event, scale)
 }
 \arguments{
 \item{t}{Numeric. The time to event}
 
-\item{ExpLong}{Numeric. The expected longevity}
+\item{expt_time_to_event}{Numeric. The expected longevity or time to maturity.}
 
-\item{Shape}{Numeric. The shape parameter}
+\item{scale}{Numeric. The scale parameter}
 }
 \value{
 The survival probability (numeric)

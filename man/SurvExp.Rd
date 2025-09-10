@@ -4,14 +4,12 @@
 \alias{SurvExp}
 \title{Exponential survival function}
 \usage{
-SurvExp(t, ExpLong)
+SurvExp(t, expt_time_to_event)
 }
 \arguments{
 \item{t}{Numeric. The time to event}
 
-\item{ExpLong}{Numeric. The expected longevity}
-
-\item{Shape}{Numeric. The shape parameter}
+\item{expt_time_to_event}{Numeric. The expected longevity or time to maturity.}
 }
 \value{
 The survival probability (numeric)
