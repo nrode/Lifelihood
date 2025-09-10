@@ -51,6 +51,10 @@ results <- lifelihood(
 )
 
 coef(results)
+object <- results
+link(estimate=coef(results)[1], min = 0.001, max = 324)
+prediction(results, parameter_name="expt_death", type="response", newdata = data.frame(par=0, geno=0, spore=0))
+
 prediction(results, parameter_name="pontn")
 simulation(results) |> head()
 simulation(results, event = "mortality") |> head()
