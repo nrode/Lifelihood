@@ -52,10 +52,15 @@ results <- lifelihood(
 
 coef(results)
 object <- results
-link(estimate=coef(results)[1], min = 0.001, max = 324)
-prediction(results, parameter_name="expt_death", type="response", newdata = data.frame(par=0, geno=0, spore=0))
+link(estimate = coef(results)[1], min = 0.001, max = 324)
+prediction(
+  results,
+  parameter_name = "expt_death",
+  type = "response",
+  newdata = data.frame(par = 0, geno = 0, spore = 0)
+)
 
-prediction(results, parameter_name="pontn")
+prediction(results, parameter_name = "pontn")
 simulation(results) |> head()
 simulation(results, event = "mortality") |> head()
 simulation(results, event = "maturity") |> head()
@@ -104,7 +109,7 @@ newdata <- expand.grid(
   geno = levels(lifelihoodData$df$geno),
   par = levels(lifelihoodData$df$par)
 )
-compute_observed_mortality_rate(
+compute_fitted_mortality_rate(
   lifelihoodData,
   interval_width = 15,
   newdata = newdata

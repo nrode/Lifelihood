@@ -35,7 +35,7 @@ plot_fitted_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
-  rate_df <- compute_fitted_mortality_rate(
+  rate_df <- compute_observed_mortality_rate(
     lifelihoodData = lifelihoodResults$lifelihoodData,
     interval_width = interval_width,
     newdata = newdata,
@@ -97,7 +97,7 @@ plot_observed_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  rate_df <- compute_observed_mortality_rate(
+  rate_df <- compute_fitted_mortality_rate(
     lifelihoodData,
     interval_width,
     newdata = newdata,

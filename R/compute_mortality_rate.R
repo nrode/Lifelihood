@@ -1,4 +1,4 @@
-#' @title Compute fitted mortality rate
+#' @title Compute observed mortality rate
 #'
 #' @description
 #' Calculate the empirical mortality rate over a given interval
@@ -12,7 +12,7 @@
 #' at this time).
 #'
 #' @export
-compute_fitted_mortality_rate <- function(
+compute_observed_mortality_rate <- function(
   lifelihoodData,
   interval_width,
   max_time = NULL,
@@ -29,7 +29,7 @@ compute_fitted_mortality_rate <- function(
   ))
 }
 
-#' @title Compute observed mortality rate
+#' @title Compute fitted mortality rate
 #'
 #' @description
 #' Calculate the empirical mortality rate over a given interval
@@ -43,7 +43,7 @@ compute_fitted_mortality_rate <- function(
 #' at this time).
 #'
 #' @export
-compute_observed_mortality_rate <- function(
+compute_fitted_mortality_rate <- function(
   lifelihoodData,
   interval_width,
   newdata,
