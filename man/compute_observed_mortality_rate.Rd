@@ -2,11 +2,12 @@
 % Please edit documentation in R/compute_mortality_rate.R
 \name{compute_observed_mortality_rate}
 \alias{compute_observed_mortality_rate}
-\title{Compute observed mortality rate}
+\title{Compute empirical mortality rate}
 \usage{
 compute_observed_mortality_rate(
   lifelihoodData,
   interval_width,
+  newdata = NULL,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL
@@ -19,6 +20,9 @@ compute_observed_mortality_rate(
 mortality rate. For instance, if the time unit for deaths in
 the original dataset is days and \code{interval_width} is set to 10,
 the mortality rate will be calculated every 10 days for each group.}
+
+\item{newdata}{Data for computation. If absent, predictions are for
+the subjects used in the original fit.}
 
 \item{max_time}{The maximum time for calculating the mortality
 rate. If set to NULL, the time of the last observed death is used.}
@@ -43,6 +47,46 @@ or "Overall" if groupby = NULL), and MortalityRate (mortality rate
 at this time).
 }
 \description{
-Calculate the empirical mortality rate over a given interval
-on the original fit.
+Calculate the empirical mortality rate over a given interval.
 }
+\examples{
+library(lifelihood)
+library(tidyverse)
+
+df <- fakesample |>
+  mutate(
+    geno = as.factor(geno),
+    type = as.factor(type)
+  )
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+dataLFH <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+mort_df <- compute_observed_mortality_rate(dataLFH, interval_width = 2)
+head(mort_df)
+
+mort_df <- compute_observed_mortality_rate(
+  dataLFH,
+  interval_width = 2,
+  groupby = NULL,
+  max_time = 170
+)
+head(mort_df)
+}
+\keyword{internal}

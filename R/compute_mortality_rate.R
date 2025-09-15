@@ -1,46 +1,17 @@
-#' @title Compute observed mortality rate
-#'
-#' @description
-#' Calculate the empirical mortality rate over a given interval
-#' on the original fit.
-#'
-#' @inheritParams compute_mortality_rate
-#'
-#' @return A dataframe with 3 columns: Interval (time interval, based
-#' on `interval_width` value), Group (identifier of a given subgroup,
-#' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
-#' at this time).
-#'
-#' @export
-compute_observed_mortality_rate <- function(
-  lifelihoodData,
-  interval_width,
-  max_time = NULL,
-  min_sample_size = 1,
-  groupby = NULL
-) {
-  return(compute_mortality_rate(
-    lifelihoodData = lifelihoodData,
-    interval_width = interval_width,
-    newdata = NULL,
-    max_time = max_time,
-    min_sample_size = min_sample_size,
-    groupby = groupby
-  ))
-}
-
 #' @title Compute fitted mortality rate
 #'
 #' @description
 #' Calculate the empirical mortality rate over a given interval
 #' on some new data.
 #'
-#' @inheritParams compute_mortality_rate
+#' @inheritParams compute_observed_mortality_rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), Group (identifier of a given subgroup,
 #' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
 #' at this time).
+#'
+#' @import dplyr
 #'
 #' @export
 compute_fitted_mortality_rate <- function(
@@ -204,17 +175,17 @@ compute_fitted_mortality_rate <- function(
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
 #'
-#' mort_df <- compute_mortality_rate(dataLFH, interval_width = 2)
+#' mort_df <- compute_observed_mortality_rate(dataLFH, interval_width = 2)
 #' head(mort_df)
 #'
-#' mort_df <- compute_mortality_rate(
+#' mort_df <- compute_observed_mortality_rate(
 #'   dataLFH,
 #'   interval_width = 2,
 #'   groupby = NULL,
 #'   max_time = 170
 #' )
 #' head(mort_df)
-compute_mortality_rate <- function(
+compute_observed_mortality_rate <- function(
   lifelihoodData,
   interval_width,
   newdata = NULL,
