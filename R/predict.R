@@ -74,6 +74,13 @@ prediction <- function(
   original_df <- object$lifelihoodData$df
 
   covariates <- object$formula[[parameter_name]]
+  if (is.null(covariates)) {
+    stop(paste0(
+      "It seems like you're trying to make a prediction with an unfitted parameter (",
+      parameter_name,
+      "). Make sure it's in your configuration file."
+    ))
+  }
 
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
