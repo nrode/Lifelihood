@@ -27,6 +27,9 @@ generate_clutch_vector <- function(N) {
     sep = "_"
   ))
 }
+generate_interval_names <- function(n) {
+  paste("interval", 1:n, sep = "_")
+}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- lifelihoodData(
@@ -72,10 +75,10 @@ prediction(
 prediction(results, parameter_name = "pontn")
 prediction(results, parameter_name = "n_offspring")
 prediction(results, parameter_name = "expt_death") |> head()
-simulation(results) |> head()
-simulation(results, event = "mortality") |> head()
-simulation(results, event = "maturity") |> head()
-simulation(results, event = "reproduction") |> head()
+simulate_life_history(results) |> head()
+simulate_life_history(results, event = "mortality") |> head()
+simulate_life_history(results, event = "maturity") |> head()
+simulate_life_history(results, event = "reproduction") |> head()
 
 AIC(results)
 BIC(results)

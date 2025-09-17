@@ -5,14 +5,14 @@ library(future.apply)
 # Sequential
 plan(sequential)
 bench_seq <- microbenchmark(
-  seq = simulation(results, event = "all", seed = 123),
+  seq = simulate_life_history(results, event = "all", seed = 123),
   times = 100L
 )
 
 # Parallel (multisession: safe across OS)
 plan(multisession, workers = 3)
 bench_par <- microbenchmark(
-  par = simulation(results, event = "all", seed = 123),
+  par = simulate_life_history(results, event = "all", seed = 123),
   times = 100L
 )
 
