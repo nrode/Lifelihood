@@ -7,7 +7,6 @@
 #' the survival shape.
 #'
 #' @inheritParams lifelihood
-#' @inheritParams pred_mortality_rate
 #'
 #' @export
 make_design_matrix <- function(covariates, data) {

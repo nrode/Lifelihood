@@ -9,8 +9,7 @@ compute_fitted_mortality_rate(
   interval_width,
   event = c("mortality", "maturity"),
   newdata = NULL,
-  max_time = NULL,
-  min_sample_size = 1
+  max_time = NULL
 )
 }
 \arguments{
@@ -24,9 +23,6 @@ the subjects used in the original fit.}
 
 \item{max_time}{The maximum time for calculating the mortality
 rate. If set to NULL, the time of the last observed death is used.}
-
-\item{min_sample_size}{The minimum number of individuals alive
-at the beggining of a time interval for computing the observed mortality rate}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based

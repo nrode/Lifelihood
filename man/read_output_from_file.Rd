@@ -4,12 +4,19 @@
 \alias{read_output_from_file}
 \title{Read and format the output file of the program}
 \usage{
-read_output_from_file(file_path, group_by_group = FALSE, covariates = NULL)
+read_output_from_file(
+  file_path,
+  group_by_group = FALSE,
+  covariates = NULL,
+  path_config
+)
 }
 \arguments{
 \item{file_path}{Location of the output file of the program}
 
 \item{group_by_group}{Boolean option to fit the full factorail model with all the interactions between each of the factors}
+
+\item{path_config}{A character string specifying the file path to the YAML configuration file.}
 }
 \value{
 An object of class \code{lifelihoodResults} with all results from the output file

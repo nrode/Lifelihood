@@ -47,8 +47,6 @@ plot_mortality_rate(
 )
 }
 \arguments{
-\item{lifelihoodResults}{output of \code{\link[=lifelihood]{lifelihood()}}}
-
 \item{interval_width}{The interval width used to calculate the
 mortality rate. For instance, if the time unit for deaths in
 the original dataset is days and \code{interval_width} is set to 10,
@@ -104,7 +102,7 @@ function, only to retrieve a lifelihood data object
 with \code{\link[=lifelihoodData]{lifelihoodData()}}
 
 If you want more control over the style of the graph,
-use the \code{\link[=compute_mortality_rate]{compute_mortality_rate()}} function to retrieve data.
+use the \code{\link[=compute_observed_mortality_rate]{compute_observed_mortality_rate()}} function to retrieve data.
 
 Convenient function used in \code{\link[=plot_observed_mortality_rate]{plot_observed_mortality_rate()}}
 and \code{\link[=plot_fitted_mortality_rate]{plot_fitted_mortality_rate()}}.

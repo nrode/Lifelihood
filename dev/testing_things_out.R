@@ -61,7 +61,6 @@ plot_observed_mortality_rate(
 
 coef(results)
 object <- results
-link(estimate = coef(results)[1], min = 0.001, max = 324)
 prediction(
   results,
   parameter_name = "expt_death",
@@ -72,6 +71,7 @@ prediction(
 
 prediction(results, parameter_name = "pontn")
 prediction(results, parameter_name = "n_offspring")
+prediction(results, parameter_name = "expt_death") |> head()
 simulation(results) |> head()
 simulation(results, event = "mortality") |> head()
 simulation(results, event = "maturity") |> head()
@@ -118,15 +118,15 @@ lm(Sepal.Length ~ Sepal.Width + Sepal.Width2, data = iris, singular.ok = FALSE)
 
 newdata <- expand.grid(
   geno = levels(lifelihoodData$df$geno),
-  par = levels(lifelihoodData$df$par)
+  par = levels(lifelihoodData$df$par |> as.factor())
 )
 compute_fitted_mortality_rate(
-  lifelihoodData,
+  results,
   interval_width = 15,
   newdata = newdata
 )
 plot_observed_mortality_rate(
-  lifelihoodData,
+  results,
   interval_width = 15,
   groupby = "all",
   use_facet = TRUE
@@ -152,8 +152,6 @@ plot_fitted_mortality_rate(
   groupby = "all",
   use_facet = TRUE
 )
-
-pred_mortality_rate(results, interval_width = 15)
 
 
 df <- read.csv(here::here("data/fake_re_sample.csv"))

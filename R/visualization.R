@@ -10,7 +10,6 @@
 #' @name plot_mortality_rate
 #'
 #' @inheritParams lifelihood
-#' @inheritParams pred_mortality_rate
 #' @inheritParams plot_mortality_rate
 #' @inheritParams prediction
 #' @inheritParams validate_groupby_arg
@@ -67,12 +66,12 @@ plot_fitted_mortality_rate <- function(
 #' with [lifelihoodData()]
 #'
 #' If you want more control over the style of the graph,
-#' use the [compute_mortality_rate()] function to retrieve data.
+#' use the [compute_observed_mortality_rate()] function to retrieve data.
 #'
 #' @name plot_mortality_rate
 #'
 #' @inheritParams lifelihood
-#' @inheritParams compute_mortality_rate
+#' @inheritParams compute_observed_mortality_rate
 #' @inheritParams plot_mortality_rate
 #' @inheritParams validate_groupby_arg
 #'
@@ -123,7 +122,7 @@ plot_observed_mortality_rate <- function(
 #' Convenient function used in [plot_observed_mortality_rate()]
 #' and [plot_fitted_mortality_rate()].
 #'
-#' @inheritParams compute_mortality_rate
+#' @inheritParams compute_observed_mortality_rate
 #' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
 #' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale
@@ -132,7 +131,7 @@ plot_observed_mortality_rate <- function(
 #'
 #' @return a ggplot2 plot
 #'
-#' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap
+#' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim
 #'
 #' @keywords internal
 plot_mortality_rate <- function(
@@ -167,13 +166,12 @@ plot_mortality_rate <- function(
 
   plot <- plot +
     ggplot2::geom_point() +
-    #ggplot2::geom_smooth(method = "lm") +
     ggplot2::labs(
       title = title,
       x = xlab,
       y = ylab
     ) +
-    ylim(0, 1) + 
+    ylim(0, 1) +
     ggplot2::theme_minimal()
 
   if (!is.null(max_time) & !log_x) {
