@@ -26,7 +26,7 @@ compute_fitted_mortality_rate <- function(
   check_valid_lifelihoodResults(lifelihoodResults)
 
   lifelihoodData <- lifelihoodResults$lifelihoodData
-
+  
   if (event == "mortality") {
     start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
@@ -84,8 +84,9 @@ compute_fitted_mortality_rate <- function(
       max_time <- sorted_values[1]
     }
   }
-
+  
   n_intervals <- ceiling(max_time / interval_width) - 1
+  
 
   if (event == "mortality") {
     parameter_name1 <- "expt_death"
