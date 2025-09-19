@@ -10,8 +10,6 @@ knitr:
     comment: '#>'
 ---
 
-
-
 In order to compile the underlying Pascal code, you need to install:
 
 - [Lazarus](https://www.lazarus-ide.org/index.php?page=downloads): code editor for Pascal

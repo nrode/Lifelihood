@@ -39,12 +39,8 @@ df <- fakesample |>
   )
 ```
 
-```{r, echo=FALSE}
-DT::datatable(
-  df,
-  options = list(scrollX = TRUE),
-  class = "cell-border stripe hover compact"
-)
+```{r}
+df |> head()
 ```
 
 Prepare input parameters for the `lifelihood()` function:
@@ -118,14 +114,7 @@ You can get the parameter boundaries with the `default_bounds_df()` function and
 
 ```{r}
 bounds_df <- default_bounds_df(dataLFH)
-```
-
-```{r, echo=FALSE}
-DT::datatable(
-  bounds_df,
-  options = list(scrollX = TRUE),
-  class = "cell-border stripe hover compact"
-)
+bounds_df
 ```
 
 Since 10 seems to not be high enough, let's try with 80:

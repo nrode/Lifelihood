@@ -27,16 +27,8 @@ df <- fakesample |>
     type = as.factor(type),
     geno = as.factor(geno)
   )
-```
 
-```{r}
-#| echo=FALSE
-
-DT::datatable(
-  df,
-  options = list(scrollX = TRUE),
-  class = "cell-border stripe hover compact"
-)
+df |> head()
 ```
 
 # Generate clutch names

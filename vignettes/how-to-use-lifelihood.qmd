@@ -37,16 +37,8 @@ df <- fakesample |>
     type = as.factor(type),
     geno = as.factor(geno)
   )
-```
 
-```{r}
-#| echo=FALSE
-
-DT::datatable(
-  df,
-  options = list(scrollX = TRUE),
-  class = "cell-border stripe hover compact"
-)
+df |> head()
 ```
 
 Prepare input parameters for the `lifelihoodData()` function:
@@ -63,7 +55,7 @@ clutchs <- c(
 )
 ```
 
-*Note: If you have a large number of clutches, it is easier to generate this vector programmatically, particularly if your dataset contains a large number of clutches. See the [Generate clutch names](generate-clutch-names.html) vignette.*
+*Note: If you have a large number of clutches, it is easier to generate this vector programmatically. See the [Generate clutch names](generate-clutch-names.html) vignette.*
 
 # Create the `lifelihoodData` object
 
@@ -115,26 +107,18 @@ summary(results)
 
 The `lifelihoodResults` object is a list containing all the results of the analysis. We can get specific results by calling the list element.
 
-Get estimations:
-
 ```{r}
-#| eval: false
-results$effects
-```
+coef(results)
+coeff(results, "expt_death")
+coeff(results, "survival_shape")
 
-```{r}
-#| echo=FALSE
-DT::datatable(
-  results$effects,
-  options = list(scrollX = TRUE),
-  class = "cell-border stripe hover compact"
-)
-```
+AIC(results)
+BIC(results)
 
-Get maximum likelihood found:
+logLik(results)
 
-```{r}
-results$likelihood
+prediction(results, parameter_name = "expt_death") |> head()
+prediction(results, parameter_name = "expt_death", type = "response") |> head()
 ```
 
 # Next step

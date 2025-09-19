@@ -1,3 +1,13 @@
+#' @title Simulation for a single life event
+#'
+#' @description Internal function used to simulate one of the
+#' life history event (maturity, reproduction, mortality).
+#'
+#' @param object Output of [`lifelihood()`]
+#' @param ev A character of the event (must be one of "mortality",
+#' "reproduction" or "maturity")
+#' @param newdata An optional dataset used for prediction
+#'
 #' @keywords internal
 simulate_event <- function(object, ev, newdata) {
   if (ev == "mortality") {

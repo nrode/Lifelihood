@@ -61,12 +61,7 @@ df <- data.frame(
 ```
 
 ```{r}
-#| echo=FALSE
-DT::datatable(
-  df,
-  options = list(scrollX = TRUE),
-  class = "cell-border stripe hover compact"
-)
+df |> head()
 ```
 
 As you can see, some observations made more ponts, leading to the presence of NULL values.
