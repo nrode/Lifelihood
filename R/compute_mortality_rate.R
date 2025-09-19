@@ -4,6 +4,7 @@
 #' Calculate the empirical mortality rate over a given interval
 #' on some new data.
 #'
+#' @param lifelihoodResults A `lifelihoodResults` object 
 #' @inheritParams compute_observed_mortality_rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based

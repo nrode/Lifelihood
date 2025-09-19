@@ -13,6 +13,8 @@ compute_fitted_mortality_rate(
 )
 }
 \arguments{
+\item{lifelihoodResults}{A \code{lifelihoodResults} object}
+
 \item{interval_width}{The interval width used to calculate the
 mortality rate. For instance, if the time unit for deaths in
 the original dataset is days and \code{interval_width} is set to 10,

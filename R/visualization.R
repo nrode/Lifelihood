@@ -35,11 +35,10 @@ plot_fitted_mortality_rate <- function(
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
   rate_df <- compute_fitted_mortality_rate(
-    lifelihoodData = lifelihoodResults$lifelihoodData,
+    lifelihoodResults=lifelihoodResults,
     interval_width = interval_width,
     newdata = newdata,
-    max_time = max_time,
-    groupby = groupby
+    max_time = max_time
   )
 
   plot_mortality_rate(
