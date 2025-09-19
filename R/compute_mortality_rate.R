@@ -60,6 +60,21 @@ compute_fitted_mortality_rate <- function(
       setdiff("intercept")
   }
   
+  if (is.null(max_time)) {
+    sorted_values <- sort(
+      unique(lifelihoodData$df[[end_col]]),
+      decreasing = TRUE,
+      na.last = NA
+    )
+    if (sorted_values[1] == lifelihoodData$right_censoring_date) {
+      max_time <- sorted_values[2]
+    } else {
+      max_time <- sorted_values[1]
+    }
+  }
+  
+  n_intervals <- ceiling(max_time / interval_width) - 1
+  
   if (is.null(newdata)) {
     params <- setNames(
       lapply(covar, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
@@ -86,23 +101,6 @@ compute_fitted_mortality_rate <- function(
   }
 
   newdata$Group <- as.factor(newdata$Group)
-  
-  
-  if (is.null(max_time)) {
-    sorted_values <- sort(
-      unique(lifelihoodData$df[[end_col]]),
-      decreasing = TRUE,
-      na.last = NA
-    )
-    if (sorted_values[1] == lifelihoodData$right_censoring_date) {
-      max_time <- sorted_values[2]
-    } else {
-      max_time <- sorted_values[1]
-    }
-  }
-  
-  n_intervals <- ceiling(max_time / interval_width) - 1
-  
 
   if (event == "mortality") {
     parameter_name1 <- "expt_death"
