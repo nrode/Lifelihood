@@ -20,7 +20,8 @@ compute_fitted_mortality_rate <- function(
   interval_width,
   event = c("mortality", "maturity"),
   newdata = NULL,
-  max_time = NULL
+  max_time = NULL,
+  groupby = NULL
 ) {
   event <- match.arg(event)
   check_valid_lifelihoodResults(lifelihoodResults)
@@ -58,7 +59,7 @@ compute_fitted_mortality_rate <- function(
       unique() |>
       setdiff("intercept")
   }
-
+  
   if (is.null(newdata)) {
     params <- setNames(
       lapply(covar, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
@@ -70,8 +71,23 @@ compute_fitted_mortality_rate <- function(
       by = interval_width
     )
     newdata <- expand.grid(params) |> relocate(time)
+    newdata <- newdata |>
+      dplyr::mutate(
+        Interval_start = time,
+        Interval_end = time+interval_width,
+        Mean_Interval = time + interval_width / 2
+      )
+  }
+  
+  if (!is.null(groupby)) {
+    newdata$Group <- interaction(newdata[groupby])
+   } else {
+    newdata$Group <- "Overall"
   }
 
+  newdata$Group <- as.factor(newdata$Group)
+  
+  
   if (is.null(max_time)) {
     sorted_values <- sort(
       unique(lifelihoodData$df[[end_col]]),
@@ -112,13 +128,14 @@ compute_fitted_mortality_rate <- function(
     type = "response"
   )
 
-  newdata$prob_of_event <- prob_event_interval_dt(
+  newdata$MortalityRate <- prob_event_interval_dt(
     t = newdata$time,
     dt = interval_width,
     param1 = param1,
     param2 = param2,
     family = family
   )
+  return(newdata)
 }
 
 #' @title Compute empirical mortality rate

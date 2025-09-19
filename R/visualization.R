@@ -38,9 +38,10 @@ plot_fitted_mortality_rate <- function(
     lifelihoodResults=lifelihoodResults,
     interval_width = interval_width,
     newdata = newdata,
-    max_time = max_time
+    max_time = max_time,
+    groupby = groupby
   )
-
+  
   plot_mortality_rate(
     rate_df = rate_df,
     max_time = max_time,

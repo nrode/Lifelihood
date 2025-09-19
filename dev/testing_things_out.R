@@ -89,10 +89,30 @@ vcov(results)
 results$effects
 results$mcmc
 
-# newdata <- expand.grid(
-#   geno = levels(lifelihoodData$df$geno),
-#   par = levels(lifelihoodData$df$par),
-# )
+ newdata <- expand.grid(
+   geno = levels(lifelihoodData$df$geno),
+   par = levels(as.factor(lifelihoodData$df$par)),
+   spore = levels(lifelihoodData$df$spore),
+   time= seq(0, 170, by=10)
+ )
+ 
+ rate_df <- compute_fitted_mortality_rate(
+   lifelihoodResults=results,
+   interval_width = 10,
+   newdata = NULL,
+   max_time = NULL,
+   groupby = c("spore", "par")
+ )
+ 
+ plot_fitted_mortality_rate(
+   lifelihoodResults=results,
+   interval_width=10,
+   newdata = NULL,
+   max_time = NULL,
+   xlab = "Time",
+   ylab = "Mortality Rate",
+   groupby = c("spore", "par")
+ )
 prediction(results, "expt_death", type = "response")
 prediction(results, "survival_shape", type = "response")
 
