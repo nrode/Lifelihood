@@ -143,7 +143,7 @@ compute_fitted_mortality_rate <- function(
 #' at this time).
 #'
 #' @importFrom dplyr mutate if_else select
-#'
+#' @export
 #' @keywords internal
 #'
 #' @examples
