@@ -90,6 +90,10 @@ using maximum likelihood.</p>
 <span>  Tf <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  climbrate <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  precision <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  ratiomax <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  tc <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  tinf <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  sub_interval <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  delete_temp_files <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -171,6 +175,22 @@ using maximum likelihood.</p>
 <dd><p>TBD - Check the actual meaning</p></dd>
 
 
+<dt id="arg-ratiomax">ratiomax<a class="anchor" aria-label="anchor" href="#arg-ratiomax"></a></dt>
+<dd><p>facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque</p></dd>
+
+
+<dt id="arg-tc">tc<a class="anchor" aria-label="anchor" href="#arg-tc"></a></dt>
+<dd><p>critical time for the increase in juvenile survival mortality compared to later survival</p></dd>
+
+
+<dt id="arg-tinf">tinf<a class="anchor" aria-label="anchor" href="#arg-tinf"></a></dt>
+<dd><p>maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)</p></dd>
+
+
+<dt id="arg-sub-interval">sub_interval<a class="anchor" aria-label="anchor" href="#arg-sub-interval"></a></dt>
+<dd><p>sub-interval used to integrate the left and right censoring dates of each event</p></dd>
+
+
 <dt id="arg-raise-estimation-warning">raise_estimation_warning<a class="anchor" aria-label="anchor" href="#arg-raise-estimation-warning"></a></dt>
 <dd><p>Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.</p></dd>
 
@@ -235,7 +255,6 @@ using maximum likelihood.</p>
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/private/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/Rtmp2lbF6M/temp_libpath1e0a2a79ba80/lifelihood/bin/lifelihood/Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 0 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> lifelihood Pascal program status code 0</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> LIFELIHOOD RESULTS</span>
@@ -296,58 +315,58 @@ using maximum likelihood.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 49             int_quad_change_n_offspring   1.60524468        0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50      eff_quad_change_n_offspring_geno_1  -0.07882676        0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 51                     int_tof_n_offspring  -0.26241118        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   parameter        kind        event</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                expt_death   intercept    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                expt_death coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                expt_death coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                expt_death coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            survival_shape   intercept    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            survival_shape coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            survival_shape coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            survival_shape coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            survival_shape coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10           survival_shape coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11         ratio_expt_death   intercept    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12         ratio_expt_death coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13               prob_death   intercept    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14               prob_death coefficient    mortality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15            expt_maturity   intercept     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16            expt_maturity coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17            expt_maturity coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18            expt_maturity coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19           maturity_shape   intercept     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20           maturity_shape coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21      ratio_expt_maturity   intercept     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      ratio_expt_maturity coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      ratio_expt_maturity coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      ratio_expt_maturity coefficient     maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25        expt_reproduction   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26        expt_reproduction coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27                    pontn   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28                    pontn coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29    increase_death_hazard   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30    increase_death_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31    increase_death_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32    increase_death_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33    increase_death_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34    increase_death_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35       tof_reduction_date   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36       tof_reduction_date coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 increase_tof_n_offspring   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 increase_tof_n_offspring coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39      lin_decrease_hazard   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40      lin_decrease_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41      lin_decrease_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42      lin_decrease_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43      lin_decrease_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44      lin_decrease_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45          quad_senescence   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46          quad_senescence coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47     quad_decrease_hazard   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48     quad_decrease_hazard coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49  quad_change_n_offspring   intercept reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50  quad_change_n_offspring coefficient reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51          tof_n_offspring   intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   parameter                 kind        event</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                expt_death            intercept    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                expt_death coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                expt_death coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                expt_death coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            survival_shape            intercept    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            survival_shape coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7            survival_shape coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            survival_shape coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9            survival_shape coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10           survival_shape coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11         ratio_expt_death            intercept    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12         ratio_expt_death coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13               prob_death            intercept    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14               prob_death coefficient_category    mortality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15            expt_maturity            intercept     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16            expt_maturity coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17            expt_maturity coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18            expt_maturity coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19           maturity_shape            intercept     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20           maturity_shape coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21      ratio_expt_maturity            intercept     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22      ratio_expt_maturity coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23      ratio_expt_maturity coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24      ratio_expt_maturity coefficient_category     maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25        expt_reproduction            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26        expt_reproduction coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27                    pontn            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28                    pontn coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    increase_death_hazard            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30    increase_death_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31    increase_death_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32    increase_death_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33    increase_death_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34    increase_death_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35       tof_reduction_date            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36       tof_reduction_date coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37 increase_tof_n_offspring            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38 increase_tof_n_offspring coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39      lin_decrease_hazard            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40      lin_decrease_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41      lin_decrease_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42      lin_decrease_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43      lin_decrease_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44      lin_decrease_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45          quad_senescence            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46          quad_senescence coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47     quad_decrease_hazard            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48     quad_decrease_hazard coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  quad_change_n_offspring            intercept reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50  quad_change_n_offspring coefficient_category reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51          tof_n_offspring            intercept reproduction</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

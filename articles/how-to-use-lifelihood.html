@@ -15,12 +15,7 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="how-to-use-lifelihood_files/libs/quarto-html/popper.min.js"></script><script src="how-to-use-lifelihood_files/libs/quarto-html/tippy.umd.min.js"></script><link href="how-to-use-lifelihood_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="how-to-use-lifelihood_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="how-to-use-lifelihood_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-<script src="how-to-use-lifelihood_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="how-to-use-lifelihood_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="how-to-use-lifelihood_files/libs/datatables-binding-0.33/datatables.js"></script><link href="how-to-use-lifelihood_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="how-to-use-lifelihood_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<link href="how-to-use-lifelihood_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
-<script src="how-to-use-lifelihood_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="How to use lifelihood">
 </head>
 <body>
@@ -114,8 +109,8 @@ If you haven’t already check it, have a look at:
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
 <span><span class="co">#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.5</span></span>
-<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   3.5.2     ✔ tibble    3.3.0</span></span>
+<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.2</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.0     ✔ tibble    3.3.0</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tidyr     1.3.1</span></span>
 <span><span class="co">#&gt; ✔ purrr     1.1.0     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
@@ -134,13 +129,23 @@ If you haven’t already check it, have a look at:
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>,</span>
 <span>    geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-fbe53fe0b52d627da5b4" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-fbe53fe0b52d627da5b4">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["1","2","0","0","0","1","2","2","2","2","2","1","1"],["0","0","1","1","1","0","1","1","1","1","1","0","0"],[0,0,0,0,0,0,0,0,0,0,0,0,0],[1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[0,0,0,0,0,0,0,0,0,0,0,0,0],[0,2,3,3,3,0,1,1,1,1,1,0,0],[1000,3,4,4,4,1000,2,2,2,2,2,1000,1000],[" NA"," 4"," 2"," 2"," 2"," NA"," 2"," 2"," 2"," 2"," 2"," NA"," NA"],[" NA"," 3"," 4"," 4"," 4"," NA"," 2"," 2"," 2"," 2"," 2"," NA"," NA"],[" NA"," 4"," 5"," 5"," 5"," NA"," 3"," 1"," 1"," 1"," 1"," NA"," NA"],[" NA"," 2"," NA"," NA"," NA"," NA"," 5"," 5"," 5"," 5"," 5"," NA"," NA"],[" NA"," 4"," NA"," NA"," NA"," NA"," 3"," 8"," 8"," 8"," 8"," NA"," NA"],[" NA"," 5"," NA"," NA"," NA"," NA"," 4"," 3"," 3"," 3"," 3"," NA"," NA"],[0.1,9,5,5,5,0.1,11,19,12,14,19,0.1,4],[1,10,6,6,6,1,12,20,13,15,20,1,5]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>geno<\/th>\n      <th>sex_start<\/th>\n      <th>sex_end<\/th>\n      <th>sex<\/th>\n      <th>mat_start<\/th>\n      <th>mat_end<\/th>\n      <th>clutch_start1<\/th>\n      <th>clutch_end1<\/th>\n      <th>clutch_size1<\/th>\n      <th>clutch_start2<\/th>\n      <th>clutch_end2<\/th>\n      <th>clutch_size2<\/th>\n      <th>death_start<\/th>\n      <th>death_end<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"type","targets":1},{"name":"geno","targets":2},{"name":"sex_start","targets":3},{"name":"sex_end","targets":4},{"name":"sex","targets":5},{"name":"mat_start","targets":6},{"name":"mat_end","targets":7},{"name":"clutch_start1","targets":8},{"name":"clutch_end1","targets":9},{"name":"clutch_size1","targets":10},{"name":"clutch_start2","targets":11},{"name":"clutch_end2","targets":12},{"name":"clutch_size2","targets":13},{"name":"death_start","targets":14},{"name":"death_end","targets":15}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-</div>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   type geno sex_start sex_end sex mat_start mat_end clutch_start1 clutch_end1</span></span>
+<span><span class="co">#&gt; 1    1    0         0    1000   0         0    1000            NA          NA</span></span>
+<span><span class="co">#&gt; 2    2    0         0    1000   0         2       3             4           3</span></span>
+<span><span class="co">#&gt; 3    0    1         0    1000   0         3       4             2           4</span></span>
+<span><span class="co">#&gt; 4    0    1         0    1000   0         3       4             2           4</span></span>
+<span><span class="co">#&gt; 5    0    1         0    1000   0         3       4             2           4</span></span>
+<span><span class="co">#&gt; 6    1    0         0    1000   0         0    1000            NA          NA</span></span>
+<span><span class="co">#&gt;   clutch_size1 clutch_start2 clutch_end2 clutch_size2 death_start death_end</span></span>
+<span><span class="co">#&gt; 1           NA            NA          NA           NA         0.1         1</span></span>
+<span><span class="co">#&gt; 2            4             2           4            5         9.0        10</span></span>
+<span><span class="co">#&gt; 3            5            NA          NA           NA         5.0         6</span></span>
+<span><span class="co">#&gt; 4            5            NA          NA           NA         5.0         6</span></span>
+<span><span class="co">#&gt; 5            5            NA          NA           NA         5.0         6</span></span>
+<span><span class="co">#&gt; 6           NA            NA          NA           NA         0.1         1</span></span></code></pre></div>
 </div>
 <p>Prepare input parameters for the <code><a href="../reference/lifelihoodData.html">lifelihoodData()</a></code> function:</p>
 <div class="cell">
@@ -155,7 +160,7 @@ If you haven’t already check it, have a look at:
 <span>  <span class="st">"clutch_size2"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-<p><em>Note: If you have a large number of clutches, it is easier to generate this vector programmatically, particularly if your dataset contains a large number of clutches. See the <a href="generate-clutch-names.html">Generate clutch names</a> vignette.</em></p>
+<p><em>Note: If you have a large number of clutches, it is easier to generate this vector programmatically. See the <a href="generate-clutch-names.html">Generate clutch names</a> vignette.</em></p>
 </section><section class="section level2"><h2 id="create-the-lifelihooddata-object">Create the <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-the-lifelihooddata-object"></a>
 </h2>
 <p><code><a href="../reference/lifelihoodData.html">lifelihoodData()</a></code> creates a <code>lifelihoodData</code> object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.</p>
@@ -193,7 +198,6 @@ If you haven’t already check it, have a look at:
 <span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood/private/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/Rtmpi4DQmb/pkgdown-quarto-1f5d4a2af4a1/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /private/var/folders/y6/nj790rtn62lfktb1sh__79hc0000gn/T/Rtmpi4DQmb/pkgdown-quarto-1f5d4a2af4a1/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 0 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="co">#&gt; lifelihood Pascal program status code 0</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; LIFELIHOOD RESULTS</span></span>
@@ -254,79 +258,155 @@ If you haven’t already check it, have a look at:
 <span><span class="co">#&gt; 49             int_quad_change_n_offspring   1.60524468        0</span></span>
 <span><span class="co">#&gt; 50      eff_quad_change_n_offspring_geno_1  -0.07882676        0</span></span>
 <span><span class="co">#&gt; 51                     int_tof_n_offspring  -0.26241118        0</span></span>
-<span><span class="co">#&gt;                   parameter        kind        event</span></span>
-<span><span class="co">#&gt; 1                expt_death   intercept    mortality</span></span>
-<span><span class="co">#&gt; 2                expt_death coefficient    mortality</span></span>
-<span><span class="co">#&gt; 3                expt_death coefficient    mortality</span></span>
-<span><span class="co">#&gt; 4                expt_death coefficient    mortality</span></span>
-<span><span class="co">#&gt; 5            survival_shape   intercept    mortality</span></span>
-<span><span class="co">#&gt; 6            survival_shape coefficient    mortality</span></span>
-<span><span class="co">#&gt; 7            survival_shape coefficient    mortality</span></span>
-<span><span class="co">#&gt; 8            survival_shape coefficient    mortality</span></span>
-<span><span class="co">#&gt; 9            survival_shape coefficient    mortality</span></span>
-<span><span class="co">#&gt; 10           survival_shape coefficient    mortality</span></span>
-<span><span class="co">#&gt; 11         ratio_expt_death   intercept    mortality</span></span>
-<span><span class="co">#&gt; 12         ratio_expt_death coefficient    mortality</span></span>
-<span><span class="co">#&gt; 13               prob_death   intercept    mortality</span></span>
-<span><span class="co">#&gt; 14               prob_death coefficient    mortality</span></span>
-<span><span class="co">#&gt; 15            expt_maturity   intercept     maturity</span></span>
-<span><span class="co">#&gt; 16            expt_maturity coefficient     maturity</span></span>
-<span><span class="co">#&gt; 17            expt_maturity coefficient     maturity</span></span>
-<span><span class="co">#&gt; 18            expt_maturity coefficient     maturity</span></span>
-<span><span class="co">#&gt; 19           maturity_shape   intercept     maturity</span></span>
-<span><span class="co">#&gt; 20           maturity_shape coefficient     maturity</span></span>
-<span><span class="co">#&gt; 21      ratio_expt_maturity   intercept     maturity</span></span>
-<span><span class="co">#&gt; 22      ratio_expt_maturity coefficient     maturity</span></span>
-<span><span class="co">#&gt; 23      ratio_expt_maturity coefficient     maturity</span></span>
-<span><span class="co">#&gt; 24      ratio_expt_maturity coefficient     maturity</span></span>
-<span><span class="co">#&gt; 25        expt_reproduction   intercept reproduction</span></span>
-<span><span class="co">#&gt; 26        expt_reproduction coefficient reproduction</span></span>
-<span><span class="co">#&gt; 27                    pontn   intercept reproduction</span></span>
-<span><span class="co">#&gt; 28                    pontn coefficient reproduction</span></span>
-<span><span class="co">#&gt; 29    increase_death_hazard   intercept reproduction</span></span>
-<span><span class="co">#&gt; 30    increase_death_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 31    increase_death_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 32    increase_death_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 33    increase_death_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 34    increase_death_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 35       tof_reduction_date   intercept reproduction</span></span>
-<span><span class="co">#&gt; 36       tof_reduction_date coefficient reproduction</span></span>
-<span><span class="co">#&gt; 37 increase_tof_n_offspring   intercept reproduction</span></span>
-<span><span class="co">#&gt; 38 increase_tof_n_offspring coefficient reproduction</span></span>
-<span><span class="co">#&gt; 39      lin_decrease_hazard   intercept reproduction</span></span>
-<span><span class="co">#&gt; 40      lin_decrease_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 41      lin_decrease_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 42      lin_decrease_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 43      lin_decrease_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 44      lin_decrease_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 45          quad_senescence   intercept reproduction</span></span>
-<span><span class="co">#&gt; 46          quad_senescence coefficient reproduction</span></span>
-<span><span class="co">#&gt; 47     quad_decrease_hazard   intercept reproduction</span></span>
-<span><span class="co">#&gt; 48     quad_decrease_hazard coefficient reproduction</span></span>
-<span><span class="co">#&gt; 49  quad_change_n_offspring   intercept reproduction</span></span>
-<span><span class="co">#&gt; 50  quad_change_n_offspring coefficient reproduction</span></span>
-<span><span class="co">#&gt; 51          tof_n_offspring   intercept reproduction</span></span></code></pre></div>
+<span><span class="co">#&gt;                   parameter                 kind        event</span></span>
+<span><span class="co">#&gt; 1                expt_death            intercept    mortality</span></span>
+<span><span class="co">#&gt; 2                expt_death coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 3                expt_death coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 4                expt_death coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 5            survival_shape            intercept    mortality</span></span>
+<span><span class="co">#&gt; 6            survival_shape coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 7            survival_shape coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 8            survival_shape coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 9            survival_shape coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 10           survival_shape coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 11         ratio_expt_death            intercept    mortality</span></span>
+<span><span class="co">#&gt; 12         ratio_expt_death coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 13               prob_death            intercept    mortality</span></span>
+<span><span class="co">#&gt; 14               prob_death coefficient_category    mortality</span></span>
+<span><span class="co">#&gt; 15            expt_maturity            intercept     maturity</span></span>
+<span><span class="co">#&gt; 16            expt_maturity coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 17            expt_maturity coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 18            expt_maturity coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 19           maturity_shape            intercept     maturity</span></span>
+<span><span class="co">#&gt; 20           maturity_shape coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 21      ratio_expt_maturity            intercept     maturity</span></span>
+<span><span class="co">#&gt; 22      ratio_expt_maturity coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 23      ratio_expt_maturity coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 24      ratio_expt_maturity coefficient_category     maturity</span></span>
+<span><span class="co">#&gt; 25        expt_reproduction            intercept reproduction</span></span>
+<span><span class="co">#&gt; 26        expt_reproduction coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 27                    pontn            intercept reproduction</span></span>
+<span><span class="co">#&gt; 28                    pontn coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 29    increase_death_hazard            intercept reproduction</span></span>
+<span><span class="co">#&gt; 30    increase_death_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 31    increase_death_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 32    increase_death_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 33    increase_death_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 34    increase_death_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 35       tof_reduction_date            intercept reproduction</span></span>
+<span><span class="co">#&gt; 36       tof_reduction_date coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 37 increase_tof_n_offspring            intercept reproduction</span></span>
+<span><span class="co">#&gt; 38 increase_tof_n_offspring coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 39      lin_decrease_hazard            intercept reproduction</span></span>
+<span><span class="co">#&gt; 40      lin_decrease_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 41      lin_decrease_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 42      lin_decrease_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 43      lin_decrease_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 44      lin_decrease_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 45          quad_senescence            intercept reproduction</span></span>
+<span><span class="co">#&gt; 46          quad_senescence coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 47     quad_decrease_hazard            intercept reproduction</span></span>
+<span><span class="co">#&gt; 48     quad_decrease_hazard coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 49  quad_change_n_offspring            intercept reproduction</span></span>
+<span><span class="co">#&gt; 50  quad_change_n_offspring coefficient_category reproduction</span></span>
+<span><span class="co">#&gt; 51          tof_n_offspring            intercept reproduction</span></span></code></pre></div>
 </div>
 </section></section><section class="section level2"><h2 id="get-specific-results">Get specific results<a class="anchor" aria-label="anchor" href="#get-specific-results"></a>
 </h2>
 <hr>
 <p>The <code>lifelihoodResults</code> object is a list containing all the results of the analysis. We can get specific results by calling the list element.</p>
-<p>Get estimations:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">effects</span></span></code></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-b6e169172dbac0855f3e" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b6e169172dbac0855f3e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51"],["int_expt_death","eff_expt_death_geno_1","eff_expt_death_type_1","eff_expt_death_type_2","int_survival_shape","eff_survival_shape_geno_1","eff_survival_shape_type_1","eff_survival_shape_type_2","eff_survival_shape_type_1:geno_1","eff_survival_shape_type_2:geno_1","int_ratio_expt_death","eff_ratio_expt_death_geno_1","int_prob_death","eff_prob_death_geno_1","int_expt_maturity","eff_expt_maturity_geno_1","eff_expt_maturity_type_1","eff_expt_maturity_type_2","int_maturity_shape","eff_maturity_shape_geno_1","int_ratio_expt_maturity","eff_ratio_expt_maturity_geno_1","eff_ratio_expt_maturity_type_1","eff_ratio_expt_maturity_type_2","int_expt_reproduction","eff_expt_reproduction_geno_1","int_pontn","eff_pontn_geno_1","int_increase_death_hazard","eff_increase_death_hazard_geno_1","eff_increase_death_hazard_type_1","eff_increase_death_hazard_type_2","eff_increase_death_hazard_type_1:geno_1","eff_increase_death_hazard_type_2:geno_1","int_tof_reduction_date","eff_tof_reduction_date_geno_1","int_increase_tof_n_offspring","eff_increase_tof_n_offspring_geno_1","int_lin_decrease_hazard","eff_lin_decrease_hazard_geno_1","eff_lin_decrease_hazard_type_1","eff_lin_decrease_hazard_type_2","eff_lin_decrease_hazard_type_1:geno_1","eff_lin_decrease_hazard_type_2:geno_1","int_quad_senescence","eff_quad_senescence_geno_1","int_quad_decrease_hazard","eff_quad_decrease_hazard_geno_1","int_quad_change_n_offspring","eff_quad_change_n_offspring_geno_1","int_tof_n_offspring"],[-17.78869453,-2.89709225,-4.4827929,-0.30099192,6.14904518,2.9678766,3.56630436,3.43958754,-9.789043700000001,5.39234946,7.51220924,4.47236458,-19.85150681,-4.66755544,-2.03877432,1.55444499,0.66072953,-0.65520063,-6.13510368,-12.66969959,9.21718291,6.29157951,4.8206192,10.81747842,-4.45837175,-5.55089666,-7.93134379,-16.2060607,7.14071218,2.0601013,2.45327099,-3.24686063,0.05537952,0.48247027,-5.98084468,4.27436871,0.70052182,7.73467571,2.66887494,-2.84465302,-2.97177934,3.88660973,-4.75747643,-0.28970093,2.49832143,-2.71133455,-0.06403035999999999,0.09121032,1.60524468,-0.07882676,-0.26241118],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["expt_death","expt_death","expt_death","expt_death","survival_shape","survival_shape","survival_shape","survival_shape","survival_shape","survival_shape","ratio_expt_death","ratio_expt_death","prob_death","prob_death","expt_maturity","expt_maturity","expt_maturity","expt_maturity","maturity_shape","maturity_shape","ratio_expt_maturity","ratio_expt_maturity","ratio_expt_maturity","ratio_expt_maturity","expt_reproduction","expt_reproduction","pontn","pontn","increase_death_hazard","increase_death_hazard","increase_death_hazard","increase_death_hazard","increase_death_hazard","increase_death_hazard","tof_reduction_date","tof_reduction_date","increase_tof_n_offspring","increase_tof_n_offspring","lin_decrease_hazard","lin_decrease_hazard","lin_decrease_hazard","lin_decrease_hazard","lin_decrease_hazard","lin_decrease_hazard","quad_senescence","quad_senescence","quad_decrease_hazard","quad_decrease_hazard","quad_change_n_offspring","quad_change_n_offspring","tof_n_offspring"],["intercept","coefficient","coefficient","coefficient","intercept","coefficient","coefficient","coefficient","coefficient","coefficient","intercept","coefficient","intercept","coefficient","intercept","coefficient","coefficient","coefficient","intercept","coefficient","intercept","coefficient","coefficient","coefficient","intercept","coefficient","intercept","coefficient","intercept","coefficient","coefficient","coefficient","coefficient","coefficient","intercept","coefficient","intercept","coefficient","intercept","coefficient","coefficient","coefficient","coefficient","coefficient","intercept","coefficient","intercept","coefficient","intercept","coefficient","intercept"],["mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","mortality","maturity","maturity","maturity","maturity","maturity","maturity","maturity","maturity","maturity","maturity","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction","reproduction"]],"container":"<table class=\"cell-border stripe hover compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>estimation<\/th>\n      <th>stderror<\/th>\n      <th>parameter<\/th>\n      <th>kind<\/th>\n      <th>event<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"estimation","targets":2},{"name":"stderror","targets":3},{"name":"parameter","targets":4},{"name":"kind","targets":5},{"name":"event","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<p>Get maximum likelihood found:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">likelihood</span></span>
-<span><span class="co">#&gt; [1] -598.4095</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coef.html">coef</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                          int_expt_death                   eff_expt_death_geno_1 </span></span>
+<span><span class="co">#&gt;                            -17.78869453                             -2.89709225 </span></span>
+<span><span class="co">#&gt;                   eff_expt_death_type_1                   eff_expt_death_type_2 </span></span>
+<span><span class="co">#&gt;                             -4.48279290                             -0.30099192 </span></span>
+<span><span class="co">#&gt;                      int_survival_shape               eff_survival_shape_geno_1 </span></span>
+<span><span class="co">#&gt;                              6.14904518                              2.96787660 </span></span>
+<span><span class="co">#&gt;               eff_survival_shape_type_1               eff_survival_shape_type_2 </span></span>
+<span><span class="co">#&gt;                              3.56630436                              3.43958754 </span></span>
+<span><span class="co">#&gt;        eff_survival_shape_type_1:geno_1        eff_survival_shape_type_2:geno_1 </span></span>
+<span><span class="co">#&gt;                             -9.78904370                              5.39234946 </span></span>
+<span><span class="co">#&gt;                    int_ratio_expt_death             eff_ratio_expt_death_geno_1 </span></span>
+<span><span class="co">#&gt;                              7.51220924                              4.47236458 </span></span>
+<span><span class="co">#&gt;                          int_prob_death                   eff_prob_death_geno_1 </span></span>
+<span><span class="co">#&gt;                            -19.85150681                             -4.66755544 </span></span>
+<span><span class="co">#&gt;                       int_expt_maturity                eff_expt_maturity_geno_1 </span></span>
+<span><span class="co">#&gt;                             -2.03877432                              1.55444499 </span></span>
+<span><span class="co">#&gt;                eff_expt_maturity_type_1                eff_expt_maturity_type_2 </span></span>
+<span><span class="co">#&gt;                              0.66072953                             -0.65520063 </span></span>
+<span><span class="co">#&gt;                      int_maturity_shape               eff_maturity_shape_geno_1 </span></span>
+<span><span class="co">#&gt;                             -6.13510368                            -12.66969959 </span></span>
+<span><span class="co">#&gt;                 int_ratio_expt_maturity          eff_ratio_expt_maturity_geno_1 </span></span>
+<span><span class="co">#&gt;                              9.21718291                              6.29157951 </span></span>
+<span><span class="co">#&gt;          eff_ratio_expt_maturity_type_1          eff_ratio_expt_maturity_type_2 </span></span>
+<span><span class="co">#&gt;                              4.82061920                             10.81747842 </span></span>
+<span><span class="co">#&gt;                   int_expt_reproduction            eff_expt_reproduction_geno_1 </span></span>
+<span><span class="co">#&gt;                             -4.45837175                             -5.55089666 </span></span>
+<span><span class="co">#&gt;                               int_pontn                        eff_pontn_geno_1 </span></span>
+<span><span class="co">#&gt;                             -7.93134379                            -16.20606070 </span></span>
+<span><span class="co">#&gt;               int_increase_death_hazard        eff_increase_death_hazard_geno_1 </span></span>
+<span><span class="co">#&gt;                              7.14071218                              2.06010130 </span></span>
+<span><span class="co">#&gt;        eff_increase_death_hazard_type_1        eff_increase_death_hazard_type_2 </span></span>
+<span><span class="co">#&gt;                              2.45327099                             -3.24686063 </span></span>
+<span><span class="co">#&gt; eff_increase_death_hazard_type_1:geno_1 eff_increase_death_hazard_type_2:geno_1 </span></span>
+<span><span class="co">#&gt;                              0.05537952                              0.48247027 </span></span>
+<span><span class="co">#&gt;                  int_tof_reduction_date           eff_tof_reduction_date_geno_1 </span></span>
+<span><span class="co">#&gt;                             -5.98084468                              4.27436871 </span></span>
+<span><span class="co">#&gt;            int_increase_tof_n_offspring     eff_increase_tof_n_offspring_geno_1 </span></span>
+<span><span class="co">#&gt;                              0.70052182                              7.73467571 </span></span>
+<span><span class="co">#&gt;                 int_lin_decrease_hazard          eff_lin_decrease_hazard_geno_1 </span></span>
+<span><span class="co">#&gt;                              2.66887494                             -2.84465302 </span></span>
+<span><span class="co">#&gt;          eff_lin_decrease_hazard_type_1          eff_lin_decrease_hazard_type_2 </span></span>
+<span><span class="co">#&gt;                             -2.97177934                              3.88660973 </span></span>
+<span><span class="co">#&gt;   eff_lin_decrease_hazard_type_1:geno_1   eff_lin_decrease_hazard_type_2:geno_1 </span></span>
+<span><span class="co">#&gt;                             -4.75747643                             -0.28970093 </span></span>
+<span><span class="co">#&gt;                     int_quad_senescence              eff_quad_senescence_geno_1 </span></span>
+<span><span class="co">#&gt;                              2.49832143                             -2.71133455 </span></span>
+<span><span class="co">#&gt;                int_quad_decrease_hazard         eff_quad_decrease_hazard_geno_1 </span></span>
+<span><span class="co">#&gt;                             -0.06403036                              0.09121032 </span></span>
+<span><span class="co">#&gt;             int_quad_change_n_offspring      eff_quad_change_n_offspring_geno_1 </span></span>
+<span><span class="co">#&gt;                              1.60524468                             -0.07882676 </span></span>
+<span><span class="co">#&gt;                     int_tof_n_offspring </span></span>
+<span><span class="co">#&gt;                             -0.26241118</span></span>
+<span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        int_expt_death eff_expt_death_geno_1 eff_expt_death_type_1 </span></span>
+<span><span class="co">#&gt;           -17.7886945            -2.8970923            -4.4827929 </span></span>
+<span><span class="co">#&gt; eff_expt_death_type_2 </span></span>
+<span><span class="co">#&gt;            -0.3009919</span></span>
+<span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"survival_shape"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;               int_survival_shape        eff_survival_shape_geno_1 </span></span>
+<span><span class="co">#&gt;                         6.149045                         2.967877 </span></span>
+<span><span class="co">#&gt;        eff_survival_shape_type_1        eff_survival_shape_type_2 </span></span>
+<span><span class="co">#&gt;                         3.566304                         3.439588 </span></span>
+<span><span class="co">#&gt; eff_survival_shape_type_1:geno_1 eff_survival_shape_type_2:geno_1 </span></span>
+<span><span class="co">#&gt;                        -9.789044                         5.392349</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1298.819</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1327.631</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -598.4095</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        [,1]</span></span>
+<span><span class="co">#&gt; 1 -22.27149</span></span>
+<span><span class="co">#&gt; 2 -18.08969</span></span>
+<span><span class="co">#&gt; 3 -20.68579</span></span>
+<span><span class="co">#&gt; 4 -20.68579</span></span>
+<span><span class="co">#&gt; 5 -20.68579</span></span>
+<span><span class="co">#&gt; 6 -22.27149</span></span>
+<span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          [,1]</span></span>
+<span><span class="co">#&gt; 1 0.001000009</span></span>
+<span><span class="co">#&gt; 2 0.001000557</span></span>
+<span><span class="co">#&gt; 3 0.001000042</span></span>
+<span><span class="co">#&gt; 4 0.001000042</span></span>
+<span><span class="co">#&gt; 5 0.001000042</span></span>
+<span><span class="co">#&gt; 6 0.001000009</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="next-step">Next step<a class="anchor" aria-label="anchor" href="#next-step"></a>
 </h2>

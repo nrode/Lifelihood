@@ -9,7 +9,7 @@ You don't need to fit with lifelihood() to use this
 function, only to retrieve a lifelihood data object
 with lifelihoodData()
 If you want more control over the style of the graph,
-use the compute_mortality_rate() function to retrieve data.
+use the compute_observed_mortality_rate() function to retrieve data.
 Convenient function used in plot_observed_mortality_rate()
 and plot_fitted_mortality_rate()."><meta property="og:description" content="Useful function for creating a good-quality line graph
 of changes in the predicted mortality rate.
@@ -21,7 +21,7 @@ You don't need to fit with lifelihood() to use this
 function, only to retrieve a lifelihood data object
 with lifelihoodData()
 If you want more control over the style of the graph,
-use the compute_mortality_rate() function to retrieve data.
+use the compute_observed_mortality_rate() function to retrieve data.
 Convenient function used in plot_observed_mortality_rate()
 and plot_fitted_mortality_rate()."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -84,14 +84,14 @@ and plot_fitted_mortality_rate()."></head><body>
     <p>Useful function for creating a good-quality line graph
 of changes in the predicted mortality rate.</p>
 <p>If you want more control over the style of the graph,
-use the <code><a href="pred_mortality_rate.html">pred_mortality_rate()</a></code> function to retrieve data.</p>
+use the <code>pred_mortality_rate()</code> function to retrieve data.</p>
 <p>Useful function for creating a good-quality line graph
 of changes in the empirical mortality rate.</p>
 <p>You don't need to fit with <code><a href="lifelihood.html">lifelihood()</a></code> to use this
 function, only to retrieve a lifelihood data object
 with <code><a href="lifelihoodData.html">lifelihoodData()</a></code></p>
 <p>If you want more control over the style of the graph,
-use the <code><a href="compute_mortality_rate.html">compute_mortality_rate()</a></code> function to retrieve data.</p>
+use the <code><a href="compute_observed_mortality_rate.html">compute_observed_mortality_rate()</a></code> function to retrieve data.</p>
 <p>Convenient function used in <code>plot_observed_mortality_rate()</code>
 and <code>plot_fitted_mortality_rate()</code>.</p>
     </div>
@@ -143,11 +143,7 @@ and <code>plot_fitted_mortality_rate()</code>.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-lifelihoodresults">lifelihoodResults<a class="anchor" aria-label="anchor" href="#arg-lifelihoodresults"></a></dt>
-<dd><p>output of <code><a href="lifelihood.html">lifelihood()</a></code></p></dd>
-
-
-<dt id="arg-interval-width">interval_width<a class="anchor" aria-label="anchor" href="#arg-interval-width"></a></dt>
+<dl><dt id="arg-interval-width">interval_width<a class="anchor" aria-label="anchor" href="#arg-interval-width"></a></dt>
 <dd><p>The interval width used to calculate the
 mortality rate. For instance, if the time unit for deaths in
 the original dataset is days and <code>interval_width</code> is set to 10,

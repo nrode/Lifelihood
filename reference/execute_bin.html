@@ -77,6 +77,11 @@
 <span>  <span class="va">seed2</span>,</span>
 <span>  <span class="va">seed3</span>,</span>
 <span>  <span class="va">seed4</span>,</span>
+<span>  <span class="va">ratiomax</span>,</span>
+<span>  <span class="va">tc</span>,</span>
+<span>  <span class="va">tinf</span>,</span>
+<span>  <span class="va">sub_interval</span>,</span>
+<span>  <span class="va">path_continuous_var</span>,</span>
 <span>  <span class="va">ntr</span>,</span>
 <span>  <span class="va">nst</span>,</span>
 <span>  <span class="va">To</span>,</span>
@@ -144,6 +149,22 @@
 
 <dt id="arg-seed-">seed4<a class="anchor" aria-label="anchor" href="#arg-seed-"></a></dt>
 <dd><p>4th seed number used to reproduce results (same seed = same results).</p></dd>
+
+
+<dt id="arg-ratiomax">ratiomax<a class="anchor" aria-label="anchor" href="#arg-ratiomax"></a></dt>
+<dd><p>facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque</p></dd>
+
+
+<dt id="arg-tc">tc<a class="anchor" aria-label="anchor" href="#arg-tc"></a></dt>
+<dd><p>critical time for the increase in juvenile survival mortality compared to later survival</p></dd>
+
+
+<dt id="arg-tinf">tinf<a class="anchor" aria-label="anchor" href="#arg-tinf"></a></dt>
+<dd><p>maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)</p></dd>
+
+
+<dt id="arg-sub-interval">sub_interval<a class="anchor" aria-label="anchor" href="#arg-sub-interval"></a></dt>
+<dd><p>sub-interval used to integrate the left and right censoring dates of each event</p></dd>
 
 
 <dt id="arg-ntr">ntr<a class="anchor" aria-label="anchor" href="#arg-ntr"></a></dt>
