@@ -41,7 +41,7 @@ jobs:
       - name: Build pkgdown site
         run: |
           Rscript -e 'devtools::install()'
-          Rscript -e 'pkgdown::build_site(quiet=FALSE)'
+          Rscript -e 'pkgdown::build_site()'
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
