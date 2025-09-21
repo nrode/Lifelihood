@@ -37,3 +37,8 @@ devtools::install_github("nrode/Lifelihood")
 
 - ❌ Visualization
 - ❌ Simulation with trade-offs
+
+### Nice to have
+
+- Better workflow for compilation
+- Better error messages
