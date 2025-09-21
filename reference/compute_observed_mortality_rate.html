@@ -103,12 +103,13 @@ at the beggining of a time interval for computing the observed mortality rate</p
 
 
 <dt id="arg-groupby">groupby<a class="anchor" aria-label="anchor" href="#arg-groupby"></a></dt>
-<dd><p>covariate(s) over which mortality rate should be
+<dd><p>vector of covariate(s) over which mortality rate should be
 computed (default is <code>NULL</code>).</p><ul><li><p>If NULL, calculates a single overall mortality rate.</p></li>
 <li><p>If <code>"all"</code>, calculates mortality rate over each combination
 of covariates listed in the<code>lifelihoodData</code> object provided.</p></li>
 <li><p>Otherwise must be a character (<code>"covariate1"</code>) or a
-character vector (<code>c("covariate1", "covariate2")</code>).</p></li>
+character vector (<code>c("covariate1", "covariate2")</code>).
+Note that the function will consider continuous covariates as factors</p></li>
 </ul></dd>
 
 </dl></div>
