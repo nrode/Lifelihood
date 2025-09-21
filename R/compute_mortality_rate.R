@@ -307,21 +307,24 @@ compute_observed_mortality_rate <- function(
 #' Check that `groupby` has an expected value, and returns it
 #'
 #' @inheritParams lifelihood
-#' @param groupby covariate(s) over which mortality rate should be
+#' @param groupby vector of covariate(s) over which mortality rate should be
 #' computed (default is `NULL`).
 #' - If NULL, calculates a single overall mortality rate.
 #' - If `"all"`, calculates mortality rate over each combination
 #' of covariates listed in the`lifelihoodData` object provided.
 #' - Otherwise must be a character (`"covariate1"`) or a
 #' character vector (`c("covariate1", "covariate2")`).
-#'
+#' Note that the function will consider continuous covariates as factors
+#' 
 #' @returns The valid `groupby` value
 #'
 #' @keywords internal
 validate_groupby_arg <- function(lifelihoodData, groupby) {
   if (is.null(groupby)) {
     return(NULL)
-  } else if (length(groupby) > 1) {
+  } else if (groupby == "all") {
+    return(lifelihoodData$covariates)
+  } else {
     covariates <- lifelihoodData$covariates
 
     if (!all(groupby %in% covariates)) {
@@ -335,11 +338,7 @@ validate_groupby_arg <- function(lifelihoodData, groupby) {
         paste0(covariates, collapse = ", ")
       )
     } else {
-      return(covariates)
+      return(groupby)
     }
-  } else if (groupby == "all") {
-    return(lifelihoodData$covariates)
-  } else {
-    return(groupby)
   }
 }

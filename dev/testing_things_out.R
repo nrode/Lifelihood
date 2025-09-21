@@ -55,7 +55,7 @@ lifelihoodResults <- results
 plot_observed_mortality_rate(
   lifelihoodData,
   interval_width = 15,
-  groupby = "all",
+  groupby = c("par", "geno"),
   use_facet = TRUE
 )
 

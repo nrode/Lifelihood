@@ -9,7 +9,7 @@ validate_groupby_arg(lifelihoodData, groupby)
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
-\item{groupby}{covariate(s) over which mortality rate should be
+\item{groupby}{vector of covariate(s) over which mortality rate should be
 computed (default is \code{NULL}).
 \itemize{
 \item If NULL, calculates a single overall mortality rate.
@@ -17,6 +17,7 @@ computed (default is \code{NULL}).
 of covariates listed in the\code{lifelihoodData} object provided.
 \item Otherwise must be a character (\code{"covariate1"}) or a
 character vector (\code{c("covariate1", "covariate2")}).
+Note that the function will consider continuous covariates as factors
 }}
 }
 \value{
