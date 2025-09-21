@@ -69,7 +69,6 @@ prediction(
 )
 
 
-prediction(results, parameter_name = "pontn")
 prediction(results, parameter_name = "n_offspring")
 prediction(results, parameter_name = "expt_death") |> head()
 simulate_life_history(results) |> head()
@@ -77,15 +76,13 @@ simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
 
-
-logLik(results)
 AIC(results)
 BIC(results)
-results$effects
 coeff(results, "expt_death")
 coeff(results, "survival_shape")
-
+logLik(results)
 vcov(results)
+results$effects
 results$mcmc
 
 newdata <- expand.grid(
@@ -102,7 +99,7 @@ rate_df <- compute_fitted_mortality_rate(
   max_time = NULL,
   groupby = c("spore", "par")
 )
-rate_df[rate_df$Group=="spore=1.par=0",]
+
 plot_fitted_mortality_rate(
   lifelihoodResults = results,
   interval_width = 10,
@@ -110,11 +107,8 @@ plot_fitted_mortality_rate(
   max_time = NULL,
   xlab = "Time",
   ylab = "Mortality Rate",
-  groupby = c("spore", "par"),
-  use_facet = TRUE
+  groupby = c("spore", "par")
 )
-df$par[df$spore==0]
-### Old stuff
 prediction(results, "expt_death", type = "response")
 prediction(results, "survival_shape", type = "response")
 
