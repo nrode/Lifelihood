@@ -7,7 +7,7 @@ mortality:
 reproduction:
   expt_reproduction: par + spore
   reproduction_shape: 1
-  n_offspring: 1
+  n_offspring: not_fitted
   increase_death_hazard: not_fitted
   tof_reduction_date: not_fitted
   increase_tof_n_offspring: not_fitted
