@@ -55,12 +55,18 @@ lifelihoodResults <- results
 plot_observed_mortality_rate(
   lifelihoodData,
   interval_width = 15,
-  groupby = c("par", "geno"),
+  groupby = c("spore", "par"),
   use_facet = TRUE
 )
 
+
+results$effects
 coef(results)
-object <- results
+coeff(results, "expt_death")
+coeff(results, "survival_shape")
+vcov(results)
+results$mcmc
+
 prediction(
   results,
   parameter_name = "expt_death",
@@ -69,21 +75,16 @@ prediction(
 )
 
 
-prediction(results, parameter_name = "n_offspring")
 prediction(results, parameter_name = "expt_death") |> head()
+prediction(results, parameter_name = "n_offspring") |> head()
 simulate_life_history(results) |> head()
 simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
 
+logLik(results)
 AIC(results)
 BIC(results)
-coeff(results, "expt_death")
-coeff(results, "survival_shape")
-logLik(results)
-vcov(results)
-results$effects
-results$mcmc
 
 newdata <- expand.grid(
   geno = levels(lifelihoodData$df$geno),
@@ -107,8 +108,12 @@ plot_fitted_mortality_rate(
   max_time = NULL,
   xlab = "Time",
   ylab = "Mortality Rate",
-  groupby = c("spore", "par")
+  groupby = c("spore", "par"),
+  use_facet = TRUE
 )
+
+
+### Old stuff
 prediction(results, "expt_death", type = "response")
 prediction(results, "survival_shape", type = "response")
 

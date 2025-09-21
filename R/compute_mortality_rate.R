@@ -60,6 +60,16 @@ compute_fitted_mortality_rate <- function(
       setdiff("intercept")
   }
   
+  if (!all(groupby %in% covar)) {
+    missing_vars <- groupby[!groupby %in% covar]
+    stop(
+      "`groupby` argument contains invalid values. ",
+      paste0("Covariate(s) `", paste0(missing_vars, collapse = ", "), "` not fitted for event `", event, "` in the `lifelihoodResults` object provided"),
+      ".\n",
+      paste0("Fitted covariate(s) for`", event,"` event: ",
+      paste0(covar, collapse = ", "))
+    )
+  }
   if (is.null(max_time)) {
     sorted_values <- sort(
       unique(lifelihoodData$df[[end_col]]),
@@ -255,7 +265,7 @@ compute_observed_mortality_rate <- function(
       dplyr::arrange(across(all_of(groupby))) |>
       dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
                            .names = "{.col}_tmp")) |> ## Add the name of the columns to the group
-      tidyr::unite("Group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = TRUE)|>
+      tidyr::unite("group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = TRUE)|>
       dplyr::mutate(group=as.factor(group))
     
     groups <- levels(newdata$group)
