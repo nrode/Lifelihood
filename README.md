@@ -21,8 +21,19 @@ devtools::install_github("nrode/Lifelihood")
 
 <br>
 <br>
+<br>
 
 ## State
+
+### Statistics
+
+~5000 lines of R code
+
+~6000 lines of pascal code
+
+9 vignettes (3 for internal development)
+
+2 built-in datasets (Pierrick + fake sample)
 
 ### Works
 
@@ -32,11 +43,14 @@ devtools::install_github("nrode/Lifelihood")
 - ✅ Configure what models to fit
 - ✅ Configure parameters bounds
 - ✅ Simulation of individual events
+- ✅ Documentation website updates automatically
 
 ### Still needs work
 
 - ❌ Visualization
 - ❌ Simulation with trade-offs
+- ❌ Group by group
+- ❌ Unit tests
 
 ### Nice to have
 
