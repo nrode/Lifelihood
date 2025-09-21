@@ -95,7 +95,12 @@ compute_fitted_mortality_rate <- function(
   }
   
   if (!is.null(groupby)) {
-    newdata$Group <- interaction(newdata[groupby])
+    newdata <- newdata |>
+      dplyr::arrange(across(all_of(groupby))) |>
+      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .))) |>
+      tidyr::unite("Group", all_of(groupby), sep = ".", remove = FALSE)|>
+      dplyr::mutate(Group=as.factor(Group))
+ 
    } else {
     newdata$Group <- "Overall"
   }
@@ -238,8 +243,13 @@ compute_observed_mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
-    newdata$group <- interaction(newdata[groupby])
-    groups <- sort(unique(newdata$group))
+    newdata <- newdata |>
+      dplyr::arrange(across(all_of(groupby))) |>
+      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .))) |>
+      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)|>
+      dplyr::mutate(group=as.factor(group))
+    
+    groups <- levels(newdata$group)
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"
@@ -322,7 +332,7 @@ compute_observed_mortality_rate <- function(
 validate_groupby_arg <- function(lifelihoodData, groupby) {
   if (is.null(groupby)) {
     return(NULL)
-  } else if (groupby == "all") {
+  } else if (length(groupby) == 1 && groupby == "all") {
     return(lifelihoodData$covariates)
   } else {
     covariates <- lifelihoodData$covariates
