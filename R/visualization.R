@@ -28,7 +28,6 @@ plot_fitted_mortality_rate <- function(
   use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
-  title = "Mortality rate over time",
   xlab = "Time",
   ylab = "Mortality Rate"
 ) {
@@ -49,7 +48,6 @@ plot_fitted_mortality_rate <- function(
     use_facet = use_facet,
     log_x = log_x,
     log_y = log_y,
-    title = title,
     xlab = xlab,
     ylab = ylab
   )
@@ -89,7 +87,6 @@ plot_observed_mortality_rate <- function(
   use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
-  title = "Mortality rate over time",
   xlab = "Time",
   ylab = "Mortality Rate"
 ) {
@@ -110,7 +107,6 @@ plot_observed_mortality_rate <- function(
     use_facet = use_facet,
     log_x = log_x,
     log_y = log_y,
-    title = title,
     xlab = xlab,
     ylab = ylab
   )
@@ -139,9 +135,8 @@ plot_mortality_rate <- function(
   max_time,
   groupby,
   use_facet,
-  log_x,
-  log_y,
-  title,
+  log_x=FALSE,
+  log_y=FALSE,
   xlab = "Time",
   ylab = "Mortality rate"
 ) {
@@ -167,7 +162,6 @@ plot_mortality_rate <- function(
   plot <- plot +
     ggplot2::geom_point() +
     ggplot2::labs(
-      title = title,
       x = xlab,
       y = ylab
     ) +

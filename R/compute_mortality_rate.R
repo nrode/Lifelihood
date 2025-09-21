@@ -95,18 +95,26 @@ compute_fitted_mortality_rate <- function(
   }
   
   if (!is.null(groupby)) {
+    ## Remove interactions not present in original dataset
     newdata <- newdata |>
-      dplyr::arrange(across(all_of(groupby))) |>
-      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .))) |>
-      tidyr::unite("Group", all_of(groupby), sep = ".", remove = FALSE)|>
-      dplyr::mutate(Group=as.factor(Group))
+      dplyr::mutate(Group_tmp=interaction(newdata[groupby]))|>
+      dplyr::filter(Group_tmp%in%unique(interaction(lifelihoodData$df[groupby])))|>
+      dplyr::select(-Group_tmp)
+    
+    newdata <- newdata |>
+     dplyr::arrange(across(all_of(groupby))) |>
+      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
+                           .names = "{.col}_tmp")) |>
+      tidyr::unite("Group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = TRUE)
  
+   
+    
    } else {
     newdata$Group <- "Overall"
   }
 
   newdata$Group <- as.factor(newdata$Group)
-
+  
   if (event == "mortality") {
     parameter_name1 <- "expt_death"
     parameter_name2 <- "survival_shape"
@@ -245,8 +253,9 @@ compute_observed_mortality_rate <- function(
   if (!is.null(groupby)) {
     newdata <- newdata |>
       dplyr::arrange(across(all_of(groupby))) |>
-      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .))) |>
-      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)|>
+      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
+                           .names = "{.col}_tmp")) |> ## Add the name of the columns to the group
+      tidyr::unite("Group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = TRUE)|>
       dplyr::mutate(group=as.factor(group))
     
     groups <- levels(newdata$group)

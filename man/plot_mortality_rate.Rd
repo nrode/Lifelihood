@@ -15,7 +15,6 @@ plot_fitted_mortality_rate(
   use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
-  title = "Mortality rate over time",
   xlab = "Time",
   ylab = "Mortality Rate"
 )
@@ -29,7 +28,6 @@ plot_observed_mortality_rate(
   use_facet = FALSE,
   log_x = FALSE,
   log_y = FALSE,
-  title = "Mortality rate over time",
   xlab = "Time",
   ylab = "Mortality Rate"
 )
@@ -39,9 +37,8 @@ plot_mortality_rate(
   max_time,
   groupby,
   use_facet,
-  log_x,
-  log_y,
-  title,
+  log_x = FALSE,
+  log_y = FALSE,
   xlab = "Time",
   ylab = "Mortality rate"
 )
