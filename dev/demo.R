@@ -49,7 +49,7 @@ AIC(results)
 BIC(results)
 logLik(results)
 
-prediction(results, parameter_name = "n_offspring")
+prediction(results, parameter_name = "n_offspring") |> head()
 prediction(results, parameter_name = "expt_death") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
 
@@ -57,3 +57,14 @@ simulate_life_history(results) |> head()
 simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
+
+plot_fitted_mortality_rate(
+  lifelihoodResults = results,
+  interval_width = 10,
+  newdata = NULL,
+  max_time = NULL,
+  xlab = "Time",
+  ylab = "Mortality Rate",
+  groupby = c("spore", "par"),
+  use_facet = TRUE
+)
