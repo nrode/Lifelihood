@@ -142,7 +142,7 @@ simulate_event <- function(object, ev, newdata) {
 #'
 #' @param object A fitted `lifelihoodResults` object.
 #' @param event Character string specifying the event(s) to simulate.
-#'   Must be one of `"mortality"`, `"reproduction"`, `"maturity"`, or `"all"`.
+#'   Must be one of `"mortality"`, `"maturity"`, or `"all"` (event=`"reproduction"` is equivalent to `"all"` as maturity and mortality are needed to simulate reproduction events).
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
@@ -166,7 +166,7 @@ simulate_life_history <- function(
 
   event <- match.arg(event, c("all", "mortality", "reproduction", "maturity"))
 
-  events <- if (event == "all") {
+  events <- if (event == "all"| event == "reproduction") {
     c("maturity", "reproduction", "mortality")
   } else {
     event
@@ -192,6 +192,7 @@ simulate_life_history <- function(
   }
 
   if ("reproduction" %in% events) {
+    ## Compute actual age for each reproduction event (=age at maturity + sum over all previous reproduction events)
     df_sims_up <- df_sims |>
       mutate(clutch_1 = clutch_1 + maturity) |>
       relocate(maturity, .before = clutch_1)
@@ -220,6 +221,7 @@ simulate_life_history <- function(
     df_sims_up_na <- df_sims_up_na |> select(-all_of(remove_cols_all))
 
     if (object$lifelihoodData$matclutch) {
+      ## Remove maturity which is not observed when matchcluth is TRUE
       df_sims_up_na <- df_sims_up_na |>
         select(-maturity) |>
         rename(maturity = clutch_1, n_offspring_maturity = n_offspring_clutch_1)

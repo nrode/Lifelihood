@@ -15,7 +15,7 @@ simulate_life_history(
 \item{object}{A fitted \code{lifelihoodResults} object.}
 
 \item{event}{Character string specifying the event(s) to simulate.
-Must be one of \code{"mortality"}, \code{"reproduction"}, \code{"maturity"}, or \code{"all"}.
+Must be one of \code{"mortality"}, \code{"maturity"}, or \code{"all"} (event=\code{"reproduction"} is equivalent to \code{"all"} as maturity and mortality are needed to simulate reproduction events).
 Default is \code{"all"}, which simulates all fitted events.}
 
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
