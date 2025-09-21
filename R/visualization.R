@@ -1,11 +1,11 @@
-#' @title Display evolution of predicted mortality rate
+#' @title Display change in predicted mortality rate with age
 #'
 #' @description
 #' Useful function for creating a good-quality line graph
-#' of changes in the predicted mortality rate.
+#' of changes in predicted mortality rate with age.
 #'
 #' If you want more control over the style of the graph,
-#' use the [pred_mortality_rate()] function to retrieve data.
+#' use the [compute_fitted_mortality_rate()] function to directly retrieve the predicted data.
 #'
 #' @name plot_mortality_rate
 #'
@@ -13,6 +13,9 @@
 #' @inheritParams plot_mortality_rate
 #' @inheritParams prediction
 #' @inheritParams validate_groupby_arg
+#' @param add_observed_mortality_rate Boolean to add the observed mortality rate to the graph (default=TRUE)
+#' @param min_sample_size The minimum number of individuals alive
+#' at the beggining of a time interval for computing the observed mortality rate (only used if add_observed_mortality_rate=TRUE, default=1)
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
 #'
@@ -23,6 +26,8 @@ plot_fitted_mortality_rate <- function(
   lifelihoodResults,
   interval_width,
   newdata = NULL,
+  add_observed_mortality_rate=TRUE,
+  min_sample_size = 1,
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
@@ -41,9 +46,10 @@ plot_fitted_mortality_rate <- function(
     groupby = groupby
   )
   
-  plot_mortality_rate(
+pfitted <- plot_mortality_rate(
     rate_df = rate_df,
     max_time = max_time,
+    type = "lines",
     groupby = groupby,
     use_facet = use_facet,
     log_x = log_x,
@@ -51,6 +57,28 @@ plot_fitted_mortality_rate <- function(
     xlab = xlab,
     ylab = ylab
   )
+
+if(add_observed_mortality_rate){
+  
+  obs_rate_df <- compute_observed_mortality_rate(
+    lifelihoodData=lifelihoodResults$lifelihoodData,
+    interval_width=interval_width,
+    max_time = max_time,
+    groupby = groupby,
+    min_sample_size = min_sample_size
+  )
+  if(!is.null(groupby)){
+    
+    pfitted <- pfitted +
+      geom_point(data=obs_rate_df, aes(x=Mean_Interval, y=MortalityRate,  color = Group))
+   
+  }else{
+    pfitted <- pfitted +
+      geom_point(obs_rate_df, aes(x=Mean_Interval, y=MortalityRate))
+  }
+
+}
+pfitted
 }
 
 #' @title Display evolution of empirical mortality rate
@@ -100,7 +128,7 @@ plot_observed_mortality_rate <- function(
     min_sample_size = min_sample_size
   )
 
-  plot_mortality_rate(
+pobs <- plot_mortality_rate(
     rate_df = rate_df,
     max_time = max_time,
     groupby = groupby,
@@ -110,6 +138,7 @@ plot_observed_mortality_rate <- function(
     xlab = xlab,
     ylab = ylab
   )
+pobs
 }
 
 #' @title Plot mortality rate
@@ -121,6 +150,7 @@ plot_observed_mortality_rate <- function(
 #' @inheritParams compute_observed_mortality_rate
 #' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
+#' @param type The type of symbol to be used for the plot (either of "points" or 'lines") 
 #' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale
 #' @param log_y Determine whether the y-axis should be displayed on a logarithmic scale
 #' @param use_facet Use facet_wrap to plot one panel per group (default=FALSE)
@@ -133,6 +163,7 @@ plot_observed_mortality_rate <- function(
 plot_mortality_rate <- function(
   rate_df,
   max_time,
+  type = c("points", "lines"),
   groupby,
   use_facet,
   log_x=FALSE,
@@ -140,8 +171,10 @@ plot_mortality_rate <- function(
   xlab = "Time",
   ylab = "Mortality rate"
 ) {
+  type <- match.arg(type)
+  
   if (!is.null(groupby)) {
-    plot <- ggplot2::ggplot(
+    p <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
         x = as.numeric(as.character(Mean_Interval)),
@@ -150,7 +183,7 @@ plot_mortality_rate <- function(
       )
     )
   } else {
-    plot <- ggplot2::ggplot(
+    p <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
         x = as.numeric(as.character(Mean_Interval)),
@@ -159,8 +192,13 @@ plot_mortality_rate <- function(
     )
   }
 
-  plot <- plot +
-    ggplot2::geom_point() +
+  if (type == "points") {
+    p <- p + geom_point()
+  } else if (type == "lines") {
+    p <- p + geom_line()
+  }
+  
+  plot <- p +
     ggplot2::labs(
       x = xlab,
       y = ylab
@@ -184,5 +222,5 @@ plot_mortality_rate <- function(
     plot <- plot + facet_wrap(vars(Group))
   }
 
-  plot
+  return(plot)
 }
