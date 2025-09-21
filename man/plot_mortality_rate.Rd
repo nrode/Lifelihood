@@ -4,12 +4,14 @@
 \alias{plot_mortality_rate}
 \alias{plot_fitted_mortality_rate}
 \alias{plot_observed_mortality_rate}
-\title{Display evolution of predicted mortality rate}
+\title{Display change in predicted mortality rate with age}
 \usage{
 plot_fitted_mortality_rate(
   lifelihoodResults,
   interval_width,
   newdata = NULL,
+  add_observed_mortality_rate = TRUE,
+  min_sample_size = 1,
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
@@ -35,6 +37,7 @@ plot_observed_mortality_rate(
 plot_mortality_rate(
   rate_df,
   max_time,
+  type = c("points", "lines"),
   groupby,
   use_facet,
   log_x = FALSE,
@@ -50,6 +53,11 @@ the original dataset is days and \code{interval_width} is set to 10,
 the mortality rate will be calculated every 10 days for each group.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
+
+\item{add_observed_mortality_rate}{Boolean to add the observed mortality rate to the graph (default=TRUE)}
+
+\item{min_sample_size}{The minimum number of individuals alive
+at the beggining of a time interval for computing the observed mortality rate (only used if add_observed_mortality_rate=TRUE, default=1)}
 
 \item{max_time}{The maximum time for calculating the mortality
 rate. If set to NULL, the time of the last observed death is used.}
@@ -73,10 +81,9 @@ Note that the function will consider continuous covariates as factors
 
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
-\item{min_sample_size}{The minimum number of individuals alive
-at the beggining of a time interval for computing the observed mortality rate}
-
 \item{rate_df}{Dataframe with mortality rate, obtained via \code{\link[=mortality_rate_data]{mortality_rate_data()}}}
+
+\item{type}{The type of symbol to be used for the plot (either of "points" or 'lines")}
 }
 \value{
 a ggplot2 plot
@@ -87,10 +94,10 @@ a ggplot2 plot
 }
 \description{
 Useful function for creating a good-quality line graph
-of changes in the predicted mortality rate.
+of changes in predicted mortality rate with age.
 
 If you want more control over the style of the graph,
-use the \code{\link[=pred_mortality_rate]{pred_mortality_rate()}} function to retrieve data.
+use the \code{\link[=compute_fitted_mortality_rate]{compute_fitted_mortality_rate()}} function to directly retrieve the predicted data.
 
 Useful function for creating a good-quality line graph
 of changes in the empirical mortality rate.

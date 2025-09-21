@@ -6,7 +6,7 @@ library(tidyverse)
 df <- datapierrick |>
   as_tibble() |>
   mutate(
-    par = as.numeric(par),
+    par = as.factor(par),
     geno = as.factor(geno),
     spore = as.factor(spore)
   )
@@ -58,13 +58,15 @@ simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
 
+## PLot fitted/observed mortality rates
 plot_fitted_mortality_rate(
   lifelihoodResults = results,
   interval_width = 10,
+  add_observed_mortality_rate = TRUE,
+  groupby = c("spore", "par"),
+  use_facet = FALSE,
   newdata = NULL,
   max_time = NULL,
   xlab = "Time",
-  ylab = "Mortality Rate",
-  groupby = c("spore", "par"),
-  use_facet = TRUE
+  ylab = "Mortality Rate"
 )

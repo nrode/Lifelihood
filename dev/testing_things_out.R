@@ -14,9 +14,9 @@ df <- fakesample |>
 df <- datapierrick |>
   as_tibble() |>
   mutate(
-    par = as.numeric(par),
+    par = as.factor(par),
     geno = as.factor(geno),
-    spore = as.factor(spore)
+    spore = as.numeric(spore)
   )
 
 generate_clutch_vector <- function(N) {
@@ -104,12 +104,14 @@ rate_df <- compute_fitted_mortality_rate(
 plot_fitted_mortality_rate(
   lifelihoodResults = results,
   interval_width = 10,
+  add_observed_mortality_rate = TRUE,
+  groupby = c("spore", "par"),
+  use_facet = TRUE,
   newdata = NULL,
   max_time = NULL,
   xlab = "Time",
-  ylab = "Mortality Rate",
-  groupby = c("spore", "par"),
-  use_facet = TRUE
+  ylab = "Mortality Rate"
+  
 )
 
 
