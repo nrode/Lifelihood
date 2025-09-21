@@ -180,10 +180,6 @@ while not eof(f1) do
               End; //of treating that individual
    end;
 
-(*//creation des sous intervales
- for i:= 0 to nb_group_file - 1 do
- for j := 0 to group[i].nb_ind - 1 do ghv(i,j);       *)
-
 // Generer les non-pontes
 Gnop;
 
@@ -238,7 +234,7 @@ with FD.paramdescript[i] do
 
 if fitness_repar=1 then
 begin
-  with FD.paramdescript[10] do        //pontn est le 11 param ds custom.txt
+  with FD.paramdescript[10] do        //n_offspring est le 11 param ds custom.txt
   begin
     readln(fc, check);
     lal.DelimitedText := check;

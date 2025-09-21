@@ -142,7 +142,7 @@ default_bounds_df <- function(
       min = clutch_shape_min,
       max = clutch_shape_max
     ),
-    pontn = c(name = "pontn", min = 1, max = 50),
+    n_offspring = c(name = "n_offspring", min = 1, max = 50),
     increase_death_hazard = c(
       name = "increase_death_hazard",
       min = 1e-05,
