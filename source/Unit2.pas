@@ -1638,7 +1638,7 @@ begin
   else
     with FD.paramdescript[10] do
     begin
-      Name := 'pontn';
+      Name := 'n_offspring';
       minBound := 1;
       maxBound := 50;    //attention a cette limite
       //   value := 20;

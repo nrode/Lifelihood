@@ -1,4 +1,5 @@
 library(lifelihood)
+devtools::load_all()
 library(tidyverse)
 
 
@@ -43,12 +44,13 @@ results <- lifelihood(
 coef(results)
 coeff(results, "expt_death")
 coeff(results, "survival_shape")
+coeff(results, "n_offspring")
 AIC(results)
 BIC(results)
 logLik(results)
 
+prediction(results, parameter_name = "n_offspring")
 prediction(results, parameter_name = "expt_death") |> head()
-
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
 
 simulate_life_history(results) |> head()

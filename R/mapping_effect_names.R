@@ -24,7 +24,7 @@ map_parameter_name <- function(name) {
     "sex_ratio",
     "reproduction_shape",
     "increase_death_hazard",
-    "pontn",
+    "n_offspring",
     "tof_reduction_date",
     "increase_tof_n_offspring",
     "lin_decrease_hazard",
@@ -82,7 +82,6 @@ find_event_type <- function(parameter_name) {
         "lin_change_n_offspring",
         "quad_change_n_offspring",
         "tof_n_offspring",
-        "pontn",
         "quad_senescence"
       )
   ) {

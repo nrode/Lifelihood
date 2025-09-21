@@ -66,24 +66,39 @@ read_output_from_file <- function(
   }
 
   results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
-  results$formula$expt_death <- get_event_covariates(
-    results$config$mortality$expt_death
+
+  sections <- list(
+    mortality = c(
+      "expt_death",
+      "survival_shape",
+      "ratio_expt_death",
+      "prob_death",
+      "sex_ratio"
+    ),
+    maturity = c("expt_maturity", "maturity_shape", "ratio_expt_maturity"),
+    reproduction = c(
+      "expt_reproduction",
+      "reproduction_shape",
+      "n_offspring",
+      "increase_death_hazard",
+      "tof_reduction_date",
+      "increase_tof_n_offspring",
+      "lin_decrease_hazard",
+      "quad_decrease_hazard",
+      "lin_change_n_offspring",
+      "quad_change_n_offspring",
+      "tof_n_offspring"
+    )
   )
-  results$formula$survival_shape <- get_event_covariates(
-    results$config$mortality$survival_shape
-  )
-  results$formula$expt_maturity <- get_event_covariates(
-    results$config$maturity$expt_maturity
-  )
-  results$formula$maturity_shape <- get_event_covariates(
-    results$config$maturity$maturity_shape
-  )
-  results$formula$expt_reproduction <- get_event_covariates(
-    results$config$reproduction$expt_reproduction
-  )
-  results$formula$reproduction_shape <- get_event_covariates(
-    results$config$reproduction$reproduction_shape
-  )
+
+  for (section in names(sections)) {
+    for (var in sections[[section]]) {
+      results$formula[[var]] <- get_event_covariates(results$config[[section]][[
+        var
+      ]])
+    }
+  }
+
   results$covariates <- covariates
   results$seeds <- seeds
   results$likelihood <- likelihood

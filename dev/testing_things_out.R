@@ -69,7 +69,6 @@ prediction(
 )
 
 
-prediction(results, parameter_name = "pontn")
 prediction(results, parameter_name = "n_offspring")
 prediction(results, parameter_name = "expt_death") |> head()
 simulate_life_history(results) |> head()
