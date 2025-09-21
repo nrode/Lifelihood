@@ -84,6 +84,34 @@ read_output_from_file <- function(
   results$formula$reproduction_shape <- get_event_covariates(
     results$config$reproduction$reproduction_shape
   )
+  results$formula$n_offspring <- get_event_covariates(
+    results$config$reproduction$n_offspring
+  )
+  results$formula$increase_death_hazard <- get_event_covariates(
+    results$config$reproduction$increase_death_hazard
+  )
+  results$formula$tof_reduction_date <- get_event_covariates(
+    results$config$reproduction$tof_reduction_date
+  )
+  results$formula$increase_tof_n_offspring <- get_event_covariates(
+    results$config$reproduction$increase_tof_n_offspring
+  )
+  
+  results$formula$lin_decrease_hazard <- get_event_covariates(
+    results$config$reproduction$lin_decrease_hazard
+  )
+  results$formula$quad_decrease_hazard <- get_event_covariates(
+    results$config$reproduction$quad_decrease_hazard
+  )
+  results$formula$lin_change_n_offspring <- get_event_covariates(
+    results$config$reproduction$lin_change_n_offspring
+  )
+  results$formula$quad_change_n_offspring <- get_event_covariates(
+    results$config$reproduction$quad_change_n_offspring
+  )
+  results$formula$tof_n_offspring <- get_event_covariates(
+    results$config$reproduction$tof_n_offspring
+  )
   results$covariates <- covariates
   results$seeds <- seeds
   results$likelihood <- likelihood
