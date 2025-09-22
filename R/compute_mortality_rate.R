@@ -18,7 +18,7 @@
 compute_fitted_mortality_rate <- function(
   lifelihoodResults,
   interval_width,
-  event = c("mortality", "maturity"),
+  event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   max_time = NULL,
   groupby = NULL
@@ -156,6 +156,10 @@ compute_fitted_mortality_rate <- function(
     param2 = param2,
     family = family
   )
+  
+  if (event == "reproduction") {
+    newdata$n_offspring <- prediction(lifelihoodResults, parameter_name = "n_offspring", newdata=newdata)
+  }
   return(newdata)
 }
 
