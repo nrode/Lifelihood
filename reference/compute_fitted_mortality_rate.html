@@ -68,7 +68,7 @@ on some new data.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compute_fitted_mortality_rate</span><span class="op">(</span></span>
 <span>  <span class="va">lifelihoodResults</span>,</span>
 <span>  <span class="va">interval_width</span>,</span>
-<span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mortality"</span>, <span class="st">"maturity"</span><span class="op">)</span>,</span>
+<span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mortality"</span>, <span class="st">"maturity"</span>, <span class="st">"reproduction"</span><span class="op">)</span>,</span>
 <span>  newdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  groupby <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -114,8 +114,8 @@ Note that the function will consider continuous covariates as factors</p></li>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A dataframe with 3 columns: Interval (time interval, based
-on <code>interval_width</code> value), Group (identifier of a given subgroup,
-or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+on <code>interval_width</code> value), group (identifier of a given subgroup,
+or "Overall" if groupby = NULL), and Event_rate (event rate
 at this time).</p>
     </div>
 
