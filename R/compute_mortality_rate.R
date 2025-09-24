@@ -8,8 +8,8 @@
 #' @inheritParams compute_observed_mortality_rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
-#' on `interval_width` value), Group (identifier of a given subgroup,
-#' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+#' on `interval_width` value), group (identifier of a given subgroup,
+#' or "Overall" if groupby = NULL), and Event_rate (event rate
 #' at this time).
 #'
 #' @import dplyr
@@ -114,16 +114,14 @@ compute_fitted_mortality_rate <- function(
     newdata <- newdata |>
      dplyr::arrange(across(all_of(groupby))) |>
       dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
-                           .names = "{.col}_tmp")) |>
-      tidyr::unite("Group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = TRUE)
- 
-   
+                           .names = "{.col}")) |>
+      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)
     
    } else {
-    newdata$Group <- "Overall"
+    newdata$group <- "Overall"
   }
 
-  newdata$Group <- as.factor(newdata$Group)
+  newdata$group <- as.factor(newdata$group)
   
   if (event == "mortality") {
     parameter_name1 <- "expt_death"
@@ -149,7 +147,7 @@ compute_fitted_mortality_rate <- function(
     type = "response"
   )
 
-  newdata$MortalityRate <- prob_event_interval_dt(
+  newdata$Event_Rate <- prob_event_interval_dt(
     t = newdata$time,
     dt = interval_width,
     param1 = param1,
@@ -182,8 +180,8 @@ compute_fitted_mortality_rate <- function(
 #' at the beggining of a time interval for computing the observed mortality rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
-#' on `interval_width` value), Group (identifier of a given subgroup,
-#' or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+#' on `interval_width` value), group (identifier of a given subgroup,
+#' or "Overall" if groupby = NULL), and Event_rate (event rate
 #' at this time).
 #'
 #' @importFrom dplyr mutate if_else select
@@ -265,26 +263,58 @@ compute_observed_mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
+    
+    ## Add group column to newdata
     newdata <- newdata |>
       dplyr::arrange(across(all_of(groupby))) |>
       dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
                            .names = "{.col}_tmp")) |> ## Add the name of the columns to the group
-      tidyr::unite("group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = TRUE)|>
+      tidyr::unite("group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = FALSE)|>
       dplyr::mutate(group=as.factor(group))
     
     groups <- levels(newdata$group)
+    
+    ## creates a empty dataframe where the estimated event rates will be stored
+    params <- setNames(
+      lapply(groupby, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
+      groupby
+    )
+    params$time <- seq(
+      from = 0,
+      to = n_intervals * interval_width,
+      by = interval_width
+    )
+    
+    event_rate <- expand.grid(params) |> relocate(time)
+    
+    ## Add group
+    event_rate <- event_rate |>
+      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
+                           .names = "{.col}")) |> ## Add the name of the factor to each level
+      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)|> 
+      dplyr::filter(group%in%groups)|> ## Remove interactions not present in original dataset
+      dplyr::mutate(group=as.factor(group))
+    
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"
+    
+    event_rate <- expand.grid(time=seq(
+      from = 0,
+      to = n_intervals * interval_width,
+      by = interval_width
+    ), group = "Overall")
+    
   }
 
-  mortality_rate <- matrix(0, nrow = n_intervals, ncol = length(groups))
-  colnames(mortality_rate) <- groups
-  rownames(mortality_rate) <- seq(
-    interval_width,
-    n_intervals * interval_width,
-    by = interval_width
-  )
+  event_rate <- event_rate |>
+    dplyr::mutate(
+      Interval_start = time,
+      Interval_end = time+interval_width,
+      Mean_Interval = time + interval_width / 2
+    )
+  
+  event_rate$Event_Rate <- 0
 
   for (grp in groups) {
     group_data <- newdata[newdata$group == grp, ]
@@ -292,7 +322,8 @@ compute_observed_mortality_rate <- function(
     for (i in 1:n_intervals) {
       interval_start <- (i - 1) * interval_width
       interval_end <- i * interval_width
-
+      
+      ## Number of individuals alive at the beggining of the time interval
       alive_start <- sum(
         group_data[[start_col]] >= interval_start &
           group_data[[end_col]] != right_censoring_date |
@@ -300,12 +331,13 @@ compute_observed_mortality_rate <- function(
             group_data[[end_col]] == right_censoring_date
       )
 
+      ## Number of individuals dead at the end of the time interval
       deaths <- sum(
         group_data[[start_col]] >= interval_start &
           group_data[[end_col]] < interval_end
       )
 
-      mortality_rate[i, grp] <- if (alive_start > min_sample_size) {
+      event_rate$Event_Rate[event_rate$time==interval_start&event_rate$group==grp] <- if (alive_start > min_sample_size) {
         deaths / alive_start
       } else {
         NA
@@ -313,24 +345,11 @@ compute_observed_mortality_rate <- function(
     }
   }
 
-  mortality_rate_df <- reshape2::melt(mortality_rate)
-  colnames(mortality_rate_df) <- c("Interval_end", "Group", "MortalityRate")
-  mortality_rate_df$Group <- as.factor(mortality_rate_df$Group)
-
-  ## Add columns
-  mortality_rate_df <- mortality_rate_df |>
-    dplyr::mutate(
-      Interval_start = Interval_end - interval_width,
-      Mean_Interval = Interval_end - interval_width / 2
-    ) |>
-    dplyr::relocate(Interval_start, .before = Interval_end) |>
-    dplyr::relocate(Mean_Interval, .before = Group)
-
   if (is.null(groupby)) {
-    mortality_rate_df <- mortality_rate_df |> select(-Group)
+    event_rate <- event_rate |> select(-group)
   }
 
-  return(mortality_rate_df)
+  return(event_rate)
 }
 
 

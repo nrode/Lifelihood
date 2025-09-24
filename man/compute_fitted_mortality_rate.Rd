@@ -7,7 +7,7 @@
 compute_fitted_mortality_rate(
   lifelihoodResults,
   interval_width,
-  event = c("mortality", "maturity"),
+  event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   max_time = NULL,
   groupby = NULL
@@ -40,8 +40,8 @@ Note that the function will consider continuous covariates as factors
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based
-on \code{interval_width} value), Group (identifier of a given subgroup,
-or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+on \code{interval_width} value), group (identifier of a given subgroup,
+or "Overall" if groupby = NULL), and Event_rate (event rate
 at this time).
 }
 \description{

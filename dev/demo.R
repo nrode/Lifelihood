@@ -64,9 +64,9 @@ plot_fitted_mortality_rate(
   interval_width = 10,
   add_observed_mortality_rate = TRUE,
   groupby = c("spore", "par"),
-  use_facet = FALSE,
+  use_facet = TRUE,
   newdata = NULL,
   max_time = NULL,
-  xlab = "Time",
-  ylab = "Mortality Rate"
+  xlab = "Age (days)",
+  ylab = "Fitted Mortality Rate"
 )

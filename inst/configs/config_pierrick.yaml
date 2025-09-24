@@ -1,6 +1,6 @@
 mortality:
   expt_death: par + spore
-  survival_shape: 1
+  survival_shape: par
   ratio_expt_death: not_fitted
   prob_death: not_fitted
   sex_ratio: not_fitted

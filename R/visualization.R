@@ -1,8 +1,8 @@
-#' @title Display change in predicted mortality rate with age
+#' @title Display change in predicted event rate with age
 #'
 #' @description
 #' Useful function for creating a good-quality line graph
-#' of changes in predicted mortality rate with age.
+#' of changes in predicted event rate with age.
 #'
 #' If you want more control over the style of the graph,
 #' use the [compute_fitted_mortality_rate()] function to directly retrieve the predicted data.
@@ -13,9 +13,9 @@
 #' @inheritParams plot_mortality_rate
 #' @inheritParams prediction
 #' @inheritParams validate_groupby_arg
-#' @param add_observed_mortality_rate Boolean to add the observed mortality rate to the graph (default=TRUE)
+#' @param add_observed_mortality_rate Boolean to add the observed event rate to the graph (default=TRUE)
 #' @param min_sample_size The minimum number of individuals alive
-#' at the beggining of a time interval for computing the observed mortality rate (only used if add_observed_mortality_rate=TRUE, default=1)
+#' at the beggining of a time interval for computing the observed event rate (only used if add_observed_mortality_rate=TRUE, default=1)
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
 #'
@@ -31,10 +31,8 @@ plot_fitted_mortality_rate <- function(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
-  log_x = FALSE,
-  log_y = FALSE,
   xlab = "Time",
-  ylab = "Mortality Rate"
+  ylab = "Event Rate"
 ) {
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
@@ -52,8 +50,6 @@ pfitted <- plot_mortality_rate(
     type = "lines",
     groupby = groupby,
     use_facet = use_facet,
-    log_x = log_x,
-    log_y = log_y,
     xlab = xlab,
     ylab = ylab
   )
@@ -70,7 +66,7 @@ if(add_observed_mortality_rate){
   if(!is.null(groupby)){
     
     pfitted <- pfitted +
-      geom_point(data=obs_rate_df, aes(x=Mean_Interval, y=MortalityRate,  color = Group))
+      geom_point(data=obs_rate_df, aes(x=Mean_Interval, y=Event_Rate,  color = group))
    
   }else{
     pfitted <- pfitted +
@@ -113,8 +109,6 @@ plot_observed_mortality_rate <- function(
   min_sample_size = 1,
   groupby = NULL,
   use_facet = FALSE,
-  log_x = FALSE,
-  log_y = FALSE,
   xlab = "Time",
   ylab = "Mortality Rate"
 ) {
@@ -133,8 +127,6 @@ pobs <- plot_mortality_rate(
     max_time = max_time,
     groupby = groupby,
     use_facet = use_facet,
-    log_x = log_x,
-    log_y = log_y,
     xlab = xlab,
     ylab = ylab
   )
@@ -151,10 +143,9 @@ pobs
 #' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
 #' @param type The type of symbol to be used for the plot (either of "points" or 'lines") 
-#' @param log_x Determine whether the x-axis should be displayed on a logarithmic scale
-#' @param log_y Determine whether the y-axis should be displayed on a logarithmic scale
 #' @param use_facet Use facet_wrap to plot one panel per group (default=FALSE)
-#'
+#' @param groupby Factor(s) whosse levels over which event rate should be represented (default=NULL)
+#' 
 #' @return a ggplot2 plot
 #'
 #' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim
@@ -166,10 +157,8 @@ plot_mortality_rate <- function(
   type = c("points", "lines"),
   groupby,
   use_facet,
-  log_x=FALSE,
-  log_y=FALSE,
   xlab = "Time",
-  ylab = "Mortality rate"
+  ylab = "Event rate"
 ) {
   type <- match.arg(type)
   
@@ -177,17 +166,17 @@ plot_mortality_rate <- function(
     p <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
-        x = as.numeric(as.character(Mean_Interval)),
-        y = MortalityRate,
-        color = Group
+        x = Mean_Interval,
+        y = Event_Rate,
+        color = group
       )
     )
   } else {
     p <- ggplot2::ggplot(
       rate_df,
       ggplot2::aes(
-        x = as.numeric(as.character(Mean_Interval)),
-        y = MortalityRate
+        x = Mean_Interval,
+        y = Event_Rate
       )
     )
   }
@@ -206,20 +195,12 @@ plot_mortality_rate <- function(
     ylim(0, 1) +
     ggplot2::theme_minimal()
 
-  if (!is.null(max_time) & !log_x) {
+  if (!is.null(max_time)) {
     plot <- plot + ggplot2::xlim(0, max_time * 1.1)
   }
 
-  if (log_x) {
-    plot <- plot + ggplot2::scale_x_log10()
-  }
-
-  if (log_y) {
-    plot <- plot + ggplot2::scale_y_log10()
-  }
-
   if (use_facet) {
-    plot <- plot + facet_wrap(vars(Group))
+    plot <- plot + ggh4x::facet_nested(as.formula(paste("~", paste(groupby, collapse = " + "))))
   }
 
   return(plot)

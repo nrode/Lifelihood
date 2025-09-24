@@ -43,8 +43,8 @@ Note that the function will consider continuous covariates as factors
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based
-on \code{interval_width} value), Group (identifier of a given subgroup,
-or "Overall" if groupby = NULL), and MortalityRate (mortality rate
+on \code{interval_width} value), group (identifier of a given subgroup,
+or "Overall" if groupby = NULL), and Event_rate (event rate
 at this time).
 }
 \description{

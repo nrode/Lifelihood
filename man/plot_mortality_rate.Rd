@@ -4,7 +4,7 @@
 \alias{plot_mortality_rate}
 \alias{plot_fitted_mortality_rate}
 \alias{plot_observed_mortality_rate}
-\title{Display change in predicted mortality rate with age}
+\title{Display change in predicted event rate with age}
 \usage{
 plot_fitted_mortality_rate(
   lifelihoodResults,
@@ -15,10 +15,8 @@ plot_fitted_mortality_rate(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
-  log_x = FALSE,
-  log_y = FALSE,
   xlab = "Time",
-  ylab = "Mortality Rate"
+  ylab = "Event Rate"
 )
 
 plot_observed_mortality_rate(
@@ -28,8 +26,6 @@ plot_observed_mortality_rate(
   min_sample_size = 1,
   groupby = NULL,
   use_facet = FALSE,
-  log_x = FALSE,
-  log_y = FALSE,
   xlab = "Time",
   ylab = "Mortality Rate"
 )
@@ -40,10 +36,8 @@ plot_mortality_rate(
   type = c("points", "lines"),
   groupby,
   use_facet,
-  log_x = FALSE,
-  log_y = FALSE,
   xlab = "Time",
-  ylab = "Mortality rate"
+  ylab = "Event rate"
 )
 }
 \arguments{
@@ -54,30 +48,17 @@ the mortality rate will be calculated every 10 days for each group.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
 
-\item{add_observed_mortality_rate}{Boolean to add the observed mortality rate to the graph (default=TRUE)}
+\item{add_observed_mortality_rate}{Boolean to add the observed event rate to the graph (default=TRUE)}
 
 \item{min_sample_size}{The minimum number of individuals alive
-at the beggining of a time interval for computing the observed mortality rate (only used if add_observed_mortality_rate=TRUE, default=1)}
+at the beggining of a time interval for computing the observed event rate (only used if add_observed_mortality_rate=TRUE, default=1)}
 
 \item{max_time}{The maximum time for calculating the mortality
 rate. If set to NULL, the time of the last observed death is used.}
 
-\item{groupby}{vector of covariate(s) over which mortality rate should be
-computed (default is \code{NULL}).
-\itemize{
-\item If NULL, calculates a single overall mortality rate.
-\item If \code{"all"}, calculates mortality rate over each combination
-of covariates listed in the\code{lifelihoodData} object provided.
-\item Otherwise must be a character (\code{"covariate1"}) or a
-character vector (\code{c("covariate1", "covariate2")}).
-Note that the function will consider continuous covariates as factors
-}}
+\item{groupby}{Factor(s) whosse levels over which event rate should be represented (default=NULL)}
 
 \item{use_facet}{Use facet_wrap to plot one panel per group (default=FALSE)}
-
-\item{log_x}{Determine whether the x-axis should be displayed on a logarithmic scale}
-
-\item{log_y}{Determine whether the y-axis should be displayed on a logarithmic scale}
 
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
@@ -94,7 +75,7 @@ a ggplot2 plot
 }
 \description{
 Useful function for creating a good-quality line graph
-of changes in predicted mortality rate with age.
+of changes in predicted event rate with age.
 
 If you want more control over the style of the graph,
 use the \code{\link[=compute_fitted_mortality_rate]{compute_fitted_mortality_rate()}} function to directly retrieve the predicted data.

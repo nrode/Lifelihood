@@ -53,12 +53,13 @@ results <- lifelihood(
 lifelihoodResults <- results
 
 plot_observed_mortality_rate(
-  lifelihoodData,
+  lifelihoodData=lifelihoodData,
   interval_width = 15,
   groupby = c("spore", "par"),
-  use_facet = TRUE
+  use_facet = TRUE,
+  xlab = "Age (days)",
+  ylab = "Observed Mortality Rate"
 )
-
 
 results$effects
 coef(results)
@@ -109,9 +110,8 @@ plot_fitted_mortality_rate(
   use_facet = TRUE,
   newdata = NULL,
   max_time = NULL,
-  xlab = "Time",
-  ylab = "Mortality Rate"
-  
+  xlab = "Age (days)",
+  ylab = "Fitted Mortality Rate"
 )
 
 
