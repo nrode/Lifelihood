@@ -5,7 +5,7 @@ mortality:
   prob_death: not_fitted
   sex_ratio: not_fitted
 reproduction:
-  expt_reproduction: spore
+  expt_reproduction: par
   reproduction_shape: 1
   n_offspring: 1
   increase_death_hazard: not_fitted
@@ -17,6 +17,6 @@ reproduction:
   quad_change_n_offspring: not_fitted
   tof_n_offspring: not_fitted
 maturity:
-  expt_maturity: spore
+  expt_maturity: par
   maturity_shape: 1
   ratio_expt_maturity: not_fitted

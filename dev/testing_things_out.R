@@ -16,7 +16,7 @@ df <- datapierrick |>
   mutate(
     par = as.factor(par),
     geno = as.factor(geno),
-    spore = as.numeric(spore)
+    spore = as.factor(spore)
   )
 
 generate_clutch_vector <- function(N) {
@@ -70,9 +70,9 @@ results$mcmc
 
 prediction(
   results,
-  parameter_name = "expt_death",
+  parameter_name = "survival_shape",
   type = "response",
-  newdata = data.frame(par = 0, geno = 0, spore = 0)
+  newdata = data.frame(par = 2, geno = 0, spore = 0)
 )
 
 
