@@ -39,7 +39,7 @@ execute_bin(
 
 \item{path_param_bounds}{Path to the parameter boundaries text file with the min and max boudaries for each parameter.}
 
-\item{group_by_group}{Boolean option to fit the full factorail model with all the interactions between each of the factors}
+\item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
 
 \item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
 
@@ -61,11 +61,11 @@ execute_bin(
 
 \item{seed4}{4th seed number used to reproduce results (same seed = same results).}
 
-\item{ratiomax}{facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque}
+\item{ratiomax}{Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)}
 
-\item{tc}{critical time for the increase in juvenile survival mortality compared to later survival}
+\item{tc}{critical age (after the juvenile mortality peak) at which the survival model starts to be fitted}
 
-\item{tinf}{maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)}
+\item{tinf}{maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)}
 
 \item{sub_interval}{sub-interval used to integrate the left and right censoring dates of each event}
 

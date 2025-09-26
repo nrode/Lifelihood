@@ -14,7 +14,7 @@ read_output_from_file(
 \arguments{
 \item{file_path}{Location of the output file of the program}
 
-\item{group_by_group}{Boolean option to fit the full factorail model with all the interactions between each of the factors}
+\item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
 
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
 }

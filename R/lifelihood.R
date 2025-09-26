@@ -10,17 +10,17 @@
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
-#' @param group_by_group Boolean option to fit the full factorail model with all the interactions between each of the factors
+#' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
 #' @param SEcal If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
-#' @param seeds Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.
-#' @param ratiomax facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque
-#' @param tc critical time for the increase in juvenile survival mortality compared to later survival
-#' @param tinf maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)
+#' @param seeds Vector of length for with seed numbers used to reproduce results (same seeds = same results).
+#' @param ratiomax Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)
+#' @param tc critical age (after the juvenile mortality peak) at which the survival model starts to be fitted 
+#' @param tinf maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)
 #' @param sub_interval sub-interval used to integrate the left and right censoring dates of each event
 #' @param ntr Number of thread for the paralelisation ?
 #' @param nst TBD - Check the actual meaning
