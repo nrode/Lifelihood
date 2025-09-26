@@ -120,7 +120,7 @@ using maximum likelihood.</p>
 
 
 <dt id="arg-group-by-group">group_by_group<a class="anchor" aria-label="anchor" href="#arg-group-by-group"></a></dt>
-<dd><p>Boolean option to fit the full factorail model with all the interactions between each of the factors</p></dd>
+<dd><p>Boolean option to fit the full factorial model with all the interactions between each of the factors</p></dd>
 
 
 <dt id="arg-mcmc">MCMC<a class="anchor" aria-label="anchor" href="#arg-mcmc"></a></dt>
@@ -148,7 +148,7 @@ using maximum likelihood.</p>
 
 
 <dt id="arg-seeds">seeds<a class="anchor" aria-label="anchor" href="#arg-seeds"></a></dt>
-<dd><p>Numbers used to reproduce results (same seeds = same results). This must be a vector of length 4.</p></dd>
+<dd><p>Vector of length for with seed numbers used to reproduce results (same seeds = same results).</p></dd>
 
 
 <dt id="arg-ntr">ntr<a class="anchor" aria-label="anchor" href="#arg-ntr"></a></dt>
@@ -176,15 +176,15 @@ using maximum likelihood.</p>
 
 
 <dt id="arg-ratiomax">ratiomax<a class="anchor" aria-label="anchor" href="#arg-ratiomax"></a></dt>
-<dd><p>facteur multiplicatif max de la taille de ponte avec les modeles qui incluent une senescene de repro cf fonction CalculRatioEspPoissonTronque</p></dd>
+<dd><p>Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)</p></dd>
 
 
 <dt id="arg-tc">tc<a class="anchor" aria-label="anchor" href="#arg-tc"></a></dt>
-<dd><p>critical time for the increase in juvenile survival mortality compared to later survival</p></dd>
+<dd><p>critical age (after the juvenile mortality peak) at which the survival model starts to be fitted</p></dd>
 
 
 <dt id="arg-tinf">tinf<a class="anchor" aria-label="anchor" href="#arg-tinf"></a></dt>
-<dd><p>maximum censoring time (should be greater than the age of the oldest dead individual observed in the dataset)</p></dd>
+<dd><p>maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)</p></dd>
 
 
 <dt id="arg-sub-interval">sub_interval<a class="anchor" aria-label="anchor" href="#arg-sub-interval"></a></dt>

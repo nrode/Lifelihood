@@ -110,7 +110,7 @@ If you haven’t already check it, have a look at:
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
 <span><span class="co">#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.5</span></span>
-<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.2</span></span>
+<span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.5.2</span></span>
 <span><span class="co">#&gt; ✔ ggplot2   4.0.0     ✔ tibble    3.3.0</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tidyr     1.3.1</span></span>
 <span><span class="co">#&gt; ✔ purrr     1.1.0     </span></span>
@@ -193,9 +193,21 @@ If you haven’t already check it, have a look at:
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/get_config_path.html">get_config_path</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; lifelihood Pascal program status code 0</span></span>
-<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'n_offspring' is</span></span>
-<span><span class="co">#&gt; close to the minimum bound: n_offspring~=1.00049474017674. Consider decreasing</span></span>
-<span><span class="co">#&gt; minimum bound.</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'expt_death' is close</span></span>
+<span><span class="co">#&gt; to the minimum bound: expt_death~=0.00100000000078328. Consider decreasing</span></span>
+<span><span class="co">#&gt; minimum bound.</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'survival_shape' is</span></span>
+<span><span class="co">#&gt; close to the maximum bound: survival_shape~=499.999999744822. Consider</span></span>
+<span><span class="co">#&gt; increasing maximum bound.</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'prob_death' is close</span></span>
+<span><span class="co">#&gt; to the minimum bound: prob_death~=1.00000006450293e-05. Consider decreasing</span></span>
+<span><span class="co">#&gt; minimum bound.</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'maturity_shape' is</span></span>
+<span><span class="co">#&gt; close to the minimum bound: maturity_shape~=0.00500026355901226. Consider</span></span>
+<span><span class="co">#&gt; decreasing minimum bound.</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of</span></span>
+<span><span class="co">#&gt; 'increase_death_hazard' is close to the maximum bound:</span></span>
+<span><span class="co">#&gt; increase_death_hazard~=9.97018349127629. Consider increasing maximum bound.</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
 </h2>
@@ -254,13 +266,16 @@ If you haven’t already check it, have a look at:
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; lifelihood Pascal program status code 0</span></span>
 <span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'expt_death' is close</span></span>
-<span><span class="co">#&gt; to the minimum bound: expt_death~=0.00100000000013154. Consider decreasing</span></span>
+<span><span class="co">#&gt; to the minimum bound: expt_death~=0.00100000000268193. Consider decreasing</span></span>
 <span><span class="co">#&gt; minimum bound.</span></span>
 <span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'survival_shape' is</span></span>
-<span><span class="co">#&gt; close to the maximum bound: survival_shape~=499.999999999884. Consider</span></span>
+<span><span class="co">#&gt; close to the maximum bound: survival_shape~=499.999645415131. Consider</span></span>
 <span><span class="co">#&gt; increasing maximum bound.</span></span>
 <span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'prob_death' is close</span></span>
-<span><span class="co">#&gt; to the minimum bound: prob_death~=1.00004239751162e-05. Consider decreasing</span></span>
+<span><span class="co">#&gt; to the minimum bound: prob_death~=1.00000008475031e-05. Consider decreasing</span></span>
+<span><span class="co">#&gt; minimum bound.</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'n_offspring' is</span></span>
+<span><span class="co">#&gt; close to the minimum bound: n_offspring~=1.00002893289797. Consider decreasing</span></span>
 <span><span class="co">#&gt; minimum bound.</span></span></code></pre></div>
 </div>
 <p>Now we don’t get any warning!</p>
