@@ -193,9 +193,15 @@ If you haven’t already check it, have a look at:
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/get_config_path.html">get_config_path</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; lifelihood Pascal program status code 0</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'expt_death' is close</span></span>
+<span><span class="co">#&gt; to the minimum bound: expt_death~=0.00100000541629802. Consider decreasing</span></span>
+<span><span class="co">#&gt; minimum bound.</span></span>
 <span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'survival_param2' is</span></span>
-<span><span class="co">#&gt; close to the maximum bound: survival_param2~=499.672477325804. Consider</span></span>
-<span><span class="co">#&gt; increasing maximum bound.</span></span></code></pre></div>
+<span><span class="co">#&gt; close to the maximum bound: survival_param2~=499.999999999472. Consider</span></span>
+<span><span class="co">#&gt; increasing maximum bound.</span></span>
+<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of</span></span>
+<span><span class="co">#&gt; 'increase_death_hazard' is close to the maximum bound:</span></span>
+<span><span class="co">#&gt; increase_death_hazard~=9.9934041833179. Consider increasing maximum bound.</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
 </h2>
@@ -254,20 +260,11 @@ If you haven’t already check it, have a look at:
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; lifelihood Pascal program status code 0</span></span>
 <span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'expt_death' is close</span></span>
-<span><span class="co">#&gt; to the minimum bound: expt_death~=0.00100000001014637. Consider decreasing</span></span>
+<span><span class="co">#&gt; to the minimum bound: expt_death~=0.00100014079550904. Consider decreasing</span></span>
 <span><span class="co">#&gt; minimum bound.</span></span>
 <span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'survival_param2' is</span></span>
-<span><span class="co">#&gt; close to the maximum bound: survival_param2~=499.999996892658. Consider</span></span>
-<span><span class="co">#&gt; increasing maximum bound.</span></span>
-<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'prob_death' is close</span></span>
-<span><span class="co">#&gt; to the minimum bound: prob_death~=1.00028759271059e-05. Consider decreasing</span></span>
-<span><span class="co">#&gt; minimum bound.</span></span>
-<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of 'maturity_param2' is</span></span>
-<span><span class="co">#&gt; close to the minimum bound: maturity_param2~=0.00500138360668201. Consider</span></span>
-<span><span class="co">#&gt; decreasing minimum bound.</span></span>
-<span><span class="co">#&gt; Warning in check_valid_estimation(results): Estimation of</span></span>
-<span><span class="co">#&gt; 'increase_death_hazard' is close to the maximum bound:</span></span>
-<span><span class="co">#&gt; increase_death_hazard~=9.99728408554267. Consider increasing maximum bound.</span></span></code></pre></div>
+<span><span class="co">#&gt; close to the maximum bound: survival_param2~=499.997820167122. Consider</span></span>
+<span><span class="co">#&gt; increasing maximum bound.</span></span></code></pre></div>
 </div>
 <p>Now we don’t get any warning!</p>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
