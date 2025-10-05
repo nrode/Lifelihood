@@ -81,7 +81,7 @@ begin
 
     // critical time for the increase in juvenile survival mortality compared to later survival
     tc := StrToFloat(list[14]);
-    writeln('tc: ', tc);
+    //writeln('tc: ', tc);
 
     // maximum censoring time
     tinf := StrToFloat(list[15]);
