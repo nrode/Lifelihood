@@ -1,4 +1,4 @@
-pandoc: '3.8'
+pandoc: 3.8.1
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
@@ -11,7 +11,7 @@ articles:
   overview: overview.html
   required-data-format: required-data-format.html
   setting-up-the-configuration-file: setting-up-the-configuration-file.html
-last_built: 2025-09-26T09:06Z
+last_built: 2025-10-05T07:11Z
 urls:
   reference: https://nrode.github.io/Lifelihood/reference
   article: https://nrode.github.io/Lifelihood/articles
