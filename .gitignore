@@ -29,7 +29,8 @@ docs
 backup/
 
 inst/bin/*
-!inst/bin/lifelihood
-!inst/bin/lifelihood.exe
+!inst/bin/lifelihood-macos
+!inst/bin/lifelihood-windows.exe
+!inst/bin/lifelihood-linux
 
 *.log

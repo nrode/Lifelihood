@@ -73,13 +73,19 @@ execute_bin <- function(
       os,
       "Windows" = system.file(
         "bin",
-        "lifelihood.exe",
+        "lifelihood-windows.exe",
         package = "lifelihood",
         mustWork = TRUE
       ),
       "Darwin" = system.file(
         "bin",
-        "lifelihood",
+        "lifelihood-macos",
+        package = "lifelihood",
+        mustWork = TRUE
+      ),
+      "Linux" = system.file(
+        "bin",
+        "lifelihood-linux",
         package = "lifelihood",
         mustWork = TRUE
       ),

@@ -173,13 +173,13 @@ SurvExp <- function(t, expt_time_to_event) {
 #'
 #' @export
 detect_os <- function() {
-  compatible_oses <- c("Windows", "Darwin")
+  compatible_oses <- c("Windows", "Darwin", "Linux")
   os <- Sys.info()["sysname"]
   if (os %in% compatible_oses) {
     return(os)
   } else {
     stop(
-      "lifelihood only works with MacOS and Windows at the moment, not: ",
+      "lifelihood only works with MacOS, Windows, and Linux at the moment, not: ",
       os
     )
   }

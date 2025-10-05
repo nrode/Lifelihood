@@ -1,2 +1,3 @@
-inst/bin/lifelihood
-inst/bin/lifelihood.exe
+inst/bin/lifelihood-macos
+inst/bin/lifelihood-linux
+inst/bin/lifelihood-windows.exe
