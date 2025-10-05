@@ -14,6 +14,8 @@ In order to compile the underlying Pascal code, you need to install:
 
 - [Lazarus](https://www.lazarus-ide.org/index.php?page=downloads): code editor for Pascal
 - [FPC](https://www.freepascal.org/download.html) (Free Pascal Compiler): the compiler
+- (ideally) [Make](https://makefiletutorial.com/): facilitate the compilation process
+- (optionnal) [Pascal VS Code / Positron extension](https://github.com/alefragnani/vscode-language-pascal): facilitate development
 
 ## Setup R environment
 
