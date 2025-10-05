@@ -1,4 +1,4 @@
-program lifelihoodC2023;
+program lifelihood;
 
 {$MODE Delphi}
 
@@ -56,7 +56,6 @@ begin
         assignfile(file_continuous_var, path_continuous_var);  
       end;
     read_custom_continuous_var(continuous_var_flag); 
-    writeln('Continuous variable(s) detected: ', continuous_var_flag);
 
     try
       nomoutfile := ChangeFileExt(nomf1, '.out');
@@ -82,7 +81,7 @@ begin
 
     // critical time for the increase in juvenile survival mortality compared to later survival
     tc := StrToFloat(list[14]);
-    //writeln('tc: ', tc);
+    writeln('tc: ', tc);
 
     // maximum censoring time
     tinf := StrToFloat(list[15]);

@@ -388,7 +388,6 @@ end;
 { *****generateur histoire de vie des sexe 2: vie femelle et la vie male************************* }
 procedure roughgarden(a, b: integer);
 var
-  indvirtuel: ind_info;
   i: integer;
 begin
   with group[a].gi[b] do
@@ -444,7 +443,7 @@ end;
 { ************************************************************************* }
 function surv(x: double; var su: survfunctype; sex: integer): double;
 var
-  ans, eps, paramaux: double;
+  eps, paramaux: double;
 begin
   if x >= tinf then surv := 0
   else
@@ -2020,7 +2019,7 @@ end;
 procedure promenade(var Fun_Des: function_D; var Met_Des: Metropolis_D);
 var
   t, k: integer;
-  specific_Heat, tempt, LastResult: double;
+  tempt, LastResult: double;
   acc: boolean;
   m, i, j: integer;
   df, newfresult, sm, ssq, nATT, savedvalue: double;

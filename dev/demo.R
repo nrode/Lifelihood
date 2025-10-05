@@ -22,7 +22,7 @@ generate_clutch_vector <- function(N) {
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- lifelihoodData(
-  df = df |> sample_n(100),
+  df = df |> sample_n(300),
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
