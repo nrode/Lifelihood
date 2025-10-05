@@ -137,7 +137,7 @@ If you haven’t already check it, have a look at:
 <li>
 <code>expt_death</code>: Expected time to death</li>
 <li>
-<code>survival_shape</code>: Survival shape parameter</li>
+<code>survival_param2</code>: Survival shape parameter</li>
 <li>
 <code>ratio_expt_death</code>: Ratio between expected time to death for male vs expected time to death for female</li>
 <li>
@@ -150,7 +150,7 @@ If you haven’t already check it, have a look at:
 <li>
 <code>expt_maturity</code>: Expected time to maturity</li>
 <li>
-<code>maturity_shape</code>: Maturity shape parameter</li>
+<code>maturity_param2</code>: Maturity shape parameter</li>
 <li>
 <code>ratio_expt_maturity</code>: Ratio between expected time to maturity for male and expected time to maturity for female</li>
 </ul></section><section class="level4"><h5 id="reproduction">Reproduction<a class="anchor" aria-label="anchor" href="#reproduction"></a>
@@ -159,7 +159,7 @@ If you haven’t already check it, have a look at:
 <li>
 <code>expt_reproduction</code>: Expected time until next reproduction</li>
 <li>
-<code>reproduction_shape</code>: Reproduction shape parameter</li>
+<code>reproduction_param2</code>: Reproduction shape parameter</li>
 <li>
 <code>n_offspring</code>: Number of offspring per reproduction event or fitness</li>
 <li>
@@ -184,17 +184,17 @@ If you haven’t already check it, have a look at:
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mortality</span><span class="kw">:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_death</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">survival_shape</span><span class="kw">:</span><span class="at"> geno + type + geno*type</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">survival_param2</span><span class="kw">:</span><span class="at"> geno + type + geno*type</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ratio_expt_death</span><span class="kw">:</span><span class="at"> geno</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">prob_death</span><span class="kw">:</span><span class="at"> geno</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sex_ratio</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">maturity</span><span class="kw">:</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_maturity</span><span class="kw">:</span><span class="at"> geno + type</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">maturity_shape</span><span class="kw">:</span><span class="at"> geno</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">maturity_param2</span><span class="kw">:</span><span class="at"> geno</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ratio_expt_maturity</span><span class="kw">:</span><span class="at"> geno + type</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">reproduction</span><span class="kw">:</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_reproduction</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reproduction_shape</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reproduction_param2</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">n_offspring</span><span class="kw">:</span><span class="at"> geno</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">increase_death_hazard</span><span class="kw">:</span><span class="at"> geno + type + geno*type</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tof_reduction_date</span><span class="kw">:</span><span class="at"> geno</span></span>
