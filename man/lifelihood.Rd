@@ -28,7 +28,8 @@ lifelihood(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE
+  delete_temp_files = TRUE,
+  temp_dir = NULL
 )
 }
 \arguments{

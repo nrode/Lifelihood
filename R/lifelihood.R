@@ -19,7 +19,7 @@
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
 #' @param seeds Vector of length for with seed numbers used to reproduce results (same seeds = same results).
 #' @param ratiomax Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)
-#' @param tc critical age (after the juvenile mortality peak) at which the survival model starts to be fitted 
+#' @param tc critical age (after the juvenile mortality peak) at which the survival model starts to be fitted
 #' @param tinf maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)
 #' @param sub_interval sub-interval used to integrate the left and right censoring dates of each event
 #' @param ntr Number of thread for the paralelisation ?
@@ -98,7 +98,8 @@ lifelihood <- function(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE
+  delete_temp_files = TRUE,
+  temp_dir = NULL
 ) {
   if ((length(seeds) != 4) & !is.null(seeds)) {
     stop("`seeds` must be an integer vector of length 4.")
@@ -108,10 +109,12 @@ lifelihood <- function(
   }
 
   set.seed(sum(seeds))
-  temp_dir <- file.path(
-    here::here(),
-    paste0(paste0("lifelihood_", paste(seeds, collapse = "_")))
-  )
+  if (is.null(temp_dir)) {
+    temp_dir <- file.path(
+      here::here(),
+      paste0(paste0("lifelihood_", paste(seeds, collapse = "_")))
+    )
+  }
   dir.create(temp_dir, showWarnings = FALSE)
 
   if (is.null(param_bounds_df)) {
@@ -214,7 +217,7 @@ lifelihood <- function(
     )
   )
 
-  # decod the encoded factor levels in output file
+  # decode the encoded factor levels in output file
   output_path <- decode_file_with_translator(output_path, translator)
 
   results <- read_output_from_file(

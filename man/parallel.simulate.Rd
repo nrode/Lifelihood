@@ -4,7 +4,7 @@
 \alias{parallel.simulate}
 \title{Parallelized simulations}
 \usage{
-parallel.simulate(..., nsim, parallel_seed = 1)
+parallel.simulate(..., nsim, parallel_seed = FALSEj)
 }
 \arguments{
 \item{...}{Arguments passed to \code{\link[=simulate_life_history]{simulate_life_history()}}.}

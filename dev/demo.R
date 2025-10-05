@@ -22,7 +22,7 @@ generate_clutch_vector <- function(N) {
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- lifelihoodData(
-  df = df,
+  df = df |> sample_n(100),
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -40,6 +40,13 @@ results <- lifelihood(
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE
 )
+
+# r <- lifelihood_optim(
+#   lifelihoodData = lifelihoodData,
+#   path_config = get_config_path("config_pierrick"),
+#   delete_temp_files = FALSE,
+#   n_fit = 3
+# )
 
 coef(results)
 coeff(results, "expt_death")

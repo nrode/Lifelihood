@@ -45,7 +45,6 @@ begin
 
     //customfilevalcont
     //If there is no path_continuous_var file then covar.valcont are set automatically as ordinals, else the values are read in the file
-    writeln(list[17]);
     if list[17] = 'NULL' then
       begin
         continuous_var_flag := False;
