@@ -166,7 +166,7 @@ simulate_life_history <- function(
 
   event <- match.arg(event, c("all", "mortality", "reproduction", "maturity"))
 
-  events <- if (event == "all"| event == "reproduction") {
+  events <- if (event == "all" | event == "reproduction") {
     c("maturity", "reproduction", "mortality")
   } else {
     event
@@ -238,18 +238,16 @@ simulate_life_history <- function(
 #' @param ... Arguments passed to [simulate_life_history()].
 #' @param nsim Number of simulations
 #' @param parallel_seed Logical or integer, seed used for
-parallel.simulate <- function(..., nsim, parallel_seed = 1) {
+parallel.simulate <- function(..., nsim, parallel_seed = FALSEj) {
   sims <- future.apply::future_lapply(
     1:nsim,
-    simulate_life_history,
-    ...,
+    function(i) simulate_life_history(...),
     future.seed = parallel_seed
   )
   sims <- sims[!vapply(sims, is.null, logical(1))]
 
-  sims
+  return(sims)
 }
-
 
 #' @keywords internal
 simulate_weibull <- function(expected, shape, n) {
