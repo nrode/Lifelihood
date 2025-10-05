@@ -80,7 +80,7 @@ BIC(results)
 ```{r}
 coef(results)
 coeff(results, "expt_death")
-coeff(results, "survival_shape")
+coeff(results, "survival_param2")
 
 AIC(results)
 BIC(results)

@@ -12,16 +12,16 @@
 simulate_event <- function(object, ev, newdata) {
   if (ev == "mortality") {
     expt_name <- "expt_death"
-    shape_name <- "survival_shape"
+    shape_name <- "survival_param2"
     fam_id <- 1
     n <- 1
   } else if (ev == "reproduction") {
     expt_name <- "expt_reproduction"
-    shape_name <- "reproduction_shape"
+    shape_name <- "reproduction_param2"
     fam_id <- 3
   } else if (ev == "maturity") {
     expt_name <- "expt_maturity"
-    shape_name <- "maturity_shape"
+    shape_name <- "maturity_param2"
     fam_id <- 2
     n <- 1
   }
@@ -46,10 +46,10 @@ simulate_event <- function(object, ev, newdata) {
       prediction(object, "expt_death", type = "response", newdata = newdata),
       error = function(e) return(NULL)
     )
-    survival_shape <- tryCatch(
+    survival_param2 <- tryCatch(
       prediction(
         object,
-        "survival_shape",
+        "survival_param2",
         type = "response",
         newdata = newdata
       ),
@@ -59,15 +59,15 @@ simulate_event <- function(object, ev, newdata) {
     ## max longeity= value of longevity so that 99% of individuals with this shape and scale parameters die before this age
     family_mortality <- object$lifelihoodData$model_specs[[1]]
     if (family_mortality == "wei") {
-      scale <- expt_death / gamma(1 + 1 / survival_shape)
-      long <- qweibull(0.99999999, shape = survival_shape, scale = scale)
+      scale <- expt_death / gamma(1 + 1 / survival_param2)
+      long <- qweibull(0.99999999, shape = survival_param2, scale = scale)
     } else if (family_mortality == "lgn") {
-      mu <- log(expt_death) - 0.5 * log(1 + survival_shape / (expt_death^2))
-      sigma <- sqrt(log(1 + survival_shape / (expt_death^2)))
+      mu <- log(expt_death) - 0.5 * log(1 + survival_param2 / (expt_death^2))
+      sigma <- sqrt(log(1 + survival_param2 / (expt_death^2)))
       long <- qlnorm(0.99999999, meanlog = mu, sdlog = sigma)
     } else if (family_mortality == "gam") {
-      shape <- expt_death / survival_shape
-      long <- qgamma(0.99999999, shape = shape, scale = survival_shape)
+      shape <- expt_death / survival_param2
+      long <- qgamma(0.99999999, shape = shape, scale = survival_param2)
     } else if (family_mortality == "exp") {
       long <- qexp(0.99999999, rate = 1 / expt_death)
     }

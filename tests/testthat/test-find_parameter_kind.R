@@ -1,5 +1,5 @@
 test_that("Finding parameter kind.", {
-  result <- lifelihood:::find_parameter_kind("eff_survival_shape_type2")
+  result <- lifelihood:::find_parameter_kind("eff_survival_param2_type2")
   expect_equal(result, "coefficient")
 
   result <- lifelihood:::find_parameter_kind("int_quad_senescence")

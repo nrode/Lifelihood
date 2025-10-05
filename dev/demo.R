@@ -43,7 +43,7 @@ results <- lifelihood(
 
 coef(results)
 coeff(results, "expt_death")
-coeff(results, "survival_shape")
+coeff(results, "survival_param2")
 coeff(results, "n_offspring")
 AIC(results)
 BIC(results)

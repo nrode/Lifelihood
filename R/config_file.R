@@ -65,9 +65,9 @@ format_config <- function(path_config, covariates, covar_types) {
       )[1]
     ),
     paste(
-      "survival_shape",
+      "survival_param2",
       R_to_lifelihood(
-        safe_access(config, c("mortality", "survival_shape")),
+        safe_access(config, c("mortality", "survival_param2")),
         covariates,
         covar_types
       )[1]
@@ -105,9 +105,9 @@ format_config <- function(path_config, covariates, covar_types) {
       )[1]
     ),
     paste(
-      "maturity_shape",
+      "maturity_param2",
       R_to_lifelihood(
-        safe_access(config, c("maturity", "maturity_shape")),
+        safe_access(config, c("maturity", "maturity_param2")),
         covariates,
         covar_types
       )[1]
@@ -129,9 +129,9 @@ format_config <- function(path_config, covariates, covar_types) {
       )[1]
     ),
     paste(
-      "reproduction_shape",
+      "reproduction_param2",
       R_to_lifelihood(
-        safe_access(config, c("reproduction", "reproduction_shape")),
+        safe_access(config, c("reproduction", "reproduction_param2")),
         covariates,
         covar_types
       )[1]

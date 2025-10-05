@@ -4,7 +4,7 @@
 #' Calculate the empirical mortality rate over a given interval
 #' on some new data.
 #'
-#' @param lifelihoodResults A `lifelihoodResults` object 
+#' @param lifelihoodResults A `lifelihoodResults` object
 #' @inheritParams compute_observed_mortality_rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
@@ -27,14 +27,14 @@ compute_fitted_mortality_rate <- function(
   check_valid_lifelihoodResults(lifelihoodResults)
 
   lifelihoodData <- lifelihoodResults$lifelihoodData
-  
+
   if (event == "mortality") {
     start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
     family <- lifelihoodData$model_specs[1]
     covar <- c(
       lifelihoodResults$formula$expt_death,
-      lifelihoodResults$formula$survival_shape
+      lifelihoodResults$formula$survival_param2
     ) |>
       unique() |>
       setdiff("intercept")
@@ -44,7 +44,7 @@ compute_fitted_mortality_rate <- function(
     family <- lifelihoodData$model_specs[2]
     covar <- c(
       lifelihoodResults$formula$expt_maturity,
-      lifelihoodResults$formula$maturity_shape
+      lifelihoodResults$formula$maturity_param2
     ) |>
       unique() |>
       setdiff("intercept")
@@ -54,20 +54,30 @@ compute_fitted_mortality_rate <- function(
     family <- lifelihoodData$model_specs[3]
     covar <- c(
       lifelihoodResults$formula$expt_reproduction,
-      lifelihoodResults$formula$reproduction_shape
+      lifelihoodResults$formula$reproduction_param2
     ) |>
       unique() |>
       setdiff("intercept")
   }
-  
+
   if (!all(groupby %in% covar)) {
     missing_vars <- groupby[!groupby %in% covar]
     stop(
       "`groupby` argument contains invalid values. ",
-      paste0("Covariate(s) `", paste0(missing_vars, collapse = ", "), "` not fitted for event `", event, "` in the `lifelihoodResults` object provided"),
+      paste0(
+        "Covariate(s) `",
+        paste0(missing_vars, collapse = ", "),
+        "` not fitted for event `",
+        event,
+        "` in the `lifelihoodResults` object provided"
+      ),
       ".\n",
-      paste0("Fitted covariate(s) for`", event,"` event: ",
-      paste0(covar, collapse = ", "))
+      paste0(
+        "Fitted covariate(s) for`",
+        event,
+        "` event: ",
+        paste0(covar, collapse = ", ")
+      )
     )
   }
   if (is.null(max_time)) {
@@ -82,9 +92,9 @@ compute_fitted_mortality_rate <- function(
       max_time <- sorted_values[1]
     }
   }
-  
+
   n_intervals <- ceiling(max_time / interval_width) - 1
-  
+
   if (is.null(newdata)) {
     params <- setNames(
       lapply(covar, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
@@ -99,39 +109,43 @@ compute_fitted_mortality_rate <- function(
     newdata <- newdata |>
       dplyr::mutate(
         Interval_start = time,
-        Interval_end = time+interval_width,
+        Interval_end = time + interval_width,
         Mean_Interval = time + interval_width / 2
       )
   }
-  
+
   if (!is.null(groupby)) {
     ## Remove interactions not present in original dataset
     newdata <- newdata |>
-      dplyr::mutate(Group_tmp=interaction(newdata[groupby]))|>
-      dplyr::filter(Group_tmp%in%unique(interaction(lifelihoodData$df[groupby])))|>
+      dplyr::mutate(Group_tmp = interaction(newdata[groupby])) |>
+      dplyr::filter(
+        Group_tmp %in% unique(interaction(lifelihoodData$df[groupby]))
+      ) |>
       dplyr::select(-Group_tmp)
-    
+
     newdata <- newdata |>
-     dplyr::arrange(across(all_of(groupby))) |>
-      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
-                           .names = "{.col}")) |>
+      dplyr::arrange(across(all_of(groupby))) |>
+      dplyr::mutate(across(
+        all_of(groupby),
+        ~ paste0(cur_column(), "=", .),
+        .names = "{.col}"
+      )) |>
       tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)
-    
-   } else {
+  } else {
     newdata$group <- "Overall"
   }
 
   newdata$group <- as.factor(newdata$group)
-  
+
   if (event == "mortality") {
     parameter_name1 <- "expt_death"
-    parameter_name2 <- "survival_shape"
+    parameter_name2 <- "survival_param2"
   } else if (event == "maturity") {
     parameter_name1 <- "expt_maturity"
-    parameter_name2 <- "maturity_shape"
+    parameter_name2 <- "maturity_param2"
   } else if (event == "reproduction") {
     parameter_name1 <- "expt_reproduction"
-    parameter_name2 <- "reproduction_shape"
+    parameter_name2 <- "reproduction_param2"
   }
 
   param1 <- prediction(
@@ -154,9 +168,13 @@ compute_fitted_mortality_rate <- function(
     param2 = param2,
     family = family
   )
-  
+
   if (event == "reproduction") {
-    newdata$n_offspring <- prediction(lifelihoodResults, parameter_name = "n_offspring", newdata=newdata)
+    newdata$n_offspring <- prediction(
+      lifelihoodResults,
+      parameter_name = "n_offspring",
+      newdata = newdata
+    )
   }
   return(newdata)
 }
@@ -263,17 +281,24 @@ compute_observed_mortality_rate <- function(
   n_intervals <- ceiling(max_time / interval_width)
 
   if (!is.null(groupby)) {
-    
     ## Add group column to newdata
     newdata <- newdata |>
       dplyr::arrange(across(all_of(groupby))) |>
-      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
-                           .names = "{.col}_tmp")) |> ## Add the name of the columns to the group
-      tidyr::unite("group", all_of(paste0(groupby, "_tmp")), sep = ".", remove = FALSE)|>
-      dplyr::mutate(group=as.factor(group))
-    
+      dplyr::mutate(across(
+        all_of(groupby),
+        ~ paste0(cur_column(), "=", .),
+        .names = "{.col}_tmp"
+      )) |> ## Add the name of the columns to the group
+      tidyr::unite(
+        "group",
+        all_of(paste0(groupby, "_tmp")),
+        sep = ".",
+        remove = FALSE
+      ) |>
+      dplyr::mutate(group = as.factor(group))
+
     groups <- levels(newdata$group)
-    
+
     ## creates a empty dataframe where the estimated event rates will be stored
     params <- setNames(
       lapply(groupby, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
@@ -284,36 +309,40 @@ compute_observed_mortality_rate <- function(
       to = n_intervals * interval_width,
       by = interval_width
     )
-    
+
     event_rate <- expand.grid(params) |> relocate(time)
-    
+
     ## Add group
     event_rate <- event_rate |>
-      dplyr::mutate(across(all_of(groupby), ~ paste0(cur_column(), "=", .),
-                           .names = "{.col}")) |> ## Add the name of the factor to each level
-      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)|> 
-      dplyr::filter(group%in%groups)|> ## Remove interactions not present in original dataset
-      dplyr::mutate(group=as.factor(group))
-    
+      dplyr::mutate(across(
+        all_of(groupby),
+        ~ paste0(cur_column(), "=", .),
+        .names = "{.col}"
+      )) |> ## Add the name of the factor to each level
+      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE) |>
+      dplyr::filter(group %in% groups) |> ## Remove interactions not present in original dataset
+      dplyr::mutate(group = as.factor(group))
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"
-    
-    event_rate <- expand.grid(time=seq(
-      from = 0,
-      to = n_intervals * interval_width,
-      by = interval_width
-    ), group = "Overall")
-    
+
+    event_rate <- expand.grid(
+      time = seq(
+        from = 0,
+        to = n_intervals * interval_width,
+        by = interval_width
+      ),
+      group = "Overall"
+    )
   }
 
   event_rate <- event_rate |>
     dplyr::mutate(
       Interval_start = time,
-      Interval_end = time+interval_width,
+      Interval_end = time + interval_width,
       Mean_Interval = time + interval_width / 2
     )
-  
+
   event_rate$Event_Rate <- 0
 
   for (grp in groups) {
@@ -322,7 +351,7 @@ compute_observed_mortality_rate <- function(
     for (i in 1:n_intervals) {
       interval_start <- (i - 1) * interval_width
       interval_end <- i * interval_width
-      
+
       ## Number of individuals alive at the beggining of the time interval
       alive_start <- sum(
         group_data[[start_col]] >= interval_start &
@@ -337,7 +366,9 @@ compute_observed_mortality_rate <- function(
           group_data[[end_col]] < interval_end
       )
 
-      event_rate$Event_Rate[event_rate$time==interval_start&event_rate$group==grp] <- if (alive_start > min_sample_size) {
+      event_rate$Event_Rate[
+        event_rate$time == interval_start & event_rate$group == grp
+      ] <- if (alive_start > min_sample_size) {
         deaths / alive_start
       } else {
         NA
@@ -367,7 +398,7 @@ compute_observed_mortality_rate <- function(
 #' - Otherwise must be a character (`"covariate1"`) or a
 #' character vector (`c("covariate1", "covariate2")`).
 #' Note that the function will consider continuous covariates as factors
-#' 
+#'
 #' @returns The valid `groupby` value
 #'
 #' @keywords internal

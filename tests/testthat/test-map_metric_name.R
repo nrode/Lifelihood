@@ -1,6 +1,6 @@
 test_that("Mapping effect name.", {
-  result <- lifelihood:::map_parameter_name("eff_survival_shape_type2")
-  expect_equal(result, "survival_shape")
+  result <- lifelihood:::map_parameter_name("eff_survival_param2_type2")
+  expect_equal(result, "survival_param2")
 
   result <- lifelihood:::map_parameter_name("int_ratio_expt_maturity")
   expect_equal(result, "ratio_expt_maturity")

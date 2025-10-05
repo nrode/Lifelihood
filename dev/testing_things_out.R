@@ -53,7 +53,7 @@ results <- lifelihood(
 lifelihoodResults <- results
 
 plot_observed_mortality_rate(
-  lifelihoodData=lifelihoodData,
+  lifelihoodData = lifelihoodData,
   interval_width = 15,
   groupby = c("spore", "par"),
   use_facet = TRUE,
@@ -64,13 +64,13 @@ plot_observed_mortality_rate(
 results$effects
 coef(results)
 coeff(results, "expt_death")
-coeff(results, "survival_shape")
+coeff(results, "survival_param2")
 vcov(results)
 results$mcmc
 
 prediction(
   results,
-  parameter_name = "survival_shape",
+  parameter_name = "survival_param2",
   type = "response",
   newdata = data.frame(par = 2, geno = 0, spore = 0)
 )
@@ -117,7 +117,7 @@ plot_fitted_mortality_rate(
 
 ### Old stuff
 prediction(results, "expt_death", type = "response")
-prediction(results, "survival_shape", type = "response")
+prediction(results, "survival_param2", type = "response")
 
 t <- 0:10
 dt <- 0.5

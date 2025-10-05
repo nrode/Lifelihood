@@ -29,12 +29,12 @@ make_design_matrix <- function(covariates, data) {
   formula <- as.formula(formula_str)
 
   mat_expt_death <- model.matrix(formula, fitted_data)
-  mat_survival_shape <- model.matrix(formula, fitted_data)
+  mat_survival_param2 <- model.matrix(formula, fitted_data)
 
   return(list(
     fitted_data = fitted_data,
     mat_expt_death = mat_expt_death,
-    mat_survival_shape = mat_survival_shape
+    mat_survival_param2 = mat_survival_param2
   ))
 }
 

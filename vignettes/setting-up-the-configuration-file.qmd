@@ -49,7 +49,7 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 #### Mortality
 
 - `expt_death`: Expected time to death
-- `survival_shape`: Survival shape parameter
+- `survival_param2`: Survival shape parameter
 - `ratio_expt_death`: Ratio between expected time to death for male vs expected time to death for female
 - `prob_death`: Probability of death before critical time
 - `sex_ratio`: Sex ratio
@@ -57,13 +57,13 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 #### Maturity
 
 - `expt_maturity`: Expected time to maturity
-- `maturity_shape`: Maturity shape parameter
+- `maturity_param2`: Maturity shape parameter
 - `ratio_expt_maturity`: Ratio between expected time to maturity for male and expected time to maturity for female
 
 #### Reproduction
 
 - `expt_reproduction`: Expected time until next reproduction
-- `reproduction_shape`: Reproduction shape parameter
+- `reproduction_param2`: Reproduction shape parameter
 - `n_offspring`: Number of offspring per reproduction event or fitness
 - `increase_death_hazard`: Increase in death hazard following a reproduction event
 - `tof_reduction_date`: Trade-off of reduction rate
@@ -84,17 +84,17 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 ---
 mortality:
   expt_death: geno
-  survival_shape: geno + type + geno*type
+  survival_param2: geno + type + geno*type
   ratio_expt_death: geno
   prob_death: geno
   sex_ratio: not_fitted
 maturity:
   expt_maturity: geno + type
-  maturity_shape: geno
+  maturity_param2: geno
   ratio_expt_maturity: geno + type
 reproduction:
   expt_reproduction: geno
-  reproduction_shape: not_fitted
+  reproduction_param2: not_fitted
   n_offspring: geno
   increase_death_hazard: geno + type + geno*type
   tof_reduction_date: geno

@@ -1557,7 +1557,7 @@ begin
 
   with FD.paramdescript[1] do                 { faire distingo entre weibull et ln }
   begin
-    Name := 'survival_shape'; // 'morta'
+    Name := 'survival_param2'; // 'morta'
     minBound := 0.001;
     maxBound := 30;
     //   value := 1;
@@ -1598,7 +1598,7 @@ begin
 
   with FD.paramdescript[6] do
   begin
-    Name := 'maturity_shape'; // 'mata'
+    Name := 'maturity_param2'; // 'mata'
     minBound := 0.0001;
     maxBound := 12;
     //   value := 1;
@@ -1622,7 +1622,7 @@ begin
 
   with FD.paramdescript[9] do
   begin
-    Name := 'reproduction_shape'; // 'ponta'
+    Name := 'reproduction_param2'; // 'ponta'
     minBound := 0.001;
     maxBound := 12;
     //    value := 1;

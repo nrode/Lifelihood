@@ -110,7 +110,7 @@ The `lifelihoodResults` object is a list containing all the results of the analy
 ```{r}
 coef(results)
 coeff(results, "expt_death")
-coeff(results, "survival_shape")
+coeff(results, "survival_param2")
 
 AIC(results)
 BIC(results)

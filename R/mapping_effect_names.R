@@ -18,11 +18,11 @@
 #' @return A named list containing the mapped value for the input element.
 map_parameter_name <- function(name) {
   keys <- c(
-    "survival_shape",
+    "survival_param2",
     "ratio_expt_death",
     "prob_death",
     "sex_ratio",
-    "reproduction_shape",
+    "reproduction_param2",
     "increase_death_hazard",
     "n_offspring",
     "tof_reduction_date",
@@ -32,7 +32,7 @@ map_parameter_name <- function(name) {
     "lin_change_n_offspring",
     "quad_change_n_offspring",
     "tof_n_offspring",
-    "maturity_shape",
+    "maturity_param2",
     "ratio_expt_maturity",
     "quad_senescence",
     "expt_reproduction",
@@ -61,7 +61,7 @@ find_event_type <- function(parameter_name) {
     parameter_name %in%
       c(
         "expt_death",
-        "survival_shape",
+        "survival_param2",
         "ratio_expt_death",
         "prob_death",
         "sex_ratio"
@@ -72,7 +72,7 @@ find_event_type <- function(parameter_name) {
     parameter_name %in%
       c(
         "expt_reproduction",
-        "reproduction_shape",
+        "reproduction_param2",
         "n_offspring",
         "increase_death_hazard",
         "tof_reduction_date",
@@ -88,7 +88,7 @@ find_event_type <- function(parameter_name) {
     event_type <- "reproduction"
   } else if (
     parameter_name %in%
-      c("expt_maturity", "maturity_shape", "ratio_expt_maturity")
+      c("expt_maturity", "maturity_param2", "ratio_expt_maturity")
   ) {
     event_type <- "maturity"
   } else {

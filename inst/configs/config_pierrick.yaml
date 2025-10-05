@@ -1,12 +1,12 @@
 mortality:
   expt_death: par + spore
-  survival_shape: par
+  survival_param2: par
   ratio_expt_death: not_fitted
   prob_death: not_fitted
   sex_ratio: not_fitted
 reproduction:
   expt_reproduction: par
-  reproduction_shape: 1
+  reproduction_param2: 1
   n_offspring: 1
   increase_death_hazard: not_fitted
   tof_reduction_date: not_fitted
@@ -18,5 +18,5 @@ reproduction:
   tof_n_offspring: not_fitted
 maturity:
   expt_maturity: par
-  maturity_shape: 1
+  maturity_param2: 1
   ratio_expt_maturity: not_fitted

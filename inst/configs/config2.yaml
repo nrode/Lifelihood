@@ -1,12 +1,12 @@
 mortality:
   expt_death: geno + type
-  survival_shape: 1
+  survival_param2: 1
   ratio_expt_death: not_fitted
   prob_death: not_fitted
   sex_ratio: not_fitted
 reproduction:
   expt_reproduction: not_fitted
-  reproduction_shape: not_fitted
+  reproduction_param2: not_fitted
   n_offspring: not_fitted
   increase_death_hazard: not_fitted
   tof_reduction_date: not_fitted
@@ -18,5 +18,5 @@ reproduction:
   tof_n_offspring: not_fitted
 maturity:
   expt_maturity: not_fitted
-  maturity_shape: not_fitted
+  maturity_param2: not_fitted
   ratio_expt_maturity: not_fitted
