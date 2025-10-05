@@ -134,60 +134,21 @@ all parameter estimates). All parameters#' can be found
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> lifelihood Pascal program status code 0</span>
 <span class="r-in"><span><span class="fu">coef</span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          int_expt_death                   eff_expt_death_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            -17.78869453                             -2.89709225 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   eff_expt_death_type_1                   eff_expt_death_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -4.48279290                             -0.30099192 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     int_survival_param2              eff_survival_param2_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              6.14904518                              2.96787660 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              eff_survival_param2_type_1              eff_survival_param2_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              3.56630436                              3.43958754 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       eff_survival_param2_type_1:geno_1       eff_survival_param2_type_2:geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -9.78904370                              5.39234946 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    int_ratio_expt_death             eff_ratio_expt_death_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              7.51220924                              4.47236458 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          int_prob_death                   eff_prob_death_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            -19.85150681                             -4.66755544 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       int_expt_maturity                eff_expt_maturity_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -2.03877432                              1.55444499 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                eff_expt_maturity_type_1                eff_expt_maturity_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              0.66072953                             -0.65520063 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     int_maturity_param2              eff_maturity_param2_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -6.13510368                            -12.66969959 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 int_ratio_expt_maturity          eff_ratio_expt_maturity_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              9.21718291                              6.29157951 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          eff_ratio_expt_maturity_type_1          eff_ratio_expt_maturity_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              4.82061920                             10.81747842 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   int_expt_reproduction            eff_expt_reproduction_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -4.45837175                             -5.55089666 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         int_n_offspring                  eff_n_offspring_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -7.93134379                            -16.20606070 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               int_increase_death_hazard        eff_increase_death_hazard_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              7.14071218                              2.06010130 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        eff_increase_death_hazard_type_1        eff_increase_death_hazard_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              2.45327099                             -3.24686063 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> eff_increase_death_hazard_type_1:geno_1 eff_increase_death_hazard_type_2:geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              0.05537952                              0.48247027 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  int_tof_reduction_date           eff_tof_reduction_date_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -5.98084468                              4.27436871 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            int_increase_tof_n_offspring     eff_increase_tof_n_offspring_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              0.70052182                              7.73467571 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 int_lin_decrease_hazard          eff_lin_decrease_hazard_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              2.66887494                             -2.84465302 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          eff_lin_decrease_hazard_type_1          eff_lin_decrease_hazard_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -2.97177934                              3.88660973 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   eff_lin_decrease_hazard_type_1:geno_1   eff_lin_decrease_hazard_type_2:geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -4.75747643                             -0.28970093 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     int_quad_senescence              eff_quad_senescence_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              2.49832143                             -2.71133455 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                int_quad_decrease_hazard         eff_quad_decrease_hazard_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -0.06403036                              0.09121032 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             int_quad_change_n_offspring      eff_quad_change_n_offspring_geno_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              1.60524468                             -0.07882676 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     int_tof_n_offspring </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             -0.26241118 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               int_expt_death        eff_expt_death_geno_1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -2.5253959                    0.7835095 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        eff_expt_death_type_1        eff_expt_death_type_2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -0.9687812                    1.3991316 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          int_survival_param2            int_expt_maturity </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -6.5822104                   -2.2285974 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     eff_expt_maturity_geno_1     eff_expt_maturity_type_1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -0.8401484                    0.4112408 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     eff_expt_maturity_type_2          int_maturity_param2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -0.5456602                   -3.1111023 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        int_expt_reproduction eff_expt_reproduction_geno_1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -2.3365343                    1.3102563 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      int_reproduction_param2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   -2.5535342 </span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -222,13 +183,12 @@ all parameter estimates). All parameters#' can be found
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> lifelihood Pascal program status code 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">coeff</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        int_expt_death eff_expt_death_geno_1 eff_expt_death_type_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           -17.7886945            -2.8970923            -4.4827929 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            -2.5253959             0.7835095            -0.9687812 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> eff_expt_death_type_2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            -0.3009919 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             1.3991316 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
