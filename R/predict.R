@@ -82,7 +82,6 @@ prediction <- function(
     ))
   }
 
-  print(covariates)
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
       "Invalid factor levels in new data.

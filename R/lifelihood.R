@@ -15,7 +15,6 @@
 #' @param interval TBD - Check the actual meaning
 #' @param SEcal If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
 #' @param saveprobevent TBD - Check the actual meaning
-#' @param fitness Reparametrize the model with one parameter as the lifetime reproductive success
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
 #' @param seeds Vector of length for with seed numbers used to reproduce results (same seeds = same results).
 #' @param ratiomax Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)
@@ -84,7 +83,6 @@ lifelihood <- function(
   interval = 25,
   SEcal = FALSE,
   saveprobevent = 0,
-  fitness = 0,
   r = 0,
   seeds = NULL,
   ntr = 2,
@@ -181,6 +179,21 @@ lifelihood <- function(
     temp_dir = temp_dir
   )
 
+  # we deduce fitness from the configuration file
+  config_yaml <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
+  if (read_formula(config_yaml, "fitness") != "not_fitted") {
+    if (read_formula(config_yaml, "n_offspring") != "not_fitted") {
+      stop(
+        "Model in configuration file (",
+        path_config,
+        ") is not identifiable: you should either fit 'fitness' or 'n_offpsring' in your model."
+      )
+    }
+    fitness <- 1
+  } else {
+    fitness <- 0
+  }
+
   execute_bin(
     path_to_Lifelihood = path_to_Lifelihood,
     path_input_data = data_path,
@@ -230,7 +243,6 @@ lifelihood <- function(
   results$lifelihoodData <- lifelihoodData
   results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df
-  results$fitness <- fitness
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)
