@@ -102,7 +102,7 @@ compute_fitted_mortality_rate <- function(
     )
     params$time <- seq(
       from = 0,
-      to = n_intervals * interval_width,
+      to = (n_intervals-1) * interval_width,
       by = interval_width
     )
     newdata <- expand.grid(params) |> relocate(time)
@@ -306,7 +306,7 @@ compute_observed_mortality_rate <- function(
     )
     params$time <- seq(
       from = 0,
-      to = n_intervals * interval_width,
+      to = (n_intervals-1) * interval_width,
       by = interval_width
     )
 
@@ -382,7 +382,6 @@ compute_observed_mortality_rate <- function(
 
   return(event_rate)
 }
-
 
 #' @title Check that the `groupby` argument is valid
 #'
