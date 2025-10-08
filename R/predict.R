@@ -73,11 +73,6 @@ prediction <- function(
   df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
   original_df <- object$lifelihoodData$df
 
-  # if fitness, n_offspring corresponds to fitness estimate
-  if (object$fitness == 1 & parameter_name == "fitness") {
-    parameter_name <- "n_offspring"
-  }
-
   covariates <- object$formula[[parameter_name]]
   if (is.null(covariates)) {
     stop(paste0(

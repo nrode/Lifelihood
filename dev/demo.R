@@ -43,7 +43,7 @@ results <- lifelihood(
   fitness = 1
 )
 
-prediction(results, "fitness")
+prediction(results, "fitness", type = "response") |> head()
 
 r <- lifelihood_optim(
   lifelihoodData = lifelihoodData,

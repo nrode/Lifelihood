@@ -87,7 +87,8 @@ read_output_from_file <- function(
       "quad_decrease_hazard",
       "lin_change_n_offspring",
       "quad_change_n_offspring",
-      "tof_n_offspring"
+      "tof_n_offspring",
+      "fitness"
     )
   )
 
