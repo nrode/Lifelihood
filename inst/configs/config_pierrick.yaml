@@ -7,7 +7,7 @@ mortality:
 reproduction:
   expt_reproduction: par
   reproduction_param2: 1
-  n_offspring: 1
+  n_offspring: not_fitted
   increase_death_hazard: not_fitted
   tof_reduction_date: not_fitted
   increase_tof_n_offspring: not_fitted
@@ -16,7 +16,7 @@ reproduction:
   lin_change_n_offspring: not_fitted
   quad_change_n_offspring: not_fitted
   tof_n_offspring: not_fitted
-  fitness: not_fitted
+  fitness: 1
 maturity:
   expt_maturity: par
   maturity_param2: 1
