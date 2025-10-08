@@ -102,7 +102,7 @@ compute_fitted_mortality_rate <- function(
     )
     params$time <- seq(
       from = 0,
-      to = (n_intervals-1) * interval_width,
+      to = (n_intervals - 1) * interval_width,
       by = interval_width
     )
     newdata <- expand.grid(params) |> relocate(time)
@@ -306,7 +306,7 @@ compute_observed_mortality_rate <- function(
     )
     params$time <- seq(
       from = 0,
-      to = (n_intervals-1) * interval_width,
+      to = (n_intervals - 1) * interval_width,
       by = interval_width
     )
 

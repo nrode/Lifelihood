@@ -230,6 +230,7 @@ lifelihood <- function(
   results$lifelihoodData <- lifelihoodData
   results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df
+  results$fitness <- fitness
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)

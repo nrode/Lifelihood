@@ -80,7 +80,12 @@ simulate_event <- function(object, ev, newdata) {
     n <- floor(max_long / min_reproduction_interval) + 1
 
     n_offspring <- tryCatch(
-      prediction(object, "n_offspring", type = "response", newdata = newdata),
+      prediction(
+        object,
+        "n_offspring",
+        type = "response",
+        newdata = newdata
+      ),
       error = function(e) return(rep(NA, length(expected)))
     )
     #n_offspring <- floor(expt_death) # temporary workaround

@@ -207,6 +207,14 @@ format_config <- function(path_config, covariates, covar_types) {
         covariates,
         covar_types
       )[1]
+    ),
+    paste(
+      "fitness",
+      R_to_lifelihood(
+        safe_access(config, c("reproduction", "fitness")),
+        covariates,
+        covar_types
+      )[1]
     )
   )
 

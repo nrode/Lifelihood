@@ -49,10 +49,12 @@ const
   a2_erfra = -0.0958798;
   a3_erfra = 0.7478556;
   minus = 0.00000000000000000000000000000000001;
-  nbparposs = 19;
+  // nbparposs = 19;
+  nbparposs = 20;
   nbparmort = 5; {  mortuf  morta  Rmortum mortp propmal}
   nbparmat = 3; {  matuf mata Rmatum }
-  nbparponte = 11;
+  // nbparponte = 11;
+  nbparponte = 12;
   {pontu  ponta  (W)pontn  to(ps)int  to(ps)am  to(ps)tp  sen(pu)t  sen(pu)t2  sen(pn)t  sen(pn)t2  to(pnpu) }
 
 type
@@ -1627,21 +1629,21 @@ begin
     //    value := 1;
   end;
 
-  if fitness_repar = 1 then  with FD.paramdescript[10] do
-    begin
-      Name := 'fitness'; // 'W'
-      minBound := 0.0001;
-      maxBound := 1000;
-      //   value := 20;
-    end
-  else
-    with FD.paramdescript[10] do
-    begin
-      Name := 'n_offspring';
-      minBound := 1;
-      maxBound := 50;    //attention a cette limite
-      //   value := 20;
-    end;
+  // if fitness_repar = 1 then  with FD.paramdescript[10] do
+  //   begin
+  //     Name := 'n_offspring'; // 'W'
+  //     minBound := 0.0001;
+  //     maxBound := 1000;
+  //     //   value := 20;
+  //   end
+  // else
+  with FD.paramdescript[10] do
+  begin
+    Name := 'n_offspring';
+    minBound := 1;
+    maxBound := 50;    //attention a cette limite
+    //   value := 20;
+  end;
 
   with FD.paramdescript[11] do
   begin
@@ -1715,6 +1717,14 @@ begin
     //   value := 0.5;
   end;
 
+  with FD.paramdescript[19] do
+  begin
+    Name := 'fitness'; // 'W'
+    minBound := 0.0001;
+    maxBound := 1000;
+    //   value := 20;
+  end
+
 end;
 
 {----------------------------------------------------------------------------------------------------}
@@ -1734,9 +1744,9 @@ begin
   intinit[7] := 0;
   intinit[8] := -3.036;
   intinit[9] := -3.35;
-  if fitrep = 1 then intinit[10] := -4.0
-  else
-    intinit[10] := -2.6;
+  // if fitrep = 1 then intinit[10] := -4.0
+  // else
+  intinit[10] := -2.6;
   intinit[11] := 0;
   intinit[12] := 0;
   intinit[13] := 0;
@@ -1745,6 +1755,7 @@ begin
   intinit[16] := 0;
   intinit[17] := 0;
   intinit[18] := 0;
+  intinit[19] := -4.0;
 
   //decrireparam(ll_d);
   Count := 0;

@@ -38,7 +38,6 @@ map_parameter_name <- function(name) {
     "expt_reproduction",
     "expt_maturity",
     "expt_death",
-    "n_offspring",
     "fitness"
   )
   for (key in keys) {
@@ -82,7 +81,8 @@ find_event_type <- function(parameter_name) {
         "lin_change_n_offspring",
         "quad_change_n_offspring",
         "tof_n_offspring",
-        "quad_senescence"
+        "quad_senescence",
+        "fitness"
       )
   ) {
     event_type <- "reproduction"

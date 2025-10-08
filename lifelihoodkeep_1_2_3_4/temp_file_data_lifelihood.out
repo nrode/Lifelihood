@@ -1,0 +1,50 @@
+---------------------------
+
+datafile= /Users/josephbarbier/Desktop/lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt
+seed1= 1 seed2= 2 seed3= 3 seed4= 4
+#parameters= 18
+Likelihood_max= -35918.777170
+int_expt_death -0.92064907 0.00000000
+eff_expt_death_par1 -0.36883031 0.00000000
+eff_expt_death_par2 0.29722324 0.00000000
+eff_expt_death_spore1 -0.41485255 0.00000000
+eff_expt_death_spore2 -0.34409575 0.00000000
+eff_expt_death_spore3 -1.05908004 0.00000000
+int_survival_param2 -5.61537960 0.00000000
+eff_survival_param2_par1 0.23587078 0.00000000
+eff_survival_param2_par2 0.29203023 0.00000000
+int_expt_maturity -1.52911273 0.00000000
+eff_expt_maturity_par1 0.14109124 0.00000000
+eff_expt_maturity_par2 0.07185599 0.00000000
+int_maturity_param2 -5.90239081 0.00000000
+int_expt_reproduction -1.78747587 0.00000000
+eff_expt_reproduction_par1 -1.70352092 0.00000000
+eff_expt_reproduction_par2 -1.10637689 0.00000000
+int_reproduction_param2 -5.01765793 0.00000000
+int_n_offspring -2.54595864 0.00000000
+
+
+Parameter_Range_Table
+expt_death 0.00100000 324.00000000
+survival_param2 0.05000000 1000.00000000
+ratio_expt_death 0.01000000 100.00000000
+prob_death 0.00001000 0.99999000
+sex_ratio 0.00001000 0.99999000
+expt_maturity 0.00100000 70.00000000
+maturity_param2 0.05000000 500.00000000
+ratio_expt_maturity 0.01000000 100.00000000
+expt_reproduction 0.00100000 32.00000000
+reproduction_param2 0.00500000 600.00000000
+n_offspring 1.00000000 50.00000000
+increase_death_hazard 0.00001000 10.00000000
+tof_reduction_date 0.00000010 10.00000000
+increase_tof_n_offspring 0.00000010 10.00000000
+lin_decrease_hazard -20.00000000 20.00000000
+quad_senescence -20.00000000 20.00000000
+quad_decrease_hazard -10.00000000 10.00000000
+quad_change_n_offspring -10.00000000 10.00000000
+tof_n_offspring -10.00000000 10.00000000
+fitness 0.00100000 1000.00000000
+ratiomax  1.0000000000000000E+001
+tinf_(right_censoring)  1.0000000000000000E+003
+tc_(juvenile_period_length)  2.0000000000000000E+001

@@ -16,6 +16,7 @@ reproduction:
   lin_change_n_offspring: not_fitted
   quad_change_n_offspring: not_fitted
   tof_n_offspring: not_fitted
+  fitness: not_fitted
 maturity:
   expt_maturity: par
   maturity_param2: 1

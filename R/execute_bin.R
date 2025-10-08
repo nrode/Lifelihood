@@ -95,5 +95,6 @@ execute_bin <- function(
     path <- path_to_Lifelihood
   }
 
+  print(paste0(path, " ", arg_string))
   system(path, input = arg_string)
 }
