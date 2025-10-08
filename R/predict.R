@@ -129,10 +129,20 @@ prediction <- function(
 
     if (se.fit) {
       vcov <- object$vcov
+      var_parameter <- as.matrix(vcov[range, range])
       if (type == "link") {
-        se <- sqrt(diag(x %*% vcov %*% t(x)))
+        se <- sqrt(diag(x %*% var_parameter %*% t(x)))
       } else {
-        se <- sqrt(diag(x %*% vv %*% t(x)) * (derivLink(estimate, min, max)^2))
+        bounds_df <- object$param_bounds_df
+        parameter_bounds <- subset(bounds_df, param == parameter_name)
+        se <- sqrt(
+          diag(x %*% var_parameter %*% t(x)) *
+            (derivLink(
+              predictions,
+              min = as.numeric(parameter_bounds$min),
+              max = as.numeric(parameter_bounds$max)
+            )^2)
+        )
       }
     }
 
