@@ -63,7 +63,7 @@ clutchs <- c(
 
 This function mostly takes as input your dataset, your column names.
 
-It also has the `model_specs` argument, which is a vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of `"wei"` (Weibull law), `"exp"` (Exponential law), `"gam"` (Gamma law) or `"lgn"` (Log-normal law). The first one is used for **maturity**, the second one is used for **clutchs** and the third one for **death**.
+It also has the `model_specs` argument, which is a vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of `"wei"` (Weibull law), `"exp"` (Exponential law), `"gam"` (Gamma law) or `"lgn"` (Log-normal law). The first one is used for **death**, the second one is used for **maturity** and the third one for **clutchs**.
 
 ```{r}
 dataLFH <- lifelihoodData(
