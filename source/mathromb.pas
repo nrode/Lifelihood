@@ -30,12 +30,11 @@ procedure romb(var fx: fint; lower, upper, tol: double; var ans: double);
 var
   nx: array[1..16] of integer;
   t: array[1..136] of double;
-  done, error: boolean;
+  done: boolean;
   pieces, nt, i, ii, n, nn, l, ntra, k, m, j: integer;
   delta_x, c, sum, fotom, x: double;
 begin
   done := False;
-  error := False;
   pieces := 1;
   nx[1] := 1;
   delta_x := (upper - lower) / pieces;
@@ -80,7 +79,6 @@ begin
         else if n > 15 then
         begin
           done := True;
-          error := True;
         end;
     end;  { if n>4 }
     nn := j + 1

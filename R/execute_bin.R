@@ -11,7 +11,7 @@
 #' @param seed1 First seed number used to reproduce results (same seed = same results).
 #' @param seed2 Second seed number used to reproduce results (same seed = same results).
 #' @param seed3 Third seed number used to reproduce results (same seed = same results).
-#' @param seed4 4th seed number used to reproduce results (same seed = same results).
+#' @param seed4 Fourth seed number used to reproduce results (same seed = same results).
 #' @inheritParams lifelihood
 #' @inheritParams lifelihoodData
 execute_bin <- function(

@@ -1,4 +1,3 @@
-{$N+}
 unit Alea;
 
 {$MODE Delphi}

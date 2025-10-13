@@ -34,7 +34,7 @@ begin
     nomf1 := list[0];
     assignfile(f1, nomf1);     // f1 declaré ds unit2
     readata;
-    fitness_repar := StrToInt(list[7]);
+    fitness_repar := list[7];
     r := StrToFloat(list[8]);
 
     //customfile
@@ -93,7 +93,7 @@ begin
 
     //LL maximization                    //a maodifier ce bloc pour faire des fit gxgroup + remettre procedure ecriture correspondante...
     Init_met_D(The_Met_D);
-    interpretation(fitness_repar);      //anciennement readgrid
+    interpretation();      //anciennement readgrid
     Init_f_D(LL_D);
     automatic_met(LL_D, The_Met_D);
 

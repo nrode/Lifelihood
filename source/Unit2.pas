@@ -161,8 +161,8 @@ var
   nb_group, nb_current_group, max_vars: integer;
   //f1:filetype;
   f1, fc, outfile, file_continuous_var: Text;
-  nom, nomf1, nomfc, nomoutfile, nommodfile, path_continuous_var: string;
-  fitness_repar, matclutch: byte;
+  fitness_repar, nom, nomf1, nomfc, nomoutfile, nommodfile, path_continuous_var: string;
+  matclutch: byte;
   r, xratiomax, ratiomax, tc, tinf, sub_interval: double;
   H: mat;
   intervalp1p2: double;
@@ -177,7 +177,7 @@ procedure printout_FD(var FD: function_D; nomf: string; nbrun: integer;
   exportinvhessian: string);
 procedure automatic_met(var function_des: function_D; var Metrop_des: Metropolis_D);
 procedure Init_f_D(var FD: function_D);
-procedure interpretation(var fitrep: byte);
+procedure interpretation();
 procedure ghv(var a, b: integer);
 procedure gnop;
 procedure calendrier(var hv: life_history);
@@ -559,7 +559,6 @@ function Survtotpon(tfromlastpon, tfrommat: double; var su: survfunctype;
   var lh: life_history; sex: integer): double;
   //fonction qui corrige S(t) en ajoutant un increment /decrement de hazard pour senescence du taux de ponte. attention le temps en argument est le temps depuis maturité!!
 var
-  i: integer;
   vp0, vp6, vp7: double;
 begin
   //ATTENTION A FAIRE PROTECTION SUR VP[0]
@@ -707,7 +706,7 @@ function romb(var r: double; var legroupe: groupe_info): double;
 var
   nx: array[1..16] of integer;
   t: array[1..136] of double;
-  done, error: boolean;
+  done: boolean;
   pieces, nt, i, ii, n, nn, l, ntra, k, m, j: integer;
   delta_x, c, sum, fotom, x, lower, upper, tol: double;
 begin
@@ -718,7 +717,6 @@ begin
     //On se limite ici a un tmps 10 fois la moyenne, pour pas se casser les pieds avec les differentes distribs, assez large                            ///min(mort.vp[0]*Power(Ln(70),1/mort.vp[1]),tinf)      ;//VERIF EN LOGNORMALE!!!!  //la borne sup pour integrer fitness inst est prise telle que >99% individus sont morts a ce temps la. C'est vp0 Log(100)^(1/vp1)
     tol := 0.005;
     done := False;
-    error := False;
     pieces := 1;
     nx[1] := 1;
     delta_x := (upper - lower) / pieces;
@@ -765,7 +763,6 @@ begin
           else if n > 15 then
           begin
             done := True;
-            error := True;
           end;
       end;  { if n>4 }
       nn := j + 1
@@ -777,7 +774,7 @@ end;    { ROMBERG }
 { ************************************************************************ }
 procedure calendrier(var hv: life_history);
 var
-  nbponte, I: integer;                         {sex, mat,(pon)xn,mor,nop}
+  I: integer;                         {sex, mat,(pon)xn,mor,nop}
 begin                                          { 0 ,  1 ,  ...,  nbevent-2, nbevent-1}
 
   for I := 0 to hv.nb_event - 1 do       //tous les evenements
@@ -833,7 +830,7 @@ end;
 function probevent(var ev: event_type; var mo, ma, pon: survfunctype;
   var integrale: double; sex: integer; var hv: life_history): double;
 var
-  probmale, survmale, survfem, esptailleponte: double;
+  probmale, esptailleponte: double;
 begin
   if ev.Name = 'sex' then if mo.vp[4] = 0 then probevent := 1
     else
@@ -851,7 +848,7 @@ begin
     else if ev.tp > 0 then
     begin
       if
-      fitness_repar = 1 then esptailleponte :=
+      fitness_repar = 'TRUE' then esptailleponte :=
           pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv) / integrale
       else
         esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv);
@@ -868,7 +865,7 @@ begin
     probevent := survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin, pon, hv, sex) + minus;
   if ev.Name = 'pon' then
   begin
-    if fitness_repar = 1 then
+    if fitness_repar = 'TRUE' then
       esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv) / integrale
     else
       esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv);
@@ -998,7 +995,7 @@ begin
         end;
 
 
-        if fitness_repar = 1 then
+        if fitness_repar = 'TRUE' then
         begin
           if group[j].ponte.vp[0] = 0 then integrale := minus
           else if matclutch = 0 then integrale := romb(r, group[j])
@@ -1205,7 +1202,7 @@ procedure automatic_met(var function_des: function_D; var Metrop_des: Metropolis
 var
   specific_Heat, tempt, LastResult: double;
   //A FAIRE PATTERN DE REFROIDISSEMENT AVEC UN STOP DE DECOMPRESSION A  T=1
-  I, k, t, batchsize, rep: integer;
+  k, t, batchsize, rep: integer;
 begin
   t := 0;
   repeat { recherche globale }
@@ -1515,7 +1512,7 @@ end;
 { ************************************************************************** }
 procedure Init_f_D(var FD: function_D);
 var
-  j, k: integer;
+  j: integer;
 begin
   with FD do
   begin
@@ -1629,7 +1626,7 @@ begin
     //    value := 1;
   end;
 
-  // if fitness_repar = 1 then  with FD.paramdescript[10] do
+  // if fitness_repar = 'TRUE' then  with FD.paramdescript[10] do
   //   begin
   //     Name := 'n_offspring'; // 'W'
   //     minBound := 0.0001;
@@ -1728,7 +1725,7 @@ begin
 end;
 
 {----------------------------------------------------------------------------------------------------}
-procedure interpretmodel(var fitrep: byte);
+procedure interpretmodel();
 var
   i, j, k, l, Count: integer;
   intinit: array[0..nbparposs - 1] of double;
@@ -1963,13 +1960,11 @@ begin
 end;
 
 { ************************************************************************** }
-procedure interpretation(var fitrep: byte);
-var
-  I, j: integer;
+procedure interpretation();
 begin
   LL_D.number_of_variables := max_vars;
   LL_D.BestResult := -1E10;
-  interpretmodel(fitrep);
+  interpretmodel();
   interpretmodelpargroupe;
 end;
 
@@ -2030,11 +2025,10 @@ end;
 procedure promenade(var Fun_Des: function_D; var Met_Des: Metropolis_D);
 var
   t, k: integer;
-  tempt, LastResult: double;
   acc: boolean;
   m, i, j: integer;
-  df, newfresult, sm, ssq, nATT, savedvalue: double;
-  beta, temp: double;{cooling rate}
+  df, newfresult, nATT, savedvalue: double;
+  temp: double;{cooling rate}
 begin
 
   {start walking at best point found so far }
@@ -2050,7 +2044,6 @@ begin
 
   with Met_Des do { set up cooling rates: beta, temp }
   begin
-    beta := 0;
     temp := 1;
     pacc := 0;
 
@@ -2067,8 +2060,6 @@ begin
   {*****************************************}
   { initialise local variables }
 
-  sm := 0;
-  ssq := 0;
   nATT := 0;
   t := 0;
 
@@ -2242,7 +2233,7 @@ begin
               link(group[j].ponte.vp[k - 8], fd.paramdescript[k]);
           end;
         end;
-        if fitness_repar = 1 then
+        if fitness_repar = 'TRUE' then
         begin
           if group[j].ponte.vp[0] = 0 then integrale := minus
           else if matclutch = 0 then integrale := romb(r, group[j])
@@ -2282,8 +2273,7 @@ end;    //fin getandwrite
 (*******************************************************************************************)
 procedure writeparamdescript(var FD: function_D);
 var
-  i, j, k, l, m, n: integer;
-  integrale, valeur: double;
+  k: integer;
 begin
   append(outfile);
   writeln(outfile);

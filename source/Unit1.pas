@@ -20,7 +20,6 @@ implementation
 //{$R *.DFM}    {$I+}
 {----init met ------------------------------------------------------------------------------------------------}
 procedure Init_met_D(var md: Metropolis_D);
-var i:integer;
 begin
   with md do
     begin
@@ -39,16 +38,13 @@ end;
 
 {----readata-------------------------------------------------------------------------------------------------}
 procedure readata;
-var i,j,k,t,m,n,numhv,nbponte,numevent,ii:integer;
-    stop:boolean;
-    tabaux:Array of integer;
-    somme,maxi,currentgroup:integer;
-    lal:TStringList;
-    check,checkpart:string;
-    vc:vecti;
+var i,j,k,numhv,numevent: integer;
+    currentgroup: integer;
+    lal: TStringList;
+    check: string;
+    vc: vecti;
 
 begin
-// {$I+}
 reset(f1);
 readln(f1);    //line 'data struct'
 lal := TStringList.Create;
@@ -205,7 +201,7 @@ END;
 procedure read_custom(var FD: function_D);
 var lal:TStringList;
     check:string;
-    i,j:integer;
+    i:integer;
 begin
 setlength(suaux.vp,11);
 //  1    morta            !!! faire distingo entre weibull et ln
@@ -232,7 +228,7 @@ with FD.paramdescript[i] do
         maxBound :=StrToFloat(lal[2]);
         end;
 
-// if fitness_repar=1 then
+// if fitness_repar='TRUE' then
 // begin
 //   with FD.paramdescript[19] do        //n_offspring est le 11 param ds custom.txt
 //   begin

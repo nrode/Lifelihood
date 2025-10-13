@@ -7,18 +7,19 @@
       <Unit>
         <Filename Value="lifelihood.lpr"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="5"/>
-        <CursorPos X="51" Y="13"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="77"/>
+        <CursorPos X="5" Y="96"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="Unit2.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="1742"/>
-        <CursorPos X="4" Y="1760"/>
+        <TopLine Value="837"/>
+        <CursorPos X="7" Y="854"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -49,7 +50,7 @@
         <UsageCount Value="20"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="3">
+    <JumpHistory HistoryIndex="5">
       <Position>
         <Filename Value="lifelihood.lpr"/>
         <Caret Line="13" Column="51" TopLine="5"/>
@@ -65,6 +66,14 @@
       <Position>
         <Filename Value="lifelihood.lpr"/>
         <Caret Line="13" Column="51" TopLine="5"/>
+      </Position>
+      <Position>
+        <Filename Value="lifelihood.lpr"/>
+        <Caret Line="20" Column="34" TopLine="5"/>
+      </Position>
+      <Position>
+        <Filename Value="Unit2.pas"/>
+        <Caret Line="854" Column="7" TopLine="837"/>
       </Position>
     </JumpHistory>
     <RunParams>

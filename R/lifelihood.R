@@ -189,9 +189,9 @@ lifelihood <- function(
         ") is not identifiable: you should either fit 'fitness' or 'n_offpsring' in your model."
       )
     }
-    fitness <- 1
+    fitness <- TRUE
   } else {
-    fitness <- 0
+    fitness <- FALSE
   }
 
   execute_bin(
