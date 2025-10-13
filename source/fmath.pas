@@ -698,9 +698,9 @@ begin
     if XX <= LC.X1 then
     begin
       RETA := Sqrt(LC.D12 * DELX);
-      LambertW := RETA /
-        (1.0 + RETA / (3.0 + RETA / (RETA / (LC.AN4 + RETA /
-        (RETA * LC.AN6 + LC.AN5)) + LC.AN3))) - 1.0;
+      LambertW := RETA / (1.0 + RETA /
+        (3.0 + RETA / (RETA / (LC.AN4 + RETA / (RETA * LC.AN6 + LC.AN5)) +
+        LC.AN3))) - 1.0;
       Exit;
     end;
 
@@ -729,9 +729,9 @@ begin
     if XX <= LC.X1 then
     begin
       RETA := Sqrt(LC.D12 * DELX);
-      LambertW := RETA /
-        (RETA / (3.0 + RETA / (RETA / (LC.AN4 + RETA /
-        (RETA * LC.AN6 - LC.AN5)) - LC.AN3)) - 1.0) - 1.0;
+      LambertW := RETA / (RETA /
+        (3.0 + RETA / (RETA / (LC.AN4 + RETA / (RETA * LC.AN6 - LC.AN5)) - LC.AN3)) -
+        1.0) - 1.0;
       Exit;
     end;
 
@@ -1000,8 +1000,7 @@ begin
     Exit;
   end;
   Temp := Sqr(B.X) + Sqr(B.Y);
-  CDiv := Cmplx((A.X * B.X + A.Y * B.Y) / Temp,
-    (A.Y * B.X - A.X * B.Y) / Temp);
+  CDiv := Cmplx((A.X * B.X + A.Y * B.Y) / Temp, (A.Y * B.X - A.X * B.Y) / Temp);
 end;
 
 function CRoot(Z: Complex; K, N: integer): Complex;

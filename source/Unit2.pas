@@ -282,7 +282,8 @@ begin
     delink := 200;
   end
   else
-    delink := Ln((val - pt.minBound + 0.0000000000000000) / (pt.maxBound - val + 0.0000000000000000));
+    delink := Ln((val - pt.minBound + 0.0000000000000000) /
+      (pt.maxBound - val + 0.0000000000000000));
 end;
 
 (****************************************************************)
@@ -545,7 +546,8 @@ begin
   else
     {si c'est 'mat'} tfrommat := 0;
   // temps depuis la maturite qui est l'evenement [1]     vrai qqsoit matclutch si ev.name=pon sinon, si matcluth=true et ev.name='mat' compte senescence a partir de la mat=1ere ponte// Attention ca veut dire que senescence de taille de ponte ne veut pas dire exactement meme chose en matclutch true et false (false: senescence accumule depuis mat; true: senescence accumule depuis 1ere ponte(qui est aussi mat))
-  sum := tfrommat * (pon.vp[8] + pon.vp[9] * tfrommat) + pon.vp[10] * (ev.fin - ev.debut);
+  sum := tfrommat * (pon.vp[8] + pon.vp[9] * tfrommat) + pon.vp[10] *
+    (ev.fin - ev.debut);
   // intercept + senpent t + senpentt t2 + to(pupn) duréeDernierintervaledeponte
   if sum > 20 then CalculRatioEspPoissonTronque := ratiomax
   else if sum < -20 then CalculRatioEspPoissonTronque := minus
@@ -611,7 +613,8 @@ begin
         sumhaz := sumhaz + (d + dn * lh.events[i + aux].tp) * ttodeath
       //l'amortissement est presque nul, l'intgrale vaut d * t
       else
-        sumhaz := sumhaz + (d + dn * lh.events[i + aux].tp) * (1 - Exp(-da * ttodeath)) / da;
+        sumhaz := sumhaz + (d + dn * lh.events[i + aux].tp) *
+          (1 - Exp(-da * ttodeath)) / da;
       //l'integrale vaut d(1-exp(-da t))/da
     end;
     Sda := Exp(-sumhaz);          //S(t) = Exp(-somme hazard cumulé)
@@ -619,8 +622,8 @@ begin
 end;
 
 { ************************************************************************* }
-function censored_mort(t1, t2: double; var su: survfunctype;
-  sex: integer; var hv: life_history; d, da, dn: double): double;
+function censored_mort(t1, t2: double; var su: survfunctype; sex: integer;
+  var hv: life_history; d, da, dn: double): double;
 begin
   if (su.vp[3] > 0) then                     //i.e. if mortp est utilisé
   begin
@@ -686,13 +689,14 @@ begin
   begin
     if ponte.vp[0] <= 0 then fx := 0
     else if matclutch = 0 then
-      fx := (*0.5*)((1 - surv(t, mat, 0)) * survp(t, mort, 0) (*+ (1-surv(t,mat,1))*survp(t,mort,1)*)
+      fx := (*0.5*)((1 - surv(t, mat, 0)) *
+        survp(t, mort, 0) (*+ (1-surv(t,mat,1))*survp(t,mort,1)*)
         ) * Expo(-r * t) * (1 / ponte.vp[0])
     //vp[0] est l'esperance du temps de ponte qqsoit la loi (exp, wei, lgn, gam), donc 1 sur cette esperance est le taux instatané de ponte  //le reste (survie, maturite) moyenne male/fem
     else
       fx := (*0.5*)((1 - surv(t, mat(*sanspon*), 0)) * survp(
-        t, mort, 0) (*+ (1-surv(t,mat,1))*survp(t,mort,1)*)) * Expo(-r * t) *
-        (1 / ponte.vp[0]);
+        t, mort, 0) (*+ (1-surv(t,mat,1))*survp(t,mort,1)*)) *
+        Expo(-r * t) * (1 / ponte.vp[0]);
 
 
     // fitness:=romb(fitnessinst,0,?,0.001) probleme de passer arguments variés de fitnessinst ds romb
@@ -840,29 +844,29 @@ begin
         sex * probmale + (1 - sex) * (1 - probmale) + minus;
     end;
   if ev.Name = 'mor' then
-    probevent := censored_mort(ev.t1, ev.t2, mo,
-      sex, hv, pon.vp[3], pon.vp[4], pon.vp[5]) + minus;
+    probevent := censored_mort(ev.t1, ev.t2, mo, sex, hv, pon.vp[3],
+      pon.vp[4], pon.vp[5]) + minus;
   if ev.Name = 'mat' then
     if matclutch = 0 then
       probevent := censored_mat(ev.t1, ev.t2, ma, sex) + minus
     else if ev.tp > 0 then
     begin
-      if
-      fitness_repar = 'TRUE' then esptailleponte :=
+      if fitness_repar = 'TRUE' then esptailleponte :=
           pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv) / integrale
       else
         esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv);
-      if esptailleponte
-        <= 1 then  esptailleponte := 1 + minus;
+      if esptailleponte <= 1 then  esptailleponte := 1 + minus;
       // attention du fait du ratio cette esperance pourrait se retrouver <1 et ce n'est pas possible mathematiquement
       probevent :=
-        censored_mat(ev.t1, ev.t2, ma, sex) * ppoissontrunc(esptailleponte, ev.tp) + minus;
+        censored_mat(ev.t1, ev.t2, ma, sex) * ppoissontrunc(esptailleponte,
+        ev.tp) + minus;
     end
     else
       probevent := censored_mat(ev.t1, ev.t2, ma, sex) + minus;
 
   if ev.Name = 'nop' then
-    probevent := survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin, pon, hv, sex) + minus;
+    probevent := survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin,
+      pon, hv, sex) + minus;
   if ev.Name = 'pon' then
   begin
     if fitness_repar = 'TRUE' then
@@ -925,8 +929,8 @@ begin
   else
     varmatsanspon := 0.001;
 
-  legroupe.matsanspon.vp[1] := (legroupe.matsanspon.vp[0] * legroupe.matsanspon.vp[0]) /
-    varmatsanspon;
+  legroupe.matsanspon.vp[1] :=
+    (legroupe.matsanspon.vp[0] * legroupe.matsanspon.vp[0]) / varmatsanspon;
 
 end;
 
@@ -953,10 +957,10 @@ begin
             group[j].mort.vp[k] := 0;
             for l :=
               0 to group[j].param[k].nbterms - 1 do
-              if
-              group[j].param[k].po[l] > -1 then
-                group[j].mort.vp[k] := group[j].mort.vp[k] +
-                  var_info[group[j].param[k].po[l]].Value * group[j].param[k].valpo[l];
+              if group[j].param[k].po[l] > -1 then
+                group[j].mort.vp[k] :=
+                  group[j].mort.vp[k] + var_info[group[j].param[k].po[l]].Value *
+                  group[j].param[k].valpo[l];
             group[j].mort.vp[k] :=
               link(group[j].mort.vp[k], fd.paramdescript[k]);
           end;
@@ -969,10 +973,10 @@ begin
             group[j].mat.vp[k - 5] := 0;
             for l :=
               0 to group[j].param[k].nbterms - 1 do
-              if
-              group[j].param[k].po[l] > -1 then
-                group[j].mat.vp[k - 5] := group[j].mat.vp[k - 5] +
-                  var_info[group[j].param[k].po[l]].Value * group[j].param[k].valpo[l];
+              if group[j].param[k].po[l] > -1 then
+                group[j].mat.vp[k - 5] :=
+                  group[j].mat.vp[k - 5] + var_info[group[j].param[k].po[l]].Value *
+                  group[j].param[k].valpo[l];
             group[j].mat.vp[k - 5] :=
               link(group[j].mat.vp[k - 5], fd.paramdescript[k]);
           end;
@@ -985,10 +989,10 @@ begin
             group[j].ponte.vp[k - 8] := 0;
             for l :=
               0 to group[j].param[k].nbterms - 1 do
-              if
-              group[j].param[k].po[l] > -1 then
-                group[j].ponte.vp[k - 8] := group[j].ponte.vp[k - 8] +
-                  var_info[group[j].param[k].po[l]].Value * group[j].param[k].valpo[l];
+              if group[j].param[k].po[l] > -1 then
+                group[j].ponte.vp[k - 8] :=
+                  group[j].ponte.vp[k - 8] + var_info[group[j].param[k].po[l]].Value *
+                  group[j].param[k].valpo[l];
             group[j].ponte.vp[k - 8] :=
               link(group[j].ponte.vp[k - 8], fd.paramdescript[k]);
           end;
@@ -1003,11 +1007,9 @@ begin
           begin
             CalcMatsanspon(
               group[j]);
-            integrale
-            :=
+            integrale :=
               romb(r, group[j]);
-          end
-          ;
+          end;
           if integrale <= minus then integrale := minus;
         end;
 
@@ -1021,9 +1023,10 @@ begin
             ans3 := 1;
             for n := 0 to group[j].gi[I].lh[m].nb_event - 1 do
               { boucle sur les evenements de l'histoire de vie m }
-              ans3 := ans3 * probevent(group[j].gi[I].lh[m].events[n], group[j].mort,
-                group[j].mat, group[j].ponte, integrale, group[j].gi[I].lh[m].events[0].tp,
-                group[j].gi[I].lh[m]);   //group[j].gi[I].lh[m].events[0].tp = sex
+              ans3 := ans3 * probevent(group[j].gi[I].lh[m].events[n],
+                group[j].mort, group[j].mat, group[j].ponte, integrale,
+                group[j].gi[I].lh[m].events[0].tp, group[j].gi[I].lh[m]);
+            //group[j].gi[I].lh[m].events[0].tp = sex
             { produit proba des evenement de hist de vie m }
             ans2 := ans2 + ans3;
           end;
@@ -1281,13 +1284,16 @@ begin
   setlength(auxH2, fd.number_of_variables);
   for i := 0 to fd.number_of_variables - 1 do setlength(H[i], fd.number_of_variables);
   //faire la matrice n x n
-  for i := 0 to fd.number_of_variables - 1 do setlength(auxH1[i], fd.number_of_variables);
-  for i := 0 to fd.number_of_variables - 1 do setlength(auxH2[i], fd.number_of_variables);
+  for i := 0 to fd.number_of_variables - 1 do
+    setlength(auxH1[i], fd.number_of_variables);
+  for i := 0 to fd.number_of_variables - 1 do
+    setlength(auxH2[i], fd.number_of_variables);
   for i := 1 to fd.number_of_variables do fd.var_info[i].step :=
       (fd.var_info[i].maxBound - fd.var_info[i].minBound) / 1000;
 
   {remplir la diagonale}
-  for i := 1 to fd.number_of_variables do fd.var_info[i].Value := fd.var_info[i].Bestvalue;
+  for i := 1 to fd.number_of_variables do fd.var_info[i].Value :=
+      fd.var_info[i].Bestvalue;
   max := f(fd);
   for i := 1 to fd.number_of_variables do          {calcul des f(a+delta,b)}
   begin
@@ -1304,7 +1310,8 @@ begin
   for i := 1 to fd.number_of_variables do
     {calcul des d2f/da2 =  (f(a+d,b)+f(a-d,b)-2f(a,b))/d^2}
   begin
-    H[i - 1, i - 1] := (auxD2[i - 1, 1] + auxD2[i - 1, 2] - 2 * max) / Power(fd.var_info[i].step, 2);
+    H[i - 1, i - 1] := (auxD2[i - 1, 1] + auxD2[i - 1, 2] - 2 * max) /
+      Power(fd.var_info[i].step, 2);
   end;
   for i := 2 to fd.number_of_variables do
     {calcul des f(a+deltaa,b-deltab), elements sous diagonal}
@@ -1329,8 +1336,9 @@ begin
   for i := 1 to fd.number_of_variables - 1 do
     {calcul des d2f(a,b)/dadb, element sous diagonal}
     for j := 0 to i - 1 do H[i, j] :=
-        (auxD2[i, 1] + auxD2[i, 2] + auxD2[j, 1] + auxD2[j, 2] - 2 * max - auxH1[i, j] - auxH2[i, j]) /
-        (2 * fd.var_info[i + 1].step * fd.var_info[j + 1].step);
+        (auxD2[i, 1] + auxD2[i, 2] + auxD2[j, 1] + auxD2[j, 2] - 2 *
+        max - auxH1[i, j] - auxH2[i, j]) / (2 * fd.var_info[i + 1].step *
+        fd.var_info[j + 1].step);
   for i := 1 to fd.number_of_variables - 1 do          {matrice est symetrique}
     for j := 0 to i - 1 do H[j, i] := H[i, j];
 
@@ -1720,7 +1728,7 @@ begin
     minBound := 0.0001;
     maxBound := 1000;
     //   value := 20;
-  end
+  end;
 
 end;
 
@@ -1777,24 +1785,26 @@ begin
         LL_D.var_info[Count].Value := intinit[i];
       end;
       if (modele[i].term[j] > 0) and (modele[i].term[j] < 10) and
-        (covar[modele[i].term[j]].typ = 0) then                    //determine the termcov
+        (covar[modele[i].term[j]].typ = 0) then
+        //determine the termcov
       begin
         modele[i].termcov0[j] := modele[i].term[j];
         modele[i].termcov1[j] := -1;
         modele[i].firstvi[j] := Count + 1;
-        Setlength(ll_d.var_info, Count +
-          covar[modele[i].termcov0[j]].lev - 1 + 1);
+        Setlength(ll_d.var_info, Count + covar[modele[i].termcov0[j]].lev - 1 + 1);
         for k := 1 to (covar[modele[i].termcov0[j]].lev - 1) do
         begin
           LL_D.var_info[Count + k].Name :=
-            'eff_' + LL_D.paramdescript[i].Name + '_' + covar[modele[i].termcov0[j]].Name + IntToStr(k);
+            'eff_' + LL_D.paramdescript[i].Name + '_' +
+            covar[modele[i].termcov0[j]].Name + IntToStr(k);
           LL_D.var_info[Count + k].Value := 0;
         end;
         Count := Count + covar[modele[i].termcov0[j]].lev - 1;
       end;
       //continue
       if (modele[i].term[j] > 0) and (modele[i].term[j] < 10) and
-        (covar[modele[i].term[j]].typ = 1) then                    //determine the termcov
+        (covar[modele[i].term[j]].typ = 1) then
+        //determine the termcov
       begin
         modele[i].termcov0[j] := modele[i].term[j];
         modele[i].termcov1[j] := -1;
@@ -1819,18 +1829,22 @@ begin
           //facteur x facteur
         begin
           Setlength(ll_d.var_info, Count +
-            (covar[modele[i].termcov0[j]].lev - 1) * (covar[modele[i].termcov1[j]].lev - 1) + 1);
+            (covar[modele[i].termcov0[j]].lev - 1) *
+            (covar[modele[i].termcov1[j]].lev - 1) + 1);
           for k := 1 to (covar[modele[i].termcov0[j]].lev - 1) do
             for l := 1 to (covar[modele[i].termcov1[j]].lev - 1) do
             begin
               LL_D.var_info[Count + k + (l - 1) *
                 (covar[modele[i].termcov0[j]].lev - 1)].Name :=
-                'eff_' + LL_D.paramdescript[i].Name + '_' + covar[modele[i].termcov0[j]].Name + IntToStr(k) + ':' + covar[modele[i].termcov1[j]].Name + IntToStr(l);
+                'eff_' + LL_D.paramdescript[i].Name + '_' +
+                covar[modele[i].termcov0[j]].Name + IntToStr(k) + ':' +
+                covar[modele[i].termcov1[j]].Name + IntToStr(l);
               LL_D.var_info[Count + k + (l - 1) *
                 (covar[modele[i].termcov0[j]].lev - 1)].Value := 0;
             end;
           Count :=
-            Count + (covar[modele[i].termcov0[j]].lev - 1) * (covar[modele[i].termcov1[j]].lev - 1);
+            Count + (covar[modele[i].termcov0[j]].lev - 1) *
+            (covar[modele[i].termcov1[j]].lev - 1);
         end;
         if (covar[modele[i].termcov0[j]].typ = 1) and
           (covar[modele[i].termcov1[j]].typ = 0) then
@@ -1841,7 +1855,9 @@ begin
           for k := 1 to (covar[modele[i].termcov1[j]].lev - 1) do
           begin
             LL_D.var_info[Count + k].Name :=
-              'slo_' + LL_D.paramdescript[i].Name + '_' + covar[modele[i].termcov1[j]].Name + IntToStr(k) + ':' + covar[modele[i].termcov0[j]].Name + '_cont';
+              'slo_' + LL_D.paramdescript[i].Name + '_' +
+              covar[modele[i].termcov1[j]].Name + IntToStr(k) + ':' +
+              covar[modele[i].termcov0[j]].Name + '_cont';
             LL_D.var_info[Count + k].Value := 0;
           end;
           Count := Count + covar[modele[i].termcov1[j]].lev - 1;
@@ -1855,7 +1871,9 @@ begin
           for k := 1 to (covar[modele[i].termcov0[j]].lev - 1) do
           begin
             LL_D.var_info[Count + k].Name :=
-              'slo_' + LL_D.paramdescript[i].Name + '_' + covar[modele[i].termcov0[j]].Name + IntToStr(k) + ':' + covar[modele[i].termcov1[j]].Name + '_cont';
+              'slo_' + LL_D.paramdescript[i].Name + '_' +
+              covar[modele[i].termcov0[j]].Name + IntToStr(k) + ':' +
+              covar[modele[i].termcov1[j]].Name + '_cont';
             LL_D.var_info[Count + k].Value := 0;
           end;
           Count := Count + covar[modele[i].termcov0[j]].lev - 1;
@@ -1867,7 +1885,9 @@ begin
           Count := Count + 1;
           Setlength(ll_d.var_info, Count + 1);
           LL_D.var_info[Count + k].Name :=
-            'slo_' + LL_D.paramdescript[i].Name + '_' + covar[modele[i].termcov0[j]].Name + '_cont' + ':' + covar[modele[i].termcov1[j]].Name + '_cont';
+            'slo_' + LL_D.paramdescript[i].Name + '_' +
+            covar[modele[i].termcov0[j]].Name + '_cont' + ':' +
+            covar[modele[i].termcov1[j]].Name + '_cont';
           LL_D.var_info[Count + 1].Value := 0;
         end;
       end;
@@ -1894,14 +1914,14 @@ begin
 
           if (modele[j].term[k] > 0) and (modele[j].term[k] < 10) then
             //determine the termcov
-            if covar[modele[j].termcov0[k]].typ =
-              0 then
+            if covar[modele[j].termcov0[k]].typ = 0 then
             begin
               if getcov(i, modele[j].termcov0[k]) = 0
               //le premier niveau indicé 0 est fitté deja ds l'intercept, il ne faut pas l'ajouter
               then group[i].param[j].po[k] := -1
               else
-                group[i].param[j].po[k] := modele[j].firstvi[k] + getcov(i, modele[j].termcov0[k]) - 1;
+                group[i].param[j].po[k] :=
+                  modele[j].firstvi[k] + getcov(i, modele[j].termcov0[k]) - 1;
             end
             else
             begin
@@ -1912,12 +1932,15 @@ begin
           if (modele[j].term[k] > 10) then                    //determine the termcov
           begin
             //facteur x facteur
-            if (covar[modele[j].termcov0[k]].typ + covar[modele[j].termcov1[k]].typ = 0) then
+            if (covar[modele[j].termcov0[k]].typ +
+              covar[modele[j].termcov1[k]].typ = 0) then
               if getcov(i, modele[j].termcov0[k]) * getcov(i, modele[j].termcov1[k]) =
                 0 then group[i].param[j].po[k] := -1
               else
-                group[i].param[j].po[k] := modele[j].firstvi[k] + getcov(i, modele[j].termcov0[k]) - 1 +
-                  (getcov(i, modele[j].termcov1[k]) - 1) * (covar[modele[j].termcov0[k]].lev - 1);
+                group[i].param[j].po[k] :=
+                  modele[j].firstvi[k] + getcov(i, modele[j].termcov0[k]) - 1 +
+                  (getcov(i, modele[j].termcov1[k]) - 1) *
+                  (covar[modele[j].termcov0[k]].lev - 1);
             // firstvi+x-1+(y-1)(nx-1)
             //else group[i].param[j].po[k]:=modele[j].firstvi[k]+getcov(i,modele[j].termcov1[k])-1+(getcov(i,modele[j].termcov0[k])-1)*(covar[modele[j].termcov1[k]].lev-1 );  // firstvi+x-1+(y-1)(nx-1)
             //continu x facteur
@@ -1978,8 +2001,9 @@ begin
   writeln(outfile, '---------------------------');
   writeln(outfile);
   writeln(outfile, 'datafile= ', nomf);
-  writeln(outfile, 'seed1= ', IntToStr(savedseed[1]), ' seed2= ', IntToStr(
-    savedseed[2]), ' seed3= ', IntToStr(savedseed[3]), ' seed4= ', IntToStr(savedseed[4]));
+  writeln(outfile, 'seed1= ', IntToStr(savedseed[1]), ' seed2= ',
+    IntToStr(savedseed[2]), ' seed3= ', IntToStr(savedseed[3]),
+    ' seed4= ', IntToStr(savedseed[4]));
   writeln(outfile, '#parameters= ', IntToStr(fd.number_of_variables));
   writeln(outfile, 'Likelihood_max= ', fd.BestResult: 10: 6);
   with FD do { Write out the results }
@@ -1996,7 +2020,8 @@ begin
       writeln(outfile, 'inverse of Hessian Matrix');
       for i := 1 to FD.number_of_variables do
       begin
-        for j := 1 to FD.number_of_variables do Write(outfile, H[i - 1, j - 1]: 10: 8, ' ');
+        for j := 1 to FD.number_of_variables do
+          Write(outfile, H[i - 1, j - 1]: 10: 8, ' ');
         writeln(outfile);
       end;
     end;
@@ -2105,7 +2130,8 @@ begin
                   end;
                 end
                 else
-                  acc := (df > 0); { when temp=0 or negative, only accept df if it is an improvement }
+                  acc := (df > 0);
+                { when temp=0 or negative, only accept df if it is an improvement }
               end; {of working out whether to accept the change}
             end
             else
@@ -2193,10 +2219,10 @@ begin
             group[j].mort.vp[k] := 0;
             for l :=
               0 to group[j].param[k].nbterms - 1 do
-              if
-              group[j].param[k].po[l] > -1 then
-                group[j].mort.vp[k] := group[j].mort.vp[k] +
-                  var_info[group[j].param[k].po[l]].Value * group[j].param[k].valpo[l];
+              if group[j].param[k].po[l] > -1 then
+                group[j].mort.vp[k] :=
+                  group[j].mort.vp[k] + var_info[group[j].param[k].po[l]].Value *
+                  group[j].param[k].valpo[l];
             group[j].mort.vp[k] :=
               link(group[j].mort.vp[k], fd.paramdescript[k]);
           end;
@@ -2209,10 +2235,10 @@ begin
             group[j].mat.vp[k - 5] := 0;
             for l :=
               0 to group[j].param[k].nbterms - 1 do
-              if
-              group[j].param[k].po[l] > -1 then
-                group[j].mat.vp[k - 5] := group[j].mat.vp[k - 5] +
-                  var_info[group[j].param[k].po[l]].Value * group[j].param[k].valpo[l];
+              if group[j].param[k].po[l] > -1 then
+                group[j].mat.vp[k - 5] :=
+                  group[j].mat.vp[k - 5] + var_info[group[j].param[k].po[l]].Value *
+                  group[j].param[k].valpo[l];
             group[j].mat.vp[k - 5] :=
               link(group[j].mat.vp[k - 5], fd.paramdescript[k]);
           end;
@@ -2225,10 +2251,10 @@ begin
             group[j].ponte.vp[k - 8] := 0;
             for l :=
               0 to group[j].param[k].nbterms - 1 do
-              if
-              group[j].param[k].po[l] > -1 then
-                group[j].ponte.vp[k - 8] := group[j].ponte.vp[k - 8] +
-                  var_info[group[j].param[k].po[l]].Value * group[j].param[k].valpo[l];
+              if group[j].param[k].po[l] > -1 then
+                group[j].ponte.vp[k - 8] :=
+                  group[j].ponte.vp[k - 8] + var_info[group[j].param[k].po[l]].Value *
+                  group[j].param[k].valpo[l];
             group[j].ponte.vp[k - 8] :=
               link(group[j].ponte.vp[k - 8], fd.paramdescript[k]);
           end;
@@ -2241,11 +2267,9 @@ begin
           begin
             CalcMatsanspon(
               group[j]);
-            integrale
-            :=
+            integrale :=
               romb(r, group[j]);
-          end
-          ;
+          end;
           if integrale <= minus then integrale := minus;
         end;
 
@@ -2256,9 +2280,10 @@ begin
             for n := 0 to group[j].gi[I].lh[m].nb_event - 1 do
               { boucle sur les evenements de l'histoire de vie m }
             begin
-              valeur := probevent(group[j].gi[I].lh[m].events[n], group[j].mort,
-                group[j].mat, group[j].ponte, integrale, group[j].gi[I].lh[m].events[0].tp,
-                group[j].gi[I].lh[m]);   //group[j].gi[I].lh[m].events[0].tp = sex
+              valeur := probevent(group[j].gi[I].lh[m].events[n],
+                group[j].mort, group[j].mat, group[j].ponte, integrale,
+                group[j].gi[I].lh[m].events[0].tp, group[j].gi[I].lh[m]);
+              //group[j].gi[I].lh[m].events[0].tp = sex
               Write(outfile, group[j].gi[I].lh[m].events[n].Name, ' ',
                 ln(valeur): 10: 8, ' ');
             end;
@@ -2281,7 +2306,8 @@ begin
   writeln(outfile, 'Parameter_Range_Table');
   with FD do
     for k := 0 to nbparposs - 1 do
-      with FD.paramdescript[k] do writeln(outfile, Name, ' ', minbound: 5: 8, ' ', maxbound: 5: 8);
+      with FD.paramdescript[k] do
+        writeln(outfile, Name, ' ', minbound: 5: 8, ' ', maxbound: 5: 8);
   writeln(outfile, 'ratiomax ', ratiomax);
   writeln(outfile, 'tinf_(right_censoring) ', tinf);
   writeln(outfile, 'tc_(juvenile_period_length) ', tc);

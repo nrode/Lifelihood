@@ -46,16 +46,16 @@ begin
     //customfilevalcont
     //If there is no path_continuous_var file then covar.valcont are set automatically as ordinals, else the values are read in the file
     if list[17] = 'NULL' then
-      begin
-        continuous_var_flag := False;
-      end
+    begin
+      continuous_var_flag := False;
+    end
     else
-      begin
-        continuous_var_flag := True;
-        path_continuous_var := list[17];
-        assignfile(file_continuous_var, path_continuous_var);  
-      end;
-    read_custom_continuous_var(continuous_var_flag); 
+    begin
+      continuous_var_flag := True;
+      path_continuous_var := list[17];
+      assignfile(file_continuous_var, path_continuous_var);
+    end;
+    read_custom_continuous_var(continuous_var_flag);
 
     try
       nomoutfile := ChangeFileExt(nomf1, '.out');
