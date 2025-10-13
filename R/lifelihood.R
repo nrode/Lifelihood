@@ -186,7 +186,7 @@ lifelihood <- function(
       stop(
         "Model in configuration file (",
         path_config,
-        ") is not identifiable: you should either fit 'fitness' or 'n_offpsring' in your model."
+        ") is not identifiable: you should either fit 'fitness' or 'n_offpsring' in your model, not both."
       )
     }
     fitness <- TRUE

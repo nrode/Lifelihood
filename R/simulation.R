@@ -191,8 +191,8 @@ simulate_life_history <- function(
   }
 
   df_sims <- NULL
-  for (event in events) {
-    sim <- simulate_event(object, event, newdata)
+  for (ev in events) {
+    sim <- simulate_event(object, ev, newdata)
     df_sims <- bind_cols(sim, df_sims)
   }
 
@@ -233,6 +233,13 @@ simulate_life_history <- function(
     }
   } else {
     df_sims_up_na <- df_sims
+  }
+
+  if (event %in% c("all", "reproduction")) {
+    df_sims_up_na <- df_sims_up_na |>
+      mutate(
+        total_clutchs = rowSums(across(starts_with("clutch_")), na.rm = TRUE)
+      )
   }
 
   df_sims_up_na
