@@ -1,4 +1,3 @@
-library(lifelihood)
 devtools::load_all()
 library(tidyverse)
 
@@ -42,6 +41,13 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4)
 )
 
+results <- lifelihood(
+  lifelihoodData = lifelihoodData,
+  path_config = get_config_path("config_pierrick"),
+  delete_temp_files = FALSE,
+  n_fit = 3
+)
+
 # results$vcov <- -data.frame(
 #   c(-0.00410321, 0.00400797, 0.00402230, -0.00046523),
 #   c(0.00400797, -0.00478376, -0.00407384, -0.00037870),
@@ -49,13 +55,6 @@ results <- lifelihood(
 #   c(-0.00046523, -0.00037870, -0.00025174, -0.00412250)
 # )
 # prediction(results, "expt_death", se.fit = TRUE) |> head()
-
-r <- lifelihood_optim(
-  lifelihoodData = lifelihoodData,
-  path_config = get_config_path("config_pierrick"),
-  delete_temp_files = FALSE,
-  n_fit = 3
-)
 
 coef(results)
 coeff(results, "expt_death")

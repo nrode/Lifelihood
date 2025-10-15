@@ -9,6 +9,7 @@
 #' @param lifelihoodData `lifelihoodData` object created with [lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
+#' @param n_fit Number of times to fit.
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
 #' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
@@ -16,7 +17,7 @@
 #' @param SEcal If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
-#' @param seeds Vector of length for with seed numbers used to reproduce results (same seeds = same results).
+#' @param seeds Vector of length for with seed numbers used to reproduce results (same seeds = same results). This argument should be `NULL` (default) when `n_fit` > 1.
 #' @param ratiomax Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)
 #' @param tc critical age (after the juvenile mortality peak) at which the survival model starts to be fitted
 #' @param tinf maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)
@@ -74,6 +75,110 @@
 #' )
 #' summary(results)
 lifelihood <- function(
+  lifelihoodData,
+  path_config,
+  path_to_Lifelihood = NULL,
+  n_fit = 1,
+  param_bounds_df = NULL,
+  group_by_group = FALSE,
+  MCMC = 0,
+  interval = 25,
+  SEcal = FALSE,
+  saveprobevent = 0,
+  r = 0,
+  seeds = NULL,
+  ntr = 2,
+  nst = 2,
+  To = 50,
+  Tf = 1,
+  climbrate = 1,
+  precision = 0.001,
+  ratiomax = 10,
+  tc = 20,
+  tinf = 1000,
+  sub_interval = 0.3,
+  raise_estimation_warning = TRUE,
+  delete_temp_files = TRUE,
+  temp_dir = NULL
+) {
+  # we force generate seeds here because it would not make sense
+  # to use n times the same seeds.
+  if (!is.null(seeds) & n_fit > 1) {
+    stop("Can't set `seeds` with `n_fit` > 1.")
+  }
+
+  all_results <- list()
+  for (i in 1:n_fit) {
+    seeds <- sample(1:10000, 4, replace = T)
+
+    temp_dir <- file.path(
+      here::here(),
+      paste0(paste0("lifelihood_", paste(seeds, collapse = "_")))
+    )
+
+    results <- lifelihood_fit(
+      lifelihoodData = lifelihoodData,
+      path_config = path_config,
+      path_to_Lifelihood = path_to_Lifelihood,
+      param_bounds_df = param_bounds_df,
+      group_by_group = group_by_group,
+      MCMC = MCMC,
+      interval = interval,
+      SEcal = SEcal,
+      saveprobevent = saveprobevent,
+      r = r,
+      ntr = ntr,
+      nst = nst,
+      To = To,
+      Tf = Tf,
+      climbrate = climbrate,
+      precision = precision,
+      ratiomax = ratiomax,
+      tc = tc,
+      tinf = tinf,
+      sub_interval = sub_interval,
+      raise_estimation_warning = raise_estimation_warning,
+      delete_temp_files = delete_temp_files,
+      seeds = seeds,
+      temp_dir = temp_dir
+    )
+    all_results[[glue::glue("lifelihood_fit_{i}")]] <- results
+  }
+
+  likelihoods <- sapply(all_results, function(x) x$likelihood)
+  ord <- order(likelihoods, decreasing = TRUE)
+
+  best_fit <- all_results[[ord[1]]]
+
+  # we want to make sure that we couldn't easily find a better
+  # solution (https://github.com/nrode/Lifelihood/issues/111)
+  if (length(likelihoods) > 1) {
+    diff_best <- likelihoods[ord[1]] - likelihoods[ord[2]]
+    if (diff_best > 0.1) {
+      warning(glue::glue(
+        "Best and second-best likelihoods differ by {round(diff_best, 3)} (> 0.1). ",
+        "Consider increasing n_fit (currently {n_fit}) for more stable optimization."
+      ))
+    }
+  }
+
+  return(best_fit)
+}
+
+#' @title Fit lifelihood one time.
+#'
+#' @description
+#' This function fits [`lifelihood()`] 1 time. It's used
+#' internally to fit multiple times lifelihood.
+#'
+#' @inheritParams lifelihood
+#'
+#' @import glue
+#'
+#' @keywords internal
+#'
+#' @return `lifelihoodResults`
+lifelihood_fit <- function(
   lifelihoodData,
   path_config,
   path_to_Lifelihood = NULL,
@@ -256,6 +361,7 @@ lifelihood <- function(
 
   return(results)
 }
+
 
 #' @title Coefficient estimates
 #'

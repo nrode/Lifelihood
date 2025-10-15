@@ -49,8 +49,6 @@ execute_bin(
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 
-\item{fitness}{Reparametrize the model with one parameter as the lifetime reproductive success}
-
 \item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
 
 \item{seed1}{First seed number used to reproduce results (same seed = same results).}
@@ -59,7 +57,7 @@ execute_bin(
 
 \item{seed3}{Third seed number used to reproduce results (same seed = same results).}
 
-\item{seed4}{4th seed number used to reproduce results (same seed = same results).}
+\item{seed4}{Fourth seed number used to reproduce results (same seed = same results).}
 
 \item{ratiomax}{Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)}
 
