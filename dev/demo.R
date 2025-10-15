@@ -38,8 +38,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
-  seeds = c(1, 2, 3, 4),
-  se = TRUE
+  seeds = c(1, 2, 3, 4)
 )
 
 
@@ -65,8 +64,7 @@ prediction(
   se.fit = TRUE,
   parameter_name = "expt_death",
   type = "response"
-) |>
-  head()
+)
 prediction(results, parameter_name = "n_offspring") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
 

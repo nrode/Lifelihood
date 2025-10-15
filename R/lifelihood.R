@@ -109,7 +109,9 @@ lifelihood <- function(
 
   all_results <- list()
   for (i in 1:n_fit) {
-    seeds <- sample(1:10000, 4, replace = T)
+    if (n_fit != 1 & is.null(seeds)) {
+      seeds <- sample(1:10000, 4, replace = T)
+    }
 
     temp_dir <- file.path(
       here::here(),

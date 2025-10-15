@@ -185,7 +185,7 @@ get_effects <- function(lines, group_by_group = FALSE) {
 get_hessian <- function(lines) {
   start_idx <- which(trimws(lines) == "inverse of Hessian Matrix")
   if (length(start_idx) == 0) {
-    stop("No 'inverse of Hessian Matrix' section found")
+    return(NULL)
   }
 
   end_idx <- which(trimws(lines) == "Parameter_Range_Table")
