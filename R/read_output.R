@@ -28,26 +28,7 @@ read_output_from_file <- function(
   effects <- parse_output(lines, "effects", group_by_group)
   parameter_ranges <- parse_output(lines, "parameter_ranges", group_by_group)
   ratiomax <- parse_output(lines, "ratio_max", group_by_group)
-  mcmc_raw <- parse_output(lines, "mcmc")
-
-  if (!is.null(mcmc_raw)) {
-    mcmc_long <- tidyr::pivot_longer(
-      data = mcmc_raw,
-      cols = starts_with("Sample_"),
-      names_to = "Sample",
-      values_to = "Value"
-    )
-
-    mcmc_pivoted <- tidyr::pivot_wider(
-      data = mcmc_long,
-      names_from = Parameter,
-      values_from = Value
-    )
-
-    mcmc_pivoted <- mcmc_pivoted[, -1]
-    results$mcmc <- coda::mcmc(mcmc_pivoted)
-    results$vcov <- mcmc_pivoted |> dplyr::select(-LL)
-  }
+  inverse_hessian <- parse_output(lines, "hessian")
 
   get_event_covariates <- function(str_formula) {
     if (trimws(as.character(str_formula)) == "1") {
@@ -110,6 +91,8 @@ read_output_from_file <- function(
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
+  results$inverse_hessian <- inverse_hessian
+  results$vcov <- -inverse_hessian
   class(results) <- "lifelihoodResults"
   return(results)
 }

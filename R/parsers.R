@@ -20,7 +20,7 @@ parse_output <- function(lines, element, group_by_group = FALSE) {
     effects = get_effects(lines, group_by_group),
     parameter_ranges = get_param_ranges(lines),
     ratio_max = get_ratio_max(lines),
-    mcmc = get_mcmc(lines)
+    hessian = get_hessian(lines)
   )
 }
 
@@ -182,38 +182,24 @@ get_effects <- function(lines, group_by_group = FALSE) {
 }
 
 #' @rdname parse_output
-get_mcmc <- function(lines) {
-  mcmc_start_idx <- which(lines == "MCMCsamples")
-  mcmc_end_idx <- which(grepl("Parameter_Range_Table", lines))
-
-  if (length(mcmc_start_idx) == 0) {
-    return(NULL)
+get_hessian <- function(lines) {
+  start_idx <- which(trimws(lines) == "inverse of Hessian Matrix")
+  if (length(start_idx) == 0) {
+    stop("No 'inverse of Hessian Matrix' section found")
   }
 
-  mcmc_lines <- lines[(mcmc_start_idx + 1):(mcmc_end_idx - 1)]
-  mcmc_lines <- mcmc_lines[mcmc_lines != ""]
-  mcmc_data <- list()
-
-  for (i in 1:length(mcmc_lines)) {
-    line_parts <- strsplit(mcmc_lines[i], "\\s+")[[1]]
-
-    line_parts <- line_parts[line_parts != ""]
-
-    param_name <- line_parts[1]
-    param_values <- as.numeric(line_parts[2:length(line_parts)])
-
-    mcmc_data[[param_name]] <- param_values
+  end_idx <- which(trimws(lines) == "Parameter_Range_Table")
+  if (length(end_idx) == 0) {
+    stop("No 'Parameter_Range_Table' section found")
   }
 
-  result_df <- as.data.frame(mcmc_data, stringsAsFactors = FALSE)
-  result_df <- data.frame(t(result_df))
-  colnames(result_df) <- paste0("Sample_", 1:ncol(result_df))
-  result_df$Parameter <- rownames(result_df)
-  result_df <- result_df[, c(
-    "Parameter",
-    colnames(result_df)[colnames(result_df) != "Parameter"]
-  )]
+  hessian_lines <- lines[(start_idx + 1):(end_idx - 1)]
+  hessian_lines <- trimws(hessian_lines)
+  hessian_lines <- hessian_lines[hessian_lines != ""] # remove empty lines
 
-  rownames(result_df) <- NULL
-  return(result_df)
+  hessian <- do.call(
+    rbind,
+    lapply(hessian_lines, function(l) as.numeric(strsplit(l, "\\s+")[[1]]))
+  )
+  return(hessian)
 }

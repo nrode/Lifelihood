@@ -11,7 +11,7 @@ execute_bin(
   group_by_group,
   MCMC,
   interval,
-  SEcal,
+  se,
   saveprobevent,
   fitness,
   r,
@@ -45,7 +45,7 @@ execute_bin(
 
 \item{interval}{TBD - Check the actual meaning}
 
-\item{SEcal}{If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)}
+\item{se}{If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)}
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 

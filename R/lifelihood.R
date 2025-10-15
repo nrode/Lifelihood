@@ -14,7 +14,7 @@
 #' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
-#' @param SEcal If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
+#' @param se If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)
 #' @param saveprobevent TBD - Check the actual meaning
 #' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
 #' @param seeds Vector of length for with seed numbers used to reproduce results (same seeds = same results). This argument should be `NULL` (default) when `n_fit` > 1.
@@ -83,7 +83,7 @@ lifelihood <- function(
   group_by_group = FALSE,
   MCMC = 0,
   interval = 25,
-  SEcal = FALSE,
+  se = FALSE,
   saveprobevent = 0,
   r = 0,
   seeds = NULL,
@@ -124,7 +124,7 @@ lifelihood <- function(
       group_by_group = group_by_group,
       MCMC = MCMC,
       interval = interval,
-      SEcal = SEcal,
+      se = se,
       saveprobevent = saveprobevent,
       r = r,
       ntr = ntr,
@@ -186,7 +186,7 @@ lifelihood_fit <- function(
   group_by_group = FALSE,
   MCMC = 0,
   interval = 25,
-  SEcal = FALSE,
+  se = FALSE,
   saveprobevent = 0,
   r = 0,
   seeds = NULL,
@@ -306,7 +306,7 @@ lifelihood_fit <- function(
     group_by_group = group_by_group,
     MCMC = MCMC,
     interval = interval,
-    SEcal = SEcal,
+    se = se,
     saveprobevent = saveprobevent,
     fitness = fitness,
     r = r,

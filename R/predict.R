@@ -158,7 +158,16 @@ prediction <- function(
       )
     }
   }
-  return(pred)
+
+  if (se.fit) {
+    result <- list(
+      fit = as.vector(pred),
+      se.fit = as.vector(se)
+    )
+    return(result)
+  } else {
+    return(as.vector(pred))
+  }
 }
 
 #' @title Check for valid factor levels

@@ -38,15 +38,10 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
-  seeds = c(1, 2, 3, 4)
+  seeds = c(1, 2, 3, 4),
+  se = TRUE
 )
 
-results <- lifelihood(
-  lifelihoodData = lifelihoodData,
-  path_config = get_config_path("config_pierrick"),
-  delete_temp_files = FALSE,
-  n_fit = 3
-)
 
 # results$vcov <- -data.frame(
 #   c(-0.00410321, 0.00400797, 0.00402230, -0.00046523),
@@ -62,10 +57,17 @@ coeff(results, "survival_param2")
 coeff(results, "n_offspring")
 AIC(results)
 BIC(results)
+vcov(results)
 logLik(results)
 
+prediction(
+  results,
+  se.fit = TRUE,
+  parameter_name = "expt_death",
+  type = "response"
+) |>
+  head()
 prediction(results, parameter_name = "n_offspring") |> head()
-prediction(results, parameter_name = "expt_death") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
 
 simulate_life_history(results) |> head()
