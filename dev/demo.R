@@ -43,14 +43,6 @@ results <- lifelihood(
 )
 
 
-# results$vcov <- -data.frame(
-#   c(-0.00410321, 0.00400797, 0.00402230, -0.00046523),
-#   c(0.00400797, -0.00478376, -0.00407384, -0.00037870),
-#   c(0.00402230, -0.00407384, -0.00579095, -0.00025174),
-#   c(-0.00046523, -0.00037870, -0.00025174, -0.00412250)
-# )
-# prediction(results, "expt_death", se.fit = TRUE) |> head()
-
 coef(results)
 coeff(results, "expt_death")
 coeff(results, "survival_param2")
@@ -65,6 +57,11 @@ prediction(
   se.fit = TRUE,
   parameter_name = "expt_death",
   type = "response"
+)
+prediction(
+  results,
+  se.fit = TRUE,
+  parameter_name = "expt_death"
 )
 prediction(results, parameter_name = "n_offspring") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()

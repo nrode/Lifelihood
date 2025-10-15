@@ -128,8 +128,8 @@ prediction <- function(
     predictions <- x %*% coef_vector
 
     if (se.fit) {
-      vcov <- object$vcov
-      var_parameter <- as.matrix(vcov[range, range])
+      var_cov <- object$vcov
+      var_parameter <- as.matrix(var_cov[range, range])
       if (type == "link") {
         se <- sqrt(diag(x %*% var_parameter %*% t(x)))
       } else {
