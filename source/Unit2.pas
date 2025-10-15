@@ -158,7 +158,7 @@ var
   group: array of groupe_info;
   LL_D: function_D;
   The_Met_D: Metropolis_D;
-  nb_group, nb_current_group, max_vars: integer;
+  flag_hessian, nb_group, nb_current_group, max_vars: integer;
   //f1:filetype;
   f1, fc, outfile, file_continuous_var: Text;
   fitness_repar, nom, nomf1, nomfc, nomoutfile, nommodfile, path_continuous_var: string;
@@ -1500,9 +1500,11 @@ begin
   try
     Hessian(fd);
     adaptGaussJordan(fd.number_of_variables - 1, fd.number_of_variables - 1, flag, detA);
+    flag_hessian := flag;
     if flag = 1 then
     begin
-      for i := 1 to fd.number_of_variables do if H[i - 1, i - 1] < 0 then
+      for i := 1 to fd.number_of_variables do
+        if H[i - 1, i - 1] < 0 then
           fd.var_info[i].SE := Sqrt(-H[i - 1, i - 1])
         else
           fd.var_info[i].SE := -1;
@@ -1996,6 +1998,7 @@ procedure printout_FD(var FD: function_D; nomf: string; nbrun: integer;
   exportinvhessian: string);
 var
   i, j: integer;
+  flag: integer;
 begin
   append(outfile);
   writeln(outfile, '---------------------------');
@@ -2017,11 +2020,19 @@ begin
     with FD do
     begin
       writeln(outfile);
-      writeln(outfile, 'inverse of Hessian Matrix');
+      if flag_hessian = 0 then
+      begin
+        writeln(outfile, 'inverse of Hessian Matrix (!INVALID)');
+      end
+      else
+      begin
+        writeln(outfile, 'inverse of Hessian Matrix');
+      end;
+
       for i := 1 to FD.number_of_variables do
       begin
         for j := 1 to FD.number_of_variables do
-          Write(outfile, H[i - 1, j - 1]: 10: 8, ' ');
+          Write(outfile, H[i - 1, j - 1]:10:8, ' ');
         writeln(outfile);
       end;
     end;

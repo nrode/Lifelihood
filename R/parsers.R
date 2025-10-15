@@ -183,6 +183,12 @@ get_effects <- function(lines, group_by_group = FALSE) {
 
 #' @rdname parse_output
 get_hessian <- function(lines) {
+  start_idx <- which(trimws(lines) == "inverse of Hessian Matrix (!INVALID)")
+  if (length(start_idx) != 0) {
+    warning("Failed to compute standard errors. Use MCMC option instead.")
+    return(NULL)
+  }
+
   start_idx <- which(trimws(lines) == "inverse of Hessian Matrix")
   if (length(start_idx) == 0) {
     return(NULL)
