@@ -75,13 +75,13 @@ using maximum likelihood.</p>
 <span>  <span class="va">lifelihoodData</span>,</span>
 <span>  <span class="va">path_config</span>,</span>
 <span>  path_to_Lifelihood <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n_fit <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group_by_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  interval <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>  SEcal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  saveprobevent <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  fitness <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  seeds <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ntr <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -116,6 +116,10 @@ using maximum likelihood.</p>
 <dd><p>A character string specifying the file path to the compile Lifelihood program (default is NULL)</p></dd>
 
 
+<dt id="arg-n-fit">n_fit<a class="anchor" aria-label="anchor" href="#arg-n-fit"></a></dt>
+<dd><p>Number of times to fit.</p></dd>
+
+
 <dt id="arg-param-bounds-df">param_bounds_df<a class="anchor" aria-label="anchor" href="#arg-param-bounds-df"></a></dt>
 <dd><p>Dataframe with the parameter ranges/boundaries/boundaries</p></dd>
 
@@ -140,16 +144,12 @@ using maximum likelihood.</p>
 <dd><p>TBD - Check the actual meaning</p></dd>
 
 
-<dt id="arg-fitness">fitness<a class="anchor" aria-label="anchor" href="#arg-fitness"></a></dt>
-<dd><p>Reparametrize the model with one parameter as the lifetime reproductive success</p></dd>
-
-
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>Reparametrize the model with one parameter as the intrinsic rate of increase</p></dd>
 
 
 <dt id="arg-seeds">seeds<a class="anchor" aria-label="anchor" href="#arg-seeds"></a></dt>
-<dd><p>Vector of length for with seed numbers used to reproduce results (same seeds = same results).</p></dd>
+<dd><p>Vector of length for with seed numbers used to reproduce results (same seeds = same results). This argument should be <code>NULL</code> (default) when <code>n_fit</code> &gt; 1.</p></dd>
 
 
 <dt id="arg-ntr">ntr<a class="anchor" aria-label="anchor" href="#arg-ntr"></a></dt>
@@ -256,28 +256,28 @@ using maximum likelihood.</p>
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/private/var/folders/q0/wmf37v850txck86cpnvwm_zw0000gn/T/RtmpjTP7O1/temp_libpath316b4a05fa8f/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/private/var/folders/q0/wmf37v850txck86cpnvwm_zw0000gn/T/Rtmpqfcek9/temp_libpath4bd261ec4106/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9977_2323_9729_6997/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9977_2323_9729_6997/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 9977 2323 9729 6997 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> LIFELIHOOD RESULTS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Likelihood:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -2821.227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -2821.223</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            name estimation stderror           parameter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                int_expt_death -2.5253959        0          expt_death</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         eff_expt_death_geno_1  0.7835095        0          expt_death</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         eff_expt_death_type_1 -0.9687812        0          expt_death</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         eff_expt_death_type_2  1.3991316        0          expt_death</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           int_survival_param2 -6.5822104        0     survival_param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6             int_expt_maturity -2.2285974        0       expt_maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      eff_expt_maturity_geno_1 -0.8401484        0       expt_maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      eff_expt_maturity_type_1  0.4112408        0       expt_maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      eff_expt_maturity_type_2 -0.5456602        0       expt_maturity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          int_maturity_param2 -3.1111023        0     maturity_param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11        int_expt_reproduction -2.3365343        0   expt_reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 eff_expt_reproduction_geno_1  1.3102563        0   expt_reproduction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      int_reproduction_param2 -2.5535342        0 reproduction_param2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                int_expt_death -1.9728054        0          expt_death</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         eff_expt_death_geno_1  0.2053012        0          expt_death</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         eff_expt_death_type_1 -1.5404992        0          expt_death</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         eff_expt_death_type_2  1.4239981        0          expt_death</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           int_survival_param2 -6.6121719        0     survival_param2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             int_expt_maturity -1.9600000        0       expt_maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      eff_expt_maturity_geno_1  0.0000000        0       expt_maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      eff_expt_maturity_type_1  0.0000000        0       expt_maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      eff_expt_maturity_type_2  0.0000000        0       expt_maturity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          int_maturity_param2 -3.4500000        0     maturity_param2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11        int_expt_reproduction -1.8214823        0   expt_reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 eff_expt_reproduction_geno_1  0.7973170        0   expt_reproduction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13      int_reproduction_param2 -2.5514111        0 reproduction_param2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    kind        event</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1             intercept    mortality</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  coefficient_category    mortality</span>
