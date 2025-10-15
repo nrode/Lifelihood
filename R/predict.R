@@ -127,6 +127,10 @@ prediction <- function(
     }
     predictions <- x %*% coef_vector
 
+    # if(mcmc.fit){
+    #   se <- output from mcmcse
+    # }
+
     if (se.fit) {
       var_cov <- object$vcov
       var_parameter <- as.matrix(var_cov[range, range])
