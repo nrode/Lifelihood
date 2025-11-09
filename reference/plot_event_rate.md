@@ -19,15 +19,16 @@ If you want more control over the style of the graph, use the
 [`compute_observed_event_rate()`](https://nrode.github.io/Lifelihood/reference/compute_observed_event_rate.md)
 function to retrieve data.
 
-Convenient function used in `plot_observed_mortality_rate()` and
-`plot_fitted_mortality_rate()`.
+Convenient function used in `plot_observed_event_rate()` and
+`plot_fitted_event_rate()`.
 
 ## Usage
 
 ``` r
-plot_fitted_mortality_rate(
+plot_fitted_event_rate(
   lifelihoodResults,
   interval_width,
+  event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   add_observed_mortality_rate = TRUE,
   min_sample_size = 1,
@@ -38,9 +39,10 @@ plot_fitted_mortality_rate(
   ylab = "Event Rate"
 )
 
-plot_observed_mortality_rate(
+plot_observed_event_rate(
   lifelihoodData,
   interval_width,
+  event = c("mortality", "maturity", "reproduction"),
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL,
@@ -49,7 +51,7 @@ plot_observed_mortality_rate(
   ylab = "Mortality Rate"
 )
 
-plot_mortality_rate(
+plot_event_rate(
   rate_df,
   max_time,
   type = c("points", "lines"),
@@ -64,10 +66,10 @@ plot_mortality_rate(
 
 - interval_width:
 
-  The interval width used to calculate the mortality rate. For instance,
-  if the time unit for deaths in the original dataset is days and
-  `interval_width` is set to 10, the mortality rate will be calculated
-  every 10 days for each group.
+  The interval width used to calculate the event rate. For instance, if
+  the time unit for deaths in the original dataset is days and
+  `interval_width` is set to 10, the event rate will be calculated every
+  10 days for each group.
 
 - newdata:
 
@@ -86,8 +88,8 @@ plot_mortality_rate(
 
 - max_time:
 
-  The maximum time for calculating the mortality rate. If set to NULL,
-  the time of the last observed death is used.
+  The maximum time for calculating the event rate. If set to NULL, the
+  time of the last observed death is used.
 
 - groupby:
 
@@ -105,7 +107,7 @@ plot_mortality_rate(
 
 - rate_df:
 
-  Dataframe with mortality rate, obtained via `mortality_rate_data()`
+  Dataframe with event rate
 
 - type:
 

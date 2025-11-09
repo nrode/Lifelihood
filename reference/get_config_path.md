@@ -35,7 +35,7 @@ Absolute path to the configuration file
 
 ``` r
 get_config_path("config")
-#> [1] "/private/var/folders/6c/pzd640_546q6_yfn24r65c_40000gn/T/Rtmp9BpFOA/temp_libpath18676669f2c2/lifelihood/configs/config.yaml"
+#> [1] "/private/var/folders/6c/pzd640_546q6_yfn24r65c_40000gn/T/RtmpYnEJyp/temp_libpath26b2f34fc16/lifelihood/configs/config.yaml"
 get_config_path("config2")
-#> [1] "/private/var/folders/6c/pzd640_546q6_yfn24r65c_40000gn/T/Rtmp9BpFOA/temp_libpath18676669f2c2/lifelihood/configs/config2.yaml"
+#> [1] "/private/var/folders/6c/pzd640_546q6_yfn24r65c_40000gn/T/RtmpYnEJyp/temp_libpath26b2f34fc16/lifelihood/configs/config2.yaml"
 ```

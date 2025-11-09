@@ -24,10 +24,10 @@ compute_fitted_event_rate(
 
 - interval_width:
 
-  The interval width used to calculate the mortality rate. For instance,
-  if the time unit for deaths in the original dataset is days and
-  `interval_width` is set to 10, the mortality rate will be calculated
-  every 10 days for each group.
+  The interval width used to calculate the event rate. For instance, if
+  the time unit for deaths in the original dataset is days and
+  `interval_width` is set to 10, the event rate will be calculated every
+  10 days for each group.
 
 - newdata:
 
@@ -36,8 +36,8 @@ compute_fitted_event_rate(
 
 - max_time:
 
-  The maximum time for calculating the mortality rate. If set to NULL,
-  the time of the last observed death is used.
+  The maximum time for calculating the event rate. If set to NULL, the
+  time of the last observed death is used.
 
 - groupby:
 

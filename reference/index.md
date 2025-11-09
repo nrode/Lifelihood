@@ -18,6 +18,9 @@
 - [`compute_fitted_event_rate()`](https://nrode.github.io/Lifelihood/reference/compute_fitted_event_rate.md)
   : Compute fitted mortality rate
 
+- [`compute_observed_event_rate()`](https://nrode.github.io/Lifelihood/reference/compute_observed_event_rate.md)
+  : Compute empirical event rate
+
 - [`datapierrick`](https://nrode.github.io/Lifelihood/reference/datapierrick.md)
   : Pierrick data
 
