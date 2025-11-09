@@ -54,9 +54,10 @@ logLik(results)
 
 prediction(
   results,
-  se.fit = TRUE,
+  se.fit = FALSE,
   parameter_name = "expt_death",
-  type = "response"
+  type = "quantile",
+  p = 0.1
 )
 prediction(
   results,

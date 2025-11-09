@@ -26,7 +26,7 @@ plot_fitted_mortality_rate <- function(
   lifelihoodResults,
   interval_width,
   newdata = NULL,
-  add_observed_mortality_rate=TRUE,
+  add_observed_mortality_rate = TRUE,
   min_sample_size = 1,
   max_time = NULL,
   groupby = NULL,
@@ -37,14 +37,14 @@ plot_fitted_mortality_rate <- function(
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
   rate_df <- compute_fitted_mortality_rate(
-    lifelihoodResults=lifelihoodResults,
+    lifelihoodResults = lifelihoodResults,
     interval_width = interval_width,
     newdata = newdata,
     max_time = max_time,
     groupby = groupby
   )
-  
-pfitted <- plot_mortality_rate(
+
+  pfitted <- plot_mortality_rate(
     rate_df = rate_df,
     max_time = max_time,
     type = "lines",
@@ -54,27 +54,26 @@ pfitted <- plot_mortality_rate(
     ylab = ylab
   )
 
-if(add_observed_mortality_rate){
-  
-  obs_rate_df <- compute_observed_mortality_rate(
-    lifelihoodData=lifelihoodResults$lifelihoodData,
-    interval_width=interval_width,
-    max_time = max_time,
-    groupby = groupby,
-    min_sample_size = min_sample_size
-  )
-  if(!is.null(groupby)){
-    
-    pfitted <- pfitted +
-      geom_point(data=obs_rate_df, aes(x=Mean_Interval, y=Event_Rate,  color = group))
-   
-  }else{
-    pfitted <- pfitted +
-      geom_point(obs_rate_df, aes(x=Mean_Interval, y=MortalityRate))
+  if (add_observed_mortality_rate) {
+    obs_rate_df <- compute_observed_mortality_rate(
+      lifelihoodData = lifelihoodResults$lifelihoodData,
+      interval_width = interval_width,
+      max_time = max_time,
+      groupby = groupby,
+      min_sample_size = min_sample_size
+    )
+    if (!is.null(groupby)) {
+      pfitted <- pfitted +
+        geom_point(
+          data = obs_rate_df,
+          aes(x = Mean_Interval, y = Event_Rate, color = group)
+        )
+    } else {
+      pfitted <- pfitted +
+        geom_point(obs_rate_df, aes(x = Mean_Interval, y = MortalityRate))
+    }
   }
-
-}
-pfitted
+  pfitted
 }
 
 #' @title Display evolution of empirical mortality rate
@@ -122,7 +121,7 @@ plot_observed_mortality_rate <- function(
     min_sample_size = min_sample_size
   )
 
-pobs <- plot_mortality_rate(
+  pobs <- plot_mortality_rate(
     rate_df = rate_df,
     max_time = max_time,
     groupby = groupby,
@@ -130,7 +129,7 @@ pobs <- plot_mortality_rate(
     xlab = xlab,
     ylab = ylab
   )
-pobs
+  pobs
 }
 
 #' @title Plot mortality rate
@@ -142,10 +141,10 @@ pobs
 #' @inheritParams compute_observed_mortality_rate
 #' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
-#' @param type The type of symbol to be used for the plot (either of "points" or 'lines") 
+#' @param type The type of symbol to be used for the plot (either of "points" or 'lines")
 #' @param use_facet Use facet_wrap to plot one panel per group (default=FALSE)
 #' @param groupby Factor(s) whosse levels over which event rate should be represented (default=NULL)
-#' 
+#'
 #' @return a ggplot2 plot
 #'
 #' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim
@@ -161,7 +160,7 @@ plot_mortality_rate <- function(
   ylab = "Event rate"
 ) {
   type <- match.arg(type)
-  
+
   if (!is.null(groupby)) {
     p <- ggplot2::ggplot(
       rate_df,
@@ -186,7 +185,7 @@ plot_mortality_rate <- function(
   } else if (type == "lines") {
     p <- p + geom_line()
   }
-  
+
   plot <- p +
     ggplot2::labs(
       x = xlab,
@@ -200,7 +199,11 @@ plot_mortality_rate <- function(
   }
 
   if (use_facet) {
-    plot <- plot + ggh4x::facet_nested(as.formula(paste("~", paste(groupby, collapse = " + "))))
+    plot <- plot +
+      ggh4x::facet_nested(as.formula(paste(
+        "~",
+        paste(groupby, collapse = " + ")
+      )))
   }
 
   return(plot)
