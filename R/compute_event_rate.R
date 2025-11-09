@@ -74,7 +74,7 @@ compute_fitted_event_rate <- function(
       ),
       ".\n",
       paste0(
-        "Fitted covariate(s) for`",
+        "Fitted covariate(s) for` ",
         event,
         "` event: ",
         paste0(covar, collapse = ", ")

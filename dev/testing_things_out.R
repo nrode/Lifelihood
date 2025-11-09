@@ -53,7 +53,7 @@ results <- lifelihood(
 
 lifelihoodResults <- results
 
-plot_observed_mortality_rate(
+plot_observed_event_rate(
   lifelihoodData = lifelihoodData,
   interval_width = 15,
   groupby = c("spore", "par"),
@@ -103,7 +103,7 @@ rate_df <- compute_fitted_event_rate(
   groupby = c("spore", "par")
 )
 
-plot_fitted_mortality_rate(
+plot_fitted_event_rate(
   lifelihoodResults = results,
   interval_width = 10,
   add_observed_mortality_rate = TRUE,
@@ -152,20 +152,20 @@ compute_fitted_event_rate(
   interval_width = 15,
   newdata = newdata
 )
-plot_observed_mortality_rate(
+plot_observed_event_rate(
   results,
   interval_width = 15,
   groupby = "all",
   use_facet = TRUE
 )
-plot_observed_mortality_rate(
+plot_observed_event_rate(
   lifelihoodData,
   interval_width = 25,
   max_time = 170,
   groupby = c("par", "spore"),
   log_y = TRUE
 )
-plot_observed_mortality_rate(
+plot_observed_event_rate(
   lifelihoodData,
   interval_width = 25,
   max_time = 170,
@@ -173,7 +173,7 @@ plot_observed_mortality_rate(
   use_facet = TRUE,
   log_y = TRUE
 )
-plot_fitted_mortality_rate(
+plot_fitted_event_rate(
   results,
   interval_width = 5,
   groupby = "all",

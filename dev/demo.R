@@ -46,24 +46,24 @@ head(compute_fitted_event_rate(
   results,
   interval_width = 15,
   event = "maturity"
-)) # OK
+))
 head(compute_observed_event_rate(
   lifelihoodData,
   interval_width = 15,
   event = "maturity"
-)) # OK
+))
 
 #mortality
 head(compute_fitted_event_rate(
   results,
   interval_width = 15,
   event = "mortality"
-)) # OK
+))
 head(compute_observed_event_rate(
   lifelihoodData,
   interval_width = 15,
   event = "mortality"
-)) # OK
+))
 
 #reproduction
 head(compute_fitted_event_rate(
@@ -75,7 +75,7 @@ head(compute_observed_event_rate(
   lifelihoodData,
   interval_width = 15,
   event = "reproduction"
-)) # OK
+))
 
 coef(results)
 coeff(results, "expt_death")
@@ -108,14 +108,23 @@ simulate_life_history(results, event = "reproduction") |> head()
 parallel.simulate(results, nsim = 10, parallel_seed = 1)
 
 ## PLot fitted/observed mortality rates
-plot_fitted_mortality_rate(
-  lifelihoodResults = results,
+plot_fitted_event_rate(
+  results,
   interval_width = 10,
+  event = "maturity",
   add_observed_mortality_rate = TRUE,
-  groupby = c("spore", "par"),
+  groupby = "par",
   use_facet = TRUE,
   newdata = NULL,
   max_time = NULL,
   xlab = "Age (days)",
   ylab = "Fitted Mortality Rate"
+)
+plot_observed_event_rate(
+  lifelihoodData,
+  interval_width = 10,
+  groupby = "par",
+  use_facet = TRUE,
+  xlab = "Age (days)",
+  ylab = "Observed Mortality Rate"
 )
