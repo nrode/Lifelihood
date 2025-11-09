@@ -1,0 +1,134 @@
+  
+  
+
+## Description
+
+`lifelihood` is a class of continuous time multi-event models which
+provide the joined likelihood of all the events in an individual
+life-history (time of maturity, reproductive events, death).
+
+  
+
+## Quick start
+
+``` r
+
+library(lifelihood)
+
+df <- fakesample
+head(df)
+df$type <- as.factor(df$type)
+df$geno <- as.factor(df$geno)
+
+clutchs <- c(
+  "clutch_start1", "clutch_end1", "clutch_size1",
+  "clutch_start2", "clutch_end2", "clutch_size2"
+)
+
+dataLFH <- lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("geno", "type"),
+  model_specs = c("gam", "lgn", "wei")
+)
+
+results <- lifelihood(
+  lifelihoodData = dataLFH,
+  path_config = system.file("configs/config.yaml", package = "lifelihood"),
+  seeds = c(1, 2, 3, 4)
+)
+summary(results)
+```
+
+# Package index
+
+## All functions
+
+- [`AIC(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/AIC.lifelihoodResults.md)
+  : Akaike Information Criterion
+
+- [`AICc()`](https://nrode.github.io/Lifelihood/reference/AICc.md) :
+  Akaike Information Criterion for small sample size
+
+- [`BIC(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/BIC.lifelihoodResults.md)
+  : Bayesian Information Criterion
+
+- [`coef(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/coef.md)
+  [`coeff()`](https://nrode.github.io/Lifelihood/reference/coef.md) :
+  Coefficient estimates
+
+- [`compute_fitted_event_rate()`](https://nrode.github.io/Lifelihood/reference/compute_fitted_event_rate.md)
+  : Compute fitted mortality rate
+
+- [`datapierrick`](https://nrode.github.io/Lifelihood/reference/datapierrick.md)
+  : Pierrick data
+
+- [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
+  : Get dataframe with default parameter boundaries
+
+- [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
+  : Fake sample
+
+- [`get_config_path()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
+  : Get the path to a built-in configuration file.
+
+- [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
+  : Individual life history modelling
+
+- [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+  : Data object for lifelihood
+
+- [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
+  : Likelihood
+
+- [`parallel.simulate()`](https://nrode.github.io/Lifelihood/reference/parallel.simulate.md)
+  : Parallelized simulations
+
+- [`prediction()`](https://nrode.github.io/Lifelihood/reference/prediction.md)
+  : Prediction with lifelihood estimations
+
+- [`remove_lifelihood_tempfiles()`](https://nrode.github.io/Lifelihood/reference/remove_lifelihood_tempfiles.md)
+  : Remove all lifelihood temporary files
+
+- [`simulate_life_history()`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)
+  : Simulate outcomes from a fitted lifelihood model
+
+- [`summary(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.md)
+  :
+
+  Summary function to be used with the output of
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
+
+- [`vcov(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/vcov.lifelihoodResults.md)
+  : Covariance matrix
+
+# Articles
+
+### Tutorials
+
+- [Required data
+  format](https://nrode.github.io/Lifelihood/articles/required-data-format.md):
+- [Setting up configuration
+  file](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md):
+- [How to use
+  lifelihood](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md):
+- [Customize parameter boundaries and estimation
+  warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
+
+### Miscellaneous
+
+- [Generate clutch
+  names](https://nrode.github.io/Lifelihood/articles/generate-clutch-names.md):
+
+### Developer
+
+- [Overview](https://nrode.github.io/Lifelihood/articles/overview.md):
+- [Contributing](https://nrode.github.io/Lifelihood/articles/contributing.md):
+- [Compilation](https://nrode.github.io/Lifelihood/articles/compilation.md):

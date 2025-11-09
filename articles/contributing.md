@@ -1,0 +1,114 @@
+# Contributing
+
+## How to Contribute
+
+Before reading this article, we recommend familiarizing yourself with
+the [overview of how Lifelihood
+works](https://nrode.github.io/Lifelihood/articles/overview.md).
+
+### Introduction
+
+This document outlines the guidelines and steps for contributing to the
+**Lifelihood** R package. Contributions from the community help improve
+functionality, address bugs, and ensure that **Lifelihood** remains
+robust and up-to-date. This guide covers setting up your development
+environment, working with Git, and submitting changes.
+
+### Setting Up Your Development Environment
+
+To start contributing, you’ll need to set up a local development
+environment where you can modify, build, and test **Lifelihood**. Follow
+these steps to get started:
+
+- **Fork the Repository**
+
+- **Clone Your Fork Locally**: run the following command in your
+  terminal, replacing `yourusername` with your GitHub username:
+
+``` bash
+git clone https://github.com/yourusername/Lifelihood.git
+cd Lifelihood
+git remote add upstream https://github.com/nrode/Lifelihood
+git checkout -b feature-name
+```
+
+- **Install Development Dependencies**: install all necessary
+  dependencies for development, including **Lifelihood** itself, by
+  running:
+
+``` r
+
+install.packages(c("devtools", "testthat", "roxygen2", "pkgdown"))
+remotes::install_local(dependencies = TRUE)
+```
+
+### Make changes
+
+All R source code resides in the `R/` directory, and only these files
+are included in the package.
+
+After making changes, you can verify that everything works as expected
+by running:
+
+``` r
+
+devtools::load_all()
+```
+
+This allows you to work with `lifelihood` functions using your latest
+local modifications.
+
+### Documenting
+
+Documentation for **Lifelihood** is managed with **Roxygen2**. If you
+add or modify functions, update the documentation by running:
+
+``` r
+
+devtools::document()
+```
+
+### Testing and Validation
+
+**Lifelihood** includes a suite of unit tests located in the `tests/`
+directory. These tests help ensure that changes don’t break existing
+functionality. Run tests using:
+
+``` r
+
+devtools::test()
+```
+
+Ensure all tests pass before submitting a pull request. Adding new tests
+for new features or bug fixes is highly encouraged.
+
+### Code format
+
+In order to ensure consistent code style, it’s recommend to install
+[Air](https://posit-dev.github.io/air/), an R formatter. The
+documentation with it has tutorials on how to set up it in your IDE
+(RStudio, Positron, VS Code, etc).
+
+### Submitting a Pull Request (PR)
+
+Once your changes are complete and tested, submit a pull request to
+propose integrating them into the main **Lifelihood** repository:
+
+Add, commit and push your branch to your fork on GitHub:
+
+``` bash
+git add -A
+git commit -m 'commit description'
+git push origin main
+```
+
+Then go to your project fork and click on the “Open a pull request”
+pop-up.
+
+When a pull request (PR) is opened, GitHub Actions will **automatically
+run checks** to validate your changes. These checks include testing the
+codebase, ensuring consistent documentation, and verifying
+cross-platform compatibility.
+
+You can view the status of these checks directly in the pull request
+interface.

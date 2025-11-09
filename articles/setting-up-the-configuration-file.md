@@ -1,0 +1,125 @@
+# Setting up configuration file
+
+If you haven’t already check it, have a look at:
+
+- [What is the required data
+  format](https://nrode.github.io/Lifelihood/articles/required-data-format.md)
+
+## Introduction
+
+------------------------------------------------------------------------
+
+Since `lifelihood` allows for a large number of combinations on which
+parameters to estimate for a given dataset, it makes it easier to have a
+separate **configuration file** to specify what you want to fit. Under
+the hood, the program will use this file to only estimate what you have
+specified and returns the estimations.
+
+The needed configuration file must be in the `YAML` format, a convenient
+kind of file that is both easy to **read** (for humans) and to **parse**
+(for the program). It relies on **indentation** to represent structure.
+Learn more about [YAML](https://en.wikipedia.org/wiki/YAML).
+
+## Parameters
+
+------------------------------------------------------------------------
+
+There are 3 main sections in the required `YAML` configuration file:
+
+- mortality: parameters related to mortality
+- maturity: parameters related to maturity
+- reproduction: parameters related to reproduction
+
+#### Estimations
+
+##### Possible values
+
+Assuming you have 2 covariables in your dataset (named `covar1` and
+`covar2`), for each of the estimation parameters, the following values
+are possible:
+
+- `not_fitted`: do not estimate this parameter.
+- `1`: only fit the intercept.
+- `covar1`: fit the intercept and the parameter of `covar1`.
+- `covar1 + covar2`: fit the intercept, the parameter of `covar1` and
+  the parameter of `covar1`.
+- `covar1 + covar2 + covar1*covar2`: fit the intercept, the parameter of
+  `covar1`, the parameter of `covar1` and the interaction between
+  `covar1` and `covar2`.
+
+*Note: `covar1` and `covar2` are arbitrary names. The only rule is that
+they should be the name of one of your columns in your dataset.*
+
+##### Mortality
+
+- `expt_death`: Expected time to death
+- `survival_param2`: Survival shape parameter
+- `ratio_expt_death`: Ratio between expected time to death for male vs
+  expected time to death for female
+- `prob_death`: Probability of death before critical time
+- `sex_ratio`: Sex ratio
+
+##### Maturity
+
+- `expt_maturity`: Expected time to maturity
+- `maturity_param2`: Maturity shape parameter
+- `ratio_expt_maturity`: Ratio between expected time to maturity for
+  male and expected time to maturity for female
+
+##### Reproduction
+
+- `expt_reproduction`: Expected time until next reproduction
+- `reproduction_param2`: Reproduction shape parameter
+- `n_offspring`: Number of offspring per reproduction event or fitness
+- `increase_death_hazard`: Increase in death hazard following a
+  reproduction event
+- `tof_reduction_date`: Trade-off of reduction rate
+- `increase_tof_n_offspring`: Increase in trade-off proportional to the
+  number of offspring
+- `lin_decrease_hazard`: Linear decrease in hazard rate with time since
+  maturity
+- `quad_decrease_hazard`: Quadratic decrease in hazard rate with time
+  since maturity
+- `lin_change_n_offspring`: Linear change in number of offspring with
+  time since maturity
+- `quad_change_n_offspring`: Quadratic change in number of offsprings
+  with time since maturity
+- `tof_n_offspring`: Trade-off between previous reproductive interval
+  and current number of offspring
+
+## Example
+
+------------------------------------------------------------------------
+
+``` yaml
+---
+mortality:
+  expt_death: geno
+  survival_param2: geno + type + geno*type
+  ratio_expt_death: geno
+  prob_death: geno
+  sex_ratio: not_fitted
+maturity:
+  expt_maturity: geno + type
+  maturity_param2: geno
+  ratio_expt_maturity: geno + type
+reproduction:
+  expt_reproduction: geno
+  reproduction_param2: not_fitted
+  n_offspring: geno
+  increase_death_hazard: geno + type + geno*type
+  tof_reduction_date: geno
+  increase_tof_n_offspring: geno
+  lin_decrease_hazard: geno + type + geno*type
+  quad_decrease_hazard: geno
+  lin_change_n_offspring: geno
+  quad_change_n_offspring: geno
+  tof_n_offspring: not_fitted
+```
+
+## Next step
+
+------------------------------------------------------------------------
+
+The next step is to actually [use the
+package](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md).
