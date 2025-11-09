@@ -95,7 +95,7 @@ newdata <- expand.grid(
   time = seq(0, 170, by = 10)
 )
 
-rate_df <- compute_fitted_mortality_rate(
+rate_df <- compute_fitted_event_rate(
   lifelihoodResults = results,
   interval_width = 10,
   newdata = NULL,
@@ -147,7 +147,7 @@ newdata <- expand.grid(
   geno = levels(lifelihoodData$df$geno),
   par = levels(lifelihoodData$df$par |> as.factor())
 )
-compute_fitted_mortality_rate(
+compute_fitted_event_rate(
   results,
   interval_width = 15,
   newdata = newdata

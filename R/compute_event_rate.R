@@ -5,7 +5,7 @@
 #' on some new data.
 #'
 #' @param lifelihoodResults A `lifelihoodResults` object
-#' @inheritParams compute_observed_mortality_rate
+#' @inheritParams compute_observed_event_rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
@@ -15,7 +15,7 @@
 #' @import dplyr
 #'
 #' @export
-compute_fitted_mortality_rate <- function(
+compute_fitted_event_rate <- function(
   lifelihoodResults,
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
@@ -235,34 +235,44 @@ compute_fitted_mortality_rate <- function(
 #'   model_specs = c("gam", "lgn", "wei")
 #' )
 #'
-#' mort_df <- compute_observed_mortality_rate(dataLFH, interval_width = 2)
+#' mort_df <- compute_observed_event_rate(dataLFH, interval_width = 2)
 #' head(mort_df)
 #'
-#' mort_df <- compute_observed_mortality_rate(
+#' mort_df <- compute_observed_event_rate(
 #'   dataLFH,
 #'   interval_width = 2,
 #'   groupby = NULL,
 #'   max_time = 170
 #' )
 #' head(mort_df)
-compute_observed_mortality_rate <- function(
+compute_observed_event_rate <- function(
   lifelihoodData,
   interval_width,
+  event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL
 ) {
+  event <- match.arg(event)
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
   if (is.null(newdata)) {
     newdata <- lifelihoodData$df
-  } else {
-    newdata <- newdata
   }
-  start_col <- lifelihoodData$death_start
-  end_col <- lifelihoodData$death_end
-  covariates <- lifelihoodData$covariates
+
+  ## Select event-specific columns
+  if (event == "mortality") {
+    start_col <- lifelihoodData$death_start
+    end_col <- lifelihoodData$death_end
+  } else if (event == "maturity") {
+    start_col <- lifelihoodData$maturity_start
+    end_col <- lifelihoodData$maturity_end
+  } else if (event == "reproduction") {
+    start_col <- lifelihoodData$reproduction_start
+    end_col <- lifelihoodData$reproduction_end
+  }
+
   right_censoring_date <- lifelihoodData$right_censoring_date
 
   if (is.null(max_time)) {
@@ -298,8 +308,7 @@ compute_observed_mortality_rate <- function(
       dplyr::mutate(group = as.factor(group))
 
     groups <- levels(newdata$group)
-
-    ## creates a empty dataframe where the estimated event rates will be stored
+    # creates a empty dataframe where the estimated event rates will be stored
     params <- setNames(
       lapply(groupby, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
       groupby
@@ -310,22 +319,20 @@ compute_observed_mortality_rate <- function(
       by = interval_width
     )
 
-    event_rate <- expand.grid(params) |> relocate(time)
+    event_rate <- expand.grid(params) |> dplyr::relocate(time)
 
-    ## Add group
     event_rate <- event_rate |>
       dplyr::mutate(across(
         all_of(groupby),
         ~ paste0(cur_column(), "=", .),
         .names = "{.col}"
-      )) |> ## Add the name of the factor to each level
+      )) |>
       tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE) |>
-      dplyr::filter(group %in% groups) |> ## Remove interactions not present in original dataset
+      dplyr::filter(group %in% groups) |>
       dplyr::mutate(group = as.factor(group))
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"
-
     event_rate <- expand.grid(
       time = seq(
         from = 0,
@@ -345,6 +352,7 @@ compute_observed_mortality_rate <- function(
 
   event_rate$Event_Rate <- 0
 
+  # Main counting loop
   for (grp in groups) {
     group_data <- newdata[newdata$group == grp, ]
 
@@ -352,32 +360,44 @@ compute_observed_mortality_rate <- function(
       interval_start <- (i - 1) * interval_width
       interval_end <- i * interval_width
 
-      ## Number of individuals alive at the beggining of the time interval
+      # Number of individuals alive at the beggining of the time interval
       alive_start <- sum(
         group_data[[start_col]] >= interval_start &
-          group_data[[end_col]] != right_censoring_date |
-          group_data[[start_col]] >= interval_end & ## Count censored individuals only if censoring date posterior to end of interval
-            group_data[[end_col]] == right_censoring_date
+          (group_data[[end_col]] != right_censoring_date |
+            (group_data[[end_col]] == right_censoring_date &
+              group_data[[start_col]] >= interval_end))
       )
 
-      ## Number of individuals dead at the end of the time interval
-      deaths <- sum(
-        group_data[[start_col]] >= interval_start &
-          group_data[[end_col]] < interval_end
-      )
+      ## mortality or maturity: count event occurrences
+      if (event %in% c("mortality", "maturity")) {
+        events <- sum(
+          group_data[[start_col]] >= interval_start &
+            group_data[[end_col]] < interval_end
+        )
+      }
+
+      # reproduction: total offspring in interval
+      if (event == "reproduction") {
+        size_col <- lifelihoodData$reproduction_size
+        events <- sum(
+          ifelse(
+            group_data[[end_col]] < interval_end &
+              group_data[[start_col]] >= interval_start,
+            group_data[[size_col]],
+            0
+          ),
+          na.rm = TRUE
+        )
+      }
 
       event_rate$Event_Rate[
         event_rate$time == interval_start & event_rate$group == grp
-      ] <- if (alive_start > min_sample_size) {
-        deaths / alive_start
-      } else {
-        NA
-      }
+      ] <- if (alive_start > min_sample_size) events / alive_start else NA
     }
   }
 
   if (is.null(groupby)) {
-    event_rate <- event_rate |> select(-group)
+    event_rate <- dplyr::select(event_rate, -group)
   }
 
   return(event_rate)

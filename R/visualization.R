@@ -5,7 +5,7 @@
 #' of changes in predicted event rate with age.
 #'
 #' If you want more control over the style of the graph,
-#' use the [compute_fitted_mortality_rate()] function to directly retrieve the predicted data.
+#' use the [compute_fitted_event_rate()] function to directly retrieve the predicted data.
 #'
 #' @name plot_mortality_rate
 #'
@@ -36,7 +36,7 @@ plot_fitted_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
-  rate_df <- compute_fitted_mortality_rate(
+  rate_df <- compute_fitted_event_rate(
     lifelihoodResults = lifelihoodResults,
     interval_width = interval_width,
     newdata = newdata,
@@ -55,7 +55,7 @@ plot_fitted_mortality_rate <- function(
   )
 
   if (add_observed_mortality_rate) {
-    obs_rate_df <- compute_observed_mortality_rate(
+    obs_rate_df <- compute_observed_event_rate(
       lifelihoodData = lifelihoodResults$lifelihoodData,
       interval_width = interval_width,
       max_time = max_time,
@@ -87,12 +87,12 @@ plot_fitted_mortality_rate <- function(
 #' with [lifelihoodData()]
 #'
 #' If you want more control over the style of the graph,
-#' use the [compute_observed_mortality_rate()] function to retrieve data.
+#' use the [compute_observed_event_rate()] function to retrieve data.
 #'
 #' @name plot_mortality_rate
 #'
 #' @inheritParams lifelihood
-#' @inheritParams compute_observed_mortality_rate
+#' @inheritParams compute_observed_event_rate
 #' @inheritParams plot_mortality_rate
 #' @inheritParams validate_groupby_arg
 #'
@@ -113,7 +113,7 @@ plot_observed_mortality_rate <- function(
 ) {
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  rate_df <- compute_observed_mortality_rate(
+  rate_df <- compute_observed_event_rate(
     lifelihoodData,
     interval_width,
     max_time = max_time,
@@ -138,7 +138,7 @@ plot_observed_mortality_rate <- function(
 #' Convenient function used in [plot_observed_mortality_rate()]
 #' and [plot_fitted_mortality_rate()].
 #'
-#' @inheritParams compute_observed_mortality_rate
+#' @inheritParams compute_observed_event_rate
 #' @inheritParams validate_groupby_arg
 #' @param rate_df Dataframe with mortality rate, obtained via [mortality_rate_data()]
 #' @param type The type of symbol to be used for the plot (either of "points" or 'lines")

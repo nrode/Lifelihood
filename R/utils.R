@@ -95,9 +95,9 @@ surv <- function(
   if (family == "wei") {
     return(SurvWei(t = t, expt_time_to_event = param1, shape = param2))
   } else if (family == "gam") {
-    return(SurvGam(t = t, expt_time_to_event = param1, shape = param2))
+    return(SurvGam(t = t, expt_time_to_event = param1, scale = param2))
   } else if (family == "lgn") {
-    return(SurvLgn(t = t, expt_time_to_event = param1, shape = param2))
+    return(SurvLgn(t = t, expt_time_to_event = param1, vp1 = param2))
   } else if (family == "exp") {
     return(SurvExp(t = t, expt_time_to_event = param1))
   }
