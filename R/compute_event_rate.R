@@ -49,11 +49,9 @@ compute_fitted_event_rate <- function(
       unique() |>
       setdiff("intercept")
   } else if (event == "reproduction") {
-    stop(
-      "`Reproduction event for computation and visualization not available yet.`"
-    )
-    start_col <- NULL
-    end_col <- NULL
+    # Use death columns for determining alive status
+    start_col <- lifelihoodData$death_start
+    end_col <- lifelihoodData$death_end
     family <- lifelihoodData$model_specs[3]
     covar <- c(
       lifelihoodResults$formula$expt_reproduction,
@@ -176,7 +174,8 @@ compute_fitted_event_rate <- function(
     newdata$n_offspring <- prediction(
       lifelihoodResults,
       parameter_name = "n_offspring",
-      newdata = newdata
+      newdata = newdata,
+      type = "response"
     )
   }
   return(newdata)
@@ -225,15 +224,23 @@ compute_observed_event_rate <- function(
   }
 
   # Select event-specific columns
-  if (event == "mortality") {
+  if (event == "reproduction") {
+    # Extract clutch column names - pattern is start, end, size repeated
+    clutch_cols <- lifelihoodData$clutchs
+    n_clutches <- length(clutch_cols) / 3
+    start_cols <- clutch_cols[seq(1, length(clutch_cols), by = 3)]
+    end_cols <- clutch_cols[seq(2, length(clutch_cols), by = 3)]
+    size_cols <- clutch_cols[seq(3, length(clutch_cols), by = 3)]
+
+    # Use death columns for determining alive status
+    start_col <- lifelihoodData$death_start
+    end_col <- lifelihoodData$death_end
+  } else if (event == "mortality") {
     start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
   } else if (event == "maturity") {
     start_col <- lifelihoodData$maturity_start
     end_col <- lifelihoodData$maturity_end
-  } else if (event == "reproduction") {
-    start_col <- NULL
-    end_col <- NULL
   }
 
   right_censoring_date <- lifelihoodData$right_censoring_date
@@ -339,18 +346,31 @@ compute_observed_event_rate <- function(
         )
       }
 
-      # reproduction: total offspring in interval
+      # reproduction: total offspring across all clutches in interval
       if (event == "reproduction") {
-        size_col <- lifelihoodData$reproduction_size
-        events <- sum(
-          ifelse(
-            group_data[[end_col]] < interval_end &
-              group_data[[start_col]] >= interval_start,
-            group_data[[size_col]],
-            0
-          ),
-          na.rm = TRUE
-        )
+        events <- 0
+
+        # Iterate through all clutch events
+        for (j in seq_along(start_cols)) {
+          clutch_start <- group_data[[start_cols[j]]]
+          clutch_end <- group_data[[end_cols[j]]]
+          clutch_size <- group_data[[size_cols[j]]]
+
+          # Count offspring for clutches that fall within the interval
+          # A clutch is counted if its timing overlaps with the interval
+          events <- events +
+            sum(
+              ifelse(
+                !is.na(clutch_end) &
+                  !is.na(clutch_start) &
+                  clutch_end < interval_end &
+                  clutch_start >= interval_start,
+                clutch_size,
+                0
+              ),
+              na.rm = TRUE
+            )
+        }
       }
 
       event_rate$Event_Rate[

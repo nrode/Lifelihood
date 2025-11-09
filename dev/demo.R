@@ -39,34 +39,31 @@ results <- lifelihood(
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4),
-  MCMC = 20
 )
 
-
-#maturity
+# maturity
 head(compute_fitted_event_rate(
-  #OK
   results,
   interval_width = 15,
   event = "maturity"
-))
+)) # OK
 head(compute_observed_event_rate(
-  results,
+  lifelihoodData,
   interval_width = 15,
   event = "maturity"
-))
+)) # OK
 
 #mortality
 head(compute_fitted_event_rate(
   results,
   interval_width = 15,
   event = "mortality"
-))
+)) # OK
 head(compute_observed_event_rate(
-  results,
+  lifelihoodData,
   interval_width = 15,
   event = "mortality"
-))
+)) # OK
 
 #reproduction
 head(compute_fitted_event_rate(
@@ -75,10 +72,10 @@ head(compute_fitted_event_rate(
   event = "reproduction"
 ))
 head(compute_observed_event_rate(
-  results,
+  lifelihoodData,
   interval_width = 15,
   event = "reproduction"
-))
+)) # OK
 
 coef(results)
 coeff(results, "expt_death")
