@@ -49,6 +49,9 @@ compute_fitted_event_rate <- function(
       unique() |>
       setdiff("intercept")
   } else if (event == "reproduction") {
+    stop(
+      "`Reproduction event for computation and visualization not available yet.`"
+    )
     start_col <- NULL
     end_col <- NULL
     family <- lifelihoodData$model_specs[3]
@@ -179,23 +182,23 @@ compute_fitted_event_rate <- function(
   return(newdata)
 }
 
-#' @title Compute empirical mortality rate
+#' @title Compute empirical event rate
 #'
 #' @description
-#' Calculate the empirical mortality rate over a given interval.
+#' Calculate the empirical event rate over a given interval.
 #'
 #' @inheritParams lifelihood
 #' @inheritParams validate_groupby_arg
 #' @param interval_width The interval width used to calculate the
-#' mortality rate. For instance, if the time unit for deaths in
+#' event rate. For instance, if the time unit for deaths in
 #' the original dataset is days and `interval_width` is set to 10,
-#' the mortality rate will be calculated every 10 days for each group.
+#' the event rate will be calculated every 10 days for each group.
 #' @param newdata Data for computation. If absent, predictions are for
 #' the subjects used in the original fit.
-#' @param max_time The maximum time for calculating the mortality
+#' @param max_time The maximum time for calculating the event
 #' rate. If set to NULL, the time of the last observed death is used.
 #' @param min_sample_size The minimum number of individuals alive
-#' at the beggining of a time interval for computing the observed mortality rate
+#' at the beggining of a time interval for computing the observed event rate
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
@@ -203,48 +206,8 @@ compute_fitted_event_rate <- function(
 #' at this time).
 #'
 #' @importFrom dplyr mutate if_else select
+#'
 #' @export
-#' @keywords internal
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- fakesample |>
-#'   mutate(
-#'     geno = as.factor(geno),
-#'     type = as.factor(type)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' mort_df <- compute_observed_event_rate(dataLFH, interval_width = 2)
-#' head(mort_df)
-#'
-#' mort_df <- compute_observed_event_rate(
-#'   dataLFH,
-#'   interval_width = 2,
-#'   groupby = NULL,
-#'   max_time = 170
-#' )
-#' head(mort_df)
 compute_observed_event_rate <- function(
   lifelihoodData,
   interval_width,
@@ -261,7 +224,7 @@ compute_observed_event_rate <- function(
     newdata <- lifelihoodData$df
   }
 
-  ## Select event-specific columns
+  # Select event-specific columns
   if (event == "mortality") {
     start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
@@ -269,8 +232,8 @@ compute_observed_event_rate <- function(
     start_col <- lifelihoodData$maturity_start
     end_col <- lifelihoodData$maturity_end
   } else if (event == "reproduction") {
-    start_col <- lifelihoodData$reproduction_start
-    end_col <- lifelihoodData$reproduction_end
+    start_col <- NULL
+    end_col <- NULL
   }
 
   right_censoring_date <- lifelihoodData$right_censoring_date

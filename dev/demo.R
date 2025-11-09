@@ -43,16 +43,43 @@ results <- lifelihood(
 )
 
 
-compute_fitted_event_rate(results, interval_width = 15, event = "maturity") |>
-  head()
-compute_fitted_event_rate(results, interval_width = 15, event = "mortality") |>
-  head()
-compute_fitted_event_rate(
+#maturity
+head(compute_fitted_event_rate(
+  #OK
+  results,
+  interval_width = 15,
+  event = "maturity"
+))
+head(compute_observed_event_rate(
+  results,
+  interval_width = 15,
+  event = "maturity"
+))
+
+#mortality
+head(compute_fitted_event_rate(
+  results,
+  interval_width = 15,
+  event = "mortality"
+))
+head(compute_observed_event_rate(
+  results,
+  interval_width = 15,
+  event = "mortality"
+))
+
+#reproduction
+head(compute_fitted_event_rate(
   results,
   interval_width = 15,
   event = "reproduction"
-) |>
-  head()
+))
+head(compute_observed_event_rate(
+  results,
+  interval_width = 15,
+  event = "reproduction"
+))
+
 coef(results)
 coeff(results, "expt_death")
 coeff(results, "survival_param2")
