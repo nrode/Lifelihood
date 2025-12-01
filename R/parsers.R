@@ -15,12 +15,13 @@
 parse_output <- function(lines, element, group_by_group = FALSE) {
   switch(
     element,
-    seeds = get_seeds(lines, group_by_group),
-    likelihood = get_likelihood(lines, group_by_group),
-    effects = get_effects(lines, group_by_group),
+    seeds = get_seeds(lines),
+    likelihood = get_likelihood(lines),
+    effects = get_effects(lines),
     parameter_ranges = get_param_ranges(lines),
     ratio_max = get_ratio_max(lines),
-    hessian = get_hessian(lines)
+    hessian = get_hessian(lines),
+    mcmc = get_mcmc(lines)
   )
 }
 
@@ -208,4 +209,63 @@ get_hessian <- function(lines) {
     lapply(hessian_lines, function(l) as.numeric(strsplit(l, "\\s+")[[1]]))
   )
   return(hessian)
+}
+
+#' @rdname parse_output
+get_mcmc <- function(lines) {
+  # find start of the MCMC samples table
+  start_idx <- which(grepl("MCMCsamples", lines))
+
+  if (length(start_idx) == 0) {
+    # If no MCMC block is found, return NULL
+    return(NULL)
+  }
+
+  # find end of the MCMC samples table (before Parameter_Range_Table)
+  end_idx <- which(grepl("Parameter_Range_Table", lines))
+
+  if (length(end_idx) == 0) {
+    stop(
+      "No 'Parameter_Range_Table' section found to mark end of MCMC samples."
+    )
+  }
+
+  # Extract lines between "MCMCsamples" and "Parameter_Range_Table"
+  # start + 1 skips the "MCMCsamples" line
+  mcmc_lines <- lines[(start_idx + 1):(end_idx - 1)]
+
+  # Remove empty lines and trim whitespace
+  mcmc_lines <- trimws(mcmc_lines)
+  mcmc_lines <- mcmc_lines[mcmc_lines != ""]
+
+  # Check if there are any samples
+  if (length(mcmc_lines) == 0) {
+    return(NULL)
+  }
+
+  # Split each line by one or more whitespace characters
+  mcmc_list <- strsplit(mcmc_lines, "\\s+")
+
+  # Extract parameter names (the first element of each split list)
+  param_names <- sapply(mcmc_list, function(x) x[1])
+
+  # Extract numerical samples (the rest of the elements)
+  samples_list <- lapply(mcmc_list, function(x) {
+    # x[-1] gets everything after the name. Convert to numeric.
+    # The output contains a trailing non-breaking space ( ) on the sample lines,
+    # which strsplit() handles, but a spurious empty string might result if
+    # the split pattern is not robust; using as.numeric is robust to this.
+    as.numeric(x[-1])
+  })
+
+  # Combine into a matrix, binding the rows together
+  mcmc_matrix <- do.call(rbind, samples_list)
+
+  # Set the row names to the parameter names
+  rownames(mcmc_matrix) <- param_names
+
+  # Convert the matrix to a data frame and return it
+  # We set check.names=FALSE to preserve row names like 'LL'
+  mcmc_df <- as.data.frame(mcmc_matrix, check.names = FALSE)
+  return(mcmc_df)
 }

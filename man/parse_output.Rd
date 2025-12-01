@@ -8,6 +8,7 @@
 \alias{get_ratio_max}
 \alias{get_effects}
 \alias{get_hessian}
+\alias{get_mcmc}
 \title{Parsing functions used to read the output file of the program}
 \usage{
 parse_output(lines, element, group_by_group = FALSE)
@@ -23,6 +24,8 @@ get_ratio_max(lines)
 get_effects(lines, group_by_group = FALSE)
 
 get_hessian(lines)
+
+get_mcmc(lines)
 }
 \arguments{
 \item{lines}{Vector of the output file (\code{.out}), where each element is a line of the file.}

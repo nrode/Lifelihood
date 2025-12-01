@@ -101,7 +101,7 @@ lifelihood <- function(
   delete_temp_files = TRUE,
   temp_dir = NULL
 ) {
-  check_valid_lifelihoodData(lifelihoodData)
+  check_lifelihoodData(lifelihoodData)
 
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
@@ -360,7 +360,7 @@ lifelihood_fit <- function(
   }
 
   if (raise_estimation_warning) {
-    check_valid_estimation(results)
+    check_estimation(results)
   }
 
   return(results)
@@ -382,45 +382,8 @@ lifelihood_fit <- function(
 #' @export
 #'
 #' @importFrom stats coef
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' coef(results)
 coef.lifelihoodResults <- function(object, ...) {
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
 
   coefs <- object$effects$estimation
   names(coefs) <- object$effects$name
@@ -445,46 +408,8 @@ coef.lifelihoodResults <- function(object, ...) {
 #' @return A list of coefficient estimates
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#'
-#' coeff(results, "expt_death")
 coeff <- function(object, parameter_name) {
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
 
   effects <- object$effects
   parameter_data <- which(effects$parameter == parameter_name)
@@ -506,45 +431,8 @@ coeff <- function(object, parameter_name) {
 #' @return A number with the value of maximum likelihood found.
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' logLik(results)
 logLik.lifelihoodResults <- function(object, ...) {
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
   return(object$likelihood)
 }
 
@@ -560,46 +448,26 @@ logLik.lifelihoodResults <- function(object, ...) {
 #' @return A covariance matrix
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' vcov(results)
 vcov.lifelihoodResults <- function(object, ...) {
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
   return(object$vcov)
+}
+
+#' @title MCMC
+#'
+#' @description
+#' S3 method to retrieve the mcmc
+#' from the output of [lifelihood()]
+#'
+#' @param object output of [lifelihood()]
+#' @param ... Ignored
+#'
+#' @return A covariance matrix
+#'
+#' @export
+mcmc.lifelihoodResults <- function(object, ...) {
+  check_lifelihoodResults(object)
+  return(object$mcmc)
 }
 
 #' @title Akaike Information Criterion
@@ -616,43 +484,6 @@ vcov.lifelihoodResults <- function(object, ...) {
 #' @seealso [AICc()], [BIC()]
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' AIC(results)
 AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
   L <- object$likelihood
   AIC <- -2 * L + 2 * k
@@ -672,45 +503,8 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #' @seealso [AIC()], [BIC()]
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' AICc(results)
 AICc <- function(object, ..., k = length(coef(object))) {
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
 
   L <- object$likelihood
   n <- object$sample_size
@@ -733,43 +527,6 @@ AICc <- function(object, ..., k = length(coef(object))) {
 #' @importFrom stats BIC
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- lifelihood::fakesample |>
-#'   mutate(
-#'     type = as.factor(type),
-#'     geno = as.factor(geno)
-#'   )
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' BIC(results)
 BIC.lifelihoodResults <- function(object, ...) {
   k <- length(coef(object))
   L <- object$likelihood
@@ -787,44 +544,6 @@ BIC.lifelihoodResults <- function(object, ...) {
 #' @param ... Ignored
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- fakesample |>
-#'   mutate(
-#'     geno = as.factor(geno),
-#'     type = as.factor(type)
-#'   )
-#' head(df)
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' summary(results)
 summary.lifelihoodResults <- function(object, ...) {
   cat("LIFELIHOOD RESULTS\n\n")
 

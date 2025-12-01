@@ -167,7 +167,7 @@ simulate_life_history <- function(
   if (!is.null(seed)) {
     set.seed(seed)
   }
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
 
   event <- match.arg(event, c("all", "mortality", "reproduction", "maturity"))
 

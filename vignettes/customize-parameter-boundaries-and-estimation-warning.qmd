@@ -97,7 +97,7 @@ results <- lifelihood(
 When runnning `lifelihood()` function, you might encounter the following warning:
 
 ```r
-## Warning in check_valid_estimation(results_lifelihood = results): Estimation of
+## Warning in check_estimation(results_lifelihood = results): Estimation of
 ## 'increase_death_hazard' is close to the maximum bound:
 ## increase_death_hazard≃9.9864992332278. Consider increasing maximum bound.
 ```

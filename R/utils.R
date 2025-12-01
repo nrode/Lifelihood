@@ -274,15 +274,15 @@ remove_lifelihood_tempfiles <- function(path = ".") {
 #' \dontrun{
 #' # raise an error
 #' obj <- c(1,2,3)
-#' check_valid_lifelihoodResults(obj)
+#' check_lifelihoodResults(obj)
 #'
 #' # works (does nothing)
 #' class(obj) = "lifelihoodResults"
-#' check_valid_lifelihoodResults(obj)
+#' check_lifelihoodResults(obj)
 #' }
 #'
 #' @keywords internal
-check_valid_lifelihoodResults <- function(object) {
+check_lifelihoodResults <- function(object) {
   if (!(inherits(object, "lifelihoodResults"))) {
     stop(paste0(
       "`object` expects a 'lifelihoodResults' object, not: '",
@@ -307,15 +307,15 @@ check_valid_lifelihoodResults <- function(object) {
 #' \dontrun{
 #' # raise an error
 #' obj <- c(1,2,3)
-#' check_valid_lifelihoodData(obj)
+#' check_lifelihoodData(obj)
 #'
 #' # works (does nothing)
 #' class(obj) = "lifelihoodData"
-#' check_valid_lifelihoodData(obj)
+#' check_lifelihoodData(obj)
 #' }
 #'
 #' @keywords internal
-check_valid_lifelihoodData <- function(object) {
+check_lifelihoodData <- function(object) {
   if (!(inherits(object, "lifelihoodData"))) {
     stop(paste0(
       "`object` expects a 'lifelihoodData' object, not: '",

@@ -14,7 +14,7 @@
 #' @keywords internal
 #'
 #' @export
-check_valid_estimation <- function(lifelihoodResults) {
+check_estimation <- function(lifelihoodResults) {
   estimations <- lifelihoodResults$effects
   boundaries <- lifelihoodResults$parameter_ranges
   parameter_names <- unique(estimations$parameter)

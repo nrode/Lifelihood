@@ -66,7 +66,7 @@ prediction <- function(
   type = c("link", "response"),
   se.fit = FALSE
 ) {
-  check_valid_lifelihoodResults(object)
+  check_lifelihoodResults(object)
 
   type <- match.arg(type)
 
