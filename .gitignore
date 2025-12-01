@@ -31,6 +31,7 @@ backup/
 inst/bin/*
 !inst/bin/lifelihood-macos
 !inst/bin/lifelihood-windows.exe
+!inst/bin/lifelihood-windows
 !inst/bin/lifelihood-linux
 
 *.log
