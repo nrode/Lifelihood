@@ -40,3 +40,8 @@ check-image-linux:
 	else \
 		echo "Docker image '$(LINUX_IMAGE)' already exists."; \
 	fi
+
+
+# ---- Windows Build ----
+windows:
+	fpc -MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -l -vabq -Fiinst/bin -FuC:\Users\josephbarbier\.lazarus/lib/units/i386-win32/win32 -FuC:\Users\josephbarbier\.lazarus/lib/LCLBase/units/i386-win32 -FuC:\Users\josephbarbier\.lazarus/lib/freetypelaz/lib/i386-win32 -FuC:\Users\josephbarbier\.lazarus/lib/LazUtils/lib/i386-win32 -FuC:\Users\josephbarbier\.lazarus/lib/units/i386-win32 -Fusource -FEinst/bin -oinst/bin/lifelihood-windows.exe -dLCL -dLCLwin32 -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL source/lifelihood.lpr
