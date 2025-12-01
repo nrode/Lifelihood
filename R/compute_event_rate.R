@@ -217,6 +217,7 @@ compute_observed_event_rate <- function(
   groupby = NULL
 ) {
   event <- match.arg(event)
+  check_valid_lifelihoodData(lifelihoodData)
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
   if (is.null(newdata)) {
