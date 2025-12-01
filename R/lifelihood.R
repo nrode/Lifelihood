@@ -101,6 +101,8 @@ lifelihood <- function(
   delete_temp_files = TRUE,
   temp_dir = NULL
 ) {
+  check_valid_lifelihoodData(lifelihoodData)
+
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
   if (!is.null(seeds) & n_fit > 1) {

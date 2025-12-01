@@ -10,12 +10,11 @@ It requires R 4.1.0 or later, and:
 
 - macOS (Apple silicon)
 - Linux
-- ~~Windows~~ (coming soon)
+- Windows
 
 <br>
 
 ## Installation
-
 
 ```r
 devtools::install_github("nrode/Lifelihood")

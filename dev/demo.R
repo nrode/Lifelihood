@@ -30,12 +30,13 @@ lifelihoodData <- lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("par", "geno", "spore"),
+  covariates = c("par", "geno"),
   model_specs = c("wei", "gam", "exp")
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
+  se = TRUE,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4),
