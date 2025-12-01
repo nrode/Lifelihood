@@ -16,6 +16,7 @@ It requires R 4.1.0 or later, and:
 
 ## Installation
 
+
 ```r
 devtools::install_github("nrode/Lifelihood")
 ```
