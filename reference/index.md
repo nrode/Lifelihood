@@ -42,6 +42,9 @@
 - [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
   : Likelihood
 
+- [`mcmc()`](https://nrode.github.io/Lifelihood/reference/mcmc.md) :
+  MCMC
+
 - [`parallel.simulate()`](https://nrode.github.io/Lifelihood/reference/parallel.simulate.md)
   : Parallelized simulations
 

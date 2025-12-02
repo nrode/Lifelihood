@@ -20,6 +20,8 @@ get_ratio_max(lines)
 get_effects(lines, group_by_group = FALSE)
 
 get_hessian(lines)
+
+get_mcmc(lines)
 ```
 
 ## Arguments

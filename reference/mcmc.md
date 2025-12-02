@@ -1,13 +1,12 @@
-# Covariance matrix
+# MCMC
 
-S3 method to retrieve the covariance matrix from the output of
+Retrieve the mcmc from the output of
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
 
 ## Usage
 
 ``` r
-# S3 method for class 'lifelihoodResults'
-vcov(object, ...)
+mcmc(object)
 ```
 
 ## Arguments
@@ -16,10 +15,6 @@ vcov(object, ...)
 
   output of
   [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
-
-- ...:
-
-  Ignored
 
 ## Value
 

@@ -22,9 +22,9 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/SurvGam.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/SurvLgn.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/SurvWei.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/check_valid_estimation.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/check_valid_lifelihoodData.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/check_valid_lifelihoodResults.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/check_estimation.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/check_lifelihoodData.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/check_lifelihoodResults.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/coef.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/compute_fitted_event_rate.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/compute_observed_event_rate.html</loc></url>
@@ -51,6 +51,7 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/make_design_matrix.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/map_parameter_name.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/mcmc.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/parallel.simulate.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/parse_output.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/plot_event_rate.html</loc></url>

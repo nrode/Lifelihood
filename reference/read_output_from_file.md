@@ -11,7 +11,8 @@ read_output_from_file(
   file_path,
   group_by_group = FALSE,
   covariates = NULL,
-  path_config
+  path_config,
+  MCMC
 )
 ```
 
@@ -30,6 +31,11 @@ read_output_from_file(
 
   A character string specifying the file path to the YAML configuration
   file.
+
+- MCMC:
+
+  Perform MCMC sampling of the parameter after convergence to estimate
+  their 95% confidence interval
 
 ## Value
 

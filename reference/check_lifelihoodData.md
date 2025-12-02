@@ -1,15 +1,15 @@
-# Check that an object is of class `lifelihoodResults`
+# Check that an object is of class `lifelihoodData`
 
 Internally, `lifelihood` has to check multiple times that the passed
 object is the expected one.
 
 It basically raises an explicit error if the object is not of class
-`lifelihoodResults`.
+`lifelihoodData`.
 
 ## Usage
 
 ``` r
-check_valid_lifelihoodResults(object)
+check_lifelihoodData(object)
 ```
 
 ## Arguments
@@ -24,10 +24,10 @@ check_valid_lifelihoodResults(object)
 if (FALSE) { # \dontrun{
 # raise an error
 obj <- c(1,2,3)
-check_valid_lifelihoodResults(obj)
+check_lifelihoodData(obj)
 
 # works (does nothing)
-class(obj) = "lifelihoodResults"
-check_valid_lifelihoodResults(obj)
+class(obj) = "lifelihoodData"
+check_lifelihoodData(obj)
 } # }
 ```

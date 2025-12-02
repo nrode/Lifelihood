@@ -12,7 +12,7 @@ explicit. This function can be ignored thanks to the
 ## Usage
 
 ``` r
-check_valid_estimation(lifelihoodResults)
+check_estimation(lifelihoodResults)
 ```
 
 ## Arguments
