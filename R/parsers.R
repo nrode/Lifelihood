@@ -25,7 +25,6 @@ parse_output <- function(lines, element, group_by_group = FALSE) {
   )
 }
 
-
 #' @rdname parse_output
 get_seeds <- function(lines, group_by_group = FALSE) {
   # find the line starting with pattern "seed1="

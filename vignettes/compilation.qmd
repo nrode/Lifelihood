@@ -1,7 +1,7 @@
 ---
 title: "Compilation"
 vignette: >
-  %\VignetteIndexEntry{contributing}
+  %\VignetteIndexEntry{compilation}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:

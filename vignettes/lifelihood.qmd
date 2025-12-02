@@ -63,7 +63,6 @@ dataLFH <- lifelihoodData(
 ### Estimation
 
 ```{r}
-#| cache: true
 results <- dataLFH |>
   lifelihood(path_config = get_config_path("config_pierrick"))
 ```

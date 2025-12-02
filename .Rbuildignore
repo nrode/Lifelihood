@@ -12,6 +12,7 @@ source/*
 air.toml
 dev.R
 \*.zip
+\*.o
 ^docs$
 ^_pkgdown\.yaml$
 ^pkgdown$
@@ -25,3 +26,5 @@ dev.R
 ^doc$
 ^Meta$
 ^BinaryFiles
+^Dockerfile
+^Makefile

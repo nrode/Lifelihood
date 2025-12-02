@@ -15,7 +15,8 @@ License: MIT + file LICENSE
 URL: https://nrode.github.io/Lifelihood/
 BugReports: https://github.com/nrode/Lifelihood/issues
 Depends: 
-    R (>= 4.1.0)
+    R (>= 4.1.0),
+    tidyverse
 Imports: 
     coda,
     dplyr,
@@ -24,7 +25,8 @@ Imports:
     here,
     reshape2,
     stats,
-    yaml
+    yaml,
+    glue
 Suggests: 
     devtools,
     DT,

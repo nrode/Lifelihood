@@ -18,7 +18,8 @@ read_output_from_file <- function(
   file_path,
   group_by_group = FALSE,
   covariates = NULL,
-  path_config
+  path_config,
+  MCMC
 ) {
   lines <- readLines(file_path)
   results <- list()
@@ -29,7 +30,10 @@ read_output_from_file <- function(
   parameter_ranges <- parse_output(lines, "parameter_ranges", group_by_group)
   ratiomax <- parse_output(lines, "ratio_max", group_by_group)
   inverse_hessian <- parse_output(lines, "hessian")
-  mcmc <- parse_output(lines, "mcmc")
+
+  if (MCMC > 0) {
+    mcmc <- parse_output(lines, "mcmc")
+  }
 
   get_event_covariates <- function(str_formula) {
     if (trimws(as.character(str_formula)) == "1") {
@@ -92,11 +96,12 @@ read_output_from_file <- function(
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
-  results$mcmc <- mcmc
 
-  if (!is.null(inverse_hessian)) {
-    results$inverse_hessian <- inverse_hessian
-    results$vcov <- -inverse_hessian
+  if (MCMC > 0) {
+    results$mcmc_loglikelihood <- as.data.frame(t(mcmc))$LL
+    mcmc_sample <- as.data.frame(t(mcmc)) |> dplyr::select(-LL)
+    rownames(mcmc_sample) <- NULL
+    results$mcmc_sample <- mcmc_sample
   }
 
   class(results) <- "lifelihoodResults"

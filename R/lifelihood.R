@@ -346,7 +346,8 @@ lifelihood_fit <- function(
     output_path,
     group_by_group = group_by_group,
     covariates = lifelihoodData$covariates,
-    path_config = path_config
+    path_config = path_config,
+    MCMC = MCMC
   )
 
   results$lifelihoodData <- lifelihoodData
@@ -456,16 +457,14 @@ vcov.lifelihoodResults <- function(object, ...) {
 #' @title MCMC
 #'
 #' @description
-#' S3 method to retrieve the mcmc
-#' from the output of [lifelihood()]
+#' Retrieve the mcmc from the output of [lifelihood()]
 #'
 #' @param object output of [lifelihood()]
-#' @param ... Ignored
 #'
 #' @return A covariance matrix
 #'
 #' @export
-mcmc.lifelihoodResults <- function(object, ...) {
+mcmc <- function(object) {
   check_lifelihoodResults(object)
   return(object$mcmc)
 }

@@ -42,6 +42,10 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4),
 )
 
+mcmcse::mcse(results$mcmc_sample$int_expt_death)
+results$mcmc_sample
+results$mcmc_loglikelihood
+
 # maturity
 head(compute_fitted_event_rate(
   results,
