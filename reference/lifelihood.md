@@ -16,7 +16,7 @@ lifelihood(
   group_by_group = FALSE,
   MCMC = 0,
   interval = 25,
-  se = FALSE,
+  se.fit = FALSE,
   saveprobevent = 0,
   r = 0,
   seeds = NULL,
@@ -74,11 +74,11 @@ lifelihood(
 
   TBD - Check the actual meaning
 
-- se:
+- se.fit:
 
   If TRUE, Lifelihood computes the standard error of each parameter
-  using the Hessian matrix (output with value of -1 if standard error
-  cannot be computed due to singularity of the Hessian matrix)
+  using the variance-covariance matrix (approximated by the inverse of
+  the negative of the Hessian matrix).
 
 - saveprobevent:
 

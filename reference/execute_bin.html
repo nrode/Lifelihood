@@ -69,7 +69,7 @@
 <span>  <span class="va">group_by_group</span>,</span>
 <span>  <span class="va">MCMC</span>,</span>
 <span>  <span class="va">interval</span>,</span>
-<span>  <span class="va">se</span>,</span>
+<span>  <span class="va">se.fit</span>,</span>
 <span>  <span class="va">saveprobevent</span>,</span>
 <span>  <span class="va">fitness</span>,</span>
 <span>  <span class="va">r</span>,</span>
@@ -119,8 +119,8 @@
 <dd><p>TBD - Check the actual meaning</p></dd>
 
 
-<dt id="arg-se">se<a class="anchor" aria-label="anchor" href="#arg-se"></a></dt>
-<dd><p>If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)</p></dd>
+<dt id="arg-se-fit">se.fit<a class="anchor" aria-label="anchor" href="#arg-se-fit"></a></dt>
+<dd><p>If TRUE, Lifelihood computes the standard error of each parameter using the variance-covariance matrix (approximated by the inverse of the negative of the Hessian matrix).</p></dd>
 
 
 <dt id="arg-saveprobevent">saveprobevent<a class="anchor" aria-label="anchor" href="#arg-saveprobevent"></a></dt>

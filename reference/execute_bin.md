@@ -12,7 +12,7 @@ execute_bin(
   group_by_group,
   MCMC,
   interval,
-  se,
+  se.fit,
   saveprobevent,
   fitness,
   r,
@@ -64,11 +64,11 @@ execute_bin(
 
   TBD - Check the actual meaning
 
-- se:
+- se.fit:
 
   If TRUE, Lifelihood computes the standard error of each parameter
-  using the Hessian matrix (output with value of -1 if standard error
-  cannot be computed due to singularity of the Hessian matrix)
+  using the variance-covariance matrix (approximated by the inverse of
+  the negative of the Hessian matrix).
 
 - saveprobevent:
 

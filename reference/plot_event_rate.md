@@ -30,7 +30,7 @@ plot_fitted_event_rate(
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
-  add_observed_mortality_rate = TRUE,
+  add_observed_event_rate = TRUE,
   min_sample_size = 1,
   max_time = NULL,
   groupby = NULL,
@@ -81,7 +81,7 @@ plot_event_rate(
   Data for prediction. If absent, predictions are for the subjects used
   in the original fit.
 
-- add_observed_mortality_rate:
+- add_observed_event_rate:
 
   Boolean to add the observed event rate to the graph (default=TRUE)
 
@@ -89,7 +89,7 @@ plot_event_rate(
 
   The minimum number of individuals alive at the beggining of a time
   interval for computing the observed event rate (only used if
-  add_observed_mortality_rate=TRUE, default=1)
+  add_observed_event_rate=TRUE, default=1)
 
 - max_time:
 
