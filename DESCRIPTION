@@ -31,8 +31,8 @@ Imports:
     future.apply
 Suggests: 
     devtools,
-    DT,
     knitr,
+    mcmcse,
     quarto,
     rmarkdown,
     testthat (>= 3.0.0)

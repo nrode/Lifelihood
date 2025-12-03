@@ -102,6 +102,30 @@ read_output_from_file <- function(
     mcmc_sample <- as.data.frame(t(mcmc)) |> dplyr::select(-LL)
     rownames(mcmc_sample) <- NULL
     results$mcmc_sample <- mcmc_sample
+    mcmc_se <- apply(results$mcmc_sample, MARGIN = 2, mcmcse::mcse)
+
+    mcmc_se_df <- mcmc_se |> unlist() |> as.data.frame()
+    mcmc_se_df$est <- rownames(mcmc_se_df)
+    rownames(mcmc_se_df) <- NULL
+    colnames(mcmc_se_df) <- c("est_std", "name")
+
+    results$mcmc_se <- mcmc_se_df |>
+      mutate(
+        type = ifelse(
+          grepl("\\.est$", name),
+          "mcmc_estimation",
+          "mcmc_stderror"
+        ),
+        name = sub("\\.(est|se)$", "", name)
+      ) |>
+      pivot_wider(names_from = type, values_from = est_std)
+
+    results$effects <- results$effects |>
+      left_join(
+        results$mcmc_se,
+        by = "name"
+      ) |>
+      relocate(mcmc_estimation, mcmc_stderror, .before = parameter)
   }
 
   class(results) <- "lifelihoodResults"

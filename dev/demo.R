@@ -36,13 +36,14 @@ lifelihoodData <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  MCMC = 10,
+  MCMC = 3,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4),
 )
 
-mcmcse::mcse(results$mcmc_sample$int_expt_death)
+summary(results)
+results$mcmc_se
 results$mcmc_sample
 results$mcmc_loglikelihood
 
