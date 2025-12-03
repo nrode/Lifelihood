@@ -80,7 +80,7 @@ on some new data.</p>
 
 
 <dl><dt id="arg-lifelihoodresults">lifelihoodResults<a class="anchor" aria-label="anchor" href="#arg-lifelihoodresults"></a></dt>
-<dd><p>A <code>lifelihoodResults</code> object</p></dd>
+<dd><p>output of <code><a href="lifelihood.html">lifelihood()</a></code>.</p></dd>
 
 
 <dt id="arg-interval-width">interval_width<a class="anchor" aria-label="anchor" href="#arg-interval-width"></a></dt>
@@ -90,9 +90,13 @@ the original dataset is days and <code>interval_width</code> is set to 10,
 the event rate will be calculated every 10 days for each group.</p></dd>
 
 
+<dt id="arg-event">event<a class="anchor" aria-label="anchor" href="#arg-event"></a></dt>
+<dd><p>Which event to compute? Must be one of "mortality", "maturity", "reproduction".</p></dd>
+
+
 <dt id="arg-newdata">newdata<a class="anchor" aria-label="anchor" href="#arg-newdata"></a></dt>
-<dd><p>Data for computation. If absent, predictions are for
-the subjects used in the original fit.</p></dd>
+<dd><p>Optional <code>data.frame</code> providing covariate values for prediction.
+If <code>NULL</code>, the original model data are used.</p></dd>
 
 
 <dt id="arg-max-time">max_time<a class="anchor" aria-label="anchor" href="#arg-max-time"></a></dt>
@@ -101,14 +105,7 @@ rate. If set to NULL, the time of the last observed death is used.</p></dd>
 
 
 <dt id="arg-groupby">groupby<a class="anchor" aria-label="anchor" href="#arg-groupby"></a></dt>
-<dd><p>vector of covariate(s) over which mortality rate should be
-computed (default is <code>NULL</code>).</p><ul><li><p>If NULL, calculates a single overall mortality rate.</p></li>
-<li><p>If <code>"all"</code>, calculates mortality rate over each combination
-of covariates listed in the<code>lifelihoodData</code> object provided.</p></li>
-<li><p>Otherwise must be a character (<code>"covariate1"</code>) or a
-character vector (<code>c("covariate1", "covariate2")</code>).
-Note that the function will consider continuous covariates as factors</p></li>
-</ul></dd>
+<dd><p>One or multiple covariates used to group the computation.</p></dd>
 
 </dl></div>
     <div class="section level2">

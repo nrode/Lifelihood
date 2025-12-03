@@ -20,7 +20,8 @@ compute_fitted_event_rate(
 
 - lifelihoodResults:
 
-  A `lifelihoodResults` object
+  output of
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
 
 - interval_width:
 
@@ -29,10 +30,15 @@ compute_fitted_event_rate(
   `interval_width` is set to 10, the event rate will be calculated every
   10 days for each group.
 
+- event:
+
+  Which event to compute? Must be one of "mortality", "maturity",
+  "reproduction".
+
 - newdata:
 
-  Data for computation. If absent, predictions are for the subjects used
-  in the original fit.
+  Optional `data.frame` providing covariate values for prediction. If
+  `NULL`, the original model data are used.
 
 - max_time:
 
@@ -41,17 +47,7 @@ compute_fitted_event_rate(
 
 - groupby:
 
-  vector of covariate(s) over which mortality rate should be computed
-  (default is `NULL`).
-
-  - If NULL, calculates a single overall mortality rate.
-
-  - If `"all"`, calculates mortality rate over each combination of
-    covariates listed in the`lifelihoodData` object provided.
-
-  - Otherwise must be a character (`"covariate1"`) or a character vector
-    (`c("covariate1", "covariate2")`). Note that the function will
-    consider continuous covariates as factors
+  One or multiple covariates used to group the computation.
 
 ## Value
 

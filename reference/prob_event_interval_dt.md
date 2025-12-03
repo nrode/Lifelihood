@@ -14,13 +14,21 @@ prob_event_interval_dt(t, dt, param1, param2, family)
 
   Numeric. The time to event
 
-- expt_time_to_event:
+- dt:
+
+  Interval
+
+- param1:
 
   Numeric. The expected longevity or time to maturity.
 
-- Shape:
+- param2:
 
-  Numeric. The shape parameter
+  Numeric. The second parameter returned by lifelihood.
+
+- family:
+
+  One of "exp", "wei", "gam", "lgn"
 
 ## Value
 

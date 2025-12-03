@@ -22,6 +22,10 @@ surv(t, param1, param2, family = c("exp", "wei", "gam", "lgn"))
 
   Numeric. The second parameter returned by lifelihood.
 
+- family:
+
+  One of "exp", "wei", "gam", "lgn"
+
 ## Value
 
 The probability of event (being alive or not mature) at time t.

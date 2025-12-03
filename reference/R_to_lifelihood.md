@@ -27,12 +27,3 @@ R_to_lifelihood(R_format, covariates, covar_types)
 
 The formatted format for lifelihood to understand which parameter to
 fit.
-
-## Examples
-
-``` r
-R_to_lifelihood("geno + type", c("geno", "type"))
-#> Error in R_to_lifelihood("geno + type", c("geno", "type")): argument "covar_types" is missing, with no default
-R_to_lifelihood("geno + type + geno*type", c("geno", "type"))
-#> Error in R_to_lifelihood("geno + type + geno*type", c("geno", "type")): argument "covar_types" is missing, with no default
-```

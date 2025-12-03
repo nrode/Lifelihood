@@ -30,6 +30,11 @@ compute_observed_event_rate(
   `interval_width` is set to 10, the event rate will be calculated every
   10 days for each group.
 
+- event:
+
+  Which event to compute? Must be one of "mortality", "maturity",
+  "reproduction".
+
 - newdata:
 
   Data for computation. If absent, predictions are for the subjects used

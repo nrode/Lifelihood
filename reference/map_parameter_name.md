@@ -20,14 +20,3 @@ map_parameter_name(name)
 ## Value
 
 A named list containing the mapped value for the input element.
-
-## Examples
-
-``` r
-map_parameter_name("eff_expt_death_geno1")
-#> Error in map_parameter_name("eff_expt_death_geno1"): could not find function "map_parameter_name"
-map_parameter_name("eff_ratio_expt_death_geno1")
-#> Error in map_parameter_name("eff_ratio_expt_death_geno1"): could not find function "map_parameter_name"
-map_parameter_name("int_sex_ratio")
-#> Error in map_parameter_name("int_sex_ratio"): could not find function "map_parameter_name"
-```

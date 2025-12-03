@@ -39,10 +39,6 @@ simulate_life_history(
   Optional integer. If provided, sets the random seed for
   reproducibility.
 
-- nsim:
-
-  Number of simulations per individual in newdata (default: nsim=1)
-
 ## Value
 
 A list of `data.frame` with one column per simulated event. Each column

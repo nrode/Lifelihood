@@ -146,6 +146,10 @@ lifelihood_fit(
   Indicates whether temporary files should be deleted. TRUE by default
   and recommended.
 
+- temp_dir:
+
+  An optional temporary directory.
+
 ## Value
 
 `lifelihoodResults`
