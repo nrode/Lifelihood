@@ -12,7 +12,7 @@ lifelihood_fit(
   group_by_group = FALSE,
   MCMC = 0,
   interval = 25,
-  se = FALSE,
+  se.fit = FALSE,
   saveprobevent = 0,
   r = 0,
   seeds = NULL,
@@ -46,7 +46,7 @@ lifelihood_fit(
 
 \item{interval}{TBD - Check the actual meaning}
 
-\item{se}{If TRUE, Lifelihood computes the standard error of each parameter using the Hessian matrix (output with value of -1 if standard error cannot be computed due to singularity of the Hessian matrix)}
+\item{se.fit}{If TRUE, Lifelihood computes the standard error of each parameter using the variance-covariance matrix (approximated by the inverse of the negative of the Hessian matrix).}
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 

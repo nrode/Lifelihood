@@ -8,6 +8,7 @@ prediction(
   object,
   parameter_name,
   newdata = NULL,
+  mcmc.fit = FALSE,
   type = c("link", "response"),
   se.fit = FALSE
 )

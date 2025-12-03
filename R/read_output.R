@@ -96,29 +96,23 @@ read_output_from_file <- function(
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
+  results$vcov <- -inverse_hessian
 
   if (MCMC > 0) {
     results$mcmc_loglikelihood <- as.data.frame(t(mcmc))$LL
     mcmc_sample <- as.data.frame(t(mcmc)) |> dplyr::select(-LL)
     rownames(mcmc_sample) <- NULL
     results$mcmc_sample <- mcmc_sample
-    mcmc_se <- apply(results$mcmc_sample, MARGIN = 2, mcmcse::mcse)
+    mcmc <- lifelihood_mcmcse(results$mcmc_sample)
+    results$mcmc_vcov <- mcmc$vcov
+    mcmc$vcov <- NULL
 
-    mcmc_se_df <- mcmc_se |> unlist() |> as.data.frame()
-    mcmc_se_df$est <- rownames(mcmc_se_df)
+    mcmc_se_df <- mcmc |> as.data.frame()
+    mcmc_se_df$name <- rownames(mcmc_se_df)
     rownames(mcmc_se_df) <- NULL
-    colnames(mcmc_se_df) <- c("est_std", "name")
+    colnames(mcmc_se_df) <- c("mcmc_estimation", "mcmc_stderror", "name")
 
-    results$mcmc_se <- mcmc_se_df |>
-      mutate(
-        type = ifelse(
-          grepl("\\.est$", name),
-          "mcmc_estimation",
-          "mcmc_stderror"
-        ),
-        name = sub("\\.(est|se)$", "", name)
-      ) |>
-      pivot_wider(names_from = type, values_from = est_std)
+    results$mcmc_se <- mcmc_se_df
 
     results$effects <- results$effects |>
       left_join(

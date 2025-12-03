@@ -63,6 +63,7 @@ prediction <- function(
   object,
   parameter_name,
   newdata = NULL,
+  mcmc.fit = FALSE,
   type = c("link", "response"),
   se.fit = FALSE
 ) {
@@ -100,7 +101,12 @@ prediction <- function(
     m <- model.frame(fml, data = df)
     Terms <- terms(m)
     x <- model.matrix(Terms, m)
-    coef_vector <- effects$estimation[range]
+
+    if (mcmc.fit) {
+      coef_vector <- effects$mcmc_estimation[range]
+    } else {
+      coef_vector <- effects$estimation[range]
+    }
 
     # the case where newdata does not contain all
     # possible factors: we add them and put to 0.
@@ -128,7 +134,11 @@ prediction <- function(
     predictions <- x %*% coef_vector
 
     if (se.fit) {
-      var_cov <- object$vcov
+      if (mcmc.fit) {
+        var_cov <- object$mcmc_vcov
+      } else {
+        var_cov <- object$vcov
+      }
       var_parameter <- as.matrix(var_cov[range, range])
       if (type == "link") {
         se <- sqrt(diag(x %*% var_parameter %*% t(x)))
@@ -160,11 +170,10 @@ prediction <- function(
   }
 
   if (se.fit) {
-    result <- list(
-      fit = as.vector(pred),
-      se.fit = as.vector(se)
-    )
-    return(result)
+    return(data.frame(
+      fitted = as.vector(pred),
+      se.fitted = as.vector(se)
+    ))
   } else {
     return(as.vector(pred))
   }
