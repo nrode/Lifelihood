@@ -14,29 +14,22 @@ compute_fitted_event_rate(
 )
 }
 \arguments{
-\item{lifelihoodResults}{A \code{lifelihoodResults} object}
+\item{lifelihoodResults}{output of \code{\link[=lifelihood]{lifelihood()}}.}
 
 \item{interval_width}{The interval width used to calculate the
 event rate. For instance, if the time unit for deaths in
 the original dataset is days and \code{interval_width} is set to 10,
 the event rate will be calculated every 10 days for each group.}
 
-\item{newdata}{Data for computation. If absent, predictions are for
-the subjects used in the original fit.}
+\item{event}{Which event to compute? Must be one of "mortality", "maturity", "reproduction".}
+
+\item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
+If \code{NULL}, the original model data are used.}
 
 \item{max_time}{The maximum time for calculating the event
 rate. If set to NULL, the time of the last observed death is used.}
 
-\item{groupby}{vector of covariate(s) over which mortality rate should be
-computed (default is \code{NULL}).
-\itemize{
-\item If NULL, calculates a single overall mortality rate.
-\item If \code{"all"}, calculates mortality rate over each combination
-of covariates listed in the\code{lifelihoodData} object provided.
-\item Otherwise must be a character (\code{"covariate1"}) or a
-character vector (\code{c("covariate1", "covariate2")}).
-Note that the function will consider continuous covariates as factors
-}}
+\item{groupby}{One or multiple covariates used to group the computation.}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based

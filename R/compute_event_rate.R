@@ -4,8 +4,17 @@
 #' Calculate the empirical mortality rate over a given interval
 #' on some new data.
 #'
-#' @param lifelihoodResults A `lifelihoodResults` object
-#' @inheritParams compute_observed_event_rate
+#' @param lifelihoodResults output of [lifelihood()].
+#' @param interval_width The interval width used to calculate the
+#' event rate. For instance, if the time unit for deaths in
+#' the original dataset is days and `interval_width` is set to 10,
+#' the event rate will be calculated every 10 days for each group.
+#' @param event Which event to compute? Must be one of "mortality", "maturity", "reproduction".
+#' @param newdata Optional `data.frame` providing covariate values for prediction.
+#' If `NULL`, the original model data are used.
+#' @param max_time The maximum time for calculating the event
+#' rate. If set to NULL, the time of the last observed death is used.
+#' @param groupby One or multiple covariates used to group the computation.
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
@@ -198,6 +207,7 @@ compute_fitted_event_rate <- function(
 #' rate. If set to NULL, the time of the last observed death is used.
 #' @param min_sample_size The minimum number of individuals alive
 #' at the beggining of a time interval for computing the observed event rate
+#' @param event Which event to compute? Must be one of "mortality", "maturity", "reproduction".
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,

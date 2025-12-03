@@ -10,11 +10,6 @@
 #'
 #' @param name A character string representing the element to be mapped.
 #'
-#' @examples
-#' map_parameter_name("eff_expt_death_geno1")
-#' map_parameter_name("eff_ratio_expt_death_geno1")
-#' map_parameter_name("int_sex_ratio")
-#'
 #' @return A named list containing the mapped value for the input element.
 map_parameter_name <- function(name) {
   keys <- c(

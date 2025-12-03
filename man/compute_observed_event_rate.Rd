@@ -22,6 +22,8 @@ event rate. For instance, if the time unit for deaths in
 the original dataset is days and \code{interval_width} is set to 10,
 the event rate will be calculated every 10 days for each group.}
 
+\item{event}{Which event to compute? Must be one of "mortality", "maturity", "reproduction".}
+
 \item{newdata}{Data for computation. If absent, predictions are for
 the subjects used in the original fit.}
 

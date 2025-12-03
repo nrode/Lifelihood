@@ -12,6 +12,8 @@ surv(t, param1, param2, family = c("exp", "wei", "gam", "lgn"))
 \item{param1}{Numeric. The expected longevity or time to maturity.}
 
 \item{param2}{Numeric. The second parameter returned by lifelihood.}
+
+\item{family}{One of "exp", "wei", "gam", "lgn"}
 }
 \value{
 The probability of event (being alive or not mature) at time t.

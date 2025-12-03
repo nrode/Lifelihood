@@ -36,44 +36,6 @@
 #' @importFrom utils write.table
 #'
 #' @export
-#'
-#' @examples
-#' library(lifelihood)
-#' library(tidyverse)
-#'
-#' df <- fakesample |>
-#'   mutate(
-#'     geno = as.factor(geno),
-#'     type = as.factor(type)
-#'   )
-#' head(df)
-#'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
-#'
-#' dataLFH <- lifelihoodData(
-#'   df = df,
-#'   sex = "sex",
-#'   sex_start = "sex_start",
-#'   sex_end = "sex_end",
-#'   maturity_start = "mat_start",
-#'   maturity_end = "mat_end",
-#'   clutchs = clutchs,
-#'   death_start = "death_start",
-#'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
-#' )
-#'
-#' results <- lifelihood(
-#'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config"),
-#'   seeds = c(1, 2, 3, 4),
-#'   raise_estimation_warning = FALSE
-#' )
-#' summary(results)
 lifelihood <- function(
   lifelihoodData,
   path_config,
@@ -98,8 +60,7 @@ lifelihood <- function(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE,
-  temp_dir = NULL
+  delete_temp_files = TRUE
 ) {
   check_lifelihoodData(lifelihoodData)
 
@@ -176,6 +137,7 @@ lifelihood <- function(
 #' internally to fit multiple times lifelihood.
 #'
 #' @inheritParams lifelihood
+#' @param temp_dir An optional temporary directory.
 #'
 #' @import glue
 #'

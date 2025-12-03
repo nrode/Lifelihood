@@ -248,15 +248,9 @@ read_formula <- function(config, parameter) {
 #' @param R_format String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.
 #' @inheritParams lifelihoodData
 #'
-#' @keywords internal
-#'
 #' @return The formatted format for lifelihood to understand which parameter to fit.
 #'
-#' @examples
-#' R_to_lifelihood("geno + type", c("geno", "type"))
-#' R_to_lifelihood("geno + type + geno*type", c("geno", "type"))
-#'
-#' @export
+#' @keywords internal
 R_to_lifelihood <- function(R_format, covariates, covar_types) {
   # ensure input is a string
   R_format <- as.character(R_format)

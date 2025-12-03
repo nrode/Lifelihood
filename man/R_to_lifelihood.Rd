@@ -21,9 +21,4 @@ into a format which the compiled program can understand. For example,
 \code{covariables} and \code{"type"} is the second. This function is used to
 create the model part of the input text file.
 }
-\examples{
-R_to_lifelihood("geno + type", c("geno", "type"))
-R_to_lifelihood("geno + type + geno*type", c("geno", "type"))
-
-}
 \keyword{internal}

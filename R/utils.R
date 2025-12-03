@@ -62,8 +62,10 @@ SurvWei <- function(t, expt_time_to_event, shape) {
 #' @keywords internal
 #'
 #' @param t Numeric. The time to event
-#' @param expt_time_to_event Numeric. The expected longevity or time to maturity.
-#' @param Shape Numeric. The shape parameter
+#' @param dt Interval
+#' @param param1 Numeric. The expected longevity or time to maturity.
+#' @param param2 Numeric. The second parameter returned by lifelihood.
+#' @param family One of "exp", "wei", "gam", "lgn"
 #'
 #' @return The survival probability (numeric)
 #'
@@ -81,10 +83,9 @@ prob_event_interval_dt <- function(t, dt, param1, param2, family) {
 #' @param t Numeric. The time to event
 #' @param param1 Numeric. The expected longevity or time to maturity.
 #' @param param2 Numeric. The second parameter returned by lifelihood.
+#' @param family One of "exp", "wei", "gam", "lgn"
 #'
 #' @return The probability of event (being alive or not mature) at time t.
-#'
-#' @export
 surv <- function(
   t,
   param1,

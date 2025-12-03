@@ -22,8 +22,6 @@ Default is \code{"all"}, which simulates all fitted events.}
 If \code{NULL}, the original model data are used.}
 
 \item{seed}{Optional integer. If provided, sets the random seed for reproducibility.}
-
-\item{nsim}{Number of simulations per individual in newdata (default: nsim=1)}
 }
 \value{
 A list of \code{data.frame} with one column per simulated event.

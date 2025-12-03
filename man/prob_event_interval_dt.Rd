@@ -9,9 +9,13 @@ prob_event_interval_dt(t, dt, param1, param2, family)
 \arguments{
 \item{t}{Numeric. The time to event}
 
-\item{expt_time_to_event}{Numeric. The expected longevity or time to maturity.}
+\item{dt}{Interval}
 
-\item{Shape}{Numeric. The shape parameter}
+\item{param1}{Numeric. The expected longevity or time to maturity.}
+
+\item{param2}{Numeric. The second parameter returned by lifelihood.}
+
+\item{family}{One of "exp", "wei", "gam", "lgn"}
 }
 \value{
 The survival probability (numeric)

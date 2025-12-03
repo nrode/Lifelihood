@@ -28,8 +28,7 @@ lifelihood(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE,
-  temp_dir = NULL
+  delete_temp_files = TRUE
 )
 }
 \arguments{
@@ -89,42 +88,4 @@ Computes the joined likelihood of all the events in
 an individual life-history (time of maturity, reproductive
 events, death) and estimates the parameters of the model
 using maximum likelihood.
-}
-\examples{
-library(lifelihood)
-library(tidyverse)
-
-df <- fakesample |>
-  mutate(
-    geno = as.factor(geno),
-    type = as.factor(type)
-  )
-head(df)
-
-clutchs <- c(
-  "clutch_start1", "clutch_end1", "clutch_size1",
-  "clutch_start2", "clutch_end2", "clutch_size2"
-)
-
-dataLFH <- lifelihoodData(
-  df = df,
-  sex = "sex",
-  sex_start = "sex_start",
-  sex_end = "sex_end",
-  maturity_start = "mat_start",
-  maturity_end = "mat_end",
-  clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
-  covariates = c("geno", "type"),
-  model_specs = c("gam", "lgn", "wei")
-)
-
-results <- lifelihood(
-  lifelihoodData = dataLFH,
-  path_config = get_config_path("config"),
-  seeds = c(1, 2, 3, 4),
-  raise_estimation_warning = FALSE
-)
-summary(results)
 }

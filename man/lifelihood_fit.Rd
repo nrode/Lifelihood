@@ -77,6 +77,8 @@ lifelihood_fit(
 \item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.}
 
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
+
+\item{temp_dir}{An optional temporary directory.}
 }
 \value{
 \code{lifelihoodResults}
