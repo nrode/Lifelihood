@@ -30,7 +30,7 @@ lifelihoodData <- lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("par", "geno"),
+  covariates = c("par", "spore"),
   model_specs = c("wei", "gam", "exp")
 )
 
@@ -88,7 +88,6 @@ coeff(results, "survival_param2")
 coeff(results, "n_offspring")
 AIC(results)
 BIC(results)
-vcov(results)
 logLik(results)
 
 prediction(
@@ -117,18 +116,14 @@ plot_fitted_event_rate(
   results,
   interval_width = 10,
   event = "maturity",
-  add_observed_mortality_rate = TRUE,
-  groupby = "par",
-  use_facet = TRUE,
-  newdata = NULL,
-  max_time = NULL,
   xlab = "Age (days)",
-  ylab = "Fitted Mortality Rate"
+  ylab = "Fitted Maturity Rate"
 )
 plot_observed_event_rate(
   lifelihoodData,
   interval_width = 10,
   groupby = "par",
+  event = "reproduction",
   use_facet = TRUE,
   xlab = "Age (days)",
   ylab = "Observed Mortality Rate"

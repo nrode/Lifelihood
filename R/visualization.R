@@ -35,6 +35,7 @@ plot_fitted_event_rate <- function(
   xlab = "Time",
   ylab = "Event Rate"
 ) {
+  check_lifelihoodResults(lifelihoodResults)
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
 
   rate_df <- compute_fitted_event_rate(
@@ -73,9 +74,13 @@ plot_fitted_event_rate <- function(
         )
     } else {
       pfitted <- pfitted +
-        geom_point(obs_rate_df, aes(x = Mean_Interval, y = MortalityRate))
+        geom_point(
+          data = obs_rate_df,
+          aes(x = Mean_Interval, y = Event_Rate)
+        )
     }
   }
+
   pfitted
 }
 
@@ -203,7 +208,7 @@ plot_event_rate <- function(
     plot <- plot + ggplot2::xlim(0, max_time * 1.1)
   }
 
-  if (use_facet) {
+  if (use_facet && !is.null(groupby)) {
     plot <- plot +
       ggh4x::facet_nested(as.formula(paste(
         "~",
