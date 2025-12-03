@@ -11,7 +11,7 @@ plot_fitted_event_rate(
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
-  add_observed_mortality_rate = TRUE,
+  add_observed_event_rate = TRUE,
   min_sample_size = 1,
   max_time = NULL,
   groupby = NULL,
@@ -52,10 +52,10 @@ the event rate will be calculated every 10 days for each group.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
 
-\item{add_observed_mortality_rate}{Boolean to add the observed event rate to the graph (default=TRUE)}
+\item{add_observed_event_rate}{Boolean to add the observed event rate to the graph (default=TRUE)}
 
 \item{min_sample_size}{The minimum number of individuals alive
-at the beggining of a time interval for computing the observed event rate (only used if add_observed_mortality_rate=TRUE, default=1)}
+at the beggining of a time interval for computing the observed event rate (only used if add_observed_event_rate=TRUE, default=1)}
 
 \item{max_time}{The maximum time for calculating the event
 rate. If set to NULL, the time of the last observed death is used.}

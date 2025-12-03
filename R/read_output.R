@@ -96,7 +96,10 @@ read_output_from_file <- function(
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
   results$group_by_group <- group_by_group
-  results$vcov <- -inverse_hessian
+
+  if (!is.null(inverse_hessian)) {
+    results$vcov <- -inverse_hessian
+  }
 
   if (MCMC > 0) {
     results$mcmc_loglikelihood <- as.data.frame(t(mcmc))$LL

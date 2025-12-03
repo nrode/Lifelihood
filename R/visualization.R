@@ -13,9 +13,9 @@
 #' @inheritParams plot_event_rate
 #' @inheritParams prediction
 #' @inheritParams validate_groupby_arg
-#' @param add_observed_mortality_rate Boolean to add the observed event rate to the graph (default=TRUE)
+#' @param add_observed_event_rate Boolean to add the observed event rate to the graph (default=TRUE)
 #' @param min_sample_size The minimum number of individuals alive
-#' at the beggining of a time interval for computing the observed event rate (only used if add_observed_mortality_rate=TRUE, default=1)
+#' at the beggining of a time interval for computing the observed event rate (only used if add_observed_event_rate=TRUE, default=1)
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
 #'
@@ -27,13 +27,14 @@ plot_fitted_event_rate <- function(
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
-  add_observed_mortality_rate = TRUE,
+  add_observed_event_rate = TRUE,
   min_sample_size = 1,
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
   xlab = "Time",
-  ylab = "Event Rate"
+  ylab = "Event Rate",
+  type = "points"
 ) {
   check_lifelihoodResults(lifelihoodResults)
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
@@ -50,14 +51,15 @@ plot_fitted_event_rate <- function(
   pfitted <- plot_event_rate(
     rate_df = rate_df,
     max_time = max_time,
-    type = "lines",
+    type = type,
     groupby = groupby,
     use_facet = use_facet,
     xlab = xlab,
-    ylab = ylab
+    ylab = ylab,
+    fitted_data = TRUE
   )
 
-  if (add_observed_mortality_rate) {
+  if (add_observed_event_rate) {
     obs_rate_df <- compute_observed_event_rate(
       lifelihoodData = lifelihoodResults$lifelihoodData,
       interval_width = interval_width,
@@ -70,15 +72,26 @@ plot_fitted_event_rate <- function(
       pfitted <- pfitted +
         geom_point(
           data = obs_rate_df,
-          aes(x = Mean_Interval, y = Event_Rate, color = group)
+          aes(
+            x = Mean_Interval,
+            y = Event_Rate,
+            color = group,
+            shape = "Observed"
+          ),
         )
     } else {
       pfitted <- pfitted +
         geom_point(
           data = obs_rate_df,
-          aes(x = Mean_Interval, y = Event_Rate)
+          aes(x = Mean_Interval, y = Event_Rate, shape = "Observed")
         )
     }
+    pfitted <- pfitted +
+      scale_shape_manual(
+        name = "",
+        values = c("Observed" = 19, "Fitted" = 2)
+      ) +
+      guides(shape = guide_legend(override.aes = list(size = 3)))
   }
 
   pfitted
@@ -137,7 +150,8 @@ plot_observed_event_rate <- function(
     groupby = groupby,
     use_facet = use_facet,
     xlab = xlab,
-    ylab = ylab
+    ylab = ylab,
+    fitted_data = FALSE
   )
   pobs
 }
@@ -167,7 +181,8 @@ plot_event_rate <- function(
   groupby,
   use_facet,
   xlab = "Time",
-  ylab = "Event rate"
+  ylab = "Event rate",
+  fitted_data = FALSE
 ) {
   type <- match.arg(type)
 
@@ -191,7 +206,11 @@ plot_event_rate <- function(
   }
 
   if (type == "points") {
-    p <- p + geom_point()
+    if (fitted_data) {
+      p <- p + geom_point(aes(shape = "Fitted"))
+    } else {
+      p <- p + geom_point()
+    }
   } else if (type == "lines") {
     p <- p + geom_line()
   }

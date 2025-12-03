@@ -55,45 +55,7 @@ prediction(results, "expt_death", type = "response") |>
   head(15)
 
 summary(results)
-results$mcmc_se
-results$mcmc_sample
-results$mcmc_loglikelihood
 
-# maturity
-head(compute_fitted_event_rate(
-  results,
-  interval_width = 15,
-  event = "maturity"
-))
-head(compute_observed_event_rate(
-  lifelihoodData,
-  interval_width = 15,
-  event = "maturity"
-))
-
-#mortality
-head(compute_fitted_event_rate(
-  results,
-  interval_width = 15,
-  event = "mortality"
-))
-head(compute_observed_event_rate(
-  lifelihoodData,
-  interval_width = 15,
-  event = "mortality"
-))
-
-#reproduction
-head(compute_fitted_event_rate(
-  results,
-  interval_width = 15,
-  event = "reproduction"
-))
-head(compute_observed_event_rate(
-  lifelihoodData,
-  interval_width = 15,
-  event = "reproduction"
-))
 
 coef(results)
 coeff(results, "expt_death")
@@ -125,18 +87,38 @@ simulate_life_history(results, event = "reproduction") |> head()
 parallel.simulate(results, nsim = 10, parallel_seed = 1)
 
 ## PLot fitted/observed mortality rates
+lifelihoodResults <- results
+interval_width = 10
+event = "mortality"
+use_facet = TRUE
+groupby = "spore"
+xlab = "Age (days)"
+ylab = "Fitted Maturity Rate"
+
+rate_df <- compute_fitted_event_rate(
+  lifelihoodResults = lifelihoodResults,
+  interval_width = interval_width,
+  event = event,
+  newdata = NULL,
+  max_time = NULL,
+  groupby = groupby
+)
+
 plot_fitted_event_rate(
   results,
   interval_width = 10,
-  event = "maturity",
+  event = "mortality",
+  use_facet = TRUE,
+  groupby = "all",
   xlab = "Age (days)",
   ylab = "Fitted Maturity Rate"
 )
+
 plot_observed_event_rate(
   lifelihoodData,
   interval_width = 10,
   groupby = "par",
-  event = "reproduction",
+  event = "maturity",
   use_facet = TRUE,
   xlab = "Age (days)",
   ylab = "Observed Mortality Rate"

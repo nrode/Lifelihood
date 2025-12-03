@@ -106,7 +106,7 @@ rate_df <- compute_fitted_event_rate(
 plot_fitted_event_rate(
   lifelihoodResults = results,
   interval_width = 10,
-  add_observed_mortality_rate = TRUE,
+  add_observed_event_rate = TRUE,
   groupby = c("spore", "par"),
   use_facet = TRUE,
   newdata = NULL,
