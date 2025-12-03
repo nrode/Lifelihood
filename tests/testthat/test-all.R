@@ -127,36 +127,54 @@ testthat::test_that("Overall demo works", {
   expect_true(class(pred_resp) == "numeric")
   expect_true(all(pred <= pred_resp))
 
-  simul <- simulate_life_history(results)
-  expect_true(ncol(simul) >= 100)
-  expect_type(simul$mortality, "double")
-  expect_type(simul$maturity, "double")
-  expect_type(simul$clutch_1, "double")
-  expect_type(simul$n_offspring_clutch_1, "integer")
+  suppressWarnings({
+    simul <- simulate_life_history(results)
+    expect_true(ncol(simul) >= 100)
+    expect_type(simul$mortality, "double")
+    expect_type(simul$maturity, "double")
+    expect_type(simul$clutch_1, "double")
+    expect_type(simul$n_offspring_clutch_1, "integer")
 
-  simul <- simulate_life_history(results, event = "mortality")
-  expect_type(simul$mortality, "double")
-  expect_true(nrow(simul) == 550)
+    simul <- simulate_life_history(results, event = "mortality")
+    expect_type(simul$mortality, "double")
+    expect_true(nrow(simul) == 550)
 
-  simul <- simulate_life_history(results, event = "maturity")
-  expect_type(simul$maturity, "double")
-  expect_true(nrow(simul) == 550)
+    simul <- simulate_life_history(results, event = "maturity")
+    expect_type(simul$maturity, "double")
+    expect_true(nrow(simul) == 550)
+  })
 
-  ## PLot fitted/observed mortality rates
-  plot_fitted_event_rate(
-    results,
-    interval_width = 10,
-    event = "maturity",
-    xlab = "Age (days)",
-    ylab = "Fitted Maturity Rate"
-  )
-  plot_observed_event_rate(
-    lifelihoodData,
-    interval_width = 10,
-    groupby = "par",
-    event = "reproduction",
-    use_facet = TRUE,
-    xlab = "Age (days)",
-    ylab = "Observed Mortality Rate"
-  )
+  for (event in c("maturity", "mortality", "reproduction")) {
+    p <- plot_fitted_event_rate(
+      results,
+      interval_width = 10,
+      event = event,
+      xlab = "Age (days)",
+      ylab = "Fitted Maturity Rate"
+    )
+    expect_true(
+      all(
+        class(p) ==
+          c("ggplot2::ggplot", "ggplot", "ggplot2::gg", "S7_object", "gg")
+      )
+    )
+  }
+
+  for (event in c("maturity", "mortality", "reproduction")) {
+    p <- plot_observed_event_rate(
+      lifelihoodData,
+      interval_width = 10,
+      groupby = "par",
+      event = "reproduction",
+      use_facet = TRUE,
+      xlab = "Age (days)",
+      ylab = "Observed Mortality Rate"
+    )
+    expect_true(
+      all(
+        class(p) ==
+          c("ggplot2::ggplot", "ggplot", "ggplot2::gg", "S7_object", "gg")
+      )
+    )
+  }
 })
