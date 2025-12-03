@@ -89,7 +89,7 @@ plot_fitted_event_rate <- function(
     pfitted <- pfitted +
       scale_shape_manual(
         name = "",
-        values = c("Observed" = 19, "Fitted" = 2)
+        values = c("Observed" = 19, "Fitted" = 1)
       ) +
       guides(shape = guide_legend(override.aes = list(size = 3)))
   }

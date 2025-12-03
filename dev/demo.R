@@ -109,7 +109,7 @@ plot_fitted_event_rate(
   interval_width = 10,
   event = "mortality",
   use_facet = TRUE,
-  groupby = "all",
+  groupby = "spore",
   xlab = "Age (days)",
   ylab = "Fitted Maturity Rate"
 )
