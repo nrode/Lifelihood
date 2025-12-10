@@ -86,15 +86,6 @@ simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
 parallel.simulate(results, nsim = 10, parallel_seed = 1)
 
-## PLot fitted/observed mortality rates
-lifelihoodResults <- results
-interval_width = 10
-event = "mortality"
-use_facet = TRUE
-groupby = "spore"
-xlab = "Age (days)"
-ylab = "Fitted Maturity Rate"
-
 rate_df <- compute_fitted_event_rate(
   lifelihoodResults = lifelihoodResults,
   interval_width = interval_width,
@@ -106,10 +97,10 @@ rate_df <- compute_fitted_event_rate(
 
 plot_fitted_event_rate(
   results,
-  interval_width = 10,
-  event = "mortality",
+  interval_width = 5,
+  event = "reproduction",
   use_facet = TRUE,
-  groupby = "spore",
+  groupby = "par",
   xlab = "Age (days)",
   ylab = "Fitted Maturity Rate"
 )
@@ -118,7 +109,7 @@ plot_observed_event_rate(
   lifelihoodData,
   interval_width = 10,
   groupby = "par",
-  event = "maturity",
+  event = "reproduction",
   use_facet = TRUE,
   xlab = "Age (days)",
   ylab = "Observed Mortality Rate"

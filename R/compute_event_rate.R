@@ -230,10 +230,6 @@ compute_observed_event_rate <- function(
   check_lifelihoodData(lifelihoodData)
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
-  if (is.null(newdata)) {
-    newdata <- lifelihoodData$df
-  }
-
   # Select event-specific columns
   if (event == "reproduction") {
     # Extract clutch column names - pattern is start, end, size repeated
@@ -243,8 +239,11 @@ compute_observed_event_rate <- function(
     end_cols <- clutch_cols[seq(2, length(clutch_cols), by = 3)]
     size_cols <- clutch_cols[seq(3, length(clutch_cols), by = 3)]
 
-    # Use death columns for determining alive status
-    start_col <- lifelihoodData$death_start
+    # Use death columns for determining alive status.
+    # Start_col and death_col are defined after for
+    # reproduction event.
+    death_start_col <- lifelihoodData$death_start
+    death_end_col <- lifelihoodData$death_end
     end_col <- lifelihoodData$death_end
   } else if (event == "mortality") {
     start_col <- lifelihoodData$death_start
@@ -254,14 +253,82 @@ compute_observed_event_rate <- function(
     end_col <- lifelihoodData$maturity_end
   }
 
+  if (is.null(newdata)) {
+    newdata <- lifelihoodData$df
+  }
+
+  if (event == "reproduction") {
+    # since reproduction can occur multiple times for each individual,
+    # we handle them as one reproduction = one event.
+    # Each event is the difference between 2 reproduction events OR
+    # between the death and the last reproduction (right censoring of
+    # unobserved reproductions that could have occured after death).
+    diff_death <- (newdata[, death_start_col] +
+      newdata[, death_end_col]) /
+      2
+    diff_death <- diff_death |>
+      as_tibble() |>
+      mutate(last_clutch_interval = NA, last_clutch_interval2 = NA) |>
+      relocate(
+        last_clutch_interval,
+        last_clutch_interval2,
+        .before = everything()
+      )
+    clutch_time <- bind_cols(
+      (newdata[, start_cols] + newdata[, end_cols]) / 2,
+      diff_death
+    )
+
+    # Add an unobserved clutch after all observed clutchs,
+    # right censored by age of death as it's the last column.
+    clutch_time[] <- t(apply(clutch_time, 1, function(row) {
+      i <- which(is.na(row))[1]
+      row[i] <- row[length(row)]
+      row
+    }))
+    clutch_time <- clutch_time[, -ncol(clutch_time)]
+
+    # Put to the same data format as "maturity" and "mortality"
+    # by re-defining newdata with reproduction data.
+    newdata <- clutch_time |>
+      t() |>
+      diff() |> # transpose is required to diff() by columns instead of rows
+      t() |>
+      bind_cols(newdata |> select(lifelihoodData$covariates)) |>
+      pivot_longer(
+        cols = c(
+          start_cols[-1],
+          "last_clutch_interval",
+          "last_clutch_interval2"
+        )
+      ) |>
+      mutate(
+        pon_end = if_else(is.na(lead(value)), right_censoring_date, value)
+      ) |>
+      filter(!is.na(value)) |>
+      filter(value != 0) |>
+      rename(pon_start = "value")
+
+    start_col <- "pon_start"
+    end_col <- "pon_end"
+  }
+
   right_censoring_date <- lifelihoodData$right_censoring_date
 
   if (is.null(max_time)) {
-    sorted_values <- sort(
-      unique(lifelihoodData$df[[end_col]]),
-      decreasing = TRUE,
-      na.last = NA
-    )
+    if (event %in% c("mortality", "maturity")) {
+      sorted_values <- sort(
+        unique(lifelihoodData$df[[end_col]]),
+        decreasing = TRUE,
+        na.last = NA
+      )
+    } else {
+      sorted_values <- sort(
+        unique(newdata[[end_col]]),
+        decreasing = TRUE,
+        na.last = NA
+      )
+    }
     if (sorted_values[1] == right_censoring_date) {
       max_time <- sorted_values[2]
     } else {
@@ -349,40 +416,10 @@ compute_observed_event_rate <- function(
               group_data[[start_col]] >= interval_end))
       )
 
-      ## mortality or maturity: count event occurrences
-      if (event %in% c("mortality", "maturity")) {
-        events <- sum(
-          group_data[[start_col]] >= interval_start &
-            group_data[[end_col]] < interval_end
-        )
-      }
-
-      # reproduction: total offspring across all clutches in interval
-      if (event == "reproduction") {
-        events <- 0
-
-        # Iterate through all clutch events
-        for (j in seq_along(start_cols)) {
-          clutch_start <- group_data[[start_cols[j]]]
-          clutch_end <- group_data[[end_cols[j]]]
-          clutch_size <- group_data[[size_cols[j]]]
-
-          # Count offspring for clutches that fall within the interval
-          # A clutch is counted if its timing overlaps with the interval
-          events <- events +
-            sum(
-              ifelse(
-                !is.na(clutch_end) &
-                  !is.na(clutch_start) &
-                  clutch_end < interval_end &
-                  clutch_start >= interval_start,
-                clutch_size,
-                0
-              ),
-              na.rm = TRUE
-            )
-        }
-      }
+      events <- sum(
+        group_data[[start_col]] >= interval_start &
+          group_data[[end_col]] < interval_end
+      )
 
       event_rate$Event_Rate[
         event_rate$time == interval_start & event_rate$group == grp
