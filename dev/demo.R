@@ -111,6 +111,16 @@ plot_observed_event_rate(
   groupby = "par",
   event = "reproduction",
   use_facet = TRUE,
+  xlab = "Time since last reproduction (days)",
+  ylab = "Observed Reproduction Rate"
+)
+
+plot_observed_event_rate(
+  lifelihoodData,
+  interval_width = 10,
+  groupby = "par",
+  event = "mortality",
+  use_facet = TRUE,
   xlab = "Age (days)",
   ylab = "Observed Mortality Rate"
 )
