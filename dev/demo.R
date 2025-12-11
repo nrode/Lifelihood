@@ -31,7 +31,7 @@ lifelihoodData <- lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  model_specs = c("wei", "gam", "exp")
+  model_specs = c("wei", "gam", "lgn")
 )
 
 results <- lifelihood(
@@ -77,8 +77,11 @@ prediction(
   se.fit = TRUE,
   parameter_name = "expt_death"
 )
+
 prediction(results, parameter_name = "n_offspring") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
+prediction(results, parameter_name = "expt_reproduction", type = "response") |> head()
+prediction(results, parameter_name = "reproduction_param2", type = "response") |> tail()
 
 simulate_life_history(results) |> head()
 simulate_life_history(results, event = "mortality") |> head()
@@ -107,7 +110,7 @@ plot_fitted_event_rate(
 
 plot_observed_event_rate(
   lifelihoodData,
-  interval_width = 10,
+  interval_width = 5,
   groupby = "par",
   event = "reproduction",
   use_facet = TRUE,
