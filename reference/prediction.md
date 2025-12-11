@@ -81,7 +81,7 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/_l/91ns3hs96sd11p4_lzxh1l140000gn/T/Rtmp8y0WZf/temp_libpath191e311aa5c0/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/private/var/folders/_l/91ns3hs96sd11p4_lzxh1l140000gn/T/RtmpmFIq5d/temp_libpath31e67279d108/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 #> Error in (start + 1):length(lines): argument of length 0
 
 prediction(results, "expt_death")
