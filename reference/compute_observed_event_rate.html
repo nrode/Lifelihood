@@ -66,7 +66,6 @@
 <span>  <span class="va">lifelihoodData</span>,</span>
 <span>  <span class="va">interval_width</span>,</span>
 <span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mortality"</span>, <span class="st">"maturity"</span>, <span class="st">"reproduction"</span><span class="op">)</span>,</span>
-<span>  newdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  min_sample_size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  groupby <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -90,11 +89,6 @@ the event rate will be calculated every 10 days for each group.</p></dd>
 
 <dt id="arg-event">event<a class="anchor" aria-label="anchor" href="#arg-event"></a></dt>
 <dd><p>Which event to compute? Must be one of "mortality", "maturity", "reproduction".</p></dd>
-
-
-<dt id="arg-newdata">newdata<a class="anchor" aria-label="anchor" href="#arg-newdata"></a></dt>
-<dd><p>Data for computation. If absent, predictions are for
-the subjects used in the original fit.</p></dd>
 
 
 <dt id="arg-max-time">max_time<a class="anchor" aria-label="anchor" href="#arg-max-time"></a></dt>

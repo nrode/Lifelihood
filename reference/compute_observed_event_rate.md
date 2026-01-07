@@ -9,7 +9,6 @@ compute_observed_event_rate(
   lifelihoodData,
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
-  newdata = NULL,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL
@@ -34,11 +33,6 @@ compute_observed_event_rate(
 
   Which event to compute? Must be one of "mortality", "maturity",
   "reproduction".
-
-- newdata:
-
-  Data for computation. If absent, predictions are for the subjects used
-  in the original fit.
 
 - max_time:
 

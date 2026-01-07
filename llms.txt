@@ -64,6 +64,8 @@ summary(results)
   : Compute fitted mortality rate
 - [`compute_observed_event_rate()`](https://nrode.github.io/Lifelihood/reference/compute_observed_event_rate.md)
   : Compute empirical event rate
+- [`compute_reproduction_intervals()`](https://nrode.github.io/Lifelihood/reference/compute_reproduction_intervals.md)
+  : Compute time interval between clutches
 - [`datapierrick`](https://nrode.github.io/Lifelihood/reference/datapierrick.md)
   : Pierrick data
 - [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
