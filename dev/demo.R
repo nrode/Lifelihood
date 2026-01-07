@@ -48,15 +48,10 @@ prediction(
   results,
   "expt_death",
   se.fit = TRUE,
-  mcmc.fit = TRUE,
   type = "response"
 ) |>
-  head(15)
-prediction(results, "expt_death", type = "response") |>
-  head(15)
-
-summary(results)
-
+  head()
+prediction(results, "expt_death", type = "response") |> head()
 
 coef(results)
 coeff(results, "expt_death")
@@ -65,19 +60,6 @@ coeff(results, "n_offspring")
 AIC(results)
 BIC(results)
 logLik(results)
-
-prediction(
-  results,
-  se.fit = FALSE,
-  parameter_name = "expt_death",
-  type = "quantile",
-  p = 0.1
-)
-prediction(
-  results,
-  se.fit = TRUE,
-  parameter_name = "expt_death"
-)
 
 prediction(results, parameter_name = "n_offspring") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
@@ -96,23 +78,41 @@ simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
 parallel.simulate(results, nsim = 10, parallel_seed = 1)
 
+interval_width <- 15
+newdata <- expand.grid(
+  par = c(0, 1, 2),
+  time = seq(
+    from = 0,
+    to = (10 - 1) * interval_width,
+    by = interval_width
+  )
+) |>
+  dplyr::mutate(
+    Interval_start = time,
+    Interval_end = time + interval_width,
+    Mean_Interval = time + interval_width / 2
+  )
 rate_df <- compute_fitted_event_rate(
-  lifelihoodResults = lifelihoodResults,
-  interval_width = interval_width,
-  event = event,
-  newdata = NULL,
-  max_time = NULL,
-  groupby = groupby
+  lifelihoodResults = results,
+  interval_width = 15,
+  event = "mortality",
+  groupby = "par"
+)
+rate_df <- compute_observed_event_rate(
+  lifelihoodData = lifelihoodData,
+  interval_width = 15,
+  event = "reproduction"
 )
 
 plot_fitted_event_rate(
   results,
-  interval_width = 5,
+  interval_width = 3,
   event = "reproduction",
+  newdata = NULL,
   use_facet = TRUE,
   groupby = "par",
   xlab = "Age (days)",
-  ylab = "Fitted Maturity Rate"
+  ylab = "Fitted Reproduction Rate"
 )
 
 plot_observed_event_rate(

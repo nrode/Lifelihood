@@ -8,7 +8,6 @@ compute_observed_event_rate(
   lifelihoodData,
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
-  newdata = NULL,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL
@@ -23,9 +22,6 @@ the original dataset is days and \code{interval_width} is set to 10,
 the event rate will be calculated every 10 days for each group.}
 
 \item{event}{Which event to compute? Must be one of "mortality", "maturity", "reproduction".}
-
-\item{newdata}{Data for computation. If absent, predictions are for
-the subjects used in the original fit.}
 
 \item{max_time}{The maximum time for calculating the event
 rate. If set to NULL, the time of the last observed death is used.}

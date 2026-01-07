@@ -205,8 +205,6 @@ compute_fitted_event_rate <- function(
 #' event rate. For instance, if the time unit for deaths in
 #' the original dataset is days and `interval_width` is set to 10,
 #' the event rate will be calculated every 10 days for each group.
-#' @param newdata Data for computation. If absent, predictions are for
-#' the subjects used in the original fit.
 #' @param max_time The maximum time for calculating the event
 #' rate. If set to NULL, the time of the last observed death is used.
 #' @param min_sample_size The minimum number of individuals alive
@@ -225,7 +223,6 @@ compute_observed_event_rate <- function(
   lifelihoodData,
   interval_width,
   event = c("mortality", "maturity", "reproduction"),
-  newdata = NULL,
   max_time = NULL,
   min_sample_size = 1,
   groupby = NULL
@@ -250,7 +247,8 @@ compute_observed_event_rate <- function(
     death_end_col <- lifelihoodData$death_end
     maturity_start_col <- lifelihoodData$maturity_start
     maturity_end_col <- lifelihoodData$maturity_end
-    
+    start_col <- "pon_start"
+    end_col <- "pon_end"
   } else if (event == "mortality") {
     start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
@@ -259,80 +257,26 @@ compute_observed_event_rate <- function(
     end_col <- lifelihoodData$maturity_end
   }
 
-  if (is.null(newdata)) {
-    newdata <- lifelihoodData$df
-  }
-  
+  newdata <- lifelihoodData$df
   right_censoring_date <- lifelihoodData$right_censoring_date
-  
+
   if (event == "reproduction") {
     # since reproduction can occur multiple times for each individual,
     # we handle them as one reproduction = one event.
     # Each event is the difference between 2 reproduction events OR
     # between the death and the last reproduction (right censoring of
     # unobserved reproductions that could have occurred after death).
-    diff_death <- (newdata[, death_start_col] +
-      newdata[, death_end_col]) /
-      2
-    
-    ## Add 2 columns for unobserved clutches before death
-    diff_death <- diff_death |>
-      as_tibble() |>
-      mutate(last_clutch_interval = NA, last_clutch_interval2 = NA) |>
-      relocate(
-        last_clutch_interval,
-        last_clutch_interval2,
-        .before = everything()
-      )
-    
-    ## Add maturity (matclutch=false) or first reproduction (matclutch=ture) as first event
-      clutch_time <- bind_cols(
-        (newdata[, maturity_start_col] + newdata[, maturity_end_col]) / 2,
-        (newdata[, start_cols] + newdata[, end_cols]) / 2,
-        diff_death
-      )
-
-    # Add an unobserved clutch after all observed clutches,
-    # which is right censored by age at death (i.e. the last column of the dataset).
-    clutch_time[] <- t(apply(clutch_time, 1, function(row) {
-      i <- which(is.na(row))[1]
-      row[i] <- row[length(row)]
-      row
-    }))
-    clutch_time <- clutch_time[, -ncol(clutch_time)]
-
-    # Define newdata using with reproduction data in the same data format as "maturity" and "mortality" data
-    newdata <- clutch_time |>
-      t() |>
-      diff() |> # transpose is required to diff() by columns instead of rows
-      t() |>
-      bind_cols(newdata |> select(lifelihoodData$covariates)) |>
-      pivot_longer(
-        cols = c(
-          start_cols[-1],
-          "last_clutch_interval",
-          "last_clutch_interval2"
-        )
-      ) |>
-      mutate(
-        pon_end = if_else(is.na(lead(value)), right_censoring_date, value)
-      ) |> ## Specify the right censoring of the last unobserved clutch of each individual which always followed by a NA reproduction event
-      filter(!is.na(value)) |>
-      filter(value != 0) |> ## Remove data from individual whose last reproduction and death occured over the same time interval
-      rename(pon_start = "value")
-
-    start_col <- "pon_start"
-    end_col <- "pon_end"
+    newdata <- compute_reproduction_intervals(lifelihoodData)
+    write.csv2(newdata, "here.csv")
   }
 
-
   if (is.null(max_time)) {
-      sorted_values <- sort(
-        unique(newdata[[end_col]]),
-        decreasing = TRUE,
-        na.last = NA
-      )
-    
+    sorted_values <- sort(
+      unique(newdata[[end_col]]),
+      decreasing = TRUE,
+      na.last = NA
+    )
+
     if (sorted_values[1] == right_censoring_date) {
       max_time <- sorted_values[2]
     } else {
@@ -436,6 +380,128 @@ compute_observed_event_rate <- function(
   }
 
   return(event_rate)
+}
+
+#' @title Compute time interval between clutches
+#'
+#' @description
+#' This function computes the time interval between consecutive clutches
+#' and add censored unobserved last clutch between the last clutch and time
+#' of death unless the time of death is right censored. It also removes
+#' individuals that never reproduced.
+#'
+#' @param lifelihoodData Ouput of [lifelihoodData()]
+#'
+#' @return A dataframe with time interval between consecutive clutches starting from maturity.
+#'
+#' @export
+compute_reproduction_intervals <- function(lifelihoodData) {
+  check_lifelihoodData(lifelihoodData)
+
+  # Extract clutch column names - pattern is start, end, size repeated
+  clutch_cols <- lifelihoodData$clutchs
+  n_clutches <- length(clutch_cols) / 3
+  start_cols <- clutch_cols[seq(1, length(clutch_cols), by = 3)]
+  end_cols <- clutch_cols[seq(2, length(clutch_cols), by = 3)]
+  size_cols <- clutch_cols[seq(3, length(clutch_cols), by = 3)]
+
+  right_censoring_date <- lifelihoodData$right_censoring_date
+  newdata <- lifelihoodData$df
+
+  # Use death columns for determining alive status.
+  # Start_col and death_col are defined after for
+  # reproduction event.
+  death_start_col <- lifelihoodData$death_start
+  death_end_col <- lifelihoodData$death_end
+  maturity_start_col <- lifelihoodData$maturity_start
+  maturity_end_col <- lifelihoodData$maturity_end
+
+  id_removed <- which(
+    newdata[, lifelihoodData$maturity_end] == right_censoring_date
+  )
+  if (length(id_removed) > 0) {
+    message(glue(
+      "Removed {paste0(id_removed, collapse=', ')} individuals with no reproduction events"
+    ))
+  }
+
+  # Identify individuals whose time of death is right censored
+  id_censored <- as.vector(newdata[, death_end_col] == right_censoring_date)
+  if (length(id_censored) > 0) {
+    message(glue(
+      "The death of individuals {paste0(which(id_censored), collapse=', ')} is right censored"
+    ))
+  }
+  newdata <- newdata |>
+    mutate(
+      death_end_censored = if_else(
+        id_censored,
+        NA,
+        !!as.symbol(death_end_col)
+      )
+    )
+  diff_death <- (newdata[, death_start_col] +
+    newdata[, "death_end_censored"]) /
+    2
+
+  ## Add 2 columns for unobserved clutches before death
+  diff_death <- diff_death |>
+    as_tibble() |>
+    mutate(last_clutch_interval = NA, last_clutch_interval2 = NA) |>
+    relocate(
+      last_clutch_interval,
+      last_clutch_interval2,
+      .before = everything()
+    )
+
+  ## Add maturity (matclutch=false) or first reproduction (matclutch=true) as first event
+  clutch_time <- bind_cols(
+    (newdata[, maturity_start_col] + newdata[, maturity_end_col]) / 2,
+    (newdata[, start_cols] + newdata[, end_cols]) / 2,
+    diff_death
+  )
+
+  # Add an unobserved clutch after all observed clutches,
+  # which is right censored by age at death (i.e. the last column of the dataset).
+  clutch_time[] <- t(apply(clutch_time, 1, function(row) {
+    i <- which(is.na(row))[1]
+    row[i] <- row[length(row)]
+    row
+  }))
+  clutch_time <- clutch_time[, -ncol(clutch_time)]
+
+  # Define newdata using with reproduction data in the same data format as "maturity" and "mortality" data
+  newdata <- clutch_time |>
+    t() |>
+    diff() |> # transpose is required to diff() by columns instead of rows
+    t() |>
+    bind_cols(newdata |> select(lifelihoodData$covariates)) |>
+    mutate(id = 1:nrow(clutch_time)) |>
+    relocate(id) |>
+    # We remove individuals that never reproduced (maturity right censored)
+    filter(!(id %in% id_removed)) |>
+    pivot_longer(
+      cols = all_of(c(
+        start_cols,
+        "last_clutch_interval",
+        "last_clutch_interval2"
+      ))
+    ) |>
+    mutate(
+      pon_end = if_else(
+        # Specify the right censoring of the last unobserved clutch
+        # of each individual which always followed by a NA reproduction
+        # event unless the last clutch is observed (time of death is right censored)
+        is.na(lead(value)) & !(id %in% which(id_censored)),
+        right_censoring_date,
+        value
+      )
+    ) |>
+    filter(!is.na(value)) |>
+    filter(value != 0) |> ## Remove data from individual whose last reproduction and death occured over the same time interval
+    rename(pon_start = "value")
+
+  return(newdata)
 }
 
 #' @title Check that the `groupby` argument is valid

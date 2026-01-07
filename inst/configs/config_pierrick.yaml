@@ -6,7 +6,7 @@ mortality:
   sex_ratio: not_fitted
 reproduction:
   expt_reproduction: par
-  reproduction_param2: par
+  reproduction_param2: 1
   n_offspring: 1
   increase_death_hazard: not_fitted
   tof_reduction_date: not_fitted
