@@ -47,7 +47,7 @@ testthat::test_that("Overall demo works", {
   expect_true(lifelihoodData$critical_age == 20)
   expect_true(lifelihoodData$ratiomax == 10)
 
-  results <- lifelihood(lifelihoodData, get_config_path("config_pierrick"))
+  results <- lifelihood(lifelihoodData, "config.yaml")
 
   expect_true(results$config |> length() == 3)
   expect_true(results$config$mortality |> length() == 5)
