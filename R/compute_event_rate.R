@@ -42,7 +42,6 @@ compute_fitted_event_rate <- function(
   lifelihoodData <- lifelihoodResults$lifelihoodData
 
   if (event == "mortality") {
-    start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
     family <- lifelihoodData$model_specs[1]
     covar <- c(
@@ -52,7 +51,6 @@ compute_fitted_event_rate <- function(
       unique() |>
       setdiff("intercept")
   } else if (event == "maturity") {
-    start_col <- lifelihoodData$maturity_start
     end_col <- lifelihoodData$maturity_end
     family <- lifelihoodData$model_specs[2]
     covar <- c(
@@ -63,7 +61,6 @@ compute_fitted_event_rate <- function(
       setdiff("intercept")
   } else if (event == "reproduction") {
     # Use death columns for determining alive status
-    start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
     family <- lifelihoodData$model_specs[3]
     covar <- c(
