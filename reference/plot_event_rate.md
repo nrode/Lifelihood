@@ -36,7 +36,8 @@ plot_fitted_event_rate(
   groupby = NULL,
   use_facet = FALSE,
   xlab = "Time",
-  ylab = "Event Rate"
+  ylab = "Event Rate",
+  type = "points"
 )
 
 plot_observed_event_rate(
@@ -58,7 +59,8 @@ plot_event_rate(
   groupby,
   use_facet,
   xlab = "Time",
-  ylab = "Event rate"
+  ylab = "Event rate",
+  fitted_data = FALSE
 )
 ```
 
@@ -105,6 +107,11 @@ plot_event_rate(
 
   Use facet_wrap to plot one panel per group (default=FALSE)
 
+- type:
+
+  The type of symbol to be used for the plot (either of "points" or
+  'lines")
+
 - lifelihoodData:
 
   `lifelihoodData` object created with
@@ -113,11 +120,6 @@ plot_event_rate(
 - rate_df:
 
   Dataframe with event rate
-
-- type:
-
-  The type of symbol to be used for the plot (either of "points" or
-  'lines")
 
 ## Value
 
