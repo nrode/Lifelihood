@@ -19,7 +19,7 @@ library(lifelihood)
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.6
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
 #> ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
-#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
 #> ✔ purrr     1.2.0     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
@@ -147,40 +147,41 @@ results <- lifelihood(
 )
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 summary(results)
-#> LIFELIHOOD RESULTS
 #> 
-#> Likelihood:
-#> [1] -2821.227
+#> === LIFELIHOOD RESULTS ===
 #> 
-#> Effects:
-#>                            name estimation stderror           parameter
-#> 1                int_expt_death -2.5253959        0          expt_death
-#> 2         eff_expt_death_geno_1  0.7835095        0          expt_death
-#> 3         eff_expt_death_type_1 -0.9687812        0          expt_death
-#> 4         eff_expt_death_type_2  1.3991316        0          expt_death
-#> 5           int_survival_param2 -6.5822104        0     survival_param2
-#> 6             int_expt_maturity -2.2285974        0       expt_maturity
-#> 7      eff_expt_maturity_geno_1 -0.8401484        0       expt_maturity
-#> 8      eff_expt_maturity_type_1  0.4112408        0       expt_maturity
-#> 9      eff_expt_maturity_type_2 -0.5456602        0       expt_maturity
-#> 10          int_maturity_param2 -3.1111023        0     maturity_param2
-#> 11        int_expt_reproduction -2.3365343        0   expt_reproduction
-#> 12 eff_expt_reproduction_geno_1  1.3102563        0   expt_reproduction
-#> 13      int_reproduction_param2 -2.5535342        0 reproduction_param2
-#>                    kind        event
-#> 1             intercept    mortality
-#> 2  coefficient_category    mortality
-#> 3  coefficient_category    mortality
-#> 4  coefficient_category    mortality
-#> 5             intercept    mortality
-#> 6             intercept     maturity
-#> 7  coefficient_category     maturity
-#> 8  coefficient_category     maturity
-#> 9  coefficient_category     maturity
-#> 10            intercept     maturity
-#> 11            intercept reproduction
-#> 12 coefficient_category reproduction
-#> 13            intercept reproduction
+#> Sample size: 13 
+#> 
+#> --- Model Fit ---
+#> Log-likelihood:  -2821.227
+#> AIC:             5668.5
+#> BIC:             5675.8
+#> 
+#> --- Key Parameters ---
+#> 
+#> Mortality:
+#>   expt_death (Intercept)    -2.525 (0.000)
+#>   expt_death eff_expt_death_geno_1 0.784 (0.000)
+#>   expt_death eff_expt_death_type_1 -0.969 (0.000)
+#>   expt_death eff_expt_death_type_2 1.399 (0.000)
+#>   survival_param2 (Intercept) -6.582 (0.000)
+#> 
+#> Maturity:
+#>   expt_maturity (Intercept) -2.229 (0.000)
+#>   expt_maturity eff_expt_maturity_geno_1 -0.840 (0.000)
+#>   expt_maturity eff_expt_maturity_type_1 0.411 (0.000)
+#>   expt_maturity eff_expt_maturity_type_2 -0.546 (0.000)
+#>   maturity_param2 (Intercept) -3.111 (0.000)
+#> 
+#> Reproduction:
+#>   expt_reproduction (Intercept) -2.337 (0.000)
+#>   expt_reproduction eff_expt_reproduction_geno_1 1.310 (0.000)
+#>   reproduction_param2 (Intercept) -2.554 (0.000)
+#> 
+#> --- Convergence ---
+#> All parameters within bounds
+#> 
+#> ======================
 ```
 
 ## Get specific results
