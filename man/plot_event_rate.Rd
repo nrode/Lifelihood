@@ -17,7 +17,8 @@ plot_fitted_event_rate(
   groupby = NULL,
   use_facet = FALSE,
   xlab = "Time",
-  ylab = "Event Rate"
+  ylab = "Event Rate",
+  type = "points"
 )
 
 plot_observed_event_rate(
@@ -39,7 +40,8 @@ plot_event_rate(
   groupby,
   use_facet,
   xlab = "Time",
-  ylab = "Event rate"
+  ylab = "Event rate",
+  fitted_data = FALSE
 )
 }
 \arguments{
@@ -64,11 +66,11 @@ rate. If set to NULL, the time of the last observed death is used.}
 
 \item{use_facet}{Use facet_wrap to plot one panel per group (default=FALSE)}
 
+\item{type}{The type of symbol to be used for the plot (either of "points" or 'lines")}
+
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
 \item{rate_df}{Dataframe with event rate}
-
-\item{type}{The type of symbol to be used for the plot (either of "points" or 'lines")}
 }
 \value{
 a ggplot2 plot

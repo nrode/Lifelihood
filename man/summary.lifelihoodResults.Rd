@@ -2,15 +2,20 @@
 % Please edit documentation in R/lifelihood.R
 \name{summary.lifelihoodResults}
 \alias{summary.lifelihoodResults}
-\title{Summary function to be used with the output of \code{\link[=lifelihood]{lifelihood()}}}
+\title{Simple summary for lifelihoodResults objects}
 \usage{
-\method{summary}{lifelihoodResults}(object, ...)
+\method{summary}{lifelihoodResults}(object, digits = 3, ...)
 }
 \arguments{
-\item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}
+\item{object}{Output of \code{\link[=lifelihood]{lifelihood()}}}
+
+\item{digits}{Number of significant digits to display (default: 3)}
 
 \item{...}{Ignored}
 }
+\value{
+Invisibly returns the object
+}
 \description{
-S3 method to display main results of the lifelihood program.
+S3 method to display key results of the lifelihood program in a concise format.
 }
