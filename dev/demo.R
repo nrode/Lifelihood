@@ -41,6 +41,7 @@ results <- lifelihood(
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4),
 )
+summary(results)
 
 prediction(results, "expt_death", se.fit = TRUE)
 prediction(
@@ -80,8 +81,14 @@ prediction(
 
 prediction(results, parameter_name = "n_offspring") |> head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
-prediction(results, parameter_name = "expt_reproduction", type = "response") |> head()
-prediction(results, parameter_name = "reproduction_param2", type = "response") |> tail()
+prediction(results, parameter_name = "expt_reproduction", type = "response") |>
+  head()
+prediction(
+  results,
+  parameter_name = "reproduction_param2",
+  type = "response"
+) |>
+  tail()
 
 simulate_life_history(results) |> head()
 simulate_life_history(results, event = "mortality") |> head()

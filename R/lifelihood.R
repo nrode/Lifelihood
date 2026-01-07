@@ -496,23 +496,197 @@ BIC.lifelihoodResults <- function(object, ...) {
   return(BIC)
 }
 
-#' @title Summary function to be used with the output of [lifelihood()]
+#' @title Simple summary for lifelihoodResults objects
 #'
 #' @description
-#' S3 method to display main results of the lifelihood program.
+#' S3 method to display key results of the lifelihood program in a concise format.
 #'
-#' @param object output of [lifelihood()]
+#' @param object Output of [lifelihood()]
+#' @param digits Number of significant digits to display (default: 3)
 #' @param ... Ignored
 #'
+#' @return Invisibly returns the object
+#'
 #' @export
-summary.lifelihoodResults <- function(object, ...) {
-  cat("LIFELIHOOD RESULTS\n\n")
+summary.lifelihoodResults <- function(object, digits = 3, ...) {
+  check_lifelihoodResults(object)
 
-  cat("Likelihood:\n")
-  print(object$likelihood)
   cat("\n")
+  cat("=== LIFELIHOOD RESULTS ===\n\n")
 
-  cat("Effects:\n")
-  print(object$effects)
-  cat("\n")
+  # 1. BASIC INFO
+  if (!is.null(object$sample_size)) {
+    cat("Sample size:", object$sample_size, "\n")
+  }
+
+  # 2. MODEL FIT
+  cat("\n--- Model Fit ---\n")
+  cat(sprintf("Log-likelihood:  %.3f\n", object$likelihood))
+  cat(sprintf("AIC:             %.1f\n", AIC(object)))
+  cat(sprintf("BIC:             %.1f\n", BIC(object)))
+
+  # 3. KEY PARAMETERS (most important ones)
+  cat("\n--- Key Parameters ---\n")
+
+  if (!is.null(object$effects)) {
+    # Group by parameter and show only main effects (not all covariates)
+    effects <- object$effects
+
+    # Show mortality parameters
+    mortal <- effects[effects$event == "mortality", ]
+    if (nrow(mortal) > 0) {
+      cat("\nMortality:\n")
+      print_coef_table(mortal, digits)
+    }
+
+    # Show maturity parameters
+    mat <- effects[effects$event == "maturity", ]
+    if (nrow(mat) > 0) {
+      cat("\nMaturity:\n")
+      print_coef_table(mat, digits)
+    }
+
+    # Show reproduction parameters
+    repro <- effects[effects$event == "reproduction", ]
+    if (nrow(repro) > 0) {
+      cat("\nReproduction:\n")
+      print_coef_table(repro, digits)
+    }
+  }
+
+  # 4. CONVERGENCE STATUS
+  cat("\n--- Convergence ---\n")
+
+  # Check boundary conditions
+  if (!is.null(object$param_bounds_df) && !is.null(object$effects)) {
+    near_boundary <- check_boundaries_simple(object, threshold = 0.05)
+    if (length(near_boundary) > 0) {
+      cat("Warning:", length(near_boundary), "parameter(s) near boundary:\n")
+      cat(paste(near_boundary, collapse = ", "), "\n")
+    } else {
+      cat("All parameters within bounds\n")
+    }
+  }
+
+  # Check MCMC-MLE consistency if available
+  if (!is.null(object$mcmc_se) && nrow(object$mcmc_se) > 0) {
+    if (
+      !is.null(object$effects) &&
+        "mcmc_estimation" %in% colnames(object$effects)
+    ) {
+      consistent <- check_mcmc_consistency(object, threshold = 0.05)
+      if (!consistent) {
+        cat("Note: MCMC and MLE estimates differ >5%\n")
+      }
+    }
+  }
+
+  cat("\n======================\n")
+
+  invisible(object)
+}
+
+#' @title Print simplified coefficient table
+#'
+#' @description
+#' Helper function to print a clean coefficient table
+#'
+#' @param df Dataframe with effects
+#' @param digits Number of digits to display
+#'
+#' @keywords internal
+print_coef_table <- function(df, digits = 3) {
+  # Simplify parameter names
+  df$display_name <- sapply(1:nrow(df), function(i) {
+    if (df$kind[i] == "intercept") {
+      return(paste(df$parameter[i], "(Intercept)"))
+    } else {
+      return(paste(df$parameter[i], df$name[i]))
+    }
+  })
+
+  # Format estimates
+  for (i in 1:nrow(df)) {
+    est <- sprintf("%.*f", digits, df$estimation[i])
+
+    # Add SE if available
+    if ("stderror" %in% colnames(df) && !is.na(df$stderror[i])) {
+      est <- paste0(est, " (", sprintf("%.*f", digits, df$stderror[i]), ")")
+    }
+
+    cat(sprintf("  %-25s %s\n", df$display_name[i], est))
+  }
+}
+
+#' @title Simple boundary check
+#'
+#' @description
+#' Check if parameters are near boundaries
+#'
+#' @param object lifelihoodResults object
+#' @param threshold Threshold for warning (default: 5%)
+#'
+#' @return Vector of parameter names near boundaries
+#'
+#' @keywords internal
+check_boundaries_simple <- function(object, threshold = 0.05) {
+  near_bounds <- c()
+
+  for (i in 1:nrow(object$effects)) {
+    param_name <- object$effects$name[i]
+    estimate <- object$effects$estimation[i]
+
+    bounds_row <- object$param_bounds_df[
+      object$param_bounds_df$name == param_name,
+    ]
+
+    if (nrow(bounds_row) == 1) {
+      lower <- bounds_row$lower
+      upper <- bounds_row$upper
+
+      if (!is.na(lower) && !is.na(upper)) {
+        range <- upper - lower
+        if (range > 0) {
+          dist_lower <- abs(estimate - lower) / range
+          dist_upper <- abs(upper - estimate) / range
+
+          if (dist_lower < threshold || dist_upper < threshold) {
+            near_bounds <- c(near_bounds, param_name)
+          }
+        }
+      }
+    }
+  }
+
+  return(near_bounds)
+}
+
+#' @title Check MCMC consistency
+#'
+#' @description
+#' Check if MCMC estimates are consistent with MLE
+#'
+#' @param object lifelihoodResults object
+#' @param threshold Maximum relative difference (default: 5%)
+#'
+#' @return TRUE if consistent, FALSE if not
+#'
+#' @keywords internal
+check_mcmc_consistency <- function(object, threshold = 0.05) {
+  consistent <- TRUE
+
+  for (i in 1:nrow(object$effects)) {
+    mle <- object$effects$estimation[i]
+    mcmc <- object$effects$mcmc_estimation[i]
+
+    if (!is.na(mcmc) && !is.na(mle)) {
+      rel_diff <- abs(mcmc - mle) / abs(mle)
+      if (rel_diff > threshold) {
+        consistent <- FALSE
+        break
+      }
+    }
+  }
+
+  return(consistent)
 }
