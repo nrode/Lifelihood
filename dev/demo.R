@@ -1,7 +1,6 @@
 devtools::load_all()
 library(tidyverse)
 
-
 df <- datapierrick |>
   as_tibble() |>
   mutate(
@@ -104,25 +103,28 @@ rate_df <- compute_observed_event_rate(
   event = "reproduction"
 )
 
+
+## Reproduction rate
+plot_observed_event_rate(
+  lifelihoodData,
+  interval_width = 1,
+  groupby = "par",
+  event = "reproduction",
+  use_facet = TRUE,
+  xlab = "Time since last reproduction (days)",
+  ylab = "Observed Reproduction Rate"
+)
+
+
 plot_fitted_event_rate(
   results,
-  interval_width = 3,
+  interval_width = 1,
   event = "reproduction",
   newdata = NULL,
   use_facet = TRUE,
   groupby = "par",
   xlab = "Age (days)",
   ylab = "Fitted Reproduction Rate"
-)
-
-plot_observed_event_rate(
-  lifelihoodData,
-  interval_width = 5,
-  groupby = "par",
-  event = "reproduction",
-  use_facet = TRUE,
-  xlab = "Time since last reproduction (days)",
-  ylab = "Observed Reproduction Rate"
 )
 
 plot_observed_event_rate(
@@ -134,3 +136,28 @@ plot_observed_event_rate(
   xlab = "Age (days)",
   ylab = "Observed Mortality Rate"
 )
+
+## Mortality rate
+plot_fitted_event_rate(
+  results,
+  interval_width = 10,
+  event = "mortality",
+  newdata = NULL,
+  use_facet = TRUE,
+  groupby = c("par", "spore"),
+  xlab = "Age (days)",
+  ylab = "Fitted Mortality Rate"
+)
+
+## Maturity rate
+plot_fitted_event_rate(
+  results,
+  interval_width = 10,
+  event = "maturity",
+  newdata = NULL,
+  use_facet = TRUE,
+  groupby = "par",
+  xlab = "Age (days)",
+  ylab = "Fitted Maturity Rate"
+)
+
