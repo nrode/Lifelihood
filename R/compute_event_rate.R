@@ -60,8 +60,6 @@ compute_fitted_event_rate <- function(
       unique() |>
       setdiff("intercept")
   } else if (event == "reproduction") {
-    # Use death columns for determining alive status
-    end_col <- lifelihoodData$death_end
     family <- lifelihoodData$model_specs[3]
     covar <- c(
       lifelihoodResults$formula$expt_reproduction,
@@ -92,11 +90,24 @@ compute_fitted_event_rate <- function(
     )
   }
   if (is.null(max_time)) {
-    sorted_values <- sort(
-      unique(lifelihoodData$df[[end_col]]),
-      decreasing = TRUE,
-      na.last = NA
-    )
+    if (event == "reproduction") {
+      
+      reproduction_intervals <- compute_reproduction_intervals(lifelihoodData, verbose=FALSE)
+      sorted_values <- sort(
+        unique(reproduction_intervals[["pon_end"]]),
+        decreasing = TRUE,
+        na.last = NA
+      )
+      
+    }else{
+      
+      sorted_values <- sort(
+        unique(lifelihoodData$df[[end_col]]),
+        decreasing = TRUE,
+        na.last = NA
+      )
+    }
+    
     if (sorted_values[1] == lifelihoodData$right_censoring_date) {
       max_time <- sorted_values[2]
     } else {
@@ -388,11 +399,12 @@ compute_observed_event_rate <- function(
 #' individuals that never reproduced.
 #'
 #' @param lifelihoodData Ouput of [lifelihoodData()]
+#' @param verbose Boolean whether to print messages during the computation process (default=TRUE)
 #'
 #' @return A dataframe with time interval between consecutive clutches starting from maturity.
 #'
 #' @export
-compute_reproduction_intervals <- function(lifelihoodData) {
+compute_reproduction_intervals <- function(lifelihoodData, verbose=TRUE) {
   check_lifelihoodData(lifelihoodData)
 
   # Extract clutch column names - pattern is start, end, size repeated
@@ -416,17 +428,17 @@ compute_reproduction_intervals <- function(lifelihoodData) {
   id_removed <- which(
     newdata[, lifelihoodData$maturity_end] == right_censoring_date
   )
-  if (length(id_removed) > 0) {
+  if (length(id_removed) > 0 & verbose) {
     message(glue(
-      "Removed {paste0(id_removed, collapse=', ')} individuals with no reproduction events"
+      "Removed individuals {paste0(id_removed, collapse=', ')} with no reproduction events"
     ))
   }
 
   # Identify individuals whose time of death is right censored
   id_censored <- as.vector(newdata[, death_end_col] == right_censoring_date)
-  if (length(id_censored) > 0) {
+  if (length(id_censored) > 0 & verbose) {
     message(glue(
-      "The death of individuals {paste0(which(id_censored), collapse=', ')} is right censored"
+      "The death of individuals {paste0(which(id_censored), collapse=', ')} is right censored. No \"unobserved\" last clutch considered."
     ))
   }
   newdata <- newdata |>
