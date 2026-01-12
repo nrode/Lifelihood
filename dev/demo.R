@@ -38,6 +38,7 @@ results <- lifelihood(
   se.fit = TRUE,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
+  MCMC = 30,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
@@ -160,4 +161,3 @@ plot_fitted_event_rate(
   xlab = "Age (days)",
   ylab = "Fitted Maturity Rate"
 )
-

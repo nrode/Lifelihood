@@ -3,16 +3,6 @@ lifelihood_mcmcse <- function(x, method = "bm", r = 3, size = NULL, g = NULL) {
   n <- nrow(x)
   p <- ncol(x)
 
-  if (n < (p + 1)) {
-    stop(
-      "The number of MCMC iterations (",
-      n,
-      ") should be higher than the number of parameters + 1 (",
-      p + 1,
-      ")."
-    )
-  }
-
   method <- match.arg(
     method,
     choices = c("bm", "obm", "bartlett", "tukey", "lug")

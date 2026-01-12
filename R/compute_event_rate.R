@@ -91,23 +91,23 @@ compute_fitted_event_rate <- function(
   }
   if (is.null(max_time)) {
     if (event == "reproduction") {
-      
-      reproduction_intervals <- compute_reproduction_intervals(lifelihoodData, verbose=FALSE)
+      reproduction_intervals <- compute_reproduction_intervals(
+        lifelihoodData,
+        verbose = FALSE
+      )
       sorted_values <- sort(
         unique(reproduction_intervals[["pon_end"]]),
         decreasing = TRUE,
         na.last = NA
       )
-      
-    }else{
-      
+    } else {
       sorted_values <- sort(
         unique(lifelihoodData$df[[end_col]]),
         decreasing = TRUE,
         na.last = NA
       )
     }
-    
+
     if (sorted_values[1] == lifelihoodData$right_censoring_date) {
       max_time <- sorted_values[2]
     } else {
@@ -282,7 +282,6 @@ compute_observed_event_rate <- function(
     # between the death and the last reproduction (right censoring of
     # unobserved reproductions that could have occurred after death).
     newdata <- compute_reproduction_intervals(lifelihoodData)
-    write.csv2(newdata, "here.csv")
   }
 
   if (is.null(max_time)) {
@@ -411,7 +410,7 @@ compute_observed_event_rate <- function(
 #' @return A dataframe with time interval between consecutive clutches starting from maturity.
 #'
 #' @export
-compute_reproduction_intervals <- function(lifelihoodData, verbose=TRUE) {
+compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
   check_lifelihoodData(lifelihoodData)
 
   # Extract clutch column names - pattern is start, end, size repeated

@@ -190,6 +190,20 @@ lifelihood_fit <- function(
     param_bounds_df <- default_bounds_df(lifelihoodData)
   }
 
+  # Validate MCMC iterations vs number of parameters
+  if (MCMC > 0) {
+    n_params <- nrow(param_bounds_df)
+    if (MCMC < (n_params + 1)) {
+      stop(
+        "The number of MCMC iterations (",
+        MCMC,
+        ") should be higher than the number of parameters + 1 (",
+        n_params + 1,
+        ")."
+      )
+    }
+  }
+
   path_param_range <- file.path(temp_dir, "temp_param_range_path.txt")
   write.table(
     param_bounds_df,
