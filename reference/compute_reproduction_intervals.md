@@ -8,7 +8,7 @@ individuals that never reproduced.
 ## Usage
 
 ``` r
-compute_reproduction_intervals(lifelihoodData)
+compute_reproduction_intervals(lifelihoodData, verbose = TRUE)
 ```
 
 ## Arguments
@@ -17,6 +17,11 @@ compute_reproduction_intervals(lifelihoodData)
 
   Ouput of
   [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+
+- verbose:
+
+  Boolean whether to print messages during the computation process
+  (default=TRUE)
 
 ## Value
 

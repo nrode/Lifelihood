@@ -20,12 +20,16 @@ read_output_from_file(
 
 - file_path:
 
-  Location of the output file of the program
+  Location of the output file of the program.
 
 - group_by_group:
 
   Boolean option to fit the full factorial model with all the
-  interactions between each of the factors
+  interactions between each of the factors.
+
+- covariates:
+
+  Vector containing the names of the covariates.
 
 - path_config:
 
@@ -35,9 +39,9 @@ read_output_from_file(
 - MCMC:
 
   Perform MCMC sampling of the parameter after convergence to estimate
-  their 95% confidence interval
+  their 95% confidence interval.
 
 ## Value
 
 An object of class `lifelihoodResults` with all results from the output
-file
+file.

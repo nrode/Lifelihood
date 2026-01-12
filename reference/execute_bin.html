@@ -96,95 +96,119 @@
 
 
 <dl><dt id="arg-path-to-lifelihood">path_to_Lifelihood<a class="anchor" aria-label="anchor" href="#arg-path-to-lifelihood"></a></dt>
-<dd><p>A character string specifying the file path to the compile Lifelihood program (default is NULL)</p></dd>
+<dd><p>A character string specifying the file
+path to the compile Lifelihood program (default is NULL).</p></dd>
 
 
 <dt id="arg-path-input-data">path_input_data<a class="anchor" aria-label="anchor" href="#arg-path-input-data"></a></dt>
-<dd><p>Path to the input text file with the model and data to be fitted.</p></dd>
+<dd><p>Path to the input text file with the model
+and data to be fitted.</p></dd>
 
 
 <dt id="arg-path-param-bounds">path_param_bounds<a class="anchor" aria-label="anchor" href="#arg-path-param-bounds"></a></dt>
-<dd><p>Path to the parameter boundaries text file with the min and max boudaries for each parameter.</p></dd>
+<dd><p>Path to the parameter boundaries text file
+with the min and max boudaries for each parameter.</p></dd>
 
 
 <dt id="arg-group-by-group">group_by_group<a class="anchor" aria-label="anchor" href="#arg-group-by-group"></a></dt>
-<dd><p>Boolean option to fit the full factorial model with all the interactions between each of the factors</p></dd>
+<dd><p>Boolean option to fit the full factorial model
+with all the interactions between each of the factors.</p></dd>
 
 
 <dt id="arg-mcmc">MCMC<a class="anchor" aria-label="anchor" href="#arg-mcmc"></a></dt>
-<dd><p>Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval</p></dd>
+<dd><p>Perform MCMC sampling of the parameter after convergence
+to estimate their 95% confidence interval.</p></dd>
 
 
 <dt id="arg-interval">interval<a class="anchor" aria-label="anchor" href="#arg-interval"></a></dt>
-<dd><p>TBD - Check the actual meaning</p></dd>
+<dd><p>TBD - Check the actual meaning.</p></dd>
 
 
 <dt id="arg-se-fit">se.fit<a class="anchor" aria-label="anchor" href="#arg-se-fit"></a></dt>
-<dd><p>If TRUE, Lifelihood computes the standard error of each parameter using the variance-covariance matrix (approximated by the inverse of the negative of the Hessian matrix).</p></dd>
+<dd><p>If TRUE, Lifelihood computes the standard error of
+each parameter using the variance-covariance matrix.</p></dd>
 
 
 <dt id="arg-saveprobevent">saveprobevent<a class="anchor" aria-label="anchor" href="#arg-saveprobevent"></a></dt>
-<dd><p>TBD - Check the actual meaning</p></dd>
+<dd><p>TBD - Check the actual meaning.</p></dd>
+
+
+<dt id="arg-fitness">fitness<a class="anchor" aria-label="anchor" href="#arg-fitness"></a></dt>
+<dd><p>Reparametrize the model with one parameter as the
+intrinsic rate of increase.</p></dd>
 
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
-<dd><p>Reparametrize the model with one parameter as the intrinsic rate of increase</p></dd>
+<dd><p>Reparametrize the model with one parameter as the intrinsic
+rate of increase.</p></dd>
 
 
 <dt id="arg-seed-">seed1<a class="anchor" aria-label="anchor" href="#arg-seed-"></a></dt>
-<dd><p>First seed number used to reproduce results (same seed = same results).</p></dd>
+<dd><p>First seed number used to reproduce results (same seed
+= same results).</p></dd>
 
 
 <dt id="arg-seed-">seed2<a class="anchor" aria-label="anchor" href="#arg-seed-"></a></dt>
-<dd><p>Second seed number used to reproduce results (same seed = same results).</p></dd>
+<dd><p>Second seed number used to reproduce results (same seed
+= same results).</p></dd>
 
 
 <dt id="arg-seed-">seed3<a class="anchor" aria-label="anchor" href="#arg-seed-"></a></dt>
-<dd><p>Third seed number used to reproduce results (same seed = same results).</p></dd>
+<dd><p>Third seed number used to reproduce results (same seed
+= same results).</p></dd>
 
 
 <dt id="arg-seed-">seed4<a class="anchor" aria-label="anchor" href="#arg-seed-"></a></dt>
-<dd><p>Fourth seed number used to reproduce results (same seed = same results).</p></dd>
+<dd><p>Fourth seed number used to reproduce results (same seed
+= same results).</p></dd>
 
 
 <dt id="arg-ratiomax">ratiomax<a class="anchor" aria-label="anchor" href="#arg-ratiomax"></a></dt>
-<dd><p>Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)</p></dd>
+<dd><p>Maximum multiplicative factor for clutch size in
+models with reproductive senescence.</p></dd>
 
 
 <dt id="arg-tc">tc<a class="anchor" aria-label="anchor" href="#arg-tc"></a></dt>
-<dd><p>critical age (after the juvenile mortality peak) at which the survival model starts to be fitted</p></dd>
+<dd><p>Critical age (after the juvenile mortality peak) at which
+the survival model starts to be fitted.</p></dd>
 
 
 <dt id="arg-tinf">tinf<a class="anchor" aria-label="anchor" href="#arg-tinf"></a></dt>
-<dd><p>maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)</p></dd>
+<dd><p>Maximum censoring time (should be greater than the age
+of the oldest individual observed dead in the dataset).</p></dd>
 
 
 <dt id="arg-sub-interval">sub_interval<a class="anchor" aria-label="anchor" href="#arg-sub-interval"></a></dt>
-<dd><p>sub-interval used to integrate the left and right censoring dates of each event</p></dd>
+<dd><p>Sub-interval used to integrate the left and
+right censoring dates of each event.</p></dd>
+
+
+<dt id="arg-path-continuous-var">path_continuous_var<a class="anchor" aria-label="anchor" href="#arg-path-continuous-var"></a></dt>
+<dd><p>Path to the continuous variables file.</p></dd>
 
 
 <dt id="arg-ntr">ntr<a class="anchor" aria-label="anchor" href="#arg-ntr"></a></dt>
-<dd><p>Number of thread for the paralelisation ?</p></dd>
+<dd><p>Number of thread for the paralelisation.</p></dd>
 
 
 <dt id="arg-nst">nst<a class="anchor" aria-label="anchor" href="#arg-nst"></a></dt>
-<dd><p>TBD - Check the actual meaning</p></dd>
+<dd><p>TBD - Check the actual meaning.</p></dd>
 
 
 <dt id="arg-to">To<a class="anchor" aria-label="anchor" href="#arg-to"></a></dt>
-<dd><p>Initial temperature for the simulated annealing</p></dd>
+<dd><p>Initial temperature for the simulated annealing.</p></dd>
 
 
 <dt id="arg-tf">Tf<a class="anchor" aria-label="anchor" href="#arg-tf"></a></dt>
-<dd><p>Initial temperature for the simulated annealing</p></dd>
+<dd><p>Final temperature for the simulated annealing.</p></dd>
 
 
 <dt id="arg-climbrate">climbrate<a class="anchor" aria-label="anchor" href="#arg-climbrate"></a></dt>
-<dd><p>Rate for the simulated annealing ?</p></dd>
+<dd><p>Rate for the simulated annealing.</p></dd>
 
 
 <dt id="arg-precision">precision<a class="anchor" aria-label="anchor" href="#arg-precision"></a></dt>
-<dd><p>TBD - Check the actual meaning</p></dd>
+<dd><p>Precision parameter for the algorithm.</p></dd>
 
 </dl></div>
 

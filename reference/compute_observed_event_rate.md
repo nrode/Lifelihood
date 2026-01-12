@@ -42,21 +42,14 @@ compute_observed_event_rate(
 - min_sample_size:
 
   The minimum number of individuals alive at the beggining of a time
-  interval for computing the observed event rate
+  interval for computing the observed event rate.
 
 - groupby:
 
-  vector of covariate(s) over which mortality rate should be computed
-  (default is `NULL`).
-
-  - If NULL, calculates a single overall mortality rate.
-
-  - If `"all"`, calculates mortality rate over each combination of
-    covariates listed in the`lifelihoodData` object provided.
-
-  - Otherwise must be a character (`"covariate1"`) or a character vector
-    (`c("covariate1", "covariate2")`). Note that the function will
-    consider continuous covariates as factors
+  One or multiple covariates used to group the computation. If NULL,
+  calculates a single overall rate. If `"all"`, calculates rate over
+  each combination of covariates. Otherwise must be a character or
+  character vector with covariate names.
 
 ## Value
 

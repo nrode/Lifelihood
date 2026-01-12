@@ -23,6 +23,11 @@ R_to_lifelihood(R_format, covariates, covar_types)
 
   Vector containing the names of the covariates.
 
+- covar_types:
+
+  Vector containing the types of the covariates (either "cat" for
+  categorical or "num" for numerical).
+
 ## Value
 
 The formatted format for lifelihood to understand which parameter to

@@ -66,12 +66,14 @@ plot_event_rate(
 
 ## Arguments
 
+- lifelihoodResults:
+
+  Output of
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
+
 - interval_width:
 
-  The interval width used to calculate the event rate. For instance, if
-  the time unit for deaths in the original dataset is days and
-  `interval_width` is set to 10, the event rate will be calculated every
-  10 days for each group.
+  The interval width used to calculate the event rate.
 
 - event:
 
@@ -80,18 +82,17 @@ plot_event_rate(
 
 - newdata:
 
-  Data for prediction. If absent, predictions are for the subjects used
-  in the original fit.
+  Optional `data.frame` providing covariate values for prediction. If
+  `NULL`, the original model data are used.
 
 - add_observed_event_rate:
 
-  Boolean to add the observed event rate to the graph (default=TRUE)
+  Boolean to add the observed event rate to the graph (default=TRUE).
 
 - min_sample_size:
 
   The minimum number of individuals alive at the beggining of a time
-  interval for computing the observed event rate (only used if
-  add_observed_event_rate=TRUE, default=1)
+  interval for computing the observed event rate.
 
 - max_time:
 
@@ -101,16 +102,24 @@ plot_event_rate(
 - groupby:
 
   Factor(s) whosse levels over which event rate should be represented
-  (default=NULL)
+  (default=NULL).
 
 - use_facet:
 
-  Use facet_wrap to plot one panel per group (default=FALSE)
+  Use facet_wrap to plot one panel per group (default=FALSE).
+
+- xlab:
+
+  Label for x-axis (default="Time").
+
+- ylab:
+
+  Label for y-axis (default="Event rate").
 
 - type:
 
   The type of symbol to be used for the plot (either of "points" or
-  'lines")
+  'lines").
 
 - lifelihoodData:
 
@@ -119,7 +128,11 @@ plot_event_rate(
 
 - rate_df:
 
-  Dataframe with event rate
+  Dataframe with event rate.
+
+- fitted_data:
+
+  Boolean indicating if the data is fitted (default=FALSE).
 
 ## Value
 

@@ -39,7 +39,7 @@ execute_bin(
 - path_to_Lifelihood:
 
   A character string specifying the file path to the compile Lifelihood
-  program (default is NULL)
+  program (default is NULL).
 
 - path_input_data:
 
@@ -53,31 +53,35 @@ execute_bin(
 - group_by_group:
 
   Boolean option to fit the full factorial model with all the
-  interactions between each of the factors
+  interactions between each of the factors.
 
 - MCMC:
 
   Perform MCMC sampling of the parameter after convergence to estimate
-  their 95% confidence interval
+  their 95% confidence interval.
 
 - interval:
 
-  TBD - Check the actual meaning
+  TBD - Check the actual meaning.
 
 - se.fit:
 
   If TRUE, Lifelihood computes the standard error of each parameter
-  using the variance-covariance matrix (approximated by the inverse of
-  the negative of the Hessian matrix).
+  using the variance-covariance matrix.
 
 - saveprobevent:
 
-  TBD - Check the actual meaning
+  TBD - Check the actual meaning.
+
+- fitness:
+
+  Reparametrize the model with one parameter as the intrinsic rate of
+  increase.
 
 - r:
 
   Reparametrize the model with one parameter as the intrinsic rate of
-  increase
+  increase.
 
 - seed1:
 
@@ -102,44 +106,47 @@ execute_bin(
 - ratiomax:
 
   Maximum multiplicative factor for clutch size in models with
-  reproductive senescence (cf CalculRatioEspPoissonTronque function in
-  Lifelihood)
+  reproductive senescence.
 
 - tc:
 
-  critical age (after the juvenile mortality peak) at which the survival
-  model starts to be fitted
+  Critical age (after the juvenile mortality peak) at which the survival
+  model starts to be fitted.
 
 - tinf:
 
-  maximum censoring time (should be greater than the age of the oldest
-  individual observed dead in the dataset)
+  Maximum censoring time (should be greater than the age of the oldest
+  individual observed dead in the dataset).
 
 - sub_interval:
 
-  sub-interval used to integrate the left and right censoring dates of
-  each event
+  Sub-interval used to integrate the left and right censoring dates of
+  each event.
+
+- path_continuous_var:
+
+  Path to the continuous variables file.
 
 - ntr:
 
-  Number of thread for the paralelisation ?
+  Number of thread for the paralelisation.
 
 - nst:
 
-  TBD - Check the actual meaning
+  TBD - Check the actual meaning.
 
 - To:
 
-  Initial temperature for the simulated annealing
+  Initial temperature for the simulated annealing.
 
 - Tf:
 
-  Initial temperature for the simulated annealing
+  Final temperature for the simulated annealing.
 
 - climbrate:
 
-  Rate for the simulated annealing ?
+  Rate for the simulated annealing.
 
 - precision:
 
-  TBD - Check the actual meaning
+  Precision parameter for the algorithm.

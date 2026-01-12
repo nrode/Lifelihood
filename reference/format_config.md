@@ -13,9 +13,19 @@ format_config(path_config, covariates, covar_types)
 
 ## Arguments
 
+- path_config:
+
+  A character string specifying the file path to the YAML configuration
+  file.
+
 - covariates:
 
   Vector containing the names of the covariates.
+
+- covar_types:
+
+  Vector containing the types of the covariates (either "cat" for
+  categorical or "num" for numerical).
 
 ## Value
 

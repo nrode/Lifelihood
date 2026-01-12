@@ -92,40 +92,37 @@ input data file.</p>
 
 
 <dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
-<dd><p>Dataframe with the data of life history. It
-should have one row per life history / observation.</p></dd>
+<dd><p>Dataframe with the data of life history. It should
+have one row per life history / observation.</p></dd>
 
 
 <dt id="arg-sex">sex<a class="anchor" aria-label="anchor" href="#arg-sex"></a></dt>
-<dd><p>Column name containing the sex of the
-observations.</p></dd>
+<dd><p>Column name containing the sex of the observations.</p></dd>
 
 
 <dt id="arg-sex-start">sex_start<a class="anchor" aria-label="anchor" href="#arg-sex-start"></a></dt>
-<dd><p>Column name containing the first
-date of the interval in which the sex was determined.</p></dd>
+<dd><p>Column name containing the first date of the
+interval in which the sex was determined.</p></dd>
 
 
 <dt id="arg-sex-end">sex_end<a class="anchor" aria-label="anchor" href="#arg-sex-end"></a></dt>
-<dd><p>Column name containing the second date
-of the interval in which the sex was determined.</p></dd>
+<dd><p>Column name containing the second date of the
+interval in which the sex was determined.</p></dd>
 
 
 <dt id="arg-maturity-start">maturity_start<a class="anchor" aria-label="anchor" href="#arg-maturity-start"></a></dt>
-<dd><p>Column name containing the first
-date of the interval in which the maturity was determined.</p></dd>
+<dd><p>Column name containing the first date of
+the interval in which the maturity was determined.</p></dd>
 
 
 <dt id="arg-maturity-end">maturity_end<a class="anchor" aria-label="anchor" href="#arg-maturity-end"></a></dt>
-<dd><p>Column name containing the second
-date of the interval in which the maturity was determined.</p></dd>
+<dd><p>Column name containing the second date of
+the interval in which the maturity was determined.</p></dd>
 
 
 <dt id="arg-matclutch">matclutch<a class="anchor" aria-label="anchor" href="#arg-matclutch"></a></dt>
 <dd><p>Whether the maturity event (designated by
-<code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not.
-If <code>TRUE</code>, must specify the <code>matclutch_size</code> argument. Default
-is <code>FALSE</code>.</p></dd>
+<code>maturity_start</code> and <code>maturity_end</code>) is a clutch event or not.</p></dd>
 
 
 <dt id="arg-matclutch-size">matclutch_size<a class="anchor" aria-label="anchor" href="#arg-matclutch-size"></a></dt>
@@ -135,23 +132,17 @@ clutch for the maturity event. Only used (and required) if
 
 
 <dt id="arg-clutchs">clutchs<a class="anchor" aria-label="anchor" href="#arg-clutchs"></a></dt>
-<dd><p>Vector containing the names of the clutch
-columns. The order should be: first clutch first date, first
-clutch second date, first clutch clutch size, second clutch
-first date, first clutch second date, second clutch clutch
-size, and so on. If the observation with the most clutches
-is, for example, 10, then the vector must be of size 10 x 3 = 30
-(3 elements per clutch: first date, second date and size).</p></dd>
+<dd><p>Vector containing the names of the clutch columns.</p></dd>
 
 
 <dt id="arg-death-start">death_start<a class="anchor" aria-label="anchor" href="#arg-death-start"></a></dt>
-<dd><p>Column name containing the first date of
-the interval in which the death was determined.</p></dd>
+<dd><p>Column name containing the first date of the
+interval in which the death was determined.</p></dd>
 
 
 <dt id="arg-death-end">death_end<a class="anchor" aria-label="anchor" href="#arg-death-end"></a></dt>
-<dd><p>Column name containing the second date of
-the interval in which the death was determined.</p></dd>
+<dd><p>Column name containing the second date of the
+interval in which the death was determined.</p></dd>
 
 
 <dt id="arg-covariates">covariates<a class="anchor" aria-label="anchor" href="#arg-covariates"></a></dt>
@@ -160,19 +151,17 @@ the interval in which the death was determined.</p></dd>
 
 <dt id="arg-model-specs">model_specs<a class="anchor" aria-label="anchor" href="#arg-model-specs"></a></dt>
 <dd><p>Vector of characters with the name of the
-statistical law to use. Must be of length 3 and each element
-must be one of "wei" (Weibull law), "exp" (Exponential law),
-"gam" (Gamma law) or "lgn" (Log-normal law). The first one is
-used for mortality, the second one is used for maturity and the
-third is used for reproduction.</p></dd>
+statistical law to use.</p></dd>
 
 
 <dt id="arg-path-config">path_config<a class="anchor" aria-label="anchor" href="#arg-path-config"></a></dt>
-<dd><p>A character string specifying the file path to the YAML configuration file.</p></dd>
+<dd><p>A character string specifying the file path
+to the YAML configuration file.</p></dd>
 
 
 <dt id="arg-temp-dir">temp_dir<a class="anchor" aria-label="anchor" href="#arg-temp-dir"></a></dt>
-<dd><p>Name of the temporary directory with temporary files</p></dd>
+<dd><p>Name of the temporary directory with temporary
+files.</p></dd>
 
 </dl></div>
 

@@ -13,12 +13,12 @@ AICc(object, ..., k = length(coef(object)))
 
 - object:
 
-  output of
-  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
+  Output of
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
 
 - ...:
 
-  Ignored
+  Ignored.
 
 - k:
 

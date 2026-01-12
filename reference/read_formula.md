@@ -10,9 +10,13 @@ read_formula(config, parameter)
 
 ## Arguments
 
+- config:
+
+  Configuration object loaded from YAML file.
+
 - parameter:
 
-  name of the parameter
+  Name of the parameter to read formula for.
 
 ## Value
 

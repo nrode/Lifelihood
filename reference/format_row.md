@@ -55,12 +55,7 @@ format_row(
 
 - clutchs:
 
-  Vector containing the names of the clutch columns. The order should
-  be: first clutch first date, first clutch second date, first clutch
-  clutch size, second clutch first date, first clutch second date,
-  second clutch clutch size, and so on. If the observation with the most
-  clutches is, for example, 10, then the vector must be of size 10 x 3 =
-  30 (3 elements per clutch: first date, second date and size).
+  Vector containing the names of the clutch columns.
 
 - death_start:
 
