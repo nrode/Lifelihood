@@ -5,19 +5,36 @@
 #' of changes in predicted event rate with age.
 #'
 #' If you want more control over the style of the graph,
-#' use the [compute_fitted_event_rate()] function to directly retrieve the predicted data.
+#' use the [compute_fitted_event_rate()] function to directly
+#' retrieve the predicted data.
 #'
 #' @name plot_event_rate
 #'
-#' @inheritParams lifelihood
-#' @inheritParams plot_event_rate
-#' @inheritParams prediction
-#' @inheritParams validate_groupby_arg
-#' @param add_observed_event_rate Boolean to add the observed event rate to the graph (default=TRUE)
+#' @param lifelihoodResults Output of [lifelihood()].
+#' @param interval_width The interval width used to calculate the
+#' event rate.
+#' @param event Which event to compute? Must be one of "mortality",
+#' "maturity", "reproduction".
+#' @param newdata Optional `data.frame` providing covariate values
+#' for prediction. If `NULL`, the original model data are used.
+#' @param add_observed_event_rate Boolean to add the observed event
+#' rate to the graph (default=TRUE).
 #' @param min_sample_size The minimum number of individuals alive
-#' at the beggining of a time interval for computing the observed event rate (only used if add_observed_event_rate=TRUE, default=1)
+#' at the beggining of a time interval for computing the observed
+#' event rate (only used if add_observed_event_rate=TRUE, default=1).
+#' @param max_time The maximum time for calculating the event rate.
+#' If set to NULL, the time of the last observed death is used.
+#' @param groupby One or multiple covariates used to group the
+#' computation.
+#' @param use_facet Use facet_wrap to plot one panel per group
+#' (default=FALSE).
+#' @param xlab Label for x-axis (default="Time").
+#' @param ylab Label for y-axis (default="Event Rate").
+#' @param type The type of symbol to be used for the plot (either
+#' of "points" or "lines").
 #'
-#' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
+#' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/)
+#' to be installed.
 #'
 #' @return a ggplot2 plot
 #'
@@ -108,16 +125,31 @@ plot_fitted_event_rate <- function(
 #' with [lifelihoodData()]
 #'
 #' If you want more control over the style of the graph,
-#' use the [compute_observed_event_rate()] function to retrieve data.
+#' use the [compute_observed_event_rate()] function to retrieve
+#' data.
 #'
 #' @name plot_event_rate
 #'
-#' @inheritParams lifelihood
-#' @inheritParams compute_observed_event_rate
-#' @inheritParams plot_event_rate
-#' @inheritParams validate_groupby_arg
+#' @param lifelihoodData `lifelihoodData` object created with
+#' [lifelihoodData()].
+#' @param interval_width The interval width used to calculate the
+#' event rate.
+#' @param event Which event to compute? Must be one of "mortality",
+#' "maturity", "reproduction".
+#' @param max_time The maximum time for calculating the event rate.
+#' If set to NULL, the time of the last observed death is used.
+#' @param min_sample_size The minimum number of individuals alive
+#' at the beggining of a time interval for computing the observed
+#' event rate.
+#' @param groupby One or multiple covariates used to group the
+#' computation.
+#' @param use_facet Use facet_wrap to plot one panel per group
+#' (default=FALSE).
+#' @param xlab Label for x-axis (default="Time").
+#' @param ylab Label for y-axis (default="Mortality Rate").
 #'
-#' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/) to be installed.
+#' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/)
+#' to be installed.
 #'
 #' @return a ggplot2 plot
 #'
@@ -162,18 +194,25 @@ plot_observed_event_rate <- function(
 #' Convenient function used in [plot_observed_event_rate()]
 #' and [plot_fitted_event_rate()].
 #'
-#' @inheritParams compute_observed_event_rate
-#' @inheritParams validate_groupby_arg
-#' @param rate_df Dataframe with event rate
-#' @param type The type of symbol to be used for the plot (either of "points" or 'lines")
-#' @param use_facet Use facet_wrap to plot one panel per group (default=FALSE)
-#' @param groupby Factor(s) whosse levels over which event rate should be represented (default=NULL)
+#' @param rate_df Dataframe with event rate.
+#' @param max_time The maximum time for calculating the event rate.
+#' If set to NULL, the time of the last observed death is used.
+#' @param type The type of symbol to be used for the plot (either
+#' of "points" or 'lines").
+#' @param groupby Factor(s) whosse levels over which event rate
+#' should be represented (default=NULL).
+#' @param use_facet Use facet_wrap to plot one panel per group
+#' (default=FALSE).
+#' @param xlab Label for x-axis (default="Time").
+#' @param ylab Label for y-axis (default="Event rate").
+#' @param fitted_data Boolean indicating if the data is fitted
+#' (default=FALSE).
+#'
+#' @keywords internal
 #'
 #' @return a ggplot2 plot
 #'
 #' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim
-#'
-#' @keywords internal
 plot_event_rate <- function(
   rate_df,
   max_time,

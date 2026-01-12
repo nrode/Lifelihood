@@ -10,7 +10,8 @@
 #' the `param_bounds_df` argument (if not, it will automatically
 #' generate it and keep the default values).
 #'
-#' @inheritParams lifelihood
+#' @param lifelihoodData `lifelihoodData` object created with
+#' [lifelihoodData()].
 #'
 #' @return A dataframe with the default parameter boundaries.
 #'

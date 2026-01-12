@@ -457,7 +457,10 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #' S3 method to compute AICc (Akaike Information Criterion
 #' corrected for small sample size, see Hurvich and Tsai 1989).
 #'
-#' @inheritParams AIC.lifelihoodResults
+#' @param object Output of [lifelihood()].
+#' @param ... Ignored.
+#' @param k Number of estimated parameter of the modèle. Default
+#' to `length(coef(object))`.
 #'
 #' @return The AICc
 #'

@@ -7,9 +7,34 @@
 #'
 #' @keywords internal
 #'
-#' @inheritParams lifelihoodData
-#' @inheritParams lifelihood
-#' @param temp_dir Name of the temporary directory with temporary files
+#' @param df Dataframe with the data of life history. It should
+#' have one row per life history / observation.
+#' @param sex Column name containing the sex of the observations.
+#' @param sex_start Column name containing the first date of the
+#' interval in which the sex was determined.
+#' @param sex_end Column name containing the second date of the
+#' interval in which the sex was determined.
+#' @param maturity_start Column name containing the first date of
+#' the interval in which the maturity was determined.
+#' @param maturity_end Column name containing the second date of
+#' the interval in which the maturity was determined.
+#' @param matclutch Whether the maturity event (designated by
+#' `maturity_start` and `maturity_end`) is a clutch event or not.
+#' @param matclutch_size Column name containing the size of the
+#' clutch for the maturity event. Only used (and required) if
+#' `matclutch` is `TRUE`.
+#' @param clutchs Vector containing the names of the clutch columns.
+#' @param death_start Column name containing the first date of the
+#' interval in which the death was determined.
+#' @param death_end Column name containing the second date of the
+#' interval in which the death was determined.
+#' @param covariates Vector containing the names of the covariates.
+#' @param model_specs Vector of characters with the name of the
+#' statistical law to use.
+#' @param path_config A character string specifying the file path
+#' to the YAML configuration file.
+#' @param temp_dir Name of the temporary directory with temporary
+#' files.
 #'
 format_dataframe_to_txt <- function(
   df,
@@ -135,8 +160,23 @@ format_dataframe_to_txt <- function(
 #'
 #' @keywords internal
 #'
-#' @param row A row of the dataframe object provided by the user (`df` argument in [lifelihoodData()] function).
-#' @inheritParams lifelihoodData
+#' @param row A row of the dataframe object provided by the user
+#' (`df` argument in [lifelihoodData()] function).
+#' @param sex Column name containing the sex of the observations.
+#' @param sex_start Column name containing the first date of the
+#' interval in which the sex was determined.
+#' @param sex_end Column name containing the second date of the
+#' interval in which the sex was determined.
+#' @param maturity_start Column name containing the first date of
+#' the interval in which the maturity was determined.
+#' @param maturity_end Column name containing the second date of
+#' the interval in which the maturity was determined.
+#' @param clutchs Vector containing the names of the clutch columns.
+#' @param death_start Column name containing the first date of the
+#' interval in which the death was determined.
+#' @param death_end Column name containing the second date of the
+#' interval in which the death was determined.
+#' @param covariates Vector containing the names of the covariates.
 #'
 #' @return A string of the well formated row.
 format_row <- function(
