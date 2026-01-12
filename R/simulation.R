@@ -125,7 +125,8 @@ simulate_event <- function(object, ev, newdata) {
     }
     simul_df <- simul_t |> as_tibble(.name_repair = "minimal")
     colnames(simul_df) <- column_names
-    simul_df_n_offspring_t <- simul_n_offspring_t |> as_tibble(.name_repair = "minimal")
+    simul_df_n_offspring_t <- simul_n_offspring_t |>
+      as_tibble(.name_repair = "minimal")
     colnames(simul_df_n_offspring_t) <- n_offspring_column_names
 
     simul_df_full <- bind_cols(simul_df, simul_df_n_offspring_t)
