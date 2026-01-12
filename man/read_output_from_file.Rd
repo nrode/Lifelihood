@@ -13,16 +13,22 @@ read_output_from_file(
 )
 }
 \arguments{
-\item{file_path}{Location of the output file of the program}
+\item{file_path}{Location of the output file of the program.}
 
-\item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
+\item{group_by_group}{Boolean option to fit the full factorial
+model with all the interactions between each of the factors.}
 
-\item{path_config}{A character string specifying the file path to the YAML configuration file.}
+\item{covariates}{Vector containing the names of the covariates.}
 
-\item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
+\item{path_config}{A character string specifying the file path
+to the YAML configuration file.}
+
+\item{MCMC}{Perform MCMC sampling of the parameter after
+convergence to estimate their 95\% confidence interval.}
 }
 \value{
-An object of class \code{lifelihoodResults} with all results from the output file
+An object of class \code{lifelihoodResults} with all results
+from the output file.
 }
 \description{
 Takes the file path of the output file and read the

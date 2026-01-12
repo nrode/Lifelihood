@@ -7,7 +7,13 @@
 format_config(path_config, covariates, covar_types)
 }
 \arguments{
+\item{path_config}{A character string specifying the file path
+to the YAML configuration file.}
+
 \item{covariates}{Vector containing the names of the covariates.}
+
+\item{covar_types}{Vector containing the types of the covariates
+(either "cat" for categorical or "num" for numerical).}
 }
 \value{
 A character vector that will be used under the model tag in the input text file.

@@ -4,10 +4,12 @@
 \alias{compute_reproduction_intervals}
 \title{Compute time interval between clutches}
 \usage{
-compute_reproduction_intervals(lifelihoodData)
+compute_reproduction_intervals(lifelihoodData, verbose = TRUE)
 }
 \arguments{
 \item{lifelihoodData}{Ouput of \code{\link[=lifelihoodData]{lifelihoodData()}}}
+
+\item{verbose}{Boolean whether to print messages during the computation process (default=TRUE)}
 }
 \value{
 A dataframe with time interval between consecutive clutches starting from maturity.

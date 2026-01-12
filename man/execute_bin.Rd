@@ -33,51 +33,71 @@ execute_bin(
 )
 }
 \arguments{
-\item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
+\item{path_to_Lifelihood}{A character string specifying the file
+path to the compile Lifelihood program (default is NULL).}
 
-\item{path_input_data}{Path to the input text file with the model and data to be fitted.}
+\item{path_input_data}{Path to the input text file with the model
+and data to be fitted.}
 
-\item{path_param_bounds}{Path to the parameter boundaries text file with the min and max boudaries for each parameter.}
+\item{path_param_bounds}{Path to the parameter boundaries text file
+with the min and max boudaries for each parameter.}
 
-\item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
+\item{group_by_group}{Boolean option to fit the full factorial model
+with all the interactions between each of the factors.}
 
-\item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
+\item{MCMC}{Perform MCMC sampling of the parameter after convergence
+to estimate their 95\% confidence interval.}
 
-\item{interval}{TBD - Check the actual meaning}
+\item{interval}{TBD - Check the actual meaning.}
 
-\item{se.fit}{If TRUE, Lifelihood computes the standard error of each parameter using the variance-covariance matrix (approximated by the inverse of the negative of the Hessian matrix).}
+\item{se.fit}{If TRUE, Lifelihood computes the standard error of
+each parameter using the variance-covariance matrix.}
 
-\item{saveprobevent}{TBD - Check the actual meaning}
+\item{saveprobevent}{TBD - Check the actual meaning.}
 
-\item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
+\item{fitness}{Reparametrize the model with one parameter as the
+intrinsic rate of increase.}
 
-\item{seed1}{First seed number used to reproduce results (same seed = same results).}
+\item{r}{Reparametrize the model with one parameter as the intrinsic
+rate of increase.}
 
-\item{seed2}{Second seed number used to reproduce results (same seed = same results).}
+\item{seed1}{First seed number used to reproduce results (same seed
+= same results).}
 
-\item{seed3}{Third seed number used to reproduce results (same seed = same results).}
+\item{seed2}{Second seed number used to reproduce results (same seed
+= same results).}
 
-\item{seed4}{Fourth seed number used to reproduce results (same seed = same results).}
+\item{seed3}{Third seed number used to reproduce results (same seed
+= same results).}
 
-\item{ratiomax}{Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)}
+\item{seed4}{Fourth seed number used to reproduce results (same seed
+= same results).}
 
-\item{tc}{critical age (after the juvenile mortality peak) at which the survival model starts to be fitted}
+\item{ratiomax}{Maximum multiplicative factor for clutch size in
+models with reproductive senescence.}
 
-\item{tinf}{maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)}
+\item{tc}{Critical age (after the juvenile mortality peak) at which
+the survival model starts to be fitted.}
 
-\item{sub_interval}{sub-interval used to integrate the left and right censoring dates of each event}
+\item{tinf}{Maximum censoring time (should be greater than the age
+of the oldest individual observed dead in the dataset).}
 
-\item{ntr}{Number of thread for the paralelisation ?}
+\item{sub_interval}{Sub-interval used to integrate the left and
+right censoring dates of each event.}
 
-\item{nst}{TBD - Check the actual meaning}
+\item{path_continuous_var}{Path to the continuous variables file.}
 
-\item{To}{Initial temperature for the simulated annealing}
+\item{ntr}{Number of thread for the paralelisation.}
 
-\item{Tf}{Initial temperature for the simulated annealing}
+\item{nst}{TBD - Check the actual meaning.}
 
-\item{climbrate}{Rate for the simulated annealing ?}
+\item{To}{Initial temperature for the simulated annealing.}
 
-\item{precision}{TBD - Check the actual meaning}
+\item{Tf}{Final temperature for the simulated annealing.}
+
+\item{climbrate}{Rate for the simulated annealing.}
+
+\item{precision}{Precision parameter for the algorithm.}
 }
 \description{
 Run lifelihood program in console mode.

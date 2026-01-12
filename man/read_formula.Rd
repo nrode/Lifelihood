@@ -7,7 +7,9 @@
 read_formula(config, parameter)
 }
 \arguments{
-\item{parameter}{name of the parameter}
+\item{config}{Configuration object loaded from YAML file.}
+
+\item{parameter}{Name of the parameter to read formula for.}
 }
 \value{
 Formula

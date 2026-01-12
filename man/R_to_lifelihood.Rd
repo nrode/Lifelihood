@@ -7,18 +7,23 @@
 R_to_lifelihood(R_format, covariates, covar_types)
 }
 \arguments{
-\item{R_format}{String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.}
+\item{R_format}{String representing the covariates to be adjusted.
+For example, "geno + type" will use the covariates geno and type.}
 
 \item{covariates}{Vector containing the names of the covariates.}
+
+\item{covar_types}{Vector containing the types of the covariates
+(either "cat" for categorical or "num" for numerical).}
 }
 \value{
-The formatted format for lifelihood to understand which parameter to fit.
+The formatted format for lifelihood to understand which
+parameter to fit.
 }
 \description{
-Transforms a character string describing the covariates to be included
-into a format which the compiled program can understand. For example,
-\code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the first element of
-\code{covariables} and \code{"type"} is the second. This function is used to
-create the model part of the input text file.
+Transforms a character string describing the covariates to be
+included into a format which the compiled program can understand.
+For example, \code{"geno + type"} will become \verb{1 2} if \code{"geno"} is the
+first element of \code{covariables} and \code{"type"} is the second. This
+function is used to create the model part of the input text file.
 }
 \keyword{internal}

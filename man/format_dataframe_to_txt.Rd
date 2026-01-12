@@ -23,59 +23,48 @@ format_dataframe_to_txt(
 )
 }
 \arguments{
-\item{df}{Dataframe with the data of life history. It
-should have one row per life history / observation.}
+\item{df}{Dataframe with the data of life history. It should
+have one row per life history / observation.}
 
-\item{sex}{Column name containing the sex of the
-observations.}
+\item{sex}{Column name containing the sex of the observations.}
 
-\item{sex_start}{Column name containing the first
-date of the interval in which the sex was determined.}
+\item{sex_start}{Column name containing the first date of the
+interval in which the sex was determined.}
 
-\item{sex_end}{Column name containing the second date
-of the interval in which the sex was determined.}
+\item{sex_end}{Column name containing the second date of the
+interval in which the sex was determined.}
 
-\item{maturity_start}{Column name containing the first
-date of the interval in which the maturity was determined.}
+\item{maturity_start}{Column name containing the first date of
+the interval in which the maturity was determined.}
 
-\item{maturity_end}{Column name containing the second
-date of the interval in which the maturity was determined.}
+\item{maturity_end}{Column name containing the second date of
+the interval in which the maturity was determined.}
 
 \item{matclutch}{Whether the maturity event (designated by
-\code{maturity_start} and \code{maturity_end}) is a clutch event or not.
-If \code{TRUE}, must specify the \code{matclutch_size} argument. Default
-is \code{FALSE}.}
+\code{maturity_start} and \code{maturity_end}) is a clutch event or not.}
 
 \item{matclutch_size}{Column name containing the size of the
 clutch for the maturity event. Only used (and required) if
 \code{matclutch} is \code{TRUE}.}
 
-\item{clutchs}{Vector containing the names of the clutch
-columns. The order should be: first clutch first date, first
-clutch second date, first clutch clutch size, second clutch
-first date, first clutch second date, second clutch clutch
-size, and so on. If the observation with the most clutches
-is, for example, 10, then the vector must be of size 10 x 3 = 30
-(3 elements per clutch: first date, second date and size).}
+\item{clutchs}{Vector containing the names of the clutch columns.}
 
-\item{death_start}{Column name containing the first date of
-the interval in which the death was determined.}
+\item{death_start}{Column name containing the first date of the
+interval in which the death was determined.}
 
-\item{death_end}{Column name containing the second date of
-the interval in which the death was determined.}
+\item{death_end}{Column name containing the second date of the
+interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
 \item{model_specs}{Vector of characters with the name of the
-statistical law to use. Must be of length 3 and each element
-must be one of "wei" (Weibull law), "exp" (Exponential law),
-"gam" (Gamma law) or "lgn" (Log-normal law). The first one is
-used for mortality, the second one is used for maturity and the
-third is used for reproduction.}
+statistical law to use.}
 
-\item{path_config}{A character string specifying the file path to the YAML configuration file.}
+\item{path_config}{A character string specifying the file path
+to the YAML configuration file.}
 
-\item{temp_dir}{Name of the temporary directory with temporary files}
+\item{temp_dir}{Name of the temporary directory with temporary
+files.}
 }
 \description{
 Takes a dataframe (\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function)
