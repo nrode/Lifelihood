@@ -7,7 +7,8 @@ df <- datapierrick |>
     par = as.factor(par),
     geno = as.factor(geno),
     spore = as.factor(spore)
-  )
+  ) |>
+  sample_n(100)
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -38,7 +39,6 @@ results <- lifelihood(
   se.fit = TRUE,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
-  MCMC = 30,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)

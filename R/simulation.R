@@ -123,9 +123,9 @@ simulate_event <- function(object, ev, newdata) {
       simul_t <- simul
       simul_n_offspring_t <- simul_n_offspring
     }
-    simul_df <- simul_t |> as_tibble()
+    simul_df <- simul_t |> as_tibble(.name_repair = "minimal")
     colnames(simul_df) <- column_names
-    simul_df_n_offspring_t <- simul_n_offspring_t |> as_tibble()
+    simul_df_n_offspring_t <- simul_n_offspring_t |> as_tibble(.name_repair = "minimal")
     colnames(simul_df_n_offspring_t) <- n_offspring_column_names
 
     simul_df_full <- bind_cols(simul_df, simul_df_n_offspring_t)
@@ -133,7 +133,7 @@ simulate_event <- function(object, ev, newdata) {
     simul_df_full <- simul_df_full[, columns_order]
   } else {
     column_names <- ev
-    simul_df_full <- simul |> as_tibble()
+    simul_df_full <- simul |> as_tibble(.name_repair = "minimal")
     colnames(simul_df_full) <- column_names
   }
 
