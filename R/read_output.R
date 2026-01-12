@@ -6,12 +6,19 @@
 #'
 #' @keywords internal
 #'
-#' @param file_path Location of the output file of the program
-#' @inheritParams lifelihood
+#' @param file_path Location of the output file of the program.
+#' @param group_by_group Boolean option to fit the full factorial
+#' model with all the interactions between each of the factors.
+#' @param covariates Vector containing the names of the covariates.
+#' @param path_config A character string specifying the file path
+#' to the YAML configuration file.
+#' @param MCMC Perform MCMC sampling of the parameter after
+#' convergence to estimate their 95% confidence interval.
 #'
 #' @importFrom tidyr starts_with
 #'
-#' @return An object of class `lifelihoodResults` with all results from the output file
+#' @return An object of class `lifelihoodResults` with all results
+#' from the output file.
 #'
 #' @export
 read_output_from_file <- function(

@@ -7,7 +7,8 @@ df <- datapierrick |>
     par = as.factor(par),
     geno = as.factor(geno),
     spore = as.factor(spore)
-  )
+  ) |>
+  sample_n(100)
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -160,4 +161,3 @@ plot_fitted_event_rate(
   xlab = "Age (days)",
   ylab = "Fitted Maturity Rate"
 )
-

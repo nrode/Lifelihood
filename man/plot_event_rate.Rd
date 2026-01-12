@@ -45,32 +45,47 @@ plot_event_rate(
 )
 }
 \arguments{
+\item{lifelihoodResults}{Output of \code{\link[=lifelihood]{lifelihood()}}.}
+
 \item{interval_width}{The interval width used to calculate the
-event rate. For instance, if the time unit for deaths in
-the original dataset is days and \code{interval_width} is set to 10,
-the event rate will be calculated every 10 days for each group.}
+event rate.}
 
-\item{event}{Which event to compute? Must be one of "mortality", "maturity", "reproduction".}
+\item{event}{Which event to compute? Must be one of "mortality",
+"maturity", "reproduction".}
 
-\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
+\item{newdata}{Optional \code{data.frame} providing covariate values
+for prediction. If \code{NULL}, the original model data are used.}
 
-\item{add_observed_event_rate}{Boolean to add the observed event rate to the graph (default=TRUE)}
+\item{add_observed_event_rate}{Boolean to add the observed event
+rate to the graph (default=TRUE).}
 
 \item{min_sample_size}{The minimum number of individuals alive
-at the beggining of a time interval for computing the observed event rate (only used if add_observed_event_rate=TRUE, default=1)}
+at the beggining of a time interval for computing the observed
+event rate.}
 
-\item{max_time}{The maximum time for calculating the event
-rate. If set to NULL, the time of the last observed death is used.}
+\item{max_time}{The maximum time for calculating the event rate.
+If set to NULL, the time of the last observed death is used.}
 
-\item{groupby}{Factor(s) whosse levels over which event rate should be represented (default=NULL)}
+\item{groupby}{Factor(s) whosse levels over which event rate
+should be represented (default=NULL).}
 
-\item{use_facet}{Use facet_wrap to plot one panel per group (default=FALSE)}
+\item{use_facet}{Use facet_wrap to plot one panel per group
+(default=FALSE).}
 
-\item{type}{The type of symbol to be used for the plot (either of "points" or 'lines")}
+\item{xlab}{Label for x-axis (default="Time").}
 
-\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
+\item{ylab}{Label for y-axis (default="Event rate").}
 
-\item{rate_df}{Dataframe with event rate}
+\item{type}{The type of symbol to be used for the plot (either
+of "points" or 'lines").}
+
+\item{lifelihoodData}{\code{lifelihoodData} object created with
+\code{\link[=lifelihoodData]{lifelihoodData()}}.}
+
+\item{rate_df}{Dataframe with event rate.}
+
+\item{fitted_data}{Boolean indicating if the data is fitted
+(default=FALSE).}
 }
 \value{
 a ggplot2 plot
@@ -84,7 +99,8 @@ Useful function for creating a good-quality line graph
 of changes in predicted event rate with age.
 
 If you want more control over the style of the graph,
-use the \code{\link[=compute_fitted_event_rate]{compute_fitted_event_rate()}} function to directly retrieve the predicted data.
+use the \code{\link[=compute_fitted_event_rate]{compute_fitted_event_rate()}} function to directly
+retrieve the predicted data.
 
 Useful function for creating a good-quality line graph
 of changes in the empirical mortality rate.
@@ -94,14 +110,17 @@ function, only to retrieve a lifelihood data object
 with \code{\link[=lifelihoodData]{lifelihoodData()}}
 
 If you want more control over the style of the graph,
-use the \code{\link[=compute_observed_event_rate]{compute_observed_event_rate()}} function to retrieve data.
+use the \code{\link[=compute_observed_event_rate]{compute_observed_event_rate()}} function to retrieve
+data.
 
 Convenient function used in \code{\link[=plot_observed_event_rate]{plot_observed_event_rate()}}
 and \code{\link[=plot_fitted_event_rate]{plot_fitted_event_rate()}}.
 }
 \details{
-This function requires \href{https://ggplot2.tidyverse.org/}{ggplot2} to be installed.
+This function requires \href{https://ggplot2.tidyverse.org/}{ggplot2}
+to be installed.
 
-This function requires \href{https://ggplot2.tidyverse.org/}{ggplot2} to be installed.
+This function requires \href{https://ggplot2.tidyverse.org/}{ggplot2}
+to be installed.
 }
 \keyword{internal}

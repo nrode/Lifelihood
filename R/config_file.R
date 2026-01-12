@@ -39,7 +39,11 @@ safe_access <- function(config, path) {
 #' This function is used in [lifelihood()] when creating the
 #' input text file.
 #'
-#' @inheritParams lifelihoodData
+#' @param path_config A character string specifying the file path
+#' to the YAML configuration file.
+#' @param covariates Vector containing the names of the covariates.
+#' @param covar_types Vector containing the types of the covariates
+#' (either "cat" for categorical or "num" for numerical).
 #'
 #' @keywords internal
 #'
@@ -225,8 +229,8 @@ format_config <- function(path_config, covariates, covar_types) {
 #'
 #' @keywords internal
 #'
-#' @inheritParams lifelihoodData
-#' @param parameter name of the parameter
+#' @param config Configuration object loaded from YAML file.
+#' @param parameter Name of the parameter to read formula for.
 #'
 #' @return Formula
 read_formula <- function(config, parameter) {
@@ -239,18 +243,22 @@ read_formula <- function(config, parameter) {
 #' @title Convert R formula to lifelihood formula
 #'
 #' @description
-#' Transforms a character string describing the covariates to be included
-#' into a format which the compiled program can understand. For example,
-#' `"geno + type"` will become `1 2` if `"geno"` is the first element of
-#' `covariables` and `"type"` is the second. This function is used to
-#' create the model part of the input text file.
+#' Transforms a character string describing the covariates to be
+#' included into a format which the compiled program can understand.
+#' For example, `"geno + type"` will become `1 2` if `"geno"` is the
+#' first element of `covariables` and `"type"` is the second. This
+#' function is used to create the model part of the input text file.
 #'
-#' @param R_format String representing the covariates to be adjusted. For example, "geno + type" will use the covariates geno and type.
-#' @inheritParams lifelihoodData
-#'
-#' @return The formatted format for lifelihood to understand which parameter to fit.
+#' @param R_format String representing the covariates to be adjusted.
+#' For example, "geno + type" will use the covariates geno and type.
+#' @param covariates Vector containing the names of the covariates.
+#' @param covar_types Vector containing the types of the covariates
+#' (either "cat" for categorical or "num" for numerical).
 #'
 #' @keywords internal
+#'
+#' @return The formatted format for lifelihood to understand which
+#' parameter to fit.
 R_to_lifelihood <- function(R_format, covariates, covar_types) {
   # ensure input is a string
   R_format <- as.character(R_format)

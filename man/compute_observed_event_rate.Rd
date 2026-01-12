@@ -14,31 +14,29 @@ compute_observed_event_rate(
 )
 }
 \arguments{
-\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
+\item{lifelihoodData}{\code{lifelihoodData} object created with
+\code{\link[=lifelihoodData]{lifelihoodData()}}.}
 
 \item{interval_width}{The interval width used to calculate the
 event rate. For instance, if the time unit for deaths in
 the original dataset is days and \code{interval_width} is set to 10,
 the event rate will be calculated every 10 days for each group.}
 
-\item{event}{Which event to compute? Must be one of "mortality", "maturity", "reproduction".}
+\item{event}{Which event to compute? Must be one of "mortality",
+"maturity", "reproduction".}
 
-\item{max_time}{The maximum time for calculating the event
-rate. If set to NULL, the time of the last observed death is used.}
+\item{max_time}{The maximum time for calculating the event rate.
+If set to NULL, the time of the last observed death is used.}
 
 \item{min_sample_size}{The minimum number of individuals alive
-at the beggining of a time interval for computing the observed event rate}
+at the beggining of a time interval for computing the observed
+event rate.}
 
-\item{groupby}{vector of covariate(s) over which mortality rate should be
-computed (default is \code{NULL}).
-\itemize{
-\item If NULL, calculates a single overall mortality rate.
-\item If \code{"all"}, calculates mortality rate over each combination
-of covariates listed in the\code{lifelihoodData} object provided.
-\item Otherwise must be a character (\code{"covariate1"}) or a
-character vector (\code{c("covariate1", "covariate2")}).
-Note that the function will consider continuous covariates as factors
-}}
+\item{groupby}{One or multiple covariates used to group the
+computation. If NULL, calculates a single overall rate. If
+\code{"all"}, calculates rate over each combination of covariates.
+Otherwise must be a character or character vector with covariate
+names.}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based

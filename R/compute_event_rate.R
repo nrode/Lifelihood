@@ -91,23 +91,23 @@ compute_fitted_event_rate <- function(
   }
   if (is.null(max_time)) {
     if (event == "reproduction") {
-      
-      reproduction_intervals <- compute_reproduction_intervals(lifelihoodData, verbose=FALSE)
+      reproduction_intervals <- compute_reproduction_intervals(
+        lifelihoodData,
+        verbose = FALSE
+      )
       sorted_values <- sort(
         unique(reproduction_intervals[["pon_end"]]),
         decreasing = TRUE,
         na.last = NA
       )
-      
-    }else{
-      
+    } else {
       sorted_values <- sort(
         unique(lifelihoodData$df[[end_col]]),
         decreasing = TRUE,
         na.last = NA
       )
     }
-    
+
     if (sorted_values[1] == lifelihoodData$right_censoring_date) {
       max_time <- sorted_values[2]
     } else {
@@ -207,17 +207,24 @@ compute_fitted_event_rate <- function(
 #' @description
 #' Calculate the empirical event rate over a given interval.
 #'
-#' @inheritParams lifelihood
-#' @inheritParams validate_groupby_arg
+#' @param lifelihoodData `lifelihoodData` object created with
+#' [lifelihoodData()].
 #' @param interval_width The interval width used to calculate the
 #' event rate. For instance, if the time unit for deaths in
 #' the original dataset is days and `interval_width` is set to 10,
 #' the event rate will be calculated every 10 days for each group.
-#' @param max_time The maximum time for calculating the event
-#' rate. If set to NULL, the time of the last observed death is used.
+#' @param event Which event to compute? Must be one of "mortality",
+#' "maturity", "reproduction".
+#' @param max_time The maximum time for calculating the event rate.
+#' If set to NULL, the time of the last observed death is used.
 #' @param min_sample_size The minimum number of individuals alive
-#' at the beggining of a time interval for computing the observed event rate
-#' @param event Which event to compute? Must be one of "mortality", "maturity", "reproduction".
+#' at the beggining of a time interval for computing the observed
+#' event rate.
+#' @param groupby One or multiple covariates used to group the
+#' computation. If NULL, calculates a single overall rate. If
+#' `"all"`, calculates rate over each combination of covariates.
+#' Otherwise must be a character or character vector with covariate
+#' names.
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
@@ -275,7 +282,6 @@ compute_observed_event_rate <- function(
     # between the death and the last reproduction (right censoring of
     # unobserved reproductions that could have occurred after death).
     newdata <- compute_reproduction_intervals(lifelihoodData)
-    write.csv2(newdata, "here.csv")
   }
 
   if (is.null(max_time)) {
@@ -404,7 +410,7 @@ compute_observed_event_rate <- function(
 #' @return A dataframe with time interval between consecutive clutches starting from maturity.
 #'
 #' @export
-compute_reproduction_intervals <- function(lifelihoodData, verbose=TRUE) {
+compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
   check_lifelihoodData(lifelihoodData)
 
   # Extract clutch column names - pattern is start, end, size repeated

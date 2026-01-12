@@ -7,11 +7,12 @@
 AICc(object, ..., k = length(coef(object)))
 }
 \arguments{
-\item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}
+\item{object}{Output of \code{\link[=lifelihood]{lifelihood()}}.}
 
-\item{...}{Ignored}
+\item{...}{Ignored.}
 
-\item{k}{Number of estimated parameter of the modèle. Default to \code{length(coef(object))}.}
+\item{k}{Number of estimated parameter of the modèle. Default
+to \code{length(coef(object))}.}
 }
 \value{
 The AICc
