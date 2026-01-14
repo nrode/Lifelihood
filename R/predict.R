@@ -102,7 +102,7 @@ prediction <- function(
     Terms <- terms(m)
     x <- model.matrix(Terms, m)
 
-    if (mcmc.fit) {
+    if (mcmc.fit & se.fit) {
       coef_vector <- effects$mcmc_estimation[range]
     } else {
       coef_vector <- effects$estimation[range]
@@ -131,7 +131,25 @@ prediction <- function(
         )
       }
     }
-    predictions <- x %*% coef_vector
+
+    if (mcmc.fit && !se.fit) {
+      # extract MCMC sample for the parameter of interest
+      y_matrix <- object$mcmc_sample |>
+        select(contains(parameter_name)) |>
+        as.matrix()
+
+      # predict for each MCMC iteration
+      predictions <- x %*% t(y_matrix)
+
+      # and make it a dataframe
+      colnames(predictions) <- paste0(
+        "mcmc_sample_",
+        1:nrow(object$mcmc_sample)
+      )
+      predictions <- as.data.frame(predictions)
+    } else {
+      predictions <- x %*% coef_vector
+    }
 
     if (se.fit) {
       if (mcmc.fit) {
@@ -143,6 +161,7 @@ prediction <- function(
       if (type == "link") {
         se <- sqrt(diag(x %*% var_parameter %*% t(x)))
       } else {
+        # type == "response"
         bounds_df <- object$param_bounds_df
         parameter_bounds <- subset(bounds_df, param == parameter_name)
         se <- sqrt(
@@ -175,7 +194,11 @@ prediction <- function(
       se.fitted = as.vector(se)
     ))
   } else {
-    return(as.vector(pred))
+    if (mcmc.fit) {
+      return(pred)
+    } else {
+      return(as.vector(pred))
+    }
   }
 }
 

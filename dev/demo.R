@@ -7,8 +7,7 @@ df <- datapierrick |>
     par = as.factor(par),
     geno = as.factor(geno),
     spore = as.factor(spore)
-  ) |>
-  sample_n(100)
+  )
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -36,14 +35,16 @@ lifelihoodData <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  se.fit = TRUE,
+  MCMC = 20,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
 
-prediction(results, "expt_death", se.fit = TRUE)
+prediction(results, "expt_death", type = "response")
+prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)
+prediction(results, "expt_death", mcmc.fit = TRUE, se.fit = TRUE) |> head()
 prediction(
   results,
   "expt_death",
@@ -61,7 +62,13 @@ AIC(results)
 BIC(results)
 logLik(results)
 
-prediction(results, parameter_name = "n_offspring") |> head()
+prediction(
+  results,
+  parameter_name = "n_offspring",
+  mcmc.fit = TRUE,
+  type = "response"
+) |>
+  head()
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
 prediction(results, parameter_name = "expt_reproduction", type = "response") |>
   head()
@@ -108,7 +115,7 @@ rate_df <- compute_observed_event_rate(
 ## Reproduction rate
 plot_observed_event_rate(
   lifelihoodData,
-  interval_width = 1,
+  interval_width = 2,
   groupby = "par",
   event = "reproduction",
   use_facet = TRUE,
@@ -119,7 +126,7 @@ plot_observed_event_rate(
 
 plot_fitted_event_rate(
   results,
-  interval_width = 1,
+  interval_width = 2,
   event = "reproduction",
   newdata = NULL,
   use_facet = TRUE,

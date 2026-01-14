@@ -15,6 +15,7 @@
 #' @param max_time The maximum time for calculating the event
 #' rate. If set to NULL, the time of the last observed death is used.
 #' @param groupby One or multiple covariates used to group the computation.
+#' @param mcmc.ci.fit Whether or not to retrieve MCMC CI estimations.
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
@@ -34,7 +35,8 @@ compute_fitted_event_rate <- function(
   event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   max_time = NULL,
-  groupby = NULL
+  groupby = NULL,
+  mcmc.ci.fit = TRUE
 ) {
   event <- match.arg(event)
   check_lifelihoodResults(lifelihoodResults)
@@ -89,6 +91,7 @@ compute_fitted_event_rate <- function(
       )
     )
   }
+
   if (is.null(max_time)) {
     if (event == "reproduction") {
       reproduction_intervals <- compute_reproduction_intervals(
@@ -96,7 +99,7 @@ compute_fitted_event_rate <- function(
         verbose = FALSE
       )
       sorted_values <- sort(
-        unique(reproduction_intervals[["pon_end"]]),
+        unique(reproduction_intervals[["clutch_end"]]),
         decreasing = TRUE,
         na.last = NA
       )
@@ -174,22 +177,49 @@ compute_fitted_event_rate <- function(
     object = lifelihoodResults,
     parameter_name = parameter_name1,
     newdata = newdata,
+    mcmc.fit = mcmc.ci.fit,
     type = "response"
   )
   param2 <- prediction(
     object = lifelihoodResults,
     parameter_name = parameter_name2,
     newdata = newdata,
+    mcmc.fit = mcmc.ci.fit,
     type = "response"
   )
 
-  newdata$Event_Rate <- prob_event_interval_dt(
-    t = newdata$time,
-    dt = interval_width,
-    param1 = param1,
-    param2 = param2,
-    family = family
-  )
+  if (mcmc.ci.fit) {
+    Event_Rate <- prob_event_interval_dt(
+      t = newdata$time,
+      dt = interval_width,
+      param1 = param1,
+      param2 = param2,
+      family = family
+    )
+    mcmc.ci <- t(apply(
+      Event_Rate,
+      1,
+      quantile,
+      probs = c(0.025, 0.975),
+      na.rm = TRUE
+    ))
+    colnames(mcmc.ci) <- c("CI_2.5%", "CI_97.5%")
+
+    newdata <- newdata |>
+      mutate(
+        Event_Rate = rowMeans(Event_Rate, na.rm = TRUE),
+        mcmc_sample_size = rowSums(!is.na(Event_Rate))
+      ) |>
+      bind_cols(mcmc.ci)
+  } else {
+    newdata$Event_Rate <- prob_event_interval_dt(
+      t = newdata$time,
+      dt = interval_width,
+      param1 = param1,
+      param2 = param2,
+      family = family
+    )
+  }
 
   if (event == "reproduction") {
     newdata$n_offspring <- prediction(
@@ -199,6 +229,7 @@ compute_fitted_event_rate <- function(
       type = "response"
     )
   }
+
   return(newdata)
 }
 
@@ -262,8 +293,8 @@ compute_observed_event_rate <- function(
     death_end_col <- lifelihoodData$death_end
     maturity_start_col <- lifelihoodData$maturity_start
     maturity_end_col <- lifelihoodData$maturity_end
-    start_col <- "pon_start"
-    end_col <- "pon_end"
+    start_col <- "clutch_start"
+    end_col <- "clutch_end"
   } else if (event == "mortality") {
     start_col <- lifelihoodData$death_start
     end_col <- lifelihoodData$death_end
@@ -503,7 +534,7 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
       ))
     ) |>
     mutate(
-      pon_end = if_else(
+      clutch_end = if_else(
         # Specify the right censoring of the last unobserved clutch
         # of each individual which always followed by a NA reproduction
         # event unless the last clutch is observed (time of death is right censored)
@@ -514,7 +545,7 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
     ) |>
     filter(!is.na(value)) |>
     filter(value != 0) |> ## Remove data from individual whose last reproduction and death occured over the same time interval
-    rename(pon_start = "value")
+    rename(clutch_start = "value")
 
   return(newdata)
 }

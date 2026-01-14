@@ -11,7 +11,7 @@ AICc(object, ..., k = length(coef(object)))
 
 \item{...}{Ignored.}
 
-\item{k}{Number of estimated parameter of the modèle. Default
+\item{k}{Number of estimated parameter of the model. Default
 to \code{length(coef(object))}.}
 }
 \value{

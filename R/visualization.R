@@ -32,6 +32,7 @@
 #' @param ylab Label for y-axis (default="Event Rate").
 #' @param type The type of symbol to be used for the plot (either
 #' of "points" or "lines").
+#' @param se.fit Whether or not to plot standard errors.
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/)
 #' to be installed.
@@ -49,6 +50,7 @@ plot_fitted_event_rate <- function(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
+  se.fit = TRUE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"
@@ -62,7 +64,8 @@ plot_fitted_event_rate <- function(
     event = event,
     newdata = newdata,
     max_time = max_time,
-    groupby = groupby
+    groupby = groupby,
+    se.fit = se.fit
   )
 
   pfitted <- plot_event_rate(

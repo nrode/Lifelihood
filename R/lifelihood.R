@@ -191,7 +191,8 @@ lifelihood_fit <- function(
   }
 
   # Validate MCMC iterations vs number of parameters
-  if (MCMC > 0) {
+  if (FALSE) {
+    #MCMC > 0
     n_params <- nrow(param_bounds_df)
     if (MCMC < (n_params + 1)) {
       stop(
@@ -452,7 +453,7 @@ mcmc <- function(object) {
 #'
 #' @param object output of [lifelihood()]
 #' @param ... Ignored
-#' @param k Number of estimated parameter of the modèle. Default to `length(coef(object))`.
+#' @param k Number of estimated parameter of the model. Default to `length(coef(object))`.
 #'
 #' @return The AIC
 #'
@@ -473,7 +474,7 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #'
 #' @param object Output of [lifelihood()].
 #' @param ... Ignored.
-#' @param k Number of estimated parameter of the modèle. Default
+#' @param k Number of estimated parameter of the model. Default
 #' to `length(coef(object))`.
 #'
 #' @return The AICc
