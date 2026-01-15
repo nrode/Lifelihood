@@ -37,7 +37,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
-  MCMC = 10,
+  MCMC = 20,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
@@ -100,12 +100,15 @@ newdata <- expand.grid(
     Interval_end = time + interval_width,
     Mean_Interval = time + interval_width / 2
   )
+
 rate_df <- compute_fitted_event_rate(
   lifelihoodResults = results,
   interval_width = 15,
+  mcmc.ci.fit = TRUE,
   event = "mortality",
   groupby = "par"
 )
+
 rate_df <- compute_observed_event_rate(
   lifelihoodData = lifelihoodData,
   interval_width = 15,
@@ -113,7 +116,6 @@ rate_df <- compute_observed_event_rate(
 )
 
 
-## Reproduction rate
 plot_observed_event_rate(
   lifelihoodData,
   interval_width = 2,
@@ -124,48 +126,13 @@ plot_observed_event_rate(
   ylab = "Observed Reproduction Rate"
 )
 
-
 plot_fitted_event_rate(
   results,
   interval_width = 2,
   event = "reproduction",
-  newdata = NULL,
   use_facet = TRUE,
   groupby = "par",
   xlab = "Age (days)",
-  ylab = "Fitted Reproduction Rate"
-)
-
-plot_observed_event_rate(
-  lifelihoodData,
-  interval_width = 10,
-  groupby = "par",
-  event = "mortality",
-  use_facet = TRUE,
-  xlab = "Age (days)",
-  ylab = "Observed Mortality Rate"
-)
-
-## Mortality rate
-plot_fitted_event_rate(
-  results,
-  interval_width = 10,
-  event = "mortality",
-  newdata = NULL,
-  use_facet = TRUE,
-  groupby = c("par", "spore"),
-  xlab = "Age (days)",
-  ylab = "Fitted Mortality Rate"
-)
-
-## Maturity rate
-plot_fitted_event_rate(
-  results,
-  interval_width = 10,
-  event = "maturity",
-  newdata = NULL,
-  use_facet = TRUE,
-  groupby = "par",
-  xlab = "Age (days)",
-  ylab = "Fitted Maturity Rate"
+  ylab = "Fitted Reproduction Rate",
+  se.fit = TRUE
 )

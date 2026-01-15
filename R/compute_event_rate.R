@@ -21,10 +21,11 @@
 #' on `interval_width` value), group (identifier of a given subgroup,
 #' or "Overall" if groupby = NULL), and Event_rate (event rate
 #' over the interval).
-#'Note that for reproduction event, the first reproduction event of
-#'each individual cannot be computed if maturity was not observed (i.e. mat_clutch is true)
-#'When the interval between the last reproduction event of an individual and their death is
-#'greater than `interval_width` the individuals are included in the computation of reproduction rate
+#' Note that for reproduction event, the first reproduction event of
+#' each individual cannot be computed if maturity was not observed (i.e. mat_clutch is true)
+#' When the interval between the last reproduction event of an individual
+#' and their death is greater than `interval_width` the individuals are
+#' included in the computation of reproduction rate
 #'
 #' @import dplyr
 #'
@@ -36,7 +37,7 @@ compute_fitted_event_rate <- function(
   newdata = NULL,
   max_time = NULL,
   groupby = NULL,
-  mcmc.ci.fit = TRUE
+  mcmc.ci.fit = FALSE
 ) {
   event <- match.arg(event)
   check_lifelihoodResults(lifelihoodResults)
@@ -189,17 +190,29 @@ compute_fitted_event_rate <- function(
   )
 
   if (mcmc.ci.fit) {
-    Event_Rate <- prob_event_interval_dt(
-      t = newdata$time,
-      dt = interval_width,
-      param1 = param1,
-      param2 = param2,
-      family = family
-    )
+    # param1 and param2 are data.frames with MCMC samples in columns
+    # We need to compute event rate for each MCMC sample
+    n_samples <- ncol(param1)
+    n_obs <- nrow(param1)
+
+    # Initialize matrix to store event rates for all MCMC samples
+    Event_Rate <- matrix(NA, nrow = n_obs, ncol = n_samples)
+
+    # Compute event rate for each MCMC sample
+    for (i in 1:n_samples) {
+      Event_Rate[, i] <- prob_event_interval_dt(
+        t = newdata$time,
+        dt = interval_width,
+        param1 = param1[, i],
+        param2 = param2[, i],
+        family = family
+      )
+    }
+
     mcmc.ci <- t(apply(
       Event_Rate,
-      1,
-      quantile,
+      MARGIN = 1,
+      FUN = quantile,
       probs = c(0.025, 0.975),
       na.rm = TRUE
     ))
@@ -207,8 +220,8 @@ compute_fitted_event_rate <- function(
 
     newdata <- newdata |>
       mutate(
-        Event_Rate = rowMeans(Event_Rate, na.rm = TRUE),
-        mcmc_sample_size = rowSums(!is.na(Event_Rate))
+        mcmc_sample_size = rowSums(!is.na(Event_Rate)),
+        Event_Rate = rowMeans(Event_Rate, na.rm = TRUE)
       ) |>
       bind_cols(mcmc.ci)
   } else {

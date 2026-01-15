@@ -121,7 +121,7 @@ surv <- function(
 SurvLgn <- function(t, expt_time_to_event, vp1) {
   mu <- log(expt_time_to_event) - 0.5 * log(1 + vp1 / (expt_time_to_event^2))
   sigma <- sqrt(log(1 + vp1 / (expt_time_to_event^2)))
-  plnorm(t, meanlog = mu, sdlog = sigma, lower.tail = F, log.p = FALSE)
+  plnorm(t, meanlog = mu, sdlog = sigma, lower.tail = FALSE, log.p = FALSE)
 }
 
 #' @title Gamma survival function

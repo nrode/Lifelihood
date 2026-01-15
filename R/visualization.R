@@ -32,7 +32,8 @@
 #' @param ylab Label for y-axis (default="Event Rate").
 #' @param type The type of symbol to be used for the plot (either
 #' of "points" or "lines").
-#' @param se.fit Whether or not to plot standard errors.
+#' @param se.fit Whether or not to plot standard errors. Requires to fit
+#' MCMC when fitting with [lifelihood::lifelihood()] with the `MCMC` argument.
 #'
 #' @details This function requires [ggplot2](https://ggplot2.tidyverse.org/)
 #' to be installed.
@@ -50,13 +51,21 @@ plot_fitted_event_rate <- function(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
-  se.fit = TRUE,
+  se.fit = FALSE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"
 ) {
   check_lifelihoodResults(lifelihoodResults)
   groupby <- validate_groupby_arg(lifelihoodResults$lifelihoodData, groupby)
+
+  # Check if MCMC was fitted when se.fit is requested
+  if (se.fit && lifelihoodResults$MCMC < 1) {
+    stop(
+      "se.fit = TRUE requires MCMC samples. ",
+      "Please refit the model with MCMC > 0 in the lifelihood() function."
+    )
+  }
 
   rate_df <- compute_fitted_event_rate(
     lifelihoodResults = lifelihoodResults,
@@ -65,7 +74,7 @@ plot_fitted_event_rate <- function(
     newdata = newdata,
     max_time = max_time,
     groupby = groupby,
-    se.fit = se.fit
+    mcmc.ci.fit = se.fit
   )
 
   pfitted <- plot_event_rate(
@@ -76,7 +85,8 @@ plot_fitted_event_rate <- function(
     use_facet = use_facet,
     xlab = xlab,
     ylab = ylab,
-    fitted_data = TRUE
+    fitted_data = TRUE,
+    plot_ci = se.fit
   )
 
   if (add_observed_event_rate) {
@@ -210,12 +220,14 @@ plot_observed_event_rate <- function(
 #' @param ylab Label for y-axis (default="Event rate").
 #' @param fitted_data Boolean indicating if the data is fitted
 #' (default=FALSE).
+#' @param plot_ci Boolean indicating if confidence intervals should be plotted
+#' (default=FALSE). Requires CI_2.5% and CI_97.5% columns in rate_df.
 #'
 #' @keywords internal
 #'
 #' @return a ggplot2 plot
 #'
-#' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim
+#' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim geom_errorbar geom_ribbon
 plot_event_rate <- function(
   rate_df,
   max_time,
@@ -224,9 +236,19 @@ plot_event_rate <- function(
   use_facet,
   xlab = "Time",
   ylab = "Event rate",
-  fitted_data = FALSE
+  fitted_data = FALSE,
+  plot_ci = FALSE
 ) {
   type <- match.arg(type)
+
+  # Check if CI columns exist when plot_ci is requested
+  has_ci <- all(c("CI_2.5%", "CI_97.5%") %in% colnames(rate_df))
+  if (plot_ci && !has_ci) {
+    warning(
+      "plot_ci = TRUE but confidence interval columns not found in data. Skipping CI plotting."
+    )
+    plot_ci <- FALSE
+  }
 
   if (!is.null(groupby)) {
     p <- ggplot2::ggplot(
@@ -248,12 +270,48 @@ plot_event_rate <- function(
   }
 
   if (type == "points") {
+    # Add error bars for confidence intervals if requested
+    if (plot_ci) {
+      if (!is.null(groupby)) {
+        p <- p +
+          geom_errorbar(
+            aes(ymin = `CI_2.5%`, ymax = `CI_97.5%`, color = group),
+            width = 0.2
+          )
+      } else {
+        p <- p +
+          geom_errorbar(
+            aes(ymin = `CI_2.5%`, ymax = `CI_97.5%`),
+            width = 0.2
+          )
+      }
+    }
+
     if (fitted_data) {
       p <- p + geom_point(aes(shape = "Fitted"))
     } else {
       p <- p + geom_point()
     }
   } else if (type == "lines") {
+    # Add ribbon for confidence intervals if requested
+    if (plot_ci) {
+      if (!is.null(groupby)) {
+        p <- p +
+          geom_ribbon(
+            aes(ymin = `CI_2.5%`, ymax = `CI_97.5%`, fill = group),
+            alpha = 0.2,
+            color = NA
+          )
+      } else {
+        p <- p +
+          geom_ribbon(
+            aes(ymin = `CI_2.5%`, ymax = `CI_97.5%`),
+            alpha = 0.2,
+            color = NA
+          )
+      }
+    }
+
     p <- p + geom_line()
   }
 
