@@ -327,6 +327,7 @@ lifelihood_fit <- function(
     MCMC = MCMC
   )
 
+  results$MCMC <- MCMC
   results$lifelihoodData <- lifelihoodData
   results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df

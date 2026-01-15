@@ -83,6 +83,13 @@ prediction <- function(
     ))
   }
 
+  if (object$MCMC < 1 && mcmc.fit) {
+    stop(
+      "You must use MCMC when fitting to be able to predict with MCMC. ",
+      "Use the `MCMC` argument with a value different than 0 in `lifelihood::lifelihood().`"
+    )
+  }
+
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
       "Invalid factor levels in new data.
