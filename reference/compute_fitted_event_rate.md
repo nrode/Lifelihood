@@ -12,7 +12,8 @@ compute_fitted_event_rate(
   event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   max_time = NULL,
-  groupby = NULL
+  groupby = NULL,
+  mcmc.ci.fit = TRUE
 )
 ```
 
@@ -48,6 +49,10 @@ compute_fitted_event_rate(
 - groupby:
 
   One or multiple covariates used to group the computation.
+
+- mcmc.ci.fit:
+
+  Whether or not to retrieve MCMC CI estimations.
 
 ## Value
 

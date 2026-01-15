@@ -54,7 +54,7 @@ on some new data."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Compute fitted mortality rate</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/R/compute_event_rate.R" class="external-link"><code>R/compute_event_rate.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/plot-stderr/R/compute_event_rate.R" class="external-link"><code>R/compute_event_rate.R</code></a></small>
       <div class="d-none name"><code>compute_fitted_event_rate.Rd</code></div>
     </div>
 
@@ -71,7 +71,8 @@ on some new data.</p>
 <span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mortality"</span>, <span class="st">"maturity"</span>, <span class="st">"reproduction"</span><span class="op">)</span>,</span>
 <span>  newdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  groupby <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  groupby <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mcmc.ci.fit <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -106,6 +107,10 @@ rate. If set to NULL, the time of the last observed death is used.</p></dd>
 
 <dt id="arg-groupby">groupby<a class="anchor" aria-label="anchor" href="#arg-groupby"></a></dt>
 <dd><p>One or multiple covariates used to group the computation.</p></dd>
+
+
+<dt id="arg-mcmc-ci-fit">mcmc.ci.fit<a class="anchor" aria-label="anchor" href="#arg-mcmc-ci-fit"></a></dt>
+<dd><p>Whether or not to retrieve MCMC CI estimations.</p></dd>
 
 </dl></div>
     <div class="section level2">

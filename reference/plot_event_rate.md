@@ -35,6 +35,7 @@ plot_fitted_event_rate(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
+  se.fit = TRUE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"
@@ -60,7 +61,8 @@ plot_event_rate(
   use_facet,
   xlab = "Time",
   ylab = "Event rate",
-  fitted_data = FALSE
+  fitted_data = FALSE,
+  plot_ci = FALSE
 )
 ```
 
@@ -108,6 +110,13 @@ plot_event_rate(
 
   Use facet_wrap to plot one panel per group (default=FALSE).
 
+- se.fit:
+
+  Whether or not to plot standard errors. Requires to fit MCMC when
+  fitting with
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
+  with the `MCMC` argument.
+
 - xlab:
 
   Label for x-axis (default="Time").
@@ -133,6 +142,11 @@ plot_event_rate(
 - fitted_data:
 
   Boolean indicating if the data is fitted (default=FALSE).
+
+- plot_ci:
+
+  Boolean indicating if confidence intervals should be plotted
+  (default=FALSE). Requires CI_2.5% and CI_97.5% columns in rate_df.
 
 ## Value
 
