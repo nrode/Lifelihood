@@ -11,7 +11,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/nrode/Lifelihood/blob/plot-stderr/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/nrode/Lifelihood/blob/main/DESCRIPTION)
 
 Rode N, Lenormand T, Barbier J (2026). *lifelihood: Likelihood of Life
 History of Individuals*. R package version 0.0.0.9,
