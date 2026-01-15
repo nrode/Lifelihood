@@ -10,7 +10,8 @@ compute_fitted_event_rate(
   event = c("mortality", "maturity", "reproduction"),
   newdata = NULL,
   max_time = NULL,
-  groupby = NULL
+  groupby = NULL,
+  mcmc.ci.fit = TRUE
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ If \code{NULL}, the original model data are used.}
 rate. If set to NULL, the time of the last observed death is used.}
 
 \item{groupby}{One or multiple covariates used to group the computation.}
+
+\item{mcmc.ci.fit}{Whether or not to retrieve MCMC CI estimations.}
 }
 \value{
 A dataframe with 3 columns: Interval (time interval, based

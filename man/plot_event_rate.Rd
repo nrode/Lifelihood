@@ -16,6 +16,7 @@ plot_fitted_event_rate(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
+  se.fit = TRUE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"
@@ -41,7 +42,8 @@ plot_event_rate(
   use_facet,
   xlab = "Time",
   ylab = "Event rate",
-  fitted_data = FALSE
+  fitted_data = FALSE,
+  plot_ci = FALSE
 )
 }
 \arguments{
@@ -72,6 +74,9 @@ should be represented (default=NULL).}
 \item{use_facet}{Use facet_wrap to plot one panel per group
 (default=FALSE).}
 
+\item{se.fit}{Whether or not to plot standard errors. Requires to fit
+MCMC when fitting with \code{\link[=lifelihood]{lifelihood()}} with the \code{MCMC} argument.}
+
 \item{xlab}{Label for x-axis (default="Time").}
 
 \item{ylab}{Label for y-axis (default="Event rate").}
@@ -86,6 +91,9 @@ of "points" or 'lines").}
 
 \item{fitted_data}{Boolean indicating if the data is fitted
 (default=FALSE).}
+
+\item{plot_ci}{Boolean indicating if confidence intervals should be plotted
+(default=FALSE). Requires CI_2.5\% and CI_97.5\% columns in rate_df.}
 }
 \value{
 a ggplot2 plot
