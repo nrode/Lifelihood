@@ -37,6 +37,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
+  MCMC = 10,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)

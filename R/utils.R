@@ -347,3 +347,32 @@ factor_to_num <- function(x) {
     x
   }
 }
+
+#' @title Count total number of parameter to fit
+#'
+#' @description
+#' Simple utility function that parses the config yaml file
+#' and count the total number of parameter that will be fit.
+#'
+#' @param x Config file parsed by [`yaml::yaml.load_file()`].
+#'
+#' @returns Total number of parameter to fit.
+#'
+#' @keywords internal
+count_parameters <- function(x) {
+  leaves <- unlist(x, recursive = TRUE, use.names = FALSE)
+
+  leaves <- leaves[leaves != "not_fitted"]
+
+  sum(vapply(
+    leaves,
+    function(v) {
+      if (is.numeric(v)) {
+        1
+      } else {
+        length(strsplit(v, "\\s*\\+\\s*")[[1]])
+      }
+    },
+    integer(1)
+  ))
+}
