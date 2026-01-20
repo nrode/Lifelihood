@@ -36,3 +36,4 @@ inst/bin/*
 
 *.log
 *claude*
+target/
