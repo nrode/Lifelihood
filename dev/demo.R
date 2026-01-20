@@ -36,8 +36,8 @@ lifelihoodData <- lifelihoodData(
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
+  MCMC = 50,
   delete_temp_files = FALSE,
-  MCMC = 30,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
@@ -53,7 +53,7 @@ prediction(
   type = "response"
 ) |>
   head()
-prediction(results, "expt_death", type = "response") |> head()
+prediction(results, "expt_death", type = "response") |> sample_n(3)
 
 coef(results)
 coeff(results, "expt_death")
@@ -134,7 +134,6 @@ plot_fitted_event_rate(
   groupby = "par",
   xlab = "Age (days)",
   ylab = "Fitted Reproduction Rate",
-  add_observed_event_rate = TRUE,
   se.fit = TRUE,
-  type = "points"
+  type = "lines"
 )
