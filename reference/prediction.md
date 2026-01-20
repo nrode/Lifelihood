@@ -81,14 +81,14 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/RtmpXurZXc/temp_libpath2015597dc4cf/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/RtmpHedcFd/temp_libpath1985601b320e/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 
 prediction(results, "expt_death")
-#>  [1] -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294
-#>  [8] -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294
+#>  [1] -2.086480 -2.179544 -2.086480 -2.086480 -2.086480 -2.086480 -2.179544
+#>  [8] -2.179544 -2.179544 -2.179544 -2.179544 -2.086480 -2.086480
 prediction(results, "expt_death", type = "response")
-#>  [1] 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008
-#> [11] 8.0008 8.0008 8.0008
+#>  [1] 4.417605 4.065001 4.417605 4.417605 4.417605 4.417605 4.065001 4.065001
+#>  [9] 4.065001 4.065001 4.065001 4.417605 4.417605
 
 # predict on new data
 newdata <- data.frame(
@@ -98,7 +98,7 @@ newdata <- data.frame(
 newdata$type <- factor(newdata$type)
 newdata$geno <- factor(newdata$geno)
 prediction(results, "expt_death", newdata)
-#> [1] -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294
+#> [1] -2.086480 -2.179544 -2.086480 -2.086480 -2.179544 -2.086480
 prediction(results, "expt_death", newdata, type = "response")
-#> [1] 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008
+#> [1] 4.417605 4.065001 4.417605 4.417605 4.065001 4.417605
 ```

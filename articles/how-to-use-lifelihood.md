@@ -153,30 +153,30 @@ summary(results)
 #> Sample size: 13 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -90000000010.144
-#> AIC:             180000000046.3
-#> BIC:             180000000053.6
+#> Log-likelihood:  -90000000007.406
+#> AIC:             180000000040.8
+#> BIC:             180000000048.2
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.386 (0.000)
-#>   expt_death eff_expt_death_geno_1 0.000 (0.000)
+#>   expt_death (Intercept)    -2.190 (0.000)
+#>   expt_death eff_expt_death_geno_1 -0.884 (0.000)
 #>   expt_death eff_expt_death_type_1 0.000 (0.000)
 #>   expt_death eff_expt_death_type_2 0.000 (0.000)
-#>   survival_param2 (Intercept) -6.488 (0.000)
+#>   survival_param2 (Intercept) -6.264 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.386 (0.000)
+#>   expt_maturity (Intercept) -1.099 (0.000)
 #>   expt_maturity eff_expt_maturity_geno_1 0.000 (0.000)
 #>   expt_maturity eff_expt_maturity_type_1 0.000 (0.000)
 #>   expt_maturity eff_expt_maturity_type_2 0.000 (0.000)
-#>   maturity_param2 (Intercept) -1.386 (0.000)
+#>   maturity_param2 (Intercept) -6.400 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.386 (0.000)
+#>   expt_reproduction (Intercept) -1.099 (0.000)
 #>   expt_reproduction eff_expt_reproduction_geno_1 0.000 (0.000)
-#>   reproduction_param2 (Intercept) -1.386 (0.000)
+#>   reproduction_param2 (Intercept) -2.218 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -195,27 +195,27 @@ the analysis. We can get specific results by calling the list element.
 
 coef(results)
 #>               int_expt_death        eff_expt_death_geno_1 
-#>                    -1.386294                     0.000000 
+#>                   -2.1903521                   -0.8837441 
 #>        eff_expt_death_type_1        eff_expt_death_type_2 
-#>                     0.000000                     0.000000 
+#>                    0.0000000                    0.0000000 
 #>          int_survival_param2            int_expt_maturity 
-#>                    -6.487825                    -1.386294 
+#>                   -6.2638994                   -1.0986123 
 #>     eff_expt_maturity_geno_1     eff_expt_maturity_type_1 
-#>                     0.000000                     0.000000 
+#>                    0.0000000                    0.0000000 
 #>     eff_expt_maturity_type_2          int_maturity_param2 
-#>                     0.000000                    -1.386294 
+#>                    0.0000000                   -6.4002741 
 #>        int_expt_reproduction eff_expt_reproduction_geno_1 
-#>                    -1.386294                     0.000000 
+#>                   -1.0986123                    0.0000000 
 #>      int_reproduction_param2 
-#>                    -1.386294
+#>                   -2.2180354
 coeff(results, "expt_death")
 #>        int_expt_death eff_expt_death_geno_1 eff_expt_death_type_1 
-#>             -1.386294              0.000000              0.000000 
+#>            -2.1903521            -0.8837441             0.0000000 
 #> eff_expt_death_type_2 
-#>              0.000000
+#>             0.0000000
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>           -6.487825
+#>           -6.263899
 
 AIC(results)
 #> [1] 1.8e+11
@@ -226,9 +226,9 @@ logLik(results)
 #> [1] -9e+10
 
 prediction(results, parameter_name = "expt_death") |> head()
-#> [1] -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294
+#> [1] -2.190352 -2.190352 -3.074096 -3.074096 -3.074096 -2.190352
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
-#> [1] 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008
+#> [1] 4.025709 4.025709 1.768496 1.768496 1.768496 4.025709
 ```
 
 ## Next step

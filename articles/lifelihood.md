@@ -172,7 +172,7 @@ dataLFH <- lifelihoodData(
 
 results <- dataLFH |>
   lifelihood(path_config = get_config_path("config_pierrick"))
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 6926 412 3805 7275 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 2100 1546 972 6140 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### AIC & BIC
@@ -180,9 +180,9 @@ results <- dataLFH |>
 ``` r
 
 AIC(results)
-#> [1] 1.1e+13
+#> [1] 76462.64
 BIC(results)
-#> [1] 1.1e+13
+#> [1] 76540.22
 ```
 
 ### Summary results
@@ -191,39 +191,39 @@ BIC(results)
 
 coef(results)
 #>                int_expt_death          eff_expt_death_par_1 
-#>                     -1.386294                      0.000000 
+#>                   -1.09861229                    0.04828715 
 #>          eff_expt_death_par_2        eff_expt_death_spore_1 
-#>                      0.000000                      0.000000 
+#>                    0.00000000                    0.00000000 
 #>        eff_expt_death_spore_2        eff_expt_death_spore_3 
-#>                      0.000000                      0.000000 
+#>                    0.00000000                    0.00000000 
 #>           int_survival_param2             int_expt_maturity 
-#>                     -1.386294                     -1.386294 
+#>                   -6.26389939                   -1.09861229 
 #>       eff_expt_maturity_par_1       eff_expt_maturity_par_2 
-#>                      0.000000                      0.000000 
+#>                    0.38487148                    0.00000000 
 #>           int_maturity_param2         int_expt_reproduction 
-#>                     -1.386294                     -1.386294 
+#>                   -6.26389939                   -1.63734814 
 #>   eff_expt_reproduction_par_1   eff_expt_reproduction_par_2 
-#>                      0.000000                      0.000000 
+#>                    0.00000000                    0.00000000 
 #>       int_reproduction_param2 eff_reproduction_param2_par_1 
-#>                     -1.386294                      0.000000 
+#>                   -2.01075106                    0.00000000 
 #> eff_reproduction_param2_par_2               int_n_offspring 
-#>                      0.000000                     -1.386294
+#>                    0.00000000                   -3.05287714
 coeff(results, "expt_death")
 #>         int_expt_death   eff_expt_death_par_1   eff_expt_death_par_2 
-#>              -1.386294               0.000000               0.000000 
+#>            -1.09861229             0.04828715             0.00000000 
 #> eff_expt_death_spore_1 eff_expt_death_spore_2 eff_expt_death_spore_3 
-#>               0.000000               0.000000               0.000000
+#>             0.00000000             0.00000000             0.00000000
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>           -1.386294
+#>           -6.263899
 
 AIC(results)
-#> [1] 1.1e+13
+#> [1] 76462.64
 BIC(results)
-#> [1] 1.1e+13
+#> [1] 76540.22
 
 logLik(results)
-#> [1] -5.5e+12
+#> [1] -38213.32
 ```
 
 ### Prediction on new data
@@ -240,7 +240,7 @@ newdata <- tibble(
   )
 
 prediction(results, "expt_death", newdata = newdata)
-#> [1] -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294
+#> [1] -1.098612 -1.050325 -1.098612 -1.098612 -1.050325 -1.098612 -1.050325
 prediction(results, "expt_death", newdata = newdata, type = "response")
-#> [1] 64.8008 64.8008 64.8008 64.8008 64.8008 64.8008 64.8008
+#> [1] 81.00075 83.96945 81.00075 81.00075 83.96945 81.00075 83.96945
 ```
