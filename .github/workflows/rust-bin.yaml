@@ -2,7 +2,7 @@ name: Update Rust binaries
 
 on:
   push:
-    branches: [main, rust]
+    branches: [main]
 
 jobs:
   build:

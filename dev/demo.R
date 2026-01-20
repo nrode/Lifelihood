@@ -37,7 +37,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
-  MCMC = 20,
+  MCMC = 30,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
@@ -45,7 +45,7 @@ summary(results)
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
 
 prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)
-prediction(results, "expt_death", mcmc.fit = TRUE, se.fit = TRUE) |> head()
+prediction(results, "expt_death", mcmc.fit = TRUE, se.fit = TRUE) |> sample_n(3)
 prediction(
   results,
   "expt_death",
