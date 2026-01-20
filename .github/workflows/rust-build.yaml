@@ -1,4 +1,4 @@
-name: Build Rust for Linux/Macos/Windows
+name: Build Rust for
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p inst/bin
-          cp src/target/${{ matrix.target }}/release/${{ matrix.bin }} inst/bin/${{ matrix.out }}
+          cp target/${{ matrix.target }}/release/${{ matrix.bin }} inst/bin/${{ matrix.out }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

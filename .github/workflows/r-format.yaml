@@ -1,4 +1,4 @@
-name: Check that code style is consistent
+name: Run air format for R
 
 on:
   pull_request:
