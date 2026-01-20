@@ -53,7 +53,6 @@
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
     <li><a class="dropdown-item" href="../articles/contributing.html">Contributing</a></li>
-    <li><a class="dropdown-item" href="../articles/compilation.html">Compilation</a></li>
   </ul>
 </li>
       </ul>
@@ -96,43 +95,54 @@
     <section class="section level2"><h2 id="how-to-contribute">How to Contribute<a class="anchor" aria-label="anchor" href="#how-to-contribute"></a>
 </h2>
 <p>Before reading this article, we recommend familiarizing yourself with the <a href="overview.html">overview of how Lifelihood works</a>.</p>
-<section class="level2"><h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<section class="level2"><h3 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
 </h3>
-<p>This document outlines the guidelines and steps for contributing to the <strong>Lifelihood</strong> R package. Contributions from the community help improve functionality, address bugs, and ensure that <strong>Lifelihood</strong> remains robust and up-to-date. This guide covers setting up your development environment, working with Git, and submitting changes.</p>
-</section><section class="level2"><h3 id="setting-up-your-development-environment">Setting Up Your Development Environment<a class="anchor" aria-label="anchor" href="#setting-up-your-development-environment"></a>
+<p>You need all of the following tools to be installed on your machine:</p>
+<ul>
+<li><p><a href="https://git-scm.com/install/" class="external-link">Git</a>: versionning and for Github</p></li>
+<li><p><a href="https://posit-dev.github.io/air/" class="external-link">Air</a>: an R formatter</p></li>
+<li>
+<p><a href="https://doc.rust-lang.org/cargo/getting-started/installation.html" class="external-link">Rust &amp; Cargo</a>: if you plan to update Rust source code.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/.cargo/env</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rustc</span> <span class="at">--version</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> <span class="at">--version</span></span></code></pre></div>
+</li>
+</ul></section><section class="level2"><h3 id="setting-up-your-development-environment">Setting Up Your Development Environment<a class="anchor" aria-label="anchor" href="#setting-up-your-development-environment"></a>
 </h3>
 <p>To start contributing, you’ll need to set up a local development environment where you can modify, build, and test <strong>Lifelihood</strong>. Follow these steps to get started:</p>
 <ul>
 <li><p><strong>Fork the Repository</strong></p></li>
 <li><p><strong>Clone Your Fork Locally</strong>: run the following command in your terminal, replacing <code>yourusername</code> with your GitHub username:</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/yourusername/Lifelihood.git</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Lifelihood</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://github.com/nrode/Lifelihood</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature-name</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/yourusername/Lifelihood.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Lifelihood</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://github.com/nrode/Lifelihood</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature-name</span></code></pre></div>
 <ul>
 <li>
-<strong>Install Development Dependencies</strong>: install all necessary dependencies for development, including <strong>Lifelihood</strong> itself, by running:</li>
+<strong>Install Development Dependencies</strong>: install all necessary dependencies for development, by running:</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"roxygen2"</span>, <span class="st">"pkgdown"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html" class="external-link">install_local</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </section><section class="level2"><h3 id="make-changes">Make changes<a class="anchor" aria-label="anchor" href="#make-changes"></a>
 </h3>
 <p>All R source code resides in the <code>R/</code> directory, and only these files are included in the package.</p>
 <p>After making changes, you can verify that everything works as expected by running:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This allows you to work with <code>lifelihood</code> functions using your latest local modifications.</p>
 </section><section class="level2"><h3 id="documenting">Documenting<a class="anchor" aria-label="anchor" href="#documenting"></a>
 </h3>
 <p>Documentation for <strong>Lifelihood</strong> is managed with <strong>Roxygen2</strong>. If you add or modify functions, update the documentation by running:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </section><section class="level2"><h3 id="testing-and-validation">Testing and Validation<a class="anchor" aria-label="anchor" href="#testing-and-validation"></a>
 </h3>
 <p><strong>Lifelihood</strong> includes a suite of unit tests located in the <code>tests/</code> directory. These tests help ensure that changes don’t break existing functionality. Run tests using:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">test</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Ensure all tests pass before submitting a pull request. Adding new tests for new features or bug fixes is highly encouraged.</p>
 </section><section class="level2"><h3 id="code-format">Code format<a class="anchor" aria-label="anchor" href="#code-format"></a>
@@ -142,12 +152,16 @@
 </h3>
 <p>Once your changes are complete and tested, submit a pull request to propose integrating them into the main <strong>Lifelihood</strong> repository:</p>
 <p>Add, commit and push your branch to your fork on GitHub:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">'commit description'</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">'commit description'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div>
 <p>Then go to your project fork and click on the “Open a pull request” pop-up.</p>
 <p>When a pull request (PR) is opened, GitHub Actions will <strong>automatically run checks</strong> to validate your changes. These checks include testing the codebase, ensuring consistent documentation, and verifying cross-platform compatibility.</p>
 <p>You can view the status of these checks directly in the pull request interface.</p>
+</section><section class="level2"><h3 id="rust">Rust<a class="anchor" aria-label="anchor" href="#rust"></a>
+</h3>
+<p>You can try to compile Rust code with <code>cargo build</code>. It shouldn’t raise any warning or error messages.</p>
+<p>You can run <code>cargo test --all-features</code> to run Rust unit tests.</p>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);

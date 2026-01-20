@@ -6,13 +6,25 @@ Before reading this article, we recommend familiarizing yourself with
 the [overview of how Lifelihood
 works](https://nrode.github.io/Lifelihood/articles/overview.md).
 
-### Introduction
+### Requirements
 
-This document outlines the guidelines and steps for contributing to the
-**Lifelihood** R package. Contributions from the community help improve
-functionality, address bugs, and ensure that **Lifelihood** remains
-robust and up-to-date. This guide covers setting up your development
-environment, working with Git, and submitting changes.
+You need all of the following tools to be installed on your machine:
+
+- [Git](https://git-scm.com/install/): versionning and for Github
+
+- [Air](https://posit-dev.github.io/air/): an R formatter
+
+- [Rust &
+  Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html):
+  if you plan to update Rust source code.
+
+  ``` bash
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  source $HOME/.cargo/env
+
+  rustc --version
+  cargo --version
+  ```
 
 ### Setting Up Your Development Environment
 
@@ -33,8 +45,7 @@ git checkout -b feature-name
 ```
 
 - **Install Development Dependencies**: install all necessary
-  dependencies for development, including **Lifelihood** itself, by
-  running:
+  dependencies for development, by running:
 
 ``` r
 
@@ -112,3 +123,10 @@ cross-platform compatibility.
 
 You can view the status of these checks directly in the pull request
 interface.
+
+### Rust
+
+You can try to compile Rust code with `cargo build`. It shouldn’t raise
+any warning or error messages.
+
+You can run `cargo test --all-features` to run Rust unit tests.

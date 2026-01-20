@@ -20,4 +20,3 @@
 
 - [Overview](https://nrode.github.io/Lifelihood/articles/overview.md):
 - [Contributing](https://nrode.github.io/Lifelihood/articles/contributing.md):
-- [Compilation](https://nrode.github.io/Lifelihood/articles/compilation.md):
