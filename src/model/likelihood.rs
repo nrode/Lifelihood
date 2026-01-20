@@ -72,6 +72,7 @@ fn update_group_parameters(fd: &FunctionDescriptor, groups: &mut [Group]) {
         }
 
         // Update mortality parameters
+        // Parameters 0-4: expt_death, survival_param2, ratio_expt_death, prob_death, sex_ratio
         update_survival_params(
             &mut group.mort,
             &group.param,
@@ -80,24 +81,30 @@ fn update_group_parameters(fd: &FunctionDescriptor, groups: &mut [Group]) {
         );
 
         // Update maturity parameters
+        // Parameters 5-7: expt_maturity, maturity_param2, ratio_expt_maturity
         update_survival_params(
             &mut group.mat,
             &group.param,
             fd,
-            2, // Start index for maturity params
+            5, // Start index for maturity params
         );
 
         // Update reproduction parameters
+        // Parameters 8-19: expt_reproduction, reproduction_param2, n_offspring, etc.
         update_survival_params(
             &mut group.ponte,
             &group.param,
             fd,
-            5, // Start index for reproduction params
+            8, // Start index for reproduction params
         );
     }
 }
 
 /// Update survival function parameters from variable values
+///
+/// Uses the parameterization: param = link(sum of unbounded effects * indicators)
+/// This means effects are added in unbounded space BEFORE the link transformation,
+/// which is how dummy coding works for categorical effects.
 fn update_survival_params(
     sf: &mut SurvivalFunction,
     param: &[super::types::ModelParamInst],
@@ -117,18 +124,30 @@ fn update_survival_params(
             continue;
         }
 
-        // Sum contributions from all terms
-        let mut val = 0.0;
+        // Sum contributions in UNBOUNDED space first
+        // (intercept + effects where indicator=1)
+        let mut unbounded_sum = 0.0;
+        let mut min_bound = 0.0;
+        let mut max_bound = 1.0;
+
         for j in 0..p.nb_terms {
             if j < p.po.len() && p.po[j] < fd.var_info.len() {
                 let vi = &fd.var_info[p.po[j]];
-                // Transform from unbounded to bounded space
-                let linked_val = link(vi.value, vi.min_bound, vi.max_bound);
-                val += linked_val * p.valpo.get(j).unwrap_or(&1.0);
+                let indicator = p.valpo.get(j).unwrap_or(&1.0);
+
+                // Add unbounded value weighted by indicator
+                unbounded_sum += vi.value * indicator;
+
+                // Use bounds from first term (intercept)
+                if j == 0 {
+                    min_bound = vi.min_bound;
+                    max_bound = vi.max_bound;
+                }
             }
         }
 
-        *vp = val;
+        // Transform the total from unbounded to bounded space
+        *vp = link(unbounded_sum, min_bound, max_bound);
     }
 }
 
@@ -149,9 +168,9 @@ fn compute_life_history_likelihood(hv: &LifeHistory, group: &Group, state: &Mode
             &group.ponte,
             sex,
             hv,
-            1.0,
             state.tc,
             state.tinf,
+            state.ratiomax,
         );
 
         if event_ll.is_finite() {

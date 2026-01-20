@@ -210,6 +210,9 @@ pub fn parse_data_file(path: &str) -> Result<(ModelState, Vec<Group>), ParseErro
         }
     }
 
+    // Note: valpo initialization is handled in main.rs::initialize_model
+    // using proper dummy coding with one variable per non-reference level
+
     Ok((state, groups))
 }
 

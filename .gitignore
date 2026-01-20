@@ -39,3 +39,4 @@ inst/bin/*
 target/
 source/*.pas
 source/lifelihood*
+source-pascal/

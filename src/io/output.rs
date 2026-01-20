@@ -71,13 +71,10 @@ pub fn write_output(
     writeln!(writer, "Likelihood_max= {:.8}", -fd.best_result)?;
 
     // Parameter estimates with standard errors
+    // Output the unbounded optimization values (R handles the link transformation)
+    // Standard errors are 0.00000000 when not computed (matching Pascal format)
     for vi in &fd.var_info {
-        let se_str = if vi.se > 0.0 {
-            format!("{:.8}", vi.se)
-        } else {
-            "NA".to_string()
-        };
-        writeln!(writer, "{} {:.8} {}", vi.name, vi.best_value, se_str)?;
+        writeln!(writer, "{} {:.8} {:.8}", vi.name, vi.best_value, vi.se)?;
     }
 
     writeln!(writer)?;
@@ -114,14 +111,18 @@ pub fn write_output(
 
     writeln!(writer)?;
 
-    // Parameter ranges
+    // Parameter ranges - use base parameter names (not variable names)
+    // This matches the Pascal output format expected by R
     writeln!(writer, "Parameter_Range_Table")?;
-    for (_i, vi) in fd.var_info.iter().enumerate() {
-        writeln!(
-            writer,
-            "{} {:.8} {:.8}",
-            vi.name, vi.min_bound, vi.max_bound
-        )?;
+    for pd in &fd.param_descript {
+        // Only output parameters that have valid bounds (were fitted)
+        if !pd.name.is_empty() && pd.max_bound > pd.min_bound {
+            writeln!(
+                writer,
+                "{} {:.8} {:.8}",
+                pd.name, pd.min_bound, pd.max_bound
+            )?;
+        }
     }
 
     // Additional parameters

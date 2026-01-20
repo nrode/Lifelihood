@@ -49,7 +49,7 @@ testthat::test_that("Overall demo works", {
 
   results <- lifelihood(
     lifelihoodData,
-    "tests/testthat/config.yaml",
+    "config.yaml",
     delete_temp_files = FALSE,
     seeds = c(2, 2, 2, 2)
   )

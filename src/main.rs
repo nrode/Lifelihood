@@ -170,14 +170,25 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 /// Initialize model from data and configuration
+///
+/// Uses dummy coding: one variable per non-reference level for categorical covariates.
+/// The naming convention is:
+/// - Intercepts: `int_{param_name}`
+/// - Categorical effects: `eff_{param_name}_{covar_name}{level}`
 fn initialize_model(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &ModelState) {
-    // Count variables and set up var_info based on model specification
+    // Global variable index across all parameters
     let mut var_idx = 0;
 
     for (param_idx, modele_param) in state.modele.iter().enumerate() {
         if modele_param.nb_terms == 0 {
             continue;
         }
+
+        let bounds = &fd.param_descript[param_idx];
+        let param_name = &bounds.name;
+
+        // Track position in this parameter's po/valpo arrays
+        let mut param_slot_idx = 0;
 
         for term_idx in 0..modele_param.nb_terms {
             let term = modele_param.term[term_idx];
@@ -187,25 +198,68 @@ fn initialize_model(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &M
                 continue;
             }
 
-            // Create variable info
-            let bounds = &fd.param_descript[param_idx];
-            let name = format!("{}_{}", bounds.name, term_idx);
+            if term == 0 {
+                // Intercept term: single variable
+                // Initialize at a reasonable starting point (~20% above min bound)
+                // This avoids extreme values from the midpoint
+                let name = format!("int_{}", param_name);
+                let mut vi = VarInfo::new(name, bounds.min_bound, bounds.max_bound);
 
-            let mut vi = VarInfo::new(name, bounds.min_bound, bounds.max_bound);
+                // Use delink to initialize at a reasonable linked value
+                // Start at 20% of the way from min to max
+                let initial_linked = bounds.min_bound + 0.2 * (bounds.max_bound - bounds.min_bound);
+                vi.value = lifelihood::model::link::delink(initial_linked, bounds.min_bound, bounds.max_bound);
 
-            // Initialize with midpoint in delinked space
-            vi.value = 0.0;
+                fd.var_info.push(vi);
 
-            fd.var_info.push(vi);
+                // Update all groups to point to this variable for the intercept
+                for group in groups.iter_mut() {
+                    ensure_param_capacity(&mut group.param[param_idx], param_slot_idx + 1);
+                    group.param[param_idx].po[param_slot_idx] = var_idx;
+                    group.param[param_idx].valpo[param_slot_idx] = 1.0; // Intercept always 1.0
+                }
 
-            // Update group parameter instances
-            for group in groups.iter_mut() {
-                if group.param[param_idx].po.len() > term_idx {
-                    group.param[param_idx].po[term_idx] = var_idx;
+                var_idx += 1;
+                param_slot_idx += 1;
+            } else {
+                // Covariate effect term: one variable per non-reference level
+                let cov_idx = (term - 1) as usize; // 1-based to 0-based
+                if cov_idx >= state.nbcov {
+                    continue;
+                }
+
+                let cov_name = &state.covar[cov_idx].name;
+                let n_levels = state.covar[cov_idx].lev as usize;
+
+                // Create one variable for each level except reference (level 0)
+                for level in 1..n_levels {
+                    let name = format!("eff_{}_{}{}", param_name, cov_name, level);
+                    let mut vi = VarInfo::new(name, bounds.min_bound, bounds.max_bound);
+                    vi.value = 0.0;
+                    fd.var_info.push(vi);
+
+                    // Update groups to point to this variable for matching levels
+                    for (group_idx, group) in groups.iter_mut().enumerate() {
+                        let group_cov_value = state.get_cov(group_idx, cov_idx + 1);
+
+                        ensure_param_capacity(&mut group.param[param_idx], param_slot_idx + 1);
+                        group.param[param_idx].po[param_slot_idx] = var_idx;
+                        // Set valpo to 1.0 if this group's covariate matches this level
+                        group.param[param_idx].valpo[param_slot_idx] =
+                            if group_cov_value == level { 1.0 } else { 0.0 };
+                    }
+
+                    var_idx += 1;
+                    param_slot_idx += 1;
                 }
             }
+        }
+    }
 
-            var_idx += 1;
+    // Update nb_terms for each group's parameters
+    for group in groups.iter_mut() {
+        for param in group.param.iter_mut() {
+            param.nb_terms = param.po.len();
         }
     }
 
@@ -213,6 +267,16 @@ fn initialize_model(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &M
 
     // Initial likelihood evaluation
     compute_likelihood(fd, groups, state);
+}
+
+/// Ensure ModelParamInst has enough capacity for the given number of terms
+fn ensure_param_capacity(param: &mut ModelParamInst, min_capacity: usize) {
+    while param.po.len() < min_capacity {
+        param.po.push(0);
+    }
+    while param.valpo.len() < min_capacity {
+        param.valpo.push(0.0);
+    }
 }
 
 #[cfg(test)]
