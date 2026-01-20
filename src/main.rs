@@ -208,7 +208,11 @@ fn initialize_model(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &M
                 // Use delink to initialize at a reasonable linked value
                 // Start at 20% of the way from min to max
                 let initial_linked = bounds.min_bound + 0.2 * (bounds.max_bound - bounds.min_bound);
-                vi.value = lifelihood::model::link::delink(initial_linked, bounds.min_bound, bounds.max_bound);
+                vi.value = lifelihood::model::link::delink(
+                    initial_linked,
+                    bounds.min_bound,
+                    bounds.max_bound,
+                );
 
                 fd.var_info.push(vi);
 
@@ -281,7 +285,6 @@ fn ensure_param_capacity(param: &mut ModelParamInst, min_capacity: usize) {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
 
     #[test]
     fn test_argument_parsing() {
