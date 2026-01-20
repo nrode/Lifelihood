@@ -146,7 +146,13 @@ fn prob_pon(
 
 /// Compute survival with senescence for reproduction
 /// Port of survtotpon from Unit2.pas:560-586
-fn surv_with_senescence(t: f64, pon: &SurvivalFunction, t_since_mat: f64, ratiomax: f64, tinf: f64) -> f64 {
+fn surv_with_senescence(
+    t: f64,
+    pon: &SurvivalFunction,
+    t_since_mat: f64,
+    ratiomax: f64,
+    tinf: f64,
+) -> f64 {
     if t < 0.0 {
         return 1.0;
     }
