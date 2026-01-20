@@ -1,4 +1,4 @@
-name: Run air format for R
+name: Format for R
 
 on:
   pull_request:
