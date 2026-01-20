@@ -1,4 +1,4 @@
-name: CI
+name: Check Rust build and format
 
 on:
   push:

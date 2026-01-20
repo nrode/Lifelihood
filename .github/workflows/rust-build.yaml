@@ -1,0 +1,50 @@
+name: Build Rust for Linux/Macos/Windows
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            bin: lifelihood
+            out: lifelihood-macos
+
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            bin: lifelihood
+            out: lifelihood-linux
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            bin: lifelihood.exe
+            out: lifelihood-windows.exe
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --target ${{ matrix.target }}
+        working-directory: src
+
+      - name: Copy binary to inst/bin
+        shell: bash
+        run: |
+          mkdir -p inst/bin
+          cp src/target/${{ matrix.target }}/release/${{ matrix.bin }} inst/bin/${{ matrix.out }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lifelihood-${{ matrix.os }}
+          path: inst/bin/*
