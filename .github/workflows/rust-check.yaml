@@ -1,4 +1,4 @@
-name: Check Rust build and format
+name: Check Rust tests and format
 
 on:
   push:
