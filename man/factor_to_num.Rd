@@ -13,7 +13,7 @@ factor_to_num(x)
 The integer
 }
 \description{
-Function necessary because the Pascal program
+Function necessary because the Rust program
 expects integers for factor levels.
 }
 \keyword{internal}

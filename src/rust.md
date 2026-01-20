@@ -1,52 +1,3 @@
-# Pascal to Rust Migration Plan for Lifelihood
-
-This document outlines the plan to rewrite the Pascal computational core of the `lifelihood` R package in Rust, while maintaining the existing file-based interface between R and the compiled binary.
-
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Current Architecture](#current-architecture)
-3. [Input/Output File Formats](#inputoutput-file-formats)
-4. [Rust Project Structure](#rust-project-structure)
-5. [Module Breakdown](#module-breakdown)
-6. [Implementation Plan](#implementation-plan)
-7. [Build System Changes](#build-system-changes)
-8. [Testing Strategy](#testing-strategy)
-9. [Rust Environment Setup](#rust-environment-setup)
-
----
-
-## Overview
-
-### Goals
-
-- Replace Pascal source code (`source/*.pas`, `source/*.lpr`) with equivalent Rust code
-- Maintain identical file-based I/O interface (R writes text files → binary reads/processes → binary writes output files)
-- Produce cross-platform binaries: `lifelihood-linux`, `lifelihood-macos`, `lifelihood-windows.exe`
-- Preserve all existing functionality: likelihood computation, simulated annealing optimization, MCMC sampling, Hessian computation
-
-### Non-Goals
-
-- Changing the R-binary interface (keep using `system()` calls with stdin arguments)
-- Adding new features during migration
-- Using Rust-R bindings (extendr) - keeping file-based approach
-
----
-
-## Current Architecture
-
-### Pascal Source Files
-
-| File             | Purpose                                                                                                                       | Lines (approx) |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| `lifelihood.lpr` | Main entry point, argument parsing, orchestration                                                                             | 120            |
-| `Unit1.pas`      | Data reading (`readata`), config parsing (`read_custom`)                                                                      | 320            |
-| `Unit2.pas`      | Core algorithms: likelihood (`f`), optimization (`Metropolise`, `automatic_met`), MCMC (`promenade`), Hessian, output writing | 2300           |
-| `Alea.pas`       | Marsaglia random number generator                                                                                             | 70             |
-| `fmath.pas`      | Math utilities: exp, log, power, complex numbers                                                                              | ~800           |
-| `fspec.pas`      | Special functions: Gamma, incomplete Gamma, Beta, error function, distributions                                               | ~600           |
-| `mathromb.pas`   | Romberg numerical integration                                                                                                 | 160            |
-
 ### Data Flow
 
 ```
@@ -99,8 +50,6 @@ R (read_output.R, parsers.R)
 23. climbrate            - Cooling rate
 24. precision            - Convergence precision
 ```
-
----
 
 ## Input/Output File Formats
 
@@ -170,46 +119,36 @@ tc_(juvenile_period_length) X
 ## Rust Project Structure
 
 ```
-source/
-├── rust/                          # New Rust project root
-│   ├── Cargo.toml
-│   ├── src/
-│   │   ├── main.rs               # Entry point, argument parsing
-│   │   ├── lib.rs                # Library root
-│   │   ├── io/
-│   │   │   ├── mod.rs
-│   │   │   ├── input.rs          # Data file parsing
-│   │   │   ├── config.rs         # Parameter bounds parsing
-│   │   │   ├── output.rs         # Output file writing
-│   │   │   └── continuous_var.rs # Continuous variables parsing
-│   │   ├── model/
-│   │   │   ├── mod.rs
-│   │   │   ├── types.rs          # Data structures (Group, Individual, Event, etc.)
-│   │   │   ├── distributions.rs  # Survival functions (Weibull, Exponential, LogNormal, Gamma)
-│   │   │   ├── likelihood.rs     # Likelihood computation
-│   │   │   ├── events.rs         # Event probability calculations
-│   │   │   └── link.rs           # Link/delink functions
-│   │   ├── optim/
-│   │   │   ├── mod.rs
-│   │   │   ├── metropolis.rs     # Simulated annealing optimizer
-│   │   │   ├── mcmc.rs           # MCMC sampling (promenade)
-│   │   │   └── hessian.rs        # Hessian computation & inversion
-│   │   ├── math/
-│   │   │   ├── mod.rs
-│   │   │   ├── special.rs        # Gamma, incomplete gamma, beta, erf
-│   │   │   ├── integration.rs    # Romberg integration
-│   │   │   └── matrix.rs         # Matrix operations (Gauss-Jordan)
-│   │   └── rng/
-│   │       ├── mod.rs
-│   │       └── marsaglia.rs      # Marsaglia PRNG (exact port for reproducibility)
-│   └── tests/
-│       ├── integration_tests.rs
-│       └── fixtures/             # Test input/output files
-├── *.pas                         # Old Pascal files (to be removed after migration)
-└── rust.md                       # This file
+src/
+   ├── main.rs               # Entry point, argument parsing
+   ├── lib.rs                # Library root
+   ├── io/
+   │   ├── mod.rs
+   │   ├── input.rs          # Data file parsing
+   │   ├── config.rs         # Parameter bounds parsing
+   │   ├── output.rs         # Output file writing
+   │   └── continuous_var.rs # Continuous variables parsing
+   ├── model/
+   │   ├── mod.rs
+   │   ├── types.rs          # Data structures (Group, Individual, Event, etc.)
+   │   ├── distributions.rs  # Survival functions (Weibull, Exponential, LogNormal, Gamma)
+   │   ├── likelihood.rs     # Likelihood computation
+   │   ├── events.rs         # Event probability calculations
+   │   └── link.rs           # Link/delink functions
+   ├── optim/
+   │   ├── mod.rs
+   │   ├── metropolis.rs     # Simulated annealing optimizer
+   │   ├── mcmc.rs           # MCMC sampling (promenade)
+   │   └── hessian.rs        # Hessian computation & inversion
+   ├── math/
+   │   ├── mod.rs
+   │   ├── special.rs        # Gamma, incomplete gamma, beta, erf
+   │   ├── integration.rs    # Romberg integration
+   │   └── matrix.rs         # Matrix operations (Gauss-Jordan)
+   └── rng/
+       ├── mod.rs
+       └── marsaglia.rs      # Marsaglia PRNG (exact port for reproducibility)
 ```
-
----
 
 ## Module Breakdown
 
@@ -405,166 +344,6 @@ pub fn parse_bounds_file(path: &str) -> Result<Vec<ParamDescriptor>, ParseError>
 pub fn write_output(path: &str, fd: &FunctionDescriptor, config: &OutputConfig) -> io::Result<()>;
 ```
 
----
-
-## Implementation Plan
-
-### Phase 1: Foundation (Week 1-2)
-
-1. **Set up Rust project structure**
-   - Initialize Cargo project
-   - Define module structure
-   - Add dependencies (`statrs`, `thiserror`, etc.)
-
-2. **Port RNG (`rng::marsaglia`)**
-   - Exact port of Marsaglia algorithm
-   - Unit tests comparing Pascal output with Rust output
-
-3. **Port special functions (`math::special`)**
-   - Use `statrs` where possible
-   - Port Pascal implementations where needed for numerical consistency
-   - Extensive unit tests
-
-### Phase 2: Data Structures & I/O (Week 3-4)
-
-4. **Define data types (`model::types`)**
-   - Port all Pascal record types to Rust structs
-   - Implement `Default`, `Clone`, `Debug` traits
-
-5. **Implement input parsing (`io::input`, `io::config`)**
-   - Parse data file with life history records
-   - Parse parameter bounds file
-   - Handle continuous variables file
-
-6. **Implement output writing (`io::output`)**
-   - Match Pascal output format exactly
-   - Include all sections: seeds, likelihood, effects, Hessian, MCMC, ranges
-
-### Phase 3: Core Algorithms (Week 5-7)
-
-7. **Port survival functions (`model::distributions`)**
-   - Weibull, Exponential, LogNormal, Gamma
-   - Include male ratio, juvenile mortality, senescence effects
-
-8. **Port event probability (`model::events`)**
-   - `probevent` for each event type
-   - Truncated Poisson for clutch sizes
-
-9. **Port likelihood function (`model::likelihood`)**
-   - Main `f` function
-   - Link/delink transformations
-   - Group/individual/event loops
-
-10. **Port numerical integration (`math::integration`)**
-    - Romberg integration for fitness computation
-
-### Phase 4: Optimization (Week 8-9)
-
-11. **Port Metropolis algorithm (`optim::metropolis`)**
-    - Simulated annealing with adaptive cooling
-    - Local search refinement
-
-12. **Port MCMC sampling (`optim::mcmc`)**
-    - `promenade` function
-    - Sample storage
-
-13. **Port Hessian computation (`optim::hessian`)**
-    - Numerical differentiation
-    - Gauss-Jordan matrix inversion
-
-### Phase 5: Integration & Testing (Week 10-11)
-
-14. **Implement main entry point**
-    - Argument parsing (24 positional args from stdin)
-    - Orchestration of full workflow
-
-15. **Integration testing**
-    - Run Rust binary with same inputs as Pascal
-    - Compare outputs numerically
-    - Regression tests with real datasets
-
-### Phase 6: Build System & Deployment (Week 12)
-
-16. **Update Makefile**
-    - Cross-compilation targets
-    - Update binary names and paths
-
-17. **Documentation**
-    - Update CLAUDE.md
-    - README updates
-
----
-
-## Build System Changes
-
-### New Makefile Targets
-
-```makefile
-RUST_DIR := $(SRC_DIR)/rust
-
-.PHONY: rust-macos rust-linux rust-windows
-
-rust-macos:
-	cd $(RUST_DIR) && cargo build --release
-	cp $(RUST_DIR)/target/release/lifelihood $(BUILD_DIR)/lifelihood-macos
-
-rust-linux:
-	cd $(RUST_DIR) && cross build --release --target x86_64-unknown-linux-gnu
-	cp $(RUST_DIR)/target/x86_64-unknown-linux-gnu/release/lifelihood $(BUILD_DIR)/lifelihood-linux
-
-rust-windows:
-	cd $(RUST_DIR) && cross build --release --target x86_64-pc-windows-gnu
-	cp $(RUST_DIR)/target/x86_64-pc-windows-gnu/release/lifelihood.exe $(BUILD_DIR)/lifelihood-windows.exe
-```
-
-### Dependencies
-
-- `cross` for cross-compilation: `cargo install cross`
-- Docker for Linux builds (already used)
-
----
-
-## Testing Strategy
-
-### Unit Tests
-
-Each module should have unit tests comparing Rust output with known Pascal output:
-
-```rust
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_marsaglia_sequence() {
-        let mut rng = Marsaglia::new(12345, 67890, 11111, 22222);
-        // Compare with Pascal output for same seeds
-        assert!((rng.next() - 0.123456789).abs() < 1e-10);
-    }
-
-    #[test]
-    fn test_weibull_survival() {
-        // Known values from Pascal
-    }
-}
-```
-
-### Integration Tests
-
-1. **Golden file tests**: Run both Pascal and Rust binaries with identical inputs, compare outputs
-2. **Numerical tolerance**: Allow small floating-point differences (< 1e-8 relative)
-3. **Real dataset tests**: Use actual `lifelihood` datasets from tests/testthat/
-
-### R Package Tests
-
-After migration, all existing R tests should pass:
-
-```r
-devtools::test()  # Should show PASS 94
-```
-
----
-
 ## Rust Environment Setup
 
 ### Prerequisites
@@ -583,45 +362,6 @@ devtools::test()  # Should show PASS 94
    cargo --version
    ```
 
-3. **Install cross-compilation tools**:
-
-   ```bash
-   cargo install cross
-   ```
-
-4. **Install additional targets** (optional, cross handles this):
-   ```bash
-   rustup target add x86_64-unknown-linux-gnu
-   rustup target add x86_64-pc-windows-gnu
-   ```
-
-### Project Initialization
-
-```bash
-cd source
-cargo new rust --name lifelihood
-cd rust
-```
-
-### Recommended Dependencies (Cargo.toml)
-
-```toml
-[package]
-name = "lifelihood"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-statrs = "0.16"          # Statistical functions
-thiserror = "1.0"        # Error handling
-anyhow = "1.0"           # Error propagation
-
-[profile.release]
-lto = true               # Link-time optimization
-codegen-units = 1        # Better optimization
-panic = "abort"          # Smaller binary
-```
-
 ### Development Workflow
 
 ```bash
@@ -634,9 +374,6 @@ cargo build --release
 # Run tests
 cargo test
 
-# Run with arguments (simulating R call)
-echo "path/to/data.txt path/to/bounds.txt FALSE 0 1 TRUE FALSE FALSE 0 1234 5678 9012 3456 2 0 1000 0.1 NULL 100 20 10 0 1 0.0001" | cargo run --release
-
 # Format code
 cargo fmt
 
@@ -644,60 +381,7 @@ cargo fmt
 cargo clippy
 ```
 
-### Cross-Compilation
-
-```bash
-# Linux (from macOS)
-cross build --release --target x86_64-unknown-linux-gnu
-
-# Windows (from macOS/Linux)
-cross build --release --target x86_64-pc-windows-gnu
-```
-
----
-
-## Migration Checklist
-
-- [ ] Phase 1: Foundation
-  - [ ] Cargo project setup
-  - [ ] Marsaglia RNG port
-  - [ ] Special functions port
-  - [ ] Unit tests passing
-
-- [ ] Phase 2: Data & I/O
-  - [ ] Type definitions
-  - [ ] Input file parser
-  - [ ] Config file parser
-  - [ ] Output file writer
-  - [ ] Unit tests passing
-
-- [ ] Phase 3: Core Algorithms
-  - [ ] Survival functions
-  - [ ] Event probabilities
-  - [ ] Likelihood computation
-  - [ ] Romberg integration
-  - [ ] Unit tests passing
-
-- [ ] Phase 4: Optimization
-  - [ ] Metropolis algorithm
-  - [ ] MCMC sampling
-  - [ ] Hessian computation
-  - [ ] Unit tests passing
-
-- [ ] Phase 5: Integration
-  - [ ] Main entry point
-  - [ ] Integration tests passing
-  - [ ] R package tests passing
-
-- [ ] Phase 6: Deployment
-  - [ ] Makefile updated
-  - [ ] Cross-compilation working
-  - [ ] Documentation updated
-  - [ ] Old Pascal files removed
-
----
-
-## Notes
+## Notes about previous code using Pascal instead of Rust
 
 ### Numerical Precision
 
