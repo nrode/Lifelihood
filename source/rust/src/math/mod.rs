@@ -2,12 +2,12 @@
 //!
 //! Contains special mathematical functions and numerical integration routines.
 
-pub mod special;
+pub mod constants;
 pub mod integration;
 pub mod matrix;
-pub mod constants;
+pub mod special;
 
-pub use special::*;
+pub use constants::*;
 pub use integration::*;
 pub use matrix::*;
-pub use constants::*;
+pub use special::*;

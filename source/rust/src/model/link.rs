@@ -89,7 +89,7 @@ pub fn delink_derivative(val: f64, min_bound: f64, max_bound: f64) -> f64 {
     let diff_high = max_bound - val;
 
     if diff_low <= MINUS || diff_high <= MINUS {
-        1.0 / MINUS  // Large value for numerical stability
+        1.0 / MINUS // Large value for numerical stability
     } else {
         (max_bound - min_bound) / (diff_low * diff_high)
     }

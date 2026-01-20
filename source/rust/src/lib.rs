@@ -14,11 +14,11 @@
 //! - `optim`: Optimization algorithms (simulated annealing, MCMC, Hessian)
 //! - `io`: Input/output handling (file parsing, output writing)
 
-pub mod rng;
+pub mod io;
 pub mod math;
 pub mod model;
 pub mod optim;
-pub mod io;
+pub mod rng;
 
 // Re-export commonly used types
 pub use model::types::*;

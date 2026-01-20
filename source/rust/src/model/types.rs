@@ -2,7 +2,7 @@
 //!
 //! Port of type definitions from Unit2.pas
 
-use crate::math::constants::{NBPARMORT, NBPARMAT, NBPARPONTE, NBPARPOSS};
+use crate::math::constants::{NBPARMAT, NBPARMORT, NBPARPONTE, NBPARPOSS};
 
 /// Event type enumeration
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -316,7 +316,11 @@ pub struct Group {
 }
 
 impl Group {
-    pub fn new(mort_dist: DistributionType, mat_dist: DistributionType, pon_dist: DistributionType) -> Self {
+    pub fn new(
+        mort_dist: DistributionType,
+        mat_dist: DistributionType,
+        pon_dist: DistributionType,
+    ) -> Self {
         let mort = SurvivalFunction::new(mort_dist, NBPARMORT);
         let mat = SurvivalFunction::new(mat_dist, NBPARMAT);
         let mat_sans_pon = SurvivalFunction::new(mat_dist, NBPARMAT);

@@ -28,7 +28,13 @@ pub fn surv(x: f64, su: &SurvivalFunction, sex: i32, tinf: f64) -> f64 {
 
     // Get parameter values, ensuring they're positive
     let vp0 = if vp[0] <= 0.0 { eps } else { vp[0] };
-    let vp1 = if vp.len() > 1 && vp[1] <= 0.0 { eps } else if vp.len() > 1 { vp[1] } else { 1.0 };
+    let vp1 = if vp.len() > 1 && vp[1] <= 0.0 {
+        eps
+    } else if vp.len() > 1 {
+        vp[1]
+    } else {
+        1.0
+    };
     let vp2 = if vp.len() > 2 { vp[2] } else { 0.0 };
 
     if x <= 0.0 {
@@ -172,7 +178,13 @@ pub fn hazard(x: f64, su: &SurvivalFunction, sex: i32, tinf: f64) -> f64 {
     let eps = 1e-23;
     let vp = &su.vp;
     let vp0 = if vp[0] <= 0.0 { eps } else { vp[0] };
-    let vp1 = if vp.len() > 1 && vp[1] <= 0.0 { eps } else if vp.len() > 1 { vp[1] } else { 1.0 };
+    let vp1 = if vp.len() > 1 && vp[1] <= 0.0 {
+        eps
+    } else if vp.len() > 1 {
+        vp[1]
+    } else {
+        1.0
+    };
     let vp2 = if vp.len() > 2 { vp[2] } else { 0.0 };
 
     let ratio = if sex == 1 && vp2 > 0.0 { vp2 } else { 1.0 };
@@ -212,8 +224,10 @@ pub fn hazard(x: f64, su: &SurvivalFunction, sex: i32, tinf: f64) -> f64 {
             let scale = vp0 / (shape * ratio);
 
             // f(x) = x^(shape-1) * exp(-x/scale) / (scale^shape * Gamma(shape))
-            let ln_f = (shape - 1.0) * x.ln() - x / scale - shape * scale.ln()
-                     - crate::math::special::ln_gamma(shape);
+            let ln_f = (shape - 1.0) * x.ln()
+                - x / scale
+                - shape * scale.ln()
+                - crate::math::special::ln_gamma(shape);
             let f = expo(ln_f);
 
             let s = 1.0 - crate::math::special::igamma(shape, x / scale);
@@ -233,7 +247,7 @@ pub fn cumulative_hazard(x: f64, su: &SurvivalFunction, sex: i32, tinf: f64) -> 
     if s > MINUS {
         -s.ln()
     } else {
-        -MINUS.ln()  // Large positive value
+        -MINUS.ln() // Large positive value
     }
 }
 
