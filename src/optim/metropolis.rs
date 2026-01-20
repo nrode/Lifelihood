@@ -33,8 +33,11 @@ pub fn optimize(
     }
 
     // Initialize steps
+    // Port of Pascal Unit2.pas:1546 - step := 1 in unbounded space
+    // The optimization happens in unbounded parameter space where typical values
+    // range from about -20 to +20. A step of 1 provides good exploration.
     for vi in fd.var_info.iter_mut() {
-        vi.step = (vi.max_bound - vi.min_bound) / 10.0;
+        vi.step = 1.0;
     }
 
     // Initial evaluation
@@ -136,6 +139,7 @@ pub fn optimize(
 /// Adapt step sizes based on acceptance rate
 fn adapt_steps(fd: &mut FunctionDescriptor, accept_rate: f64, params: &MetropolisParams) {
     // Target acceptance rate around 0.3-0.5
+    // Port of Pascal Unit2.pas:1161-1180
     for vi in fd.var_info.iter_mut() {
         if accept_rate > 0.5 {
             // Too many acceptances - increase step size
@@ -145,13 +149,14 @@ fn adapt_steps(fd: &mut FunctionDescriptor, accept_rate: f64, params: &Metropoli
             vi.step *= params.bgedown;
         }
 
-        // Clamp step size
-        let range = vi.max_bound - vi.min_bound;
-        if vi.step > range {
-            vi.step = range;
+        // Clamp step size in unbounded space
+        // Pascal uses minbound=-20, maxbound=20, so range is 40
+        // But we allow larger steps up to 20 and minimum of 1e-6
+        if vi.step > 20.0 {
+            vi.step = 20.0;
         }
-        if vi.step < range * 1e-10 {
-            vi.step = range * 1e-10;
+        if vi.step < 1e-6 {
+            vi.step = 1e-6;
         }
     }
 }

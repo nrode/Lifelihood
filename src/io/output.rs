@@ -3,8 +3,10 @@
 //! Port of printout_FD and related functions from Unit2.pas
 
 use crate::model::types::{FunctionDescriptor, ParamDescriptor};
+use chrono::{DateTime, Local};
 use std::fs::File;
 use std::io::{BufWriter, Write};
+use std::time::SystemTime;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -57,9 +59,11 @@ pub fn write_output(
 ) -> Result<(), OutputError> {
     let file = File::create(path)?;
     let mut writer = BufWriter::new(file);
+    let now: DateTime<Local> = SystemTime::now().into();
 
     // Header
     writeln!(writer, "---------------------------")?;
+    writeln!(writer, "Generated at {}", now.format("%Y-%m-%d %H:%M:%S"))?;
     writeln!(writer)?;
     writeln!(writer, "datafile= {}", config.data_file)?;
     writeln!(

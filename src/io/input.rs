@@ -141,7 +141,12 @@ pub fn parse_data_file(path: &str) -> Result<(ModelState, Vec<Group>), ParseErro
             .filter_map(|s| s.parse().ok())
             .collect();
 
-        state.modele[param_idx].nb_terms = parts.len();
+        // Check if all terms are -1 (unfitted parameter)
+        // Also consider empty or all-negative as unfitted
+        let is_fitted = parts.iter().any(|&t| t >= 0);
+        let effective_terms = if is_fitted { parts.len() } else { 0 };
+
+        state.modele[param_idx].nb_terms = effective_terms;
         state.modele[param_idx].term = parts.clone();
         state.modele[param_idx].term_cov0 = vec![0; parts.len()];
         state.modele[param_idx].term_cov1 = vec![0; parts.len()];
@@ -149,10 +154,18 @@ pub fn parse_data_file(path: &str) -> Result<(ModelState, Vec<Group>), ParseErro
         state.modele[param_idx].name_term = vec![String::new(); parts.len()];
 
         // Initialize parameter instances for each group
+        // Only allocate if parameter is fitted
         for group in groups.iter_mut() {
-            group.param[param_idx].nb_terms = parts.len();
-            group.param[param_idx].po = vec![0; parts.len()];
-            group.param[param_idx].valpo = vec![0.0; parts.len()];
+            if is_fitted {
+                group.param[param_idx].nb_terms = effective_terms;
+                group.param[param_idx].po = vec![0; effective_terms];
+                group.param[param_idx].valpo = vec![0.0; effective_terms];
+            } else {
+                // Unfitted parameter - leave empty
+                group.param[param_idx].nb_terms = 0;
+                group.param[param_idx].po = Vec::new();
+                group.param[param_idx].valpo = Vec::new();
+            }
         }
     }
 
@@ -341,10 +354,50 @@ fn calculate_nb_ponte(hv: &mut LifeHistory) {
 }
 
 /// Calculate debut/fin times for each event
+///
+/// Port of Pascal `calendrier` procedure from Unit2.pas:779-797
+/// - fin is always the midpoint: (t1 + t2) / 2
+/// - debut depends on event type:
+///   - mat: 0 (time since birth)
+///   - pon: previous event's fin (time since last event)
+///   - mor: 0 (time since birth)
+///   - nop: events[i-2].fin (time since last ponte/maturity)
+///   - sex: 0 (not used in calculations)
 fn calculate_calendar(hv: &mut LifeHistory) {
-    for event in hv.events.iter_mut() {
-        event.debut = event.t1;
-        event.fin = event.t2;
+    let n = hv.events.len();
+
+    for i in 0..n {
+        // fin is always the midpoint of the interval
+        hv.events[i].fin = (hv.events[i].t1 + hv.events[i].t2) / 2.0;
+
+        // debut depends on event type
+        match hv.events[i].event_type {
+            EventType::Sex => {
+                hv.events[i].debut = 0.0;
+            }
+            EventType::Mat => {
+                hv.events[i].debut = 0.0;
+            }
+            EventType::Pon => {
+                // debut = previous event's fin
+                if i > 0 {
+                    hv.events[i].debut = hv.events[i - 1].fin;
+                } else {
+                    hv.events[i].debut = 0.0;
+                }
+            }
+            EventType::Mor => {
+                hv.events[i].debut = 0.0;
+            }
+            EventType::Nop => {
+                // debut = events[i-2].fin (the last ponte before mortality)
+                if i >= 2 {
+                    hv.events[i].debut = hv.events[i - 2].fin;
+                } else {
+                    hv.events[i].debut = 0.0;
+                }
+            }
+        }
     }
 }
 

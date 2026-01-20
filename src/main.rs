@@ -200,14 +200,30 @@ fn initialize_model(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &M
 
             if term == 0 {
                 // Intercept term: single variable
-                // Initialize at a reasonable starting point (~20% above min bound)
-                // This avoids extreme values from the midpoint
+                // Initialize with values that produce reasonable distributions
                 let name = format!("int_{}", param_name);
                 let mut vi = VarInfo::new(name, bounds.min_bound, bounds.max_bound);
 
-                // Use delink to initialize at a reasonable linked value
-                // Start at 20% of the way from min to max
-                let initial_linked = bounds.min_bound + 0.2 * (bounds.max_bound - bounds.min_bound);
+                // Calculate sensible initial value in linked (bounded) space
+                // For shape parameters (param2), use ~1-2 for flat distributions
+                // For mean parameters (expt_*), use ~25% of the range
+                // For other parameters, use midpoint
+                let initial_linked = match param_idx {
+                    // Mortality parameters
+                    0 => bounds.min_bound + 0.25 * (bounds.max_bound - bounds.min_bound), // expt_death
+                    1 => 1.0_f64.max(bounds.min_bound).min(bounds.max_bound - 0.001), // survival_param2 (shape≈1)
+                    // Maturity parameters
+                    5 => bounds.min_bound + 0.25 * (bounds.max_bound - bounds.min_bound), // expt_maturity
+                    6 => 1.0_f64.max(bounds.min_bound).min(bounds.max_bound - 0.001), // maturity_param2 (shape≈1)
+                    // Reproduction parameters
+                    8 => bounds.min_bound + 0.25 * (bounds.max_bound - bounds.min_bound), // expt_reproduction
+                    9 => 1.0_f64.max(bounds.min_bound).min(bounds.max_bound - 0.001), // reproduction_param2 (shape≈1)
+                    10 => 3.0_f64.max(bounds.min_bound).min(bounds.max_bound - 0.001), // n_offspring
+                    // Others use midpoint
+                    _ => bounds.min_bound + 0.5 * (bounds.max_bound - bounds.min_bound),
+                };
+
+                // Transform to unbounded space
                 vi.value = lifelihood::model::link::delink(
                     initial_linked,
                     bounds.min_bound,

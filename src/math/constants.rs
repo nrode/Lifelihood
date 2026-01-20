@@ -109,3 +109,39 @@ pub const NBPARMAT: usize = 3;
 
 /// Number of reproduction parameters
 pub const NBPARPONTE: usize = 12;
+
+/// Initial values for parameter intercepts (in unconstrained/delinked space)
+/// Port of `intinit` array from Unit2.pas:1744-1765
+///
+/// These values provide reasonable starting points for optimization that avoid
+/// extreme regions of parameter space.
+///
+/// Index mapping:
+/// 0: expt_death, 1: survival_param2, 2: ratio_expt_death, 3: prob_death,
+/// 4: sex_ratio, 5: expt_maturity, 6: maturity_param2, 7: ratio_expt_maturity,
+/// 8: expt_reproduction, 9: reproduction_param2, 10: n_offspring,
+/// 11: increase_death_hazard, 12: tof_reduction_date, 13: increase_tof_n_offspring,
+/// 14: lin_decrease_hazard, 15: quad_senescence, 16: quad_decrease_hazard,
+/// 17: quad_change_n_offspring, 18: tof_n_offspring, 19: fitness
+pub const INTINIT: [f64; 20] = [
+    -0.37,  // expt_death
+    -2.23,  // survival_param2
+    0.0,    // ratio_expt_death
+    0.0,    // prob_death
+    0.0,    // sex_ratio
+    -1.96,  // expt_maturity
+    -3.45,  // maturity_param2
+    0.0,    // ratio_expt_maturity
+    -3.036, // expt_reproduction
+    -3.35,  // reproduction_param2
+    -2.6,   // n_offspring
+    0.0,    // increase_death_hazard
+    0.0,    // tof_reduction_date
+    0.0,    // increase_tof_n_offspring
+    0.0,    // lin_decrease_hazard
+    0.0,    // quad_senescence
+    0.0,    // quad_decrease_hazard
+    0.0,    // quad_change_n_offspring
+    0.0,    // tof_n_offspring
+    -4.0,   // fitness
+];

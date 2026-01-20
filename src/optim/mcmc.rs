@@ -47,9 +47,10 @@ pub fn mcmc_sample(
     compute_likelihood(fd, groups, state);
     let mut current_ll = fd.curr_result;
 
-    // Set step sizes based on optimization results
+    // Set step sizes for MCMC - smaller than optimization for local exploration
+    // Use 0.5 in unbounded space for MCMC (half of optimization step)
     for vi in fd.var_info.iter_mut() {
-        vi.step = (vi.max_bound - vi.min_bound) / 20.0;
+        vi.step = 0.5;
     }
 
     let total_iterations = n_samples * interval;
