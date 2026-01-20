@@ -205,7 +205,12 @@ simulate_life_history <- function(
       names(df_sims_up),
       value = TRUE
     )
-    df_sims_up[clutch_cols] <- apply(df_sims_up[clutch_cols], 1, cumsum)
+
+    if (length(clutch_cols) > 1) {
+      df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
+    } else {
+      df_sims_up[clutch_cols] <- apply(df_sims_up[clutch_cols], 1, cumsum)
+    }
 
     df_sims_up_na <- df_sims_up |>
       mutate(across(starts_with("clutch_"), ~ ifelse(. > mortality, NA, .)))

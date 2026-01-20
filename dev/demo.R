@@ -134,5 +134,7 @@ plot_fitted_event_rate(
   groupby = "par",
   xlab = "Age (days)",
   ylab = "Fitted Reproduction Rate",
-  se.fit = TRUE
+  add_observed_event_rate = TRUE,
+  se.fit = TRUE,
+  type = "points"
 )
