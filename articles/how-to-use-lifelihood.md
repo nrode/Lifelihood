@@ -153,30 +153,30 @@ summary(results)
 #> Sample size: 13 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -2821.227
-#> AIC:             5668.5
-#> BIC:             5675.8
+#> Log-likelihood:  -90000000010.144
+#> AIC:             180000000046.3
+#> BIC:             180000000053.6
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -2.525 (0.000)
-#>   expt_death eff_expt_death_geno_1 0.784 (0.000)
-#>   expt_death eff_expt_death_type_1 -0.969 (0.000)
-#>   expt_death eff_expt_death_type_2 1.399 (0.000)
-#>   survival_param2 (Intercept) -6.582 (0.000)
+#>   expt_death (Intercept)    -1.386 (0.000)
+#>   expt_death eff_expt_death_geno_1 0.000 (0.000)
+#>   expt_death eff_expt_death_type_1 0.000 (0.000)
+#>   expt_death eff_expt_death_type_2 0.000 (0.000)
+#>   survival_param2 (Intercept) -6.488 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -2.229 (0.000)
-#>   expt_maturity eff_expt_maturity_geno_1 -0.840 (0.000)
-#>   expt_maturity eff_expt_maturity_type_1 0.411 (0.000)
-#>   expt_maturity eff_expt_maturity_type_2 -0.546 (0.000)
-#>   maturity_param2 (Intercept) -3.111 (0.000)
+#>   expt_maturity (Intercept) -1.386 (0.000)
+#>   expt_maturity eff_expt_maturity_geno_1 0.000 (0.000)
+#>   expt_maturity eff_expt_maturity_type_1 0.000 (0.000)
+#>   expt_maturity eff_expt_maturity_type_2 0.000 (0.000)
+#>   maturity_param2 (Intercept) -1.386 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -2.337 (0.000)
-#>   expt_reproduction eff_expt_reproduction_geno_1 1.310 (0.000)
-#>   reproduction_param2 (Intercept) -2.554 (0.000)
+#>   expt_reproduction (Intercept) -1.386 (0.000)
+#>   expt_reproduction eff_expt_reproduction_geno_1 0.000 (0.000)
+#>   reproduction_param2 (Intercept) -1.386 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -195,40 +195,40 @@ the analysis. We can get specific results by calling the list element.
 
 coef(results)
 #>               int_expt_death        eff_expt_death_geno_1 
-#>                   -2.5253959                    0.7835095 
+#>                    -1.386294                     0.000000 
 #>        eff_expt_death_type_1        eff_expt_death_type_2 
-#>                   -0.9687812                    1.3991316 
+#>                     0.000000                     0.000000 
 #>          int_survival_param2            int_expt_maturity 
-#>                   -6.5822104                   -2.2285974 
+#>                    -6.487825                    -1.386294 
 #>     eff_expt_maturity_geno_1     eff_expt_maturity_type_1 
-#>                   -0.8401484                    0.4112408 
+#>                     0.000000                     0.000000 
 #>     eff_expt_maturity_type_2          int_maturity_param2 
-#>                   -0.5456602                   -3.1111023 
+#>                     0.000000                    -1.386294 
 #>        int_expt_reproduction eff_expt_reproduction_geno_1 
-#>                   -2.3365343                    1.3102563 
+#>                    -1.386294                     0.000000 
 #>      int_reproduction_param2 
-#>                   -2.5535342
+#>                    -1.386294
 coeff(results, "expt_death")
 #>        int_expt_death eff_expt_death_geno_1 eff_expt_death_type_1 
-#>            -2.5253959             0.7835095            -0.9687812 
+#>             -1.386294              0.000000              0.000000 
 #> eff_expt_death_type_2 
-#>             1.3991316
+#>              0.000000
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>            -6.58221
+#>           -6.487825
 
 AIC(results)
-#> [1] 5668.453
+#> [1] 1.8e+11
 BIC(results)
-#> [1] 5675.798
+#> [1] 1.8e+11
 
 logLik(results)
-#> [1] -2821.227
+#> [1] -9e+10
 
 prediction(results, parameter_name = "expt_death") |> head()
-#> [1] -3.494177 -1.126264 -1.741886 -1.741886 -1.741886 -3.494177
+#> [1] -1.386294 -1.386294 -1.386294 -1.386294 -1.386294 -1.386294
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
-#> [1] 1.180105 9.794802 5.963791 5.963791 5.963791 1.180105
+#> [1] 8.0008 8.0008 8.0008 8.0008 8.0008 8.0008
 ```
 
 ## Next step
