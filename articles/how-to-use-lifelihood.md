@@ -153,30 +153,30 @@ summary(results)
 #> Sample size: 13 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -90000000007.406
-#> AIC:             180000000040.8
-#> BIC:             180000000048.2
+#> Log-likelihood:  -7260.549
+#> AIC:             14547.1
+#> BIC:             14554.4
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -2.190 (0.000)
-#>   expt_death eff_expt_death_geno_1 -0.884 (0.000)
-#>   expt_death eff_expt_death_type_1 0.000 (0.000)
-#>   expt_death eff_expt_death_type_2 0.000 (0.000)
-#>   survival_param2 (Intercept) -6.264 (0.000)
+#>   expt_death (Intercept)    -2.190 (-1.000)
+#>   expt_death eff_expt_death_geno_1 -0.884 (-1.000)
+#>   expt_death eff_expt_death_type_1 0.000 (-1.000)
+#>   expt_death eff_expt_death_type_2 0.000 (-1.000)
+#>   survival_param2 (Intercept) -6.264 (-1.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.099 (0.000)
-#>   expt_maturity eff_expt_maturity_geno_1 0.000 (0.000)
-#>   expt_maturity eff_expt_maturity_type_1 0.000 (0.000)
-#>   expt_maturity eff_expt_maturity_type_2 0.000 (0.000)
-#>   maturity_param2 (Intercept) -6.400 (0.000)
+#>   expt_maturity (Intercept) -1.099 (-1.000)
+#>   expt_maturity eff_expt_maturity_geno_1 0.000 (-1.000)
+#>   expt_maturity eff_expt_maturity_type_1 0.000 (-1.000)
+#>   expt_maturity eff_expt_maturity_type_2 0.000 (-1.000)
+#>   maturity_param2 (Intercept) -6.400 (-1.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.099 (0.000)
-#>   expt_reproduction eff_expt_reproduction_geno_1 0.000 (0.000)
-#>   reproduction_param2 (Intercept) -2.218 (0.000)
+#>   expt_reproduction (Intercept) -1.099 (-1.000)
+#>   expt_reproduction eff_expt_reproduction_geno_1 0.000 (-1.000)
+#>   reproduction_param2 (Intercept) -2.218 (-1.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -218,12 +218,12 @@ coeff(results, "survival_param2")
 #>           -6.263899
 
 AIC(results)
-#> [1] 1.8e+11
+#> [1] 14547.1
 BIC(results)
-#> [1] 1.8e+11
+#> [1] 14554.44
 
 logLik(results)
-#> [1] -9e+10
+#> [1] -7260.549
 
 prediction(results, parameter_name = "expt_death") |> head()
 #> [1] -2.190352 -2.190352 -3.074096 -3.074096 -3.074096 -2.190352
