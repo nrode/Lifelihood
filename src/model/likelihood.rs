@@ -41,10 +41,27 @@ pub fn compute_likelihood(
 
         // Loop over individuals in the group
         for ind in &group.individuals {
-            // Loop over life histories
+            // Sum probabilities across life histories, then take log
+            // This matches Pascal's approach: ans2 := ans2 + ans3 then ln(ans2)
+            // Life histories represent mutually exclusive alternatives, so we sum P(h_k)
+            let mut prob_sum = 0.0;
+
             for hv in &ind.life_histories {
-                let ll_hv = compute_life_history_likelihood(hv, group, state);
-                total_ll += ll_hv;
+                let log_prob = compute_life_history_likelihood(hv, group, state);
+                // Convert log-probability to probability
+                // Use exp with protection against underflow
+                if log_prob > -700.0 {
+                    // exp(-700) ≈ 0, avoid underflow
+                    prob_sum += log_prob.exp();
+                }
+            }
+
+            // Take log of sum (this is the correct likelihood contribution)
+            if prob_sum > MINUS {
+                total_ll += prob_sum.ln();
+            } else {
+                // Match Pascal's penalty for impossible events: 10 * ln(minus)
+                total_ll += 10.0 * MINUS.ln();
             }
         }
     }

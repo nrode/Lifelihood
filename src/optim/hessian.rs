@@ -42,12 +42,13 @@ pub fn compute_hessian(
     let mut hessian = vec![vec![0.0; nv]; nv];
 
     // Step sizes for numerical differentiation
+    // Match Pascal: range/1000
     let h: Vec<f64> = fd
         .var_info
         .iter()
         .map(|vi| {
             let range = vi.max_bound - vi.min_bound;
-            (range * 1e-4).max(1e-8)
+            (range / 1000.0).max(1e-8)
         })
         .collect();
 
@@ -148,20 +149,29 @@ pub fn calc_se(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &ModelS
     match gauss_jordan_invert(&mut hessian) {
         Ok(_det) => {
             // Extract standard errors from diagonal
+            // Note: For maximization, Hessian is negative definite at optimum
+            // The inverse Hessian diagonal should be negative
+            // SE = sqrt(-diag(H^{-1}))
+            // However, since we compute Hessian of -log_lik (for minimization),
+            // the diagonal should be positive at the minimum.
             for i in 0..nv {
                 let var = hessian[i][i];
-                if var > 0.0 {
+                if var < 0.0 {
+                    // Negative diagonal (maximizing likelihood case)
+                    fd.var_info[i].se = (-var).sqrt();
+                } else if var > 0.0 {
+                    // Positive diagonal (minimizing -log_lik case)
                     fd.var_info[i].se = var.sqrt();
                 } else {
-                    fd.var_info[i].se = 0.0; // Invalid variance
+                    fd.var_info[i].se = -1.0; // Sentinel: variance is zero or undefined
                 }
             }
             true
         }
         Err(_) => {
-            // Hessian is singular
+            // Hessian is singular - all SEs are undefined
             for vi in fd.var_info.iter_mut() {
-                vi.se = 0.0;
+                vi.se = -1.0; // Sentinel value
             }
             false
         }
@@ -169,6 +179,12 @@ pub fn calc_se(fd: &mut FunctionDescriptor, groups: &mut [Group], state: &ModelS
 }
 
 /// Get the inverse Hessian (variance-covariance matrix)
+///
+/// Note: This function negates the inverse Hessian to match Pascal's convention.
+/// Pascal maximizes log-likelihood, producing a negative definite Hessian.
+/// Rust minimizes -log-likelihood, producing a positive definite Hessian.
+/// The R code expects Pascal's convention (negative definite inverse Hessian),
+/// so we negate to maintain compatibility.
 pub fn get_inverse_hessian(
     fd: &mut FunctionDescriptor,
     groups: &mut [Group],
@@ -177,7 +193,18 @@ pub fn get_inverse_hessian(
     let mut hessian = compute_hessian(fd, groups, state);
 
     match gauss_jordan_invert(&mut hessian) {
-        Ok(_) => Some(hessian),
+        Ok(_) => {
+            // Negate the inverse Hessian to match Pascal's convention
+            // Pascal outputs inverse of Hessian of log_lik (negative definite)
+            // Rust computes inverse of Hessian of -log_lik (positive definite)
+            // Negating converts from Rust's convention to Pascal's
+            for row in hessian.iter_mut() {
+                for val in row.iter_mut() {
+                    *val = -*val;
+                }
+            }
+            Some(hessian)
+        }
         Err(_) => None,
     }
 }

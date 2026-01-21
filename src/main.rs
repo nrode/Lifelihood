@@ -143,9 +143,16 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     // Compute standard errors if requested
+    // calc_se returns true if Hessian inversion succeeded, false if singular
     let hessian = if compute_se {
-        calc_se(&mut fd, &mut groups, &state);
-        lifelihood::optim::hessian::get_inverse_hessian(&mut fd, &mut groups, &state)
+        let hessian_valid = calc_se(&mut fd, &mut groups, &state);
+        if hessian_valid {
+            // Hessian was successfully inverted, get it for output
+            lifelihood::optim::hessian::get_inverse_hessian(&mut fd, &mut groups, &state)
+        } else {
+            // Hessian was singular, output will show (!INVALID)
+            None
+        }
     } else {
         None
     };

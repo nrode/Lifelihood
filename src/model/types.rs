@@ -380,7 +380,7 @@ impl VarInfo {
             value: 0.0,
             best_value: 0.0,
             step: 1.0,
-            se: 0.0,
+            se: -1.0, // Sentinel value: -1 means "not computed"
             sample: Vec::new(),
             name,
             typ: 0,
