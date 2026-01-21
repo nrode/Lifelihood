@@ -37,6 +37,7 @@
 #' used for mortality, the second one is used for maturity and the
 #' third is used for reproduction.
 #' @param covariates Vector containing the names of the covariates.
+#' @param block Name of the block to which each individual belong to.
 #' @param matclutch Whether the maturity event (designated by
 #' `maturity_start` and `maturity_end`) is a clutch event or not.
 #' If `TRUE`, must specify the `matclutch_size` argument. Default
@@ -103,6 +104,7 @@ lifelihoodData <- function(
   death_end,
   model_specs,
   covariates,
+  block = NULL,
   matclutch = FALSE,
   matclutch_size = NULL,
   right_censoring_date = 1000,
@@ -132,6 +134,7 @@ lifelihoodData <- function(
     death_end = death_end,
     model_specs = model_specs,
     covariates = covariates,
+    block = block,
     matclutch = matclutch,
     matclutch_size = matclutch_size,
     right_censoring_date = right_censoring_date,

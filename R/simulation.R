@@ -7,9 +7,21 @@
 #' @param ev A character of the event (must be one of "mortality",
 #' "reproduction" or "maturity")
 #' @param newdata An optional dataset used for prediction
+#' @param lifelihoodData Output of [lifelihood::lifelihoodData()].
+#' @param visits Dataframe with 2 columns: "block" (must be the same as passed
+#' in [lifelihood::lifelihoodData()] `block` argument) and exactly "visit". For
+#' each block, "visit" corresponds to the ages where the events of individuals
+#' have been recorded.
 #'
 #' @keywords internal
-simulate_event <- function(object, ev, newdata) {
+simulate_event <- function(
+  object,
+  ev,
+  newdata,
+  lifelihoodData,
+  use_censoring,
+  visits
+) {
   if (ev == "mortality") {
     expt_name <- "expt_death"
     shape_name <- "survival_param2"
@@ -138,6 +150,11 @@ simulate_event <- function(object, ev, newdata) {
     colnames(simul_df_full) <- column_names
   }
 
+  # add blocks, if provided
+  if (!is.null(lifelihoodData$block) && use_censoring) {
+    simul_df_full <- add_visit_masks(simul_df_full, lifelihoodData, ev, visits)
+  }
+
   return(simul_df_full)
 }
 
@@ -152,6 +169,15 @@ simulate_event <- function(object, ev, newdata) {
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
+#' @param use_censoring Whether to retrieve censoring time interval for each event. For example,
+#' the time for "mortality_start" and "mortality_end" instead of just the time for "mortality".
+#' In this case, it's advised to use the `visits` argument and provide you own visit data. Otherwise,
+#' they are determined only using ages where events have been observed not ages where people went to the
+#' lab and no event was observed.
+#' @param visits Optionnal dataframe with 2 columns: "block" (must be the same name
+#' as passed in [lifelihood::lifelihoodData()] `block` argument) and exactly "visit".
+#' For each block, "visit" corresponds to the ages where the events of individuals
+#' have been recorded.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.
 #'
 #' @return A list of `data.frame` with one column per simulated event.
@@ -162,6 +188,8 @@ simulate_life_history <- function(
   object,
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
+  use_censoring = FALSE,
+  visits = NULL,
   seed = NULL
 ) {
   if (!is.null(seed)) {
@@ -169,13 +197,19 @@ simulate_life_history <- function(
   }
   check_lifelihoodResults(object)
 
-  event <- match.arg(event, c("all", "mortality", "reproduction", "maturity"))
+  event <- match.arg(
+    event,
+    c("all", "mortality", "reproduction", "maturity"),
+    several.ok = TRUE
+  )
 
-  events <- if (event == "all" | event == "reproduction") {
+  events <- if ("all" %in% event | "reproduction" %in% event) {
     c("maturity", "reproduction", "mortality")
   } else {
     event
   }
+
+  lifelihoodData <- object$lifelihoodData
 
   if ("reproduction" %in% events) {
     fitted_params <- object$formula |> names()
@@ -192,7 +226,14 @@ simulate_life_history <- function(
 
   df_sims <- NULL
   for (ev in events) {
-    sim <- simulate_event(object, ev, newdata)
+    sim <- simulate_event(
+      object,
+      ev,
+      newdata,
+      lifelihoodData,
+      use_censoring,
+      visits
+    )
     df_sims <- bind_cols(sim, df_sims)
   }
 
@@ -235,7 +276,7 @@ simulate_life_history <- function(
     df_sims_up_na <- df_sims
   }
 
-  if (event %in% c("all", "reproduction")) {
+  if ("reproduction" %in% events) {
     df_sims_up_na <- df_sims_up_na |>
       mutate(
         total_clutchs = rowSums(across(starts_with("clutch_")), na.rm = TRUE)

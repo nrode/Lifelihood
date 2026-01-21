@@ -6,7 +6,8 @@ df <- datapierrick |>
   mutate(
     par = as.factor(par),
     geno = as.factor(geno),
-    spore = as.factor(spore)
+    spore = as.factor(spore),
+    block = rep(1:2, each = nrow(datapierrick) / 2)
   )
 
 generate_clutch_vector <- function(N) {
@@ -27,6 +28,7 @@ lifelihoodData <- lifelihoodData(
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
+  block = "block",
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
@@ -37,7 +39,6 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = get_config_path("config_pierrick"),
   delete_temp_files = FALSE,
-  MCMC = 20,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
@@ -81,6 +82,12 @@ prediction(
   tail()
 
 simulate_life_history(results) |> head()
+z <- simulate_life_history(
+  results,
+  event = c("mortality", "maturity"),
+  use_censoring = TRUE,
+  seed = 1
+)
 simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
