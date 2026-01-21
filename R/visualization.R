@@ -124,6 +124,20 @@ plot_fitted_event_rate <- function(
       guides(shape = guide_legend(override.aes = list(size = 3)))
   }
 
+  if (type == "lines" && se.fit) {
+    pfitted <- pfitted +
+      geom_line(
+        aes(x = Inf, y = Inf, linetype = "Fitted"),
+        colour = "black",
+        linewidth = 1.5,
+        inherit.aes = FALSE
+      ) +
+      scale_linetype_manual(
+        name = "",
+        values = c("Fitted" = "solid")
+      )
+  }
+
   pfitted
 }
 
