@@ -124,7 +124,7 @@ plot_fitted_event_rate <- function(
       guides(shape = guide_legend(override.aes = list(size = 3)))
   }
 
-  if (type == "lines" && se.fit) {
+  if (type == "lines") {
     pfitted <- pfitted +
       geom_line(
         aes(x = Inf, y = Inf, linetype = "Fitted"),
