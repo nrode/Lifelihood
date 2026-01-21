@@ -53,6 +53,7 @@
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
     <li><a class="dropdown-item" href="../articles/contributing.html">Contributing</a></li>
+    <li><a class="dropdown-item" href="../articles/compilation.html">Compilation</a></li>
   </ul>
 </li>
       </ul>
@@ -83,7 +84,7 @@
 
 
 
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/rust/vignettes/overview.qmd" class="external-link"><code>vignettes/overview.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/vignettes/overview.qmd" class="external-link"><code>vignettes/overview.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
     </div>
 
@@ -97,17 +98,18 @@
 <p>This document provides an overview of the internal workings of the <strong>Lifelihood</strong> R package. It is intended for developers and contributors who wish to understand or extend the package’s functionality.</p>
 <section class="level2"><h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h3>
-<p><strong>Lifelihood</strong> is an R package designed for complex quantitative biology and survival analysis calculations. To achieve high computational performance, core calculations are performed using <strong>Rust</strong> code, which is integrated into the R package through an interface layer.</p>
+<p><strong>Lifelihood</strong> is an R package designed for complex quantitative biology and survival analysis calculations. To achieve high computational performance, core calculations are performed using <strong>Pascal</strong> code, which is integrated into the R package through an interface layer.</p>
+<p>The package’s structure facilitates efficient interaction between R and Pascal, making it scalable for handling large datasets and complex survival analysis models.</p>
 </section><section class="level2"><h3 id="package-structure">Package Structure<a class="anchor" aria-label="anchor" href="#package-structure"></a>
 </h3>
 <p>The <strong>Lifelihood</strong> package is organized into the following primary components:</p>
 <ol type="1">
 <li>
-<strong>R Interface</strong>: Provides user-facing functions and a set of helper functions for input validation, data preprocessing, and postprocessing of results. Most code lives in the <code>R/</code> directory.</li>
+<strong>R Interface</strong>: Provides user-facing functions and a set of helper functions for input validation, data preprocessing, and postprocessing of results.</li>
 <li>
-<strong>Rust Backend</strong>: Manages core computational tasks for survival analysis, allowing for performance-optimized calculations that would be challenging to achieve solely in R. Most code lives in the <code>src/</code> directory.</li>
+<strong>Pascal Backend</strong>: Manages core computational tasks for survival analysis, allowing for performance-optimized calculations that would be challenging to achieve solely in R.</li>
 <li>
-<strong>Interface Layer</strong>: Facilitates communication between R and Rust.</li>
+<strong>Interface Layer</strong>: Facilitates communication between R and Pascal.</li>
 </ol>
 <section class="level3"><h4 id="directory-structure">Directory Structure<a class="anchor" aria-label="anchor" href="#directory-structure"></a>
 </h4>
@@ -118,7 +120,7 @@
 <li>
 <code>R/</code>: Contains all R functions, user interface code, and helper functions.</li>
 <li>
-<code>src/</code>: Houses the Rust source code.</li>
+<code>source/</code>: Houses the Pascal source code and executables. Only the one in <code>/lazarus/</code> should be used.</li>
 <li>
 <code>inst/</code>: Utility files used such as the binary files and config examples.</li>
 <li>
@@ -129,13 +131,14 @@
 <code>DESCRIPTION</code>: Provides metadata about the package (authors, version, description, etc.).</li>
 <li>
 <code>NAMESPACE</code>: Specifies the functions exported from Lifelihood.</li>
-<li>
-<code>Cargo.toml</code> &amp; <code>Cargo.lock</code>: configuration file and dependencies for Rust</li>
 </ul>
 <pre><code>lifelihood/
 ├── vignettes/
 ├── R/
-├── src/
+├── source/
+│   └── source_pascal/
+│       ├── lazarus/
+│       └── delphi/
 ├── inst/
 │   ├── bin/
 │   └── configs/
@@ -144,21 +147,30 @@
 ├── DESCRIPTION
 ├── NAMESPACE
 └── ...</code></pre>
-</section></section><section class="level2"><h3 id="integration-with-rust-code">Integration with Rust Code<a class="anchor" aria-label="anchor" href="#integration-with-rust-code"></a>
+</section></section><section class="level2"><h3 id="integration-with-pascal-code">Integration with Pascal Code<a class="anchor" aria-label="anchor" href="#integration-with-pascal-code"></a>
 </h3>
-<section class="level3"><h4 id="rust-to-r-interface">Rust to R Interface<a class="anchor" aria-label="anchor" href="#rust-to-r-interface"></a>
+<section class="level3"><h4 id="pascal-to-r-interface">Pascal to R Interface<a class="anchor" aria-label="anchor" href="#pascal-to-r-interface"></a>
 </h4>
-<p>The core calculations in <strong>Lifelihood</strong> are implemented in <strong>Rust</strong> to optimize computational efficiency. Here’s how the R and Rust components interact.</p>
-<p>The Rust program requires two different input <code>txt</code> files:</p>
+<p>The core calculations in <strong>Lifelihood</strong> are implemented in <strong>Pascal</strong> to optimize computational efficiency. Here’s how the R and Pascal components interact.</p>
+<p>The Pascal program requires two different input <code>txt</code> files:</p>
 <ul>
-<li>A configuration and data file</li>
-<li>A parameter boundaries file specifying the range of each parameter</li>
+<li>A configuration and data file, such as <a href="https://github.com/nrode/Lifelihood/blob/main/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.txt" class="external-link">this example file</a>.</li>
+<li>A parameter boundaries file specifying the range of each parameter, like <a href="https://github.com/nrode/Lifelihood/blob/main/data/custom.txt" class="external-link">this example file</a>.</li>
 </ul>
-<p>Rust will parse those files and outputs a results file containing estimates, likelihoods, etc. On the other side, R will parse the output file.</p>
-</section><section class="level3"><h4 id="rust-code">Rust Code<a class="anchor" aria-label="anchor" href="#rust-code"></a>
+<p>The program outputs a results file containing estimates, likelihoods, etc. An example of the output format can be found <a href="https://github.com/nrode/Lifelihood/blob/main/data/raw_data/DataLenski/DataLenski_gam_gam_gam__Rep1.out" class="external-link">here</a>.</p>
+<p>Since this program runs via the command line, <strong>Lifelihood</strong> simplifies the process by managing these steps. <strong>Lifelihood</strong> accepts a large set of arguments, generates the necessary <code>txt</code> input files, passes them to the program, reads the output, and formats it.</p>
+</section><section class="level3"><h4 id="pascal-code">Pascal Code<a class="anchor" aria-label="anchor" href="#pascal-code"></a>
 </h4>
-<p>Unlike R, Rust is a compiled programming language, meaning the code must first be compiled into a machine-readable format (binary) before execution. Additionally, it must be compiled separately for both macOS, Windows and Linux.</p>
-<p>The binary files (one for each OS) are meant to be in in the <code>inst/bin/</code> since this directory is used to include additional files when building the package. A utility function in <strong>Lifelihood</strong> determines the user’s operating system to run the appropriate executable.</p>
+<p>Unlike R, Pascal is a compiled programming language, meaning the code must first be compiled into a machine-readable format (binary) before execution. Additionally, it must be compiled separately for both macOS and Windows systems.</p>
+<p>The <code>/</code> directory includes both the source (<code>.pas</code>) and compiled files:</p>
+<ul>
+<li>
+<code>lifelihood</code> for Unix systems (macOS)</li>
+<li>
+<code>lifelihood.exe</code> for Windows</li>
+</ul>
+<p>A utility function in <strong>Lifelihood</strong> determines the user’s operating system to run the appropriate executable.</p>
+<p>The Pascal program uses Lazarus, which supports cross-platform compilation, simplifying the process of building the code for both macOS and Windows.</p>
 </section></section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);

@@ -1,7 +1,7 @@
 # Convert a factor variable to integers
 
-Function necessary because the Rust program expects integers for factor
-levels.
+Function necessary because the Pascal program expects integers for
+factor levels.
 
 ## Usage
 
