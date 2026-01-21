@@ -60,16 +60,16 @@ simulate_event <- function(object, ev, newdata) {
     family_mortality <- object$lifelihoodData$model_specs[[1]]
     if (family_mortality == "wei") {
       scale <- expt_death / gamma(1 + 1 / survival_param2)
-      long <- qweibull(0.99999999, shape = survival_param2, scale = scale)
+      long <- qweibull(0.99, shape = survival_param2, scale = scale)
     } else if (family_mortality == "lgn") {
       mu <- log(expt_death) - 0.5 * log(1 + survival_param2 / (expt_death^2))
       sigma <- sqrt(log(1 + survival_param2 / (expt_death^2)))
-      long <- qlnorm(0.99999999, meanlog = mu, sdlog = sigma)
+      long <- qlnorm(0.99, meanlog = mu, sdlog = sigma)
     } else if (family_mortality == "gam") {
       shape <- expt_death / survival_param2
-      long <- qgamma(0.99999999, shape = shape, scale = survival_param2)
+      long <- qgamma(0.99, shape = shape, scale = survival_param2)
     } else if (family_mortality == "exp") {
-      long <- qexp(0.99999999, rate = 1 / expt_death)
+      long <- qexp(0.99, rate = 1 / expt_death)
     }
     max_long <- max(long) # maximum predicted longevity in the dataset
 
@@ -89,10 +89,7 @@ simulate_event <- function(object, ev, newdata) {
       error = function(e) return(rep(NA, length(expected)))
     )
     #n_offspring <- floor(expt_death) # temporary workaround
-    simul_n_offspring <- simulate_truncPois(
-      expected = n_offspring,
-      n = n
-    )
+    simul_n_offspring <- simulate_truncPois(expected = n_offspring, n = n)
   }
 
   if (family == "wei") {
@@ -208,7 +205,12 @@ simulate_life_history <- function(
       names(df_sims_up),
       value = TRUE
     )
-    df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
+
+    if (length(clutch_cols) > 1) {
+      df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
+    } else {
+      df_sims_up[clutch_cols] <- apply(df_sims_up[clutch_cols], 1, cumsum)
+    }
 
     df_sims_up_na <- df_sims_up |>
       mutate(across(starts_with("clutch_"), ~ ifelse(. > mortality, NA, .)))

@@ -1,4 +1,4 @@
-name: Unit Tests
+name: R Unit Tests
 
 on:
   push:

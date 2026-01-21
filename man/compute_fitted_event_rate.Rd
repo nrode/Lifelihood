@@ -11,7 +11,7 @@ compute_fitted_event_rate(
   newdata = NULL,
   max_time = NULL,
   groupby = NULL,
-  mcmc.ci.fit = TRUE
+  mcmc.ci.fit = FALSE
 )
 }
 \arguments{
@@ -41,8 +41,9 @@ or "Overall" if groupby = NULL), and Event_rate (event rate
 over the interval).
 Note that for reproduction event, the first reproduction event of
 each individual cannot be computed if maturity was not observed (i.e. mat_clutch is true)
-When the interval between the last reproduction event of an individual and their death is
-greater than \code{interval_width} the individuals are included in the computation of reproduction rate
+When the interval between the last reproduction event of an individual
+and their death is greater than \code{interval_width} the individuals are
+included in the computation of reproduction rate
 }
 \description{
 Calculate the empirical mortality rate over a given interval

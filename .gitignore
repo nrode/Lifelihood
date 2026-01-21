@@ -36,3 +36,7 @@ inst/bin/*
 
 *.log
 *claude*
+target/
+source/*.pas
+source/lifelihood*
+source-pascal/

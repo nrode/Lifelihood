@@ -24,6 +24,7 @@ dev.R
 ^data_internals/
 ^\.github$
 ^doc$
+^target$
 ^Meta$
 ^BinaryFiles
 ^Dockerfile

@@ -1,0 +1,20 @@
+[package]
+name = "lifelihood"
+version = "0.1.0"
+edition = "2021"
+description = "Life history modeling using continuous-time multi-event models"
+authors = ["Lifelihood Team"]
+
+[dependencies]
+thiserror = "1.0"
+chrono = "0.4"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 3
+debug = true

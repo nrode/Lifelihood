@@ -329,7 +329,7 @@ check_lifelihoodData <- function(object) {
 #' @title Convert a factor variable to integers
 #'
 #' @description
-#' Function necessary because the Pascal program
+#' Function necessary because the Rust program
 #' expects integers for factor levels.
 #'
 #' @param x A column name

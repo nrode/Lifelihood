@@ -16,7 +16,7 @@ plot_fitted_event_rate(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
-  se.fit = TRUE,
+  se.fit = FALSE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"

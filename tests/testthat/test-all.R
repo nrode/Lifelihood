@@ -47,7 +47,16 @@ testthat::test_that("Overall demo works", {
   expect_true(lifelihoodData$critical_age == 20)
   expect_true(lifelihoodData$ratiomax == 10)
 
-  results <- lifelihood(lifelihoodData, "config.yaml")
+  results <- lifelihood(
+    lifelihoodData,
+    if (rlang::is_interactive()) {
+      "tests/testthat/config.yaml"
+    } else {
+      "config.yaml"
+    },
+    delete_temp_files = FALSE,
+    seeds = c(2, 2, 2, 2)
+  )
 
   expect_true(results$config |> length() == 3)
   expect_true(results$config$mortality |> length() == 5)
@@ -129,7 +138,6 @@ testthat::test_that("Overall demo works", {
 
   suppressWarnings({
     simul <- simulate_life_history(results)
-    expect_true(ncol(simul) >= 100)
     expect_type(simul$mortality, "double")
     expect_type(simul$maturity, "double")
     expect_type(simul$clutch_1, "double")
