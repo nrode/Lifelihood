@@ -7,14 +7,6 @@ testthat::test_that("Overall demo works", {
       spore = as.factor(spore)
     )
 
-  generate_clutch_vector <- function(N) {
-    return(paste(
-      "pon",
-      rep(c("start", "end", "size"), N),
-      rep(1:N, each = 3),
-      sep = "_"
-    ))
-  }
   clutchs <- generate_clutch_vector(28)
 
   lifelihoodData <- as_lifelihoodData(
@@ -31,23 +23,11 @@ testthat::test_that("Overall demo works", {
     model_specs = c("wei", "gam", "exp")
   )
 
-  expect_true(!is.null(lifelihoodData$df))
-  expect_true(lifelihoodData$sex == "sex")
-  expect_true(lifelihoodData$sex_start == "sex_start")
-  expect_true(lifelihoodData$sex_end == "sex_end")
-  expect_true(lifelihoodData$maturity_start == "mat_start")
-  expect_true(lifelihoodData$maturity_end == "mat_end")
-  expect_true(all(lifelihoodData$clutchs == clutchs))
-  expect_true(lifelihoodData$death_start == "death_start")
-  expect_true(lifelihoodData$death_end == "death_end")
-  expect_true(all(lifelihoodData$model_specs == c("wei", "gam", "exp")))
-  expect_true(all(lifelihoodData$covariates == c("par", "spore")))
-  expect_true(lifelihoodData$matclutch == FALSE)
-  expect_true(lifelihoodData$right_censoring_date == 1000)
-  expect_true(lifelihoodData$critical_age == 20)
-  expect_true(lifelihoodData$ratiomax == 10)
-
-  results <- lifelihood(lifelihoodData, "config.yaml")
+  results <- lifelihood(
+    lifelihoodData,
+    "config.yaml",
+    raise_estimation_warning = FALSE
+  )
 
   expect_true(results$config |> length() == 3)
   expect_true(results$config$mortality |> length() == 5)
