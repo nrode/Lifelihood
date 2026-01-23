@@ -95,7 +95,7 @@ Here it's a minimalist usage of the function, where we only specify the `lifelih
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config"),
+  path_config = use_test_config("config"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

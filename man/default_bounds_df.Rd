@@ -62,7 +62,7 @@ bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
 # then we pass it to lifelihood()
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config"),
+  path_config = use_test_config("config"),
   param_bounds_df = bounds_df,
   raise_estimation_warning = FALSE
 )

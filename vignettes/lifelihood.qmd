@@ -64,7 +64,7 @@ dataLFH <- as_lifelihoodData(
 
 ```{r}
 results <- dataLFH |>
-  lifelihood(path_config = get_config_path("config_pierrick"))
+  lifelihood(path_config = use_test_config("config_pierrick"))
 ```
 
 ### AIC & BIC

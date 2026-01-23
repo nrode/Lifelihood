@@ -41,7 +41,7 @@
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config2"),
+#'   path_config = use_test_config("config2"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )

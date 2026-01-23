@@ -37,13 +37,14 @@ lifelihoodData <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = get_config_path("config_pierrick"),
+  path_config = use_test_config("config_pierrick"),
   delete_temp_files = FALSE,
   seeds = c(1, 2, 3, 4),
 )
 summary(results)
 
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
+prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
 prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", mcmc.fit = TRUE, se.fit = TRUE) |> head()
