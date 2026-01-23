@@ -10,7 +10,7 @@ or for customizing parameter boundaries with
 ## Usage
 
 ``` r
-lifelihoodData(
+as_lifelihoodData(
   df,
   sex,
   sex_start,
@@ -22,6 +22,7 @@ lifelihoodData(
   death_end,
   model_specs,
   covariates,
+  block = NULL,
   matclutch = FALSE,
   matclutch_size = NULL,
   right_censoring_date = 1000,
@@ -92,6 +93,10 @@ lifelihoodData(
 
   Vector containing the names of the covariates.
 
+- block:
+
+  Name of the block to which each individual belong to.
+
 - matclutch:
 
   Whether the maturity event (designated by `maturity_start` and
@@ -158,7 +163,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",

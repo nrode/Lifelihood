@@ -17,7 +17,7 @@ has_valid_factor_levels(original_df, newdata, covariates)
 - original_df:
 
   Training set passed to
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
   (`df` arg).
 
 - newdata:
@@ -28,7 +28,7 @@ has_valid_factor_levels(original_df, newdata, covariates)
 - covariates:
 
   Covariates passed to
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
   (`covariates` arg).
 
 ## Value

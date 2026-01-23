@@ -8,6 +8,8 @@
   Akaike Information Criterion for small sample size
 - [`BIC(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/BIC.lifelihoodResults.md)
   : Bayesian Information Criterion
+- [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
+  : Data object for lifelihood
 - [`coef(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/coef.md)
   [`coeff()`](https://nrode.github.io/Lifelihood/reference/coef.md) :
   Coefficient estimates
@@ -27,8 +29,6 @@
   : Get the path to a built-in configuration file.
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling
-- [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
-  : Data object for lifelihood
 - [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
   : Likelihood
 - [`mcmc()`](https://nrode.github.io/Lifelihood/reference/mcmc.md) :

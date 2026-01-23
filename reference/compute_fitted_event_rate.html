@@ -27,8 +27,7 @@ on some new data."></head><body>
     <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/visit-masks.html">Visit masks</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -54,7 +53,7 @@ on some new data."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Compute fitted mortality rate</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/R/compute_event_rate.R" class="external-link"><code>R/compute_event_rate.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/patch/R/compute_event_rate.R" class="external-link"><code>R/compute_event_rate.R</code></a></small>
       <div class="d-none name"><code>compute_fitted_event_rate.Rd</code></div>
     </div>
 
@@ -72,7 +71,7 @@ on some new data.</p>
 <span>  newdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  groupby <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  mcmc.ci.fit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  mcmc.ci.fit <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,8 +120,9 @@ or "Overall" if groupby = NULL), and Event_rate (event rate
 over the interval).
 Note that for reproduction event, the first reproduction event of
 each individual cannot be computed if maturity was not observed (i.e. mat_clutch is true)
-When the interval between the last reproduction event of an individual and their death is
-greater than <code>interval_width</code> the individuals are included in the computation of reproduction rate</p>
+When the interval between the last reproduction event of an individual
+and their death is greater than <code>interval_width</code> the individuals are
+included in the computation of reproduction rate</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

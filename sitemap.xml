@@ -12,6 +12,7 @@
 <url><loc>https://nrode.github.io/Lifelihood/articles/overview.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/required-data-format.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/articles/visit-masks.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/authors.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/index.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/AIC.lifelihoodResults.html</loc></url>
@@ -22,6 +23,7 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/SurvGam.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/SurvLgn.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/SurvWei.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/check_boundaries_simple.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/check_estimation.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/check_lifelihoodData.html</loc></url>
@@ -49,7 +51,6 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/has_valid_factor_levels.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/index.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/lifelihood.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/lifelihoodData.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/lifelihood_fit.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/link.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.html</loc></url>

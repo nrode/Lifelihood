@@ -1,7 +1,7 @@
 # Create the input data file from a dataframe
 
 Takes a dataframe (`df` argument in
-[`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 function) and apply to each row the
 [`format_row()`](https://nrode.github.io/Lifelihood/reference/format_row.md)
 function to create the input data file.

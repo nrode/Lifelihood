@@ -13,7 +13,7 @@ empirical mortality rate.
 You don't need to fit with
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
 to use this function, only to retrieve a lifelihood data object with
-[`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 
 If you want more control over the style of the graph, use the
 [`compute_observed_event_rate()`](https://nrode.github.io/Lifelihood/reference/compute_observed_event_rate.md)
@@ -35,7 +35,7 @@ plot_fitted_event_rate(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
-  se.fit = TRUE,
+  se.fit = FALSE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"
@@ -133,7 +133,7 @@ plot_event_rate(
 - lifelihoodData:
 
   `lifelihoodData` object created with
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md).
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
 
 - rate_df:
 

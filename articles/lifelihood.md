@@ -151,7 +151,7 @@ df |> head()
 
 ``` r
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -172,7 +172,7 @@ dataLFH <- lifelihoodData(
 
 results <- dataLFH |>
   lifelihood(path_config = get_config_path("config_pierrick"))
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 3082 4558 9700 8343 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 8680 8777 4258 9217 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### AIC & BIC
@@ -180,9 +180,9 @@ results <- dataLFH |>
 ``` r
 
 AIC(results)
-#> [1] 150241.4
+#> [1] 64497.32
 BIC(results)
-#> [1] 150319
+#> [1] 64574.9
 ```
 
 ### Summary results
@@ -191,39 +191,39 @@ BIC(results)
 
 coef(results)
 #>                int_expt_death          eff_expt_death_par_1 
-#>                    -0.9095786                    -0.2159296 
+#>                   -0.91123988                   -0.47196519 
 #>          eff_expt_death_par_2        eff_expt_death_spore_1 
-#>                    -0.2434283                    -0.6098942 
+#>                   -0.19236761                   -0.35393888 
 #>        eff_expt_death_spore_2        eff_expt_death_spore_3 
-#>                    -0.5368412                    -0.5620846 
+#>                   -0.27927322                   -0.61614728 
 #>           int_survival_param2             int_expt_maturity 
-#>                    -4.8779079                     0.6260985 
+#>                   -4.87655251                   -1.53565501 
 #>       eff_expt_maturity_par_1       eff_expt_maturity_par_2 
-#>                    -3.3763124                     1.9661555 
+#>                    0.21869760                    0.09608328 
 #>           int_maturity_param2         int_expt_reproduction 
-#>                    -1.1521281                    -1.7886209 
+#>                   -7.44209045                   -1.79044633 
 #>   eff_expt_reproduction_par_1   eff_expt_reproduction_par_2 
-#>                    -1.6957365                    -1.1109551 
+#>                   -1.69252636                   -1.10386156 
 #>       int_reproduction_param2 eff_reproduction_param2_par_1 
-#>                    -1.1200005                    -0.4441284 
+#>                   -1.12054363                   -0.44295119 
 #> eff_reproduction_param2_par_2               int_n_offspring 
-#>                    -0.8047261                    -2.5450012
+#>                   -0.80218243                   -2.54230468
 coeff(results, "expt_death")
 #>         int_expt_death   eff_expt_death_par_1   eff_expt_death_par_2 
-#>             -0.9095786             -0.2159296             -0.2434283 
+#>             -0.9112399             -0.4719652             -0.1923676 
 #> eff_expt_death_spore_1 eff_expt_death_spore_2 eff_expt_death_spore_3 
-#>             -0.6098942             -0.5368412             -0.5620846
+#>             -0.3539389             -0.2792732             -0.6161473
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>           -4.877908
+#>           -4.876553
 
 AIC(results)
-#> [1] 150241.4
+#> [1] 64497.32
 BIC(results)
-#> [1] 150319
+#> [1] 64574.9
 
 logLik(results)
-#> [1] -75102.72
+#> [1] -32230.66
 ```
 
 ### Prediction on new data
@@ -240,7 +240,7 @@ newdata <- tibble(
   )
 
 prediction(results, "expt_death", newdata = newdata)
-#> [1] -0.9095786 -1.7354023 -1.6898481 -1.5194727 -1.1255081 -1.7629011 -1.7354023
+#> [1] -0.9112399 -1.7371440 -1.3828807 -1.2651788 -1.3832051 -1.4575464 -1.7371440
 prediction(results, "expt_death", newdata = newdata, type = "response")
-#> [1] 93.01660 48.56776 50.47869 58.17151 79.37784 47.44332 48.56776
+#> [1] 92.90648 48.49590 64.97794 71.30789 64.96110 61.18591 48.49590
 ```

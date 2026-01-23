@@ -13,7 +13,7 @@ compute_fitted_event_rate(
   newdata = NULL,
   max_time = NULL,
   groupby = NULL,
-  mcmc.ci.fit = TRUE
+  mcmc.ci.fit = FALSE
 )
 ```
 

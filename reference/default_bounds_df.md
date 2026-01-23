@@ -1,7 +1,7 @@
 # Get dataframe with default parameter boundaries
 
 Once you have created your `lifelihoodData` object with
-[`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md),
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md),
 you can call the `default_bounds_df()` function to generate (and load) a
 dataframe with default parameter bounds. This is useful when you want to
 customise these bounds and then pass this dataframe to the
@@ -20,7 +20,7 @@ default_bounds_df(lifelihoodData)
 - lifelihoodData:
 
   `lifelihoodData` object created with
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md).
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
 
 ## Value
 
@@ -58,7 +58,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -92,5 +92,5 @@ results <- lifelihood(
   param_bounds_df = bounds_df,
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/Rtmp1chBfo/temp_libpath2105695de780/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 2607 1476 8166 2245 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/Rtmpk4Df99/temp_libpath192b484508d7/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1476 8166 2245 4613 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```

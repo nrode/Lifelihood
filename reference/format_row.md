@@ -26,7 +26,7 @@ format_row(
 - row:
 
   A row of the dataframe object provided by the user (`df` argument in
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
   function).
 
 - sex:

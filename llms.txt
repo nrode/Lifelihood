@@ -25,7 +25,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -57,6 +57,8 @@ summary(results)
   Akaike Information Criterion for small sample size
 - [`BIC(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/BIC.lifelihoodResults.md)
   : Bayesian Information Criterion
+- [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
+  : Data object for lifelihood
 - [`coef(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/coef.md)
   [`coeff()`](https://nrode.github.io/Lifelihood/reference/coef.md) :
   Coefficient estimates
@@ -76,8 +78,6 @@ summary(results)
   : Get the path to a built-in configuration file.
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling
-- [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
-  : Data object for lifelihood
 - [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
   : Likelihood
 - [`mcmc()`](https://nrode.github.io/Lifelihood/reference/mcmc.md) :
@@ -107,9 +107,8 @@ summary(results)
   lifelihood](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md):
 - [Customize parameter boundaries and estimation
   warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
-
-### Miscellaneous
-
+- [Visit
+  masks](https://nrode.github.io/Lifelihood/articles/visit-masks.md):
 - [Generate clutch
   names](https://nrode.github.io/Lifelihood/articles/generate-clutch-names.md):
 

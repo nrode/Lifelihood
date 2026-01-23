@@ -8,7 +8,7 @@ Useful function for creating a good-quality line graph
 of changes in the empirical mortality rate.
 You don't need to fit with lifelihood() to use this
 function, only to retrieve a lifelihood data object
-with lifelihoodData()
+with as_lifelihoodData()
 If you want more control over the style of the graph,
 use the compute_observed_event_rate() function to retrieve
 data.
@@ -22,7 +22,7 @@ Useful function for creating a good-quality line graph
 of changes in the empirical mortality rate.
 You don't need to fit with lifelihood() to use this
 function, only to retrieve a lifelihood data object
-with lifelihoodData()
+with as_lifelihoodData()
 If you want more control over the style of the graph,
 use the compute_observed_event_rate() function to retrieve
 data.
@@ -53,8 +53,7 @@ and plot_fitted_event_rate()."></head><body>
     <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/visit-masks.html">Visit masks</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -80,7 +79,7 @@ and plot_fitted_event_rate()."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Display change in predicted event rate with age</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/R/visualization.R" class="external-link"><code>R/visualization.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/patch/R/visualization.R" class="external-link"><code>R/visualization.R</code></a></small>
       <div class="d-none name"><code>plot_event_rate.Rd</code></div>
     </div>
 
@@ -94,7 +93,7 @@ retrieve the predicted data.</p>
 of changes in the empirical mortality rate.</p>
 <p>You don't need to fit with <code><a href="lifelihood.html">lifelihood()</a></code> to use this
 function, only to retrieve a lifelihood data object
-with <code><a href="lifelihoodData.html">lifelihoodData()</a></code></p>
+with <code><a href="as_lifelihoodData.html">as_lifelihoodData()</a></code></p>
 <p>If you want more control over the style of the graph,
 use the <code><a href="compute_observed_event_rate.html">compute_observed_event_rate()</a></code> function to retrieve
 data.</p>
@@ -114,7 +113,7 @@ and <code>plot_fitted_event_rate()</code>.</p>
 <span>  max_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  groupby <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  use_facet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  se.fit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="st">"Time"</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="st">"Event Rate"</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"points"</span></span>
@@ -214,7 +213,7 @@ of "points" or 'lines").</p></dd>
 
 <dt id="arg-lifelihooddata">lifelihoodData<a class="anchor" aria-label="anchor" href="#arg-lifelihooddata"></a></dt>
 <dd><p><code>lifelihoodData</code> object created with
-<code><a href="lifelihoodData.html">lifelihoodData()</a></code>.</p></dd>
+<code><a href="as_lifelihoodData.html">as_lifelihoodData()</a></code>.</p></dd>
 
 
 <dt id="arg-rate-df">rate_df<a class="anchor" aria-label="anchor" href="#arg-rate-df"></a></dt>

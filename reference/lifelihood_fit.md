@@ -40,7 +40,7 @@ lifelihood_fit(
 - lifelihoodData:
 
   `lifelihoodData` object created with
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md).
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
 
 - path_config:
 

@@ -27,8 +27,7 @@ for one or several life history events. By default, all fitted events are simula
     <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/visit-masks.html">Visit masks</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -54,7 +53,7 @@ for one or several life history events. By default, all fitted events are simula
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Simulate outcomes from a fitted lifelihood model</h1>
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/R/simulation.R" class="external-link"><code>R/simulation.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/patch/R/simulation.R" class="external-link"><code>R/simulation.R</code></a></small>
       <div class="d-none name"><code>simulate_life_history.Rd</code></div>
     </div>
 
@@ -69,6 +68,8 @@ for one or several life history events. By default, all fitted events are simula
 <span>  <span class="va">object</span>,</span>
 <span>  event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"mortality"</span>, <span class="st">"reproduction"</span>, <span class="st">"maturity"</span><span class="op">)</span>,</span>
 <span>  newdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use_censoring <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  visits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -90,6 +91,21 @@ Default is <code>"all"</code>, which simulates all fitted events.</p></dd>
 <dt id="arg-newdata">newdata<a class="anchor" aria-label="anchor" href="#arg-newdata"></a></dt>
 <dd><p>Optional <code>data.frame</code> providing covariate values for prediction.
 If <code>NULL</code>, the original model data are used.</p></dd>
+
+
+<dt id="arg-use-censoring">use_censoring<a class="anchor" aria-label="anchor" href="#arg-use-censoring"></a></dt>
+<dd><p>Whether to retrieve censoring time interval for each event. For example,
+the time for "mortality_start" and "mortality_end" instead of just the time for "mortality".
+In this case, it's advised to use the <code>visits</code> argument and provide you own visit data. Otherwise,
+they are determined only using ages where events have been observed not ages where people went to the
+lab and no event was observed.</p></dd>
+
+
+<dt id="arg-visits">visits<a class="anchor" aria-label="anchor" href="#arg-visits"></a></dt>
+<dd><p>Optionnal dataframe with 2 columns: "block" (must be the same name
+as passed in <code><a href="as_lifelihoodData.html">as_lifelihoodData()</a></code> <code>block</code> argument) and exactly "visit".
+For each block, "visit" corresponds to the ages where the events of individuals
+have been recorded.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>

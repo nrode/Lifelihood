@@ -16,7 +16,7 @@ compute_reproduction_intervals(lifelihoodData, verbose = TRUE)
 - lifelihoodData:
 
   Ouput of
-  [`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+  [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 
 - verbose:
 

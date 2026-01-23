@@ -61,7 +61,7 @@ df |> head()
 ```
 
 Prepare input parameters for the
-[`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 function:
 
 ``` r
@@ -84,7 +84,7 @@ vignette.*
 
 ## Create the `lifelihoodData` object
 
-[`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md)
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 creates a `lifelihoodData` object, which is a list containing all the
 information needed to run the lifelihood program of a given dataset of
 individual life history.
@@ -100,7 +100,7 @@ third one for **clutchs**.
 
 ``` r
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -122,7 +122,7 @@ dataLFH <- lifelihoodData(
 ### All default parameters
 
 Once you have created your `lifelihoodData` object with
-[`lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/lifelihoodData.md),
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md),
 you can call the
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
 function to run the lifelihood program.

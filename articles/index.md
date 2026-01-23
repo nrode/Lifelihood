@@ -10,9 +10,8 @@
   lifelihood](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md):
 - [Customize parameter boundaries and estimation
   warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
-
-### Miscellaneous
-
+- [Visit
+  masks](https://nrode.github.io/Lifelihood/articles/visit-masks.md):
 - [Generate clutch
   names](https://nrode.github.io/Lifelihood/articles/generate-clutch-names.md):
 
