@@ -32,7 +32,7 @@ lifelihood_fit(
 )
 }
 \arguments{
-\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=lifelihoodData]{lifelihoodData()}}.}
+\item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
 

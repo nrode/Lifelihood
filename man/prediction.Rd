@@ -42,7 +42,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -58,7 +58,7 @@ dataLFH <- lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config2"),
+  path_config = use_test_config("config2"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

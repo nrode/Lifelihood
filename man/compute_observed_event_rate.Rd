@@ -15,7 +15,7 @@ compute_observed_event_rate(
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with
-\code{\link[=lifelihoodData]{lifelihoodData()}}.}
+\code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 
 \item{interval_width}{The interval width used to calculate the
 event rate. For instance, if the time unit for deaths in

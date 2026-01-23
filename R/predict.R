@@ -25,7 +25,7 @@
 #'   "clutch_start2", "clutch_end2", "clutch_size2"
 #' )
 #'
-#' dataLFH <- lifelihoodData(
+#' dataLFH <- as_lifelihoodData(
 #'   df = df,
 #'   sex = "sex",
 #'   sex_start = "sex_start",
@@ -41,7 +41,7 @@
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = get_config_path("config2"),
+#'   path_config = use_test_config("config2"),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
 #' )
@@ -87,6 +87,13 @@ prediction <- function(
     stop(
       "You must use MCMC when fitting to be able to predict with MCMC. ",
       "Use the `MCMC` argument with a value different than 0 in `lifelihood::lifelihood().`"
+    )
+  }
+
+  if (se.fit && !object$se.fit) {
+    stop(
+      "Can't predict with `se.fit` if didn't fit standard errors. ",
+      "Set `se.fit=TRUE` in `lifelihood::lifelihood().`"
     )
   }
 
@@ -221,9 +228,9 @@ prediction <- function(
 #'
 #' @keywords internal
 #'
-#' @param original_df Training set passed to [lifelihoodData()] (`df` arg).
+#' @param original_df Training set passed to [as_lifelihoodData()] (`df` arg).
 #' @param newdata New data passed to [lifelihood::predict()] (`newdata` arg).
-#' @param covariates Covariates passed to [lifelihoodData()] (`covariates` arg).
+#' @param covariates Covariates passed to [as_lifelihoodData()] (`covariates` arg).
 #'
 #' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.
 has_valid_factor_levels <- function(original_df, newdata, covariates) {

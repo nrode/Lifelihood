@@ -6,7 +6,7 @@
 #' events, death) and estimates the parameters of the model
 #' using maximum likelihood.
 #'
-#' @param lifelihoodData `lifelihoodData` object created with [lifelihoodData()].
+#' @param lifelihoodData `lifelihoodData` object created with [as_lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
 #' @param n_fit Number of times to fit.
@@ -325,6 +325,7 @@ lifelihood_fit <- function(
   )
 
   results$MCMC <- MCMC
+  results$se.fit <- se.fit
   results$lifelihoodData <- lifelihoodData
   results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df

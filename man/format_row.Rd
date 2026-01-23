@@ -19,7 +19,7 @@ format_row(
 }
 \arguments{
 \item{row}{A row of the dataframe object provided by the user
-(\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function).}
+(\code{df} argument in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} function).}
 
 \item{sex}{Column name containing the sex of the observations.}
 

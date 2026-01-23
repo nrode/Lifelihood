@@ -16,7 +16,7 @@ plot_fitted_event_rate(
   max_time = NULL,
   groupby = NULL,
   use_facet = FALSE,
-  se.fit = TRUE,
+  se.fit = FALSE,
   xlab = "Time",
   ylab = "Event Rate",
   type = "points"
@@ -85,7 +85,7 @@ MCMC when fitting with \code{\link[=lifelihood]{lifelihood()}} with the \code{MC
 of "points" or 'lines").}
 
 \item{lifelihoodData}{\code{lifelihoodData} object created with
-\code{\link[=lifelihoodData]{lifelihoodData()}}.}
+\code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 
 \item{rate_df}{Dataframe with event rate.}
 
@@ -115,7 +115,7 @@ of changes in the empirical mortality rate.
 
 You don't need to fit with \code{\link[=lifelihood]{lifelihood()}} to use this
 function, only to retrieve a lifelihood data object
-with \code{\link[=lifelihoodData]{lifelihoodData()}}
+with \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}
 
 If you want more control over the style of the graph,
 use the \code{\link[=compute_observed_event_rate]{compute_observed_event_rate()}} function to retrieve

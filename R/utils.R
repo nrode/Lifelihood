@@ -207,11 +207,11 @@ detect_os <- function() {
 #' @return Absolute path to the configuration file
 #'
 #' @examples
-#' get_config_path("config")
-#' get_config_path("config2")
+#' use_test_config("config")
+#' use_test_config("config2")
 #'
 #' @export
-get_config_path <- function(
+use_test_config <- function(
   config_name = c("config", "config2", "config_pierrick")
 ) {
   config_name <- match.arg(config_name)

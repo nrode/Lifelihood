@@ -4,7 +4,7 @@
 \alias{simulate_event}
 \title{Simulation for a single life event}
 \usage{
-simulate_event(object, ev, newdata)
+simulate_event(object, ev, newdata, lifelihoodData, use_censoring, visits)
 }
 \arguments{
 \item{object}{Output of \code{\link[=lifelihood]{lifelihood()}}}
@@ -13,6 +13,13 @@ simulate_event(object, ev, newdata)
 "reproduction" or "maturity")}
 
 \item{newdata}{An optional dataset used for prediction}
+
+\item{lifelihoodData}{Output of \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
+
+\item{visits}{Dataframe with 2 columns: "block" (must be the same as passed
+in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} \code{block} argument) and exactly "visit". For
+each block, "visit" corresponds to the ages where the events of individuals
+have been recorded.}
 }
 \description{
 Internal function used to simulate one of the

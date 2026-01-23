@@ -44,7 +44,7 @@ df |> head()
 ### Creata a data lifelihood object
 
 ```{r}
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",
@@ -64,7 +64,7 @@ dataLFH <- lifelihoodData(
 
 ```{r}
 results <- dataLFH |>
-  lifelihood(path_config = get_config_path("config_pierrick"))
+  lifelihood(path_config = use_test_config("config_pierrick"))
 ```
 
 ### AIC & BIC

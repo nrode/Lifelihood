@@ -252,7 +252,7 @@ compute_fitted_event_rate <- function(
 #' Calculate the empirical event rate over a given interval.
 #'
 #' @param lifelihoodData `lifelihoodData` object created with
-#' [lifelihoodData()].
+#' [as_lifelihoodData()].
 #' @param interval_width The interval width used to calculate the
 #' event rate. For instance, if the time unit for deaths in
 #' the original dataset is days and `interval_width` is set to 10,
@@ -448,7 +448,7 @@ compute_observed_event_rate <- function(
 #' of death unless the time of death is right censored. It also removes
 #' individuals that never reproduced.
 #'
-#' @param lifelihoodData Ouput of [lifelihoodData()]
+#' @param lifelihoodData Ouput of [as_lifelihoodData()]
 #' @param verbose Boolean whether to print messages during the computation process (default=TRUE)
 #'
 #' @return A dataframe with time interval between consecutive clutches starting from maturity.

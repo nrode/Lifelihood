@@ -8,6 +8,8 @@ simulate_life_history(
   object,
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
+  use_censoring = FALSE,
+  visits = NULL,
   seed = NULL
 )
 }
@@ -20,6 +22,17 @@ Default is \code{"all"}, which simulates all fitted events.}
 
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
 If \code{NULL}, the original model data are used.}
+
+\item{use_censoring}{Whether to retrieve censoring time interval for each event. For example,
+the time for "mortality_start" and "mortality_end" instead of just the time for "mortality".
+In this case, it's advised to use the \code{visits} argument and provide you own visit data. Otherwise,
+they are determined only using ages where events have been observed not ages where people went to the
+lab and no event was observed.}
+
+\item{visits}{Optionnal dataframe with 2 columns: "block" (must be the same name
+as passed in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} \code{block} argument) and exactly "visit".
+For each block, "visit" corresponds to the ages where the events of individuals
+have been recorded.}
 
 \item{seed}{Optional integer. If provided, sets the random seed for reproducibility.}
 }

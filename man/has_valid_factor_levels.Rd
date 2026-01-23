@@ -7,11 +7,11 @@
 has_valid_factor_levels(original_df, newdata, covariates)
 }
 \arguments{
-\item{original_df}{Training set passed to \code{\link[=lifelihoodData]{lifelihoodData()}} (\code{df} arg).}
+\item{original_df}{Training set passed to \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} (\code{df} arg).}
 
 \item{newdata}{New data passed to \code{\link[=predict]{predict()}} (\code{newdata} arg).}
 
-\item{covariates}{Covariates passed to \code{\link[=lifelihoodData]{lifelihoodData()}} (\code{covariates} arg).}
+\item{covariates}{Covariates passed to \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} (\code{covariates} arg).}
 }
 \value{
 TRUE if all factor levels of each covariate in \code{newdata} passed to \code{\link[=predict]{predict()}} are present in the training data, FALSE otherwise.
