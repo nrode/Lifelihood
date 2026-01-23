@@ -1,4 +1,4 @@
-#' @export
+#' @keywords internal
 get_visits <- function(lifelihoodData) {
   clutch_start_and_end <- lifelihoodData$clutchs[
     seq_along(lifelihoodData$clutchs) %% 3 != 0
@@ -21,10 +21,12 @@ get_visits <- function(lifelihoodData) {
     distinct(!!as.symbol(lifelihoodData$block), visit) |>
     arrange(lifelihoodData$block, visit)
 
+  write.csv2(visits, "here.csv")
+
   return(visits)
 }
 
-#' @export
+#' @keywords internal
 add_visit_masks <- function(simul_df, lifelihoodData, event, visits) {
   simul_df <- simul_df |>
     mutate(lifelihoodData$df[lifelihoodData$block])
