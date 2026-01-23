@@ -90,6 +90,13 @@ prediction <- function(
     )
   }
 
+  if (se.fit && !object$se.fit) {
+    stop(
+      "Can't predict with `se.fit` if didn't fit standard errors. ",
+      "Set `se.fit=TRUE` in `lifelihood::lifelihood().`"
+    )
+  }
+
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
       "Invalid factor levels in new data.
