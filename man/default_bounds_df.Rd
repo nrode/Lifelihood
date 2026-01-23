@@ -8,14 +8,14 @@ default_bounds_df(lifelihoodData)
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with
-\code{\link[=lifelihoodData]{lifelihoodData()}}.}
+\code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 }
 \value{
 A dataframe with the default parameter boundaries.
 }
 \description{
 Once you have created your \code{lifelihoodData} object with
-\code{\link[=lifelihoodData]{lifelihoodData()}}, you can call the \code{default_bounds_df()}
+\code{\link[=as_lifelihoodData]{as_lifelihoodData()}}, you can call the \code{default_bounds_df()}
 function to generate (and load) a dataframe with default
 parameter bounds.
 This is useful when you want to customise these bounds and
@@ -39,7 +39,7 @@ clutchs <- c(
   "clutch_start2", "clutch_end2", "clutch_size2"
 )
 
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",

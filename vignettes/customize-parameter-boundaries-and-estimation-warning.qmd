@@ -62,7 +62,7 @@ clutchs <- c(
 # Create the `lifelihoodData` object
 
 ```{r}
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",

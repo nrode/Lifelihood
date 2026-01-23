@@ -7,7 +7,7 @@
 compute_reproduction_intervals(lifelihoodData, verbose = TRUE)
 }
 \arguments{
-\item{lifelihoodData}{Ouput of \code{\link[=lifelihoodData]{lifelihoodData()}}}
+\item{lifelihoodData}{Ouput of \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}}
 
 \item{verbose}{Boolean whether to print messages during the computation process (default=TRUE)}
 }

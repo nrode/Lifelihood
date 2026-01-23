@@ -67,7 +67,7 @@ to the YAML configuration file.}
 files.}
 }
 \description{
-Takes a dataframe (\code{df} argument in \code{\link[=lifelihoodData]{lifelihoodData()}} function)
+Takes a dataframe (\code{df} argument in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} function)
 and apply to each row the \code{\link[=format_row]{format_row()}} function to create the
 input data file.
 }

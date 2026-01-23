@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Once you have created your `lifelihoodData` object with
-#' [lifelihoodData()], you can call the `default_bounds_df()`
+#' [as_lifelihoodData()], you can call the `default_bounds_df()`
 #' function to generate (and load) a dataframe with default
 #' parameter bounds.
 #' This is useful when you want to customise these bounds and
@@ -11,7 +11,7 @@
 #' generate it and keep the default values).
 #'
 #' @param lifelihoodData `lifelihoodData` object created with
-#' [lifelihoodData()].
+#' [as_lifelihoodData()].
 #'
 #' @return A dataframe with the default parameter boundaries.
 #'
@@ -33,7 +33,7 @@
 #'   "clutch_start2", "clutch_end2", "clutch_size2"
 #' )
 #'
-#' dataLFH <- lifelihoodData(
+#' dataLFH <- as_lifelihoodData(
 #'   df = df,
 #'   sex = "sex",
 #'   sex_start = "sex_start",

@@ -7,9 +7,9 @@
 #' @param ev A character of the event (must be one of "mortality",
 #' "reproduction" or "maturity")
 #' @param newdata An optional dataset used for prediction
-#' @param lifelihoodData Output of [lifelihood::lifelihoodData()].
+#' @param lifelihoodData Output of [lifelihood::as_lifelihoodData()].
 #' @param visits Dataframe with 2 columns: "block" (must be the same as passed
-#' in [lifelihood::lifelihoodData()] `block` argument) and exactly "visit". For
+#' in [lifelihood::as_lifelihoodData()] `block` argument) and exactly "visit". For
 #' each block, "visit" corresponds to the ages where the events of individuals
 #' have been recorded.
 #'
@@ -175,7 +175,7 @@ simulate_event <- function(
 #' they are determined only using ages where events have been observed not ages where people went to the
 #' lab and no event was observed.
 #' @param visits Optionnal dataframe with 2 columns: "block" (must be the same name
-#' as passed in [lifelihood::lifelihoodData()] `block` argument) and exactly "visit".
+#' as passed in [lifelihood::as_lifelihoodData()] `block` argument) and exactly "visit".
 #' For each block, "visit" corresponds to the ages where the events of individuals
 #' have been recorded.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.

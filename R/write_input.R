@@ -1,7 +1,7 @@
 #' @title Create the input data file from a dataframe
 #'
 #' @description
-#' Takes a dataframe (`df` argument in [lifelihoodData()] function)
+#' Takes a dataframe (`df` argument in [as_lifelihoodData()] function)
 #' and apply to each row the [format_row()] function to create the
 #' input data file.
 #'
@@ -161,7 +161,7 @@ format_dataframe_to_txt <- function(
 #' @keywords internal
 #'
 #' @param row A row of the dataframe object provided by the user
-#' (`df` argument in [lifelihoodData()] function).
+#' (`df` argument in [as_lifelihoodData()] function).
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the
 #' interval in which the sex was determined.

@@ -149,7 +149,7 @@ plot_fitted_event_rate <- function(
 #'
 #' You don't need to fit with [lifelihood()] to use this
 #' function, only to retrieve a lifelihood data object
-#' with [lifelihoodData()]
+#' with [as_lifelihoodData()]
 #'
 #' If you want more control over the style of the graph,
 #' use the [compute_observed_event_rate()] function to retrieve
@@ -158,7 +158,7 @@ plot_fitted_event_rate <- function(
 #' @name plot_event_rate
 #'
 #' @param lifelihoodData `lifelihoodData` object created with
-#' [lifelihoodData()].
+#' [as_lifelihoodData()].
 #' @param interval_width The interval width used to calculate the
 #' event rate.
 #' @param event Which event to compute? Must be one of "mortality",

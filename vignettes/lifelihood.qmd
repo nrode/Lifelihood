@@ -44,7 +44,7 @@ df |> head()
 ### Creata a data lifelihood object
 
 ```{r}
-dataLFH <- lifelihoodData(
+dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
   sex_start = "sex_start",

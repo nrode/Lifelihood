@@ -25,7 +25,7 @@
 #'   "clutch_start2", "clutch_end2", "clutch_size2"
 #' )
 #'
-#' dataLFH <- lifelihoodData(
+#' dataLFH <- as_lifelihoodData(
 #'   df = df,
 #'   sex = "sex",
 #'   sex_start = "sex_start",
@@ -221,9 +221,9 @@ prediction <- function(
 #'
 #' @keywords internal
 #'
-#' @param original_df Training set passed to [lifelihoodData()] (`df` arg).
+#' @param original_df Training set passed to [as_lifelihoodData()] (`df` arg).
 #' @param newdata New data passed to [lifelihood::predict()] (`newdata` arg).
-#' @param covariates Covariates passed to [lifelihoodData()] (`covariates` arg).
+#' @param covariates Covariates passed to [as_lifelihoodData()] (`covariates` arg).
 #'
 #' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.
 has_valid_factor_levels <- function(original_df, newdata, covariates) {

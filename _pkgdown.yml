@@ -20,9 +20,7 @@ articles:
       - setting-up-the-configuration-file
       - how-to-use-lifelihood
       - customize-parameter-boundaries-and-estimation-warning
-  - title: Miscellaneous
-    navbar: Miscellaneous
-    contents:
+      - visit-masks
       - generate-clutch-names
   - title: Developer
     navbar: Developer
