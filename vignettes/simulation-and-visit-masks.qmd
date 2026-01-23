@@ -10,11 +10,11 @@ knitr:
     comment: '#>'
 ---
 
-`lifelihood` offers a `lifelihood::simulate_life_history()` function that lets simulate new observations based on estimations you made.
+`lifelihood` offers a `lifelihood::simulate_life_history()` function that lets you simulate new observations based on estimates you made.
 
 ## Fitting
 
-First, we need to fit with `lifelihood::lifelihood()`:
+First, we need to fit the model with `lifelihood::lifelihood()`:
 
 
 ```{r}
@@ -64,13 +64,13 @@ summary(results)
 
 ## Default simulations
 
-By default, `lifelihood` will simulate all life history events (maturity, reproduction and death):
+By default, `lifelihood` will simulate all life history events (maturity, reproduction, and death):
 
 ```{r}
 simulate_life_history(results) |> head()
 ```
 
-But you can specify which one you want:
+But you can specify which event you want:
 
 ```{r}
 simulate_life_history(results, event = "maturity") |> head()
@@ -78,9 +78,9 @@ simulate_life_history(results, event = "maturity") |> head()
 
 ## Simulations with visit masks
 
-`lifelihood` lets you specify visit masks that are used to simulate data that respects more how the original data was measured by adding constraints in the interval dates.
+`lifelihood` lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.
 
-If you scroll top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the name of the block to which each individual belong to. Since we provided this value, we just need to add `use_censoring = TRUE` to add censoring time interval in the simulation:
+If you scroll to the top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the block to which each individual belongs. Since we provided this value, we just need to add `use_censoring = TRUE` to include censoring time intervals in the simulation:
 
 ```{r}
 results |>
@@ -88,9 +88,9 @@ results |>
   head()
 ```
 
-Right now visit masks are "deducted" from the original dataset, but you can provide your own visit masks with the `visits` argument.
+Right now, visit masks are "deduced" from the original dataset, but you can provide your own visit masks with the `visits` argument.
 
-It must be a dataframe with 2 columns: "block" (must be the same name as passed in `lifelihood::as_lifelihoodData()` `block` argument) and exactly "visit". For each block, "visit" corresponds to the ages where the events of individuals have been recorded.
+It must be a dataframe with 2 columns: `block` (the same name as passed to `lifelihood::as_lifelihoodData()` in the `block` argument) and exactly `visit`. For each block, `visit` corresponds to the ages at which the events of individuals were recorded.
 
 Let's define this visits dataframe:
 
@@ -113,3 +113,4 @@ results |>
   ) |>
   head()
 ```
+
