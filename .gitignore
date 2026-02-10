@@ -37,3 +37,4 @@ inst/bin/*
 *.log
 *claude*
 source-pascal
+release.sh

@@ -21,6 +21,7 @@ articles:
       - how-to-use-lifelihood
       - customize-parameter-boundaries-and-estimation-warning
       - simulation-and-visit-masks
+      - standard-errors-and-mcmc
       - generate-clutch-names
   - title: Developer
     navbar: Developer

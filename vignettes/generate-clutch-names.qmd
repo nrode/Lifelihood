@@ -49,5 +49,3 @@ generate_clutch_vector <- function(N) {
 clutchs <- generate_clutch_vector(28)
 clutchs
 ```
-
-The only disadvantage of this technique is that the clutch names have to have a specific pattern.

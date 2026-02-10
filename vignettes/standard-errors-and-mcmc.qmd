@@ -1,0 +1,116 @@
+---
+title: "Standard errors and MCMC"
+vignette: >
+  %\VignetteIndexEntry{standard-errors-and-mcmc}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+`lifelihood` offers a `lifelihood::simulate_life_history()` function that lets you simulate new observations based on estimates you made.
+
+## Fitting
+
+First, we need to fit the model with `lifelihood::lifelihood()`:
+
+
+```{r}
+#| label: setup
+library(lifelihood)
+library(tidyverse)
+
+df <- datapierrick |>
+  mutate(
+    par = as.factor(par),
+    spore = as.factor(spore),
+    block = rep(1:2, each = nrow(datapierrick) / 2)
+  )
+
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "pon",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(28)
+
+lifelihoodData <- as_lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  block = "block",
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("par", "spore"),
+  model_specs = c("wei", "lgn", "wei")
+)
+
+results <- lifelihood(
+  lifelihoodData,
+  path_config = use_test_config("config_pierrick")
+)
+
+summary(results)
+```
+
+## Default simulations
+
+By default, `lifelihood` will simulate all life history events (maturity, reproduction, and death):
+
+```{r}
+simulate_life_history(results) |> head()
+```
+
+But you can specify which event you want:
+
+```{r}
+simulate_life_history(results, event = "maturity") |> head()
+```
+
+## Simulations with visit masks
+
+`lifelihood` lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.
+
+If you scroll to the top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the block to which each individual belongs. Since we provided this value, we just need to add `use_censoring = TRUE` to include censoring time intervals in the simulation:
+
+```{r}
+results |>
+  simulate_life_history(event = "maturity", use_censoring = TRUE) |>
+  head()
+```
+
+Right now, visit masks are "deduced" from the original dataset, but you can provide your own visit masks with the `visits` argument.
+
+It must be a dataframe with 2 columns: `block` (the same name as passed to `lifelihood::as_lifelihoodData()` in the `block` argument) and exactly `visit`. For each block, `visit` corresponds to the ages at which the events of individuals were recorded.
+
+Let's define this visits dataframe:
+
+```{r}
+visits <- tibble(
+  block = rep(1:2, nrow(datapierrick) / 2),
+  visit = 1:nrow(datapierrick)
+)
+visits |> head()
+```
+
+Now we can pass this to the `simulate_life_history()` function:
+
+```{r}
+results |>
+  simulate_life_history(
+    event = "maturity",
+    use_censoring = TRUE,
+    visits = visits
+  ) |>
+  head()
+```
+
