@@ -88,9 +88,9 @@ bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
 # then we pass it to lifelihood()
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config"),
+  path_config = use_test_config("config"),
   param_bounds_df = bounds_df,
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/Rtmpk4Df99/temp_libpath192b484508d7/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1476 8166 2245 4613 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpUkrTUT/temp_libpath18fd3072c687/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1476 8166 2245 4613 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```

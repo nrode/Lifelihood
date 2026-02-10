@@ -1,5 +1,5 @@
-  
-  
+\
+\
 
 ## Description
 
@@ -7,7 +7,7 @@
 provide the joined likelihood of all the events in an individual
 life-history (time of maturity, reproductive events, death).
 
-  
+\
 
 ## Quick start
 

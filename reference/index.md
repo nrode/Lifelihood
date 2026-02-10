@@ -25,7 +25,7 @@
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
-- [`get_config_path()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
+- [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
   : Get the path to a built-in configuration file.
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling

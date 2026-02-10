@@ -12,7 +12,7 @@ For more info about configuration files, see
 ## Usage
 
 ``` r
-get_config_path(config_name = c("config", "config2", "config_pierrick"))
+use_test_config(config_name = c("config", "config2", "config_pierrick"))
 ```
 
 ## Arguments
@@ -34,8 +34,8 @@ Absolute path to the configuration file
 ## Examples
 
 ``` r
-get_config_path("config")
-#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/Rtmpk4Df99/temp_libpath192b484508d7/lifelihood/configs/config.yaml"
-get_config_path("config2")
-#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/Rtmpk4Df99/temp_libpath192b484508d7/lifelihood/configs/config2.yaml"
+use_test_config("config")
+#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpUkrTUT/temp_libpath18fd3072c687/lifelihood/configs/config.yaml"
+use_test_config("config2")
+#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpUkrTUT/temp_libpath18fd3072c687/lifelihood/configs/config2.yaml"
 ```

@@ -77,11 +77,11 @@ dataLFH <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config2"),
+  path_config = use_test_config("config2"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/kg/7q73ww8s3llgyl61c9z_j5g40000gn/T/Rtmpk4Df99/temp_libpath192b484508d7/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpUkrTUT/temp_libpath18fd3072c687/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 #> Error in (start + 1):length(lines): argument of length 0
 
 prediction(results, "expt_death")

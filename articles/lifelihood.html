@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">lifelihood</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,8 @@
     <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><a class="dropdown-item" href="../articles/visit-masks.html">Visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -84,7 +85,7 @@
 
 
 
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/patch/vignettes/lifelihood.qmd" class="external-link"><code>vignettes/lifelihood.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/vignettes/lifelihood.qmd" class="external-link"><code>vignettes/lifelihood.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
     </div>
 
@@ -100,10 +101,10 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tidyverse</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.6</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.1.6</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.1     ✔ tibble    3.3.1</span></span>
-<span><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tidyr     1.3.2</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
 <span><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
@@ -261,17 +262,17 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">dataLFH</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span>path_config <span class="op">=</span> <span class="fu"><a href="../reference/get_config_path.html">get_config_path</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 8680 8777 4258 9217 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span>path_config <span class="op">=</span> <span class="fu"><a href="../reference/get_config_path.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 5036 6121 3499 1234 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="aic-bic">AIC &amp; BIC<a class="anchor" aria-label="anchor" href="#aic-bic"></a>
 </h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64497.32</span></span>
+<span><span class="co">#&gt; [1] 64508.21</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64574.9</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 64585.79</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="summary-results">Summary results<a class="anchor" aria-label="anchor" href="#summary-results"></a>
 </h3>
@@ -279,39 +280,39 @@
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coef.html">coef</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                int_expt_death          eff_expt_death_par_1 </span></span>
-<span><span class="co">#&gt;                   -0.91123988                   -0.47196519 </span></span>
+<span><span class="co">#&gt;                   -0.91007076                   -0.10234735 </span></span>
 <span><span class="co">#&gt;          eff_expt_death_par_2        eff_expt_death_spore_1 </span></span>
-<span><span class="co">#&gt;                   -0.19236761                   -0.35393888 </span></span>
+<span><span class="co">#&gt;                    0.04524202                   -0.72602161 </span></span>
 <span><span class="co">#&gt;        eff_expt_death_spore_2        eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;                   -0.27927322                   -0.61614728 </span></span>
+<span><span class="co">#&gt;                   -0.65098532                   -0.85561574 </span></span>
 <span><span class="co">#&gt;           int_survival_param2             int_expt_maturity </span></span>
-<span><span class="co">#&gt;                   -4.87655251                   -1.53565501 </span></span>
+<span><span class="co">#&gt;                   -4.87751698                   -1.47032827 </span></span>
 <span><span class="co">#&gt;       eff_expt_maturity_par_1       eff_expt_maturity_par_2 </span></span>
-<span><span class="co">#&gt;                    0.21869760                    0.09608328 </span></span>
+<span><span class="co">#&gt;                    0.11031041                    0.03011947 </span></span>
 <span><span class="co">#&gt;           int_maturity_param2         int_expt_reproduction </span></span>
-<span><span class="co">#&gt;                   -7.44209045                   -1.79044633 </span></span>
+<span><span class="co">#&gt;                   -7.41762409                   -1.79040388 </span></span>
 <span><span class="co">#&gt;   eff_expt_reproduction_par_1   eff_expt_reproduction_par_2 </span></span>
-<span><span class="co">#&gt;                   -1.69252636                   -1.10386156 </span></span>
+<span><span class="co">#&gt;                   -1.69262872                   -1.10232305 </span></span>
 <span><span class="co">#&gt;       int_reproduction_param2 eff_reproduction_param2_par_1 </span></span>
-<span><span class="co">#&gt;                   -1.12054363                   -0.44295119 </span></span>
+<span><span class="co">#&gt;                   -1.12249799                   -0.43834967 </span></span>
 <span><span class="co">#&gt; eff_reproduction_param2_par_2               int_n_offspring </span></span>
-<span><span class="co">#&gt;                   -0.80218243                   -2.54230468</span></span>
+<span><span class="co">#&gt;                   -0.79959532                   -2.54275453</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         int_expt_death   eff_expt_death_par_1   eff_expt_death_par_2 </span></span>
-<span><span class="co">#&gt;             -0.9112399             -0.4719652             -0.1923676 </span></span>
+<span><span class="co">#&gt;            -0.91007076            -0.10234735             0.04524202 </span></span>
 <span><span class="co">#&gt; eff_expt_death_spore_1 eff_expt_death_spore_2 eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;             -0.3539389             -0.2792732             -0.6161473</span></span>
+<span><span class="co">#&gt;            -0.72602161            -0.65098532            -0.85561574</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"survival_param2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; int_survival_param2 </span></span>
-<span><span class="co">#&gt;           -4.876553</span></span>
+<span><span class="co">#&gt;           -4.877517</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64497.32</span></span>
+<span><span class="co">#&gt; [1] 64508.21</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64574.9</span></span>
+<span><span class="co">#&gt; [1] 64585.79</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -32230.66</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -32236.1</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="prediction-on-new-data">Prediction on new data<a class="anchor" aria-label="anchor" href="#prediction-on-new-data"></a>
 </h3>
@@ -327,9 +328,9 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -0.9112399 -1.7371440 -1.3828807 -1.2651788 -1.3832051 -1.4575464 -1.7371440</span></span>
+<span><span class="co">#&gt; [1] -0.9100708 -1.7384397 -1.5158141 -1.6360924 -1.0124181 -1.5908503 -1.7384397</span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 92.90648 48.49590 64.97794 71.30789 64.96110 61.18591 48.49590</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 92.98397 48.44249 58.34633 52.81202 86.34897 54.84246 48.44249</span></span></code></pre></div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

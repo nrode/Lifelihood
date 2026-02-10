@@ -1,5 +1,5 @@
-  
-  
+\
+\
 
 ## Description
 
@@ -7,7 +7,7 @@
 provide the joined likelihood of all the events in an individual
 life-history (time of maturity, reproductive events, death).
 
-  
+\
 
 ## Quick start
 
@@ -74,7 +74,7 @@ summary(results)
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
-- [`get_config_path()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
+- [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
   : Get the path to a built-in configuration file.
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling
@@ -107,8 +107,10 @@ summary(results)
   lifelihood](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md):
 - [Customize parameter boundaries and estimation
   warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
-- [Visit
-  masks](https://nrode.github.io/Lifelihood/articles/visit-masks.md):
+- [Simulation and visit
+  masks](https://nrode.github.io/Lifelihood/articles/simulation-and-visit-masks.md):
+- [Standard errors and
+  MCMC](https://nrode.github.io/Lifelihood/articles/standard-errors-and-mcmc.md):
 - [Generate clutch
   names](https://nrode.github.io/Lifelihood/articles/generate-clutch-names.md):
 

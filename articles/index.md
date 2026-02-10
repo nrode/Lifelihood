@@ -10,8 +10,10 @@
   lifelihood](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md):
 - [Customize parameter boundaries and estimation
   warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
-- [Visit
-  masks](https://nrode.github.io/Lifelihood/articles/visit-masks.md):
+- [Simulation and visit
+  masks](https://nrode.github.io/Lifelihood/articles/simulation-and-visit-masks.md):
+- [Standard errors and
+  MCMC](https://nrode.github.io/Lifelihood/articles/standard-errors-and-mcmc.md):
 - [Generate clutch
   names](https://nrode.github.io/Lifelihood/articles/generate-clutch-names.md):
 

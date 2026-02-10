@@ -18,10 +18,10 @@ If you haven’t already check it, have a look at:
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.1.4     ✔ readr     2.1.6
+#> ✔ dplyr     1.2.0     ✔ readr     2.1.6
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.1     ✔ tibble    3.3.1
-#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
 #> ✔ purrr     1.2.1     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
@@ -117,9 +117,9 @@ Let’s run the analysis with default parameters.
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config")
+  path_config = use_test_config("config")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 8986 6234 9647 3694 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 9928 2357 7447 2826 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ## Warning
@@ -200,10 +200,10 @@ again with the `param_bounds_df` argument:
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = get_config_path("config"),
+  path_config = use_test_config("config"),
   param_bounds_df = bounds_df
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 7903 4104 7047 4101 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 7650 8394 1694 8177 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 Now we don’t get any warning!
