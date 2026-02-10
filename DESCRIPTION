@@ -1,6 +1,6 @@
 Package: lifelihood
 Title: Likelihood of Life History of Individuals
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
     person("Nicolas", "Rode", , "nicolas.rode@inrae.fr", role = c("aut", "cre")),
     person("Thomas", "Lenormand", , "thomas.lenormand@cefe.cnrs.fr", role = "aut"),
