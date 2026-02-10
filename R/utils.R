@@ -212,7 +212,13 @@ detect_os <- function() {
 #'
 #' @export
 use_test_config <- function(
-  config_name = c("config", "config2", "config_pierrick")
+  config_name = c(
+    "config",
+    "config2",
+    "config_pierrick",
+    "example_config_se",
+    "example_config_mcmc"
+  )
 ) {
   config_name <- match.arg(config_name)
 

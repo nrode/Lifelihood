@@ -20,6 +20,7 @@ dev.R
 ^vignettes/\.quarto$
 ^vignettes/*_files$
 ^dev/*
+^img/*
 ^lifelihood_
 ^data_internals/
 ^\.github$
