@@ -21,8 +21,6 @@ get_visits <- function(lifelihoodData) {
     distinct(!!as.symbol(lifelihoodData$block), visit) |>
     arrange(lifelihoodData$block, visit)
 
-  write.csv2(visits, "here.csv")
-
   return(visits)
 }
 
