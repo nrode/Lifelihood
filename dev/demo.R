@@ -137,10 +137,9 @@ plot_observed_event_rate(
 plot_fitted_event_rate(
   results,
   interval_width = 2,
-  event = "reproduction",
+  event = "mortality",
   use_facet = TRUE,
   groupby = "par",
   xlab = "Age (days)",
-  ylab = "Fitted Reproduction Rate",
-  se.fit = TRUE
+  ylab = "Fitted Mortality Rate",
 )
