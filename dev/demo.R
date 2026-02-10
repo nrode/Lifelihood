@@ -103,7 +103,7 @@ newdata <- expand.grid(
     by = interval_width
   )
 ) |>
-  dplyr::mutate(
+  mutate(
     Interval_start = time,
     Interval_end = time + interval_width,
     Mean_Interval = time + interval_width / 2

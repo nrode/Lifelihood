@@ -8,13 +8,12 @@ knitr:
   opts_chunk:
     collapse: true
     comment: '#>'
+code-annotations: hover
+execute: 
+  cache: true
 ---
 
-`lifelihood` offers a `lifelihood::simulate_life_history()` function that lets you simulate new observations based on estimates you made.
-
-## Fitting
-
-First, we need to fit the model with `lifelihood::lifelihood()`:
+## Create a `lifelihoodData` object
 
 
 ```{r}
@@ -23,8 +22,10 @@ library(lifelihood)
 library(tidyverse)
 
 df <- datapierrick |>
+  as_tibble() |>
   mutate(
     par = as.factor(par),
+    geno = as.factor(geno),
     spore = as.factor(spore),
     block = rep(1:2, each = nrow(datapierrick) / 2)
   )
@@ -51,66 +52,82 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  model_specs = c("wei", "lgn", "wei")
+  model_specs = c("wei", "gam", "lgn")
 )
+```
 
+## Standard errors
+
+By default, lifelihood will not try to fit standard errors. But, you can use the `se.fit` argument for this purpose:
+
+```{r}
 results <- lifelihood(
-  lifelihoodData,
-  path_config = use_test_config("config_pierrick")
+  lifelihoodData = lifelihoodData,
+  path_config = use_test_config("example_config_se"), # <1>
+  se.fit = TRUE, # <2>
 )
-
 summary(results)
 ```
 
-## Default simulations
+1. Configuration file that determines which model(s) to fit. Learn more [here](./setting-up-the-configuration-file.html).
+2. Default value is `FALSE`.
 
-By default, `lifelihood` will simulate all life history events (maturity, reproduction, and death):
+Now if we have a look at the estimations we have standard errors:
 
 ```{r}
-simulate_life_history(results) |> head()
+results$effects |> as_tibble()
 ```
 
-But you can specify which event you want:
+### Prediction
+
+We can predict with standard errors.
+
+- Default scale
 
 ```{r}
-simulate_life_history(results, event = "maturity") |> head()
+prediction(results, "expt_death", se.fit = TRUE) |>
+  as_tibble() |>
+  sample_n(5)
 ```
 
-## Simulations with visit masks
-
-`lifelihood` lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.
-
-If you scroll to the top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the block to which each individual belongs. Since we provided this value, we just need to add `use_censoring = TRUE` to include censoring time intervals in the simulation:
+- Response scale
 
 ```{r}
-results |>
-  simulate_life_history(event = "maturity", use_censoring = TRUE) |>
-  head()
+prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
+  as_tibble() |>
+  sample_n(5)
 ```
 
-Right now, visit masks are "deduced" from the original dataset, but you can provide your own visit masks with the `visits` argument.
 
-It must be a dataframe with 2 columns: `block` (the same name as passed to `lifelihood::as_lifelihoodData()` in the `block` argument) and exactly `visit`. For each block, `visit` corresponds to the ages at which the events of individuals were recorded.
+## MCMC
 
-Let's define this visits dataframe:
+> MCMC stands for **M**arkov **C**hain **M**onte **C**arlo.
+
+### Fitting with MCMC
 
 ```{r}
-visits <- tibble(
-  block = rep(1:2, nrow(datapierrick) / 2),
-  visit = 1:nrow(datapierrick)
+results <- lifelihood(
+  lifelihoodData = lifelihoodData,
+  path_config = use_test_config("example_config_mcmc"),
+  MCMC = 30 # <1>
 )
-visits |> head()
 ```
 
-Now we can pass this to the `simulate_life_history()` function:
+1. Perform 30 MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
+
+### Visualization
+
+We can represent the confidence interval computed thanks to the standard errors:
 
 ```{r}
-results |>
-  simulate_life_history(
-    event = "maturity",
-    use_censoring = TRUE,
-    visits = visits
-  ) |>
-  head()
+plot_fitted_event_rate(
+  results,
+  interval_width = 10,
+  event = "mortality",
+  use_facet = TRUE,
+  groupby = "par",
+  xlab = "Age (days)",
+  ylab = "Fitted Mortality Rate",
+  se.fit = TRUE
+)
 ```
-
