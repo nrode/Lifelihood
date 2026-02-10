@@ -263,16 +263,16 @@
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">dataLFH</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span>path_config <span class="op">=</span> <span class="fu"><a href="../reference/get_config_path.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 5036 6121 3499 1234 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1542 2116 9493 5092 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="aic-bic">AIC &amp; BIC<a class="anchor" aria-label="anchor" href="#aic-bic"></a>
 </h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64508.21</span></span>
+<span><span class="co">#&gt; [1] 64505.08</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64585.79</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 64582.66</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="summary-results">Summary results<a class="anchor" aria-label="anchor" href="#summary-results"></a>
 </h3>
@@ -280,39 +280,39 @@
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coef.html">coef</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                int_expt_death          eff_expt_death_par_1 </span></span>
-<span><span class="co">#&gt;                   -0.91007076                   -0.10234735 </span></span>
+<span><span class="co">#&gt;                   -0.91284340                   -0.14645793 </span></span>
 <span><span class="co">#&gt;          eff_expt_death_par_2        eff_expt_death_spore_1 </span></span>
-<span><span class="co">#&gt;                    0.04524202                   -0.72602161 </span></span>
+<span><span class="co">#&gt;                   -0.89960236                   -0.67857422 </span></span>
 <span><span class="co">#&gt;        eff_expt_death_spore_2        eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;                   -0.65098532                   -0.85561574 </span></span>
+<span><span class="co">#&gt;                   -0.60177153                    0.09195066 </span></span>
 <span><span class="co">#&gt;           int_survival_param2             int_expt_maturity </span></span>
-<span><span class="co">#&gt;                   -4.87751698                   -1.47032827 </span></span>
+<span><span class="co">#&gt;                   -4.87853932                   -1.55265369 </span></span>
 <span><span class="co">#&gt;       eff_expt_maturity_par_1       eff_expt_maturity_par_2 </span></span>
-<span><span class="co">#&gt;                    0.11031041                    0.03011947 </span></span>
+<span><span class="co">#&gt;                    0.37825176                    0.09718313 </span></span>
 <span><span class="co">#&gt;           int_maturity_param2         int_expt_reproduction </span></span>
-<span><span class="co">#&gt;                   -7.41762409                   -1.79040388 </span></span>
+<span><span class="co">#&gt;                   -7.52812744                   -1.78836143 </span></span>
 <span><span class="co">#&gt;   eff_expt_reproduction_par_1   eff_expt_reproduction_par_2 </span></span>
-<span><span class="co">#&gt;                   -1.69262872                   -1.10232305 </span></span>
+<span><span class="co">#&gt;                   -1.69560336                   -1.10439001 </span></span>
 <span><span class="co">#&gt;       int_reproduction_param2 eff_reproduction_param2_par_1 </span></span>
-<span><span class="co">#&gt;                   -1.12249799                   -0.43834967 </span></span>
+<span><span class="co">#&gt;                   -1.12191859                   -0.43984909 </span></span>
 <span><span class="co">#&gt; eff_reproduction_param2_par_2               int_n_offspring </span></span>
-<span><span class="co">#&gt;                   -0.79959532                   -2.54275453</span></span>
+<span><span class="co">#&gt;                   -0.80178169                   -2.54163649</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         int_expt_death   eff_expt_death_par_1   eff_expt_death_par_2 </span></span>
-<span><span class="co">#&gt;            -0.91007076            -0.10234735             0.04524202 </span></span>
+<span><span class="co">#&gt;            -0.91284340            -0.14645793            -0.89960236 </span></span>
 <span><span class="co">#&gt; eff_expt_death_spore_1 eff_expt_death_spore_2 eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;            -0.72602161            -0.65098532            -0.85561574</span></span>
+<span><span class="co">#&gt;            -0.67857422            -0.60177153             0.09195066</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"survival_param2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; int_survival_param2 </span></span>
-<span><span class="co">#&gt;           -4.877517</span></span>
+<span><span class="co">#&gt;           -4.878539</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64508.21</span></span>
+<span><span class="co">#&gt; [1] 64505.08</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64585.79</span></span>
+<span><span class="co">#&gt; [1] 64582.66</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -32236.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -32234.54</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="prediction-on-new-data">Prediction on new data<a class="anchor" aria-label="anchor" href="#prediction-on-new-data"></a>
 </h3>
@@ -328,9 +328,9 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -0.9100708 -1.7384397 -1.5158141 -1.6360924 -1.0124181 -1.5908503 -1.7384397</span></span>
+<span><span class="co">#&gt; [1] -0.9128434 -1.7378756 -2.4142173 -1.5914176 -1.0593013 -2.4910200 -1.7378756</span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 92.98397 48.44249 58.34633 52.81202 86.34897 54.84246 48.44249</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 92.80026 48.46574 26.59969 54.81662 83.41227 24.78372 48.46574</span></span></code></pre></div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

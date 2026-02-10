@@ -101,7 +101,7 @@
 <a href="https://www.freepascal.org/download.html" class="external-link">FPC</a> (Free Pascal Compiler): the compiler</li>
 <li>
 <a href="https://www.docker.com/" class="external-link">Docker</a>: facilitate the compilation process</li>
-<li>(ideally) <a href="https://makefiletutorial.com/" class="external-link">Make</a>: facilitate the compilation process</li>
+<li>(ideally) <a href="https://github.com/casey/just" class="external-link">just</a>: facilitate the compilation process</li>
 <li>(optionnal) <a href="https://github.com/alefragnani/vscode-language-pascal" class="external-link">Pascal VS Code / Positron extension</a>: facilitate development</li>
 </ul>
 <section class="level2"><h2 id="setup-r-environment">Setup R environment<a class="anchor" aria-label="anchor" href="#setup-r-environment"></a>
@@ -135,15 +135,18 @@
 <ul>
 <li>On macOS</li>
 </ul>
-<p>Run <code>make macos</code>. This runs the <code>macos</code> script inside <code>Makefile</code>, and will automatically update <code>inst/bin/lifelihood-macos</code>.</p>
+<p>Run <code>just macos</code>. This runs the <code>macos</code> script inside <code>justfile</code>, and will automatically update <code>inst/bin/lifelihood-macos</code>.</p>
 <ul>
 <li>On Linux</li>
 </ul>
-<p>Run <code>make linux</code>. This runs the <code>linux</code> script inside <code>Makefile</code>, and will automatically update <code>inst/bin/lifelihood-linux</code>. If this is the first time you’re compiling, this might take some time as it will build a Docker image first.</p>
+<p>Run <code>just linux</code>. This runs the <code>linux</code> script inside <code>justfile</code>, and will automatically update <code>inst/bin/lifelihood-linux</code>. If this is the first time you’re compiling, this might take some time as it will build a Docker image first.</p>
+<blockquote>
+<p>Note that except if you’re on a Linux machine, you’ll need to have Docker installed and the Docker daemon running.</p>
+</blockquote>
 <ul>
 <li>On Windows</li>
 </ul>
-<p>The <code>make windows</code> command is a work in progress. You can still compile manually using Lazarus.</p>
+<p>The <code>just windows</code> command is a work in progress. You can still compile manually using Lazarus.</p>
 </section><section class="level2"><h2 id="open-project-in-lazarus">Open project in Lazarus<a class="anchor" aria-label="anchor" href="#open-project-in-lazarus"></a>
 </h2>
 <p>Then, open Lazarus and select “Open project”. You should select the file named <code>lifelihood.lpi</code> that should be in <code>Lifelihood/source/lifelihood.lpi</code>.</p>

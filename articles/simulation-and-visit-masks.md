@@ -62,7 +62,7 @@ results <- lifelihood(
   lifelihoodData,
   path_config = use_test_config("config_pierrick")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 5932 4186 810 3763 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1320 4060 4080 3575 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 
 summary(results)
 #> 
@@ -71,35 +71,35 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -32261.764
-#> AIC:             64559.5
-#> BIC:             64637.1
+#> Log-likelihood:  -75102.904
+#> AIC:             150241.8
+#> BIC:             150319.4
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -0.918 (0.000)
-#>   expt_death eff_expt_death_par_1 -0.292 (0.000)
-#>   expt_death eff_expt_death_par_2 -0.417 (0.000)
-#>   expt_death eff_expt_death_spore_1 -0.529 (0.000)
-#>   expt_death eff_expt_death_spore_2 -0.457 (0.000)
-#>   expt_death eff_expt_death_spore_3 -0.385 (0.000)
-#>   survival_param2 (Intercept) -4.881 (0.000)
+#>   expt_death (Intercept)    -0.914 (0.000)
+#>   expt_death eff_expt_death_par_1 -0.167 (0.000)
+#>   expt_death eff_expt_death_par_2 -0.312 (0.000)
+#>   expt_death eff_expt_death_spore_1 -0.658 (0.000)
+#>   expt_death eff_expt_death_spore_2 -0.581 (0.000)
+#>   expt_death eff_expt_death_spore_3 -0.490 (0.000)
+#>   survival_param2 (Intercept) -4.879 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.363 (0.000)
-#>   expt_maturity eff_expt_maturity_par_1 -0.011 (0.000)
-#>   expt_maturity eff_expt_maturity_par_2 -0.079 (0.000)
-#>   maturity_param2 (Intercept) -7.409 (0.000)
+#>   expt_maturity (Intercept) -3.600 (0.000)
+#>   expt_maturity eff_expt_maturity_par_1 0.918 (0.000)
+#>   expt_maturity eff_expt_maturity_par_2 0.797 (0.000)
+#>   maturity_param2 (Intercept) -0.166 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.789 (0.000)
-#>   expt_reproduction eff_expt_reproduction_par_1 -1.693 (0.000)
-#>   expt_reproduction eff_expt_reproduction_par_2 -1.102 (0.000)
-#>   reproduction_param2 (Intercept) -1.121 (0.000)
-#>   reproduction_param2 eff_reproduction_param2_par_1 -0.437 (0.000)
-#>   reproduction_param2 eff_reproduction_param2_par_2 -0.797 (0.000)
-#>   n_offspring (Intercept)   -2.545 (0.000)
+#>   expt_reproduction (Intercept) -1.793 (0.000)
+#>   expt_reproduction eff_expt_reproduction_par_1 -1.686 (0.000)
+#>   expt_reproduction eff_expt_reproduction_par_2 -1.097 (0.000)
+#>   reproduction_param2 (Intercept) -1.130 (0.000)
+#>   reproduction_param2 eff_reproduction_param2_par_1 -0.428 (0.000)
+#>   reproduction_param2 eff_reproduction_param2_par_2 -0.784 (0.000)
+#>   n_offspring (Intercept)   -2.541 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -115,16 +115,16 @@ By default, `lifelihood` will simulate all life history events
 ``` r
 
 simulate_life_history(results) |> head()
-#> # A tibble: 6 × 153
+#> # A tibble: 6 × 165
 #>   mortality maturity clutch_1 n_offspring_clutch_1 clutch_2 n_offspring_clutch_2
 #>       <dbl>    <dbl>    <dbl>                <int>    <dbl>                <int>
-#> 1     129.      14.5     15.5                    7     18.2                    7
-#> 2      83.0     14.2     20.3                    5     26.1                    4
-#> 3      92.7     14.7     21.2                    6     23.4                    5
-#> 4      90.5     14.4     17.4                    2     21.2                    5
-#> 5     112.      14.7     21.7                    3     26.0                    1
-#> 6     108.      14.9     19.8                    3     22.9                    5
-#> # ℹ 147 more variables: clutch_3 <dbl>, n_offspring_clutch_3 <int>,
+#> 1      98.3   0.217      3.58                    4     8.89                    3
+#> 2      99.7   0.315      4.08                    5     9.94                    5
+#> 3     109.    0.109      5.02                    8    12.6                     4
+#> 4      48.8   3.14       7.29                    4    12.4                     5
+#> 5      99.6   0.0471     4.21                    6    10.4                     5
+#> 6     108.    0.0160     2.20                    5     4.02                    4
+#> # ℹ 159 more variables: clutch_3 <dbl>, n_offspring_clutch_3 <int>,
 #> #   clutch_4 <dbl>, n_offspring_clutch_4 <int>, clutch_5 <dbl>,
 #> #   n_offspring_clutch_5 <int>, clutch_6 <dbl>, n_offspring_clutch_6 <int>,
 #> #   clutch_7 <dbl>, n_offspring_clutch_7 <int>, clutch_8 <dbl>,
@@ -141,12 +141,12 @@ simulate_life_history(results, event = "maturity") |> head()
 #> # A tibble: 6 × 1
 #>   maturity
 #>      <dbl>
-#> 1     12.6
-#> 2     12.6
-#> 3     15.1
-#> 4     14.3
-#> 5     14.9
-#> 6     14.0
+#> 1  0.00594
+#> 2  0.437  
+#> 3  0.0906 
+#> 4  0.421  
+#> 5  0.0242 
+#> 6  0.465
 ```
 
 ## Simulations with visit masks
@@ -168,13 +168,13 @@ results |>
   head()
 #> # A tibble: 6 × 3
 #>   maturity maturity_start maturity_end
-#>      <dbl>          <int>        <int>
-#> 1     14.5             14           15
-#> 2     13.8             13           14
-#> 3     14.3             14           15
-#> 4     15.1             15           16
-#> 5     14.1             14           15
-#> 6     14.4             14           15
+#>      <dbl>          <dbl>        <dbl>
+#> 1   0.0269              0            7
+#> 2   0.0478              0            7
+#> 3   1.13                0            7
+#> 4   1.30                0            7
+#> 5   0.147               0            7
+#> 6   0.0159              0            7
 ```
 
 Right now, visit masks are “deduced” from the original dataset, but you
@@ -222,11 +222,11 @@ results |>
   head()
 #> # A tibble: 6 × 3
 #>   maturity maturity_start maturity_end
-#>      <dbl>          <int>        <int>
-#> 1     14.2             13           15
-#> 2     14.7             13           15
-#> 3     14.6             13           15
-#> 4     14.2             13           15
-#> 5     13.5             13           15
-#> 6     13.4             13           15
+#>      <dbl>          <dbl>        <int>
+#> 1   1.22         1                   3
+#> 2   3.20         3                   5
+#> 3   0.107        0.000001            1
+#> 4   1.53         1                   3
+#> 5   0.0564       0.000001            1
+#> 6   0.900        0.000001            1
 ```

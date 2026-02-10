@@ -7,7 +7,7 @@ In order to compile the underlying Pascal code, you need to install:
 - [FPC](https://www.freepascal.org/download.html) (Free Pascal
   Compiler): the compiler
 - [Docker](https://www.docker.com/): facilitate the compilation process
-- (ideally) [Make](https://makefiletutorial.com/): facilitate the
+- (ideally) [just](https://github.com/casey/just): facilitate the
   compilation process
 - (optionnal) [Pascal VS Code / Positron
   extension](https://github.com/alefragnani/vscode-language-pascal):
@@ -68,19 +68,22 @@ Duration: 4.8 s
 
 - On macOS
 
-Run `make macos`. This runs the `macos` script inside `Makefile`, and
+Run `just macos`. This runs the `macos` script inside `justfile`, and
 will automatically update `inst/bin/lifelihood-macos`.
 
 - On Linux
 
-Run `make linux`. This runs the `linux` script inside `Makefile`, and
+Run `just linux`. This runs the `linux` script inside `justfile`, and
 will automatically update `inst/bin/lifelihood-linux`. If this is the
 first time you’re compiling, this might take some time as it will build
 a Docker image first.
 
+> Note that except if you’re on a Linux machine, you’ll need to have
+> Docker installed and the Docker daemon running.
+
 - On Windows
 
-The `make windows` command is a work in progress. You can still compile
+The `just windows` command is a work in progress. You can still compile
 manually using Lazarus.
 
 ## Open project in Lazarus

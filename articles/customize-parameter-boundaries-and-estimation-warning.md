@@ -119,7 +119,7 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = use_test_config("config")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 9928 2357 7447 2826 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 9765 5781 1247 2701 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ## Warning
@@ -203,7 +203,7 @@ results <- lifelihood(
   path_config = use_test_config("config"),
   param_bounds_df = bounds_df
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 7650 8394 1694 8177 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 6597 1571 1011 7826 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 Now we don’t get any warning!

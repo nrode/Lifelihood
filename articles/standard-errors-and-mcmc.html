@@ -93,10 +93,8 @@
 
 
 
-    <p><code>lifelihood</code> offers a <code><a href="../reference/simulate_life_history.html">lifelihood::simulate_life_history()</a></code> function that lets you simulate new observations based on estimates you made.</p>
-<section class="level2"><h2 id="fitting">Fitting<a class="anchor" aria-label="anchor" href="#fitting"></a>
+    <section class="level2"><h2 id="create-a-lifelihooddata-object">Create a <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-a-lifelihooddata-object"></a>
 </h2>
-<p>First, we need to fit the model with <code><a href="../reference/lifelihood.html">lifelihood::lifelihood()</a></code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
@@ -114,8 +112,10 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">datapierrick</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">par</span><span class="op">)</span>,</span>
+<span>    geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span>,</span>
 <span>    spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">spore</span><span class="op">)</span>,</span>
 <span>    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">datapierrick</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -142,154 +142,154 @@
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
-<span>  <span class="va">lifelihoodData</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/get_config_path.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1763 8992 4613 1362 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Sample size: 550 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -75103.413</span></span>
-<span><span class="co">#&gt; AIC:             150242.8</span></span>
-<span><span class="co">#&gt; BIC:             150320.4</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --- Key Parameters ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -0.891 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.429 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.137 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_spore_1 -0.411 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_spore_2 -0.335 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_spore_3 -0.685 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -4.863 (0.000)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) 1.180 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_par_1 0.179 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_par_2 -6.060 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -2.748 (0.000)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.792 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_reproduction eff_expt_reproduction_par_1 -1.691 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_reproduction eff_expt_reproduction_par_2 -1.112 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -1.130 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 eff_reproduction_param2_par_1 -0.441 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 eff_reproduction_param2_par_2 -0.795 (0.000)</span></span>
-<span><span class="co">#&gt;   n_offspring (Intercept)   -2.541 (0.000)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --- Convergence ---</span></span>
-<span><span class="co">#&gt; All parameters within bounds</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ======================</span></span></code></pre></div>
+<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"gam"</span>, <span class="st">"lgn"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
-</section><section class="level2"><h2 id="default-simulations">Default simulations<a class="anchor" aria-label="anchor" href="#default-simulations"></a>
+</section><section class="level2"><h2 id="standard-errors">Standard errors<a class="anchor" aria-label="anchor" href="#standard-errors"></a>
 </h2>
-<p>By default, <code>lifelihood</code> will simulate all life history events (maturity, reproduction, and death):</p>
+<p>By default, lifelihood will not try to fit standard errors. But, you can use the <code>se.fit</code> argument for this purpose:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lifelihood</span>(</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lifelihoodData =</span> lifelihoodData,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">path_config =</span> <span class="fu">use_test_config</span>(<span class="st">"example_config_se"</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span>,</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(results)</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 TRUE 0 FALSE 0 9237 1491 840 9119 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample size: 550 </span></span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --- Model Fit ---</span></span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Log-likelihood:  -343783.721</span></span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; AIC:             687575.4</span></span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; BIC:             687592.7</span></span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --- Key Parameters ---</span></span>
+<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Mortality:</span></span>
+<span id="annotated-cell-2-21"><a href="#annotated-cell-2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expt_death (Intercept)    -1.995 (0.069)</span></span>
+<span id="annotated-cell-2-22"><a href="#annotated-cell-2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.316 (0.074)</span></span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.304 (0.081)</span></span>
+<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   survival_param2 (Intercept) -0.237 (0.114)</span></span>
+<span id="annotated-cell-2-25"><a href="#annotated-cell-2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-26"><a href="#annotated-cell-2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --- Convergence ---</span></span>
+<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All parameters within bounds</span></span>
+<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ======================</span></span><div class="code-annotation-gutter-bg"></div>
+<div class="code-annotation-gutter"></div></code></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="1">Configuration file that determines which model(s) to fit. Learn more <a href="./setting-up-the-configuration-file.html">here</a>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="2">Default value is <code>FALSE</code>.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Now if we have a look at the estimations we have standard errors:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 109</span></span>
-<span><span class="co">#&gt;   mortality maturity clutch_1 n_offspring_clutch_1 clutch_2 n_offspring_clutch_2</span></span>
-<span><span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;                &lt;int&gt;    &lt;dbl&gt;                &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1      57.3     49.5     55.9                    3     NA                      3</span></span>
-<span><span class="co">#&gt; 2     141.      50.9     52.8                    5     56.0                    5</span></span>
-<span><span class="co">#&gt; 3      97.6     50.9     56.6                    1     59.0                    6</span></span>
-<span><span class="co">#&gt; 4      93.2     57.7     62.6                    1     66.9                    2</span></span>
-<span><span class="co">#&gt; 5     108.      54.2     57.3                    6     60.1                    3</span></span>
-<span><span class="co">#&gt; 6     114.      50.3     52.4                    3     55.7                    2</span></span>
-<span><span class="co">#&gt; # ℹ 103 more variables: clutch_3 &lt;dbl&gt;, n_offspring_clutch_3 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_4 &lt;dbl&gt;, n_offspring_clutch_4 &lt;int&gt;, clutch_5 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   n_offspring_clutch_5 &lt;int&gt;, clutch_6 &lt;dbl&gt;, n_offspring_clutch_6 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_7 &lt;dbl&gt;, n_offspring_clutch_7 &lt;int&gt;, clutch_8 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   n_offspring_clutch_8 &lt;int&gt;, clutch_9 &lt;dbl&gt;, n_offspring_clutch_9 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_10 &lt;dbl&gt;, n_offspring_clutch_10 &lt;int&gt;, clutch_11 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   n_offspring_clutch_11 &lt;int&gt;, clutch_12 &lt;dbl&gt;, …</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">effects</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
+<span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; 1 int_expt_death           -2.00    0.0686 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1      0.316   0.0743 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2      0.304   0.0810 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2      -0.237   0.114  survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
-<p>But you can specify which event you want:</p>
+<section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
+</h3>
+<p>We can predict with standard errors.</p>
+<ul>
+<li>Default scale</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">results</span>, event <span class="op">=</span> <span class="st">"maturity"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 1</span></span>
-<span><span class="co">#&gt;   maturity</span></span>
-<span><span class="co">#&gt;      &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1     48.1</span></span>
-<span><span class="co">#&gt; 2     58.4</span></span>
-<span><span class="co">#&gt; 3     48.7</span></span>
-<span><span class="co">#&gt; 4     49.7</span></span>
-<span><span class="co">#&gt; 5     54.0</span></span>
-<span><span class="co">#&gt; 6     50.5</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
+<span><span class="co">#&gt;   fitted se.fitted</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  -2.00    0.0686</span></span>
+<span><span class="co">#&gt; 2  -2.00    0.0686</span></span>
+<span><span class="co">#&gt; 3  -2.00    0.0686</span></span>
+<span><span class="co">#&gt; 4  -2.00    0.0686</span></span>
+<span><span class="co">#&gt; 5  -2.00    0.0686</span></span></code></pre></div>
 </div>
-</section><section class="level2"><h2 id="simulations-with-visit-masks">Simulations with visit masks<a class="anchor" aria-label="anchor" href="#simulations-with-visit-masks"></a>
-</h2>
-<p><code>lifelihood</code> lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.</p>
-<p>If you scroll to the top, you’ll see that we passed a column name from our dataframe to the <code>block</code> argument. This column represents the block to which each individual belongs. Since we provided this value, we just need to add <code>use_censoring = TRUE</code> to include censoring time intervals in the simulation:</p>
+<ul>
+<li>Response scale</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span>event <span class="op">=</span> <span class="st">"maturity"</span>, use_censoring <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
-<span><span class="co">#&gt;   maturity maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1     50.4             50           51</span></span>
-<span><span class="co">#&gt; 2     59.0             59           60</span></span>
-<span><span class="co">#&gt; 3     48.6             48           49</span></span>
-<span><span class="co">#&gt; 4     52.8             52           53</span></span>
-<span><span class="co">#&gt; 5     44.5             44           45</span></span>
-<span><span class="co">#&gt; 6     56.3             56           57</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
+<span><span class="co">#&gt;   fitted se.fitted</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1   50.9      1.27</span></span>
+<span><span class="co">#&gt; 2   38.8      2.34</span></span>
+<span><span class="co">#&gt; 3   38.8      2.34</span></span>
+<span><span class="co">#&gt; 4   50.4      1.85</span></span>
+<span><span class="co">#&gt; 5   38.8      2.34</span></span></code></pre></div>
 </div>
-<p>Right now, visit masks are “deduced” from the original dataset, but you can provide your own visit masks with the <code>visits</code> argument.</p>
-<p>It must be a dataframe with 2 columns: <code>block</code> (the same name as passed to <code><a href="../reference/as_lifelihoodData.html">lifelihood::as_lifelihoodData()</a></code> in the <code>block</code> argument) and exactly <code>visit</code>. For each block, <code>visit</code> corresponds to the ages at which the events of individuals were recorded.</p>
-<p>Let’s define this visits dataframe:</p>
+</section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
+</h2>
+<blockquote>
+<p>MCMC stands for <strong>M</strong>arkov <strong>C</strong>hain <strong>M</strong>onte <strong>C</strong>arlo.</p>
+</blockquote>
+<section class="level3"><h3 id="fitting-with-mcmc">Fitting with MCMC<a class="anchor" aria-label="anchor" href="#fitting-with-mcmc"></a>
+</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lifelihood</span>(</span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lifelihoodData =</span> lifelihoodData,</span>
+<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">path_config =</span> <span class="fu">use_test_config</span>(<span class="st">"example_config_mcmc"</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">MCMC =</span> <span class="dv">30</span></span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 30 25 FALSE 0 TRUE 0 7995 1813 5009 5155 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span><div class="code-annotation-gutter-bg"></div>
+<div class="code-annotation-gutter"></div></code></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="4" data-code-annotation="1">Perform 30 MCMC sampling of the parameter after convergence to estimate their 95% confidence interval</span>
+</dd>
+</dl>
+</div>
+</div>
+</section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
+</h3>
+<p>We can represent the confidence interval computed thanks to the standard errors:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>  block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">datapierrick</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  visit <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">datapierrick</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_event_rate.html">plot_fitted_event_rate</a></span><span class="op">(</span></span>
+<span>  <span class="va">results</span>,</span>
+<span>  interval_width <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  event <span class="op">=</span> <span class="st">"mortality"</span>,</span>
+<span>  use_facet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  groupby <span class="op">=</span> <span class="st">"par"</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Age (days)"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Fitted Mortality Rate"</span>,</span>
+<span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">visits</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 2</span></span>
-<span><span class="co">#&gt;   block visit</span></span>
-<span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1     1     1</span></span>
-<span><span class="co">#&gt; 2     2     2</span></span>
-<span><span class="co">#&gt; 3     1     3</span></span>
-<span><span class="co">#&gt; 4     2     4</span></span>
-<span><span class="co">#&gt; 5     1     5</span></span>
-<span><span class="co">#&gt; 6     2     6</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 20 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="standard-errors-and-mcmc_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+</figure>
 </div>
-<p>Now we can pass this to the <code><a href="../reference/simulate_life_history.html">simulate_life_history()</a></code> function:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span></span>
-<span>    event <span class="op">=</span> <span class="st">"maturity"</span>,</span>
-<span>    use_censoring <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    visits <span class="op">=</span> <span class="va">visits</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
-<span><span class="co">#&gt;   maturity maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1     50.3             49           51</span></span>
-<span><span class="co">#&gt; 2     68.3             67           69</span></span>
-<span><span class="co">#&gt; 3     50.9             49           51</span></span>
-<span><span class="co">#&gt; 4     60.3             59           61</span></span>
-<span><span class="co">#&gt; 5     64.1             63           65</span></span>
-<span><span class="co">#&gt; 6     62.7             61           63</span></span></code></pre></div>
 </div>
-</section><script id="quarto-html-after-body" type="application/javascript">
+</div>
+</section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -334,6 +334,158 @@
       }
       window.tippy(el, config);
     }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]
+            }
+          };
+          window.tippy(annoteTarget, config);
+        }
     const findCites = (el) => {
       const parentEl = el.parentElement;
       if (parentEl) {

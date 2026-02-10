@@ -77,17 +77,33 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><br><br></p>
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="lifelihood">lifelihood<a class="anchor" aria-label="anchor" href="#lifelihood"></a>
+</h1></div>
 <div class="section level2">
 <h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h2>
-<p><code>lifelihood</code> is a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).</p>
+<p><code>lifelihood</code> is an R package and a class of continuous time multi-event models which provide the joined likelihood of all the events in an individual life-history (time of maturity, reproductive events, death).</p>
+<p><a href="https://nrode.github.io/Lifelihood/">Documentation</a></p>
+<p>It requires R 4.1.0 or later, and:</p>
+<ul>
+<li>macOS (Apple silicon)</li>
+<li>Windows (Still some known issues)</li>
+<li>Linux</li>
+</ul>
+<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nrode/Lifelihood"</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">fakesample</span></span>
@@ -119,9 +135,89 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"configs/config.yaml"</span>, package <span class="op">=</span> <span class="st">"lifelihood"</span><span class="op">)</span>,</span>
 <span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Sample size: 550</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; --- Model Fit ---</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -30491.599</span></span>
+<span><span class="co">#&gt; AIC:             61019.2</span></span>
+<span><span class="co">#&gt; BIC:             61096.8</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; --- Key Parameters ---</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Mortality:</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -0.912 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.455 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.121 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_spore_1 -0.373 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_spore_2 -0.303 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_spore_3 -0.927 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.480 (0.000)</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Maturity:</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.527 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_par_1 0.134 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_par_2 0.074 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -5.900 (0.000)</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Reproduction:</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.780 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction eff_expt_reproduction_par_1 -1.742 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction eff_expt_reproduction_par_2 -1.166 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -7.517 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 eff_reproduction_param2_par_1 0.222 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 eff_reproduction_param2_par_2 0.776 (0.000)</span></span>
+<span><span class="co">#&gt;   n_offspring (Intercept)   -2.543 (0.000)</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; --- Convergence ---</span></span>
+<span><span class="co">#&gt; All parameters within bounds</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; ======================</span></span></code></pre></div>
 </div>
-
+<div class="section level2">
+<h2 id="goodness-of-fit">Goodness of fit<a class="anchor" aria-label="anchor" href="#goodness-of-fit"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; int_expt_death  eff_expt_death_par_1  eff_expt_death_par_2  eff_expt_death_spore_1  eff_expt_death_spore_2  eff_expt_death_spore_3</span></span>
+<span><span class="co">#&gt; -0.9116360      -0.4551437            0.1214695             -0.3729372              -0.3028974              -0.9274529</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 61019.2</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 61096.78</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; -30491.6</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 92.88023 92.88023 92.88023 92.88023 92.88023 92.88023</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_event_rate.html">plot_fitted_event_rate</a></span><span class="op">(</span></span>
+<span>  <span class="va">results</span>,</span>
+<span>  interval_width <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  event <span class="op">=</span> <span class="st">"mortality"</span>,</span>
+<span>  use_facet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  groupby <span class="op">=</span> <span class="st">"par"</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Age (days)"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Fitted Mortality Rate"</span>,</span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="img/example-1.png"></p>
+<p><br></p>
+<p>Learn more and find more examples in the <a href="https://nrode.github.io/Lifelihood/">documentation</a>.</p>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
