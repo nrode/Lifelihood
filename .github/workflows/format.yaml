@@ -1,6 +1,7 @@
 name: Check that code style is consistent
 
 on:
+  push:
   pull_request:
 
 permissions: read-all
