@@ -12,16 +12,26 @@
 validate_group_by_group_config <- function(config) {
   sections <- list(
     mortality = c(
-      "expt_death", "survival_param2", "ratio_expt_death",
-      "prob_death", "sex_ratio"
+      "expt_death",
+      "survival_param2",
+      "ratio_expt_death",
+      "prob_death",
+      "sex_ratio"
     ),
     maturity = c("expt_maturity", "maturity_param2", "ratio_expt_maturity"),
     reproduction = c(
-      "expt_reproduction", "reproduction_param2", "n_offspring",
-      "increase_death_hazard", "tof_reduction_date",
-      "increase_tof_n_offspring", "lin_decrease_hazard",
-      "quad_decrease_hazard", "lin_change_n_offspring",
-      "quad_change_n_offspring", "tof_n_offspring", "fitness"
+      "expt_reproduction",
+      "reproduction_param2",
+      "n_offspring",
+      "increase_death_hazard",
+      "tof_reduction_date",
+      "increase_tof_n_offspring",
+      "lin_decrease_hazard",
+      "quad_decrease_hazard",
+      "lin_change_n_offspring",
+      "quad_change_n_offspring",
+      "tof_n_offspring",
+      "fitness"
     )
   )
 
@@ -29,7 +39,9 @@ validate_group_by_group_config <- function(config) {
   for (section in names(sections)) {
     for (param in sections[[section]]) {
       val <- config[[section]][[param]]
-      if (!is.null(val) && val != "not_fitted" && val != "1" && !is.numeric(val)) {
+      if (
+        !is.null(val) && val != "not_fitted" && val != "1" && !is.numeric(val)
+      ) {
         non_trivial_formulas <- c(non_trivial_formulas, val)
       }
     }
@@ -105,7 +117,10 @@ split_data_by_groups <- function(lifelihoodData, group_covariates) {
 
     if (length(idx) < 10) {
       warning(
-        "Group '", lvl, "' has only ", length(idx),
+        "Group '",
+        lvl,
+        "' has only ",
+        length(idx),
         " observations. Results may be unreliable."
       )
     }
@@ -142,16 +157,26 @@ create_intercept_only_config <- function(original_config, temp_dir) {
 
   sections <- list(
     mortality = c(
-      "expt_death", "survival_param2", "ratio_expt_death",
-      "prob_death", "sex_ratio"
+      "expt_death",
+      "survival_param2",
+      "ratio_expt_death",
+      "prob_death",
+      "sex_ratio"
     ),
     maturity = c("expt_maturity", "maturity_param2", "ratio_expt_maturity"),
     reproduction = c(
-      "expt_reproduction", "reproduction_param2", "n_offspring",
-      "increase_death_hazard", "tof_reduction_date",
-      "increase_tof_n_offspring", "lin_decrease_hazard",
-      "quad_decrease_hazard", "lin_change_n_offspring",
-      "quad_change_n_offspring", "tof_n_offspring", "fitness"
+      "expt_reproduction",
+      "reproduction_param2",
+      "n_offspring",
+      "increase_death_hazard",
+      "tof_reduction_date",
+      "increase_tof_n_offspring",
+      "lin_decrease_hazard",
+      "quad_decrease_hazard",
+      "lin_change_n_offspring",
+      "quad_change_n_offspring",
+      "tof_n_offspring",
+      "fitness"
     )
   )
 
@@ -222,16 +247,26 @@ merge_group_results <- function(
 
   sections <- list(
     mortality = c(
-      "expt_death", "survival_param2", "ratio_expt_death",
-      "prob_death", "sex_ratio"
+      "expt_death",
+      "survival_param2",
+      "ratio_expt_death",
+      "prob_death",
+      "sex_ratio"
     ),
     maturity = c("expt_maturity", "maturity_param2", "ratio_expt_maturity"),
     reproduction = c(
-      "expt_reproduction", "reproduction_param2", "n_offspring",
-      "increase_death_hazard", "tof_reduction_date",
-      "increase_tof_n_offspring", "lin_decrease_hazard",
-      "quad_decrease_hazard", "lin_change_n_offspring",
-      "quad_change_n_offspring", "tof_n_offspring", "fitness"
+      "expt_reproduction",
+      "reproduction_param2",
+      "n_offspring",
+      "increase_death_hazard",
+      "tof_reduction_date",
+      "increase_tof_n_offspring",
+      "lin_decrease_hazard",
+      "quad_decrease_hazard",
+      "lin_change_n_offspring",
+      "quad_change_n_offspring",
+      "tof_n_offspring",
+      "fitness"
     )
   )
 

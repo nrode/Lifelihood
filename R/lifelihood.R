@@ -566,8 +566,11 @@ summary.lifelihoodResults <- function(object, digits = 3, ...) {
     cat("Groups:", paste(object$group_names, collapse = ", "), "\n")
     cat("\n--- Per-group Likelihoods ---\n")
     for (i in seq_along(object$group_names)) {
-      cat(sprintf("  %-25s %.3f\n",
-        object$group_names[i], object$group_likelihoods[i]))
+      cat(sprintf(
+        "  %-25s %.3f\n",
+        object$group_names[i],
+        object$group_likelihoods[i]
+      ))
     }
   }
 
