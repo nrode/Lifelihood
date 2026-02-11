@@ -19,8 +19,6 @@
 #' = same results).
 #' @param seed4 Fourth seed number used to reproduce results (same seed
 #' = same results).
-#' @param group_by_group Boolean option to fit the full factorial model
-#' with all the interactions between each of the factors.
 #' @param MCMC Perform MCMC sampling of the parameter after convergence
 #' to estimate their 95% confidence interval.
 #' @param interval TBD - Check the actual meaning.
@@ -50,7 +48,6 @@ execute_bin <- function(
   path_to_Lifelihood,
   path_input_data,
   path_param_bounds,
-  group_by_group,
   MCMC,
   interval,
   se.fit,
@@ -76,7 +73,6 @@ execute_bin <- function(
   arg_string <- paste(
     path_input_data,
     path_param_bounds,
-    group_by_group,
     MCMC,
     interval,
     se.fit,

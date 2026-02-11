@@ -281,7 +281,6 @@ lifelihood_fit <- function(
     path_to_Lifelihood = path_to_Lifelihood,
     path_input_data = data_path,
     path_param_bounds = path_param_range,
-    group_by_group = group_by_group,
     MCMC = MCMC,
     interval = interval,
     se.fit = se.fit,
@@ -318,7 +317,6 @@ lifelihood_fit <- function(
 
   results <- read_output_from_file(
     output_path,
-    group_by_group = group_by_group,
     covariates = lifelihoodData$covariates,
     path_config = path_config,
     MCMC = MCMC
