@@ -25,12 +25,12 @@ procedure Init_met_D(var md: Metropolis_D);
 begin
   with md do
   begin
-    ntr := StrToInt(list[18]);
-    nst := StrToInt(list[19]);
-    temp0 := StrToFloat(list[20]);
-    tempf := StrToFloat(list[21]);
-    climbrate := StrToFloat(list[22]);
-    precision := StrToFloat(list[23]);
+    ntr := StrToInt(list[17]);
+    nst := StrToInt(list[18]);
+    temp0 := StrToFloat(list[19]);
+    tempf := StrToFloat(list[20]);
+    climbrate := StrToFloat(list[21]);
+    precision := StrToFloat(list[22]);
     maxrep := 40;
     tT := 4;
     t0 := 2;
