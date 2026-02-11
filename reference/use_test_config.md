@@ -12,7 +12,10 @@ For more info about configuration files, see
 ## Usage
 
 ``` r
-use_test_config(config_name = c("config", "config2", "config_pierrick"))
+use_test_config(
+  config_name = c("config", "config2", "config_pierrick", "example_config_se",
+    "example_config_mcmc", "config_gbg")
+)
 ```
 
 ## Arguments
@@ -35,7 +38,7 @@ Absolute path to the configuration file
 
 ``` r
 use_test_config("config")
-#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpQxTG0q/temp_libpath1d7b579ac7b2/lifelihood/configs/config.yaml"
+#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/Rtmp0YMnSn/temp_libpath2b7a3f8418db/lifelihood/configs/config.yaml"
 use_test_config("config2")
-#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpQxTG0q/temp_libpath1d7b579ac7b2/lifelihood/configs/config2.yaml"
+#> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/Rtmp0YMnSn/temp_libpath2b7a3f8418db/lifelihood/configs/config2.yaml"
 ```

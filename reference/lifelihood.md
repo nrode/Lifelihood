@@ -54,7 +54,9 @@ lifelihood(
 
 - n_fit:
 
-  Number of times to fit.
+  Number of replicates for model fit to check convergence through
+  consistency in log-likelihood values. The `seeds` argument should be
+  `NULL` when `n_fit` \> 1.
 
 - param_bounds_df:
 

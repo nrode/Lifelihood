@@ -12,6 +12,8 @@
   warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
 - [Simulation and visit
   masks](https://nrode.github.io/Lifelihood/articles/simulation-and-visit-masks.md):
+- [Fit saturated model using \`group_by_group =
+  TRUE\`](https://nrode.github.io/Lifelihood/articles/fit-saturated-model.md):
 - [Standard errors and
   MCMC](https://nrode.github.io/Lifelihood/articles/standard-errors-and-mcmc.md):
 - [Generate clutch

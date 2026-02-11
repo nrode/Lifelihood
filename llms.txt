@@ -1,7 +1,5 @@
 # lifelihood
 
-## Description
-
 `lifelihood` is an R package and a class of continuous time multi-event
 models which provide the joined likelihood of all the events in an
 individual life-history (time of maturity, reproductive events, death).
@@ -177,8 +175,6 @@ Learn more and find more examples in the
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
-- [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
-  : Get the path to a built-in configuration file.
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling
 - [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
@@ -195,6 +191,8 @@ Learn more and find more examples in the
   : Simulate outcomes from a fitted lifelihood model
 - [`summary(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.md)
   : Simple summary for lifelihoodResults objects
+- [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)
+  : Get the path to a built-in configuration file.
 - [`vcov(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/vcov.lifelihoodResults.md)
   : Covariance matrix
 
@@ -212,6 +210,8 @@ Learn more and find more examples in the
   warning](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md):
 - [Simulation and visit
   masks](https://nrode.github.io/Lifelihood/articles/simulation-and-visit-masks.md):
+- [Fit saturated model using \`group_by_group =
+  TRUE\`](https://nrode.github.io/Lifelihood/articles/fit-saturated-model.md):
 - [Standard errors and
   MCMC](https://nrode.github.io/Lifelihood/articles/standard-errors-and-mcmc.md):
 - [Generate clutch

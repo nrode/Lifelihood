@@ -25,8 +25,6 @@
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
-- [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/get_config_path.md)
-  : Get the path to a built-in configuration file.
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling
 - [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
@@ -43,5 +41,7 @@
   : Simulate outcomes from a fitted lifelihood model
 - [`summary(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.md)
   : Simple summary for lifelihoodResults objects
+- [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)
+  : Get the path to a built-in configuration file.
 - [`vcov(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/vcov.lifelihoodResults.md)
   : Covariance matrix

@@ -7,13 +7,7 @@ parsers from
 ## Usage
 
 ``` r
-read_output_from_file(
-  file_path,
-  group_by_group = FALSE,
-  covariates = NULL,
-  path_config,
-  MCMC
-)
+read_output_from_file(file_path, covariates = NULL, path_config, MCMC)
 ```
 
 ## Arguments
@@ -21,11 +15,6 @@ read_output_from_file(
 - file_path:
 
   Location of the output file of the program.
-
-- group_by_group:
-
-  Boolean option to fit the full factorial model with all the
-  interactions between each of the factors.
 
 - covariates:
 

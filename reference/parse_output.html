@@ -30,6 +30,7 @@ is an aggregator of all the get_*() functions described below."></head><body>
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -68,17 +69,17 @@ is an aggregator of all the <code>get_*()</code> functions described below.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parse_output</span><span class="op">(</span><span class="va">lines</span>, <span class="va">element</span>, group_by_group <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parse_output</span><span class="op">(</span><span class="va">lines</span>, <span class="va">element</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">get_seeds</span><span class="op">(</span><span class="va">lines</span>, group_by_group <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">get_seeds</span><span class="op">(</span><span class="va">lines</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">get_likelihood</span><span class="op">(</span><span class="va">lines</span>, group_by_group <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">get_likelihood</span><span class="op">(</span><span class="va">lines</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">get_param_ranges</span><span class="op">(</span><span class="va">lines</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">get_ratio_max</span><span class="op">(</span><span class="va">lines</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">get_effects</span><span class="op">(</span><span class="va">lines</span>, group_by_group <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">get_effects</span><span class="op">(</span><span class="va">lines</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">get_hessian</span><span class="op">(</span><span class="va">lines</span><span class="op">)</span></span>
 <span></span>
@@ -95,10 +96,6 @@ is an aggregator of all the <code>get_*()</code> functions described below.</p>
 
 <dt id="arg-element">element<a class="anchor" aria-label="anchor" href="#arg-element"></a></dt>
 <dd><p>Name of the result to parse. Must be in one of 'seeds', 'likelihood', 'effects', 'parameter_ranges', 'ratio_max', 'mcmc'.</p></dd>
-
-
-<dt id="arg-group-by-group">group_by_group<a class="anchor" aria-label="anchor" href="#arg-group-by-group"></a></dt>
-<dd><p>Boolean indicating whether parsing should be performed group by group or not (<code>FALSE</code> by default). This argument is necessary because the structure of the output file is different depending on whether the analysis was carried out "group by group" or not (the analysis method used will then be different, for certain parsers).</p></dd>
 
 </dl></div>
     <div class="section level2">

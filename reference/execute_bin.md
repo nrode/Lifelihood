@@ -9,7 +9,6 @@ execute_bin(
   path_to_Lifelihood,
   path_input_data,
   path_param_bounds,
-  group_by_group,
   MCMC,
   interval,
   se.fit,
@@ -49,11 +48,6 @@ execute_bin(
 
   Path to the parameter boundaries text file with the min and max
   boudaries for each parameter.
-
-- group_by_group:
-
-  Boolean option to fit the full factorial model with all the
-  interactions between each of the factors.
 
 - MCMC:
 

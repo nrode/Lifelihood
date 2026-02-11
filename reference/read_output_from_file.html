@@ -28,6 +28,7 @@ results using parsers from parse_output()."></head><body>
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -65,13 +66,7 @@ results using parsers from <code><a href="parse_output.html">parse_output()</a><
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_output_from_file</span><span class="op">(</span></span>
-<span>  <span class="va">file_path</span>,</span>
-<span>  group_by_group <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  covariates <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">path_config</span>,</span>
-<span>  <span class="va">MCMC</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_output_from_file</span><span class="op">(</span><span class="va">file_path</span>, covariates <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">path_config</span>, <span class="va">MCMC</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,11 +75,6 @@ results using parsers from <code><a href="parse_output.html">parse_output()</a><
 
 <dl><dt id="arg-file-path">file_path<a class="anchor" aria-label="anchor" href="#arg-file-path"></a></dt>
 <dd><p>Location of the output file of the program.</p></dd>
-
-
-<dt id="arg-group-by-group">group_by_group<a class="anchor" aria-label="anchor" href="#arg-group-by-group"></a></dt>
-<dd><p>Boolean option to fit the full factorial
-model with all the interactions between each of the factors.</p></dd>
 
 
 <dt id="arg-covariates">covariates<a class="anchor" aria-label="anchor" href="#arg-covariates"></a></dt>

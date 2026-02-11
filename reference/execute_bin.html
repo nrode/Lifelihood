@@ -26,6 +26,7 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -66,7 +67,6 @@
 <span>  <span class="va">path_to_Lifelihood</span>,</span>
 <span>  <span class="va">path_input_data</span>,</span>
 <span>  <span class="va">path_param_bounds</span>,</span>
-<span>  <span class="va">group_by_group</span>,</span>
 <span>  <span class="va">MCMC</span>,</span>
 <span>  <span class="va">interval</span>,</span>
 <span>  <span class="va">se.fit</span>,</span>
@@ -108,11 +108,6 @@ and data to be fitted.</p></dd>
 <dt id="arg-path-param-bounds">path_param_bounds<a class="anchor" aria-label="anchor" href="#arg-path-param-bounds"></a></dt>
 <dd><p>Path to the parameter boundaries text file
 with the min and max boudaries for each parameter.</p></dd>
-
-
-<dt id="arg-group-by-group">group_by_group<a class="anchor" aria-label="anchor" href="#arg-group-by-group"></a></dt>
-<dd><p>Boolean option to fit the full factorial model
-with all the interactions between each of the factors.</p></dd>
 
 
 <dt id="arg-mcmc">MCMC<a class="anchor" aria-label="anchor" href="#arg-mcmc"></a></dt>

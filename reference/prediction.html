@@ -26,6 +26,7 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -130,11 +131,11 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihood.html">lifelihood</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span></span>
-<span class="r-in"><span>  path_config <span class="op">=</span> <span class="fu"><a href="get_config_path.html">use_test_config</a></span><span class="op">(</span><span class="st">"config2"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  path_config <span class="op">=</span> <span class="fu"><a href="use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config2"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/RtmpQxTG0q/temp_libpath1d7b579ac7b2/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt FALSE 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/private/var/folders/yz/zr09txvs5dn18vt4cn21kzl40000gn/T/Rtmp0YMnSn/temp_libpath2b7a3f8418db/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in (start + 1):length(lines):</span> argument of length 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">prediction</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span></span>
