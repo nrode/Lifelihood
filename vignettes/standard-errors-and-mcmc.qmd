@@ -11,6 +11,7 @@ knitr:
 code-annotations: hover
 execute: 
   cache: true
+embed-resources: true
 ---
 
 ## Create a `lifelihoodData` object
@@ -63,14 +64,11 @@ By default, lifelihood will not try to fit standard errors. But, you can use the
 ```{r}
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("example_config_se"), # <1>
-  se.fit = TRUE, # <2>
+  path_config = use_test_config("example_config_se"),
+  se.fit = TRUE,
 )
 summary(results)
 ```
-
-1. Configuration file that determines which model(s) to fit. Learn more [here](./setting-up-the-configuration-file.html).
-2. Default value is `FALSE`.
 
 Now if we have a look at the estimations we have standard errors:
 
@@ -109,11 +107,9 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("example_config_mcmc"),
-  MCMC = 30 # <1>
+  MCMC = 30
 )
 ```
-
-1. Perform 30 MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 
 ### Visualization
 

@@ -8,6 +8,7 @@ knitr:
   opts_chunk:
     collapse: true
     comment: '#>'
+embed-resources: true
 ---
 
 In order to compile the underlying Pascal code, you need to install:

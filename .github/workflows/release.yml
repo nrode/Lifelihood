@@ -23,7 +23,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
 
       - name: Build package
-        run: R CMD build .
+        run: R CMD build . --no-build-vignettes
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

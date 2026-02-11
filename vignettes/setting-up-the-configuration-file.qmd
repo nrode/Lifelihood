@@ -8,6 +8,7 @@ knitr:
   opts_chunk:
     collapse: true
     comment: '#>'
+embed-resources: true
 ---
 
 <div class="topVignette">If you haven't already check it, have a look at:</div>
