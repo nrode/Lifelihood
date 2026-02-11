@@ -1,16 +1,16 @@
 mortality:
-  expt_death: par + geno + par * geno
-  survival_param2: par + geno + par * geno
+  expt_death: par
+  survival_param2: par
   ratio_expt_death: not_fitted
   prob_death: not_fitted
   sex_ratio: not_fitted
 maturity:
-  expt_maturity: not_fitted
-  maturity_param2: not_fitted
+  expt_maturity: par
+  maturity_param2: par
   ratio_expt_maturity: not_fitted
 reproduction:
-  expt_reproduction: not_fitted
-  reproduction_param2: not_fitted
+  expt_reproduction: par
+  reproduction_param2: par
   n_offspring: not_fitted
   increase_death_hazard: not_fitted
   tof_reduction_date: not_fitted

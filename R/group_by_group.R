@@ -39,9 +39,7 @@ validate_group_by_group_config <- function(config) {
   for (section in names(sections)) {
     for (param in sections[[section]]) {
       val <- config[[section]][[param]]
-      if (
-        !is.null(val) && val != "not_fitted" && val != "1" && !is.numeric(val)
-      ) {
+      if (!is.null(val) && val != "not_fitted") {
         non_trivial_formulas <- c(non_trivial_formulas, val)
       }
     }
@@ -49,7 +47,7 @@ validate_group_by_group_config <- function(config) {
 
   if (length(non_trivial_formulas) == 0) {
     stop(
-      "group_by_group requires at least one fitted parameter with covariates ",
+      "`group_by_group` argument requires at least one fitted parameter with covariates ",
       "(i.e., not '1' or 'not_fitted'). No covariate formulas found in config."
     )
   }
@@ -57,8 +55,9 @@ validate_group_by_group_config <- function(config) {
   unique_formulas <- unique(non_trivial_formulas)
   if (length(unique_formulas) > 1) {
     stop(
-      "group_by_group requires the same covariates for all fitted parameters ",
-      "across mortality, maturity and reproduction. Found different formulas: ",
+      "`group_by_group` argument requires the same covariate(s) for all fitted parameters ",
+      "across mortality, maturity and reproduction. Found different formulas ",
+      "across mortality, maturity and reproduction: ",
       paste(unique_formulas, collapse = ", ")
     )
   }

@@ -1,0 +1,95 @@
+---
+title: "Fit saturated model using `group_by_group = TRUE`"
+vignette: >
+  %\VignetteIndexEntry{fit-saturated-model}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+code-annotations: hover
+execute: 
+  cache: false
+embed-resources: true
+---
+
+## Create a `lifelihoodData` object
+
+```{r}
+#| label: setup
+library(lifelihood)
+library(tidyverse)
+
+df <- datapierrick |>
+  as_tibble() |>
+  mutate(
+    par = as.factor(par),
+    geno = as.factor(geno),
+    spore = as.factor(spore)
+  )
+
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "pon",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(28)
+
+lifelihoodData <- as_lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  block = "block",
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("par", "geno"),
+  model_specs = c("wei", "gam", "lgn")
+)
+
+set.seed(42)
+```
+
+## Difference between default and saturated models
+
+- Default model
+
+```{r}
+system.time(
+  results_default <- lifelihood(
+    lifelihoodData,
+    path_config = use_test_config("config_gbg"),
+    group_by_group = FALSE # Default value
+  )
+)
+```
+
+- Group by group model
+
+```{r}
+system.time(
+  results_gbg <- lifelihood(
+    lifelihoodData,
+    path_config = use_test_config("config_gbg"),
+    group_by_group = TRUE
+  )
+)
+```
+
+Fitting saturated model with group by group is faster than default model.
+
+- Comparison
+
+```{r}
+results_default$likelihood
+results_gbg$likelihood
+```
+
+Log-likelihood is also higher with group by group indicating better convergence towards the maximum log-likelihood value.

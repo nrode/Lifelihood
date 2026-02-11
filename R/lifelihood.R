@@ -9,7 +9,7 @@
 #' @param lifelihoodData `lifelihoodData` object created with [as_lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
-#' @param n_fit Number of times to fit.
+#' @param n_fit Number of replicates for model fit to check convergence through consistency in log-likelihood values. The `seeds` argument should be `NULL` when `n_fit` > 1.
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
 #' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
@@ -98,7 +98,7 @@ lifelihood <- function(
 
   all_results <- list()
   for (i in 1:n_fit) {
-    if (n_fit != 1 & is.null(seeds)) {
+    if (n_fit != 1) {
       seeds <- sample(1:10000, 4, replace = T)
     }
 
@@ -148,7 +148,8 @@ lifelihood <- function(
     if (diff_best > 0.1) {
       warning(glue::glue(
         "Best and second-best likelihoods differ by {round(diff_best, 3)} (> 0.1). ",
-        "Consider increasing n_fit (currently {n_fit}) for more stable optimization."
+        "Consider increasing n_fit (currently {n_fit}) to be sure of model convergence",
+        " and find the model with highest log-likelihood."
       ))
     }
   }
@@ -203,7 +204,6 @@ lifelihood_fit <- function(
     seeds <- sample(1:10000, 4, replace = T)
   }
 
-  set.seed(sum(seeds))
   if (is.null(temp_dir)) {
     temp_dir <- file.path(
       here::here(),

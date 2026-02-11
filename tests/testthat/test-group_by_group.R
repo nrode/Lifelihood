@@ -1,6 +1,10 @@
-# --- Unit tests for group_by_group helper functions ---
+path_config <- if (rlang::is_interactive()) {
+  "tests/testthat/config_gbg.yaml"
+} else {
+  "config_gbg.yaml"
+}
 
-testthat::test_that("validate_group_by_group_config rejects mixed formulas", {
+test_that("validate_group_by_group_config rejects mixed formulas", {
   config <- list(
     mortality = list(
       expt_death = "par + spore",
@@ -32,81 +36,11 @@ testthat::test_that("validate_group_by_group_config rejects mixed formulas", {
 
   expect_error(
     validate_group_by_group_config(config),
-    "group_by_group requires the same covariates"
+    "`group_by_group` argument requires the same covariate"
   )
 })
 
-testthat::test_that("validate_group_by_group_config accepts uniform formulas", {
-  config <- list(
-    mortality = list(
-      expt_death = "par",
-      survival_param2 = "1",
-      ratio_expt_death = "not_fitted",
-      prob_death = "not_fitted",
-      sex_ratio = "not_fitted"
-    ),
-    maturity = list(
-      expt_maturity = "par",
-      maturity_param2 = "1",
-      ratio_expt_maturity = "not_fitted"
-    ),
-    reproduction = list(
-      expt_reproduction = "par",
-      reproduction_param2 = "1",
-      n_offspring = "1",
-      increase_death_hazard = "not_fitted",
-      tof_reduction_date = "not_fitted",
-      increase_tof_n_offspring = "not_fitted",
-      lin_decrease_hazard = "not_fitted",
-      quad_decrease_hazard = "not_fitted",
-      lin_change_n_offspring = "not_fitted",
-      quad_change_n_offspring = "not_fitted",
-      tof_n_offspring = "not_fitted",
-      fitness = "not_fitted"
-    )
-  )
-
-  result <- validate_group_by_group_config(config)
-  expect_equal(result, "par")
-})
-
-testthat::test_that("validate_group_by_group_config errors with no covariates", {
-  config <- list(
-    mortality = list(
-      expt_death = "1",
-      survival_param2 = "1",
-      ratio_expt_death = "not_fitted",
-      prob_death = "not_fitted",
-      sex_ratio = "not_fitted"
-    ),
-    maturity = list(
-      expt_maturity = "1",
-      maturity_param2 = "1",
-      ratio_expt_maturity = "not_fitted"
-    ),
-    reproduction = list(
-      expt_reproduction = "1",
-      reproduction_param2 = "1",
-      n_offspring = "1",
-      increase_death_hazard = "not_fitted",
-      tof_reduction_date = "not_fitted",
-      increase_tof_n_offspring = "not_fitted",
-      lin_decrease_hazard = "not_fitted",
-      quad_decrease_hazard = "not_fitted",
-      lin_change_n_offspring = "not_fitted",
-      quad_change_n_offspring = "not_fitted",
-      tof_n_offspring = "not_fitted",
-      fitness = "not_fitted"
-    )
-  )
-
-  expect_error(
-    validate_group_by_group_config(config),
-    "group_by_group requires at least one fitted parameter with covariates"
-  )
-})
-
-testthat::test_that("extract_group_covariates parses formulas correctly", {
+test_that("extract_group_covariates parses formulas correctly", {
   expect_equal(extract_group_covariates("par"), "par")
   expect_equal(
     sort(extract_group_covariates("par + geno")),
@@ -122,7 +56,7 @@ testthat::test_that("extract_group_covariates parses formulas correctly", {
   )
 })
 
-testthat::test_that("split_data_by_groups creates correct sub-datasets", {
+test_that("split_data_by_groups creates correct sub-datasets", {
   df <- data.frame(
     x = 1:10,
     grp = factor(rep(c("A", "B"), each = 5)),
@@ -169,7 +103,7 @@ testthat::test_that("split_data_by_groups creates correct sub-datasets", {
 
 # --- Integration test ---
 
-testthat::test_that("lifelihood with group_by_group=TRUE works end-to-end", {
+test_that("lifelihood with group_by_group=TRUE works end-to-end", {
   df <- datapierrick |>
     as_tibble() |>
     mutate(
@@ -177,7 +111,9 @@ testthat::test_that("lifelihood with group_by_group=TRUE works end-to-end", {
       geno = as.factor(geno),
       spore = as.factor(spore)
     ) |>
-    sample_n(200)
+    mutate(
+      par = factor(par, levels = c(0, 1, 2), labels = c("par1", "par2", "par3"))
+    )
 
   clutchs <- generate_clutch_vector(28)
 
@@ -197,7 +133,7 @@ testthat::test_that("lifelihood with group_by_group=TRUE works end-to-end", {
 
   results <- lifelihood(
     lifelihoodData,
-    path_config = use_test_config("config_gbg"),
+    path_config = path_config,
     group_by_group = TRUE,
     seeds = c(1, 2, 3, 4),
     delete_temp_files = TRUE

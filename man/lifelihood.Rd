@@ -38,7 +38,7 @@ lifelihood(
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 
-\item{n_fit}{Number of times to fit.}
+\item{n_fit}{Number of replicates for model fit to check convergence through consistency in log-likelihood values. The \code{seeds} argument should be \code{NULL} when \code{n_fit} > 1.}
 
 \item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 
