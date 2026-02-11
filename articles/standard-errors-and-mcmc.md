@@ -59,45 +59,37 @@ By default, lifelihood will not try to fit standard errors. But, you can
 use the `se.fit` argument for this purpose:
 
 ``` r
+
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-1  path_config = use_test_config("example_config_se"),
-2  se.fit = TRUE,
+  path_config = use_test_config("example_config_se"),
+  se.fit = TRUE,
 )
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 TRUE 0 FALSE 0 5537 7354 3389 3319 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 summary(results)
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 0 25 TRUE 0 FALSE 0 5674 7772 9326 4333 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 #> 
 #> === LIFELIHOOD RESULTS ===
 #> 
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343788.040
-#> AIC:             687584.1
-#> BIC:             687601.3
+#> Log-likelihood:  -343787.940
+#> AIC:             687583.9
+#> BIC:             687601.1
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.878 (0.093)
-#>   expt_death eff_expt_death_par_1 0.192 (0.101)
-#>   expt_death eff_expt_death_par_2 0.180 (0.105)
-#>   survival_param2 (Intercept) -0.273 (0.118)
+#>   expt_death (Intercept)    -1.879 (0.091)
+#>   expt_death eff_expt_death_par_1 0.199 (0.098)
+#>   expt_death eff_expt_death_par_2 0.188 (0.103)
+#>   survival_param2 (Intercept) -0.242 (0.119)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
 #> 
 #> ======================
 ```
-
-- 1:
-
-  Configuration file that determines which model(s) to fit. Learn more
-  [here](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md).
-
-- 2:
-
-  Default value is `FALSE`.
 
 Now if we have a look at the estimations we have standard errors:
 
@@ -107,10 +99,10 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -1.88    0.0931 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1      0.192   0.101  expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2      0.180   0.105  expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.273   0.118  survival_param2 intercept       mort…
+#> 1 int_expt_death           -1.88    0.0910 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1      0.199   0.0985 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2      0.188   0.103  expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2      -0.242   0.119  survival_param2 intercept       mort…
 ```
 
 ### Prediction
@@ -127,11 +119,11 @@ prediction(results, "expt_death", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -1.69    0.0303
-#> 2  -1.88    0.0931
-#> 3  -1.88    0.0931
-#> 4  -1.69    0.0303
-#> 5  -1.88    0.0931
+#> 1  -1.88    0.0910
+#> 2  -1.88    0.0910
+#> 3  -1.88    0.0910
+#> 4  -1.88    0.0910
+#> 5  -1.68    0.0298
 ```
 
 - Response scale
@@ -144,11 +136,11 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   50.6      1.29
-#> 2   43.0      3.47
-#> 3   50.6      1.29
-#> 4   43.0      3.47
-#> 5   43.0      3.47
+#> 1   42.9      3.39
+#> 2   42.9      3.39
+#> 3   42.9      3.39
+#> 4   42.9      3.39
+#> 5   50.4      1.86
 ```
 
 ## MCMC
@@ -158,18 +150,16 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 ### Fitting with MCMC
 
 ``` r
+
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("example_config_mcmc"),
-1  MCMC = 30
+  MCMC = 30
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 30 25 FALSE 0 TRUE 0 6415 7129 411 1172 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_/temp_param_range_path.txt FALSE 30 25 FALSE 0 TRUE 0 3357 1791 2237 7163 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> Warning in check_estimation(results): Estimation of 'fitness' is close to the
+#> maximum bound: fitness~=999.999916215974. Consider increasing maximum bound.
 ```
-
-- 1:
-
-  Perform 30 MCMC sampling of the parameter after convergence to
-  estimate their 95% confidence interval
 
 ### Visualization
 
