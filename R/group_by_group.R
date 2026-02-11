@@ -113,7 +113,9 @@ split_data_by_groups <- function(lifelihoodData, group_covariates) {
 
   for (lvl in group_levels) {
     idx <- which(group_col == lvl)
-    if (length(idx) == 0) next
+    if (length(idx) == 0) {
+      next
+    }
 
     if (length(idx) < 10) {
       warning(
