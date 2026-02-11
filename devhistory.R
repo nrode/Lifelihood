@@ -1,7 +1,10 @@
 # Create project on Github
 
 ## Create compendium
-rrtools::use_compendium("/Users/rodenico/Documents/Pro/Articles/2024_Lifelihood/Lifelihood", open = FALSE)
+rrtools::use_compendium(
+  "/Users/rodenico/Documents/Pro/Articles/2024_Lifelihood/Lifelihood",
+  open = FALSE
+)
 
 ## Add to .gitignore
 usethis::use_git_ignore(".DS_Store")
@@ -31,4 +34,3 @@ devtools::document()
 
 ## Load all required packages
 devtools::load_all()
-

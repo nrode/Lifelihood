@@ -9,7 +9,7 @@
 #' @param lifelihoodData `lifelihoodData` object created with [as_lifelihoodData()].
 #' @param path_config A character string specifying the file path to the YAML configuration file.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
-#' @param n_fit Number of times to fit.
+#' @param n_fit Number of replicates for model fit to check convergence through consistency in log-likelihood values. The `seeds` argument should be `NULL` when `n_fit` > 1.
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
 #' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
@@ -64,6 +64,32 @@ lifelihood <- function(
 ) {
   check_lifelihoodData(lifelihoodData)
 
+  if (isTRUE(group_by_group)) {
+    return(lifelihood_fit_group_by_group(
+      lifelihoodData = lifelihoodData,
+      path_config = path_config,
+      path_to_Lifelihood = path_to_Lifelihood,
+      param_bounds_df = param_bounds_df,
+      MCMC = MCMC,
+      interval = interval,
+      se.fit = se.fit,
+      saveprobevent = saveprobevent,
+      r = r,
+      seeds = seeds,
+      ntr = ntr,
+      nst = nst,
+      To = To,
+      Tf = Tf,
+      climbrate = climbrate,
+      precision = precision,
+      ratiomax = ratiomax,
+      tc = tc,
+      tinf = tinf,
+      sub_interval = sub_interval,
+      delete_temp_files = delete_temp_files
+    ))
+  }
+
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
   if (!is.null(seeds) & n_fit > 1) {
@@ -72,7 +98,7 @@ lifelihood <- function(
 
   all_results <- list()
   for (i in 1:n_fit) {
-    if (n_fit != 1 & is.null(seeds)) {
+    if (n_fit != 1) {
       seeds <- sample(1:10000, 4, replace = T)
     }
 
@@ -122,7 +148,8 @@ lifelihood <- function(
     if (diff_best > 0.1) {
       warning(glue::glue(
         "Best and second-best likelihoods differ by {round(diff_best, 3)} (> 0.1). ",
-        "Consider increasing n_fit (currently {n_fit}) for more stable optimization."
+        "Consider increasing n_fit (currently {n_fit}) to be sure of model convergence",
+        " and find the model with highest log-likelihood."
       ))
     }
   }
@@ -177,7 +204,6 @@ lifelihood_fit <- function(
     seeds <- sample(1:10000, 4, replace = T)
   }
 
-  set.seed(sum(seeds))
   if (is.null(temp_dir)) {
     temp_dir <- file.path(
       here::here(),
@@ -281,7 +307,6 @@ lifelihood_fit <- function(
     path_to_Lifelihood = path_to_Lifelihood,
     path_input_data = data_path,
     path_param_bounds = path_param_range,
-    group_by_group = group_by_group,
     MCMC = MCMC,
     interval = interval,
     se.fit = se.fit,
@@ -318,7 +343,6 @@ lifelihood_fit <- function(
 
   results <- read_output_from_file(
     output_path,
-    group_by_group = group_by_group,
     covariates = lifelihoodData$covariates,
     path_config = path_config,
     MCMC = MCMC
@@ -534,6 +558,20 @@ summary.lifelihoodResults <- function(object, digits = 3, ...) {
   # 1. BASIC INFO
   if (!is.null(object$sample_size)) {
     cat("Sample size:", object$sample_size, "\n")
+  }
+
+  if (isTRUE(object$group_by_group)) {
+    cat("Fitting method: group-by-group\n")
+    cat("Number of groups:", length(object$group_names), "\n")
+    cat("Groups:", paste(object$group_names, collapse = ", "), "\n")
+    cat("\n--- Per-group Likelihoods ---\n")
+    for (i in seq_along(object$group_names)) {
+      cat(sprintf(
+        "  %-25s %.3f\n",
+        object$group_names[i],
+        object$group_likelihoods[i]
+      ))
+    }
   }
 
   # 2. MODEL FIT

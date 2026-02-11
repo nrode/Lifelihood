@@ -1,0 +1,23 @@
+mortality:
+  expt_death: par + geno + par * geno
+  survival_param2: par + geno + par * geno
+  ratio_expt_death: not_fitted
+  prob_death: not_fitted
+  sex_ratio: not_fitted
+maturity:
+  expt_maturity: not_fitted
+  maturity_param2: not_fitted
+  ratio_expt_maturity: not_fitted
+reproduction:
+  expt_reproduction: not_fitted
+  reproduction_param2: not_fitted
+  n_offspring: not_fitted
+  increase_death_hazard: not_fitted
+  tof_reduction_date: not_fitted
+  increase_tof_n_offspring: not_fitted
+  lin_decrease_hazard: not_fitted
+  quad_decrease_hazard: not_fitted
+  lin_change_n_offspring: not_fitted
+  quad_change_n_offspring: not_fitted
+  tof_n_offspring: not_fitted
+  fitness: not_fitted

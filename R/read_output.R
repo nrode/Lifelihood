@@ -7,8 +7,6 @@
 #' @keywords internal
 #'
 #' @param file_path Location of the output file of the program.
-#' @param group_by_group Boolean option to fit the full factorial
-#' model with all the interactions between each of the factors.
 #' @param covariates Vector containing the names of the covariates.
 #' @param path_config A character string specifying the file path
 #' to the YAML configuration file.
@@ -23,7 +21,6 @@
 #' @export
 read_output_from_file <- function(
   file_path,
-  group_by_group = FALSE,
   covariates = NULL,
   path_config,
   MCMC
@@ -31,11 +28,11 @@ read_output_from_file <- function(
   lines <- readLines(file_path)
   results <- list()
 
-  seeds <- parse_output(lines, "seeds", group_by_group)
-  likelihood <- parse_output(lines, "likelihood", group_by_group)
-  effects <- parse_output(lines, "effects", group_by_group)
-  parameter_ranges <- parse_output(lines, "parameter_ranges", group_by_group)
-  ratiomax <- parse_output(lines, "ratio_max", group_by_group)
+  seeds <- parse_output(lines, "seeds")
+  likelihood <- parse_output(lines, "likelihood")
+  effects <- parse_output(lines, "effects")
+  parameter_ranges <- parse_output(lines, "parameter_ranges")
+  ratiomax <- parse_output(lines, "ratio_max")
   inverse_hessian <- parse_output(lines, "hessian")
 
   if (MCMC > 0) {
@@ -102,7 +99,6 @@ read_output_from_file <- function(
   results$effects$event <- sapply(results$effects$parameter, find_event_type)
   results$parameter_ranges <- parameter_ranges
   results$ratiomax <- ratiomax
-  results$group_by_group <- group_by_group
 
   if (!is.null(inverse_hessian)) {
     results$vcov <- -inverse_hessian

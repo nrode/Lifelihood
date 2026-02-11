@@ -197,6 +197,13 @@ simulate_life_history <- function(
   }
   check_lifelihoodResults(object)
 
+  if (isTRUE(object$group_by_group)) {
+    stop(
+      "simulate_life_history() is not supported for group_by_group results. ",
+      "Use coef() to access per-group estimates."
+    )
+  }
+
   event <- match.arg(
     event,
     c("all", "mortality", "reproduction", "maturity"),

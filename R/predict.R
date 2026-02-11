@@ -69,6 +69,13 @@ prediction <- function(
 ) {
   check_lifelihoodResults(object)
 
+  if (isTRUE(object$group_by_group)) {
+    stop(
+      "prediction() is not supported for group_by_group results. ",
+      "Use coef() to access per-group estimates."
+    )
+  }
+
   type <- match.arg(type)
 
   df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
