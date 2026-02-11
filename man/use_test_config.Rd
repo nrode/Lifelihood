@@ -4,7 +4,10 @@
 \alias{use_test_config}
 \title{Get the path to a built-in configuration file.}
 \usage{
-use_test_config(config_name = c("config", "config2", "config_pierrick"))
+use_test_config(
+  config_name = c("config", "config2", "config_pierrick", "example_config_se",
+    "example_config_mcmc", "config_gbg")
+)
 }
 \arguments{
 \item{config_name}{Configuration name. Currently available options:

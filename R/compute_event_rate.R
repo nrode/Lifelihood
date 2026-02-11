@@ -42,6 +42,13 @@ compute_fitted_event_rate <- function(
   event <- match.arg(event)
   check_lifelihoodResults(lifelihoodResults)
 
+  if (isTRUE(lifelihoodResults$group_by_group)) {
+    stop(
+      "compute_fitted_event_rate() is not supported for group_by_group results. ",
+      "Use coef() to access per-group estimates."
+    )
+  }
+
   lifelihoodData <- lifelihoodResults$lifelihoodData
 
   if (event == "mortality") {

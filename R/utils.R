@@ -217,7 +217,8 @@ use_test_config <- function(
     "config2",
     "config_pierrick",
     "example_config_se",
-    "example_config_mcmc"
+    "example_config_mcmc",
+    "config_gbg"
   )
 ) {
   config_name <- match.arg(config_name)
