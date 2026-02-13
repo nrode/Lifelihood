@@ -70,6 +70,7 @@ fits intercept-only models for each group, and merges results.</p>
 <span>  <span class="va">lifelihoodData</span>,</span>
 <span>  <span class="va">path_config</span>,</span>
 <span>  path_to_Lifelihood <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n_fit <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  interval <span class="op">=</span> <span class="fl">25</span>,</span>
@@ -105,6 +106,10 @@ fits intercept-only models for each group, and merges results.</p>
 
 <dt id="arg-path-to-lifelihood">path_to_Lifelihood<a class="anchor" aria-label="anchor" href="#arg-path-to-lifelihood"></a></dt>
 <dd><p>A character string specifying the file path to the compile Lifelihood program (default is NULL)</p></dd>
+
+
+<dt id="arg-n-fit">n_fit<a class="anchor" aria-label="anchor" href="#arg-n-fit"></a></dt>
+<dd><p>Number of replicates for model fit to check convergence through consistency in log-likelihood values. The <code>seeds</code> argument should be <code>NULL</code> when <code>n_fit</code> &gt; 1.</p></dd>
 
 
 <dt id="arg-param-bounds-df">param_bounds_df<a class="anchor" aria-label="anchor" href="#arg-param-bounds-df"></a></dt>

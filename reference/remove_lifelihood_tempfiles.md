@@ -18,7 +18,7 @@ remove_lifelihood_tempfiles(path = ".")
 
 - path:
 
-  Where to look for. Default to current dir.
+  Where to look for. Default to current directory.
 
 ## Examples
 

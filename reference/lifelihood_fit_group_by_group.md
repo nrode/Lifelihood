@@ -10,6 +10,7 @@ lifelihood_fit_group_by_group(
   lifelihoodData,
   path_config,
   path_to_Lifelihood = NULL,
+  n_fit = 1,
   param_bounds_df = NULL,
   MCMC = 0,
   interval = 25,
@@ -47,6 +48,12 @@ lifelihood_fit_group_by_group(
 
   A character string specifying the file path to the compile Lifelihood
   program (default is NULL)
+
+- n_fit:
+
+  Number of replicates for model fit to check convergence through
+  consistency in log-likelihood values. The `seeds` argument should be
+  `NULL` when `n_fit` \> 1.
 
 - param_bounds_df:
 

@@ -205,55 +205,6 @@ Cannot be greater than ratiomax.</p></dd>
     <p><code>lifelihoodData</code> object</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">fakesample</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   type geno sex_start sex_end sex mat_start mat_end clutch_start1 clutch_end1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1    0         0    1000   0         0    1000            NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2    0         0    1000   0         2       3             4           3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0    1         0    1000   0         3       4             2           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0    1         0    1000   0         3       4             2           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0    1         0    1000   0         3       4             2           4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    1    0         0    1000   0         0    1000            NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   clutch_size1 clutch_start2 clutch_end2 clutch_size2 death_start death_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           NA            NA          NA           NA         0.1         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            4             2           4            5         9.0        10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            5            NA          NA           NA         5.0         6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            5            NA          NA           NA         5.0         6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            5            NA          NA           NA         5.0         6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           NA            NA          NA           NA         0.1         1</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu">as_lifelihoodData</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  df <span class="op">=</span> <span class="va">df</span>,</span></span>
-<span class="r-in"><span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
-<span class="r-in"><span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span></span>
-<span class="r-in"><span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span></span>
-<span class="r-in"><span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span></span>
-<span class="r-in"><span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span></span>
-<span class="r-in"><span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span></span>
-<span class="r-in"><span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span></span>
-<span class="r-in"><span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span></span>
-<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in object[[i]]:</span> object of type 'closure' is not subsettable</span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
