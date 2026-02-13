@@ -99,7 +99,7 @@ lifelihood <- function(
 
   all_results <- list()
   for (i in 1:n_fit) {
-    if (n_fit != 1) {
+    if (is.null(seeds) | n_fit > 1) {
       seeds <- sample(1:10000, 4, replace = T)
     }
 

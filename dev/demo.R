@@ -36,10 +36,9 @@ lifelihoodData <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_gbg"),
+  path_config = use_test_config("config_pierrick"),
   delete_temp_files = FALSE,
-  group_by_group = TRUE,
-  n_fit = 10
+  group_by_group = FALSE
 )
 summary(results)
 

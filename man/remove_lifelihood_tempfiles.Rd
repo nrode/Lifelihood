@@ -7,7 +7,7 @@
 remove_lifelihood_tempfiles(path = ".")
 }
 \arguments{
-\item{path}{Where to look for. Default to current dir.}
+\item{path}{Where to look for. Default to current directory.}
 }
 \description{
 By default, \code{\link[=lifelihood]{lifelihood()}} deletes all the temp files

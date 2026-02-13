@@ -51,6 +51,10 @@ test_that("extract_group_covariates parses formulas correctly", {
     c("geno", "par")
   )
   expect_equal(
+    sort(extract_group_covariates("par + geno + par:geno")),
+    c("geno", "par")
+  )
+  expect_equal(
     sort(extract_group_covariates("par + geno + spore")),
     c("geno", "par", "spore")
   )

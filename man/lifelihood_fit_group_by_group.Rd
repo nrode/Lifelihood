@@ -8,6 +8,7 @@ lifelihood_fit_group_by_group(
   lifelihoodData,
   path_config,
   path_to_Lifelihood = NULL,
+  n_fit = 1,
   param_bounds_df = NULL,
   MCMC = 0,
   interval = 25,
@@ -34,6 +35,8 @@ lifelihood_fit_group_by_group(
 \item{path_config}{A character string specifying the file path to the YAML configuration file.}
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
+
+\item{n_fit}{Number of replicates for model fit to check convergence through consistency in log-likelihood values. The \code{seeds} argument should be \code{NULL} when \code{n_fit} > 1.}
 
 \item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
 

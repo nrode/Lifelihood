@@ -77,13 +77,8 @@ validate_group_by_group_config <- function(config) {
 #'
 #' @keywords internal
 extract_group_covariates <- function(common_formula) {
-  parts <- trimws(unlist(strsplit(common_formula, "\\+")))
-  covariates <- c()
-  for (part in parts) {
-    sub_parts <- trimws(unlist(strsplit(part, "\\*")))
-    covariates <- c(covariates, sub_parts)
-  }
-  return(unique(covariates))
+  terms <- expand_formula_terms(common_formula)
+  extract_formula_covariates(terms)
 }
 
 #' @title Split data by covariate groups
@@ -242,7 +237,7 @@ merge_group_results <- function(
     } else if (str_formula == "not_fitted") {
       return(c())
     } else {
-      return(trimws(unlist(strsplit(str_formula, split = "\\+"))))
+      return(expand_formula_terms(str_formula))
     }
   }
 

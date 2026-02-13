@@ -41,8 +41,9 @@ check_estimation <- function(lifelihoodResults) {
         parameter_name,
         "~=",
         sum_estimations_linked,
-        ". ",
-        "Consider decreasing minimum bound.",
+        " (bound=",
+        min_threshold,
+        "). Consider decreasing minimum bound.",
         sep = ""
       ))
     } else if (sum_estimations_linked >= max_threshold) {
@@ -53,8 +54,9 @@ check_estimation <- function(lifelihoodResults) {
         parameter_name,
         "~=",
         sum_estimations_linked,
-        ". ",
-        "Consider increasing maximum bound.",
+        " (bound=",
+        max_threshold,
+        "). Consider increasing maximum bound.",
         sep = ""
       ))
     }
