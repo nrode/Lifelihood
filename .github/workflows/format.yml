@@ -1,4 +1,4 @@
-name: Check that code style is consistent
+name: Check code format
 
 on:
   push:

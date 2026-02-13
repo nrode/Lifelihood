@@ -242,7 +242,7 @@ use_test_config <- function(
 #' After multiple runs, there can be lots of temp files.
 #' This function will just remove them.
 #'
-#' @param path Where to look for. Default to current dir.
+#' @param path Where to look for. Default to current directory.
 #'
 #' @examples
 #' remove_lifelihood_tempfiles()
@@ -250,19 +250,21 @@ use_test_config <- function(
 #' @export
 remove_lifelihood_tempfiles <- function(path = ".") {
   # regex pattern for the directory names
-  pattern <- "^lifelihood_\\d+_\\d+_\\d+_\\d+"
+  patterns <- c("^lifelihood_\\d+_\\d+_\\d+_\\d+", "^lifelihood_gbg_")
 
-  dirs <- list.dirs(path, full.names = TRUE, recursive = FALSE)
-  target_dirs <- dirs[grepl(pattern, basename(dirs))]
+  for (pattern in patterns) {
+    dirs <- list.dirs(path, full.names = TRUE, recursive = FALSE)
+    target_dirs <- dirs[grepl(pattern, basename(dirs))]
 
-  for (dir in target_dirs) {
-    # delete directory if it contains 3 or fewer files
-    files <- list.files(dir, full.names = TRUE)
-    file_count <- sum(!file.info(files)$isdir)
+    for (dir in target_dirs) {
+      # delete directory if it contains 3 or fewer files
+      files <- list.files(dir, full.names = TRUE)
+      file_count <- sum(!file.info(files)$isdir)
 
-    if (file_count <= 4) {
-      unlink(dir, recursive = TRUE)
-      message(sprintf("Deleted: %s (contained %d files)", dir, file_count))
+      if (file_count <= 4) {
+        unlink(dir, recursive = TRUE)
+        message(sprintf("Deleted: %s (contained %d files)", dir, file_count))
+      }
     }
   }
 }
@@ -377,7 +379,7 @@ count_parameters <- function(x) {
       if (is.numeric(v)) {
         1
       } else {
-        length(strsplit(v, "\\s*\\+\\s*")[[1]])
+        length(expand_formula_terms(v))
       }
     },
     integer(1)

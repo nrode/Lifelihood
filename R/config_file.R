@@ -239,6 +239,68 @@ read_formula <- function(config, parameter) {
   return(formula)
 }
 
+expand_formula_terms <- function(formula) {
+  terms <- trimws(unlist(strsplit(formula, split = "\\+")))
+  terms <- terms[nzchar(terms)]
+  expanded_terms <- c()
+
+  for (term in terms) {
+    if (grepl("*", term, fixed = TRUE)) {
+      interaction_terms <- trimws(unlist(strsplit(term, split = "\\*")))
+      interaction_terms <- interaction_terms[nzchar(interaction_terms)]
+
+      if (length(interaction_terms) != 2) {
+        stop(
+          "Interaction terms must involve exactly two covariates. Invalid term: `",
+          term,
+          "`"
+        )
+      }
+
+      expanded_terms <- c(
+        expanded_terms,
+        interaction_terms,
+        paste(interaction_terms, collapse = ":")
+      )
+    } else if (grepl(":", term, fixed = TRUE)) {
+      interaction_terms <- trimws(unlist(strsplit(term, split = ":")))
+      interaction_terms <- interaction_terms[nzchar(interaction_terms)]
+
+      if (length(interaction_terms) != 2) {
+        stop(
+          "Interaction terms must involve exactly two covariates. Invalid term: `",
+          term,
+          "`"
+        )
+      }
+
+      expanded_terms <- c(
+        expanded_terms,
+        paste(interaction_terms, collapse = ":")
+      )
+    } else {
+      expanded_terms <- c(expanded_terms, term)
+    }
+  }
+
+  unique(expanded_terms)
+}
+
+extract_formula_covariates <- function(formula_terms) {
+  all_covariates <- c()
+
+  for (term in formula_terms) {
+    if (grepl(":", term, fixed = TRUE)) {
+      interaction_terms <- trimws(unlist(strsplit(term, split = ":")))
+      all_covariates <- c(all_covariates, interaction_terms)
+    } else {
+      all_covariates <- c(all_covariates, term)
+    }
+  }
+
+  unique(all_covariates)
+}
+
 
 #' @title Convert R formula to lifelihood formula
 #'
@@ -268,23 +330,12 @@ R_to_lifelihood <- function(R_format, covariates, covar_types) {
   } else if (R_format == "1") {
     return("0")
   } else {
-    # get a list of each covariable (separated by '+')
-    used_covariables <- trimws(unlist(strsplit(R_format, split = "\\+")))
+    # expand interactions so `a * b` behaves as `a + b + a:b`
+    used_covariables <- expand_formula_terms(R_format)
     n_element_parameter <- length(used_covariables)
 
-    # initiate a list of all covariables
-    all_covariables <- c()
-
-    # create a list of all covariables used
-    for (cov in used_covariables) {
-      if (grepl("*", cov, fixed = TRUE)) {
-        interaction_covs <- trimws(unlist(strsplit(cov, split = "\\*")))
-        all_covariables <- c(all_covariables, interaction_covs)
-      } else {
-        all_covariables <- c(all_covariables, cov)
-      }
-    }
-    all_covariables <- unique(all_covariables)
+    # list all covariates needed by both main effects and interactions
+    all_covariables <- extract_formula_covariates(used_covariables)
 
     # ensure that all provided covariables are valid ones
     for (cov in all_covariables) {
@@ -296,10 +347,10 @@ R_to_lifelihood <- function(R_format, covariates, covar_types) {
     # create the lifelihood format output
     lifelihood_format <- "0"
     for (cov in used_covariables) {
-      if (grepl("*", cov, fixed = TRUE)) {
-        interaction_terms <- strsplit(cov, split = "\\*")
-        first_term <- which(covariates == interaction_terms[[1]][1])
-        second_term <- which(covariates == interaction_terms[[1]][2])
+      if (grepl(":", cov, fixed = TRUE)) {
+        interaction_terms <- trimws(unlist(strsplit(cov, split = ":")))
+        first_term <- which(covariates == interaction_terms[1])
+        second_term <- which(covariates == interaction_terms[2])
         position <- paste(first_term, second_term, sep = "")
       } else {
         position <- which(covariates == cov)

@@ -45,12 +45,7 @@ read_output_from_file <- function(
     } else if (str_formula == "not_fitted") {
       covar_names <- c()
     } else {
-      covar_names <- strsplit(
-        str_formula,
-        split = "\\+"
-      ) |>
-        unlist() |>
-        trimws()
+      covar_names <- expand_formula_terms(str_formula)
     }
     return(covar_names)
   }

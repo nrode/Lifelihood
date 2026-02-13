@@ -51,6 +51,10 @@ test_that("extract_group_covariates parses formulas correctly", {
     c("geno", "par")
   )
   expect_equal(
+    sort(extract_group_covariates("par + geno + par:geno")),
+    c("geno", "par")
+  )
+  expect_equal(
     sort(extract_group_covariates("par + geno + spore")),
     c("geno", "par", "spore")
   )
@@ -103,7 +107,7 @@ test_that("split_data_by_groups creates correct sub-datasets", {
 
 # --- Integration test ---
 
-test_that("lifelihood with group_by_group=TRUE works end-to-end", {
+test_that("lifelihood with group_by_group=TRUE and n_fit > 1 works end-to-end", {
   df <- datapierrick |>
     as_tibble() |>
     mutate(
@@ -131,12 +135,14 @@ test_that("lifelihood with group_by_group=TRUE works end-to-end", {
     model_specs = c("wei", "gam", "exp")
   )
 
-  results <- lifelihood(
-    lifelihoodData,
-    path_config = path_config,
-    group_by_group = TRUE,
-    seeds = c(1, 2, 3, 4),
-    delete_temp_files = TRUE
+  results <- suppressWarnings(
+    lifelihood(
+      lifelihoodData,
+      path_config = path_config,
+      group_by_group = TRUE,
+      n_fit = 4,
+      delete_temp_files = TRUE
+    )
   )
 
   # Check class
@@ -183,4 +189,42 @@ test_that("lifelihood with group_by_group=TRUE works end-to-end", {
   # Check group metadata
   expect_true(length(results$group_names) > 0)
   expect_true(length(results$group_likelihoods) == length(results$group_names))
+})
+
+test_that("lifelihood rejects seeds when group_by_group=TRUE and n_fit > 1", {
+  df <- datapierrick |>
+    as_tibble() |>
+    mutate(
+      par = as.factor(par),
+      geno = as.factor(geno),
+      spore = as.factor(spore)
+    )
+
+  clutchs <- generate_clutch_vector(28)
+
+  lifelihoodData <- as_lifelihoodData(
+    df = df,
+    sex = "sex",
+    sex_start = "sex_start",
+    sex_end = "sex_end",
+    maturity_start = "mat_start",
+    maturity_end = "mat_end",
+    clutchs = clutchs,
+    death_start = "death_start",
+    death_end = "death_end",
+    covariates = c("par"),
+    model_specs = c("wei", "gam", "exp")
+  )
+
+  expect_error(
+    lifelihood(
+      lifelihoodData,
+      path_config = path_config,
+      group_by_group = TRUE,
+      n_fit = 2,
+      seeds = c(1, 2, 3, 4),
+      delete_temp_files = TRUE
+    ),
+    "Can't set `seeds` with `n_fit` > 1."
+  )
 })
