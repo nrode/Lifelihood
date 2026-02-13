@@ -28,7 +28,6 @@ lifelihoodData <- as_lifelihoodData(
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
-  block = "block",
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
@@ -37,9 +36,10 @@ lifelihoodData <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_pierrick"),
+  path_config = use_test_config("config_gbg"),
   delete_temp_files = FALSE,
-  seeds = c(1, 2, 3, 4),
+  group_by_group = TRUE,
+  n_fit = 10
 )
 summary(results)
 

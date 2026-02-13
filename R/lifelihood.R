@@ -64,11 +64,18 @@ lifelihood <- function(
 ) {
   check_lifelihoodData(lifelihoodData)
 
+  # we force generate seeds here because it would not make sense
+  # to use n times the same seeds.
+  if (!is.null(seeds) & n_fit > 1) {
+    stop("Can't set `seeds` with `n_fit` > 1.")
+  }
+
   if (isTRUE(group_by_group)) {
     return(lifelihood_fit_group_by_group(
       lifelihoodData = lifelihoodData,
       path_config = path_config,
       path_to_Lifelihood = path_to_Lifelihood,
+      n_fit = n_fit,
       param_bounds_df = param_bounds_df,
       MCMC = MCMC,
       interval = interval,
@@ -88,12 +95,6 @@ lifelihood <- function(
       sub_interval = sub_interval,
       delete_temp_files = delete_temp_files
     ))
-  }
-
-  # we force generate seeds here because it would not make sense
-  # to use n times the same seeds.
-  if (!is.null(seeds) & n_fit > 1) {
-    stop("Can't set `seeds` with `n_fit` > 1.")
   }
 
   all_results <- list()

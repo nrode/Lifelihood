@@ -313,6 +313,88 @@ lifelihood_fit_group_by_group <- function(
   lifelihoodData,
   path_config,
   path_to_Lifelihood = NULL,
+  n_fit = 1,
+  param_bounds_df = NULL,
+  MCMC = 0,
+  interval = 25,
+  se.fit = FALSE,
+  saveprobevent = 0,
+  r = 0,
+  seeds = NULL,
+  ntr = 2,
+  nst = 2,
+  To = 50,
+  Tf = 1,
+  climbrate = 1,
+  precision = 0.001,
+  ratiomax = 10,
+  tc = 20,
+  tinf = 1000,
+  sub_interval = 0.3,
+  delete_temp_files = TRUE
+) {
+  if (!is.null(seeds) & n_fit > 1) {
+    stop("Can't set `seeds` with `n_fit` > 1.")
+  }
+
+  all_results <- list()
+  for (fit_i in seq_len(n_fit)) {
+    fit_seeds <- seeds
+    if (n_fit != 1) {
+      fit_seeds <- sample(1:10000, 4, replace = TRUE)
+    }
+
+    all_results[[glue::glue(
+      "lifelihood_fit_{fit_i}"
+    )]] <- lifelihood_fit_group_by_group_once(
+      lifelihoodData = lifelihoodData,
+      path_config = path_config,
+      path_to_Lifelihood = path_to_Lifelihood,
+      param_bounds_df = param_bounds_df,
+      MCMC = MCMC,
+      interval = interval,
+      se.fit = se.fit,
+      saveprobevent = saveprobevent,
+      r = r,
+      seeds = fit_seeds,
+      ntr = ntr,
+      nst = nst,
+      To = To,
+      Tf = Tf,
+      climbrate = climbrate,
+      precision = precision,
+      ratiomax = ratiomax,
+      tc = tc,
+      tinf = tinf,
+      sub_interval = sub_interval,
+      delete_temp_files = delete_temp_files
+    )
+  }
+
+  likelihoods <- sapply(all_results, function(x) x$likelihood)
+  ord <- order(likelihoods, decreasing = TRUE)
+  best_fit <- all_results[[ord[1]]]
+
+  # we want to make sure that we couldn't easily find a better
+  # solution (https://github.com/nrode/Lifelihood/issues/111)
+  if (length(likelihoods) > 1) {
+    diff_best <- likelihoods[ord[1]] - likelihoods[ord[2]]
+    if (diff_best > 0.1) {
+      warning(glue::glue(
+        "Best and second-best likelihoods differ by {round(diff_best, 3)} (> 0.1). ",
+        "Consider increasing n_fit (currently {n_fit}) to be sure of model convergence",
+        " and find the model with highest log-likelihood."
+      ))
+    }
+  }
+
+  return(best_fit)
+}
+
+lifelihood_fit_group_by_group_once <- function(
+  lifelihoodData,
+  path_config,
+  path_to_Lifelihood = NULL,
   param_bounds_df = NULL,
   MCMC = 0,
   interval = 25,
