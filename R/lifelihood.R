@@ -71,7 +71,7 @@ lifelihood <- function(
   }
 
   if (isTRUE(group_by_group)) {
-    return(lifelihood_fit_group_by_group(
+    results <- lifelihood_fit_group_by_group(
       lifelihoodData = lifelihoodData,
       path_config = path_config,
       path_to_Lifelihood = path_to_Lifelihood,
@@ -94,7 +94,10 @@ lifelihood <- function(
       tinf = tinf,
       sub_interval = sub_interval,
       delete_temp_files = delete_temp_files
-    ))
+    )
+
+    results$effects <- results$effects |> arrange(parameter)
+    return(results)
   }
 
   all_results <- list()

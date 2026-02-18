@@ -1,5 +1,5 @@
 mortality:
-  expt_death: par + spore
+  expt_death: par * spore
   survival_param2: 1
   ratio_expt_death: not_fitted
   prob_death: not_fitted

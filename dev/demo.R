@@ -36,10 +36,12 @@ lifelihoodData <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_pierrick"),
+  path_config = use_test_config("config_gbg"),
   delete_temp_files = FALSE,
-  group_by_group = FALSE
+  group_by_group = TRUE,
+  n_fit = 2
 )
+results$effects |> as_tibble()
 summary(results)
 
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)

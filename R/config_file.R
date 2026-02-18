@@ -239,6 +239,7 @@ read_formula <- function(config, parameter) {
   return(formula)
 }
 
+#' @keywords internal
 expand_formula_terms <- function(formula) {
   terms <- trimws(unlist(strsplit(formula, split = "\\+")))
   terms <- terms[nzchar(terms)]
@@ -260,7 +261,9 @@ expand_formula_terms <- function(formula) {
       expanded_terms <- c(
         expanded_terms,
         interaction_terms,
-        paste(interaction_terms, collapse = ":")
+        # rev() is here to make sure we have the same
+        # order of levels in interactions and be consistent with R
+        paste(rev(interaction_terms), collapse = ":")
       )
     } else if (grepl(":", term, fixed = TRUE)) {
       interaction_terms <- trimws(unlist(strsplit(term, split = ":")))
