@@ -65,7 +65,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1518_3726_6899_4521/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1518_3726_6899_4521/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 1518 3726 6899 4521 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9209_7083_9929_9024/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9209_7083_9929_9024/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 9209 7083 9929 9024 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 summary(results)
 #> 
 #> === LIFELIHOOD RESULTS ===
@@ -73,17 +73,17 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343784.778
-#> AIC:             687577.6
-#> BIC:             687594.8
+#> Log-likelihood:  -343784.413
+#> AIC:             687576.8
+#> BIC:             687594.1
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.960 (0.074)
-#>   expt_death eff_expt_death_par_1 0.278 (0.081)
-#>   expt_death eff_expt_death_par_2 0.255 (0.087)
-#>   survival_param2 (Intercept) -0.246 (0.115)
+#>   expt_death (Intercept)    -1.983 (0.069)
+#>   expt_death eff_expt_death_par_1 0.289 (0.075)
+#>   expt_death eff_expt_death_par_2 0.293 (0.081)
+#>   survival_param2 (Intercept) -0.210 (0.116)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -99,10 +99,10 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -1.96    0.0745 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1      0.278   0.0808 expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2      0.255   0.0866 expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.246   0.115  survival_param2 intercept       mort…
+#> 1 int_expt_death           -1.98    0.0690 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1      0.289   0.0749 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2      0.293   0.0812 expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2      -0.210   0.116  survival_param2 intercept       mort…
 ```
 
 ### Prediction
@@ -119,11 +119,11 @@ prediction(results, "expt_death", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -1.68    0.0297
-#> 2  -1.71    0.0431
-#> 3  -1.96    0.0745
-#> 4  -1.96    0.0745
-#> 5  -1.71    0.0431
+#> 1  -1.98    0.0690
+#> 2  -1.69    0.0429
+#> 3  -1.98    0.0690
+#> 4  -1.98    0.0690
+#> 5  -1.98    0.0690
 ```
 
 - Response scale
@@ -136,11 +136,11 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   40.0      2.61
-#> 2   50.8      1.27
-#> 3   40.0      2.61
-#> 4   40.0      2.61
-#> 5   49.8      1.82
+#> 1   50.3      1.24
+#> 2   39.2      2.38
+#> 3   39.2      2.38
+#> 4   39.2      2.38
+#> 5   39.2      2.38
 ```
 
 ## MCMC
@@ -156,7 +156,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_mcmc"),
   MCMC = 30
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8941_3664_2785_8209/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8941_3664_2785_8209/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 8941 3664 2785 8209 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5109_6887_1241_448/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5109_6887_1241_448/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 5109 6887 1241 448 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### Visualization

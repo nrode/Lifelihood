@@ -73,7 +73,7 @@ they should be the name of one of your columns in your dataset.*
 - `n_offspring`: Number of offspring per reproduction event or fitness
 - `increase_death_hazard`: Increase in death hazard following a
   reproduction event
-- `tof_reduction_date`: Trade-off of reduction rate
+- `tof_reduction_rate`: Trade-off of reduction rate
 - `increase_tof_n_offspring`: Increase in trade-off proportional to the
   number of offspring
 - `lin_decrease_hazard`: Linear decrease in hazard rate with time since
@@ -108,7 +108,7 @@ reproduction:
   reproduction_param2: not_fitted
   n_offspring: geno
   increase_death_hazard: geno + type + geno*type
-  tof_reduction_date: geno
+  tof_reduction_rate: geno
   increase_tof_n_offspring: geno
   lin_decrease_hazard: geno + type + geno*type
   quad_decrease_hazard: geno
