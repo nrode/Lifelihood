@@ -23,7 +23,7 @@ test_that("validate_group_by_group_config rejects mixed formulas", {
       reproduction_param2 = "1",
       n_offspring = "1",
       increase_death_hazard = "not_fitted",
-      tof_reduction_date = "not_fitted",
+      tof_reduction_rate = "not_fitted",
       increase_tof_n_offspring = "not_fitted",
       lin_decrease_hazard = "not_fitted",
       quad_decrease_hazard = "not_fitted",

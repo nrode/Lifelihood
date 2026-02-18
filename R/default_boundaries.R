@@ -153,7 +153,7 @@ default_bounds_df <- function(
       min = 1e-05,
       max = 10
     ),
-    tof_reduction_date = c(name = "tof_reduction_date", min = 1e-07, max = 10),
+    tof_reduction_rate = c(name = "tof_reduction_rate", min = 1e-07, max = 10),
     increase_tof_n_offspring = c(
       name = "increase_tof_n_offspring",
       min = 1e-07,

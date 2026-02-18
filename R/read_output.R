@@ -66,7 +66,7 @@ read_output_from_file <- function(
       "reproduction_param2",
       "n_offspring",
       "increase_death_hazard",
-      "tof_reduction_date",
+      "tof_reduction_rate",
       "increase_tof_n_offspring",
       "lin_decrease_hazard",
       "quad_decrease_hazard",

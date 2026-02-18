@@ -157,9 +157,9 @@ format_config <- function(path_config, covariates, covar_types) {
       )[1]
     ),
     paste(
-      "tof_reduction_date",
+      "tof_reduction_rate",
       R_to_lifelihood(
-        safe_access(config, c("reproduction", "tof_reduction_date")),
+        safe_access(config, c("reproduction", "tof_reduction_rate")),
         covariates,
         covar_types
       )[1]

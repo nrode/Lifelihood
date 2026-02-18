@@ -1664,7 +1664,7 @@ begin
   with FD.paramdescript[12] do
     //tradeoff ponte -> surv amortissement du precedent avec le temps
   begin
-    Name := 'tof_reduction_date'; // 'to(ps)am'
+    Name := 'tof_reduction_rate'; // 'to(ps)am'
     minBound := 0.0000001;
     maxBound := 10;
     //   value := 0.5;
