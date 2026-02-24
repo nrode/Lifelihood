@@ -36,12 +36,7 @@ test_that("goodness_of_fit returns expected object structure", {
     raise_estimation_warning = FALSE
   )
 
-  gof <- goodness_of_fit(
-    results,
-    nsim = 1,
-    seed = 1,
-    show_progress = FALSE
-  )
+  gof <- goodness_of_fit(results, nsim = 1)
 
   expect_s3_class(gof, "lifelihoodGOF")
   expect_true(is.numeric(gof$original_loglik))
@@ -58,7 +53,7 @@ test_that("goodness_of_fit input validation works", {
     class = "lifelihoodResults"
   )
   expect_error(
-    goodness_of_fit(fake_gbg, nsim = 1, show_progress = FALSE),
+    goodness_of_fit(fake_gbg, nsim = 1),
     "group_by_group"
   )
 
@@ -78,15 +73,14 @@ test_that("goodness_of_fit input validation works", {
   )
 
   expect_error(
-    goodness_of_fit(fake_fit, nsim = 0, show_progress = FALSE),
+    goodness_of_fit(fake_fit, nsim = 0),
     "positive integer"
   )
   expect_error(
     goodness_of_fit(
       fake_fit,
       nsim = 1,
-      fit_args = list(1),
-      show_progress = FALSE
+      fit_args = list(1)
     ),
     "named list"
   )
