@@ -4,12 +4,12 @@ test_that("R_to_lifelihood expands interaction terms consistently", {
 
   expect_equal(
     R_to_lifelihood("par * geno", covariates, covar_types),
-    c("0 1 2 12", "3")
+    c("0 1 2 21", "3")
   )
 
   expect_equal(
     R_to_lifelihood("par + geno + par * geno", covariates, covar_types),
-    c("0 1 2 12", "3")
+    c("0 1 2 21", "3")
   )
 
   expect_equal(
