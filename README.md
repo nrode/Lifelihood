@@ -7,7 +7,7 @@
 It requires R 4.1.0 or later, and:
 
 - macOS (Apple silicon)
-- Windows (Still some known issues)
+- Windows
 - Linux
 
 <br>
