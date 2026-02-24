@@ -7,7 +7,7 @@
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.1.6
+#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
 #> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
@@ -65,7 +65,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9209_7083_9929_9024/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9209_7083_9929_9024/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 9209 7083 9929 9024 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6993_7460_6205_7561/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6993_7460_6205_7561/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 6993 7460 6205 7561 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 summary(results)
 #> 
 #> === LIFELIHOOD RESULTS ===
@@ -73,17 +73,17 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343784.413
-#> AIC:             687576.8
-#> BIC:             687594.1
+#> Log-likelihood:  -343809.537
+#> AIC:             687627.1
+#> BIC:             687644.3
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.983 (0.069)
-#>   expt_death eff_expt_death_par_1 0.289 (0.075)
-#>   expt_death eff_expt_death_par_2 0.293 (0.081)
-#>   survival_param2 (Intercept) -0.210 (0.116)
+#>   expt_death (Intercept)    -1.500 (-1.000)
+#>   expt_death eff_expt_death_par_1 -0.204 (-1.000)
+#>   expt_death eff_expt_death_par_2 -0.207 (-1.000)
+#>   survival_param2 (Intercept) -0.493 (-1.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -99,10 +99,10 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -1.98    0.0690 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1      0.289   0.0749 expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2      0.293   0.0812 expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.210   0.116  survival_param2 intercept       mort…
+#> 1 int_expt_death           -1.50        -1 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1     -0.204       -1 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2     -0.207       -1 expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2      -0.493       -1 survival_param2 intercept       mort…
 ```
 
 ### Prediction
@@ -116,14 +116,15 @@ We can predict with standard errors.
 prediction(results, "expt_death", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
+#> Warning in sqrt(diag(x %*% var_parameter %*% t(x))): NaNs produced
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -1.98    0.0690
-#> 2  -1.69    0.0429
-#> 3  -1.98    0.0690
-#> 4  -1.98    0.0690
-#> 5  -1.98    0.0690
+#> 1  -1.50  NaN     
+#> 2  -1.50  NaN     
+#> 3  -1.70    0.0234
+#> 4  -1.70    0.0234
+#> 5  -1.50  NaN
 ```
 
 - Response scale
@@ -133,14 +134,16 @@ prediction(results, "expt_death", se.fit = TRUE) |>
 prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
+#> Warning in sqrt(diag(x %*% var_parameter %*% t(x)) * (derivLink(predictions, :
+#> NaNs produced
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   50.3      1.24
-#> 2   39.2      2.38
-#> 3   39.2      2.38
-#> 4   39.2      2.38
-#> 5   39.2      2.38
+#> 1   59.1    NaN   
+#> 2   59.1    NaN   
+#> 3   59.1    NaN   
+#> 4   49.8      2.00
+#> 5   59.1    NaN
 ```
 
 ## MCMC
@@ -156,7 +159,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_mcmc"),
   MCMC = 30
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5109_6887_1241_448/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5109_6887_1241_448/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 5109 6887 1241 448 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8554_7131_8749_7016/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8554_7131_8749_7016/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 8554 7131 8749 7016 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### Visualization

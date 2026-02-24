@@ -101,7 +101,7 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tidyverse</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.1.6</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.2.0</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
 <span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
@@ -156,7 +156,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_se"</span><span class="op">)</span>,</span>
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9209_7083_9929_9024/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9209_7083_9929_9024/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 9209 7083 9929 9024 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6993_7460_6205_7561/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6993_7460_6205_7561/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 6993 7460 6205 7561 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
@@ -164,17 +164,17 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343784.413</span></span>
-<span><span class="co">#&gt; AIC:             687576.8</span></span>
-<span><span class="co">#&gt; BIC:             687594.1</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -343809.537</span></span>
+<span><span class="co">#&gt; AIC:             687627.1</span></span>
+<span><span class="co">#&gt; BIC:             687644.3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.983 (0.069)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.289 (0.075)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.293 (0.081)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.210 (0.116)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.500 (-1.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.204 (-1.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.207 (-1.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.493 (-1.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -188,10 +188,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.98    0.0690 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1      0.289   0.0749 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2      0.293   0.0812 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -0.210   0.116  survival_param2 intercept       mort…</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 int_expt_death           -1.50        -1 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1     -0.204       -1 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2     -0.207       -1 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2      -0.493       -1 survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
 <section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h3>
@@ -204,14 +204,15 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(x %*% var_parameter %*% t(x))): NaNs produced</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.98    0.0690</span></span>
-<span><span class="co">#&gt; 2  -1.69    0.0429</span></span>
-<span><span class="co">#&gt; 3  -1.98    0.0690</span></span>
-<span><span class="co">#&gt; 4  -1.98    0.0690</span></span>
-<span><span class="co">#&gt; 5  -1.98    0.0690</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  -1.50  NaN     </span></span>
+<span><span class="co">#&gt; 2  -1.50  NaN     </span></span>
+<span><span class="co">#&gt; 3  -1.70    0.0234</span></span>
+<span><span class="co">#&gt; 4  -1.70    0.0234</span></span>
+<span><span class="co">#&gt; 5  -1.50  NaN</span></span></code></pre></div>
 </div>
 <ul>
 <li>Response scale</li>
@@ -221,14 +222,16 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(x %*% var_parameter %*% t(x)) * (derivLink(predictions, :</span></span>
+<span><span class="co">#&gt; NaNs produced</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   50.3      1.24</span></span>
-<span><span class="co">#&gt; 2   39.2      2.38</span></span>
-<span><span class="co">#&gt; 3   39.2      2.38</span></span>
-<span><span class="co">#&gt; 4   39.2      2.38</span></span>
-<span><span class="co">#&gt; 5   39.2      2.38</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   59.1    NaN   </span></span>
+<span><span class="co">#&gt; 2   59.1    NaN   </span></span>
+<span><span class="co">#&gt; 3   59.1    NaN   </span></span>
+<span><span class="co">#&gt; 4   49.8      2.00</span></span>
+<span><span class="co">#&gt; 5   59.1    NaN</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
 </h2>
@@ -244,7 +247,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_mcmc"</span><span class="op">)</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">30</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5109_6887_1241_448/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5109_6887_1241_448/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 5109 6887 1241 448 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8554_7131_8749_7016/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8554_7131_8749_7016/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 8554 7131 8749 7016 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h3>

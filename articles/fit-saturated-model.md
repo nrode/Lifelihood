@@ -7,7 +7,7 @@
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.1.6
+#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
 #> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
@@ -69,7 +69,7 @@ system.time(
 )
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 #>    user  system elapsed 
-#>  43.956   0.739  46.722
+#>  19.107   0.218  19.799
 ```
 
 - Group by group model
@@ -108,7 +108,7 @@ system.time(
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 #> [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197"
 #>    user  system elapsed 
-#>   3.026   0.179   3.343
+#>   1.198   0.059   1.312
 ```
 
 Fitting saturated model with group by group is faster than default
