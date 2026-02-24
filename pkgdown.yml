@@ -7,6 +7,7 @@ articles:
   customize-parameter-boundaries-and-estimation-warning: customize-parameter-boundaries-and-estimation-warning.html
   fit-saturated-model: fit-saturated-model.html
   generate-clutch-names: generate-clutch-names.html
+  goodness-of-fit: goodness-of-fit.html
   how-to-use-lifelihood: how-to-use-lifelihood.html
   lifelihood: lifelihood.html
   overview: overview.html
@@ -14,7 +15,7 @@ articles:
   setting-up-the-configuration-file: setting-up-the-configuration-file.html
   simulation-and-visit-masks: simulation-and-visit-masks.html
   standard-errors-and-mcmc: standard-errors-and-mcmc.html
-last_built: 2026-02-24T07:47Z
+last_built: 2026-02-24T09:42Z
 urls:
   reference: https://nrode.github.io/Lifelihood/reference
   article: https://nrode.github.io/Lifelihood/articles

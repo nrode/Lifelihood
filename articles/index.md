@@ -16,6 +16,8 @@
   TRUE\`](https://nrode.github.io/Lifelihood/articles/fit-saturated-model.md):
 - [Standard errors and
   MCMC](https://nrode.github.io/Lifelihood/articles/standard-errors-and-mcmc.md):
+- [How to use
+  lifelihood](https://nrode.github.io/Lifelihood/articles/goodness-of-fit.md):
 - [Generate clutch
   names](https://nrode.github.io/Lifelihood/articles/generate-clutch-names.md):
 

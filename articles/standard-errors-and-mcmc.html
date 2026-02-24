@@ -49,6 +49,7 @@
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
     <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -156,7 +157,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_se"</span><span class="op">)</span>,</span>
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6993_7460_6205_7561/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6993_7460_6205_7561/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 6993 7460 6205 7561 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5946_8414_4704_1279/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5946_8414_4704_1279/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 5946 8414 4704 1279 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
@@ -164,17 +165,17 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343809.537</span></span>
-<span><span class="co">#&gt; AIC:             687627.1</span></span>
-<span><span class="co">#&gt; BIC:             687644.3</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -343822.862</span></span>
+<span><span class="co">#&gt; AIC:             687653.7</span></span>
+<span><span class="co">#&gt; BIC:             687671.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.500 (-1.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.204 (-1.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.207 (-1.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.493 (-1.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.275 (-1.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.456 (-1.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.473 (-1.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.590 (-1.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -188,10 +189,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.50        -1 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1     -0.204       -1 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2     -0.207       -1 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -0.493       -1 survival_param2 intercept       mort…</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 int_expt_death           -1.27        -1 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1     -0.456       -1 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2     -0.473       -1 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2      -0.590       -1 survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
 <section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h3>
@@ -208,11 +209,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.50  NaN     </span></span>
-<span><span class="co">#&gt; 2  -1.50  NaN     </span></span>
-<span><span class="co">#&gt; 3  -1.70    0.0234</span></span>
-<span><span class="co">#&gt; 4  -1.70    0.0234</span></span>
-<span><span class="co">#&gt; 5  -1.50  NaN</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  -1.27  NaN     </span></span>
+<span><span class="co">#&gt; 2  -1.27  NaN     </span></span>
+<span><span class="co">#&gt; 3  -1.73    0.0323</span></span>
+<span><span class="co">#&gt; 4  -1.27  NaN     </span></span>
+<span><span class="co">#&gt; 5  -1.73    0.0323</span></span></code></pre></div>
 </div>
 <ul>
 <li>Response scale</li>
@@ -227,11 +228,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   59.1    NaN   </span></span>
-<span><span class="co">#&gt; 2   59.1    NaN   </span></span>
-<span><span class="co">#&gt; 3   59.1    NaN   </span></span>
-<span><span class="co">#&gt; 4   49.8      2.00</span></span>
-<span><span class="co">#&gt; 5   59.1    NaN</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   48.8      1.34</span></span>
+<span><span class="co">#&gt; 2   70.8    NaN   </span></span>
+<span><span class="co">#&gt; 3   70.8    NaN   </span></span>
+<span><span class="co">#&gt; 4   48.1      2.05</span></span>
+<span><span class="co">#&gt; 5   48.1      2.05</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
 </h2>
@@ -247,7 +248,10 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_mcmc"</span><span class="op">)</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">30</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8554_7131_8749_7016/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8554_7131_8749_7016/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 8554 7131 8749 7016 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1664_5157_2361_8455/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1664_5157_2361_8455/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 1664 5157 2361 8455 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; Warning in check_estimation(results): Estimation of 'fitness' is close to the</span></span>
+<span><span class="co">#&gt; maximum bound: fitness~=998.979190125656 (bound=995). Consider increasing</span></span>
+<span><span class="co">#&gt; maximum bound.</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h3>

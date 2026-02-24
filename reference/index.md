@@ -25,6 +25,8 @@
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
+- [`goodness_of_fit()`](https://nrode.github.io/Lifelihood/reference/goodness_of_fit.md)
+  : Parametric goodness-of-fit from simulated datasets
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
   : Individual life history modelling
 - [`logLik(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/logLik.lifelihoodResults.md)
@@ -33,6 +35,8 @@
   MCMC
 - [`parallel.simulate()`](https://nrode.github.io/Lifelihood/reference/parallel.simulate.md)
   : Parallelized simulations
+- [`plot(`*`<lifelihoodGOF>`*`)`](https://nrode.github.io/Lifelihood/reference/plot.lifelihoodGOF.md)
+  : Plot goodness-of-fit histogram
 - [`prediction()`](https://nrode.github.io/Lifelihood/reference/prediction.md)
   : Prediction with lifelihood estimations
 - [`remove_lifelihood_tempfiles()`](https://nrode.github.io/Lifelihood/reference/remove_lifelihood_tempfiles.md)
