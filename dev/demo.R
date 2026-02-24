@@ -8,7 +8,8 @@ df <- datapierrick |>
     geno = as.factor(geno),
     spore = as.factor(spore),
     block = rep(1:2, each = nrow(datapierrick) / 2)
-  )
+  ) |>
+  sample_n(100)
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -36,13 +37,13 @@ lifelihoodData <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_gbg"),
-  delete_temp_files = FALSE,
-  group_by_group = TRUE,
-  n_fit = 2
+  path_config = use_test_config("config_pierrick")
 )
 results$effects |> as_tibble()
 summary(results)
+
+gof <- goodness_of_fit(results, nsim = 5, show_progress = TRUE)
+plot(gof)
 
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)

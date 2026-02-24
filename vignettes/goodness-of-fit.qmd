@@ -1,0 +1,92 @@
+---
+title: "How to use lifelihood"
+vignette: >
+  %\VignetteIndexEntry{goodness-of-fit}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+embed-resources: true
+---
+
+
+## Load libraries
+
+```{r}
+library(lifelihood)
+library(tidyverse)
+```
+
+## Fit a simple model
+
+```{r}
+df <- datapierrick |>
+  as_tibble() |>
+  mutate(
+    par = as.factor(par),
+    geno = as.factor(geno),
+    spore = as.factor(spore)
+  ) |>
+  sample_n(120)
+
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "pon",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+
+lifelihoodData <- as_lifelihoodData(
+  df = df,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = generate_clutch_vector(28),
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("par", "spore"),
+  model_specs = c("wei", "gam", "exp")
+)
+
+results <- lifelihood(
+  lifelihoodData,
+  path_config = use_test_config("config_pierrick"),
+  raise_estimation_warning = FALSE
+)
+```
+
+## Goodness of fit
+
+The goodness of fit simulate datasets from a fitted model (`results)`, refit the model on each simulated dataset (`nsim`), and compare simulated log-likelihood values to the original fit.
+
+```{r}
+gof <- goodness_of_fit(results, nsim = 5)
+```
+
+The `goodness_of_fit()` function returns an instance of class `lifelihoodGOF`, with the following attributes:
+
+```{r}
+gof$original_loglik
+gof$simulated_loglik
+gof$n_success
+gof$n_failed
+gof$p_lower_or_equal
+```
+
+You can also read the `gof$fits` attribute for all underlying fits. Use `gof$fits[[1]]` for the first one, `gof$fits[[2]]` for the second, and so on.
+
+## Visualization
+
+You can use the `plot()` S3 method on the output of `goodness_of_fit()`:
+
+```{r}
+plot(gof)
+```
+
+We can see here that the simulated datasets, when fitted, have a less good log-likelihood compared to the original fit. This might suggest that the original fit isn't that great.

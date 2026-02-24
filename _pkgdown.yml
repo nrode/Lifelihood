@@ -23,6 +23,7 @@ articles:
       - simulation-and-visit-masks
       - fit-saturated-model
       - standard-errors-and-mcmc
+      - goodness-of-fit
       - generate-clutch-names
   - title: Developer
     navbar: Developer
