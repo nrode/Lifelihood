@@ -157,7 +157,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_se"</span><span class="op">)</span>,</span>
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5946_8414_4704_1279/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5946_8414_4704_1279/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 5946 8414 4704 1279 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9296_6379_8523_809/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9296_6379_8523_809/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 9296 6379 8523 809 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
@@ -165,17 +165,17 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343822.862</span></span>
-<span><span class="co">#&gt; AIC:             687653.7</span></span>
-<span><span class="co">#&gt; BIC:             687671.0</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -343794.349</span></span>
+<span><span class="co">#&gt; AIC:             687596.7</span></span>
+<span><span class="co">#&gt; BIC:             687613.9</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.275 (-1.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.456 (-1.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.473 (-1.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.590 (-1.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.759 (0.138)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.080 (0.148)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.022 (0.153)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.307 (0.132)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -189,10 +189,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.27        -1 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1     -0.456       -1 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2     -0.473       -1 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -0.590       -1 survival_param2 intercept       mort…</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 int_expt_death          -1.76      0.138 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1     0.0799    0.148 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2     0.0221    0.153 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2     -0.307     0.132 survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
 <section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h3>
@@ -205,15 +205,14 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in sqrt(diag(x %*% var_parameter %*% t(x))): NaNs produced</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.27  NaN     </span></span>
-<span><span class="co">#&gt; 2  -1.27  NaN     </span></span>
-<span><span class="co">#&gt; 3  -1.73    0.0323</span></span>
-<span><span class="co">#&gt; 4  -1.27  NaN     </span></span>
-<span><span class="co">#&gt; 5  -1.73    0.0323</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  -1.76     0.138</span></span>
+<span><span class="co">#&gt; 2  -1.76     0.138</span></span>
+<span><span class="co">#&gt; 3  -1.76     0.138</span></span>
+<span><span class="co">#&gt; 4  -1.76     0.138</span></span>
+<span><span class="co">#&gt; 5  -1.76     0.138</span></span></code></pre></div>
 </div>
 <ul>
 <li>Response scale</li>
@@ -223,16 +222,14 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in sqrt(diag(x %*% var_parameter %*% t(x)) * (derivLink(predictions, :</span></span>
-<span><span class="co">#&gt; NaNs produced</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   48.8      1.34</span></span>
-<span><span class="co">#&gt; 2   70.8    NaN   </span></span>
-<span><span class="co">#&gt; 3   70.8    NaN   </span></span>
-<span><span class="co">#&gt; 4   48.1      2.05</span></span>
-<span><span class="co">#&gt; 5   48.1      2.05</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   47.6      5.62</span></span>
+<span><span class="co">#&gt; 2   48.5      1.82</span></span>
+<span><span class="co">#&gt; 3   47.6      5.62</span></span>
+<span><span class="co">#&gt; 4   47.6      5.62</span></span>
+<span><span class="co">#&gt; 5   48.5      1.82</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
 </h2>
@@ -248,10 +245,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_mcmc"</span><span class="op">)</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">30</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1664_5157_2361_8455/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1664_5157_2361_8455/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 1664 5157 2361 8455 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; Warning in check_estimation(results): Estimation of 'fitness' is close to the</span></span>
-<span><span class="co">#&gt; maximum bound: fitness~=998.979190125656 (bound=995). Consider increasing</span></span>
-<span><span class="co">#&gt; maximum bound.</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2441_6684_3007_7107/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2441_6684_3007_7107/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 2441 6684 3007 7107 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h3>
