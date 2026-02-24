@@ -1,4 +1,4 @@
-testthat::test_that("simulations work", {
+test_that("simulations work", {
   path_config <- if (rlang::is_interactive()) {
     "tests/testthat/config.yaml"
   } else {
@@ -51,4 +51,62 @@ testthat::test_that("simulations work", {
     expect_type(simul$maturity, "double")
     expect_true(nrow(simul) == 550)
   })
+})
+
+test_that("trade-off simulations work for reproduction events", {
+  path_config <- if (rlang::is_interactive()) {
+    "tests/testthat/config_tradeoff.yaml"
+  } else {
+    "config_tradeoff.yaml"
+  }
+
+  df <- datapierrick |>
+    as_tibble() |>
+    mutate(
+      par = as.factor(par),
+      geno = as.factor(geno),
+      spore = as.factor(spore)
+    )
+
+  clutchs <- generate_clutch_vector(28)
+
+  lifelihoodData <- as_lifelihoodData(
+    df = df,
+    sex = "sex",
+    sex_start = "sex_start",
+    sex_end = "sex_end",
+    maturity_start = "mat_start",
+    maturity_end = "mat_end",
+    clutchs = clutchs,
+    death_start = "death_start",
+    death_end = "death_end",
+    covariates = c("par", "geno"),
+    model_specs = c("wei", "gam", "lgn")
+  )
+
+  results <- lifelihood(
+    lifelihoodData,
+    path_config = path_config,
+    raise_estimation_warning = FALSE
+  )
+
+  sim_reproduction <- simulate_life_history(
+    results,
+    event = "reproduction",
+    seed = 1
+  )
+  expect_true(all(c("mortality", "maturity") %in% names(sim_reproduction)))
+  clutch_cols <- grep("^clutch_", names(sim_reproduction), value = TRUE)
+  n_offspring_cols <- grep(
+    "^n_offspring_clutch_",
+    names(sim_reproduction),
+    value = TRUE
+  )
+  expect_true(length(clutch_cols) > 0)
+  expect_true(length(n_offspring_cols) > 0)
+  expect_type(sim_reproduction[[n_offspring_cols[1]]], "integer")
+
+  sim_mortality <- simulate_life_history(results, event = "mortality", seed = 1)
+  expect_true(identical(names(sim_mortality), "mortality"))
+  expect_true(nrow(sim_mortality) == nrow(df))
 })

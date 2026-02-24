@@ -158,6 +158,281 @@ simulate_event <- function(
   return(simul_df_full)
 }
 
+#' @keywords internal
+simulate_life_history_tradeoff <- function(
+  object,
+  newdata,
+  lifelihoodData,
+  dt = 0.1
+) {
+  n_obs <- if (is.null(newdata)) nrow(lifelihoodData$df) else nrow(newdata)
+
+  family_mortality <- lifelihoodData$model_specs[[1]]
+  family_maturity <- lifelihoodData$model_specs[[2]]
+  family_reproduction <- lifelihoodData$model_specs[[3]]
+
+  expt_death <- prediction(
+    object,
+    "expt_death",
+    type = "response",
+    newdata = newdata
+  )
+  survival_param2 <- tryCatch(
+    prediction(object, "survival_param2", type = "response", newdata = newdata),
+    error = function(e) NULL
+  )
+  if (is.null(survival_param2)) {
+    if (family_mortality == "exp") {
+      survival_param2 <- rep(1, n_obs)
+    } else {
+      stop(
+        "Could not predict `survival_param2` required for mortality simulation.",
+        call. = FALSE
+      )
+    }
+  }
+
+  expt_maturity <- prediction(
+    object,
+    "expt_maturity",
+    type = "response",
+    newdata = newdata
+  )
+  maturity_param2 <- tryCatch(
+    prediction(object, "maturity_param2", type = "response", newdata = newdata),
+    error = function(e) NULL
+  )
+  if (is.null(maturity_param2)) {
+    if (family_maturity == "exp") {
+      maturity_param2 <- rep(1, n_obs)
+    } else {
+      stop(
+        "Could not predict `maturity_param2` required for maturity simulation.",
+        call. = FALSE
+      )
+    }
+  }
+
+  expt_reproduction_link <- prediction(
+    object,
+    "expt_reproduction",
+    type = "link",
+    newdata = newdata
+  )
+  reproduction_param2 <- tryCatch(
+    prediction(
+      object,
+      "reproduction_param2",
+      type = "response",
+      newdata = newdata
+    ),
+    error = function(e) NULL
+  )
+  if (is.null(reproduction_param2)) {
+    if (family_reproduction == "exp") {
+      reproduction_param2 <- rep(1, n_obs)
+    } else {
+      stop(
+        "Could not predict `reproduction_param2` required for reproduction simulation.",
+        call. = FALSE
+      )
+    }
+  }
+
+  n_offspring <- if (is_parameter_fitted(object, "n_offspring")) {
+    tryCatch(
+      prediction(object, "n_offspring", type = "response", newdata = newdata),
+      error = function(e) rep(NA_real_, n_obs)
+    )
+  } else {
+    rep(NA_real_, n_obs)
+  }
+
+  d <- predict_or_default(
+    object = object,
+    parameter_name = "increase_death_hazard",
+    newdata = newdata,
+    n_obs = n_obs,
+    default = 0
+  )
+  da <- predict_or_default(
+    object = object,
+    parameter_name = "tof_reduction_rate",
+    newdata = newdata,
+    n_obs = n_obs,
+    default = 0
+  )
+  dn <- predict_or_default(
+    object = object,
+    parameter_name = "increase_tof_n_offspring",
+    newdata = newdata,
+    n_obs = n_obs,
+    default = 0
+  )
+  senput <- predict_or_default(
+    object = object,
+    parameter_name = "lin_decrease_hazard",
+    newdata = newdata,
+    n_obs = n_obs,
+    default = 0
+  )
+
+  expt_reproduction_bounds <- subset(
+    object$param_bounds_df,
+    param == "expt_reproduction"
+  )
+  expt_reproduction_min <- as.numeric(expt_reproduction_bounds$min[1])
+  expt_reproduction_max <- as.numeric(expt_reproduction_bounds$max[1])
+
+  max_long <- compute_max_longevity(
+    expected = expt_death,
+    shape = survival_param2,
+    family = family_mortality
+  )
+  max_long[!is.finite(max_long)] <- lifelihoodData$right_censoring_date
+  max_long <- pmax(max_long, lifelihoodData$right_censoring_date)
+
+  maturity <- rep(NA_real_, n_obs)
+  mortality <- rep(NA_real_, n_obs)
+  clutch_times <- vector("list", n_obs)
+  clutch_sizes <- vector("list", n_obs)
+
+  for (i in seq_len(n_obs)) {
+    t <- 0
+    alive <- TRUE
+    matured <- FALSE
+    maturity_time <- NA_real_
+    last_reproduction_time <- NA_real_
+    clutch_times_i <- numeric(0)
+    clutch_sizes_i <- integer(0)
+    max_iter <- ceiling(max_long[i] / dt) + 1
+    iter <- 0
+
+    while (alive && t < max_long[i] && iter <= max_iter) {
+      iter <- iter + 1
+
+      if (length(clutch_times_i) > 0) {
+        offspring_effect <- ifelse(is.na(clutch_sizes_i), 0, clutch_sizes_i)
+        elapsed <- pmax(t - clutch_times_i, 0)
+        if (da[i] == 0) {
+          decay <- rep(1, length(elapsed))
+        } else {
+          decay <- exp(-da[i] * elapsed)
+        }
+        discount <- sum((d[i] + dn[i] * offspring_effect) * decay)
+      } else {
+        discount <- 0
+      }
+
+      p_die <- prob_event_interval_dt_safe(
+        t = t,
+        dt = dt,
+        param1 = expt_death[i],
+        param2 = survival_param2[i],
+        family = family_mortality
+      )
+      p_die <- clamp_probability(p_die + discount * dt)
+      if (runif(1) < p_die) {
+        mortality[i] <- t + dt / 2
+        alive <- FALSE
+        break
+      }
+
+      matured_this_interval <- FALSE
+      if (!matured) {
+        p_maturity <- prob_event_interval_dt_safe(
+          t = t,
+          dt = dt,
+          param1 = expt_maturity[i],
+          param2 = maturity_param2[i],
+          family = family_maturity
+        )
+        if (runif(1) < p_maturity) {
+          maturity_time <- t + dt / 2
+          maturity[i] <- maturity_time
+          last_reproduction_time <- maturity_time
+          matured <- TRUE
+          matured_this_interval <- TRUE
+        }
+      }
+
+      if (matured && !matured_this_interval) {
+        t_from_last <- max(t - last_reproduction_time, 0)
+        t_from_maturity <- max(t - maturity_time, 0)
+        expt_reproduction <- link(
+          estimate = expt_reproduction_link[i] + senput[i] * t_from_maturity,
+          min = expt_reproduction_min,
+          max = expt_reproduction_max
+        )
+        p_reproduction <- prob_event_interval_dt_safe(
+          t = t_from_last,
+          dt = dt,
+          param1 = expt_reproduction,
+          param2 = reproduction_param2[i],
+          family = family_reproduction
+        )
+        if (runif(1) < p_reproduction) {
+          reproduction_time <- t + dt / 2
+          clutch_times_i <- c(clutch_times_i, reproduction_time)
+          clutch_size_i <- if (is.finite(n_offspring[i])) {
+            simulate_truncPois_single(n_offspring[i])
+          } else {
+            NA_integer_
+          }
+          clutch_sizes_i <- c(clutch_sizes_i, clutch_size_i)
+          last_reproduction_time <- reproduction_time
+        }
+      }
+
+      t <- t + dt
+    }
+
+    if (is.na(mortality[i])) {
+      mortality[i] <- max_long[i]
+    }
+
+    clutch_times[[i]] <- clutch_times_i
+    clutch_sizes[[i]] <- clutch_sizes_i
+  }
+
+  clutch_intervals <- vector("list", n_obs)
+  for (i in seq_len(n_obs)) {
+    clutch_times_i <- clutch_times[[i]]
+    if (length(clutch_times_i) == 0 || is.na(maturity[i])) {
+      clutch_intervals[[i]] <- numeric(0)
+      next
+    }
+
+    clutch_intervals_i <- clutch_times_i
+    clutch_intervals_i[1] <- clutch_times_i[1] - maturity[i]
+    if (length(clutch_times_i) > 1) {
+      clutch_intervals_i[2:length(clutch_times_i)] <- diff(clutch_times_i)
+    }
+    clutch_intervals[[i]] <- clutch_intervals_i
+  }
+
+  n_clutch <- max(c(1L, lengths(clutch_intervals)))
+  clutch_matrix <- matrix(NA_real_, nrow = n_obs, ncol = n_clutch)
+  n_offspring_matrix <- matrix(NA_integer_, nrow = n_obs, ncol = n_clutch)
+
+  for (i in seq_len(n_obs)) {
+    n_i <- length(clutch_intervals[[i]])
+    if (n_i > 0) {
+      clutch_matrix[i, seq_len(n_i)] <- clutch_intervals[[i]]
+      n_offspring_matrix[i, seq_len(n_i)] <- as.integer(clutch_sizes[[i]])
+    }
+  }
+
+  sim_df <- tibble(mortality = mortality)
+  for (j in seq_len(n_clutch)) {
+    sim_df[[paste0("clutch_", j)]] <- clutch_matrix[, j]
+    sim_df[[paste0("n_offspring_clutch_", j)]] <- n_offspring_matrix[, j]
+  }
+  sim_df$maturity <- maturity
+
+  return(sim_df)
+}
+
 #' @title Simulate outcomes from a fitted lifelihood model
 #'
 #' @description This function generates simulated data from a fitted lifelihood model,
@@ -231,17 +506,43 @@ simulate_life_history <- function(
     }
   }
 
-  df_sims <- NULL
-  for (ev in events) {
-    sim <- simulate_event(
+  use_tradeoff_path <- "reproduction" %in%
+    events &&
+    uses_tradeoff_simulation(object)
+
+  if (use_tradeoff_path) {
+    df_sims <- simulate_life_history_tradeoff(
       object,
-      ev,
-      newdata,
-      lifelihoodData,
-      use_censoring,
-      visits
+      newdata = newdata,
+      lifelihoodData = lifelihoodData
     )
-    df_sims <- bind_cols(sim, df_sims)
+    if (!is.null(lifelihoodData$block) && use_censoring) {
+      df_sims <- add_visit_masks(
+        simul_df = df_sims,
+        lifelihoodData = lifelihoodData,
+        event = "maturity",
+        visits = visits
+      )
+      df_sims <- add_visit_masks(
+        simul_df = df_sims,
+        lifelihoodData = lifelihoodData,
+        event = "mortality",
+        visits = visits
+      )
+    }
+  } else {
+    df_sims <- NULL
+    for (ev in events) {
+      sim <- simulate_event(
+        object,
+        ev,
+        newdata,
+        lifelihoodData,
+        use_censoring,
+        visits
+      )
+      df_sims <- bind_cols(sim, df_sims)
+    }
   }
 
   if ("reproduction" %in% events) {
@@ -334,6 +635,20 @@ simulate_lognormal <- function(expected, vp1, n) {
 simulate_exponential <- function(expected, n) {
   rate <- 1 / expected
   return(sapply(rate, rexp, n = n))
+}
+
+#' @keywords internal
+simulate_truncPois_single <- function(expected) {
+  if (is.na(expected)) {
+    return(NA_integer_)
+  }
+
+  repeat {
+    draw <- rpois(n = 1, lambda = expected)
+    if (!is.na(draw) && draw > 0) {
+      return(as.integer(draw))
+    }
+  }
 }
 
 #' @keywords internal

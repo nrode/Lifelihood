@@ -83,7 +83,8 @@ prediction(
 ) |>
   tail()
 
-simulate_life_history(results) |> head()
+simul <- simulate_life_history(results) |> head()
+
 z <- simulate_life_history(
   results,
   event = c("mortality", "maturity"),
