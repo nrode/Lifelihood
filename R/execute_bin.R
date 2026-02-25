@@ -118,7 +118,9 @@ execute_bin <- function(
         mustWork = TRUE
       ),
       "Darwin" = {
-        macos_binary <- if (machine == "x86_64") "lifelihood" else
+        macos_binary <- if (machine == "x86_64") {
+          "lifelihood"
+        } else {
           "lifelihood-macos"
         system.file(
           "bin",
