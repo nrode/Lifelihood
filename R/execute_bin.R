@@ -70,6 +70,16 @@ execute_bin <- function(
   climbrate,
   precision
 ) {
+  normalize_machine <- function(machine) {
+    machine <- tolower(machine)
+    switch(
+      machine,
+      "amd64" = "x86_64",
+      "arm64" = "aarch64",
+      machine
+    )
+  }
+
   arg_string <- paste(
     path_input_data,
     path_param_bounds,
@@ -97,6 +107,8 @@ execute_bin <- function(
   )
   if (is.null(path_to_Lifelihood)) {
     os <- detect_os()
+    machine <- normalize_machine(Sys.info()[["machine"]])
+
     path <- switch(
       os,
       "Windows" = system.file(
@@ -105,19 +117,21 @@ execute_bin <- function(
         package = "lifelihood",
         mustWork = TRUE
       ),
-      "Darwin" = system.file(
-        "bin",
-        "lifelihood-macos",
-        package = "lifelihood",
-        mustWork = TRUE
-      ),
-      "Linux" = system.file(
-        "bin",
-        "lifelihood-linux",
-        package = "lifelihood",
-        mustWork = TRUE
-      ),
-      stop("Unexpect OS: ", os)
+      "Darwin" = {
+        macos_binary <- if (machine == "x86_64") "lifelihood" else "lifelihood-macos"
+        system.file("bin", macos_binary, package = "lifelihood", mustWork = TRUE)
+      },
+      "Linux" = {
+        if (machine != "x86_64") {
+          stop(
+            "No bundled Linux executable for architecture '", machine, "'. ",
+            "Bundled Linux binary currently targets x86_64 only. ",
+            "Provide a matching executable via `path_to_Lifelihood`."
+          )
+        }
+        system.file("bin", "lifelihood-linux", package = "lifelihood", mustWork = TRUE)
+      },
+      stop("Unexpected OS: ", os)
     )
   } else {
     path <- path_to_Lifelihood
