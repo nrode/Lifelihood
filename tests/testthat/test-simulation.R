@@ -155,12 +155,15 @@ test_that("censoring works for reproduction and validates block in newdata", {
     use_censoring = TRUE,
     seed = 1
   )
-  expect_true(all(c(
-    "maturity_start",
-    "maturity_end",
-    "mortality_start",
-    "mortality_end"
-  ) %in% names(sim)))
+  expect_true(all(
+    c(
+      "maturity_start",
+      "maturity_end",
+      "mortality_start",
+      "mortality_end"
+    ) %in%
+      names(sim)
+  ))
 
   newdata_without_block <- df[1:5, c("par", "spore")]
   expect_error(
