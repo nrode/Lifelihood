@@ -1,13 +1,13 @@
-#' @title Prediction with lifelihood estimations
+#' @title Prediction from a lifelihood model at new data values
 #'
 #' @description
-#' S3 method to use to make prediction using fitted results from [lifelihood()].
+#' S3 method used to make predictions using `lifelihoodResults` objects, i.e. results from [lifelihood()].
 #'
 #' @param object output of [lifelihood()]
 #' @param parameter_name A string specifying the name of the parameter for which to make the prediction. Must be one of `unique(lifelihoodResults$effects$parameter)`.
-#' @param newdata Data for prediction. If absent, predictions are for the subjects used in the original fit.
-#' @param type The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.
-#' @param se.fit Whether or not to include standard errors in the prediction.
+#' @param newdata Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.
+#' @param type The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.
+#' @param se.fit Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).
 #'
 #' @return A vector containing the predicted values for the parameter.
 #'
@@ -121,7 +121,7 @@ prediction <- function(
     )
   } else {
     effects <- object$effects
-    range <- which(effects$parameter == parameter_name)
+    range1 <- effects$parameter == parameter_name
 
     fml <- read_formula(config = object$config, parameter = parameter_name)
     fml <- formula(paste("~ ", fml))
@@ -130,9 +130,9 @@ prediction <- function(
     x <- model.matrix(Terms, m)
 
     if (mcmc.fit & se.fit) {
-      coef_vector <- effects$mcmc_estimation[range]
+      coef_vector <- effects$mcmc_estimation[range1]
     } else {
-      coef_vector <- effects$estimation[range]
+      coef_vector <- effects$estimation[range1]
     }
 
     # the case where newdata does not contain all
@@ -193,18 +193,6 @@ prediction <- function(
         max = as.numeric(parameter_bounds$max)
       )
 
-      if (is_parameter_fitted(object, ratio_param)) {
-        pred_ratio_expt <- prediction(
-          object,
-          ratio_param,
-          type = "response"
-        )
-
-        # for male, we multiply by the fitted ratio expected death/maturity
-        pred <- (1 - df[[object$lifelihoodData$sex]]) *
-          pred +
-          df[[object$lifelihoodData$sex]] * pred * pred_ratio_expt
-      }
     }
 
     if (se.fit) {
@@ -213,48 +201,82 @@ prediction <- function(
       } else {
         var_cov <- object$vcov
       }
-      var_parameter <- as.matrix(var_cov[range, range])
+      ## Extract variance covariance matrix for effects of interest
+      var_parameter <- as.matrix(var_cov[range1, range1])
+      ## Compute covariance matrix of fitted values (i.e.linear predictors) using the desgin matrix
+      var_cov_fitted_predictors <- diag(x %*% var_parameter %*% t(x))
+      
       if (type == "link") {
-        se <- sqrt(diag(x %*% var_parameter %*% t(x)))
+        se <- sqrt(var_cov_fitted_predictors)
       } else {
         # type == "response"
         bounds_df <- object$param_bounds_df
         parameter_bounds <- subset(bounds_df, param == parameter_name)
 
-        q <- diag(x %*% var_parameter %*% t(x))
-        beta <- derivLink(
+        ## Estimate first derivative at the ML estimate value
+        firstderiv <- derivLink(
           predictions,
           min = as.numeric(parameter_bounds$min),
           max = as.numeric(parameter_bounds$max)
         )
-        se <- sqrt(q * beta^2)
+        
+        var_fitted_predictors <- var_cov_fitted_predictors * firstderiv^2
+        
+        se <- sqrt(var_fitted_predictors)
 
         # compute the standard error of the expt_death for males (expt_death
-        # females * ratio_expt_death) using the delta method
+        # females * ratio_expt_death) using the multivariate delta method
         if (is_parameter_fitted(object, ratio_param)) {
+          range2 <- effects$parameter == ratio_param
+          ## Define contrast matrix for the two parameters of interest (e.g. exp_death and ratio_expected_death)
+          contrast_males <- as.matrix(rbind(range1, range2))
+          
+          ## Compute the variance covariance matrix between the two parameters of interest
+          vcov_males <- contrast_males %*% var_cov %*% t(contrast_males)
+          
           fml <- read_formula(config = object$config, parameter = ratio_param)
           fml <- formula(paste("~ ", fml))
           m <- model.frame(fml, data = df)
           Terms <- terms(m)
+          ## Design matrix for ratio_param 
           x2 <- model.matrix(Terms, m)
 
-          range2 <- which(effects$parameter == ratio_param)
-          var_parameter2 <- as.matrix(var_cov[range2, range2])
-          q2 <- diag(x2 %*% var_parameter2 %*% t(x2))
-          q12 <- diag(x %*% var_cov[range, range2] %*% t(x2))
-
+          ## Estimate at the ML estimate value on the response scale
+          pred_ratio_expt_resp <- prediction(
+            object,
+            ratio_param,
+            type = "response"
+          )
+          
+          ## Estimate first derivative at the ML estimate value
+          pred_ratio_expt_link <- prediction(
+            object,
+            ratio_param,
+            type = "link"
+          ) ## Estimate at the ML estimate value
           parameter_bounds <- subset(bounds_df, param == ratio_param)
-          beta2 <- derivLink(
-            predictions,
+          ratio_firstderiv <- derivLink(
+            pred_ratio_expt_link,
             min = as.numeric(parameter_bounds$min),
             max = as.numeric(parameter_bounds$max)
           )
 
-          se_ratio <- sqrt(q * beta^2 + q2 * beta2^2 + 2 * beta * beta2 * q12)
-
+          ## Compute the variance using the multivariate delta method
+          var_expt_males <- diag(vcov_males)[1] * (firstderiv * pred_ratio_expt_resp)^2+diag(vcov_males)[2] *(ratio_firstderiv * pred)^2 + sum(vcov_males[row(vcov_males)!=col(vcov_males)]) * firstderiv * ratio_firstderiv * pred * pred_ratio_expt_resp
+          
+          message(glue::glue(
+            "Standard errors for {parameter_name} for males ",
+            "were computed with the multivariate delta method approximation. "
+          ))
+          
+          # For males, we multiply by the ratio fitted for expected death/maturity
+          pred <- (1 - df[[object$lifelihoodData$sex]]) *
+          pred +
+          df[[object$lifelihoodData$sex]] * pred * pred_ratio_expt_resp
+         
           se <- (1 - df[[object$lifelihoodData$sex]]) *
             se +
-            df[[object$lifelihoodData$sex]] * se_ratio
+            df[[object$lifelihoodData$sex]] * sqrt(var_expt_males)
         }
       }
     }
