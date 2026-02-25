@@ -122,6 +122,7 @@ execute_bin <- function(
           "lifelihood"
         } else {
           "lifelihood-macos"
+        }
         system.file(
           "bin",
           macos_binary,
