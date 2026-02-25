@@ -69,7 +69,7 @@ Run `just macos`. This runs the `macos` script inside `justfile`, and will autom
 
 - On Linux
 
-Run `just linux`. This runs the `linux` script inside `justfile`, and will automatically update `inst/bin/lifelihood-linux`. If this is the first time you're compiling, this might take some time as it will build a Docker image first.
+Run `just linux`. This runs the `linux` script inside `justfile`, and will automatically update `inst/bin/lifelihood-linux` as an `x86_64` binary (using a `linux/amd64` Docker image). If this is the first time you're compiling, this might take some time as it will build a Docker image first.
 
 > Note that except if you're on a Linux machine, you'll need to have Docker installed and the Docker daemon running.
 

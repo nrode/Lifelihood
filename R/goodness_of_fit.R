@@ -34,8 +34,7 @@ goodness_of_fit <- function(
 
   if (isTRUE(object$group_by_group)) {
     stop(
-      "goodness_of_fit() is not supported for group_by_group results.",
-      call. = FALSE
+      "goodness_of_fit() is not supported for group_by_group results."
     )
   }
 
@@ -46,16 +45,16 @@ goodness_of_fit <- function(
       nsim < 1 ||
       nsim %% 1 != 0
   ) {
-    stop("`nsim` must be a single positive integer.", call. = FALSE)
+    stop("`nsim` must be a single positive integer.")
   }
   nsim <- as.integer(nsim)
 
   if (!is.list(fit_args)) {
-    stop("`fit_args` must be a list.", call. = FALSE)
+    stop("`fit_args` must be a list.")
   }
   if (length(fit_args) > 0) {
     if (is.null(names(fit_args)) || any(names(fit_args) == "")) {
-      stop("`fit_args` must be a named list.", call. = FALSE)
+      stop("`fit_args` must be a named list.")
     }
   }
 
@@ -63,16 +62,14 @@ goodness_of_fit <- function(
   if (isTRUE(lfh$matclutch)) {
     stop(
       "goodness_of_fit() does not currently support models fitted with ",
-      "`matclutch = TRUE`.",
-      call. = FALSE
+      "`matclutch = TRUE`."
     )
   }
 
   events_to_simulate <- infer_simulation_events(object)
   if (length(events_to_simulate) == 0) {
     stop(
-      "No fitted event can be simulated from this model.",
-      call. = FALSE
+      "No fitted event can be simulated from this model."
     )
   }
 
@@ -80,8 +77,7 @@ goodness_of_fit <- function(
   if (is.null(object$config)) {
     stop(
       "`path_config` is NULL and `object$config` is missing. ",
-      "Provide `path_config` explicitly.",
-      call. = FALSE
+      "Provide `path_config` explicitly."
     )
   }
   temp_config <- tempfile(
@@ -223,7 +219,7 @@ plot.lifelihoodGOF <- function(
       bins < 1 ||
       bins %% 1 != 0
   ) {
-    stop("`bins` must be a single positive integer.", call. = FALSE)
+    stop("`bins` must be a single positive integer.")
   }
   bins <- as.integer(bins)
 
@@ -231,7 +227,7 @@ plot.lifelihoodGOF <- function(
   plot_df <- plot_df[!is.na(plot_df$loglikelihood), , drop = FALSE]
 
   if (nrow(plot_df) == 0) {
-    stop("No successful simulation fit available to plot.", call. = FALSE)
+    stop("No successful simulation fit available to plot.")
   }
 
   ggplot(plot_df, aes(x = loglikelihood)) +
@@ -286,8 +282,7 @@ infer_simulation_events <- function(object) {
 build_simulated_lifelihood_df <- function(simulated, lifelihoodData) {
   if (is.null(simulated) || !is.data.frame(simulated)) {
     stop(
-      "simulate_life_history() did not return a data.frame.",
-      call. = FALSE
+      "simulate_life_history() did not return a data.frame."
     )
   }
 
@@ -296,8 +291,7 @@ build_simulated_lifelihood_df <- function(simulated, lifelihoodData) {
 
   if (nrow(simulated) != nrow(df)) {
     stop(
-      "Simulated dataset and original dataset have different numbers of rows.",
-      call. = FALSE
+      "Simulated dataset and original dataset have different numbers of rows."
     )
   }
 
@@ -321,8 +315,7 @@ build_simulated_lifelihood_df <- function(simulated, lifelihoodData) {
 
   if (length(lifelihoodData$clutchs) %% 3 != 0) {
     stop(
-      "`lifelihoodData$clutchs` must contain start/end/size triplets.",
-      call. = FALSE
+      "`lifelihoodData$clutchs` must contain start/end/size triplets."
     )
   }
 

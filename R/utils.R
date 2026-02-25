@@ -216,6 +216,7 @@ use_test_config <- function(
     "config",
     "config2",
     "config_pierrick",
+    "config_tradeoff",
     "example_config_se",
     "example_config_mcmc",
     "config_gbg"
