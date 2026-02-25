@@ -4,7 +4,15 @@
 \alias{simulate_event}
 \title{Simulation for a single life event}
 \usage{
-simulate_event(object, ev, newdata, lifelihoodData, use_censoring, visits)
+simulate_event(
+  object,
+  ev,
+  newdata,
+  lifelihoodData,
+  use_censoring,
+  visits,
+  block_values = NULL
+)
 }
 \arguments{
 \item{object}{Output of \code{\link[=lifelihood]{lifelihood()}}}

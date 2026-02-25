@@ -20,7 +20,8 @@ simulate_event <- function(
   newdata,
   lifelihoodData,
   use_censoring,
-  visits
+  visits,
+  block_values = NULL
 ) {
   if (ev == "mortality") {
     expt_name <- "expt_death"
@@ -100,11 +101,8 @@ simulate_event <- function(
       ),
       error = function(e) return(rep(NA, length(expected)))
     )
-    #n_offspring <- floor(expt_death) # temporary workaround
-    simul_n_offspring <- simulate_truncPois(
-      expected = n_offspring,
-      n = n
-    )
+
+    simul_n_offspring <- simulate_truncPois(expected = n_offspring, n = n)
   }
 
   if (family == "wei") {
@@ -116,10 +114,7 @@ simulate_event <- function(
   } else if (family == "exp") {
     simul <- simulate_exponential(expected, n = n)
   } else {
-    stop(
-      sprintf("Unknown family '%s' for event '%s'.", family, ev),
-      call. = FALSE
-    )
+    stop(sprintf("Unknown family '%s' for event '%s'.", family, ev))
   }
 
   # transpose the matrix to ensure consistent format in this specific event
@@ -151,8 +146,14 @@ simulate_event <- function(
   }
 
   # add blocks, if provided
-  if (!is.null(lifelihoodData$block) && use_censoring) {
-    simul_df_full <- add_visit_masks(simul_df_full, lifelihoodData, ev, visits)
+  if (!is.null(lifelihoodData$block) && use_censoring && ev != "reproduction") {
+    simul_df_full <- add_visit_masks(
+      simul_df = simul_df_full,
+      lifelihoodData = lifelihoodData,
+      event = ev,
+      visits = visits,
+      block_values = block_values
+    )
   }
 
   return(simul_df_full)
@@ -186,8 +187,7 @@ simulate_life_history_tradeoff <- function(
       survival_param2 <- rep(1, n_obs)
     } else {
       stop(
-        "Could not predict `survival_param2` required for mortality simulation.",
-        call. = FALSE
+        "Could not predict `survival_param2` required for mortality simulation."
       )
     }
   }
@@ -207,8 +207,7 @@ simulate_life_history_tradeoff <- function(
       maturity_param2 <- rep(1, n_obs)
     } else {
       stop(
-        "Could not predict `maturity_param2` required for maturity simulation.",
-        call. = FALSE
+        "Could not predict `maturity_param2` required for maturity simulation."
       )
     }
   }
@@ -233,8 +232,7 @@ simulate_life_history_tradeoff <- function(
       reproduction_param2 <- rep(1, n_obs)
     } else {
       stop(
-        "Could not predict `reproduction_param2` required for reproduction simulation.",
-        call. = FALSE
+        "Could not predict `reproduction_param2` required for reproduction simulation."
       )
     }
   }
@@ -248,41 +246,24 @@ simulate_life_history_tradeoff <- function(
     rep(NA_real_, n_obs)
   }
 
-  d <- predict_or_default(
-    object = object,
-    parameter_name = "increase_death_hazard",
-    newdata = newdata,
-    n_obs = n_obs,
-    default = 0
-  )
-  da <- predict_or_default(
-    object = object,
-    parameter_name = "tof_reduction_rate",
-    newdata = newdata,
-    n_obs = n_obs,
-    default = 0
-  )
-  dn <- predict_or_default(
-    object = object,
-    parameter_name = "increase_tof_n_offspring",
-    newdata = newdata,
-    n_obs = n_obs,
-    default = 0
-  )
-  senput <- predict_or_default(
-    object = object,
-    parameter_name = "lin_decrease_hazard",
-    newdata = newdata,
-    n_obs = n_obs,
-    default = 0
-  )
+  d <- predict_or_default(object, "increase_death_hazard", newdata, n_obs)
+  da <- predict_or_default(object, "tof_reduction_rate", newdata, n_obs)
+  dn <- predict_or_default(object, "increase_tof_n_offspring", newdata, n_obs)
+  senput <- predict_or_default(object, "lin_decrease_hazard", newdata, n_obs)
 
   expt_reproduction_bounds <- subset(
     object$param_bounds_df,
     param == "expt_reproduction"
   )
-  expt_reproduction_min <- as.numeric(expt_reproduction_bounds$min[1])
-  expt_reproduction_max <- as.numeric(expt_reproduction_bounds$max[1])
+  expt_reproduction_min <- suppressWarnings(
+    as.numeric(expt_reproduction_bounds$min[1])
+  )
+  expt_reproduction_max <- suppressWarnings(
+    as.numeric(expt_reproduction_bounds$max[1])
+  )
+  if (!is.finite(expt_reproduction_min) || !is.finite(expt_reproduction_max)) {
+    stop("Could not retrieve finite numeric bounds for `expt_reproduction`.")
+  }
 
   max_long <- compute_max_longevity(
     expected = expt_death,
@@ -444,11 +425,12 @@ simulate_life_history_tradeoff <- function(
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
-#' @param use_censoring Whether to retrieve censoring time interval for each event. For example,
-#' the time for "mortality_start" and "mortality_end" instead of just the time for "mortality".
-#' In this case, it's advised to use the `visits` argument and provide you own visit data. Otherwise,
-#' they are determined only using ages where events have been observed not ages where people went to the
-#' lab and no event was observed.
+#' @param use_censoring Whether to retrieve censoring time intervals for scalar
+#' events (`maturity`, `mortality`). For example, returns `mortality_start` and
+#' `mortality_end` instead of only `mortality`. If `newdata` is provided and
+#' censoring is enabled, `newdata` must include the block column.
+#' In this case, it's advised to use the `visits` argument and provide your own
+#' visit data. Otherwise, visits are inferred from observed event ages.
 #' @param visits Optionnal dataframe with 2 columns: "block" (must be the same name
 #' as passed in [lifelihood::as_lifelihoodData()] `block` argument) and exactly "visit".
 #' For each block, "visit" corresponds to the ages where the events of individuals
@@ -492,6 +474,22 @@ simulate_life_history <- function(
   }
 
   lifelihoodData <- object$lifelihoodData
+  block_values <- NULL
+  if (!is.null(lifelihoodData$block) && use_censoring) {
+    block_col <- lifelihoodData$block
+    if (is.null(newdata)) {
+      block_values <- lifelihoodData$df[[block_col]]
+    } else {
+      if (!(block_col %in% names(newdata))) {
+        stop(
+          "`use_censoring = TRUE` with `newdata` requires a `",
+          block_col,
+          "` column."
+        )
+      }
+      block_values <- newdata[[block_col]]
+    }
+  }
 
   if ("reproduction" %in% events) {
     fitted_params <- object$formula |> names()
@@ -500,8 +498,7 @@ simulate_life_history <- function(
     ) {
       stop(
         "To simulate reproduction, the fitted object must also include both ",
-        "maturity and mortality models.",
-        call. = FALSE
+        "maturity and mortality models."
       )
     }
   }
@@ -521,13 +518,15 @@ simulate_life_history <- function(
         simul_df = df_sims,
         lifelihoodData = lifelihoodData,
         event = "maturity",
-        visits = visits
+        visits = visits,
+        block_values = block_values
       )
       df_sims <- add_visit_masks(
         simul_df = df_sims,
         lifelihoodData = lifelihoodData,
         event = "mortality",
-        visits = visits
+        visits = visits,
+        block_values = block_values
       )
     }
   } else {
@@ -539,7 +538,8 @@ simulate_life_history <- function(
         newdata,
         lifelihoodData,
         use_censoring,
-        visits
+        visits,
+        block_values
       )
       df_sims <- bind_cols(sim, df_sims)
     }
@@ -563,9 +563,7 @@ simulate_life_history <- function(
       mutate(across(starts_with("clutch_"), ~ ifelse(. > mortality, NA, .)))
 
     remove_cols <- colnames(df_sims_up_na[clutch_cols])[
-      apply(df_sims_up_na[clutch_cols], 2, is.na) |>
-        colSums() ==
-        nrow(df_sims_up_na)
+      colSums(is.na(df_sims_up_na[clutch_cols])) == nrow(df_sims_up_na)
     ]
     remove_cols_all <- colnames(df_sims_up_na)[c(
       which(colnames(df_sims_up_na) %in% remove_cols) + 1,
@@ -599,7 +597,7 @@ simulate_life_history <- function(
 #' @param ... Arguments passed to [simulate_life_history()].
 #' @param nsim Number of simulations
 #' @param parallel_seed Logical or integer, seed used for
-parallel.simulate <- function(..., nsim, parallel_seed = FALSEj) {
+parallel.simulate <- function(..., nsim, parallel_seed = FALSE) {
   sims <- future.apply::future_lapply(
     1:nsim,
     function(i) simulate_life_history(...),
@@ -639,31 +637,44 @@ simulate_exponential <- function(expected, n) {
 
 #' @keywords internal
 simulate_truncPois_single <- function(expected) {
-  if (is.na(expected)) {
-    return(NA_integer_)
+  simulate_truncPois_draws(lambda = expected, n = 1L)[1]
+}
+
+#' @keywords internal
+simulate_truncPois_draws <- function(lambda, n) {
+  if (!is.finite(lambda) || lambda <= 0) {
+    return(rep(NA_integer_, n))
   }
 
-  repeat {
-    draw <- rpois(n = 1, lambda = expected)
-    if (!is.na(draw) && draw > 0) {
-      return(as.integer(draw))
-    }
-  }
+  p0 <- exp(-lambda)
+  u <- runif(n)
+  draws <- qpois(p0 + u * (1 - p0), lambda = lambda)
+  draws <- as.integer(draws)
+  draws[draws < 1L] <- 1L
+  draws
 }
 
 #' @keywords internal
 simulate_truncPois <- function(expected, n) {
-  trunc_Pois <- function(lambda) {
-    zer <- 0
-    while (zer == 0) {
-      data_num_offspring <- rpois(n = n, lambda = lambda)
-      ifelse(
-        all(data_num_offspring != 0 | is.na(data_num_offspring)),
-        zer <- 1,
-        zer <- 0
-      )
-    }
-    data_num_offspring
+  n <- as.integer(n)
+  if (length(n) != 1 || is.na(n) || n < 1) {
+    stop("`n` must be a single positive integer.")
   }
-  sapply(expected, trunc_Pois)
+
+  expected <- as.numeric(expected)
+  if (length(expected) == 0) {
+    return(integer(0))
+  }
+  draws <- lapply(
+    expected,
+    function(lambda) simulate_truncPois_draws(lambda = lambda, n = n)
+  )
+
+  if (n == 1L) {
+    return(vapply(draws, function(x) x[1], integer(1)))
+  }
+
+  out <- do.call(cbind, draws)
+  storage.mode(out) <- "integer"
+  out
 }
