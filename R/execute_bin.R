@@ -118,18 +118,31 @@ execute_bin <- function(
         mustWork = TRUE
       ),
       "Darwin" = {
-        macos_binary <- if (machine == "x86_64") "lifelihood" else "lifelihood-macos"
-        system.file("bin", macos_binary, package = "lifelihood", mustWork = TRUE)
+        macos_binary <- if (machine == "x86_64") "lifelihood" else
+          "lifelihood-macos"
+        system.file(
+          "bin",
+          macos_binary,
+          package = "lifelihood",
+          mustWork = TRUE
+        )
       },
       "Linux" = {
         if (machine != "x86_64") {
           stop(
-            "No bundled Linux executable for architecture '", machine, "'. ",
+            "No bundled Linux executable for architecture '",
+            machine,
+            "'. ",
             "Bundled Linux binary currently targets x86_64 only. ",
             "Provide a matching executable via `path_to_Lifelihood`."
           )
         }
-        system.file("bin", "lifelihood-linux", package = "lifelihood", mustWork = TRUE)
+        system.file(
+          "bin",
+          "lifelihood-linux",
+          package = "lifelihood",
+          mustWork = TRUE
+        )
       },
       stop("Unexpected OS: ", os)
     )
