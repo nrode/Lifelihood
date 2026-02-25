@@ -557,11 +557,16 @@ simulate_life_history <- function(
       names(df_sims_up),
       value = TRUE
     )
+
+    # Sum duration between clutches to get age at which clutches are made
     df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
 
+    # Convert to NA clutches that occurred after simulated death
     df_sims_up_na <- df_sims_up |>
       mutate(across(starts_with("clutch_"), ~ ifelse(. > mortality, NA, .)))
 
+    # Remove clutch columns with only NA because they all occurred
+    # after simulated death
     remove_cols <- colnames(df_sims_up_na[clutch_cols])[
       colSums(is.na(df_sims_up_na[clutch_cols])) == nrow(df_sims_up_na)
     ]
@@ -569,14 +574,18 @@ simulate_life_history <- function(
       which(colnames(df_sims_up_na) %in% remove_cols) + 1,
       which(colnames(df_sims_up_na) %in% remove_cols)
     )]
-
     df_sims_up_na <- df_sims_up_na |> select(-all_of(remove_cols_all))
 
     if (object$lifelihoodData$matclutch) {
       ## Remove maturity which is not observed when matchcluth is TRUE
       df_sims_up_na <- df_sims_up_na |>
         select(-maturity) |>
-        rename(maturity = clutch_1, n_offspring_maturity = n_offspring_clutch_1)
+        rename(
+          maturity = clutch_1,
+          !!as.symbol(
+            object$lifelihoodData$matclutch_size
+          ) := n_offspring_clutch_1
+        )
     }
   } else {
     df_sims_up_na <- df_sims
@@ -585,9 +594,20 @@ simulate_life_history <- function(
   if ("reproduction" %in% events) {
     df_sims_up_na <- df_sims_up_na |>
       mutate(
-        total_clutchs = rowSums(across(starts_with("clutch_")), na.rm = TRUE)
+        total_n_offspring = rowSums(
+          across(starts_with("n_offspring_clutch_")),
+          na.rm = TRUE
+        )
       )
   }
+
+  if (is.null(newdata)) {
+    simul_lifelihood_Data <- object$lifelihoodData
+    simul_lifelihood_Data$df <- df_sims_up_na
+    #sex <- object$lifelihoodData$
+  }
+
+  as_lifelihoodData(df = df_sims_up_na)
 
   df_sims_up_na
 }

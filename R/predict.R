@@ -81,6 +81,14 @@ prediction <- function(
   df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
   original_df <- object$lifelihoodData$df
 
+  if (is.null(df[[object$lifelihoodData$sex]])) {
+    stop(
+      "'",
+      object$lifelihoodData$sex,
+      "' column cannot be missing in newdata provided."
+    )
+  }
+
   covariates <- object$formula[[parameter_name]]
   if (is.null(covariates)) {
     stop(paste0(
@@ -113,8 +121,6 @@ prediction <- function(
     )
   } else {
     effects <- object$effects
-
-    parameter_data <- which(effects$parameter == parameter_name)
     range <- which(effects$parameter == parameter_name)
 
     fml <- read_formula(config = object$config, parameter = parameter_name)
@@ -172,6 +178,35 @@ prediction <- function(
       predictions <- x %*% coef_vector
     }
 
+    if (parameter_name %in% c("expt_death", "expt_maturity")) {
+      ratio_param <- paste0("ratio_", parameter_name)
+    }
+
+    if (type == "link") {
+      pred <- predictions
+    } else if (type == "response") {
+      bounds_df <- object$param_bounds_df
+      parameter_bounds <- subset(bounds_df, param == parameter_name)
+      pred <- link(
+        predictions,
+        min = as.numeric(parameter_bounds$min),
+        max = as.numeric(parameter_bounds$max)
+      )
+
+      if (is_parameter_fitted(object, ratio_param)) {
+        pred_ratio_expt <- prediction(
+          object,
+          ratio_param,
+          type = "response"
+        )
+
+        # for male, we multiply by the fitted ratio expected death/maturity
+        pred <- (1 - df[[object$lifelihoodData$sex]]) *
+          pred +
+          df[[object$lifelihoodData$sex]] * pred * pred_ratio_expt
+      }
+    }
+
     if (se.fit) {
       if (mcmc.fit) {
         var_cov <- object$mcmc_vcov
@@ -185,27 +220,43 @@ prediction <- function(
         # type == "response"
         bounds_df <- object$param_bounds_df
         parameter_bounds <- subset(bounds_df, param == parameter_name)
-        se <- sqrt(
-          diag(x %*% var_parameter %*% t(x)) *
-            (derivLink(
-              predictions,
-              min = as.numeric(parameter_bounds$min),
-              max = as.numeric(parameter_bounds$max)
-            )^2)
-        )
-      }
-    }
 
-    if (type == "link") {
-      pred <- predictions
-    } else if (type == "response") {
-      bounds_df <- object$param_bounds_df
-      parameter_bounds <- subset(bounds_df, param == parameter_name)
-      pred <- link(
-        predictions,
-        min = as.numeric(parameter_bounds$min),
-        max = as.numeric(parameter_bounds$max)
-      )
+        q <- diag(x %*% var_parameter %*% t(x))
+        beta <- derivLink(
+          predictions,
+          min = as.numeric(parameter_bounds$min),
+          max = as.numeric(parameter_bounds$max)
+        )
+        se <- sqrt(q * beta^2)
+
+        # compute the standard error of the expt_death for males (expt_death
+        # females * ratio_expt_death) using the delta method
+        if (is_parameter_fitted(object, ratio_param)) {
+          fml <- read_formula(config = object$config, parameter = ratio_param)
+          fml <- formula(paste("~ ", fml))
+          m <- model.frame(fml, data = df)
+          Terms <- terms(m)
+          x2 <- model.matrix(Terms, m)
+
+          range2 <- which(effects$parameter == ratio_param)
+          var_parameter2 <- as.matrix(var_cov[range2, range2])
+          q2 <- diag(x2 %*% var_parameter2 %*% t(x2))
+          q12 <- diag(x %*% var_cov[range, range2] %*% t(x2))
+
+          parameter_bounds <- subset(bounds_df, param == ratio_param)
+          beta2 <- derivLink(
+            predictions,
+            min = as.numeric(parameter_bounds$min),
+            max = as.numeric(parameter_bounds$max)
+          )
+
+          se_ratio <- sqrt(q * beta^2 + q2 * beta2^2 + 2 * beta * beta2 * q12)
+
+          se <- (1 - df[[object$lifelihoodData$sex]]) *
+            se +
+            df[[object$lifelihoodData$sex]] * se_ratio
+        }
+      }
     }
   }
 

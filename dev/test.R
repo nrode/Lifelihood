@@ -1,16 +1,21 @@
 devtools::load_all()
 library(tidyverse)
 
-df <- datapierrick |>
+df_female <- datapierrick |>
   as_tibble() |>
   mutate(
     par = as.factor(par),
     geno = as.factor(geno),
-    spore = as.factor(spore),
-    matclutch_size = as.integer(rep(1, nrow(datapierrick))),
-    block = rep(1:2, each = nrow(datapierrick) / 2)
-  ) |>
-  relocate(matclutch_size)
+    spore = as.factor(spore)
+  )
+
+df_male <- df_female |>
+  mutate(
+    sex = 1,
+    across(starts_with("pon"), ~NA_real_)
+  )
+df <- rbind(df_female, df_male)
+
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -32,8 +37,6 @@ lifelihoodData <- as_lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  matclutch = TRUE,
-  matclutch_size = "matclutch_size",
   covariates = c("par", "spore"),
   model_specs = c("wei", "gam", "lgn")
 )
@@ -41,13 +44,17 @@ lifelihoodData <- as_lifelihoodData(
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
-  raise_estimation_warning = FALSE
+  se.fit = FALSE,
+  MCMC = 10,
+  delete_temp_files = FALSE
 )
 summary(results)
 
 gof <- goodness_of_fit(results, nsim = 5)
 plot(gof)
 
+prediction(results, "ratio_expt_death", type = "response")
+prediction(results, "expt_death", type = "response")
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
