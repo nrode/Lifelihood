@@ -65,7 +65,8 @@ prediction <- function(
   newdata = NULL,
   mcmc.fit = FALSE,
   type = c("link", "response"),
-  se.fit = FALSE
+  se.fit = FALSE,
+  .warning_ratio_male = TRUE
 ) {
   check_lifelihoodResults(object)
 
@@ -74,6 +75,14 @@ prediction <- function(
       "prediction() is not supported for group_by_group results. ",
       "Use coef() to access per-group estimates."
     )
+  }
+
+  if (
+    parameter_name %in%
+      c("ratio_expt_death", "ratio_expt_maturity") &
+      .warning_ratio_male
+  ) {
+    message("Parameter '", parameter_name, "' set to NA for females.")
   }
 
   type <- match.arg(type)
@@ -244,14 +253,16 @@ prediction <- function(
           pred_ratio_expt_resp <- prediction(
             object,
             ratio_param,
-            type = "response"
+            type = "response",
+            .warning_ratio_male = FALSE
           )
 
           ## Estimate first derivative at the ML estimate value
           pred_ratio_expt_link <- prediction(
             object,
             ratio_param,
-            type = "link"
+            type = "link",
+            .warning_ratio_male = FALSE
           )
 
           ## Estimate at the ML estimate value
@@ -287,6 +298,16 @@ prediction <- function(
             df[[object$lifelihoodData$sex]] * sqrt(var_expt_males)
         }
       }
+    }
+  }
+
+  if (
+    .warning_ratio_male &
+      parameter_name %in% c("ratio_expt_death", "ratio_expt_maturity")
+  ) {
+    pred[df[[object$lifelihoodData$sex]] == 0] = NA
+    if (se.fit) {
+      se[df[[object$lifelihoodData$sex]] == 0] = NA
     }
   }
 

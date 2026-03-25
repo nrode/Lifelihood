@@ -9,6 +9,12 @@ datapierrick <- read.csv(here::here(
 ))
 usethis::use_data(datapierrick)
 
+# Make `datadaphnia` available
+datadaphnia <- read.csv(here::here(
+  "data_internals/raw_data/DataPierrick/DataPierrick_interceptonlynewfemellessponteavec0newm(1).csv"
+))
+usethis::use_data(datadaphnia, overwrite = TRUE)
+
 # Make `fakesample` available
 fakesample <- read.csv(here::here("data_internals/fake_sample.csv"))
 usethis::use_data(fakesample)

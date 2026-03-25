@@ -1,7 +1,7 @@
 devtools::load_all()
 library(tidyverse)
 
-df_female <- datapierrick |>
+df_female <- datadaphnia |>
   as_tibble() |>
   mutate(
     par = as.factor(par),
@@ -52,7 +52,7 @@ summary(results)
 gof <- goodness_of_fit(results, nsim = 5)
 plot(gof)
 
-prediction(results, "ratio_expt_death", type = "response")
+prediction(results, "ratio_expt_death", type = "response", se.fit = TRUE)
 prediction(results, "expt_death", type = "response")
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
