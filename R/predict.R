@@ -79,7 +79,7 @@ prediction <- function(
 
   if (
     parameter_name %in%
-      c("ratio_expt_death", "ratio_expt_maturity") &
+      c("ratio_expt_death", "ratio_expt_maturity") &&
       .warning_ratio_male
   ) {
     message("Parameter '", parameter_name, "' set to NA for females.")
@@ -128,186 +128,187 @@ prediction <- function(
       covariate columns of the new data differ from
       those in the data used to fit the model."
     )
-  } else {
-    effects <- object$effects
-    range1 <- effects$parameter == parameter_name
+  }
 
-    fml <- read_formula(config = object$config, parameter = parameter_name)
-    fml <- formula(paste("~ ", fml))
-    m <- model.frame(fml, data = df)
-    Terms <- terms(m)
-    x <- model.matrix(Terms, m)
+  effects <- object$effects
+  range1 <- effects$parameter == parameter_name
 
-    if (mcmc.fit & se.fit) {
-      coef_vector <- effects$mcmc_estimation[range1]
-    } else {
-      coef_vector <- effects$estimation[range1]
+  fml <- read_formula(config = object$config, parameter = parameter_name)
+  fml <- formula(paste("~ ", fml))
+  m <- model.frame(fml, data = df)
+  Terms <- terms(m)
+  x <- model.matrix(Terms, m)
+
+  coef_vector <- effects$estimation[range1]
+
+  # the case where newdata does not contain all
+  # possible factors: we add them and put to 0.
+  if (ncol(x) != length(coef_vector)) {
+    orig_m <- model.frame(fml, data = original_df)
+    orig_x <- model.matrix(Terms, orig_m)
+    missing_cols <- setdiff(colnames(orig_x), colnames(x))
+    for (col in missing_cols) {
+      x <- cbind(x, rep(0, nrow(x)))
+      colnames(x)[ncol(x)] <- col
     }
-
-    # the case where newdata does not contain all
-    # possible factors: we add them and put to 0.
+    x <- x[, colnames(orig_x), drop = FALSE]
     if (ncol(x) != length(coef_vector)) {
-      orig_m <- model.frame(fml, data = original_df)
-      orig_x <- model.matrix(Terms, orig_m)
-      missing_cols <- setdiff(colnames(orig_x), colnames(x))
-      for (col in missing_cols) {
-        x <- cbind(x, rep(0, nrow(x)))
-        colnames(x)[ncol(x)] <- col
-      }
-      x <- x[, colnames(orig_x), drop = FALSE]
-      if (ncol(x) != length(coef_vector)) {
-        stop(
-          paste0(
-            "Dimension mismatch after adding missing factor levels: design matrix has ",
-            ncol(x),
-            " columns but coefficient vector has ",
-            length(coef_vector),
-            " elements."
-          )
+      stop(
+        paste0(
+          "Dimension mismatch after adding missing factor levels: design matrix has ",
+          ncol(x),
+          " columns but coefficient vector has ",
+          length(coef_vector),
+          " elements."
         )
-      }
-    }
-
-    if (mcmc.fit && !se.fit) {
-      # extract MCMC sample for the parameter of interest
-      y_matrix <- object$mcmc_sample |>
-        select(contains(parameter_name)) |>
-        as.matrix()
-
-      # predict for each MCMC iteration
-      predictions <- x %*% t(y_matrix)
-
-      # and make it a dataframe
-      colnames(predictions) <- paste0(
-        "mcmc_sample_",
-        1:nrow(object$mcmc_sample)
       )
-      predictions <- as.data.frame(predictions)
+    }
+  }
+
+  if (mcmc.fit && !se.fit) {
+    y_matrix <- object$mcmc_sample |>
+      select(contains(parameter_name)) |>
+      as.matrix()
+
+    predictions <- x %*% t(y_matrix)
+
+    colnames(predictions) <- paste0(
+      "mcmc_sample_",
+      1:nrow(object$mcmc_sample)
+    )
+    predictions <- as.data.frame(predictions)
+  } else {
+    predictions <- x %*% coef_vector
+  }
+
+  if (parameter_name %in% c("expt_death", "expt_maturity")) {
+    ratio_param <- paste0("ratio_", parameter_name)
+  } else {
+    ratio_param <- NULL
+  }
+
+  if (type == "link") {
+    base_pred <- predictions
+    pred <- base_pred
+  } else {
+    bounds_df <- object$param_bounds_df
+    parameter_bounds <- subset(bounds_df, param == parameter_name)
+    base_pred <- link(
+      predictions,
+      min = as.numeric(parameter_bounds$min),
+      max = as.numeric(parameter_bounds$max)
+    )
+    pred <- base_pred
+  }
+
+  if (
+    type == "response" &&
+      !is.null(ratio_param) &&
+      is_parameter_fitted(object, ratio_param)
+  ) {
+    pred_ratio_expt_resp <- prediction(
+      object,
+      ratio_param,
+      newdata = df,
+      mcmc.fit = mcmc.fit,
+      type = "response",
+      se.fit = FALSE,
+      .warning_ratio_male = FALSE
+    )
+
+    pred <- (1 - df[[object$lifelihoodData$sex]]) *
+      base_pred +
+      df[[object$lifelihoodData$sex]] * base_pred * pred_ratio_expt_resp
+  }
+
+  if (se.fit) {
+    if (mcmc.fit) {
+      var_cov <- object$mcmc_vcov
     } else {
-      predictions <- x %*% coef_vector
+      var_cov <- object$vcov
     }
 
-    if (parameter_name %in% c("expt_death", "expt_maturity")) {
-      ratio_param <- paste0("ratio_", parameter_name)
-    }
+    var_parameter <- as.matrix(var_cov[range1, range1])
+    var_cov_fitted_predictors <- diag(x %*% var_parameter %*% t(x))
 
     if (type == "link") {
-      pred <- predictions
-    } else if (type == "response") {
+      se <- sqrt(var_cov_fitted_predictors)
+    } else {
       bounds_df <- object$param_bounds_df
       parameter_bounds <- subset(bounds_df, param == parameter_name)
-      pred <- link(
+
+      firstderiv <- derivLink(
         predictions,
         min = as.numeric(parameter_bounds$min),
         max = as.numeric(parameter_bounds$max)
       )
-    }
 
-    if (se.fit) {
-      if (mcmc.fit) {
-        var_cov <- object$mcmc_vcov
-      } else {
-        var_cov <- object$vcov
-      }
-      ## Extract variance covariance matrix for effects of interest
-      var_parameter <- as.matrix(var_cov[range1, range1])
-      ## Compute covariance matrix of fitted values (i.e.linear predictors) using the design matrix
-      var_cov_fitted_predictors <- diag(x %*% var_parameter %*% t(x))
+      var_fitted_predictors <- var_cov_fitted_predictors * firstderiv^2
+      se <- sqrt(var_fitted_predictors)
 
-      if (type == "link") {
-        se <- sqrt(var_cov_fitted_predictors)
-      } else {
-        # type == "response"
-        bounds_df <- object$param_bounds_df
-        parameter_bounds <- subset(bounds_df, param == parameter_name)
+      if (
+        !is.null(ratio_param) &&
+          is_parameter_fitted(object, ratio_param)
+      ) {
+        range2 <- effects$parameter == ratio_param
+        contrast_males <- as.matrix(rbind(range1, range2))
+        vcov_males <- contrast_males %*% var_cov %*% t(contrast_males)
 
-        ## Estimate first derivative at the ML estimate value
-        firstderiv <- derivLink(
-          predictions,
+        pred_ratio_expt_resp <- prediction(
+          object,
+          ratio_param,
+          newdata = df,
+          mcmc.fit = mcmc.fit,
+          type = "response",
+          se.fit = FALSE,
+          .warning_ratio_male = FALSE
+        )
+
+        pred_ratio_expt_link <- prediction(
+          object,
+          ratio_param,
+          newdata = df,
+          mcmc.fit = mcmc.fit,
+          type = "link",
+          se.fit = FALSE,
+          .warning_ratio_male = FALSE
+        )
+
+        parameter_bounds <- subset(bounds_df, param == ratio_param)
+        ratio_firstderiv <- derivLink(
+          pred_ratio_expt_link,
           min = as.numeric(parameter_bounds$min),
           max = as.numeric(parameter_bounds$max)
         )
 
-        var_fitted_predictors <- var_cov_fitted_predictors * firstderiv^2
+        var_expt_males <- diag(vcov_males)[1] *
+          (firstderiv * pred_ratio_expt_resp)^2 +
+          diag(vcov_males)[2] * (ratio_firstderiv * base_pred)^2 +
+          sum(vcov_males[row(vcov_males) != col(vcov_males)]) *
+            firstderiv *
+            ratio_firstderiv *
+            base_pred *
+            pred_ratio_expt_resp
 
-        se <- sqrt(var_fitted_predictors)
+        message(glue::glue(
+          "Standard errors for {parameter_name} for males ",
+          "were computed with the multivariate delta method approximation. "
+        ))
 
-        # compute the standard error of the expt_death for males (expt_death
-        # females * ratio_expt_death) using the multivariate delta method
-        if (is_parameter_fitted(object, ratio_param)) {
-          range2 <- effects$parameter == ratio_param
-          ## Define contrast matrix for the two parameters of interest (e.g. exp_death and ratio_expected_death)
-          contrast_males <- as.matrix(rbind(range1, range2))
-
-          ## Compute the variance covariance matrix between the two parameters of interest
-          vcov_males <- contrast_males %*% var_cov %*% t(contrast_males)
-
-          fml <- read_formula(config = object$config, parameter = ratio_param)
-          fml <- formula(paste("~ ", fml))
-          m <- model.frame(fml, data = df)
-          Terms <- terms(m)
-          ## Design matrix for ratio_param
-          x2 <- model.matrix(Terms, m)
-
-          ## Estimate at the ML estimate value on the response scale
-          pred_ratio_expt_resp <- prediction(
-            object,
-            ratio_param,
-            type = "response",
-            .warning_ratio_male = FALSE
-          )
-
-          ## Estimate first derivative at the ML estimate value
-          pred_ratio_expt_link <- prediction(
-            object,
-            ratio_param,
-            type = "link",
-            .warning_ratio_male = FALSE
-          )
-
-          ## Estimate at the ML estimate value
-          parameter_bounds <- subset(bounds_df, param == ratio_param)
-          ratio_firstderiv <- derivLink(
-            pred_ratio_expt_link,
-            min = as.numeric(parameter_bounds$min),
-            max = as.numeric(parameter_bounds$max)
-          )
-
-          ## Compute the variance using the multivariate delta method
-          var_expt_males <- diag(vcov_males)[1] *
-            (firstderiv * pred_ratio_expt_resp)^2 +
-            diag(vcov_males)[2] * (ratio_firstderiv * pred)^2 +
-            sum(vcov_males[row(vcov_males) != col(vcov_males)]) *
-              firstderiv *
-              ratio_firstderiv *
-              pred *
-              pred_ratio_expt_resp
-
-          message(glue::glue(
-            "Standard errors for {parameter_name} for males ",
-            "were computed with the multivariate delta method approximation. "
-          ))
-
-          # For males, we multiply by the ratio fitted for expected death/maturity
-          pred <- (1 - df[[object$lifelihoodData$sex]]) *
-            pred +
-            df[[object$lifelihoodData$sex]] * pred * pred_ratio_expt_resp
-
-          se <- (1 - df[[object$lifelihoodData$sex]]) *
-            se +
-            df[[object$lifelihoodData$sex]] * sqrt(var_expt_males)
-        }
+        se <- (1 - df[[object$lifelihoodData$sex]]) *
+          se +
+          df[[object$lifelihoodData$sex]] * sqrt(var_expt_males)
       }
     }
   }
 
   if (
-    .warning_ratio_male &
+    .warning_ratio_male &&
       parameter_name %in% c("ratio_expt_death", "ratio_expt_maturity")
   ) {
-    pred[df[[object$lifelihoodData$sex]] == 0] = NA
+    pred[df[[object$lifelihoodData$sex]] == 0] <- NA
     if (se.fit) {
-      se[df[[object$lifelihoodData$sex]] == 0] = NA
+      se[df[[object$lifelihoodData$sex]] == 0] <- NA
     }
   }
 
@@ -316,13 +317,13 @@ prediction <- function(
       fitted = as.vector(pred),
       se.fitted = as.vector(se)
     ))
-  } else {
-    if (mcmc.fit) {
-      return(pred)
-    } else {
-      return(as.vector(pred))
-    }
   }
+
+  if (mcmc.fit) {
+    return(pred)
+  }
+
+  as.vector(pred)
 }
 
 #' @title Check for valid factor levels
