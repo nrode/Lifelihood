@@ -45,7 +45,6 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
   se.fit = TRUE,
-  #MCMC = 10,
   delete_temp_files = FALSE
 )
 summary(results)

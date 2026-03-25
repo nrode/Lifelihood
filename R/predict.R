@@ -11,7 +11,7 @@
 #'
 #' @return A vector containing the predicted values for the parameter.
 #'
-#' @importFrom stats as.formula formula model.frame model.matrix terms
+#' @importFrom stats formula model.frame model.matrix terms
 #'
 #' @examples
 #' df <- fakesample |>
@@ -202,7 +202,7 @@ prediction <- function(
       }
       ## Extract variance covariance matrix for effects of interest
       var_parameter <- as.matrix(var_cov[range1, range1])
-      ## Compute covariance matrix of fitted values (i.e.linear predictors) using the desgin matrix
+      ## Compute covariance matrix of fitted values (i.e.linear predictors) using the design matrix
       var_cov_fitted_predictors <- diag(x %*% var_parameter %*% t(x))
 
       if (type == "link") {
@@ -252,7 +252,9 @@ prediction <- function(
             object,
             ratio_param,
             type = "link"
-          ) ## Estimate at the ML estimate value
+          )
+
+          ## Estimate at the ML estimate value
           parameter_bounds <- subset(bounds_df, param == ratio_param)
           ratio_firstderiv <- derivLink(
             pred_ratio_expt_link,
