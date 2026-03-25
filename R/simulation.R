@@ -601,14 +601,6 @@ simulate_life_history <- function(
       )
   }
 
-  if (is.null(newdata)) {
-    simul_lifelihood_Data <- object$lifelihoodData
-    simul_lifelihood_Data$df <- df_sims_up_na
-    #sex <- object$lifelihoodData$
-  }
-
-  as_lifelihoodData(df = df_sims_up_na)
-
   df_sims_up_na
 }
 
