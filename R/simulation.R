@@ -514,20 +514,19 @@ simulate_life_history <- function(
       lifelihoodData = lifelihoodData
     )
     if (!is.null(lifelihoodData$block) && use_censoring) {
-      df_sims <- add_visit_masks(
-        simul_df = df_sims,
-        lifelihoodData = lifelihoodData,
-        event = "maturity",
-        visits = visits,
-        block_values = block_values
-      )
-      df_sims <- add_visit_masks(
-        simul_df = df_sims,
-        lifelihoodData = lifelihoodData,
-        event = "mortality",
-        visits = visits,
-        block_values = block_values
-      )
+      df_sims <- df_sims |>
+        add_visit_masks(
+          lifelihoodData = lifelihoodData,
+          event = "maturity",
+          visits = visits,
+          block_values = block_values
+        ) |>
+        add_visit_masks(
+          lifelihoodData = lifelihoodData,
+          event = "mortality",
+          visits = visits,
+          block_values = block_values
+        )
     }
   } else {
     df_sims <- NULL

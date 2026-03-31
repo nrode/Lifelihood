@@ -63,18 +63,10 @@ test_that("Prediction with ratio expt death", {
   df_male <- df_female |>
     mutate(
       sex = 1,
-      across(starts_with("pon"), ~NA_real_)
+      across(starts_with("clutch"), ~NA_real_)
     )
   df <- rbind(df_female, df_male)
 
-  generate_clutch_vector <- function(N) {
-    return(paste(
-      "pon",
-      rep(c("start", "end", "size"), N),
-      rep(1:N, each = 3),
-      sep = "_"
-    ))
-  }
   clutchs <- generate_clutch_vector(28)
 
   lifelihoodData <- as_lifelihoodData(
