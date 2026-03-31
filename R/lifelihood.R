@@ -360,8 +360,6 @@ lifelihood_fit <- function(
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)
-  } else {
-    print(paste("Intermediate files are stored at:", temp_dir))
   }
 
   if (raise_estimation_warning) {

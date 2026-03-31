@@ -90,14 +90,6 @@ prediction <- function(
   df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
   original_df <- object$lifelihoodData$df
 
-  if (is.null(df[[object$lifelihoodData$sex]])) {
-    stop(
-      "'",
-      object$lifelihoodData$sex,
-      "' column cannot be missing in newdata provided."
-    )
-  }
-
   covariates <- object$formula[[parameter_name]]
   if (is.null(covariates)) {
     stop(paste0(
