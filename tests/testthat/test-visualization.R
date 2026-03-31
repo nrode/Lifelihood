@@ -1,4 +1,4 @@
-testthat::test_that("visualization works", {
+test_that("visualization works", {
   path_config <- if (rlang::is_interactive()) {
     "tests/testthat/config.yaml"
   } else {

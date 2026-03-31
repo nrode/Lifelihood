@@ -1,4 +1,4 @@
-testthat::test_that("as_lifelihoodData works", {
+test_that("as_lifelihoodData works", {
   df <- datapierrick |>
     as_tibble() |>
     mutate(

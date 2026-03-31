@@ -6,11 +6,8 @@ df <- datapierrick |>
   mutate(
     par = as.factor(par),
     geno = as.factor(geno),
-    spore = as.factor(spore),
-    matclutch_size = as.integer(rep(1, nrow(datapierrick))),
-    block = rep(1:2, each = nrow(datapierrick) / 2)
-  ) |>
-  relocate(matclutch_size)
+    spore = as.factor(spore)
+  )
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -34,13 +31,13 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "death_end",
   matclutch = TRUE,
   matclutch_size = "matclutch_size",
-  covariates = c("par", "spore"),
+  covariates = c("par", "geno"),
   model_specs = c("wei", "gam", "lgn")
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_pierrick"),
+  path_config = use_test_config("config_tradeoff"),
   raise_estimation_warning = FALSE
 )
 summary(results)
