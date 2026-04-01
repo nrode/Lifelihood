@@ -8,6 +8,7 @@
 #' @param newdata Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.
 #' @param type The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.
 #' @param se.fit Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).
+#' @param keep_mcmc_samples Whether or not to also retrive MCMC samples in output. If `TRUE`, output is a list with 2 elements: pred and mcmc_samples.
 #'
 #' @return A vector containing the predicted values for the parameter.
 #'
@@ -64,6 +65,7 @@ prediction <- function(
   parameter_name,
   newdata = NULL,
   mcmc.fit = FALSE,
+  keep_mcmc_samples = FALSE,
   type = c("link", "response"),
   se.fit = FALSE,
   .warning_ratio_male = TRUE
@@ -157,34 +159,14 @@ prediction <- function(
     }
   }
 
-  if (mcmc.fit && !se.fit) {
-    y_matrix <- object$mcmc_sample |>
-      select(which(range1)) |>
-      as.matrix()
-
-    predictions <- x %*% t(y_matrix)
-
-    colnames(predictions) <- paste0(
-      "mcmc_sample_",
-      1:nrow(object$mcmc_sample)
-    )
-    predictions <- as.data.frame(predictions)
-  } else {
-    predictions <- x %*% coef_vector
-  }
-
-  if (parameter_name %in% c("expt_death", "expt_maturity")) {
-    ratio_param <- paste0("ratio_", parameter_name)
-  } else {
-    ratio_param <- NULL
-  }
+  # predict lifelihood parameters for each individual
+  predictions <- x %*% coef_vector
 
   if (type == "link") {
-    base_pred <- predictions
     pred <- predictions
     message(
-      "Lifelihood parameter estimate for males identical to that of females. ",
-      "Use type='response', to get the right parameter estimate for males ",
+      "Lifelihood parameter estimate(s) for males are identical to that of females. ",
+      "Use type='response', to get the right parameter estimate(s) for males ",
       "on the response scale."
     )
   } else {
@@ -197,12 +179,18 @@ prediction <- function(
       max = as.numeric(parameter_bounds$max)
     )
 
-    if (!is.null(ratio_param) && is_parameter_fitted(object, ratio_param)) {
+    # Update prediction for males if ratio parameter is fitted
+    if (
+      parameter_name %in%
+        c("expt_death", "expt_maturity") &&
+        is_parameter_fitted(object, paste0("ratio_", parameter_name))
+    ) {
+      ratio_param <- paste0("ratio_", parameter_name)
       pred_ratio_expt_resp <- prediction(
         object,
         ratio_param,
         newdata = df,
-        mcmc.fit = mcmc.fit,
+        mcmc.fit = FALSE,
         type = "response",
         se.fit = FALSE,
         .warning_ratio_male = FALSE
@@ -211,25 +199,23 @@ prediction <- function(
       pred <- (1 - df[[object$lifelihoodData$sex]]) *
         base_pred +
         df[[object$lifelihoodData$sex]] * base_pred * pred_ratio_expt_resp
+    } else {
+      pred <- base_pred
     }
   }
 
   if (se.fit) {
-    if (mcmc.fit) {
-      var_cov <- object$mcmc_vcov
-    } else {
-      var_cov <- object$vcov
-    }
+    var_cov <- object$vcov
 
     var_parameter <- as.matrix(var_cov[range1, range1])
+
+    # Variance-covariance matrix of fitted predictors
     var_cov_fitted_predictors <- diag(x %*% var_parameter %*% t(x))
 
     if (type == "link") {
       se <- sqrt(var_cov_fitted_predictors)
     } else {
-      bounds_df <- object$param_bounds_df
-      parameter_bounds <- subset(bounds_df, param == parameter_name)
-
+      # value at the first derivative at the maximum likelihood estimate
       firstderiv <- derivLink(
         predictions,
         min = as.numeric(parameter_bounds$min),
@@ -239,35 +225,43 @@ prediction <- function(
       var_fitted_predictors <- var_cov_fitted_predictors * firstderiv^2
       se <- sqrt(var_fitted_predictors)
 
+      # Update se for males if ratio parameter is fitted
       if (
-        !is.null(ratio_param) &&
-          is_parameter_fitted(object, ratio_param)
+        parameter_name %in%
+          c("expt_death", "expt_maturity") &&
+          is_parameter_fitted(object, paste0("ratio_", parameter_name))
       ) {
         range2 <- effects$parameter == ratio_param
-        contrast_males <- as.matrix(rbind(range1, range2))
-        vcov_males <- contrast_males %*% var_cov %*% t(contrast_males)
 
-        pred_ratio_expt_resp <- prediction(
-          object,
-          ratio_param,
-          newdata = df,
-          mcmc.fit = mcmc.fit,
-          type = "response",
-          se.fit = FALSE,
-          .warning_ratio_male = FALSE
-        )
+        # contrast matrix for parameters of interest (e.g. expt_death and ratio_expt_death)
+        contrast_males <- as.matrix(rbind(range1, range2))
+
+        # variance-covariance matrix for parameters of interest (e.g. expt_death and ratio_expt_death)
+        vcov_males <- contrast_males %*% var_cov %*% t(contrast_males)
 
         pred_ratio_expt_link <- prediction(
           object,
           ratio_param,
           newdata = df,
-          mcmc.fit = mcmc.fit,
+          mcmc.fit = FALSE,
           type = "link",
           se.fit = FALSE,
           .warning_ratio_male = FALSE
         )
 
+        pred_ratio_expt_resp <- prediction(
+          object,
+          ratio_param,
+          newdata = df,
+          mcmc.fit = FALSE,
+          type = "response",
+          se.fit = FALSE,
+          .warning_ratio_male = FALSE
+        )
+
         parameter_bounds <- subset(bounds_df, param == ratio_param)
+
+        # value at the first derivative at the maximum likelihood estimate
         ratio_firstderiv <- derivLink(
           pred_ratio_expt_link,
           min = as.numeric(parameter_bounds$min),
@@ -295,6 +289,63 @@ prediction <- function(
     }
   }
 
+  if (mcmc.fit) {
+    y_matrix <- object$mcmc_sample |>
+      select(which(range1)) |>
+      as.matrix()
+
+    predictions <- x %*% t(y_matrix)
+
+    colnames(predictions) <- paste0(
+      "mcmc_sample_",
+      1:nrow(object$mcmc_sample)
+    )
+    predictions <- as.data.frame(predictions)
+
+    if (type == "link") {
+      pred_mcmc <- predictions
+      message(
+        "Lifelihood parameter estimate(s) for males are identical to that of females. ",
+        "Use type='response', to get the right parameter estimate(s) for males ",
+        "on the response scale."
+      )
+    } else {
+      # type == "response"
+      base_pred_mcmc <- link(
+        predictions,
+        min = as.numeric(parameter_bounds$min),
+        max = as.numeric(parameter_bounds$max)
+      )
+
+      # Update prediction for males if ratio parameter is fitted
+      if (
+        parameter_name %in%
+          c("expt_death", "expt_maturity") &&
+          is_parameter_fitted(object, paste0("ratio_", parameter_name))
+      ) {
+        ratio_param <- paste0("ratio_", parameter_name)
+        pred_ratio_expt_resp <- prediction(
+          object,
+          ratio_param,
+          newdata = df,
+          mcmc.fit = mcmc.fit,
+          type = "response",
+          se.fit = FALSE,
+          keep_mcmc_samples = TRUE,
+          .warning_ratio_male = FALSE
+        )$mcmc_samples
+
+        pred_mcmc <- (1 - df[[object$lifelihoodData$sex]]) *
+          base_pred_mcmc +
+          df[[object$lifelihoodData$sex]] *
+            base_pred_mcmc *
+            pred_ratio_expt_resp
+      } else {
+        pred_mcmc <- base_pred_mcmc
+      }
+    }
+  }
+
   if (
     .warning_ratio_male &&
       parameter_name %in% c("ratio_expt_death", "ratio_expt_maturity")
@@ -305,18 +356,27 @@ prediction <- function(
     }
   }
 
-  if (se.fit) {
-    return(data.frame(
-      fitted = as.vector(pred),
-      se.fitted = as.vector(se)
-    ))
-  }
+  if (!se.fit && !mcmc.fit) {
+    return(as.vector(pred))
+  } else {
+    pred_df <- data.frame(fitted = as.vector(pred))
 
-  if (mcmc.fit) {
-    return(pred)
-  }
+    if (se.fit) {
+      pred_df <- pred_df |> mutate(se.fitted = as.vector(se))
+    }
 
-  as.vector(pred)
+    if (mcmc.fit) {
+      mcmcse <- lifelihood_mcmcse(t(pred_mcmc))
+      pred_df <- pred_df |>
+        mutate(mcmc_est = mcmcse$est, mcmc_se = mcmcse$se)
+
+      if (keep_mcmc_samples) {
+        return(list(pred = pred_df, mcmc_samples = pred_mcmc))
+      }
+    }
+
+    return(pred_df)
+  }
 }
 
 #' @title Check for valid factor levels

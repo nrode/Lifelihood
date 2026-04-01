@@ -37,6 +37,7 @@ lifelihoodData <- as_lifelihoodData(
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
+  se.fit = TRUE,
   raise_estimation_warning = FALSE
 )
 summary(results)

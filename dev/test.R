@@ -45,7 +45,8 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
   #se.fit = TRUE,
-  MCMC = 20,
+  MCMC = 40,
+  seeds = c(3699, 783, 5401, 6502),
   delete_temp_files = FALSE
 )
 summary(results)
@@ -53,8 +54,19 @@ summary(results)
 gof <- goodness_of_fit(results, nsim = 5)
 plot(gof)
 
-prediction(results, "ratio_expt_death", type = "response", se.fit = TRUE)
-prediction(results, "expt_death", type = "response")
+prediction(
+  object = results,
+  parameter_name = "ratio_expt_death",
+  type = "response",
+  mcmc.fit = TRUE
+)
+prediction(
+  results,
+  "ratio_expt_death",
+  type = "response",
+  mcmc.fit = TRUE,
+  keep_mcmc_samples = TRUE
+)
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
