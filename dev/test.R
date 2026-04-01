@@ -65,6 +65,7 @@ prediction(
   "ratio_expt_death",
   type = "response",
   mcmc.fit = TRUE,
+  #se.fit=TRUE,
   keep_mcmc_samples = TRUE
 )
 prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
