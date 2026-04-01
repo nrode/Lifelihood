@@ -29,15 +29,14 @@ lifelihoodData <- as_lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  matclutch = TRUE,
-  matclutch_size = "matclutch_size",
+  matclutch = FALSE,
   covariates = c("par", "geno"),
   model_specs = c("wei", "gam", "lgn")
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_tradeoff"),
+  path_config = use_test_config("config_pierrick"),
   raise_estimation_warning = FALSE
 )
 summary(results)

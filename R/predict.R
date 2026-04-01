@@ -159,7 +159,7 @@ prediction <- function(
 
   if (mcmc.fit && !se.fit) {
     y_matrix <- object$mcmc_sample |>
-      select(contains(parameter_name)) |>
+      select(which(range1)) |>
       as.matrix()
 
     predictions <- x %*% t(y_matrix)
@@ -181,8 +181,14 @@ prediction <- function(
 
   if (type == "link") {
     base_pred <- predictions
-    pred <- base_pred
+    pred <- predictions
+    message(
+      "Lifelihood parameter estimate for males identical to that of females. ",
+      "Use type='response', to get the right parameter estimate for males ",
+      "on the response scale."
+    )
   } else {
+    # type == "response"
     bounds_df <- object$param_bounds_df
     parameter_bounds <- subset(bounds_df, param == parameter_name)
     base_pred <- link(
@@ -190,27 +196,22 @@ prediction <- function(
       min = as.numeric(parameter_bounds$min),
       max = as.numeric(parameter_bounds$max)
     )
-    pred <- base_pred
-  }
 
-  if (
-    type == "response" &&
-      !is.null(ratio_param) &&
-      is_parameter_fitted(object, ratio_param)
-  ) {
-    pred_ratio_expt_resp <- prediction(
-      object,
-      ratio_param,
-      newdata = df,
-      mcmc.fit = mcmc.fit,
-      type = "response",
-      se.fit = FALSE,
-      .warning_ratio_male = FALSE
-    )
+    if (!is.null(ratio_param) && is_parameter_fitted(object, ratio_param)) {
+      pred_ratio_expt_resp <- prediction(
+        object,
+        ratio_param,
+        newdata = df,
+        mcmc.fit = mcmc.fit,
+        type = "response",
+        se.fit = FALSE,
+        .warning_ratio_male = FALSE
+      )
 
-    pred <- (1 - df[[object$lifelihoodData$sex]]) *
-      base_pred +
-      df[[object$lifelihoodData$sex]] * base_pred * pred_ratio_expt_resp
+      pred <- (1 - df[[object$lifelihoodData$sex]]) *
+        base_pred +
+        df[[object$lifelihoodData$sex]] * base_pred * pred_ratio_expt_resp
+    }
   }
 
   if (se.fit) {
