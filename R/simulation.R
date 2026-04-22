@@ -39,37 +39,45 @@ simulate_event <- function(
     n <- 1
   }
 
+  family <- object$lifelihoodData$model_specs[[fam_id]]
+
   expected <- prediction(
     object,
     expt_name,
     type = "response",
     newdata = newdata
   )
-  shape <- tryCatch(
-    prediction(object, shape_name, type = "response", newdata = newdata),
-    error = function(e) return(NULL)
-  )
-  if (is.null(expected) || is.null(shape)) {
-    return(NULL)
+
+  # No shape parameter for exponential
+  if (family != "exp") {
+    shape <- prediction(
+      object,
+      shape_name,
+      type = "response",
+      newdata = newdata
+    )
+  } else {
+    shape <- NULL
   }
 
-  family <- object$lifelihoodData$model_specs[[fam_id]]
   if (ev == "reproduction") {
-    expt_death <- tryCatch(
-      prediction(object, "expt_death", type = "response", newdata = newdata),
-      error = function(e) return(NULL)
+    expt_death <- prediction(
+      object,
+      "expt_death",
+      type = "response",
+      newdata = newdata
     )
-    survival_param2 <- tryCatch(
-      prediction(
+
+    if (family != "exp") {
+      survival_param2 <- prediction(
         object,
         "survival_param2",
         type = "response",
         newdata = newdata
-      ),
-      error = function(e) return(NULL)
-    )
+      )
+    }
 
-    ## max longeity= value of longevity so that 99% of individuals with this shape and scale parameters die before this age
+    ## max longevity = value of longevity so that 99% of individuals with this shape and scale parameters die before this age
     family_mortality <- object$lifelihoodData$model_specs[[1]]
     if (family_mortality == "wei") {
       scale <- expt_death / gamma(1 + 1 / survival_param2)
@@ -86,23 +94,24 @@ simulate_event <- function(
     }
     max_long <- max(long) # maximum predicted longevity in the dataset
 
-    # minimum predicted reproduction interval in the dataset
+    # minimum expected reproduction interval in the dataset
     min_reproduction_interval <- min(expected)
 
     # Maximum number of reproduction for all individual
     n <- floor(max_long / min_reproduction_interval) + 1
 
-    n_offspring <- tryCatch(
-      prediction(
+    # Check that n_offspring parameter is fitted
+    if (!is.null(object$formula[["n_offspring"]])) {
+      n_offspring <- prediction(
         object,
         "n_offspring",
         type = "response",
         newdata = newdata
-      ),
-      error = function(e) return(rep(NA, length(expected)))
-    )
-
-    simul_n_offspring <- simulate_truncPois(expected = n_offspring, n = n)
+      )
+      simul_n_offspring <- simulate_truncPois(expected = n_offspring, n = n)
+    } else {
+      simul_n_offspring <- rep(NA, length(expected))
+    }
   }
 
   if (family == "wei") {
@@ -467,12 +476,28 @@ simulate_life_history <- function(
     several.ok = TRUE
   )
 
+  # Simulate all events if user selected either "all" or "reproduction".
+  # It's required for reproduction since we need info about maturity and death.
   events <- if ("all" %in% event | "reproduction" %in% event) {
     c("maturity", "reproduction", "mortality")
   } else {
     event
   }
 
+  # We need maturity and death parameters to simulate reproduction
+  if ("reproduction" %in% events) {
+    fitted_params <- object$formula |> names()
+    if (
+      !("expt_maturity" %in% fitted_params && "expt_death" %in% fitted_params)
+    ) {
+      stop(
+        "To simulate reproduction, the fitted object must also include both ",
+        "maturity and mortality models."
+      )
+    }
+  }
+
+  # Retrieve experimental blocks if provided by user
   lifelihoodData <- object$lifelihoodData
   block_values <- NULL
   if (!is.null(lifelihoodData$block) && use_censoring) {
@@ -491,23 +516,12 @@ simulate_life_history <- function(
     }
   }
 
-  if ("reproduction" %in% events) {
-    fitted_params <- object$formula |> names()
-    if (
-      !("expt_maturity" %in% fitted_params && "expt_death" %in% fitted_params)
-    ) {
-      stop(
-        "To simulate reproduction, the fitted object must also include both ",
-        "maturity and mortality models."
-      )
-    }
-  }
-
   use_tradeoff_path <- "reproduction" %in%
     events &&
     uses_tradeoff_simulation(object)
 
   if (use_tradeoff_path) {
+    # Simulation with tradeoffs
     df_sims <- simulate_life_history_tradeoff(
       object,
       newdata = newdata,
@@ -529,6 +543,7 @@ simulate_life_history <- function(
         )
     }
   } else {
+    # Simulation without tradeoffs
     df_sims <- NULL
     for (ev in events) {
       sim <- simulate_event(
@@ -576,7 +591,7 @@ simulate_life_history <- function(
     df_sims_up_na <- df_sims_up_na |> select(-all_of(remove_cols_all))
 
     if (object$lifelihoodData$matclutch) {
-      ## Remove maturity which is not observed when matchcluth is TRUE
+      ## Remove maturity which is not observed when matclutch is TRUE
       df_sims_up_na <- df_sims_up_na |>
         select(-maturity) |>
         rename(
@@ -586,11 +601,7 @@ simulate_life_history <- function(
           ) := n_offspring_clutch_1
         )
     }
-  } else {
-    df_sims_up_na <- df_sims
-  }
 
-  if ("reproduction" %in% events) {
     df_sims_up_na <- df_sims_up_na |>
       mutate(
         total_n_offspring = rowSums(
@@ -598,6 +609,8 @@ simulate_life_history <- function(
           na.rm = TRUE
         )
       )
+  } else {
+    df_sims_up_na <- df_sims
   }
 
   df_sims_up_na

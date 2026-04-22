@@ -301,7 +301,7 @@ prediction <- function(
 
     colnames(predictions) <- paste0(
       "mcmc_sample_",
-      1:nrow(object$mcmc_sample)
+      seq_len(nrow(object$mcmc_sample))
     )
     predictions <- as.data.frame(predictions)
 
@@ -386,7 +386,7 @@ prediction <- function(
 #'
 #' @description
 #' The purpose of this function is to ensure that when a user
-#' makes a prediction with [lifelihood::predict()], the `newdata`
+#' makes a prediction with [lifelihood::prediction()], the `newdata`
 #' contains the same factor levels for its covariates as the
 #' training data.
 #' If any levels are missing or mismatched, it raises an error
@@ -395,7 +395,7 @@ prediction <- function(
 #' @keywords internal
 #'
 #' @param original_df Training set passed to [as_lifelihoodData()] (`df` arg).
-#' @param newdata New data passed to [lifelihood::predict()] (`newdata` arg).
+#' @param newdata New data passed to [lifelihood::prediction()] (`newdata` arg).
 #' @param covariates Covariates passed to [as_lifelihoodData()] (`covariates` arg).
 #'
 #' @return TRUE if all factor levels of each covariate in `newdata` passed to [lifelihood::predict()] are present in the training data, FALSE otherwise.

@@ -56,32 +56,23 @@ add_visit_masks <- function(
   if (!all(c(block_col, "visit") %in% names(visits))) {
     stop("`visits` must contain columns `", block_col, "` and `visit`.")
   }
-  visits <- visits |>
-    group_by(!!as.symbol(block_col)) |>
-    summarise(visits = list(visit), .groups = "drop")
 
-  # For each individual, we retrieve the closest visit
-  # dates (upward and downward) in their block by merging with `visits`.
-  # `simul_df` will contains upper and lower bound columns.
+  # For each age of event in simulated df, get the block and the
+  # last visits before and after observing the event
   simul_df <- simul_df |>
-    left_join(visits, by = block_col) |>
-    rowwise() |>
-    # in order to set dynamic column names (depending on `event`), we need to
-    # use the !! and := operators: https://chatgpt.com/share/6970ed2f-e458-8013-9224-289d0f4ee45e
-    mutate(
-      !!paste0(event, "_start") := {
-        v <- visits[[1]]
-        v <- v[is.finite(v) & v <= !!as.symbol(event)]
-        if (length(v) == 0) 0.000001 else max(v)
-      },
-      !!paste0(event, "_end") := {
-        v <- visits[[1]]
-        v <- v[is.finite(v) & v > !!as.symbol(event)]
-        if (length(v) == 0) lifelihoodData$right_censoring_date else min(v)
+    group_by(block) |>
+    group_modify(
+      ~ {
+        v <- visits |> filter(block == .y$block) |> pull(visit)
+        .x |>
+          mutate(
+            visit_id = findInterval(!!as.symbol(event), v),
+            !!paste0(event, "_start") := v[visit_id],
+            !!paste0(event, "_end") := v[visit_id + 1]
+          )
       }
     ) |>
-    ungroup() |>
-    select(-visits, -!!as.symbol(block_col))
+    ungroup()
 
   return(simul_df)
 }

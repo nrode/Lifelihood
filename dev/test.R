@@ -16,7 +16,20 @@ df_male <- df_female |>
     death_end = death_end * 10,
     death_start = death_start * 10
   )
-df <- rbind(df_female, df_male)
+df <- rbind(df_female, df_male) |>
+  mutate(block = c(rep(1, nrow(df_female)), rep(2, nrow(df_male))))
+
+visits <- data.frame(
+  block = rep(1:2, each = 12),
+  visit = c(
+    0,
+    sort(sample(1:max(df_female$death_end), 10)),
+    10000,
+    0,
+    sort(sample(1:max(df_male$death_end), 10)),
+    10000
+  )
+)
 
 
 generate_clutch_vector <- function(N) {
@@ -36,6 +49,7 @@ lifelihoodData <- as_lifelihoodData(
   sex_end = "sex_end",
   maturity_start = "mat_start",
   maturity_end = "mat_end",
+  block = "block",
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
@@ -47,7 +61,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
   #se.fit = TRUE,
-  MCMC = 20,
+  #MCMC = 20,
   seeds = c(3699, 783, 5401, 6502),
   delete_temp_files = FALSE
 )
@@ -70,7 +84,13 @@ prediction(
   #mcmc.fit = TRUE,
   se.fit = TRUE
 )
-prediction(results, "expt_death", type = "response", se.fit = TRUE)
+prediction(
+  results,
+  "expt_death",
+  type = "response",
+  mcmc.fit = TRUE,
+  keep_mcmc_samples = TRUE
+)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
 prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)
