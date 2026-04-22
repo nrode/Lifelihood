@@ -12,7 +12,9 @@ df_female <- datadaphnia |>
 df_male <- df_female |>
   mutate(
     sex = 1,
-    across(starts_with("clutch"), ~NA_real_)
+    across(starts_with("clutch"), ~NA_real_),
+    death_end = death_end * 10,
+    death_start = death_start * 10
   )
 df <- rbind(df_female, df_male)
 
@@ -45,7 +47,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
   #se.fit = TRUE,
-  MCMC = 40,
+  MCMC = 20,
   seeds = c(3699, 783, 5401, 6502),
   delete_temp_files = FALSE
 )
@@ -57,18 +59,18 @@ plot(gof)
 prediction(
   object = results,
   parameter_name = "ratio_expt_death",
-  type = "response",
-  mcmc.fit = TRUE
+  mcmc.fit = TRUE,
+  keep_mcmc_samples = TRUE,
+  type = "response"
 )
 prediction(
   results,
   "ratio_expt_death",
   type = "response",
-  mcmc.fit = TRUE,
-  #se.fit=TRUE,
-  keep_mcmc_samples = TRUE
+  #mcmc.fit = TRUE,
+  se.fit = TRUE
 )
-prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
+prediction(results, "expt_death", type = "response", se.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
 prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)

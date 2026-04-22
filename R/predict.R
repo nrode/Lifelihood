@@ -8,9 +8,9 @@
 #' @param newdata Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.
 #' @param type The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.
 #' @param se.fit Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).
-#' @param keep_mcmc_samples Whether or not to also retrive MCMC samples in output. If `TRUE`, output is a list with 2 elements: pred and mcmc_samples.
+#' @param keep_mcmc_samples Whether or not to also retrieve MCMC samples in output. If `TRUE`, output is a list with 2 elements: pred and mcmc_samples.
 #'
-#' @return A vector containing the predicted values for the parameter.
+#' @return A vector or list containing the predicted values for the parameter.
 #'
 #' @importFrom stats formula model.frame model.matrix terms
 #'
@@ -164,11 +164,14 @@ prediction <- function(
 
   if (type == "link") {
     pred <- predictions
-    message(
-      "Lifelihood parameter estimate(s) for males are identical to that of females. ",
-      "Use type='response', to get the right parameter estimate(s) for males ",
-      "on the response scale."
-    )
+
+    if (.warning_ratio_male) {
+      message(
+        "Lifelihood parameter estimate(s) for males are identical to that of females. ",
+        "Use type='response', to get the right parameter estimate(s) for males ",
+        "on the response scale."
+      )
+    }
   } else {
     # type == "response"
     bounds_df <- object$param_bounds_df
