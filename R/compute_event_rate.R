@@ -485,7 +485,7 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
   id_removed <- which(
     newdata[, lifelihoodData$maturity_end] == right_censoring_date
   )
-  if (length(id_removed) > 0 & verbose) {
+  if (length(id_removed) > 0 && verbose) {
     message(glue(
       "Removed individuals {paste0(id_removed, collapse=', ')} with no reproduction events"
     ))
@@ -493,7 +493,7 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
 
   # Identify individuals whose time of death is right censored
   id_censored <- as.vector(newdata[, death_end_col] == right_censoring_date)
-  if (length(id_censored) > 0 & verbose) {
+  if (length(id_censored) > 0 && verbose) {
     message(glue(
       "The death of individuals {paste0(which(id_censored), collapse=', ')} is right censored. No \"unobserved\" last clutch considered."
     ))
@@ -542,7 +542,7 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
     diff() |> # transpose is required to diff() by columns instead of rows
     t() |>
     bind_cols(newdata |> select(lifelihoodData$covariates)) |>
-    mutate(id = 1:nrow(clutch_time)) |>
+    mutate(id = seq_len(nrow(clutch_time))) |>
     relocate(id) |>
     # We remove individuals that never reproduced (maturity right censored)
     filter(!(id %in% id_removed)) |>

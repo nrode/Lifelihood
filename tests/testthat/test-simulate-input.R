@@ -1,0 +1,179 @@
+simulation_input_config <- function() {
+  list(
+    mortality = list(
+      expt_death = "par + spore",
+      survival_param2 = 1,
+      ratio_expt_death = "not_fitted",
+      prob_death = "not_fitted",
+      sex_ratio = "not_fitted"
+    ),
+    maturity = list(
+      expt_maturity = "par",
+      maturity_param2 = 1,
+      ratio_expt_maturity = "not_fitted"
+    ),
+    reproduction = list(
+      expt_reproduction = "par",
+      reproduction_param2 = 1,
+      n_offspring = 1,
+      increase_death_hazard = "not_fitted",
+      tof_reduction_rate = "not_fitted",
+      increase_tof_n_offspring = "not_fitted",
+      lin_decrease_hazard = "not_fitted",
+      quad_decrease_hazard = "not_fitted",
+      lin_change_n_offspring = "not_fitted",
+      quad_change_n_offspring = "not_fitted",
+      tof_n_offspring = "not_fitted",
+      fitness = "not_fitted"
+    )
+  )
+}
+
+simulation_input_effects <- function() {
+  list(
+    expt_death = list(
+      par = c(0, -0.4, 0.2),
+      spore = c(0, -0.2, 0.1, 0.3)
+    ),
+    survival_param2 = list(0),
+    expt_maturity = list(par = c(0, 0.15, -0.1)),
+    maturity_param2 = list(0),
+    expt_reproduction = list(par = c(0, -0.3, 0.25)),
+    reproduction_param2 = list(0),
+    n_offspring = list(0)
+  )
+}
+
+simulation_input_bounds <- function() {
+  data.frame(
+    param = c(
+      "expt_death",
+      "survival_param2",
+      "expt_maturity",
+      "maturity_param2",
+      "expt_reproduction",
+      "reproduction_param2",
+      "n_offspring"
+    ),
+    min = c(1, 0.5, 1, 0.5, 1, 0.5, 1),
+    max = c(100, 5, 30, 5, 10, 5, 10)
+  )
+}
+
+test_that("create_simulation_input builds a simulation-ready results object", {
+  n <- 1000
+  results <- create_simulation_input(
+    effects = simulation_input_effects(),
+    covariates = c("par", "spore"),
+    config = simulation_input_config(),
+    model = "wei",
+    n = n,
+    sex = rep(c(0, 1), length.out = n),
+    param_bounds_df = simulation_input_bounds()
+  )
+
+  expect_s3_class(results, "lifelihoodResults")
+  expect_s3_class(results$lifelihoodData, "lifelihoodData")
+  expect_equal(results$sample_size, n)
+  expect_equal(results$lifelihoodData$model_specs, rep("wei", 3))
+  expect_true(all(
+    c(
+      "name",
+      "estimation",
+      "stderror",
+      "parameter",
+      "kind",
+      "event"
+    ) %in%
+      names(results$effects)
+  ))
+  expect_equal(length(coeff(results, "expt_death")), 6)
+
+  pred <- prediction(results, "expt_death", type = "response")
+  expect_type(pred, "double")
+  expect_equal(length(pred), n)
+})
+
+test_that("manual simulation input produces coherent offspring totals", {
+  n <- 1000
+  results <- create_simulation_input(
+    effects = simulation_input_effects(),
+    covariates = c("par", "spore"),
+    config = simulation_input_config(),
+    model = "wei",
+    n = n,
+    sex = rep(c(0, 1), length.out = n),
+    param_bounds_df = simulation_input_bounds()
+  )
+
+  simul <- simulate_life_history(results, seed = 1)
+  clutch_cols <- grep("^clutch_", names(simul), value = TRUE)
+
+  expect_equal(nrow(simul), n)
+  expect_true(length(clutch_cols) > 0)
+  expect_true(any(simul$total_n_offspring > 0))
+  expect_true(any(rowSums(!is.na(simul[clutch_cols])) == 0))
+
+  positive_offspring_without_clutch <- simul$total_n_offspring > 0 &
+    rowSums(!is.na(simul[clutch_cols])) == 0
+
+  expect_false(any(positive_offspring_without_clutch))
+
+  for (clutch_col in clutch_cols) {
+    suffix <- sub("^clutch_", "", clutch_col)
+    n_offspring_col <- paste0("clutch_size_", suffix)
+    if (n_offspring_col %in% names(simul)) {
+      expect_true(all(is.na(simul[[n_offspring_col]][is.na(simul[[
+        clutch_col
+      ]])])))
+    }
+  }
+})
+
+test_that("create_simulation_input accepts explicit covariate data", {
+  n <- 1000
+  set.seed(1)
+  newdata <- data.frame(
+    par = factor(sample(0:2, n, replace = TRUE)),
+    spore = factor(sample(0:3, n, replace = TRUE))
+  )
+
+  results <- create_simulation_input(
+    effects = simulation_input_effects(),
+    covariates = c("par", "spore"),
+    config = simulation_input_config(),
+    model = c("wei", "wei", "wei"),
+    n = n,
+    sex = rep(c(0, 1), length.out = n),
+    data = newdata,
+    param_bounds_df = simulation_input_bounds()
+  )
+
+  simul <- simulate_life_history(results, seed = 1)
+  clutch_cols <- grep("^clutch_", names(simul), value = TRUE)
+
+  expect_equal(nrow(results$lifelihoodData$df), n)
+  expect_equal(nrow(simul), n)
+  expect_true(length(clutch_cols) > 0)
+  expect_false(any(
+    simul$total_n_offspring > 0 &
+      rowSums(!is.na(simul[clutch_cols])) == 0
+  ))
+})
+
+test_that("create_simulation_input validates fitted effects", {
+  effects <- simulation_input_effects()
+  effects$n_offspring <- NULL
+
+  expect_error(
+    create_simulation_input(
+      effects = effects,
+      covariates = c("par", "spore"),
+      config = simulation_input_config(),
+      model = "wei",
+      n = 10,
+      param_bounds_df = simulation_input_bounds()
+    ),
+    "`effects` is missing fitted parameter"
+  )
+})

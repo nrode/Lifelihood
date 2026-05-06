@@ -2,18 +2,17 @@
 % Please edit documentation in R/utils.R
 \name{factor_to_num}
 \alias{factor_to_num}
-\title{Convert a factor variable to integers}
+\title{Convert a vector to factor codes}
 \usage{
 factor_to_num(x)
 }
 \arguments{
-\item{x}{A column name}
+\item{x}{A vector}
 }
 \value{
-The integer
+Numeric vector of 0-based factor codes
 }
 \description{
-Function necessary because the Pascal program
-expects integers for factor levels.
+Convert values to 0-based factor codes for the Pascal program.
 }
 \keyword{internal}

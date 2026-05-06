@@ -69,8 +69,8 @@ get_likelihood <- function(lines) {
 #' @rdname parse_output
 get_param_ranges <- function(lines) {
   # find start and end of the parameter range table
-  start <- which(grepl("Parameter_Range_Table", lines))
-  end <- which(grepl("ratiomax", lines))
+  start <- grep("Parameter_Range_Table", lines)
+  end <- grep("ratiomax", lines)
 
   # get vector of lines in the range
   range_lines <- lines[(start + 1):(end - 1)]
@@ -90,7 +90,7 @@ get_param_ranges <- function(lines) {
 #' @rdname parse_output
 get_ratio_max <- function(lines) {
   # find the line containing the ratiomax value
-  index <- which(grepl("ratiomax", lines))
+  index <- grep("ratiomax", lines)
   ratiomax_line <- lines[index]
 
   # get the ratiomax value
@@ -150,7 +150,7 @@ get_hessian <- function(lines) {
 #' @rdname parse_output
 get_mcmc <- function(lines) {
   # find start of the MCMC samples table
-  start_idx <- which(grepl("MCMCsamples", lines))
+  start_idx <- grep("MCMCsamples", lines)
 
   if (length(start_idx) == 0) {
     # If no MCMC block is found, return NULL
@@ -158,7 +158,7 @@ get_mcmc <- function(lines) {
   }
 
   # find end of the MCMC samples table (before Parameter_Range_Table)
-  end_idx <- which(grepl("Parameter_Range_Table", lines))
+  end_idx <- grep("Parameter_Range_Table", lines)
 
   if (length(end_idx) == 0) {
     stop(

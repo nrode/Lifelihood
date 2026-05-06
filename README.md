@@ -7,7 +7,7 @@
 It requires R 4.1.0 or later, and:
 
 - macOS (Apple silicon)
-- Windows (Still some known issues)
+- Windows
 - Linux
 
 <br>
@@ -136,6 +136,7 @@ plot_fitted_event_rate(
 
 ![](img/example-1.png)
 
+<br>
 <br>
 
 Learn more and find more examples in the [documentation](https://nrode.github.io/Lifelihood/).

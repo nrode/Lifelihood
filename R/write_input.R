@@ -216,7 +216,7 @@ format_row <- function(
     clutch_end <- gsub("[[:space:]]", "", row[[clutch_cols[i + 1]]])
     clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])
     if (!(is.na(clutch_start) || is.na(clutch_end) || is.na(clutch_size))) {
-      if (clutch_start != "NA" & clutch_end != "NA" & clutch_size != "NA") {
+      if (clutch_start != "NA" && clutch_end != "NA" && clutch_size != "NA") {
         formatted_row <- paste(
           formatted_row,
           "pon",

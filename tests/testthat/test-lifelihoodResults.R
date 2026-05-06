@@ -1,4 +1,4 @@
-testthat::test_that("lifelihoodResults works", {
+test_that("lifelihoodResults works", {
   path_config <- if (rlang::is_interactive()) {
     "tests/testthat/config.yaml"
   } else {

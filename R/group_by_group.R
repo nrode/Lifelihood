@@ -328,7 +328,7 @@ lifelihood_fit_group_by_group <- function(
   sub_interval = 0.3,
   delete_temp_files = TRUE
 ) {
-  if (!is.null(seeds) & n_fit > 1) {
+  if (!is.null(seeds) && n_fit > 1) {
     stop("Can't set `seeds` with `n_fit` > 1.")
   }
 
@@ -432,7 +432,6 @@ lifelihood_fit_group_by_group_once <- function(
   group_temp_dirs <- c()
   for (i in seq_along(group_names)) {
     grp <- group_names[i]
-    message("Fitting group: ", grp)
     sub_data <- sub_datasets[[grp]]
 
     # Generate unique seeds per group to ensure unique temp dirs

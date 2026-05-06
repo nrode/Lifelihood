@@ -6,14 +6,12 @@ df <- datapierrick |>
   mutate(
     par = as.factor(par),
     geno = as.factor(geno),
-    spore = as.factor(spore),
-    block = rep(1:2, each = nrow(datapierrick) / 2)
-  ) |>
-  sample_n(100)
+    spore = as.factor(spore)
+  )
 
 generate_clutch_vector <- function(N) {
   return(paste(
-    "pon",
+    "clutch",
     rep(c("start", "end", "size"), N),
     rep(1:N, each = 3),
     sep = "_"
@@ -31,21 +29,23 @@ lifelihoodData <- as_lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("par", "spore"),
+  matclutch = FALSE,
+  covariates = c("par", "geno"),
   model_specs = c("wei", "gam", "lgn")
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_pierrick")
+  path_config = use_test_config("config_pierrick"),
+  se.fit = TRUE,
+  raise_estimation_warning = FALSE
 )
-results$effects |> as_tibble()
 summary(results)
 
-gof <- goodness_of_fit(results, nsim = 5, show_progress = TRUE)
+gof <- goodness_of_fit(results, nsim = 5)
 plot(gof)
 
-prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
+prediction(results, "ratio_expt_death", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
 prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)
@@ -74,7 +74,8 @@ prediction(
   type = "response"
 ) |>
   head()
-prediction(results, parameter_name = "expt_death", type = "response") |> head()
+prediction(results, parameter_name = "ratio_expt_death", type = "response") |>
+  head()
 prediction(results, parameter_name = "expt_reproduction", type = "response") |>
   head()
 prediction(
@@ -84,7 +85,8 @@ prediction(
 ) |>
   tail()
 
-simulate_life_history(results) |> head()
+simul <- simulate_life_history(results) |> head()
+
 z <- simulate_life_history(
   results,
   event = c("mortality", "maturity"),
@@ -94,7 +96,6 @@ z <- simulate_life_history(
 simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
-parallel.simulate(results, nsim = 10, parallel_seed = 1)
 
 interval_width <- 15
 newdata <- expand.grid(
