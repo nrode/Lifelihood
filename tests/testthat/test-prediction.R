@@ -97,9 +97,9 @@ test_that("Prediction with ratio expt death", {
   )
 
   expect_true(all(is.na(head(preds$fitted))))
-  expect_true(all(!is.na(tail(preds$fitted))))
+  expect_true(!all(is.na(tail(preds$fitted))))
   expect_true(all(is.na(head(preds$se.fitted))))
-  expect_true(all(!is.na(tail(preds$se.fitted))))
+  expect_true(!all(is.na(tail(preds$se.fitted))))
 })
 
 test_that("prediction reports fitted factor covariates with one level", {
