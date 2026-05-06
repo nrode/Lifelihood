@@ -25,3 +25,17 @@ usethis::use_data(fakesample)
 datalenski <- read.csv(here::here("data_internals/lenski.csv")) |>
   rename_with(~ sub("^pon_", "clutch_", .x), starts_with("pon_"))
 usethis::use_data(datalenski)
+
+# Make `data_lin_decrease_hazard` available
+data_lin_decrease_hazard <- read.csv(here::here(
+  "data_internals/raw_data/DataIntervn=100file=1.csv"
+)) |>
+  rename_with(~ sub("^pon_", "clutch_", .x), starts_with("pon_"))
+usethis::use_data(data_lin_decrease_hazard)
+
+# Make `data_lin_decrease_hazard` available
+data_no_lin_decrease_hazard <- read.csv(here::here(
+  "data_internals/raw_data/DataIntervn=100file=1-2.csv"
+)) |>
+  rename_with(~ sub("^pon_", "clutch_", .x), starts_with("pon_"))
+usethis::use_data(data_no_lin_decrease_hazard)

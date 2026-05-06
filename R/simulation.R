@@ -136,10 +136,10 @@ simulate_event <- function(
       simul_t <- t(simul)
       simul_n_offspring_t <- t(simul_n_offspring)
       column_names <- paste("clutch", 1:n, sep = "_")
-      n_offspring_column_names <- paste("n_offspring_clutch", 1:n, sep = "_")
+      n_offspring_column_names <- paste("clutch_size_", 1:n, sep = "_")
     } else {
       column_names <- "clutch_1"
-      n_offspring_column_names <- "n_offspring_clutch_1"
+      n_offspring_column_names <- "clutch_size_1"
       simul_t <- simul
       simul_n_offspring_t <- simul_n_offspring
     }
@@ -420,7 +420,7 @@ simulate_life_history_tradeoff <- function(
   sim_df <- tibble(mortality = mortality)
   for (j in seq_len(n_clutch)) {
     sim_df[[paste0("clutch_", j)]] <- clutch_matrix[, j]
-    sim_df[[paste0("n_offspring_clutch_", j)]] <- n_offspring_matrix[, j]
+    sim_df[[paste0("clutch_size_", j)]] <- n_offspring_matrix[, j]
   }
   sim_df$maturity <- maturity
 
@@ -585,25 +585,21 @@ simulate_life_history <- function(
       mutate(clutch_1 = clutch_1 + maturity) |>
       relocate(maturity, .before = clutch_1)
 
-    clutch_cols <- grep("^clutch_", names(df_sims_up), value = TRUE)
-    n_offspring_cols <- grep(
-      "^n_offspring_clutch_",
-      names(df_sims_up),
-      value = TRUE
-    )
+    clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up), value = TRUE)
 
     # Sum duration between clutches to get age at which clutches are made
     df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
 
     # Convert to NA clutches that occurred after simulated death
     df_sims_up_na <- df_sims_up |>
-      mutate(across(starts_with("clutch_"), ~ ifelse(. > mortality, NA, .)))
+      mutate(across(matches("^clutch_[0-9]+$"), ~ ifelse(. > mortality, NA, .)))
 
     for (clutch_col in clutch_cols) {
-      suffix <- sub("^clutch_", "", clutch_col)
-      n_offspring_col <- paste0("n_offspring_clutch_", suffix)
+      n_offspring_col <- sub("^clutch_", "clutch_size_", clutch_col)
       if (n_offspring_col %in% names(df_sims_up_na)) {
-        df_sims_up_na[[n_offspring_col]][is.na(df_sims_up_na[[clutch_col]])] <-
+        df_sims_up_na[[n_offspring_col]][is.na(df_sims_up_na[[
+          clutch_col
+        ]])] <-
           NA
       }
     }
@@ -627,7 +623,7 @@ simulate_life_history <- function(
           maturity = clutch_1,
           !!as.symbol(
             object$lifelihoodData$matclutch_size
-          ) := n_offspring_clutch_1
+          ) := clutch_size_1
         )
     }
 
@@ -637,19 +633,62 @@ simulate_life_history <- function(
       # Set reproduction-related columns to NA for males
       mutate(
         across(
-          c(starts_with("clutch_"), starts_with("n_offspring_clutch_")),
+          c(starts_with("clutch_"), starts_with("clutch_size_")),
           ~ if_else(df[[lifelihoodData$sex]] == 1, NA, .x)
         )
       ) |>
       # Compute total number of offspring during life
       mutate(
         total_n_offspring = rowSums(
-          across(starts_with("n_offspring_clutch_")),
+          across(starts_with("clutch_size_")),
           na.rm = TRUE
         )
       )
   } else {
     df_sims_up_na <- df_sims
+  }
+
+  if (use_censoring) {
+    df_sims_up_na <- df_sims_up_na
+  } else {
+    if ("maturity" %in% events) {
+      if ("mortality" %in% events) {
+        df_sims_up_na <- df_sims_up_na |>
+          mutate(
+            maturity_start = if_else(is.na(maturity), mortality, maturity),
+            maturity_end = if_else(
+              is.na(maturity),
+              lifelihoodData$right_censoring_date,
+              maturity
+            )
+          ) |>
+          select(-maturity)
+      } else {
+        df_sims_up_na <- df_sims_up_na |>
+          mutate(maturity_start = maturity, maturity_end = maturity) |>
+          select(-maturity) |>
+          relocate(maturity_start, maturity_end)
+      }
+    }
+
+    if ("mortality" %in% events) {
+      df_sims_up_na <- df_sims_up_na |>
+        mutate(death_start = mortality, death_end = mortality) |>
+        select(-mortality) |>
+        relocate(death_start, death_end)
+    }
+
+    if ("reproduction" %in% events) {
+      clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up_na), value = TRUE)
+      df_sims_up_na <- df_sims_up_na |>
+        mutate(across(
+          all_of(clutch_cols),
+          list(start = identity, end = identity),
+          .names = "clutch_{.fn}_{sub('clutch_', '', .col)}"
+        )) |>
+        relocate(matches("^clutch_(start|end|size)_"), .after = last_col()) |>
+        select(-all_of(clutch_cols))
+    }
   }
 
   df_sims_up_na

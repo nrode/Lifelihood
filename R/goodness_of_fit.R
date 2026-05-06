@@ -326,7 +326,7 @@ build_simulated_lifelihood_df <- function(simulated, lifelihoodData) {
     size_col <- lifelihoodData$clutchs[((i - 1) * 3) + 3]
 
     sim_time_col <- paste0("clutch_", i)
-    sim_size_col <- paste0("n_offspring_clutch_", i)
+    sim_size_col <- paste0("clutch_size_", i)
 
     if (sim_time_col %in% colnames(simulated)) {
       clutch_times <- simulated[[sim_time_col]]

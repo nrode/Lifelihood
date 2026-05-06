@@ -41,7 +41,7 @@ test_that("simulations work", {
     expect_type(simul$mortality, "double")
     expect_type(simul$maturity, "double")
     expect_type(simul$clutch_1, "double")
-    expect_type(simul$n_offspring_clutch_1, "integer")
+    expect_type(simul$clutch_size_1, "integer")
 
     simul <- simulate_life_history(results, event = "mortality")
     expect_type(simul$mortality, "double")

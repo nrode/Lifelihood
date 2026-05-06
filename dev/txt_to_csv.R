@@ -113,5 +113,6 @@ txt_to_csv <- function(txt_path) {
   )
 }
 
-txt_path <- "data_internals/raw_data/DataPierrick/daphnie - NEWFORMATgood.txt"
+
+txt_path <- "data_internals/raw_data/DataIntervn=100file=1-2.txt"
 txt_to_csv(txt_path)

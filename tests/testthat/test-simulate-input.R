@@ -121,7 +121,7 @@ test_that("manual simulation input produces coherent offspring totals", {
 
   for (clutch_col in clutch_cols) {
     suffix <- sub("^clutch_", "", clutch_col)
-    n_offspring_col <- paste0("n_offspring_clutch_", suffix)
+    n_offspring_col <- paste0("clutch_size_", suffix)
     if (n_offspring_col %in% names(simul)) {
       expect_true(all(is.na(simul[[n_offspring_col]][is.na(simul[[
         clutch_col

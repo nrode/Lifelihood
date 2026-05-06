@@ -45,7 +45,7 @@ summary(results)
 gof <- goodness_of_fit(results, nsim = 5)
 plot(gof)
 
-prediction(results, "expt_death", type = "response", mcmc.fit = TRUE)
+prediction(results, "ratio_expt_death", type = "response", mcmc.fit = TRUE)
 prediction(results, "expt_death", type = "response", se.fit = TRUE)
 
 prediction(results, "survival_param2", type = "response", mcmc.fit = TRUE)
@@ -74,7 +74,8 @@ prediction(
   type = "response"
 ) |>
   head()
-prediction(results, parameter_name = "expt_death", type = "response") |> head()
+prediction(results, parameter_name = "ratio_expt_death", type = "response") |>
+  head()
 prediction(results, parameter_name = "expt_reproduction", type = "response") |>
   head()
 prediction(
