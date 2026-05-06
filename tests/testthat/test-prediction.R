@@ -101,3 +101,29 @@ test_that("Prediction with ratio expt death", {
   expect_true(all(is.na(head(preds$se.fitted))))
   expect_true(all(!is.na(tail(preds$se.fitted))))
 })
+
+test_that("prediction reports fitted factor covariates with one level", {
+  df <- data.frame(
+    sex = c(0, 0, 0),
+    par = factor(c("only", "only", "only"))
+  )
+
+  results <- list(
+    lifelihoodData = list(
+      df = df,
+      sex = "sex"
+    ),
+    formula = list(expt_death = "par"),
+    config = list(
+      mortality = list(expt_death = "par")
+    ),
+    MCMC = 0,
+    se.fit = FALSE
+  )
+  class(results) <- "lifelihoodResults"
+
+  expect_error(
+    prediction(results, "expt_death"),
+    "fitted factor covariate `par` has fewer than two levels"
+  )
+})

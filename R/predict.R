@@ -129,6 +129,16 @@ prediction <- function(
 
   fml <- read_formula(config = object$config, parameter = parameter_name)
   fml <- formula(paste("~ ", fml))
+  check_fitted_factor_levels(
+    data = df,
+    covariates = all.vars(fml),
+    parameter_name = parameter_name,
+    data_name = if (is.null(newdata)) {
+      "the data used to fit the model"
+    } else {
+      "`newdata`"
+    }
+  )
   m <- model.frame(fml, data = df)
   Terms <- terms(m)
   x <- model.matrix(Terms, m)
@@ -414,4 +424,46 @@ has_valid_factor_levels <- function(original_df, newdata, covariates) {
   }
 
   return(TRUE)
+}
+
+#' @keywords internal
+check_fitted_factor_levels <- function(
+  data,
+  covariates,
+  parameter_name,
+  data_name = "data"
+) {
+  invalid_covariates <- character()
+
+  for (covariate in covariates) {
+    if (!covariate %in% names(data)) {
+      next
+    }
+
+    covariate_values <- data[[covariate]]
+    if (
+      !is.numeric(covariate_values) &&
+        nlevels(as.factor(covariate_values)) < 2
+    ) {
+      invalid_covariates <- c(invalid_covariates, covariate)
+    }
+  }
+
+  if (length(invalid_covariates) > 0) {
+    covariate_text <- paste0("`", invalid_covariates, "`", collapse = ", ")
+    stop(
+      "Cannot build a model matrix for parameter `",
+      parameter_name,
+      "`: fitted factor covariate",
+      if (length(invalid_covariates) == 1) " " else "s ",
+      covariate_text,
+      if (length(invalid_covariates) == 1) " has " else " have ",
+      "fewer than two levels in ",
+      data_name,
+      ". Each fitted factor covariate must have at least two levels.",
+      call. = FALSE
+    )
+  }
+
+  invisible(TRUE)
 }
