@@ -8,6 +8,7 @@
 - Browse relevant github issues for more information
 - Ask for more information if you don't have all required details
 - Do not try to compile entire project unless asked to
+- Use Air (`air format . --check`) and Jarl (`jarl check .`) to check for code quality
 - Always use devtools and never pkgdown or testthat
 - Never manually updates *.rd files, always use `devtools::document()`
 - Use `devtools::load_all()` for loading latest version

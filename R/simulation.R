@@ -432,7 +432,8 @@ simulate_life_history_tradeoff <- function(
 #' @description This function generates simulated data from a fitted lifelihood model,
 #' for one or several life history events. By default, all fitted events are simulated.
 #'
-#' @param object A fitted `lifelihoodResults` object.
+#' @param object A fitted `lifelihoodResults` object created either with [`lifelihood()`] or
+#'   [`create_simulation_input()`].
 #' @param event Character string specifying the event(s) to simulate.
 #'   Must be one of `"mortality"`, `"maturity"`, or `"all"` (event=`"reproduction"` is equivalent to `"all"` as maturity and mortality are needed to simulate reproduction events).
 #'   Default is `"all"`, which simulates all fitted events.
@@ -597,6 +598,15 @@ simulate_life_history <- function(
     # Convert to NA clutches that occurred after simulated death
     df_sims_up_na <- df_sims_up |>
       mutate(across(starts_with("clutch_"), ~ ifelse(. > mortality, NA, .)))
+
+    for (clutch_col in clutch_cols) {
+      suffix <- sub("^clutch_", "", clutch_col)
+      n_offspring_col <- paste0("n_offspring_clutch_", suffix)
+      if (n_offspring_col %in% names(df_sims_up_na)) {
+        df_sims_up_na[[n_offspring_col]][is.na(df_sims_up_na[[clutch_col]])] <-
+          NA
+      }
+    }
 
     # Remove clutch columns with only NA because they all occurred
     # after simulated death

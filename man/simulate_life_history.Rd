@@ -14,7 +14,8 @@ simulate_life_history(
 )
 }
 \arguments{
-\item{object}{A fitted \code{lifelihoodResults} object.}
+\item{object}{A fitted \code{lifelihoodResults} object created either with \code{\link[=lifelihood]{lifelihood()}} or
+\code{\link[=create_simulation_input]{create_simulation_input()}}.}
 
 \item{event}{Character string specifying the event(s) to simulate.
 Must be one of \code{"mortality"}, \code{"maturity"}, or \code{"all"} (event=\code{"reproduction"} is equivalent to \code{"all"} as maturity and mortality are needed to simulate reproduction events).
