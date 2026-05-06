@@ -115,7 +115,7 @@ prob_event_interval_dt_safe <- function(t, dt, param1, param2, family) {
     param2 = param2,
     family = family
   )
-  if (any(!is.finite(prob))) {
+  if (!all(is.finite(prob))) {
     surv_t <- surv(t, param1, param2, family)
     bad <- !is.finite(prob)
     prob[bad] <- ifelse(

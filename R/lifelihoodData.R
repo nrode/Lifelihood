@@ -86,7 +86,7 @@ as_lifelihoodData <- function(
     )
   }
 
-  if (isTRUE(matclutch) & is.null(matclutch_size)) {
+  if (isTRUE(matclutch) && is.null(matclutch_size)) {
     stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
   }
 

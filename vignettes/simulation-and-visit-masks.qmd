@@ -107,7 +107,7 @@ Let's define a custom visits dataframe:
 ```{r}
 custom_visits <- tibble(
   block = rep(1:2, nrow(datapierrick) / 2),
-  visit = 1:nrow(datapierrick)
+  visit = seq_len(nrow(datapierrick))
 )
 custom_visits |> head()
 ```

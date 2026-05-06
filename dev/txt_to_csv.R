@@ -1,6 +1,6 @@
 parse_row <- function(row, covariate_names) {
   elements <- strsplit(row, " ")[[1]]
-  covariates <- elements[1:length(covariate_names)]
+  covariates <- elements[seq_along(covariate_names)]
   sex <- elements[(length(covariate_names) + 2):(length(covariate_names) + 4)]
   mat <- elements[(length(covariate_names) + 6):(length(covariate_names) + 8)]
 
@@ -73,10 +73,10 @@ create_row <- function(parsed_row, max_clutches) {
 
 txt_to_csv <- function(txt_path) {
   txt_file <- readLines(txt_path)
-  model_tag_index <- which(grepl("****modele******", txt_file, fixed = TRUE))
+  model_tag_index <- grep("****modele******", txt_file, fixed = TRUE)
   line_with_cov <- txt_file[model_tag_index - 2]
   covariate_names <- strsplit(line_with_cov, "\\s+")[[1]]
-  data_tag_index <- which(grepl("*******data*********", txt_file, fixed = TRUE))
+  data_tag_index <- grep("*******data*********", txt_file, fixed = TRUE)
   data <- txt_file[(data_tag_index + 1):length(txt_file)]
 
   parsed_data <- lapply(data, parse_row, covariate_names)

@@ -66,7 +66,7 @@ lifelihood <- function(
 
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
-  if (!is.null(seeds) & n_fit > 1) {
+  if (!is.null(seeds) && n_fit > 1) {
     stop("Can't set `seeds` with `n_fit` > 1.")
   }
 
@@ -102,8 +102,8 @@ lifelihood <- function(
 
   all_results <- list()
   for (i in 1:n_fit) {
-    if (is.null(seeds) | n_fit > 1) {
-      seeds <- sample(1:10000, 4, replace = T)
+    if (is.null(seeds) || n_fit > 1) {
+      seeds <- sample(1:10000, 4, replace = TRUE)
     }
 
     temp_dir <- file.path(
@@ -201,11 +201,11 @@ lifelihood_fit <- function(
   delete_temp_files = TRUE,
   temp_dir = NULL
 ) {
-  if ((length(seeds) != 4) & !is.null(seeds)) {
+  if (!is.null(seeds) && length(seeds) != 4) {
     stop("`seeds` must be an integer vector of length 4.")
   }
   if (is.null(seeds)) {
-    seeds <- sample(1:10000, 4, replace = T)
+    seeds <- sample(1:10000, 4, replace = TRUE)
   }
 
   if (is.null(temp_dir)) {
@@ -255,11 +255,8 @@ lifelihood_fit <- function(
     path_continuous_var = "NULL"
   }
 
-  ## Convert numeric variables so that they start at 0
-  convertTonum <- function(x) as.numeric(as.factor(x)) - 1
-
   df_encoded <- df_encoded |>
-    mutate(across(all_of(colnames(numeric_vars)), convertTonum))
+    mutate(across(all_of(colnames(numeric_vars)), factor_to_num))
 
   data_path <- format_dataframe_to_txt(
     df = df_encoded,
@@ -654,7 +651,7 @@ summary.lifelihoodResults <- function(object, digits = 3, ...) {
 #' @keywords internal
 print_coef_table <- function(df, digits = 3) {
   # Simplify parameter names
-  df$display_name <- sapply(1:nrow(df), function(i) {
+  df$display_name <- sapply(seq_len(nrow(df)), function(i) {
     if (df$kind[i] == "intercept") {
       return(paste(df$parameter[i], "(Intercept)"))
     } else {
@@ -663,7 +660,7 @@ print_coef_table <- function(df, digits = 3) {
   })
 
   # Format estimates
-  for (i in 1:nrow(df)) {
+  for (i in seq_len(nrow(df))) {
     est <- sprintf("%.*f", digits, df$estimation[i])
 
     # Add SE if available
@@ -689,7 +686,7 @@ print_coef_table <- function(df, digits = 3) {
 check_boundaries_simple <- function(object, threshold = 0.05) {
   near_bounds <- c()
 
-  for (i in 1:nrow(object$effects)) {
+  for (i in seq_len(nrow(object$effects))) {
     param_name <- object$effects$name[i]
     estimate <- object$effects$estimation[i]
 
@@ -732,7 +729,7 @@ check_boundaries_simple <- function(object, threshold = 0.05) {
 check_mcmc_consistency <- function(object, threshold = 0.05) {
   consistent <- TRUE
 
-  for (i in 1:nrow(object$effects)) {
+  for (i in seq_len(nrow(object$effects))) {
     mle <- object$effects$estimation[i]
     mcmc <- object$effects$mcmc_estimation[i]
 

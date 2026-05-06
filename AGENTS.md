@@ -9,6 +9,7 @@
 - Ask for more information if you don't have all required details
 - Do not try to compile entire project unless asked to
 - Always use devtools and never pkgdown or testthat
+- Never manually updates *.rd files, always use `devtools::document()`
 - Use `devtools::load_all()` for loading latest version
 - Use `devtools::test()` for testing
 - Since testing suite takes a lot of time, only test relevant files unless it's necessary

@@ -95,7 +95,6 @@ z <- simulate_life_history(
 simulate_life_history(results, event = "mortality") |> head()
 simulate_life_history(results, event = "maturity") |> head()
 simulate_life_history(results, event = "reproduction") |> head()
-parallel.simulate(results, nsim = 10, parallel_seed = 1)
 
 interval_width <- 15
 newdata <- expand.grid(

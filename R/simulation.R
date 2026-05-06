@@ -484,7 +484,7 @@ simulate_life_history <- function(
 
   # Simulate all events if user selected either "all" or "reproduction".
   # It's required for reproduction since we need info about maturity and death.
-  events <- if ("all" %in% event | "reproduction" %in% event) {
+  events <- if ("all" %in% event || "reproduction" %in% event) {
     c("maturity", "reproduction", "mortality")
   } else {
     event
@@ -633,22 +633,6 @@ simulate_life_history <- function(
   }
 
   df_sims_up_na
-}
-
-#' @title Parallelized simulations
-#'
-#' @param ... Arguments passed to [simulate_life_history()].
-#' @param nsim Number of simulations
-#' @param parallel_seed Logical or integer, seed used for
-parallel.simulate <- function(..., nsim, parallel_seed = FALSE) {
-  sims <- future.apply::future_lapply(
-    1:nsim,
-    function(i) simulate_life_history(...),
-    future.seed = parallel_seed
-  )
-  sims <- sims[!vapply(sims, is.null, logical(1))]
-
-  return(sims)
 }
 
 #' @keywords internal

@@ -140,7 +140,7 @@ SurvLgn <- function(t, expt_time_to_event, vp1) {
 #' @export
 SurvGam <- function(t, expt_time_to_event, scale) {
   shape <- expt_time_to_event / scale
-  pgamma(t, shape = shape, scale = scale, lower.tail = F, log.p = FALSE)
+  pgamma(t, shape = shape, scale = scale, lower.tail = FALSE, log.p = FALSE)
 }
 
 #' @title Exponential survival function
@@ -336,26 +336,18 @@ check_lifelihoodData <- function(object) {
   }
 }
 
-#' @title Convert a factor variable to integers
+#' @title Convert a vector to factor codes
 #'
 #' @description
-#' Function necessary because the Pascal program
-#' expects integers for factor levels.
+#' Convert values to 0-based factor codes for the Pascal program.
 #'
-#' @param x A column name
+#' @param x A vector
 #'
-#' @returns The integer
+#' @returns Numeric vector of 0-based factor codes
 #'
 #' @keywords internal
 factor_to_num <- function(x) {
-  if (is.factor(x)) {
-    levels <- levels(x)
-    num <- match(x, levels) - 1
-    levels(num) <- levels
-    num
-  } else {
-    x
-  }
+  as.numeric(as.factor(x)) - 1
 }
 
 #' @title Count total number of parameter to fit

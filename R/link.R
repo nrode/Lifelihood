@@ -15,23 +15,6 @@ link <- function(estimate, min, max) {
   return(min + (max - min) / (1 + exp(-estimate)))
 }
 
-#' @title Delink function
-#'
-#' @description
-#' Delink function to transform the parameters from original scale
-#' to lifelihood scale.
-#'
-#' @keywords internal
-#'
-#' @param obs The observed value of the parameter
-#' @param min The minimum value of the parameter
-#' @param max The maximum value of the parameter
-#'
-#' @return Numeric. The transformed parameter
-delink <- function(obs, min, max) {
-  return(log((obs - min) / (max - obs)))
-}
-
 #' @title derivLink function
 #'
 #' @description

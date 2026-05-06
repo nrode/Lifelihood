@@ -328,7 +328,7 @@ lifelihood_fit_group_by_group <- function(
   sub_interval = 0.3,
   delete_temp_files = TRUE
 ) {
-  if (!is.null(seeds) & n_fit > 1) {
+  if (!is.null(seeds) && n_fit > 1) {
     stop("Can't set `seeds` with `n_fit` > 1.")
   }
 
