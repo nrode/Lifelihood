@@ -631,7 +631,17 @@ simulate_life_history <- function(
         )
     }
 
+    df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
+
     df_sims_up_na <- df_sims_up_na |>
+      # Set reproduction-related columns to NA for males
+      mutate(
+        across(
+          c(starts_with("clutch_"), starts_with("n_offspring_clutch_")),
+          ~ if_else(df[[lifelihoodData$sex]] == 1, NA, .x)
+        )
+      ) |>
+      # Compute total number of offspring during life
       mutate(
         total_n_offspring = rowSums(
           across(starts_with("n_offspring_clutch_")),

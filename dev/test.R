@@ -73,7 +73,6 @@ plot(gof)
 prediction(
   object = results,
   parameter_name = "ratio_expt_death",
-  mcmc.fit = TRUE,
   keep_mcmc_samples = TRUE,
   type = "response"
 )
@@ -129,7 +128,12 @@ prediction(
 ) |>
   tail()
 
-simul <- simulate_life_history(results) |> head()
+simulate_life_history(
+  results,
+  use_censoring = TRUE,
+  visits = get_visits(lifelihoodData)
+) |>
+  head()
 
 z <- simulate_life_history(
   results,
