@@ -9,6 +9,7 @@ prediction(
   parameter_name,
   newdata = NULL,
   mcmc.fit = FALSE,
+  keep_mcmc_samples = FALSE,
   type = c("link", "response"),
   se.fit = FALSE,
   .warning_ratio_male = TRUE
@@ -21,12 +22,14 @@ prediction(
 
 \item{newdata}{Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.}
 
+\item{keep_mcmc_samples}{Whether or not to also retrieve MCMC samples in output. If \code{TRUE}, output is a list with 2 elements: pred and mcmc_samples.}
+
 \item{type}{The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.}
 
 \item{se.fit}{Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).}
 }
 \value{
-A vector containing the predicted values for the parameter.
+A vector or list containing the predicted values for the parameter.
 }
 \description{
 S3 method used to make predictions using \code{lifelihoodResults} objects, i.e. results from \code{\link[=lifelihood]{lifelihood()}}.

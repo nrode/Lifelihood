@@ -91,10 +91,24 @@ test_that("censoring works for reproduction and validates block in newdata", {
     raise_estimation_warning = FALSE
   )
 
+  visits <- get_visits(lifelihoodData)
+  expect_true(all(c("geno", "visit") %in% names(visits)))
+
+  expect_error(
+    simulate_life_history(
+      results,
+      event = "maturity",
+      use_censoring = TRUE,
+      seed = 1
+    ),
+    "`visits` cannot be NULL"
+  )
+
   sim <- simulate_life_history(
     results,
     event = "reproduction",
     use_censoring = TRUE,
+    visits = visits,
     seed = 1
   )
   expect_true(all(
@@ -113,7 +127,8 @@ test_that("censoring works for reproduction and validates block in newdata", {
       results,
       event = "mortality",
       newdata = newdata_without_block,
-      use_censoring = TRUE
+      use_censoring = TRUE,
+      visits = visits
     ),
     "requires a `geno` column"
   )

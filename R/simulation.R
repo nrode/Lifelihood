@@ -68,7 +68,8 @@ simulate_event <- function(
       newdata = newdata
     )
 
-    if (family != "exp") {
+    family_mortality <- object$lifelihoodData$model_specs[[1]]
+    if (family_mortality != "exp") {
       survival_param2 <- prediction(
         object,
         "survival_param2",
@@ -78,7 +79,6 @@ simulate_event <- function(
     }
 
     ## max longevity = value of longevity so that 99% of individuals with this shape and scale parameters die before this age
-    family_mortality <- object$lifelihoodData$model_specs[[1]]
     if (family_mortality == "wei") {
       scale <- expt_death / gamma(1 + 1 / survival_param2)
       long <- qweibull(0.99999999, shape = survival_param2, scale = scale)
@@ -87,8 +87,12 @@ simulate_event <- function(
       sigma <- sqrt(log(1 + survival_param2 / (expt_death^2)))
       long <- qlnorm(0.99999999, meanlog = mu, sdlog = sigma)
     } else if (family_mortality == "gam") {
-      shape <- expt_death / survival_param2
-      long <- qgamma(0.99999999, shape = shape, scale = survival_param2)
+      mortality_shape <- expt_death / survival_param2
+      long <- qgamma(
+        0.99999999,
+        shape = mortality_shape,
+        scale = survival_param2
+      )
     } else if (family_mortality == "exp") {
       long <- qexp(0.99999999, rate = 1 / expt_death)
     }
@@ -438,12 +442,14 @@ simulate_life_history_tradeoff <- function(
 #' events (`maturity`, `mortality`). For example, returns `mortality_start` and
 #' `mortality_end` instead of only `mortality`. If `newdata` is provided and
 #' censoring is enabled, `newdata` must include the block column.
-#' In this case, it's advised to use the `visits` argument and provide your own
-#' visit data. Otherwise, visits are inferred from observed event ages.
-#' @param visits Optionnal dataframe with 2 columns: "block" (must be the same name
-#' as passed in [lifelihood::as_lifelihoodData()] `block` argument) and exactly "visit".
-#' For each block, "visit" corresponds to the ages where the events of individuals
-#' have been recorded.
+#' When `use_censoring = TRUE`, `visits` must be provided explicitly.
+#' Use [get_visits()] to derive visit data from the fitted data, or pass a
+#' custom visit data frame.
+#' @param visits Optional data frame with 2 columns: one column with the same
+#' name as the `block` argument passed to [lifelihood::as_lifelihoodData()] and
+#' one column named exactly `visit`. For each block, `visit` corresponds to the
+#' ages where the events of individuals have been recorded. Required when
+#' `use_censoring = TRUE`.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.
 #'
 #' @return A list of `data.frame` with one column per simulated event.
@@ -497,10 +503,23 @@ simulate_life_history <- function(
     }
   }
 
-  # Retrieve experimental blocks if provided by user
   lifelihoodData <- object$lifelihoodData
   block_values <- NULL
-  if (!is.null(lifelihoodData$block) && use_censoring) {
+  if (use_censoring) {
+    if (is.null(lifelihoodData$block)) {
+      stop(
+        "`use_censoring = TRUE` requires `object$lifelihoodData$block`. ",
+        "Set `block` when creating the lifelihoodData object."
+      )
+    }
+    if (is.null(visits)) {
+      stop(
+        "`visits` cannot be NULL when `use_censoring = TRUE`. ",
+        "Use `get_visits(object$lifelihoodData)` to derive visit masks from ",
+        "the fitted data, or provide a custom visits data frame."
+      )
+    }
+
     block_col <- lifelihoodData$block
     if (is.null(newdata)) {
       block_values <- lifelihoodData$df[[block_col]]

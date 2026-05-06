@@ -27,13 +27,15 @@ If \code{NULL}, the original model data are used.}
 events (\code{maturity}, \code{mortality}). For example, returns \code{mortality_start} and
 \code{mortality_end} instead of only \code{mortality}. If \code{newdata} is provided and
 censoring is enabled, \code{newdata} must include the block column.
-In this case, it's advised to use the \code{visits} argument and provide your own
-visit data. Otherwise, visits are inferred from observed event ages.}
+When \code{use_censoring = TRUE}, \code{visits} must be provided explicitly.
+Use \code{\link[=get_visits]{get_visits()}} to derive visit data from the fitted data, or pass a
+custom visit data frame.}
 
-\item{visits}{Optionnal dataframe with 2 columns: "block" (must be the same name
-as passed in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} \code{block} argument) and exactly "visit".
-For each block, "visit" corresponds to the ages where the events of individuals
-have been recorded.}
+\item{visits}{Optional data frame with 2 columns: one column with the same
+name as the \code{block} argument passed to \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} and
+one column named exactly \code{visit}. For each block, \code{visit} corresponds to the
+ages where the events of individuals have been recorded. Required when
+\code{use_censoring = TRUE}.}
 
 \item{seed}{Optional integer. If provided, sets the random seed for reproducibility.}
 }

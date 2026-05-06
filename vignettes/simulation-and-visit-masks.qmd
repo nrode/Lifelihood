@@ -81,29 +81,14 @@ simulate_life_history(results, event = "maturity") |> head()
 
 `lifelihood` lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.
 
-If you scroll to the top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the block to which each individual belongs. Since we provided this value, we just need to add `use_censoring = TRUE` to include censoring time intervals in the simulation:
+If you scroll to the top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the block to which each individual belongs. Use `get_visits()` to retrieve the visit masks inferred from the original dataset:
 
 ```{r}
-results |>
-  simulate_life_history(event = "maturity", use_censoring = TRUE) |>
-  head()
-```
-
-Right now, visit masks are "deduced" from the original dataset, but you can provide your own visit masks with the `visits` argument.
-
-It must be a dataframe with 2 columns: `block` (the same name as passed to `lifelihood::as_lifelihoodData()` in the `block` argument) and exactly `visit`. For each block, `visit` corresponds to the ages at which the events of individuals were recorded.
-
-Let's define this visits dataframe:
-
-```{r}
-visits <- tibble(
-  block = rep(1:2, nrow(datapierrick) / 2),
-  visit = 1:nrow(datapierrick)
-)
+visits <- get_visits(lifelihoodData)
 visits |> head()
 ```
 
-Now we can pass this to the `simulate_life_history()` function:
+Then pass these visits explicitly with `use_censoring = TRUE` to include censoring time intervals in the simulation:
 
 ```{r}
 results |>
@@ -115,3 +100,26 @@ results |>
   head()
 ```
 
+You can also provide your own visit masks with the `visits` argument. It must be a dataframe with 2 columns: `block` (the same name as passed to `lifelihood::as_lifelihoodData()` in the `block` argument) and exactly `visit`. For each block, `visit` corresponds to the ages at which the events of individuals were recorded.
+
+Let's define a custom visits dataframe:
+
+```{r}
+custom_visits <- tibble(
+  block = rep(1:2, nrow(datapierrick) / 2),
+  visit = 1:nrow(datapierrick)
+)
+custom_visits |> head()
+```
+
+Now we can pass this to the `simulate_life_history()` function:
+
+```{r}
+results |>
+  simulate_life_history(
+    event = "maturity",
+    use_censoring = TRUE,
+    visits = custom_visits
+  ) |>
+  head()
+```
