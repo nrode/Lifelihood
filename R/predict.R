@@ -79,6 +79,13 @@ prediction <- function(
     )
   }
 
+  if (!isTRUE(mcmc.fit) && isTRUE(keep_mcmc_samples)) {
+    warning(
+      "`keep_mcmc_samples = TRUE` has no effect when `mcmc.fit = FALSE`. ",
+      "MCMC samples are only returned when `mcmc.fit = TRUE`."
+    )
+  }
+
   if (
     parameter_name %in%
       c("ratio_expt_death", "ratio_expt_maturity") &&

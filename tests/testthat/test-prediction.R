@@ -127,3 +127,35 @@ test_that("prediction reports fitted factor covariates with one level", {
     "fitted factor covariate `par` has fewer than two levels"
   )
 })
+
+test_that("prediction warns when keeping MCMC samples without MCMC prediction", {
+  df <- data.frame(sex = c(0, 1))
+  results <- list(
+    lifelihoodData = list(
+      df = df,
+      sex = "sex"
+    ),
+    formula = list(expt_death = "1"),
+    config = list(
+      mortality = list(expt_death = "1")
+    ),
+    effects = data.frame(
+      parameter = "expt_death",
+      estimation = 1
+    ),
+    MCMC = 0,
+    se.fit = FALSE
+  )
+  class(results) <- "lifelihoodResults"
+
+  expect_warning(
+    prediction(
+      results,
+      "expt_death",
+      keep_mcmc_samples = TRUE,
+      .warning_ratio_male = FALSE
+    ),
+    "`keep_mcmc_samples = TRUE` has no effect when `mcmc.fit = FALSE`",
+    fixed = TRUE
+  )
+})
