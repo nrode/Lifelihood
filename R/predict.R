@@ -98,6 +98,8 @@ prediction <- function(
 
   df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
   original_df <- object$lifelihoodData$df
+  sex_values <- df[[object$lifelihoodData$sex]]
+  has_male_predictions <- any(sex_values == 1, na.rm = TRUE)
 
   covariates <- object$formula[[parameter_name]]
   if (is.null(covariates)) {
@@ -182,7 +184,7 @@ prediction <- function(
   if (type == "link") {
     pred <- predictions
 
-    if (.warning_ratio_male) {
+    if (.warning_ratio_male && has_male_predictions) {
       message(
         "Lifelihood parameter estimate(s) for males are identical to that of females. ",
         "Use type='response', to get the right parameter estimate(s) for males ",
@@ -324,11 +326,13 @@ prediction <- function(
 
     if (type == "link") {
       pred_mcmc <- predictions
-      message(
-        "Lifelihood parameter estimate(s) for males are identical to that of females. ",
-        "Use type='response', to get the right parameter estimate(s) for males ",
-        "on the response scale."
-      )
+      if (.warning_ratio_male && has_male_predictions) {
+        message(
+          "Lifelihood parameter estimate(s) for males are identical to that of females. ",
+          "Use type='response', to get the right parameter estimate(s) for males ",
+          "on the response scale."
+        )
+      }
     } else {
       # type == "response"
       base_pred_mcmc <- link(

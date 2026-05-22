@@ -159,3 +159,59 @@ test_that("prediction warns when keeping MCMC samples without MCMC prediction", 
     fixed = TRUE
   )
 })
+
+test_that("prediction reports link-scale male message only with males", {
+  results <- list(
+    lifelihoodData = list(
+      df = data.frame(sex = c(0, 0), par = c(0, 1)),
+      sex = "sex"
+    ),
+    formula = list(expt_death = "par"),
+    config = list(
+      mortality = list(expt_death = "par")
+    ),
+    effects = data.frame(
+      parameter = c("expt_death", "expt_death"),
+      estimation = c(1, 0.2)
+    ),
+    MCMC = 200,
+    se.fit = FALSE,
+    mcmc_sample = data.frame(
+      int_expt_death = seq(0.5, 1.5, length.out = 200),
+      eff_expt_death_par = sin(seq(0, 4 * pi, length.out = 200))
+    )
+  )
+  class(results) <- "lifelihoodResults"
+
+  expect_message(
+    prediction(results, "expt_death"),
+    NA
+  )
+  expect_message(
+    prediction(
+      results,
+      "expt_death",
+      mcmc.fit = TRUE,
+      keep_mcmc_samples = TRUE
+    ),
+    NA
+  )
+
+  results$lifelihoodData$df <- data.frame(sex = c(0, 1), par = c(0, 1))
+
+  expect_message(
+    prediction(results, "expt_death"),
+    "Lifelihood parameter estimate(s) for males are identical to that of females.",
+    fixed = TRUE
+  )
+  expect_message(
+    prediction(
+      results,
+      "expt_death",
+      mcmc.fit = TRUE,
+      keep_mcmc_samples = TRUE
+    ),
+    "Lifelihood parameter estimate(s) for males are identical to that of females.",
+    fixed = TRUE
+  )
+})
