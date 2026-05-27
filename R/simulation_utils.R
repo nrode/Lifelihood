@@ -30,8 +30,8 @@ is_parameter_fitted <- function(object, parameter_name) {
 uses_tradeoff_simulation <- function(object) {
   tradeoff_params <- c(
     "increase_death_hazard",
-    "increase_tof_n_offspring",
-    "tof_reduction_rate",
+    "increase_death_hazard_n_offspring",
+    "tof_decay",
     "lin_decrease_hazard"
   )
   any(tradeoff_params %in% object$effects$parameter)
@@ -94,37 +94,6 @@ clamp_probability <- function(x) {
   x <- as.numeric(x)
   x[!is.finite(x)] <- 0
   pmin(pmax(x, 0), 1)
-}
-
-#' @title Safe interval event probability
-#'
-#' @description
-#' Internal wrapper around [prob_event_interval_dt()] that guarantees output
-#' probabilities are valid by applying [clamp_probability()].
-#'
-#' @inheritParams prob_event_interval_dt
-#'
-#' @return A numeric vector of probabilities in `[0, 1]`.
-#'
-#' @keywords internal
-prob_event_interval_dt_safe <- function(t, dt, param1, param2, family) {
-  prob <- prob_event_interval_dt(
-    t = t,
-    dt = dt,
-    param1 = param1,
-    param2 = param2,
-    family = family
-  )
-  if (!all(is.finite(prob))) {
-    surv_t <- surv(t, param1, param2, family)
-    bad <- !is.finite(prob)
-    prob[bad] <- ifelse(
-      is.finite(surv_t[bad]) & surv_t[bad] <= .Machine$double.eps,
-      1,
-      0
-    )
-  }
-  clamp_probability(prob)
 }
 
 #' @title Compute a high-quantile longevity bound

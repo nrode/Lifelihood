@@ -73,7 +73,7 @@ as_lifelihoodData <- function(
   model_specs,
   covariates,
   block = NULL,
-  matclutch = FALSE,
+  matclutch,
   matclutch_size = NULL,
   right_censoring_date = 1000,
   critical_age = 20,

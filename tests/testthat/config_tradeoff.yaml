@@ -9,8 +9,8 @@ reproduction:
   reproduction_param2: 1
   n_offspring: not_fitted
   increase_death_hazard: 1
-  tof_reduction_rate: 1
-  increase_tof_n_offspring: 1
+  tof_decay: 1
+  increase_death_hazard_n_offspring: 1
   lin_decrease_hazard: 1
   quad_senescence: not_fitted
   quad_decrease_hazard: not_fitted
