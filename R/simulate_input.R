@@ -13,19 +13,20 @@
 #' effects.
 #'
 #' @param effects Named list of parameter effects on the lifelihood link scale.
-#' @param covariates Character vector with covariate names.
+#' @param data Data frame containing one row per simulated individual, or one
+#'   row per combination when `n_per_combination` is supplied. It must contain
+#'   the columns named in `covariates` and `sex`.
+#' @param covariates Character vector with covariate column names in `data`.
+#' @param sex Name of the sex column in `data`.
 #' @param config Path to a YAML configuration file or an already-loaded
 #'   configuration list.
 #' @param model Character vector with one model family to reuse for mortality,
 #'   maturity and reproduction, or three model families in that order. Values
 #'   must be `"wei"`, `"exp"`, `"gam"` or `"lgn"`.
-#' @param n Number of simulated individuals represented by the internal data.
-#' @param sex Scalar or vector of length `n` with sex values. Defaults to `NA`.
-#' @param data Optional data frame containing the covariate values to use for
-#'   simulation. If supplied, it must have `n` rows and contain all `covariates`.
+#' @param n_per_combination Optional name of a column in `data` containing the
+#'   number of individuals to create for each row.
 #' @param param_bounds_df Optional data frame with columns `param`, `min` and
-#'   `max`. These bounds are used by [prediction()] to transform effects from
-#'   the link scale to the response scale.
+#'   `max`. If `NULL`, defaults are created with [default_bounds_df()].
 #' @param right_censoring_date Numeric right censoring date stored in the
 #'   internal `lifelihoodData` object.
 #'
@@ -34,20 +35,32 @@
 #' @export
 create_simulation_input <- function(
   effects,
+  data,
   covariates,
+  sex,
   config,
   model,
-  n,
-  sex = NA,
-  data = NULL,
+  n_per_combination = NULL,
   param_bounds_df = NULL,
   right_censoring_date = 1000
 ) {
+  if (missing(data) || is.null(data)) {
+    stop("`data` must be supplied.", call. = FALSE)
+  }
+
   config <- load_simulation_config(config)
   model_specs <- normalize_simulation_model(model)
-  n <- validate_simulation_n(n)
   covariates <- validate_simulation_covariates(covariates)
+  sex <- validate_simulation_sex_column(sex)
   validate_simulation_effects(effects)
+
+  df <- build_simulation_data(
+    data = data,
+    covariates = covariates,
+    sex = sex,
+    n_per_combination = n_per_combination
+  )
+  n <- nrow(df)
 
   fitted_parameters <- get_simulation_fitted_parameters(config)
   missing_effects <- setdiff(fitted_parameters, names(effects))
@@ -84,35 +97,6 @@ create_simulation_input <- function(
     )
   }
 
-  df <- build_simulation_data(
-    effects = effects,
-    covariates = covariates,
-    config = config,
-    n = n,
-    sex = sex,
-    data = data
-  )
-
-  if (is.null(param_bounds_df)) {
-    param_bounds_df <- default_simulation_bounds_df(
-      model_specs = model_specs,
-      right_censoring_date = right_censoring_date
-    )
-  } else {
-    param_bounds_df <- normalize_simulation_bounds_df(param_bounds_df)
-  }
-
-  missing_bounds <- setdiff(fitted_parameters, param_bounds_df$param)
-  if (length(missing_bounds) > 0) {
-    stop(
-      "`param_bounds_df` is missing fitted parameter",
-      if (length(missing_bounds) == 1) "" else "s",
-      ": ",
-      paste(missing_bounds, collapse = ", "),
-      call. = FALSE
-    )
-  }
-
   formula <- build_simulation_formula_list(config)
   effects_df <- build_simulation_effects_df(
     effects = effects,
@@ -125,9 +109,26 @@ create_simulation_input <- function(
   lifelihoodData <- build_simulation_lifelihood_data(
     df = df,
     covariates = covariates,
+    sex = sex,
     model_specs = model_specs,
     right_censoring_date = right_censoring_date
   )
+
+  if (is.null(param_bounds_df)) {
+    param_bounds_df <- default_bounds_df(lifelihoodData)
+  }
+  param_bounds_df <- normalize_simulation_bounds_df(param_bounds_df)
+
+  missing_bounds <- setdiff(fitted_parameters, param_bounds_df$param)
+  if (length(missing_bounds) > 0) {
+    stop(
+      "`param_bounds_df` is missing fitted parameter",
+      if (length(missing_bounds) == 1) "" else "s",
+      ": ",
+      paste(missing_bounds, collapse = ", "),
+      call. = FALSE
+    )
+  }
 
   results <- list(
     config = config,
@@ -223,20 +224,21 @@ normalize_simulation_model <- function(model) {
 }
 
 #' @keywords internal
-validate_simulation_n <- function(n) {
-  if (length(n) != 1 || is.na(n) || n < 1 || n != as.integer(n)) {
-    stop("`n` must be a single positive integer.", call. = FALSE)
-  }
-  as.integer(n)
-}
-
-#' @keywords internal
 validate_simulation_covariates <- function(covariates) {
   covariates <- as.character(covariates)
   if (anyNA(covariates) || !all(nzchar(covariates))) {
     stop("`covariates` must contain non-empty names.", call. = FALSE)
   }
   unique(covariates)
+}
+
+#' @keywords internal
+validate_simulation_sex_column <- function(sex) {
+  sex <- as.character(sex)
+  if (length(sex) != 1 || is.na(sex) || !nzchar(sex)) {
+    stop("`sex` must be a single non-empty column name.", call. = FALSE)
+  }
+  sex
 }
 
 #' @keywords internal
@@ -291,236 +293,140 @@ get_simulation_formula_covariates <- function(config) {
 
 #' @keywords internal
 build_simulation_data <- function(
-  effects,
+  data,
   covariates,
-  config,
-  n,
   sex,
-  data
+  n_per_combination
 ) {
-  if (!is.null(data)) {
-    df <- as.data.frame(data)
-    if (nrow(df) != n) {
-      stop("`data` must have exactly `n` rows.", call. = FALSE)
-    }
+  df <- as.data.frame(data)
+  if (nrow(df) < 1) {
+    stop("`data` must contain at least one row.", call. = FALSE)
+  }
 
-    missing_covariates <- setdiff(covariates, names(df))
-    if (length(missing_covariates) > 0) {
-      stop(
-        "`data` is missing covariate",
-        if (length(missing_covariates) == 1) "" else "s",
-        ": ",
-        paste(missing_covariates, collapse = ", "),
-        call. = FALSE
-      )
-    }
-  } else {
-    df <- build_inferred_simulation_data(
-      effects = effects,
-      covariates = covariates,
-      config = config,
-      n = n
+  if (sex %in% covariates) {
+    stop("`sex` cannot also be listed in `covariates`.", call. = FALSE)
+  }
+
+  required_columns <- c(covariates, sex)
+  missing_columns <- setdiff(required_columns, names(df))
+  if (length(missing_columns) > 0) {
+    stop(
+      "`data` is missing column",
+      if (length(missing_columns) == 1) "" else "s",
+      ": ",
+      paste(missing_columns, collapse = ", "),
+      call. = FALSE
     )
   }
 
-  if ("sex" %in% covariates) {
-    stop("`sex` is reserved for the internal sex column.", call. = FALSE)
+  if (!is.null(n_per_combination)) {
+    count_column <- validate_simulation_count_column(
+      n_per_combination = n_per_combination,
+      data_names = names(df),
+      reserved_names = required_columns
+    )
+    counts <- normalize_simulation_count_values(df[[count_column]])
+    df <- df[rep(seq_len(nrow(df)), counts), , drop = FALSE]
+    df[[count_column]] <- NULL
   }
 
-  df$sex <- normalize_simulation_sex(sex, n)
   rownames(df) <- NULL
   df
 }
 
 #' @keywords internal
-build_inferred_simulation_data <- function(
-  effects,
-  covariates,
-  config,
-  n
+validate_simulation_count_column <- function(
+  n_per_combination,
+  data_names,
+  reserved_names
 ) {
-  used_covariates <- get_simulation_formula_covariates(config)
-
-  if (length(covariates) == 0) {
-    return(data.frame(.row_id = seq_len(n)))
-  }
-
-  level_counts <- infer_simulation_level_counts(
-    effects = effects,
-    covariates = covariates
-  )
-
-  missing_levels <- used_covariates[
-    is.na(level_counts[used_covariates]) | level_counts[used_covariates] < 2
-  ]
-  if (length(missing_levels) > 0) {
+  n_per_combination <- as.character(n_per_combination)
+  if (
+    length(n_per_combination) != 1 ||
+      is.na(n_per_combination) ||
+      !nzchar(n_per_combination)
+  ) {
     stop(
-      "Cannot infer factor levels for covariate",
-      if (length(missing_levels) == 1) "" else "s",
-      ": ",
-      paste(missing_levels, collapse = ", "),
-      ". Provide `data` or include covariate effects.",
+      "`n_per_combination` must be a single non-empty column name.",
       call. = FALSE
     )
   }
 
-  level_counts[is.na(level_counts)] <- 1L
-  values <- lapply(level_counts, function(count) {
-    factor(seq_len(count) - 1, levels = seq_len(count) - 1)
-  })
-  names(values) <- covariates
-
-  combinations <- expand.grid(
-    values,
-    KEEP.OUT.ATTRS = FALSE,
-    stringsAsFactors = TRUE
-  )
-  combinations[rep(seq_len(nrow(combinations)), length.out = n), , drop = FALSE]
-}
-
-#' @keywords internal
-infer_simulation_level_counts <- function(effects, covariates) {
-  level_counts <- rep(NA_integer_, length(covariates))
-  names(level_counts) <- covariates
-
-  for (parameter in names(effects)) {
-    parameter_effects <- effects[[parameter]]
-    if (!is.list(parameter_effects) || is.data.frame(parameter_effects)) {
-      next
-    }
-
-    effect_names <- names(parameter_effects)
-    if (is.null(effect_names)) {
-      effect_names <- rep("", length(parameter_effects))
-    }
-
-    has_explicit_intercept <- any(
-      effect_names %in% simulation_intercept_names()
+  if (!(n_per_combination %in% data_names)) {
+    stop(
+      "`data` is missing `n_per_combination` column: ",
+      n_per_combination,
+      call. = FALSE
     )
-
-    for (covariate in intersect(effect_names, covariates)) {
-      values <- as.numeric(parameter_effects[[covariate]])
-      if (length(values) == 0) {
-        next
-      }
-
-      level_count <- if (has_explicit_intercept) {
-        length(values) + 1L
-      } else {
-        length(values)
-      }
-
-      level_counts[covariate] <- max(
-        level_counts[covariate],
-        level_count,
-        na.rm = TRUE
-      )
-    }
   }
 
-  level_counts
+  if (n_per_combination %in% reserved_names) {
+    stop(
+      "`n_per_combination` cannot name a covariate or sex column.",
+      call. = FALSE
+    )
+  }
+
+  n_per_combination
 }
 
 #' @keywords internal
-normalize_simulation_sex <- function(sex, n) {
-  if (length(sex) == 1) {
-    return(rep(sex, n))
+normalize_simulation_count_values <- function(counts) {
+  if (is.factor(counts)) {
+    counts <- as.character(counts)
+  }
+  counts <- suppressWarnings(as.numeric(counts))
+
+  invalid_counts <- is.na(counts) |
+    !is.finite(counts) |
+    counts < 1 |
+    counts != as.integer(counts)
+
+  if (any(invalid_counts)) {
+    stop(
+      "`n_per_combination` values must be positive whole numbers.",
+      call. = FALSE
+    )
   }
 
-  if (length(sex) != n) {
-    stop("`sex` must be a scalar or a vector of length `n`.", call. = FALSE)
-  }
-
-  sex
+  as.integer(counts)
 }
 
 #' @keywords internal
-default_simulation_bounds_df <- function(model_specs, right_censoring_date) {
-  model_bounds <- data.frame(
-    model = c("wei", "gam", "lgn", "exp"),
-    min = c(0.05, 0.005, 0.0025, 0.05),
-    max = c(500, 600, 10, 1000),
-    stringsAsFactors = FALSE
+add_simulation_life_history_placeholders <- function(
+  df,
+  right_censoring_date
+) {
+  base_placeholder_names <- c(
+    sex_start = ".simulation_sex_start",
+    sex_end = ".simulation_sex_end",
+    maturity_start = ".simulation_maturity_start",
+    maturity_end = ".simulation_maturity_end",
+    clutch_start1 = ".simulation_clutch_start1",
+    clutch_end1 = ".simulation_clutch_end1",
+    clutch_size1 = ".simulation_clutch_size1",
+    death_start = ".simulation_death_start",
+    death_end = ".simulation_death_end"
   )
+  all_names <- make.unique(c(names(df), base_placeholder_names), sep = "_")
+  placeholder_names <- all_names[
+    (length(names(df)) + 1):length(all_names)
+  ]
+  names(placeholder_names) <- names(base_placeholder_names)
 
-  shape_bounds <- function(model) {
-    row <- model_bounds[model_bounds$model == model, , drop = FALSE]
-    c(min = row$min, max = row$max)
-  }
+  time_value <- right_censoring_date / 2
 
-  mortality_shape <- shape_bounds(model_specs[[1]])
-  maturity_shape <- shape_bounds(model_specs[[2]])
-  reproduction_shape <- shape_bounds(model_specs[[3]])
+  df[[placeholder_names[["sex_start"]]]] <- NA_real_
+  df[[placeholder_names[["sex_end"]]]] <- NA_real_
+  df[[placeholder_names[["maturity_start"]]]] <- time_value
+  df[[placeholder_names[["maturity_end"]]]] <- time_value
+  df[[placeholder_names[["clutch_start1"]]]] <- time_value
+  df[[placeholder_names[["clutch_end1"]]]] <- time_value
+  df[[placeholder_names[["clutch_size1"]]]] <- 25
+  df[[placeholder_names[["death_start"]]]] <- time_value
+  df[[placeholder_names[["death_end"]]]] <- time_value
 
-  normalize_simulation_bounds_df(data.frame(
-    param = c(
-      "expt_death",
-      "survival_param2",
-      "ratio_expt_death",
-      "prob_death",
-      "sex_ratio",
-      "expt_maturity",
-      "maturity_param2",
-      "ratio_expt_maturity",
-      "expt_reproduction",
-      "reproduction_param2",
-      "n_offspring",
-      "increase_death_hazard",
-      "tof_reduction_rate",
-      "increase_tof_n_offspring",
-      "lin_decrease_hazard",
-      "quad_decrease_hazard",
-      "lin_change_n_offspring",
-      "quad_change_n_offspring",
-      "tof_n_offspring",
-      "fitness"
-    ),
-    min = c(
-      0.001,
-      mortality_shape[["min"]],
-      0.01,
-      1e-05,
-      1e-05,
-      0.001,
-      maturity_shape[["min"]],
-      0.01,
-      0.001,
-      reproduction_shape[["min"]],
-      1,
-      1e-05,
-      1e-07,
-      1e-07,
-      -20,
-      -10,
-      -10,
-      -10,
-      -10,
-      0.001
-    ),
-    max = c(
-      right_censoring_date,
-      mortality_shape[["max"]],
-      100,
-      1 - 1e-05,
-      1 - 1e-05,
-      right_censoring_date,
-      maturity_shape[["max"]],
-      100,
-      right_censoring_date,
-      reproduction_shape[["max"]],
-      50,
-      10,
-      10,
-      10,
-      20,
-      10,
-      10,
-      10,
-      10,
-      right_censoring_date
-    ),
-    stringsAsFactors = FALSE
-  ))
+  list(df = df, columns = placeholder_names)
 }
 
 #' @keywords internal
@@ -994,19 +900,29 @@ design_column_covariate <- function(column, covariates) {
 build_simulation_lifelihood_data <- function(
   df,
   covariates,
+  sex,
   model_specs,
   right_censoring_date
 ) {
-  lifelihoodData <- list(
+  placeholders <- add_simulation_life_history_placeholders(
     df = df,
-    sex = "sex",
-    sex_start = "sex_start",
-    sex_end = "sex_end",
-    maturity_start = "maturity_start",
-    maturity_end = "maturity_end",
-    clutchs = c("clutch_start1", "clutch_end1", "clutch_size1"),
-    death_start = "death_start",
-    death_end = "death_end",
+    right_censoring_date = right_censoring_date
+  )
+
+  lifelihoodData <- list(
+    df = placeholders$df,
+    sex = sex,
+    sex_start = placeholders$columns[["sex_start"]],
+    sex_end = placeholders$columns[["sex_end"]],
+    maturity_start = placeholders$columns[["maturity_start"]],
+    maturity_end = placeholders$columns[["maturity_end"]],
+    clutchs = placeholders$columns[c(
+      "clutch_start1",
+      "clutch_end1",
+      "clutch_size1"
+    )],
+    death_start = placeholders$columns[["death_start"]],
+    death_end = placeholders$columns[["death_end"]],
     model_specs = model_specs,
     covariates = covariates,
     block = NULL,

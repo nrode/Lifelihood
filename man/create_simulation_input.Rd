@@ -6,12 +6,12 @@
 \usage{
 create_simulation_input(
   effects,
+  data,
   covariates,
+  sex,
   config,
   model,
-  n,
-  sex = NA,
-  data = NULL,
+  n_per_combination = NULL,
   param_bounds_df = NULL,
   right_censoring_date = 1000
 )
@@ -19,7 +19,13 @@ create_simulation_input(
 \arguments{
 \item{effects}{Named list of parameter effects on the lifelihood link scale.}
 
-\item{covariates}{Character vector with covariate names.}
+\item{data}{Data frame containing one row per simulated individual, or one
+row per combination when \code{n_per_combination} is supplied. It must contain
+the columns named in \code{covariates} and \code{sex}.}
+
+\item{covariates}{Character vector with covariate column names in \code{data}.}
+
+\item{sex}{Name of the sex column in \code{data}.}
 
 \item{config}{Path to a YAML configuration file or an already-loaded
 configuration list.}
@@ -28,16 +34,11 @@ configuration list.}
 maturity and reproduction, or three model families in that order. Values
 must be \code{"wei"}, \code{"exp"}, \code{"gam"} or \code{"lgn"}.}
 
-\item{n}{Number of simulated individuals represented by the internal data.}
-
-\item{sex}{Scalar or vector of length \code{n} with sex values. Defaults to \code{NA}.}
-
-\item{data}{Optional data frame containing the covariate values to use for
-simulation. If supplied, it must have \code{n} rows and contain all \code{covariates}.}
+\item{n_per_combination}{Optional name of a column in \code{data} containing the
+number of individuals to create for each row.}
 
 \item{param_bounds_df}{Optional data frame with columns \code{param}, \code{min} and
-\code{max}. These bounds are used by \code{\link[=prediction]{prediction()}} to transform effects from
-the link scale to the response scale.}
+\code{max}. If \code{NULL}, defaults are created with \code{\link[=default_bounds_df]{default_bounds_df()}}.}
 
 \item{right_censoring_date}{Numeric right censoring date stored in the
 internal \code{lifelihoodData} object.}

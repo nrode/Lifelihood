@@ -1,0 +1,177 @@
+---
+title: "Create simulation inputs"
+vignette: >
+  %\VignetteIndexEntry{create-simulation-input}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+embed-resources: true
+---
+
+`create_simulation_input()` lets you simulate life histories from parameter
+values that you choose yourself. It is useful when you want to explore a model
+before fitting it, create a known synthetic population, or understand how
+covariate effects change simulated maturity, reproduction, and mortality.
+
+```{mermaid}
+flowchart LR
+  data["data<br/>covariates + sex + counts"] --> input["create_simulation_input()"]
+  effects["effects<br/>chosen parameter values"] --> input
+  config["config<br/>which formulas are fitted"] --> input
+  input --> results["lifelihoodResults-like object"]
+  results --> pred["prediction()"]
+  results --> sim["simulate_life_history()"]
+```
+
+## Load packages
+
+```{r}
+library(lifelihood)
+library(tidyverse)
+
+theme_set(theme_minimal(base_size = 12))
+```
+
+## Create the population to simulate
+
+The `data` argument describes the individuals you want to simulate. It must
+contain the covariate columns and the sex column. Here, each row is one
+combination of factor levels, and `n_individuals` says how many individuals to
+create for that combination.
+
+```{r}
+population <- crossing(
+  par = factor(c("none", "low", "high"), levels = c("none", "low", "high")),
+  spore = factor(c("absent", "present"), levels = c("absent", "present")),
+  sex = c(0, 1)
+) |>
+  mutate(
+    n_individuals = case_when(
+      sex == 1 ~ 25L,
+      spore == "present" ~ 35L,
+      TRUE ~ 30L
+    ),
+    sex_label = if_else(sex == 1, "male", "female")
+  )
+
+population
+```
+
+If your `data` already has one row per individual, omit `n_per_combination`.
+
+## Define the fitted formulas
+
+The config tells `lifelihood` which parameters exist and which covariates each
+parameter uses. This example uses:
+
+- `par` and `spore` for mortality
+- `par` for maturity
+- `par` and `spore` for reproduction timing
+- `par` for the number of offspring
+
+```{r}
+simulation_config <- list(
+  mortality = list(
+    expt_death = "par + spore",
+    survival_param2 = 1,
+    ratio_expt_death = "not_fitted",
+    prob_death = "not_fitted",
+    sex_ratio = "not_fitted"
+  ),
+  maturity = list(
+    expt_maturity = "par",
+    maturity_param2 = 1,
+    ratio_expt_maturity = "not_fitted"
+  ),
+  reproduction = list(
+    expt_reproduction = "par + spore",
+    reproduction_param2 = 1,
+    n_offspring = "par",
+    increase_death_hazard = "not_fitted",
+    tof_reduction_rate = "not_fitted",
+    increase_tof_n_offspring = "not_fitted",
+    lin_decrease_hazard = "not_fitted",
+    quad_decrease_hazard = "not_fitted",
+    lin_change_n_offspring = "not_fitted",
+    quad_change_n_offspring = "not_fitted",
+    tof_n_offspring = "not_fitted",
+    fitness = "not_fitted"
+  )
+)
+```
+
+## Choose the effects
+
+Effects are written on the lifelihood link scale. A negative value pushes the
+response toward the lower bound, and a positive value pushes it toward the upper
+bound.
+
+For categorical covariates, give one effect for every non-reference level. In
+this example, `par` has levels `none`, `low`, and `high`, so `par = c(...)`
+contains two effects: one for `low` and one for `high`.
+
+```{r}
+effects <- list(
+  expt_death = list(intercept = -2.3, par = c(0.5, -0.4), spore = -0.5),
+  survival_param2 = -1.2,
+  expt_maturity = list(intercept = -3.2, par = c(-0.3, -0.6)),
+  maturity_param2 = -1.2,
+  expt_reproduction = list(intercept = -3.5, par = c(0.3, 0.6), spore = -0.25),
+  reproduction_param2 = -1,
+  n_offspring = list(intercept = -1.5, par = c(0.2, 0.5))
+)
+```
+
+## Build the simulation input
+
+`covariates` and `sex` are column names in `data`. The `n_per_combination`
+argument names the column that should be used to expand each row into multiple
+individuals.
+
+If `param_bounds_df` is not supplied, `create_simulation_input()` uses
+`default_bounds_df()` internally.
+
+```{r}
+simulation_input <- create_simulation_input(
+  effects = effects,
+  data = population,
+  covariates = c("par", "spore"),
+  sex = "sex",
+  config = simulation_config,
+  model = "lgn",
+  n_per_combination = "n_individuals"
+)
+
+simulation_input$sample_size
+```
+
+## Simulate life histories
+
+The object returned by `create_simulation_input()` can be passed directly to
+`simulate_life_history()`.
+
+```{r}
+simulated <- simulate_life_history(simulation_input, seed = 1)
+
+simulated |>
+  select(
+    death_start,
+    death_end,
+    maturity_start,
+    maturity_end,
+    total_n_offspring
+  ) |>
+  head()
+```
+
+## Common patterns
+
+- Use one row per individual when you want full control of the simulated sample.
+- Use one row per factor-level combination plus `n_per_combination` when you
+  want a balanced or deliberately unbalanced population design.
+- Omit `param_bounds_df` for defaults from `default_bounds_df()`.
+- Supply `param_bounds_df` when you want tighter or custom parameter ranges for
+  a teaching example, sensitivity analysis, or simulation study.

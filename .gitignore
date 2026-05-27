@@ -12,6 +12,7 @@
 
 # outputs
 lifelihood_*/
+figure/
 vignettes/*.html
 /compiled*
 /source_pascal/lazarus/*/

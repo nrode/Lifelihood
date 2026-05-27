@@ -21,6 +21,7 @@ articles:
       - how-to-use-lifelihood
       - customize-parameter-boundaries-and-estimation-warning
       - simulation-and-visit-masks
+      - create-simulation-input
       - fit-saturated-model
       - standard-errors-and-mcmc
       - goodness-of-fit
