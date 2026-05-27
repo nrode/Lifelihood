@@ -2,15 +2,17 @@
 % Please edit documentation in R/predict.R
 \name{prediction}
 \alias{prediction}
-\title{Prediction with lifelihood estimations}
+\title{Prediction from a lifelihood model at new data values}
 \usage{
 prediction(
   object,
   parameter_name,
   newdata = NULL,
   mcmc.fit = FALSE,
+  keep_mcmc_samples = FALSE,
   type = c("link", "response"),
-  se.fit = FALSE
+  se.fit = FALSE,
+  .warning_ratio_male = TRUE
 )
 }
 \arguments{
@@ -18,17 +20,19 @@ prediction(
 
 \item{parameter_name}{A string specifying the name of the parameter for which to make the prediction. Must be one of \code{unique(lifelihoodResults$effects$parameter)}.}
 
-\item{newdata}{Data for prediction. If absent, predictions are for the subjects used in the original fit.}
+\item{newdata}{Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.}
 
-\item{type}{The type of the predicted value: if "response," it is on the original data scale; if "link," it is on the lifelihood scale.}
+\item{keep_mcmc_samples}{Whether or not to also retrieve MCMC samples in output. If \code{TRUE}, output is a list with 2 elements: pred and mcmc_samples.}
 
-\item{se.fit}{Whether or not to include standard errors in the prediction.}
+\item{type}{The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.}
+
+\item{se.fit}{Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).}
 }
 \value{
-A vector containing the predicted values for the parameter.
+A vector or list containing the predicted values for the parameter.
 }
 \description{
-S3 method to use to make prediction using fitted results from \code{\link[=lifelihood]{lifelihood()}}.
+S3 method used to make predictions using \code{lifelihoodResults} objects, i.e. results from \code{\link[=lifelihood]{lifelihood()}}.
 }
 \examples{
 df <- fakesample |>

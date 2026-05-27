@@ -157,17 +157,20 @@ format_config <- function(path_config, covariates, covar_types) {
       )[1]
     ),
     paste(
-      "tof_reduction_rate",
+      "tof_decay",
       R_to_lifelihood(
-        safe_access(config, c("reproduction", "tof_reduction_rate")),
+        safe_access(config, c("reproduction", "tof_decay")),
         covariates,
         covar_types
       )[1]
     ),
     paste(
-      "increase_tof_n_offspring",
+      "increase_death_hazard_n_offspring",
       R_to_lifelihood(
-        safe_access(config, c("reproduction", "increase_tof_n_offspring")),
+        safe_access(
+          config,
+          c("reproduction", "increase_death_hazard_n_offspring")
+        ),
         covariates,
         covar_types
       )[1]

@@ -1,5 +1,5 @@
 ---
-title: "How to use lifelihood"
+title: "Goodness of fit"
 vignette: >
   %\VignetteIndexEntry{goodness-of-fit}
   %\VignetteEngine{quarto::html}
@@ -33,7 +33,7 @@ df <- datapierrick |>
 
 generate_clutch_vector <- function(N) {
   return(paste(
-    "pon",
+    "clutch",
     rep(c("start", "end", "size"), N),
     rep(1:N, each = 3),
     sep = "_"

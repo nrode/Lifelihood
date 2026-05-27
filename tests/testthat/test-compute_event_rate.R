@@ -1,4 +1,4 @@
-testthat::test_that("Overall demo works", {
+test_that("Overall demo works", {
   path_config <- if (rlang::is_interactive()) {
     "tests/testthat/config.yaml"
   } else {

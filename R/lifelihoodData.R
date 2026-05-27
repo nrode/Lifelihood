@@ -73,7 +73,7 @@ as_lifelihoodData <- function(
   model_specs,
   covariates,
   block = NULL,
-  matclutch = FALSE,
+  matclutch,
   matclutch_size = NULL,
   right_censoring_date = 1000,
   critical_age = 20,
@@ -86,7 +86,7 @@ as_lifelihoodData <- function(
     )
   }
 
-  if (isTRUE(matclutch) & is.null(matclutch_size)) {
+  if (isTRUE(matclutch) && is.null(matclutch_size)) {
     stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
   }
 

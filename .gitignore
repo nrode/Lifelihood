@@ -12,6 +12,7 @@
 
 # outputs
 lifelihood_*/
+figure/
 vignettes/*.html
 /compiled*
 /source_pascal/lazarus/*/
@@ -39,5 +40,5 @@ inst/bin/*
 source-pascal
 release.sh
 LLfunctions.R
-ScriptsimulationHistVieparintervalleversionCluster20151118.R
+simulation-tradeoff-old.R
 t.R

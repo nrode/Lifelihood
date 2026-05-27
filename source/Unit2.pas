@@ -1664,7 +1664,7 @@ begin
   with FD.paramdescript[12] do
     //tradeoff ponte -> surv amortissement du precedent avec le temps
   begin
-    Name := 'tof_reduction_rate'; // 'to(ps)am'
+    Name := 'tof_decay'; // 'to(ps)am'
     minBound := 0.0000001;
     maxBound := 10;
     //   value := 0.5;
@@ -1673,7 +1673,7 @@ begin
   with FD.paramdescript[13] do
     //tradeoff ponte -> surv , augmentation du tradeoff en fonction linéaire de la taille ponte en question
   begin
-    Name := 'increase_tof_n_offspring'; // 'to(ps)tp'
+    Name := 'increase_death_hazard_n_offspring'; // 'to(ps)tp'
     minBound := 0.0000001;
     maxBound := 10;
     //   value := 0.5;
