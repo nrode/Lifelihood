@@ -136,7 +136,7 @@ simulate_event <- function(
       simul_t <- t(simul)
       simul_n_offspring_t <- t(simul_n_offspring)
       column_names <- paste("clutch", 1:n, sep = "_")
-      n_offspring_column_names <- paste("clutch_size_", 1:n, sep = "_")
+      n_offspring_column_names <- paste("clutch_size", 1:n, sep = "_")
     } else {
       column_names <- "clutch_1"
       n_offspring_column_names <- "clutch_size_1"
@@ -305,7 +305,9 @@ simulate_life_history_tradeoff <- function(
       iter <- iter + 1
 
       if (length(clutch_times_i) > 0) {
-        offspring_effect <- clutch_sizes_i
+        # When `n_offspring` isn't fitted, clutch_sizes_i may hold NAs; the
+        # offspring-dependent hazard is undefined in that case, so treat as 0.
+        offspring_effect <- ifelse(is.na(clutch_sizes_i), 0, clutch_sizes_i)
         elapsed <- t - clutch_times_i
         if (da[i] == 0) {
           decay <- rep(1, length(elapsed))

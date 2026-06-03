@@ -124,6 +124,14 @@ prediction <- function(
     )
   }
 
+  if (se.fit && is.null(object$vcov)) {
+    stop(
+      "Can't predict with `se.fit` because the variance-covariance matrix ",
+      "is unavailable (Hessian computation failed during fit). ",
+      "Refit with `MCMC > 0` and call `prediction(..., mcmc.fit = TRUE)` instead."
+    )
+  }
+
   if (!has_valid_factor_levels(original_df, df, covariates)) {
     stop(
       "Invalid factor levels in new data.

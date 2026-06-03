@@ -69,6 +69,7 @@ It also has the `model_specs` argument, which is a vector of characters with the
 ```{r}
 dataLFH <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",

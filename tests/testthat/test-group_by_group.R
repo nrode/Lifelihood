@@ -123,6 +123,7 @@ test_that("lifelihood with group_by_group=TRUE and n_fit > 1 works end-to-end", 
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",
@@ -204,6 +205,7 @@ test_that("lifelihood rejects seeds when group_by_group=TRUE and n_fit > 1", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",

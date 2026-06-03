@@ -11,37 +11,77 @@ project_dir := invocation_directory()
 lazarus_dir := home_dir() / ".lazarus"
 build_dir := project_dir / "inst/bin"
 src_dir := project_dir / "source"
-linux_platform := env_var_or_default("LIFELIHOOD_LINUX_PLATFORM", "linux/amd64")
-linux_cpu := env_var_or_default("LIFELIHOOD_LINUX_CPU", "x86_64")
-linux_image := env_var_or_default("LIFELIHOOD_LINUX_IMAGE", "pascal-builder-linux-amd64")
+unit_dir := env_var_or_default("LIFELIHOOD_UNIT_DIR", "/tmp/lifelihood-fpc-units")
+macos_fpc_options := "-MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -v0 -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"
+linux_fpc_options := "-v0"
+linux_x86_64_platform := env_var_or_default("LIFELIHOOD_LINUX_X86_64_PLATFORM", "linux/amd64")
+linux_aarch64_platform := env_var_or_default("LIFELIHOOD_LINUX_AARCH64_PLATFORM", "linux/arm64")
+linux_x86_64_image := env_var_or_default("LIFELIHOOD_LINUX_X86_64_IMAGE", "pascal-builder-linux-x86_64")
+linux_aarch64_image := env_var_or_default("LIFELIHOOD_LINUX_AARCH64_IMAGE", "pascal-builder-linux-aarch64")
+
+default: cross
+
+cross: macos linux
 
 # ---- macOS Build ----
-macos:
-    @echo "Building for macOS..."
+macos: macos-x86_64 macos-aarch64
+
+macos-x86_64:
+    @echo "Building for macOS (x86_64)..."
     @mkdir -p {{ build_dir }}
-    {{ fpc }} -MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -k-framework -kCocoa -l -vabq \
-        -Fi{{ build_dir }} \
-        -Fu{{ lazarus_dir }}/lib/units/x86_64-darwin/cocoa \
-        -Fu{{ lazarus_dir }}/lib/LCLBase/units/x86_64-darwin \
-        -Fu{{ lazarus_dir }}/lib/freetypelaz/lib/x86_64-darwin \
-        -Fu{{ lazarus_dir }}/lib/LazUtils/lib/x86_64-darwin \
-        -Fu{{ lazarus_dir }}/lib/units/x86_64-darwin \
+    @mkdir -p {{ unit_dir }}/macos-x86_64
+    {{ fpc }} {{ macos_fpc_options }} \
+        -Px86_64 \
+        -Fi{{ src_dir }} \
         -Fu{{ src_dir }} \
+        -FU{{ unit_dir }}/macos-x86_64 \
         -FE{{ build_dir }} \
-        -o{{ build_dir }}/lifelihood-macos \
-        -dLCL -dLCLcocoa -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL \
+        -o{{ build_dir }}/lifelihood-macos-x86_64 \
+        {{ src_dir }}/lifelihood.lpr
+
+macos-aarch64:
+    @echo "Building for macOS (aarch64)..."
+    @mkdir -p {{ build_dir }}
+    @mkdir -p {{ unit_dir }}/macos-aarch64
+    {{ fpc }} {{ macos_fpc_options }} \
+        -Paarch64 \
+        -Fi{{ src_dir }} \
+        -Fu{{ src_dir }} \
+        -FU{{ unit_dir }}/macos-aarch64 \
+        -FE{{ build_dir }} \
+        -o{{ build_dir }}/lifelihood-macos-aarch64 \
         {{ src_dir }}/lifelihood.lpr
 
 # ---- Linux Build ----
-linux: build-image-linux
-    @echo "Building for Linux ({{ linux_cpu }}, {{ linux_platform }})..."
-    docker run --rm --platform {{ linux_platform }} -v $(pwd):/src -w /src {{ linux_image }} \
-        fpc source/lifelihood.lpr -P{{ linux_cpu }} -oinst/bin/lifelihood-linux
+linux: linux-x86_64 linux-aarch64
 
-build-image-linux:
-    @echo "Building Docker image for Linux ({{ linux_image }}, {{ linux_platform }})..."
-    docker build --platform {{ linux_platform }} -t {{ linux_image }} .
+linux-x86_64: build-image-linux-x86_64
+    @echo "Building for Linux (x86_64, {{ linux_x86_64_platform }})..."
+    @mkdir -p {{ build_dir }}
+    docker run --rm --platform {{ linux_x86_64_platform }} -v "{{ project_dir }}:/src" -w /src {{ linux_x86_64_image }} \
+        bash -lc 'mkdir -p /tmp/lifelihood-fpc-units/linux-x86_64 && fpc {{ linux_fpc_options }} -Px86_64 -Fisource -Fusource -FU/tmp/lifelihood-fpc-units/linux-x86_64 -FEinst/bin -oinst/bin/lifelihood-linux-x86_64 source/lifelihood.lpr'
+
+linux-aarch64: build-image-linux-aarch64
+    @echo "Building for Linux (aarch64, {{ linux_aarch64_platform }})..."
+    @mkdir -p {{ build_dir }}
+    docker run --rm --platform {{ linux_aarch64_platform }} -v "{{ project_dir }}:/src" -w /src {{ linux_aarch64_image }} \
+        bash -lc 'mkdir -p /tmp/lifelihood-fpc-units/linux-aarch64 && fpc {{ linux_fpc_options }} -Paarch64 -Fisource -Fusource -FU/tmp/lifelihood-fpc-units/linux-aarch64 -FEinst/bin -oinst/bin/lifelihood-linux-aarch64 source/lifelihood.lpr'
+
+build-image-linux-x86_64:
+    @echo "Building Docker image for Linux ({{ linux_x86_64_image }}, {{ linux_x86_64_platform }})..."
+    docker build --platform {{ linux_x86_64_platform }} -t {{ linux_x86_64_image }} .
+
+build-image-linux-aarch64:
+    @echo "Building Docker image for Linux ({{ linux_aarch64_image }}, {{ linux_aarch64_platform }})..."
+    docker build --platform {{ linux_aarch64_platform }} -t {{ linux_aarch64_image }} .
 
 # ---- Windows Build ----
 windows:
     {{ fpc }} -MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -l -vabq -Fi{{ build_dir }} -Fu{{ lazarus_dir }}\lib\units\i386-win32\win32 -Fu{{ lazarus_dir }}\lib\LCLBase\units\i386-win32 -Fu{{ lazarus_dir }}\lib\freetypelaz\lib\i386-win32 -Fu{{ lazarus_dir }}\lib\LazUtils\lib\i386-win32 -Fu{{ lazarus_dir }}\lib\units\i386-win32 -Fu{{ src_dir }} -FE{{ build_dir }} -o{{ build_dir }}\lifelihood-windows.exe -dLCL -dLCLwin32 -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL {{ src_dir }}\lifelihood.lpr
+
+clean:
+    find . -maxdepth 1 -type d -regex '.*/lifelihood_[0-9]\{2,4\}_[0-9]\{2,4\}_[0-9]\{2,4\}_[0-9]\{2,4\}' -exec rm -rf {} +
+
+    rm -rf doc/
+    rm -rf docs/
+    rm -rf figure/

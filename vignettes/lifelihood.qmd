@@ -47,6 +47,7 @@ df |> head()
 ```{r}
 dataLFH <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -58,7 +59,6 @@ dataLFH <- as_lifelihoodData(
   covariates = c("par", "spore"),
   model_specs = c("wei", "lgn", "wei")
 )
-
 ```
 
 ### Estimation

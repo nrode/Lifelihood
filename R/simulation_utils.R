@@ -79,23 +79,6 @@ predict_or_default <- function(
   pred
 }
 
-#' @title Clamp probabilities to valid bounds
-#'
-#' @description
-#' Internal helper that constrains probability values to the `[0, 1]` interval
-#' and replaces non-finite entries by `0`.
-#'
-#' @param x Numeric vector of probabilities.
-#'
-#' @return A numeric vector with values in `[0, 1]`.
-#'
-#' @keywords internal
-clamp_probability <- function(x) {
-  x <- as.numeric(x)
-  x[!is.finite(x)] <- 0
-  pmin(pmax(x, 0), 1)
-}
-
 #' @title Compute a high-quantile longevity bound
 #'
 #' @description

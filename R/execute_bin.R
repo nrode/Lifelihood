@@ -1,3 +1,82 @@
+.normalize_machine <- function(machine) {
+  machine <- tolower(machine)
+  machine <- gsub("-", "_", machine, fixed = TRUE)
+  switch(
+    machine,
+    "amd64" = "x86_64",
+    "x64" = "x86_64",
+    "arm64" = "aarch64",
+    machine
+  )
+}
+
+.lifelihood_binary_candidates <- function(os, machine) {
+  candidates <- switch(
+    os,
+    "Windows" = "lifelihood-windows.exe",
+    "Darwin" = switch(
+      machine,
+      "x86_64" = "lifelihood-macos-x86_64",
+      "aarch64" = c("lifelihood-macos-aarch64", "lifelihood-macos"),
+      character()
+    ),
+    "Linux" = switch(
+      machine,
+      "x86_64" = c("lifelihood-linux-x86_64", "lifelihood-linux"),
+      "aarch64" = "lifelihood-linux-aarch64",
+      character()
+    ),
+    character()
+  )
+
+  if (length(candidates) == 0) {
+    stop(
+      "No bundled Lifelihood executable for ",
+      os,
+      "/",
+      machine,
+      ". ",
+      "Build one with `just` or provide `path_to_Lifelihood`."
+    )
+  }
+
+  candidates
+}
+
+.find_lifelihood_binary <- function() {
+  os <- detect_os()
+  machine <- .normalize_machine(Sys.info()[["machine"]])
+  candidates <- .lifelihood_binary_candidates(os, machine)
+
+  paths <- vapply(
+    candidates,
+    function(candidate) {
+      system.file(
+        "bin",
+        candidate,
+        package = "lifelihood",
+        mustWork = FALSE
+      )
+    },
+    character(1)
+  )
+  paths <- paths[nzchar(paths)]
+
+  if (length(paths) > 0) {
+    return(unname(paths[[1]]))
+  }
+
+  stop(
+    "No bundled Lifelihood executable found for ",
+    os,
+    "/",
+    machine,
+    ". Expected one of: ",
+    paste(candidates, collapse = ", "),
+    ". Build one with `just` or provide `path_to_Lifelihood`."
+  )
+}
+
 #' @title Execution of the compiled files
 #'
 #' @keywords internal
@@ -70,16 +149,6 @@ execute_bin <- function(
   climbrate,
   precision
 ) {
-  normalize_machine <- function(machine) {
-    machine <- tolower(machine)
-    switch(
-      machine,
-      "amd64" = "x86_64",
-      "arm64" = "aarch64",
-      machine
-    )
-  }
-
   arg_string <- paste(
     path_input_data,
     path_param_bounds,
@@ -106,49 +175,7 @@ execute_bin <- function(
     precision
   )
   if (is.null(path_to_Lifelihood)) {
-    os <- detect_os()
-    machine <- normalize_machine(Sys.info()[["machine"]])
-
-    path <- switch(
-      os,
-      "Windows" = system.file(
-        "bin",
-        "lifelihood-windows.exe",
-        package = "lifelihood",
-        mustWork = TRUE
-      ),
-      "Darwin" = {
-        macos_binary <- if (machine == "x86_64") {
-          "lifelihood"
-        } else {
-          "lifelihood-macos"
-        }
-        system.file(
-          "bin",
-          macos_binary,
-          package = "lifelihood",
-          mustWork = TRUE
-        )
-      },
-      "Linux" = {
-        if (machine != "x86_64") {
-          stop(
-            "No bundled Linux executable for architecture '",
-            machine,
-            "'. ",
-            "Bundled Linux binary currently targets x86_64 only. ",
-            "Provide a matching executable via `path_to_Lifelihood`."
-          )
-        }
-        system.file(
-          "bin",
-          "lifelihood-linux",
-          package = "lifelihood",
-          mustWork = TRUE
-        )
-      },
-      stop("Unexpected OS: ", os)
-    )
+    path <- .find_lifelihood_binary()
   } else {
     path <- path_to_Lifelihood
   }

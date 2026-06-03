@@ -17,3 +17,7 @@ h3 {
   margin-top: 40px;
   margin-bottom: 10px;
 }
+
+#mermaid-1 p {
+  font-size: 1.1em;
+}

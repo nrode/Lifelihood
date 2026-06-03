@@ -17,6 +17,7 @@ test_that("trade-off simulations work for reproduction events", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",
@@ -40,7 +41,10 @@ test_that("trade-off simulations work for reproduction events", {
     event = "reproduction",
     seed = 1
   )
-  expect_true(all(c("mortality", "maturity") %in% names(sim_reproduction)))
+  expect_true(all(
+    c("death_start", "death_end", "maturity_start", "maturity_end") %in%
+      names(sim_reproduction)
+  ))
   clutch_cols <- grep("^clutch_", names(sim_reproduction), value = TRUE)
   n_offspring_cols <- grep(
     "^clutch_size_",
@@ -52,6 +56,6 @@ test_that("trade-off simulations work for reproduction events", {
   expect_type(sim_reproduction[[n_offspring_cols[1]]], "integer")
 
   sim_mortality <- simulate_life_history(results, event = "mortality", seed = 1)
-  expect_true(identical(names(sim_mortality), "mortality"))
+  expect_true(identical(names(sim_mortality), c("death_start", "death_end")))
   expect_true(nrow(sim_mortality) == nrow(df))
 })

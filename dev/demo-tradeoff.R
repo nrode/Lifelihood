@@ -12,6 +12,7 @@ clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",

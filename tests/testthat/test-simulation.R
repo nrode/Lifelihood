@@ -17,6 +17,7 @@ test_that("simulations work", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",
@@ -38,17 +39,22 @@ test_that("simulations work", {
   suppressWarnings({
     simul <- simulate_life_history(results)
     expect_true(ncol(simul) >= 100)
-    expect_type(simul$mortality, "double")
-    expect_type(simul$maturity, "double")
-    expect_type(simul$clutch_1, "double")
+    expect_type(simul$death_start, "double")
+    expect_type(simul$death_end, "double")
+    expect_type(simul$maturity_start, "double")
+    expect_type(simul$maturity_end, "double")
+    expect_type(simul$clutch_start_1, "double")
+    expect_type(simul$clutch_end_1, "double")
     expect_type(simul$clutch_size_1, "integer")
 
     simul <- simulate_life_history(results, event = "mortality")
-    expect_type(simul$mortality, "double")
+    expect_type(simul$death_start, "double")
+    expect_type(simul$death_end, "double")
     expect_true(nrow(simul) == 550)
 
     simul <- simulate_life_history(results, event = "maturity")
-    expect_type(simul$maturity, "double")
+    expect_type(simul$maturity_start, "double")
+    expect_type(simul$maturity_end, "double")
     expect_true(nrow(simul) == 550)
   })
 })
@@ -82,7 +88,8 @@ test_that("censoring works for reproduction and validates block in newdata", {
     death_end = "death_end",
     covariates = c("par", "spore"),
     model_specs = c("wei", "gam", "exp"),
-    block = "geno"
+    block = "geno",
+    matclutch = FALSE
   )
 
   results <- lifelihood(
