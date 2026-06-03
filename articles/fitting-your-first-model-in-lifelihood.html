@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>How to use lifelihood • lifelihood</title>
+<title>Fitting your first model in lifelihood • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
@@ -13,10 +13,10 @@
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="how-to-use-lifelihood_files/libs/quarto-html/popper.min.js"></script><script src="how-to-use-lifelihood_files/libs/quarto-html/tippy.umd.min.js"></script><link href="how-to-use-lifelihood_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="how-to-use-lifelihood_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="fitting-your-first-model-in-lifelihood_files/libs/quarto-html/popper.min.js"></script><script src="fitting-your-first-model-in-lifelihood_files/libs/quarto-html/tippy.umd.min.js"></script><link href="fitting-your-first-model-in-lifelihood_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="fitting-your-first-model-in-lifelihood_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="How to use lifelihood">
+<meta property="og:title" content="Fitting your first model in lifelihood">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -43,15 +43,19 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
-    <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
-    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
-    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
+    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
+    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -82,12 +86,12 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>How to use lifelihood</h1>
+      <h1>Fitting your first model in lifelihood</h1>
 
 
 
 
-      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/vignettes/how-to-use-lifelihood.qmd" class="external-link"><code>vignettes/how-to-use-lifelihood.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nrode/Lifelihood/blob/main/vignettes/fitting-your-first-model-in-lifelihood.qmd" class="external-link"><code>vignettes/fitting-your-first-model-in-lifelihood.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
     </div>
 
@@ -97,7 +101,7 @@
 
 
     <div class="topVignette">
-If you haven’t already check it, have a look at:
+If you haven’t check it yet, have a look at:
 </div>
 <ul>
 <li><a href="required-data-format.html">what is the required data format to work with lifelihood?</a></li>
@@ -129,52 +133,52 @@ If you haven’t already check it, have a look at:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># input data</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">fakesample</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>,</span>
-<span>    geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">datapierrick</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">par</span><span class="op">)</span>, geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span>, spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">spore</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   type geno sex_start sex_end sex mat_start mat_end clutch_start1 clutch_end1</span></span>
-<span><span class="co">#&gt; 1    1    0         0    1000   0         0    1000            NA          NA</span></span>
-<span><span class="co">#&gt; 2    2    0         0    1000   0         2       3             4           3</span></span>
-<span><span class="co">#&gt; 3    0    1         0    1000   0         3       4             2           4</span></span>
-<span><span class="co">#&gt; 4    0    1         0    1000   0         3       4             2           4</span></span>
-<span><span class="co">#&gt; 5    0    1         0    1000   0         3       4             2           4</span></span>
-<span><span class="co">#&gt; 6    1    0         0    1000   0         0    1000            NA          NA</span></span>
-<span><span class="co">#&gt;   clutch_size1 clutch_start2 clutch_end2 clutch_size2 death_start death_end</span></span>
-<span><span class="co">#&gt; 1           NA            NA          NA           NA         0.1         1</span></span>
-<span><span class="co">#&gt; 2            4             2           4            5         9.0        10</span></span>
-<span><span class="co">#&gt; 3            5            NA          NA           NA         5.0         6</span></span>
-<span><span class="co">#&gt; 4            5            NA          NA           NA         5.0         6</span></span>
-<span><span class="co">#&gt; 5            5            NA          NA           NA         5.0         6</span></span>
-<span><span class="co">#&gt; 6           NA            NA          NA           NA         0.1         1</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 6 × 95</span></span>
+<span><span class="co">#&gt;   par   geno  spore sex_start sex_end   sex mat_start mat_end   mat</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 0     0     0            13    1000     0        12      13     6</span></span>
+<span><span class="co">#&gt; 2 0     0     0            13    1000     0        12      13     3</span></span>
+<span><span class="co">#&gt; 3 0     0     0            15    1000     0        14      15     1</span></span>
+<span><span class="co">#&gt; 4 0     0     0            14    1000     0        13      14     6</span></span>
+<span><span class="co">#&gt; 5 0     0     0            19    1000     0        18      19     2</span></span>
+<span><span class="co">#&gt; 6 0     0     0            12    1000     0        11      12     1</span></span>
+<span><span class="co">#&gt; # ℹ 86 more variables: clutch_start_1 &lt;int&gt;, clutch_end_1 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;int&gt;, clutch_end_2 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;int&gt;, clutch_end_3 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;int&gt;, clutch_end_4 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_4 &lt;int&gt;, clutch_start_5 &lt;int&gt;, clutch_end_5 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_5 &lt;int&gt;, clutch_start_6 &lt;int&gt;, clutch_end_6 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_6 &lt;int&gt;, clutch_start_7 &lt;int&gt;, clutch_end_7 &lt;int&gt;, …</span></span></code></pre></div>
 </div>
-<p>Prepare input parameters for the <code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> function:</p>
+<p>Prepare arguments for the <code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"clutch_start1"</span>,</span>
-<span>  <span class="st">"clutch_end1"</span>,</span>
-<span>  <span class="st">"clutch_size1"</span>,</span>
-<span>  <span class="st">"clutch_start2"</span>,</span>
-<span>  <span class="st">"clutch_end2"</span>,</span>
-<span>  <span class="st">"clutch_size2"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
+<span>    <span class="st">"clutch"</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p><em>Note: If you have a large number of clutches, it is easier to generate this vector programmatically. See the <a href="generate-clutch-names.html">Generate clutch names</a> vignette.</em></p>
 </section><section class="section level2"><h2 id="create-the-lifelihooddata-object">Create the <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-the-lifelihooddata-object"></a>
 </h2>
 <p><code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> creates a <code>lifelihoodData</code> object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.</p>
 <p>This function mostly takes as input your dataset, your column names.</p>
-<p>It also has the <code>model_specs</code> argument, which is a vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of <code>"wei"</code> (Weibull law), <code>"exp"</code> (Exponential law), <code>"gam"</code> (Gamma law) or <code>"lgn"</code> (Log-normal law). The first one is used for <strong>death</strong>, the second one is used for <strong>maturity</strong> and the third one for <strong>clutchs</strong>.</p>
+<p>It also has the <code>dist</code> argument, which is a vector of characters with the name of the statistical distribution to use. Must be of length 3 and each element must be one of <code>"wei"</code> (Weibull distribution), <code>"exp"</code> (exponential distribution), <code>"gam"</code> (gamma distribution) or <code>"lgn"</code> (log-normal distribution). The first one is used for <strong>death</strong>, the second one is used for <strong>maturity</strong> and the third one for <strong>clutchs</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
-<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
@@ -183,8 +187,9 @@ If you haven’t already check it, have a look at:
 <span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
-<span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"geno"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"gam"</span>, <span class="st">"lgn"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="get-the-results">Get the results<a class="anchor" aria-label="anchor" href="#get-the-results"></a>
@@ -194,12 +199,12 @@ If you haven’t already check it, have a look at:
 </h3>
 <p>Once you have created your <code>lifelihoodData</code> object with <code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code>, you can call the <code><a href="../reference/lifelihood.html">lifelihood()</a></code> function to run the lifelihood program.</p>
 <p>It returns a <code>lifelihoodResults</code> object, which is a list containing all the results of the analysis.</p>
-<p>Here it’s a minimalist usage of the function, where we only specify the <code>lifelihoodData</code> object, the path to the <a href="2-setting-up-the-configuration-file.html">configuration file</a> and the seeds to use. The <code>raise_estimation_warning</code> argument will be the focus of the <a href="4-custom-param-boundaries-and-estimation-warning.html">next vignette</a>.</p>
+<p>Here it’s a minimalist usage of the function, where we only specify the <code>lifelihoodData</code> object, the path to the <a href="2-setting-up-the-configuration-file.html">configuration file</a> and the seeds to use (four integers used by Mersenne Twister pseudorandom number generator of the lifelihood program). The <code>raise_estimation_warning</code> argument will be the focus of the <a href="4-custom-param-boundaries-and-estimation-warning.html">next vignette</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span>,</span>
+<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span>,</span>
 <span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
@@ -208,33 +213,30 @@ If you haven’t already check it, have a look at:
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Sample size: 13 </span></span>
+<span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -2821.227</span></span>
-<span><span class="co">#&gt; AIC:             5668.5</span></span>
-<span><span class="co">#&gt; BIC:             5675.8</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -31588.744</span></span>
+<span><span class="co">#&gt; AIC:             63197.5</span></span>
+<span><span class="co">#&gt; BIC:             63240.6</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -2.525 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_geno_1 0.784 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_type_1 -0.969 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_type_2 1.399 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -6.582 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -0.913 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -1.946 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -1.976 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.480 (0.000)</span></span>
+<span><span class="co">#&gt;   ratio_expt_death (Intercept) -3.525 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -2.229 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_geno_1 -0.840 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_type_1 0.411 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_maturity eff_expt_maturity_type_2 -0.546 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.111 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.497 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -5.881 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -2.337 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_reproduction eff_expt_reproduction_geno_1 1.310 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -2.554 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.769 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -7.303 (0.000)</span></span>
+<span><span class="co">#&gt;   n_offspring (Intercept)   -2.596 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -248,46 +250,39 @@ If you haven’t already check it, have a look at:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coef.html">coef</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               int_expt_death        eff_expt_death_geno_1 </span></span>
-<span><span class="co">#&gt;                   -2.5253959                    0.7835095 </span></span>
-<span><span class="co">#&gt;        eff_expt_death_type_1        eff_expt_death_type_2 </span></span>
-<span><span class="co">#&gt;                   -0.9687812                    1.3991316 </span></span>
-<span><span class="co">#&gt;          int_survival_param2            int_expt_maturity </span></span>
-<span><span class="co">#&gt;                   -6.5822104                   -2.2285974 </span></span>
-<span><span class="co">#&gt;     eff_expt_maturity_geno_1     eff_expt_maturity_type_1 </span></span>
-<span><span class="co">#&gt;                   -0.8401484                    0.4112408 </span></span>
-<span><span class="co">#&gt;     eff_expt_maturity_type_2          int_maturity_param2 </span></span>
-<span><span class="co">#&gt;                   -0.5456602                   -3.1111023 </span></span>
-<span><span class="co">#&gt;        int_expt_reproduction eff_expt_reproduction_geno_1 </span></span>
-<span><span class="co">#&gt;                   -2.3365343                    1.3102563 </span></span>
-<span><span class="co">#&gt;      int_reproduction_param2 </span></span>
-<span><span class="co">#&gt;                   -2.5535342</span></span>
+<span><span class="co">#&gt;          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 </span></span>
+<span><span class="co">#&gt;              -0.9133659              -1.9460199              -1.9763243 </span></span>
+<span><span class="co">#&gt;     int_survival_param2    int_ratio_expt_death       int_expt_maturity </span></span>
+<span><span class="co">#&gt;              -0.4795909              -3.5245392              -1.4966132 </span></span>
+<span><span class="co">#&gt;     int_maturity_param2   int_expt_reproduction int_reproduction_param2 </span></span>
+<span><span class="co">#&gt;              -5.8814605              -1.7690031              -7.3034247 </span></span>
+<span><span class="co">#&gt;         int_n_offspring </span></span>
+<span><span class="co">#&gt;              -2.5960814</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        int_expt_death eff_expt_death_geno_1 eff_expt_death_type_1 </span></span>
-<span><span class="co">#&gt;            -2.5253959             0.7835095            -0.9687812 </span></span>
-<span><span class="co">#&gt; eff_expt_death_type_2 </span></span>
-<span><span class="co">#&gt;             1.3991316</span></span>
+<span><span class="co">#&gt;       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 </span></span>
+<span><span class="co">#&gt;           -0.9133659           -1.9460199           -1.9763243</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"survival_param2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; int_survival_param2 </span></span>
-<span><span class="co">#&gt;            -6.58221</span></span>
+<span><span class="co">#&gt;          -0.4795909</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 5668.453</span></span>
+<span><span class="co">#&gt; [1] 63197.49</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 5675.798</span></span>
+<span><span class="co">#&gt; [1] 63240.59</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -2821.227</span></span>
+<span><span class="co">#&gt; [1] -31588.74</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -3.494177 -1.126264 -1.741886 -1.741886 -1.741886 -3.494177</span></span>
+<span><span class="co">#&gt; Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.</span></span>
+<span><span class="co">#&gt; [1] -0.9133659 -0.9133659 -0.9133659 -0.9133659 -0.9133659 -0.9133659</span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.180105 9.794802 5.963791 5.963791 5.963791 1.180105</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 92.76566 92.76566 92.76566 92.76566 92.76566 92.76566</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="next-step">Next step<a class="anchor" aria-label="anchor" href="#next-step"></a>
 </h2>
 <hr>
-<p>Now that you have seen how to use the package, you can go further and <a href="custom-param-boundaries-and-estimation-warning.html">customise your parameter boundaries and deal with estimation warnings</a>.</p>
+<p>Now that you have seen how to use the package, you can go further and <a href="customize-parameter-boundaries-and-estimation-warning.html">customise your parameter boundaries and deal with estimation warnings</a>.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);

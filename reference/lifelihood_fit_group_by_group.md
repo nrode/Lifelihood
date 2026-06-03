@@ -85,9 +85,10 @@ lifelihood_fit_group_by_group(
 
 - seeds:
 
-  Vector of length for with seed numbers used to reproduce results (same
-  seeds = same results). This argument should be `NULL` (default) when
-  `n_fit` \> 1.
+  Vector of length four with seed integers used to reproduce results
+  using Mersenne Twister pseudorandom number generator (same seeds =
+  same results). This argument should be `NULL` (default) when `n_fit`
+  \> 1. [Learn more](https://en.wikipedia.org/wiki/Random_seed).
 
 - ntr:
 
@@ -95,7 +96,9 @@ lifelihood_fit_group_by_group(
 
 - nst:
 
-  TBD - Check the actual meaning
+  Simulated annealing tuning parameter increasing nst makes the search
+  more thorough at each temperature (better chance of finding the global
+  maximum, slower fit)
 
 - To:
 
@@ -107,11 +110,15 @@ lifelihood_fit_group_by_group(
 
 - climbrate:
 
-  Rate for the simulated annealing ?
+  Initial cooling rate of the adaptive annealing schedule: scales how
+  fast the temperature is lowered between annealing runs (self-adjusting
+  during the fit).
 
 - precision:
 
-  TBD - Check the actual meaning
+  Convergence tolerance of the final local search: fitting stops when an
+  additional batch of local-search iterations improves the
+  log-likelihood by less than this amount.
 
 - ratiomax:
 

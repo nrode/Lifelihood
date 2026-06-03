@@ -127,7 +127,9 @@ execute_bin(
 
 - nst:
 
-  TBD - Check the actual meaning.
+  Simulated annealing tuning parameter increasing nst makes the search
+  more thorough at each temperature (better chance of finding the global
+  maximum, slower fit)
 
 - To:
 
@@ -139,8 +141,12 @@ execute_bin(
 
 - climbrate:
 
-  Rate for the simulated annealing.
+  Initial cooling rate of the adaptive annealing schedule: scales how
+  fast the temperature is lowered between annealing runs (self-adjusting
+  during the fit).
 
 - precision:
 
-  Precision parameter for the algorithm.
+  Convergence tolerance of the final local search: fitting stops when an
+  additional batch of local-search iterations improves the
+  log-likelihood by less than this amount.

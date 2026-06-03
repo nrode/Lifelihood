@@ -33,8 +33,6 @@ library(lifelihood)
 #> ✖ dplyr::lag()    masks stats::lag()
 #> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 library(tidyverse)
-
-theme_set(theme_minimal(base_size = 12))
 ```
 
 ## Create the population to simulate
@@ -47,39 +45,23 @@ individuals to create for that combination.
 ``` r
 
 population <- crossing(
-  par = factor(c("none", "low", "high"), levels = c("none", "low", "high")),
-  spore = factor(c("absent", "present"), levels = c("absent", "present")),
-  sex = c(0, 1)
+  par = as.factor(c("none", "low", "high")),
+  spore = as.factor(c("absent", "present")),
+  sex = 0
 ) |>
-  mutate(
-    n_individuals = case_when(
-      sex == 1 ~ 25L,
-      spore == "present" ~ 35L,
-      TRUE ~ 30L
-    ),
-    sex_label = if_else(sex == 1, "male", "female")
-  )
+  mutate(n_individuals = 100)
 
 population
-#> # A tibble: 12 × 5
-#>    par   spore     sex n_individuals sex_label
-#>    <fct> <fct>   <dbl>         <int> <chr>    
-#>  1 none  absent      0            30 female   
-#>  2 none  absent      1            25 male     
-#>  3 none  present     0            35 female   
-#>  4 none  present     1            25 male     
-#>  5 low   absent      0            30 female   
-#>  6 low   absent      1            25 male     
-#>  7 low   present     0            35 female   
-#>  8 low   present     1            25 male     
-#>  9 high  absent      0            30 female   
-#> 10 high  absent      1            25 male     
-#> 11 high  present     0            35 female   
-#> 12 high  present     1            25 male
+#> # A tibble: 6 × 4
+#>   par   spore     sex n_individuals
+#>   <fct> <fct>   <dbl>         <dbl>
+#> 1 high  absent      0           100
+#> 2 high  present     0           100
+#> 3 low   absent      0           100
+#> 4 low   present     0           100
+#> 5 none  absent      0           100
+#> 6 none  present     0           100
 ```
-
-If your `data` already has one row per individual, omit
-`n_per_combination`.
 
 ## Define the fitted formulas
 
@@ -166,13 +148,18 @@ simulation_input <- create_simulation_input(
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  model = "lgn",
+  dist = c("lgn", "wei", "exp"),
   n_per_combination = "n_individuals"
 )
 
 simulation_input$sample_size
-#> [1] 345
+#> [1] 600
+
+simulation_input$lifelihoodData$block <- 1
 ```
+
+> If your `data` already has one row per individual, omit
+> `n_per_combination`.
 
 ## Simulate life histories
 
@@ -183,26 +170,29 @@ can be passed directly to
 
 ``` r
 
-simulated <- simulate_life_history(simulation_input, seed = 1)
+visits <- data.frame(
+  block = 1,
+  visit = 1:simulation_input$lifelihoodData$right_censoring_date
+)
+simulated <- simulate_life_history(simulation_input, seed = 1, visits = visits)
 
-simulated |>
-  select(
-    death_start,
-    death_end,
-    maturity_start,
-    maturity_end,
-    total_n_offspring
-  ) |>
-  head()
-#> # A tibble: 6 × 5
-#>   death_start death_end maturity_start maturity_end total_n_offspring
-#>         <dbl>     <dbl>          <dbl>        <dbl>             <dbl>
-#> 1        90.9      90.9           38.2         38.2               349
-#> 2        90.2      90.2           39.4         39.4               416
-#> 3        90.6      90.6           37.9         37.9               377
-#> 4        94.4      94.4           41.6         41.6               329
-#> 5        90.2      90.2           39.6         39.6               356
-#> 6        93.0      93.0           37.9         37.9               313
+simulated |> head()
+#> # A tibble: 6 × 134
+#>   death_start death_end total_n_offspring maturity_start maturity_end
+#>         <dbl>     <dbl>             <dbl>          <dbl>        <dbl>
+#> 1        176.      176.               176           98.9         98.9
+#> 2        180.      180.                96           87.1         87.1
+#> 3        162.      162.               105           68.0         68.0
+#> 4        192.      192.               158           31.9         31.9
+#> 5        197.      197.               130          107.         107. 
+#> 6        154.      154.               155           33.4         33.4
+#> # ℹ 129 more variables: clutch_size_1 <int>, clutch_size_2 <int>,
+#> #   clutch_size_3 <int>, clutch_size_4 <int>, clutch_size_5 <int>,
+#> #   clutch_size_6 <int>, clutch_size_7 <int>, clutch_size_8 <int>,
+#> #   clutch_size_9 <int>, clutch_size_10 <int>, clutch_size_11 <int>,
+#> #   clutch_size_12 <int>, clutch_size_13 <int>, clutch_size_14 <int>,
+#> #   clutch_size_15 <int>, clutch_size_16 <int>, clutch_size_17 <int>,
+#> #   clutch_size_18 <int>, clutch_size_19 <int>, clutch_size_20 <int>, …
 ```
 
 ## Refit the simulated data
@@ -217,41 +207,36 @@ and compare the refitted estimates with the values used for simulation.
 simulation_config_path <- tempfile(fileext = ".yaml")
 yaml::write_yaml(simulation_config, simulation_config_path)
 
-clutch_numbers <- simulated |>
-  select(matches("^clutch_start_[0-9]+$")) |>
-  names() |>
-  str_extract("[0-9]+$") |>
-  as.integer() |>
-  sort()
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "clutch",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(43)
 
-simulated_clutchs <- as.vector(rbind(
-  paste0("clutch_start_", clutch_numbers),
-  paste0("clutch_end_", clutch_numbers),
-  paste0("clutch_size_", clutch_numbers)
-))
-
-simulated_for_fit <- bind_cols(
-  simulation_input$lifelihoodData$df |>
-    select(par, spore, sex, .simulation_sex_start, .simulation_sex_end),
-  simulated
-) |>
+simulated_for_fit <- simulation_input$lifelihoodData$df |>
+  select(par, spore, sex, sex_start, sex_end) |>
+  bind_cols(simulated) |>
   mutate(
-    .simulation_sex_start = 0,
-    .simulation_sex_end = simulation_input$lifelihoodData$right_censoring_date
+    sex_start = 0,
+    sex_end = simulation_input$lifelihoodData$right_censoring_date
   )
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
   sex = "sex",
-  sex_start = ".simulation_sex_start",
-  sex_end = ".simulation_sex_end",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
-  clutchs = simulated_clutchs,
+  clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  model_specs = rep("lgn", 3),
+  dist = c("lgn", "wei", "exp"),
   matclutch = FALSE
 )
 
@@ -259,10 +244,13 @@ refit <- lifelihood(
   lifelihoodData = simulated_lifelihood_data,
   path_config = simulation_config_path,
   param_bounds_df = simulation_input$param_bounds_df,
-  seeds = c(1, 2, 3, 4),
-  raise_estimation_warning = FALSE
+  raise_estimation_warning = FALSE,
+  delete_temp_files = FALSE,
+  n_fit = 3
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3012_3271_9445_7316/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3012_3271_9445_7316/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3012 3271 9445 7316 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3962_7209_8141_7592/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3962_7209_8141_7592/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3962 7209 8141 7592 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3634_5390_9070_7966/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3634_5390_9070_7966/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3634 5390 9070 7966 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 Because this is one finite simulated sample, the refitted estimates are
@@ -281,41 +269,41 @@ simulation_input$effects |>
   arrange(parameter, name) |>
   mutate(across(where(is.numeric), \(x) round(x, digits = 3)))
 #>              parameter                                name simulated refitted
-#> 1           expt_death             eff_expt_death_par_high     -0.40    0.000
-#> 2           expt_death              eff_expt_death_par_low      0.50    0.000
-#> 3           expt_death        eff_expt_death_spore_present     -0.50    0.000
-#> 4           expt_death                      int_expt_death     -2.30   -0.370
-#> 5        expt_maturity          eff_expt_maturity_par_high     -0.60    0.000
-#> 6        expt_maturity           eff_expt_maturity_par_low     -0.30    0.000
-#> 7        expt_maturity                   int_expt_maturity     -3.20   -1.960
-#> 8    expt_reproduction      eff_expt_reproduction_par_high      0.60    0.000
-#> 9    expt_reproduction       eff_expt_reproduction_par_low      0.30    0.000
-#> 10   expt_reproduction eff_expt_reproduction_spore_present     -0.25    0.000
-#> 11   expt_reproduction               int_expt_reproduction     -3.50   -3.036
-#> 12     maturity_param2                 int_maturity_param2     -1.20   -3.450
-#> 13         n_offspring            eff_n_offspring_par_high      0.50    0.000
-#> 14         n_offspring             eff_n_offspring_par_low      0.20    0.000
-#> 15         n_offspring                     int_n_offspring     -1.50   -2.600
-#> 16 reproduction_param2             int_reproduction_param2     -1.00   -3.350
-#> 17     survival_param2                 int_survival_param2     -1.20   -2.230
+#> 1           expt_death              eff_expt_death_par_low      0.50   -0.440
+#> 2           expt_death             eff_expt_death_par_none     -0.40   -1.254
+#> 3           expt_death        eff_expt_death_spore_present     -0.50    0.556
+#> 4           expt_death                      int_expt_death     -2.30    3.000
+#> 5        expt_maturity           eff_expt_maturity_par_low     -0.30    0.574
+#> 6        expt_maturity          eff_expt_maturity_par_none     -0.60    3.726
+#> 7        expt_maturity                   int_expt_maturity     -3.20    2.457
+#> 8    expt_reproduction       eff_expt_reproduction_par_low      0.30    0.164
+#> 9    expt_reproduction      eff_expt_reproduction_par_none      0.60    2.189
+#> 10   expt_reproduction eff_expt_reproduction_spore_present     -0.25   -1.443
+#> 11   expt_reproduction               int_expt_reproduction     -3.50   -3.195
+#> 12     maturity_param2                 int_maturity_param2     -1.20    0.515
+#> 13         n_offspring             eff_n_offspring_par_low      0.20   -1.244
+#> 14         n_offspring            eff_n_offspring_par_none      0.50    0.387
+#> 15         n_offspring                     int_n_offspring     -1.50   -1.245
+#> 16 reproduction_param2             int_reproduction_param2     -1.00   -2.416
+#> 17     survival_param2                 int_survival_param2     -1.20   -2.046
 #>    difference
-#> 1       0.400
-#> 2      -0.500
-#> 3       0.500
-#> 4       1.930
-#> 5       0.600
-#> 6       0.300
-#> 7       1.240
-#> 8      -0.600
-#> 9      -0.300
-#> 10      0.250
-#> 11      0.464
-#> 12     -2.250
-#> 13     -0.500
-#> 14     -0.200
-#> 15     -1.100
-#> 16     -2.350
-#> 17     -1.030
+#> 1      -0.940
+#> 2      -0.854
+#> 3       1.056
+#> 4       5.300
+#> 5       0.874
+#> 6       4.326
+#> 7       5.657
+#> 8      -0.136
+#> 9       1.589
+#> 10     -1.193
+#> 11      0.305
+#> 12      1.715
+#> 13     -1.444
+#> 14     -0.113
+#> 15      0.255
+#> 16     -1.416
+#> 17     -0.846
 ```
 
 The fitted model also has a regular log-likelihood, AIC, and BIC:
@@ -328,7 +316,7 @@ c(
   BIC = BIC(refit)
 )
 #>    logLik       AIC       BIC 
-#> -178185.5  356405.1  356470.4
+#> -415202.1  830438.3  830513.0
 ```
 
 ## Common patterns

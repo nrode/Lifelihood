@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Setting up configuration file • lifelihood</title>
+<title>Setting up YAML configuration file • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
@@ -16,7 +16,7 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="setting-up-the-configuration-file_files/libs/quarto-html/popper.min.js"></script><script src="setting-up-the-configuration-file_files/libs/quarto-html/tippy.umd.min.js"></script><link href="setting-up-the-configuration-file_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="setting-up-the-configuration-file_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Setting up configuration file">
+<meta property="og:title" content="Setting up YAML configuration file">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -43,15 +43,19 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
-    <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
-    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
-    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
+    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
+    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -82,7 +86,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Setting up configuration file</h1>
+      <h1>Setting up YAML configuration file</h1>
 
 
 
@@ -97,7 +101,7 @@
 
 
     <div class="topVignette">
-If you haven’t already check it, have a look at:
+If you haven’t check it yet, have a look at:
 </div>
 <ul>
 <li><a href="required-data-format.html">What is the required data format</a></li>
@@ -129,10 +133,13 @@ If you haven’t already check it, have a look at:
 <li>
 <code>covar1</code>: fit the intercept and the parameter of <code>covar1</code>.</li>
 <li>
-<code>covar1 + covar2</code>: fit the intercept, the parameter of <code>covar1</code> and the parameter of <code>covar1</code>.</li>
+<code>covar1 + covar2</code>: fit the intercept, the parameter of <code>covar1</code> and the parameter of <code>covar2</code>.</li>
 <li>
-<code>covar1 + covar2 + covar1*covar2</code>: fit the intercept, the parameter of <code>covar1</code>, the parameter of <code>covar1</code> and the interaction between <code>covar1</code> and <code>covar2</code>.</li>
+<code>covar1:covar2</code>: fit the intercept and the interaction between <code>covar1</code> and <code>covar2</code>.</li>
+<li>
+<code>covar1 * covar2</code>: equivalent to <code>covar1 + covar2 + covar1:covar2</code> (fit the intercept, the parameter of <code>covar1</code>, the parameter of <code>covar2</code> and the interaction between <code>covar1</code> and <code>covar2</code>).</li>
 </ul>
+<p>This is based the reference R implementation of formulas. <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link">Learn more</a>.</p>
 <p><em>Note: <code>covar1</code> and <code>covar2</code> are arbitrary names. The only rule is that they should be the name of one of your columns in your dataset.</em></p>
 </section><section class="level4"><h5 id="mortality">Mortality<a class="anchor" aria-label="anchor" href="#mortality"></a>
 </h5>
@@ -186,31 +193,31 @@ If you haven’t already check it, have a look at:
 <hr>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mortality</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_death</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">survival_param2</span><span class="kw">:</span><span class="at"> geno + type + geno*type</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ratio_expt_death</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">prob_death</span><span class="kw">:</span><span class="at"> geno</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_death</span><span class="kw">:</span><span class="at"> geno + type + geno:type</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">survival_param2</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ratio_expt_death</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">prob_death</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sex_ratio</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">maturity</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_maturity</span><span class="kw">:</span><span class="at"> geno + type</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">maturity_param2</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ratio_expt_maturity</span><span class="kw">:</span><span class="at"> geno + type</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_maturity</span><span class="kw">:</span><span class="at"> geno * type</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">maturity_param2</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ratio_expt_maturity</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">reproduction</span><span class="kw">:</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">expt_reproduction</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reproduction_param2</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reproduction_param2</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">n_offspring</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">increase_death_hazard</span><span class="kw">:</span><span class="at"> geno + type + geno*type</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tof_decay</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">increase_death_hazard_n_offspring</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">lin_decrease_hazard</span><span class="kw">:</span><span class="at"> geno + type + geno*type</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">quad_decrease_hazard</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">lin_change_n_offspring</span><span class="kw">:</span><span class="at"> geno</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">quad_change_n_offspring</span><span class="kw">:</span><span class="at"> geno</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">increase_death_hazard</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tof_decay</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">increase_death_hazard_n_offspring</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">lin_decrease_hazard</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">quad_decrease_hazard</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">lin_change_n_offspring</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">quad_change_n_offspring</span><span class="kw">:</span><span class="at"> not_fitted</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tof_n_offspring</span><span class="kw">:</span><span class="at"> not_fitted</span></span></code></pre></div>
 </section><section class="section level2"><h2 id="next-step">Next step<a class="anchor" aria-label="anchor" href="#next-step"></a>
 </h2>
 <hr>
-<p>The next step is to actually <a href="how-to-use-lifelihood.html">use the package</a>.</p>
+<p>The next step is to actually <a href="fitting-your-first-model-in-lifelihood.html">use the package</a>.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);

@@ -43,15 +43,19 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
-    <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
-    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
-    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
+    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
+    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -146,14 +150,14 @@
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  <span class="va">lifelihoodData</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8819_4804_8234_4084/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8819_4804_8234_4084/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8819 4804 8234 4084 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3677_7488_8376_5398/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3677_7488_8376_5398/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3677 7488 8376 5398 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -162,27 +166,27 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -32479.700</span></span>
-<span><span class="co">#&gt; AIC:             64979.4</span></span>
-<span><span class="co">#&gt; BIC:             65022.5</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -32471.519</span></span>
+<span><span class="co">#&gt; AIC:             64963.0</span></span>
+<span><span class="co">#&gt; BIC:             65006.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -0.909 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -1.312 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -1.339 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -4.874 (0.000)</span></span>
-<span><span class="co">#&gt;   ratio_expt_death (Intercept) -4.138 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -0.925 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.076 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.095 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -4.888 (0.000)</span></span>
+<span><span class="co">#&gt;   ratio_expt_death (Intercept) -5.172 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -1.469 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -7.302 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.479 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -7.348 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.799 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -1.151 (0.000)</span></span>
-<span><span class="co">#&gt;   n_offspring (Intercept)   -2.552 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.800 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -1.149 (0.000)</span></span>
+<span><span class="co">#&gt;   n_offspring (Intercept)   -2.553 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -195,16 +199,16 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 116</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 107</span></span>
 <span><span class="co">#&gt;   death_start death_end total_n_offspring maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;         &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1        44.3      44.3                35           13.7         13.7</span></span>
-<span><span class="co">#&gt; 2        33.1      33.1                12           13.5         13.5</span></span>
-<span><span class="co">#&gt; 3        93.0      93.0                66           11.3         11.3</span></span>
-<span><span class="co">#&gt; 4        99.8      99.8                98           14.6         14.6</span></span>
-<span><span class="co">#&gt; 5       127.      127.                138           12.1         12.1</span></span>
-<span><span class="co">#&gt; 6        96.1      96.1                81           13.7         13.7</span></span>
-<span><span class="co">#&gt; # ℹ 111 more variables: clutch_size_1 &lt;int&gt;, clutch_size_2 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; 1        69.7      69.7                68           13.5         13.5</span></span>
+<span><span class="co">#&gt; 2       131.      131.                109           12.5         12.5</span></span>
+<span><span class="co">#&gt; 3        78.4      78.4               102           12.4         12.4</span></span>
+<span><span class="co">#&gt; 4        77.8      77.8                61           13.5         13.5</span></span>
+<span><span class="co">#&gt; 5       123.      123.                103           12.4         12.4</span></span>
+<span><span class="co">#&gt; 6       107.      107.                 80           12.3         12.3</span></span>
+<span><span class="co">#&gt; # ℹ 102 more variables: clutch_size_1 &lt;int&gt;, clutch_size_2 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_size_4 &lt;int&gt;, clutch_size_5 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_size_6 &lt;int&gt;, clutch_size_7 &lt;int&gt;, clutch_size_8 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_size_9 &lt;int&gt;, clutch_size_10 &lt;int&gt;, clutch_size_11 &lt;int&gt;,</span></span>
@@ -219,12 +223,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 2</span></span>
 <span><span class="co">#&gt;   maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;            &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1           12.7         12.7</span></span>
-<span><span class="co">#&gt; 2           13.2         13.2</span></span>
-<span><span class="co">#&gt; 3           13.8         13.8</span></span>
-<span><span class="co">#&gt; 4           13.4         13.4</span></span>
-<span><span class="co">#&gt; 5           14.0         14.0</span></span>
-<span><span class="co">#&gt; 6           13.7         13.7</span></span></code></pre></div>
+<span><span class="co">#&gt; 1           11.7         11.7</span></span>
+<span><span class="co">#&gt; 2           13.8         13.8</span></span>
+<span><span class="co">#&gt; 3           11.3         11.3</span></span>
+<span><span class="co">#&gt; 4           12.7         12.7</span></span>
+<span><span class="co">#&gt; 5           11.6         11.6</span></span>
+<span><span class="co">#&gt; 6           14.1         14.1</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="simulations-with-visit-masks">Simulations with visit masks<a class="anchor" aria-label="anchor" href="#simulations-with-visit-masks"></a>
 </h2>
@@ -257,12 +261,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
 <span><span class="co">#&gt;   maturity maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1     13.3             13           14</span></span>
-<span><span class="co">#&gt; 2     14.0             14           15</span></span>
-<span><span class="co">#&gt; 3     15.3             15           16</span></span>
-<span><span class="co">#&gt; 4     13.0             12           13</span></span>
-<span><span class="co">#&gt; 5     13.8             13           14</span></span>
-<span><span class="co">#&gt; 6     13.3             13           14</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     13.1             13           14</span></span>
+<span><span class="co">#&gt; 2     13.6             13           14</span></span>
+<span><span class="co">#&gt; 3     14.4             14           15</span></span>
+<span><span class="co">#&gt; 4     12.6             12           13</span></span>
+<span><span class="co">#&gt; 5     13.5             13           14</span></span>
+<span><span class="co">#&gt; 6     13.0             12           13</span></span></code></pre></div>
 </div>
 <p>You can also provide your own visit masks with the <code>visits</code> argument. It must be a dataframe with 2 columns: <code>block</code> (the same name as passed to <code><a href="../reference/as_lifelihoodData.html">lifelihood::as_lifelihoodData()</a></code> in the <code>block</code> argument) and exactly <code>visit</code>. For each block, <code>visit</code> corresponds to the ages at which the events of individuals were recorded.</p>
 <p>Let’s define a custom visits dataframe:</p>
@@ -296,12 +300,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
 <span><span class="co">#&gt;   maturity maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1     13.4             13           15</span></span>
-<span><span class="co">#&gt; 2     12.6             11           13</span></span>
-<span><span class="co">#&gt; 3     13.3             13           15</span></span>
-<span><span class="co">#&gt; 4     12.5             11           13</span></span>
-<span><span class="co">#&gt; 5     12.9             11           13</span></span>
-<span><span class="co">#&gt; 6     13.2             13           15</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     13.1             13           15</span></span>
+<span><span class="co">#&gt; 2     13.4             13           15</span></span>
+<span><span class="co">#&gt; 3     13.4             13           15</span></span>
+<span><span class="co">#&gt; 4     12.6             11           13</span></span>
+<span><span class="co">#&gt; 5     12.0             11           13</span></span>
+<span><span class="co">#&gt; 6     13.3             13           15</span></span></code></pre></div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

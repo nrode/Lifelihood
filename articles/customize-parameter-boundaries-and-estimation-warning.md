@@ -1,13 +1,13 @@
 # Customize parameter boundaries and estimation warning
 
-If you haven’t already check it, have a look at:
+If you haven’t check it yet, have a look at:
 
 - [What is the required data format to work with
   lifelihood?](https://nrode.github.io/Lifelihood/articles/required-data-format.md)
 - [Setting up the configuration
   file](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md)
 - [How to use the lifelihood
-  package](https://nrode.github.io/Lifelihood/articles/how-to-use-lifelihood.md)
+  package](https://nrode.github.io/Lifelihood/articles/fitting-your-first-model-in-lifelihood.md)
 
 ## Load libraries
 
@@ -104,7 +104,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
-  model_specs = c("gam", "lgn", "wei")
+  dist = c("gam", "lgn", "wei")
 )
 ```
 
@@ -120,7 +120,7 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = use_test_config("config")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6952_6421_3914_6792/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6952_6421_3914_6792/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6952 6421 3914 6792 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_389_4818_8009_5700/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_389_4818_8009_5700/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 389 4818 8009 5700 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ## Warning
@@ -155,7 +155,7 @@ optimization algorithm more flexibility to find the best estimate.
 
 ### Customize parameter boundaries
 
-You can get the parameter boundaries with the
+You can get the **default** parameter boundaries with the
 [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
 function and by passing the `lifelihoodData` object:
 
@@ -179,8 +179,8 @@ bounds_df
 #> 13                         tof_decay  1e-07      10
 #> 14 increase_death_hazard_n_offspring  1e-07      10
 #> 15               lin_decrease_hazard    -20      20
-#> 16                   quad_senescence    -20      20
-#> 17              quad_decrease_hazard    -10      10
+#> 16              quad_decrease_hazard    -10      10
+#> 17            lin_change_n_offspring    -10      10
 #> 18           quad_change_n_offspring    -10      10
 #> 19                   tof_n_offspring    -10      10
 #> 20                           fitness  0.001    1000
@@ -204,7 +204,7 @@ results <- lifelihood(
   path_config = use_test_config("config"),
   param_bounds_df = bounds_df
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5459_3972_8768_1341/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5459_3972_8768_1341/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 5459 3972 8768 1341 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8737_3864_4773_3205/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8737_3864_4773_3205/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8737 3864 4773 3205 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 Now we don’t get any warning!

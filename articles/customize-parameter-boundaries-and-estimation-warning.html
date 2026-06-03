@@ -43,15 +43,19 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
-    <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
-    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
-    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
+    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
+    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -97,12 +101,12 @@
 
 
     <div class="topVignette">
-If you haven’t already check it, have a look at:
+If you haven’t check it yet, have a look at:
 </div>
 <ul>
 <li><a href="required-data-format.html">What is the required data format to work with lifelihood?</a></li>
 <li><a href="setting-up-the-configuration-file.html">Setting up the configuration file</a></li>
-<li><a href="how-to-use-lifelihood.html">How to use the lifelihood package</a></li>
+<li><a href="fitting-your-first-model-in-lifelihood.html">How to use the lifelihood package</a></li>
 </ul>
 <section class="section level2"><h2 id="load-libraries">Load libraries<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
 </h2>
@@ -184,7 +188,7 @@ If you haven’t already check it, have a look at:
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span>
-<span>  model_specs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"lgn"</span>, <span class="st">"wei"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="get-the-results">Get the results<a class="anchor" aria-label="anchor" href="#get-the-results"></a>
@@ -197,7 +201,7 @@ If you haven’t already check it, have a look at:
 <span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6952_6421_3914_6792/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6952_6421_3914_6792/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6952 6421 3914 6792 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_389_4818_8009_5700/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_389_4818_8009_5700/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 389 4818 8009 5700 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
 </h2>
@@ -214,7 +218,7 @@ If you haven’t already check it, have a look at:
 <p>To address this warning, you can consider increasing the maximum bound of the <code>increase_death_hazard</code> parameter. This will give the optimization algorithm more flexibility to find the best estimate.</p>
 </section><section class="level2"><h3 id="customize-parameter-boundaries">Customize parameter boundaries<a class="anchor" aria-label="anchor" href="#customize-parameter-boundaries"></a>
 </h3>
-<p>You can get the parameter boundaries with the <code><a href="../reference/default_bounds_df.html">default_bounds_df()</a></code> function and by passing the <code>lifelihoodData</code> object:</p>
+<p>You can get the <strong>default</strong> parameter boundaries with the <code><a href="../reference/default_bounds_df.html">default_bounds_df()</a></code> function and by passing the <code>lifelihoodData</code> object:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/default_bounds_df.html">default_bounds_df</a></span><span class="op">(</span><span class="va">dataLFH</span><span class="op">)</span></span>
@@ -235,8 +239,8 @@ If you haven’t already check it, have a look at:
 <span><span class="co">#&gt; 13                         tof_decay  1e-07      10</span></span>
 <span><span class="co">#&gt; 14 increase_death_hazard_n_offspring  1e-07      10</span></span>
 <span><span class="co">#&gt; 15               lin_decrease_hazard    -20      20</span></span>
-<span><span class="co">#&gt; 16                   quad_senescence    -20      20</span></span>
-<span><span class="co">#&gt; 17              quad_decrease_hazard    -10      10</span></span>
+<span><span class="co">#&gt; 16              quad_decrease_hazard    -10      10</span></span>
+<span><span class="co">#&gt; 17            lin_change_n_offspring    -10      10</span></span>
 <span><span class="co">#&gt; 18           quad_change_n_offspring    -10      10</span></span>
 <span><span class="co">#&gt; 19                   tof_n_offspring    -10      10</span></span>
 <span><span class="co">#&gt; 20                           fitness  0.001    1000</span></span></code></pre></div>
@@ -254,7 +258,7 @@ If you haven’t already check it, have a look at:
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5459_3972_8768_1341/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5459_3972_8768_1341/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 5459 3972 8768 1341 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8737_3864_4773_3205/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8737_3864_4773_3205/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8737 3864 4773 3205 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 <p>Now we don’t get any warning!</p>
 </section></section><script id="quarto-html-after-body" type="application/javascript">

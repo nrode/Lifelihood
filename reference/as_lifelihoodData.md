@@ -20,7 +20,7 @@ as_lifelihoodData(
   clutchs,
   death_start,
   death_end,
-  model_specs,
+  dist,
   covariates,
   block = NULL,
   matclutch,
@@ -81,7 +81,7 @@ as_lifelihoodData(
   Column name containing the second date of the interval in which the
   death was determined.
 
-- model_specs:
+- dist:
 
   Vector of characters with the name of the statistical law to use. Must
   be of length 3 and each element must be one of "wei" (Weibull law),

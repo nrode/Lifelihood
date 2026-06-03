@@ -82,9 +82,9 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
-  model_specs = c("gam", "lgn", "wei")
+  dist = c("gam", "lgn", "wei")
 )
-#> Error in as_lifelihoodData(df = df, sex = "sex", sex_start = "sex_start",     sex_end = "sex_end", maturity_start = "mat_start", maturity_end = "mat_end",     clutchs = clutchs, death_start = "death_start", death_end = "death_end",     covariates = c("geno", "type"), model_specs = c("gam", "lgn",         "wei")): argument "matclutch" is missing, with no default
+#> Error in as_lifelihoodData(df = df, sex = "sex", sex_start = "sex_start",     sex_end = "sex_end", maturity_start = "mat_start", maturity_end = "mat_end",     clutchs = clutchs, death_start = "death_start", death_end = "death_end",     covariates = c("geno", "type"), dist = c("gam", "lgn", "wei")): argument "matclutch" is missing, with no default
 
 results <- lifelihood(
   lifelihoodData = dataLFH,

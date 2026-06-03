@@ -22,10 +22,11 @@ create_simulation_input(
   covariates,
   sex,
   config,
-  model,
+  dist,
   n_per_combination = NULL,
   param_bounds_df = NULL,
-  right_censoring_date = 1000
+  right_censoring_date = 1000,
+  max_clutch_size = 100
 )
 ```
 
@@ -54,12 +55,6 @@ create_simulation_input(
   Path to a YAML configuration file or an already-loaded configuration
   list.
 
-- model:
-
-  Character vector with one model family to reuse for mortality,
-  maturity and reproduction, or three model families in that order.
-  Values must be `"wei"`, `"exp"`, `"gam"` or `"lgn"`.
-
 - n_per_combination:
 
   Optional name of a column in `data` containing the number of
@@ -75,6 +70,12 @@ create_simulation_input(
 
   Numeric right censoring date stored in the internal `lifelihoodData`
   object.
+
+- model:
+
+  Character vector with one model family to reuse for mortality,
+  maturity and reproduction, or three model families in that order.
+  Values must be `"wei"`, `"exp"`, `"gam"` or `"lgn"`.
 
 ## Value
 

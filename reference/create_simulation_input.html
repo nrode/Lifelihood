@@ -38,15 +38,19 @@ effects."></head><body>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up configuration file</a></li>
-    <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
-    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
-    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
-    <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
+    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
+    <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -95,10 +99,11 @@ effects.</p>
 <span>  <span class="va">covariates</span>,</span>
 <span>  <span class="va">sex</span>,</span>
 <span>  <span class="va">config</span>,</span>
-<span>  <span class="va">model</span>,</span>
+<span>  <span class="va">dist</span>,</span>
 <span>  n_per_combination <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  right_censoring_date <span class="op">=</span> <span class="fl">1000</span></span>
+<span>  right_censoring_date <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  max_clutch_size <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,12 +134,6 @@ the columns named in <code>covariates</code> and <code>sex</code>.</p></dd>
 configuration list.</p></dd>
 
 
-<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Character vector with one model family to reuse for mortality,
-maturity and reproduction, or three model families in that order. Values
-must be <code>"wei"</code>, <code>"exp"</code>, <code>"gam"</code> or <code>"lgn"</code>.</p></dd>
-
-
 <dt id="arg-n-per-combination">n_per_combination<a class="anchor" aria-label="anchor" href="#arg-n-per-combination"></a></dt>
 <dd><p>Optional name of a column in <code>data</code> containing the
 number of individuals to create for each row.</p></dd>
@@ -148,6 +147,12 @@ number of individuals to create for each row.</p></dd>
 <dt id="arg-right-censoring-date">right_censoring_date<a class="anchor" aria-label="anchor" href="#arg-right-censoring-date"></a></dt>
 <dd><p>Numeric right censoring date stored in the
 internal <code>lifelihoodData</code> object.</p></dd>
+
+
+<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
+<dd><p>Character vector with one model family to reuse for mortality,
+maturity and reproduction, or three model families in that order. Values
+must be <code>"wei"</code>, <code>"exp"</code>, <code>"gam"</code> or <code>"lgn"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

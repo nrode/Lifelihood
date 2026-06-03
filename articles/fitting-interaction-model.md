@@ -1,4 +1,4 @@
-# Fit saturated model using `group_by_group = TRUE`
+# Fit interaction model using `group_by_group = TRUE`
 
 ## Create a `lifelihoodData` object
 
@@ -49,13 +49,13 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "geno"),
-  model_specs = c("wei", "gam", "lgn")
+  dist = c("wei", "gam", "lgn")
 )
 
 set.seed(42)
 ```
 
-## Difference between default and saturated models
+## Difference between default and interaction models
 
 - Default model
 
@@ -71,10 +71,11 @@ time_default <- system.time({
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 time_default
 #>    user  system elapsed 
-#>  22.000   0.212  22.770
+#>  21.359   0.189  22.028
 ```
 
-- Group by group model
+- Interaction model using the `group_by_group` argument (default to
+  `FALSE`)
 
 ``` r
 
@@ -95,10 +96,10 @@ time_gbg <- system.time({
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 time_gbg
 #>    user  system elapsed 
-#>   1.432   0.061   1.513
+#>   1.469   0.077   1.688
 ```
 
-Fitting saturated model with group by group is faster than default
+Fitting interaction model with group by group is faster than default
 model.
 
 - Comparison

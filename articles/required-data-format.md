@@ -112,7 +112,7 @@ As you can see, some observations made more ponts, leading to the
 presence of NULL values.
 
 *One* row of the dataset should represent the **life history** of *one*
-observation.
+individual in the dataset.
 
 ## Next step
 

@@ -22,7 +22,7 @@ format_dataframe_to_txt(
   death_start,
   death_end,
   covariates,
-  model_specs,
+  dist,
   path_config,
   temp_dir
 )
@@ -87,7 +87,7 @@ format_dataframe_to_txt(
 
   Vector containing the names of the covariates.
 
-- model_specs:
+- dist:
 
   Vector of characters with the name of the statistical law to use.
 
