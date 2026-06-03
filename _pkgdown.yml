@@ -21,17 +21,25 @@ articles:
       - fitting-your-first-model-in-lifelihood
       - customize-parameter-boundaries-and-estimation-warning
       - generate-clutch-names
-  - title: Miscellaneous
-    navbar: Miscellaneous
+  - title: Prediction
+    navbar: Prediction
     contents:
-      - standard-errors-and-mcmc
-      - goodness-of-fit
-      - fitting-interaction-model
+      - prediction
+      - prediction-with-standard-errors-and-mcmc
   - title: Simulation
     navbar: Simulation
     contents:
       - simulation-and-visit-masks
       - create-simulation-input
+  - title: Trade-offs
+    navbar: Trade-offs
+    contents:
+      - reproduction-survival-tradeoff
+  - title: Miscellaneous
+    navbar: Miscellaneous
+    contents:
+      - goodness-of-fit
+      - fitting-interaction-model
   - title: Developer
     navbar: Developer
     contents:

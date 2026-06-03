@@ -76,7 +76,7 @@ test_that("create_simulation_input builds a simulation-ready results object", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    model = "wei",
+    dist = c("wei", "wei", "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
@@ -110,7 +110,7 @@ test_that("manual simulation input produces coherent offspring totals", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    model = "wei",
+    dist = c("wei", "wei", "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
@@ -153,7 +153,7 @@ test_that("create_simulation_input accepts explicit covariate data", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    model = c("wei", "wei", "wei"),
+    dist = c("wei", "wei", "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
@@ -180,7 +180,7 @@ test_that("create_simulation_input validates fitted effects", {
       covariates = c("par", "spore"),
       sex = "sex",
       config = simulation_input_config(),
-      model = "wei",
+      dist = c("wei", "wei", "wei"),
       param_bounds_df = simulation_input_bounds()
     ),
     "`effects` is missing fitted parameter"
@@ -194,7 +194,7 @@ test_that("create_simulation_input requires data columns", {
       covariates = c("par", "spore"),
       sex = "sex",
       config = simulation_input_config(),
-      model = "wei",
+      dist = c("wei", "wei", "wei"),
       param_bounds_df = simulation_input_bounds()
     ),
     "`data` must be supplied"
@@ -207,7 +207,7 @@ test_that("create_simulation_input requires data columns", {
       covariates = c("par", "spore"),
       sex = "sex",
       config = simulation_input_config(),
-      model = "wei",
+      dist = c("wei", "wei", "wei"),
       param_bounds_df = simulation_input_bounds()
     ),
     "`data` is missing column"
@@ -220,7 +220,7 @@ test_that("create_simulation_input requires data columns", {
       covariates = c("par", "spore"),
       sex = "sex",
       config = simulation_input_config(),
-      model = "wei",
+      dist = c("wei", "wei", "wei"),
       param_bounds_df = simulation_input_bounds()
     ),
     "`data` is missing column"
@@ -242,7 +242,7 @@ test_that("create_simulation_input expands rows by combination counts", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    model = "wei",
+    dist = c("wei", "wei", "wei"),
     n_per_combination = "n",
     param_bounds_df = simulation_input_bounds()
   )
@@ -259,7 +259,7 @@ test_that("create_simulation_input uses default lifelihood bounds", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    model = "wei"
+    dist = c("wei", "wei", "wei")
   )
 
   expected_bounds <- normalize_simulation_bounds_df(
