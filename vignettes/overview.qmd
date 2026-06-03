@@ -78,10 +78,12 @@ Unlike R, Pascal is a compiled programming language, meaning the code must first
 
 The `/` directory includes both the source (`.pas`) and compiled files:
 
-- `lifelihood-macos`
-- `lifelihood-linux`
+- `lifelihood-macos-x86_64`
+- `lifelihood-macos-aarch64`
+- `lifelihood-linux-x86_64`
+- `lifelihood-linux-aarch64`
 - `lifelihood-windows.exe` for Windows
 
-A utility function in **Lifelihood** determines the user’s operating system (and Linux architecture) to run the appropriate executable.
+A utility function in **Lifelihood** determines the user’s operating system and architecture to run the appropriate executable.
 
 The Pascal program uses Lazarus, which supports cross-platform compilation, simplifying the process of building the code for macOS, Linux, and Windows.

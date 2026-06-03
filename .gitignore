@@ -30,10 +30,14 @@ docs
 backup/
 
 inst/bin/*
+!inst/bin/lifelihood-macos-x86_64
+!inst/bin/lifelihood-macos-aarch64
 !inst/bin/lifelihood-macos
+!inst/bin/lifelihood-linux-x86_64
+!inst/bin/lifelihood-linux-aarch64
+!inst/bin/lifelihood-linux
 !inst/bin/lifelihood-windows.exe
 !inst/bin/lifelihood-windows
-!inst/bin/lifelihood-linux
 
 *.log
 *claude*
