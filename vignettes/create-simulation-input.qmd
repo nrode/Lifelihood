@@ -167,6 +167,89 @@ simulated |>
   head()
 ```
 
+## Refit the simulated data
+
+The previous section generated one synthetic dataset from the chosen parameter
+values. We can fit the same model to that dataset with `lifelihood()` and compare
+the refitted estimates with the values used for simulation.
+
+```{r}
+simulation_config_path <- tempfile(fileext = ".yaml")
+yaml::write_yaml(simulation_config, simulation_config_path)
+
+clutch_numbers <- simulated |>
+  select(matches("^clutch_start_[0-9]+$")) |>
+  names() |>
+  str_extract("[0-9]+$") |>
+  as.integer() |>
+  sort()
+
+simulated_clutchs <- as.vector(rbind(
+  paste0("clutch_start_", clutch_numbers),
+  paste0("clutch_end_", clutch_numbers),
+  paste0("clutch_size_", clutch_numbers)
+))
+
+simulated_for_fit <- bind_cols(
+  simulation_input$lifelihoodData$df |>
+    select(par, spore, sex, .simulation_sex_start, .simulation_sex_end),
+  simulated
+) |>
+  mutate(
+    .simulation_sex_start = 0,
+    .simulation_sex_end = simulation_input$lifelihoodData$right_censoring_date
+  )
+
+simulated_lifelihood_data <- as_lifelihoodData(
+  df = simulated_for_fit,
+  sex = "sex",
+  sex_start = ".simulation_sex_start",
+  sex_end = ".simulation_sex_end",
+  maturity_start = "maturity_start",
+  maturity_end = "maturity_end",
+  clutchs = simulated_clutchs,
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = c("par", "spore"),
+  model_specs = rep("lgn", 3),
+  matclutch = FALSE
+)
+
+refit <- lifelihood(
+  lifelihoodData = simulated_lifelihood_data,
+  path_config = simulation_config_path,
+  param_bounds_df = simulation_input$param_bounds_df,
+  seeds = c(1, 2, 3, 4),
+  raise_estimation_warning = FALSE
+)
+```
+
+Because this is one finite simulated sample, the refitted estimates are not
+expected to be exactly equal to the values used for simulation.
+
+```{r}
+simulation_input$effects |>
+  select(parameter, name, simulated = estimation) |>
+  inner_join(
+    refit$effects |>
+      select(parameter, name, refitted = estimation),
+    by = c("parameter", "name")
+  ) |>
+  mutate(difference = refitted - simulated) |>
+  arrange(parameter, name) |>
+  mutate(across(where(is.numeric), \(x) round(x, digits = 3)))
+```
+
+The fitted model also has a regular log-likelihood, AIC, and BIC:
+
+```{r}
+c(
+  logLik = logLik(refit),
+  AIC = AIC(refit),
+  BIC = BIC(refit)
+)
+```
+
 ## Common patterns
 
 - Use one row per individual when you want full control of the simulated sample.
