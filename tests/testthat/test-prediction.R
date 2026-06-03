@@ -88,6 +88,7 @@ test_that("Prediction with ratio expt death", {
   results <- lifelihood(
     lifelihoodData = lifelihoodData,
     path_config = use_test_config("config_pierrick"),
+    seeds = c(9614, 1017, 8004, 4775),
     se.fit = TRUE
   )
 

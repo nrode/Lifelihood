@@ -136,7 +136,7 @@ simulate_event <- function(
       simul_t <- t(simul)
       simul_n_offspring_t <- t(simul_n_offspring)
       column_names <- paste("clutch", 1:n, sep = "_")
-      n_offspring_column_names <- paste("clutch_size_", 1:n, sep = "_")
+      n_offspring_column_names <- paste("clutch_size", 1:n, sep = "_")
     } else {
       column_names <- "clutch_1"
       n_offspring_column_names <- "clutch_size_1"
