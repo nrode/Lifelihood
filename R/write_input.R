@@ -29,7 +29,7 @@
 #' @param death_end Column name containing the second date of the
 #' interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
-#' @param model_specs Vector of characters with the name of the
+#' @param dist Vector of characters with the name of the
 #' statistical law to use.
 #' @param path_config A character string specifying the file path
 #' to the YAML configuration file.
@@ -49,7 +49,7 @@ format_dataframe_to_txt <- function(
   death_start,
   death_end,
   covariates,
-  model_specs,
+  dist,
   path_config,
   temp_dir
 ) {
@@ -126,7 +126,7 @@ format_dataframe_to_txt <- function(
   )
   model_info <- c(
     "****modele******",
-    paste(model_specs, collapse = " "),
+    paste(dist, collapse = " "),
     config_file_info
   )
   formatted_rows <- c(model_info, formatted_rows)

@@ -18,14 +18,18 @@ articles:
     contents:
       - required-data-format
       - setting-up-the-configuration-file
-      - how-to-use-lifelihood
+      - fitting-your-first-model-in-lifelihood
       - customize-parameter-boundaries-and-estimation-warning
-      - simulation-and-visit-masks
-      - create-simulation-input
-      - fit-saturated-model
+      - generate-clutch-names
+  - title: Miscellaneous
+    navbar: Miscellaneous
       - standard-errors-and-mcmc
       - goodness-of-fit
-      - generate-clutch-names
+      - fit-saturated-model
+  - title: Simulation
+    navbar: Simulation
+      - simulation-and-visit-masks
+      - create-simulation-input
   - title: Developer
     navbar: Developer
     contents:

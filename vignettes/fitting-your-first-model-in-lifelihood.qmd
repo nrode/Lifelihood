@@ -1,7 +1,7 @@
 ---
-title: "How to use lifelihood"
+title: "Fitting your first model in lifelihood"
 vignette: >
-  %\VignetteIndexEntry{how-to-use-lifelihood}
+  %\VignetteIndexEntry{fitting-your-first-model-in-lifelihood}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:
@@ -13,7 +13,7 @@ embed-resources: true
 
 
 
-<div class="topVignette">If you haven't already check it, have a look at:</div>
+<div class="topVignette">If you haven't check it yet, have a look at:</div>
 
 - [what is the required data format to work with lifelihood?](required-data-format.html)
 - [setting up the configuration file](setting-up-the-configuration-file.html)
@@ -33,27 +33,26 @@ Load the dataset from `.csv` file:
 
 ```{r}
 # input data
-df <- fakesample |>
-  mutate(
-    type = as.factor(type),
-    geno = as.factor(geno)
-  )
+df <- datapierrick |>
+  as_tibble() |>
+  mutate(par = as.factor(par), geno = as.factor(geno), spore = as.factor(spore))
 
 df |> head()
 ```
 
-Prepare input parameters for the `as_lifelihoodData()` function:
+Prepare arguments for the `as_lifelihoodData()` function:
 
 ```{r}
 # name of the columns of the clutchs into a single vector
-clutchs <- c(
-  "clutch_start1",
-  "clutch_end1",
-  "clutch_size1",
-  "clutch_start2",
-  "clutch_end2",
-  "clutch_size2"
-)
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "clutch",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(28)
 ```
 
 *Note: If you have a large number of clutches, it is easier to generate this vector programmatically. See the [Generate clutch names](generate-clutch-names.html) vignette.*
@@ -64,12 +63,11 @@ clutchs <- c(
 
 This function mostly takes as input your dataset, your column names.
 
-It also has the `model_specs` argument, which is a vector of characters with the name of the statistical law to use. Must be of length 3 and each element must be one of `"wei"` (Weibull law), `"exp"` (Exponential law), `"gam"` (Gamma law) or `"lgn"` (Log-normal law). The first one is used for **death**, the second one is used for **maturity** and the third one for **clutchs**.
+It also has the `dist` argument, which is a vector of characters with the name of the statistical distribution to use. Must be of length 3 and each element must be one of `"wei"` (Weibull distribution), `"exp"` (exponential distribution), `"gam"` (gamma distribution) or `"lgn"` (log-normal distribution). The first one is used for **death**, the second one is used for **maturity** and the third one for **clutchs**.
 
 ```{r}
 dataLFH <- as_lifelihoodData(
   df = df,
-  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -78,8 +76,9 @@ dataLFH <- as_lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("geno", "type"),
-  model_specs = c("gam", "lgn", "wei")
+  matclutch = FALSE,
+  covariates = c("par", "geno"),
+  dist = c("wei", "gam", "lgn")
 )
 ```
 
@@ -92,12 +91,12 @@ Once you have created your `lifelihoodData` object with `as_lifelihoodData()`, y
 
 It returns a `lifelihoodResults` object, which is a list containing all the results of the analysis.
 
-Here it's a minimalist usage of the function, where we only specify the `lifelihoodData` object, the path to the [configuration file](2-setting-up-the-configuration-file.html) and the seeds to use. The `raise_estimation_warning` argument will be the focus of the [next vignette](4-custom-param-boundaries-and-estimation-warning.html).
+Here it's a minimalist usage of the function, where we only specify the `lifelihoodData` object, the path to the [configuration file](2-setting-up-the-configuration-file.html) and the seeds to use (four integers used by Mersenne Twister pseudorandom number generator of the lifelihood program). The `raise_estimation_warning` argument will be the focus of the [next vignette](4-custom-param-boundaries-and-estimation-warning.html).
 
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = use_test_config("config"),
+  path_config = use_test_config("config_pierrick"),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
@@ -126,4 +125,4 @@ prediction(results, parameter_name = "expt_death", type = "response") |> head()
 # Next step
 ***
 
-Now that you have seen how to use the package, you can go further and [customise your parameter boundaries and deal with estimation warnings](custom-param-boundaries-and-estimation-warning.html).
+Now that you have seen how to use the package, you can go further and [customise your parameter boundaries and deal with estimation warnings](customize-parameter-boundaries-and-estimation-warning.html).

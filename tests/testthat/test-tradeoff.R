@@ -27,7 +27,7 @@ test_that("trade-off simulations work for reproduction events", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "geno"),
-    model_specs = c("wei", "gam", "lgn")
+    dist = c("wei", "gam", "lgn")
   )
 
   results <- lifelihood(

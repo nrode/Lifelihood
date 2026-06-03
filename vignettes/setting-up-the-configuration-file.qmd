@@ -1,5 +1,5 @@
 ---
-title: "Setting up configuration file"
+title: "Setting up YAML configuration file"
 vignette: >
   %\VignetteIndexEntry{setting-up-the-configuration-file}
   %\VignetteEngine{quarto::html}
@@ -11,7 +11,7 @@ knitr:
 embed-resources: true
 ---
 
-<div class="topVignette">If you haven't already check it, have a look at:</div>
+<div class="topVignette">If you haven't check it yet, have a look at:</div>
 
 - [What is the required data format](required-data-format.html)
 
@@ -42,8 +42,11 @@ Assuming you have 2 covariables in your dataset (named `covar1` and `covar2`), f
 - `not_fitted`: do not estimate this parameter.
 - `1`: only fit the intercept.
 - `covar1`: fit the intercept and the parameter of `covar1`.
-- `covar1 + covar2`: fit the intercept, the parameter of `covar1` and the parameter of `covar1`.
-- `covar1 + covar2 + covar1*covar2`: fit the intercept, the parameter of `covar1`, the parameter of `covar1` and the interaction between `covar1` and `covar2`.
+- `covar1 + covar2`: fit the intercept, the parameter of `covar1` and the parameter of `covar2`.
+- `covar1:covar2`: fit the intercept and the interaction between `covar1` and `covar2`.
+- `covar1 * covar2`: equivalent to `covar1 + covar2 + covar1:covar2` (fit the intercept, the parameter of `covar1`, the parameter of `covar2` and the interaction between `covar1` and `covar2`).
+
+This is based the reference R implementation of formulas. [Learn more](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html).
 
 _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they should be the name of one of your columns in your dataset._
 
@@ -84,26 +87,26 @@ _Note: `covar1` and `covar2` are arbitrary names. The only rule is that they sho
 ```yaml
 ---
 mortality:
-  expt_death: geno
-  survival_param2: geno + type + geno*type
-  ratio_expt_death: geno
-  prob_death: geno
+  expt_death: geno + type + geno:type
+  survival_param2: 1
+  ratio_expt_death: not_fitted
+  prob_death: not_fitted
   sex_ratio: not_fitted
 maturity:
-  expt_maturity: geno + type
-  maturity_param2: geno
-  ratio_expt_maturity: geno + type
+  expt_maturity: geno * type
+  maturity_param2: 1
+  ratio_expt_maturity: not_fitted
 reproduction:
   expt_reproduction: geno
-  reproduction_param2: not_fitted
+  reproduction_param2: 1
   n_offspring: geno
-  increase_death_hazard: geno + type + geno*type
-  tof_decay: geno
-  increase_death_hazard_n_offspring: geno
-  lin_decrease_hazard: geno + type + geno*type
-  quad_decrease_hazard: geno
-  lin_change_n_offspring: geno
-  quad_change_n_offspring: geno
+  increase_death_hazard: not_fitted
+  tof_decay: not_fitted
+  increase_death_hazard_n_offspring: not_fitted
+  lin_decrease_hazard: not_fitted
+  quad_decrease_hazard: not_fitted
+  lin_change_n_offspring: not_fitted
+  quad_change_n_offspring: not_fitted
   tof_n_offspring: not_fitted
 
 ```
@@ -111,4 +114,4 @@ reproduction:
 # Next step
 ***
 
-The next step is to actually [use the package](how-to-use-lifelihood.html).
+The next step is to actually [use the package](fitting-your-first-model-in-lifelihood.html).

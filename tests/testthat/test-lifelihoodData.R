@@ -21,7 +21,7 @@ test_that("as_lifelihoodData works", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    model_specs = c("wei", "gam", "exp")
+    dist = c("wei", "gam", "exp")
   )
 
   expect_true(!is.null(lifelihoodData$df))
@@ -33,7 +33,7 @@ test_that("as_lifelihoodData works", {
   expect_true(all(lifelihoodData$clutchs == clutchs))
   expect_true(lifelihoodData$death_start == "death_start")
   expect_true(lifelihoodData$death_end == "death_end")
-  expect_true(all(lifelihoodData$model_specs == c("wei", "gam", "exp")))
+  expect_true(all(lifelihoodData$dist == c("wei", "gam", "exp")))
   expect_true(all(lifelihoodData$covariates == c("par", "spore")))
   expect_true(!lifelihoodData$matclutch)
   expect_true(lifelihoodData$right_censoring_date == 1000)

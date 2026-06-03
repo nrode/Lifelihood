@@ -31,14 +31,14 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "death_end",
   matclutch = FALSE,
   covariates = c("par", "geno"),
-  model_specs = c("wei", "gam", "lgn")
+  dist = c("wei", "gam", "lgn")
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("config_pierrick"),
-  se.fit = TRUE,
-  raise_estimation_warning = FALSE
+  raise_estimation_warning = FALSE,
+  delete_temp_files = FALSE
 )
 summary(results)
 

@@ -55,7 +55,7 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "geno"),
-  model_specs = c("wei", "gam", "lgn")
+  dist = c("wei", "gam", "lgn")
 )
 
 results_sans_tradeoff <- lifelihood(

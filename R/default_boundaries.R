@@ -44,7 +44,7 @@
 #'   death_start = "death_end",
 #'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
-#'   model_specs = c("gam", "lgn", "wei")
+#'   dist = c("gam", "lgn", "wei")
 #' )
 #'
 #' bounds_df <- default_bounds_df(dataLFH)
@@ -71,7 +71,7 @@ default_bounds_df <- function(
   death_end <- lifelihoodData$death_end
   maturity_end <- lifelihoodData$maturity_end
   clutchs <- lifelihoodData$clutchs
-  model_specs <- lifelihoodData$model_specs
+  dist <- lifelihoodData$dist
   right_censoring_date <- lifelihoodData$right_censoring_date
 
   max_death <- max(
@@ -97,17 +97,17 @@ default_bounds_df <- function(
     max_default = c(500, 600, 10, 1000)
   )
 
-  maturity_model <- model_specs[1]
+  maturity_model <- dist[1]
   maturity_specs <- subset(models_bounds, name == maturity_model)
   maturity_param2_min <- maturity_specs$min_default
   maturity_param2_max <- maturity_specs$max_default
 
-  clutch_model <- model_specs[2]
+  clutch_model <- dist[2]
   clutch_specs <- subset(models_bounds, name == clutch_model)
   clutch_shape_min <- clutch_specs$min_default
   clutch_shape_max <- clutch_specs$max_default
 
-  death_model <- model_specs[3]
+  death_model <- dist[3]
   death_specs <- subset(models_bounds, name == death_model)
   death_shape_min <- death_specs$min_default
   death_shape_max <- death_specs$max_default

@@ -49,7 +49,7 @@ create_simulation_input <- function(
   }
 
   config <- load_simulation_config(config)
-  model_specs <- normalize_simulation_model(model)
+  dist <- normalize_simulation_model(model)
   covariates <- validate_simulation_covariates(covariates)
   sex <- validate_simulation_sex_column(sex)
   validate_simulation_effects(effects)
@@ -110,7 +110,7 @@ create_simulation_input <- function(
     df = df,
     covariates = covariates,
     sex = sex,
-    model_specs = model_specs,
+    dist = dist,
     right_censoring_date = right_censoring_date
   )
 
@@ -901,7 +901,7 @@ build_simulation_lifelihood_data <- function(
   df,
   covariates,
   sex,
-  model_specs,
+  dist,
   right_censoring_date
 ) {
   placeholders <- add_simulation_life_history_placeholders(
@@ -923,7 +923,7 @@ build_simulation_lifelihood_data <- function(
     )],
     death_start = placeholders$columns[["death_start"]],
     death_end = placeholders$columns[["death_end"]],
-    model_specs = model_specs,
+    dist = dist,
     covariates = covariates,
     block = NULL,
     matclutch = FALSE,

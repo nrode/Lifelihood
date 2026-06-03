@@ -46,7 +46,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
-  model_specs = c("gam", "lgn", "wei")
+  dist = c("gam", "lgn", "wei")
 )
 
 results <- lifelihood(

@@ -17,7 +17,7 @@ format_dataframe_to_txt(
   death_start,
   death_end,
   covariates,
-  model_specs,
+  dist,
   path_config,
   temp_dir
 )
@@ -57,7 +57,7 @@ interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{model_specs}{Vector of characters with the name of the
+\item{dist}{Vector of characters with the name of the
 statistical law to use.}
 
 \item{path_config}{A character string specifying the file path

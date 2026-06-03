@@ -30,7 +30,7 @@
 #' the interval in which the death was determined.
 #' @param death_end Column name containing the second date of
 #' the interval in which the death was determined.
-#' @param model_specs Vector of characters with the name of the
+#' @param dist Vector of characters with the name of the
 #' statistical law to use. Must be of length 3 and each element
 #' must be one of "wei" (Weibull law), "exp" (Exponential law),
 #' "gam" (Gamma law) or "lgn" (Log-normal law). The first one is
@@ -70,7 +70,7 @@ as_lifelihoodData <- function(
   clutchs,
   death_start,
   death_end,
-  model_specs,
+  dist,
   covariates,
   block = NULL,
   matclutch,
@@ -79,10 +79,10 @@ as_lifelihoodData <- function(
   critical_age = 20,
   ratiomax = 10
 ) {
-  valid_model_specs <- c("wei", "gam", "lgn", "exp")
-  if (length(model_specs) != 3 || !all(model_specs %in% valid_model_specs)) {
+  valid_dist <- c("wei", "gam", "lgn", "exp")
+  if (length(dist) != 3 || !all(dist %in% valid_dist)) {
     stop(
-      "'model_specs' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'"
+      "'dist' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'"
     )
   }
 
@@ -100,7 +100,7 @@ as_lifelihoodData <- function(
     clutchs = clutchs,
     death_start = death_start,
     death_end = death_end,
-    model_specs = model_specs,
+    dist = dist,
     covariates = covariates,
     block = block,
     matclutch = matclutch,

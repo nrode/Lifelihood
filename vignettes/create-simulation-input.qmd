@@ -211,7 +211,7 @@ simulated_lifelihood_data <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  model_specs = rep("lgn", 3),
+  dist = rep("lgn", 3),
   matclutch = FALSE
 )
 

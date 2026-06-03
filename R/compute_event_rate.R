@@ -53,7 +53,7 @@ compute_fitted_event_rate <- function(
 
   if (event == "mortality") {
     end_col <- lifelihoodData$death_end
-    family <- lifelihoodData$model_specs[1]
+    family <- lifelihoodData$dist[1]
     covar <- c(
       lifelihoodResults$formula$expt_death,
       lifelihoodResults$formula$survival_param2
@@ -62,7 +62,7 @@ compute_fitted_event_rate <- function(
       setdiff("intercept")
   } else if (event == "maturity") {
     end_col <- lifelihoodData$maturity_end
-    family <- lifelihoodData$model_specs[2]
+    family <- lifelihoodData$dist[2]
     covar <- c(
       lifelihoodResults$formula$expt_maturity,
       lifelihoodResults$formula$maturity_param2
@@ -70,7 +70,7 @@ compute_fitted_event_rate <- function(
       unique() |>
       setdiff("intercept")
   } else if (event == "reproduction") {
-    family <- lifelihoodData$model_specs[3]
+    family <- lifelihoodData$dist[3]
     covar <- c(
       lifelihoodResults$formula$expt_reproduction,
       lifelihoodResults$formula$reproduction_param2

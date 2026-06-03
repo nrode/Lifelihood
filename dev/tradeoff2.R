@@ -28,7 +28,7 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("Temp", "Bip"),
-  model_specs = c("wei", "wei", "wei")
+  dist = c("wei", "wei", "wei")
 )
 
 results_without_tradeoff <- lifelihood(
@@ -68,7 +68,7 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("Temp", "Bip"),
-  model_specs = c("wei", "wei", "wei")
+  dist = c("wei", "wei", "wei")
 )
 
 results_with_tradeoff <- lifelihood(
@@ -105,7 +105,7 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("Temp", "Bip"),
-  model_specs = c("wei", "wei", "wei")
+  dist = c("wei", "wei", "wei")
 )
 
 results_without_tradeoff <- lifelihood(

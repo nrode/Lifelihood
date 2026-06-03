@@ -12,11 +12,11 @@ embed-resources: true
 ---
 
 
-<div class="topVignette">If you haven't already check it, have a look at:</div>
+<div class="topVignette">If you haven't check it yet, have a look at:</div>
 
 - [What is the required data format to work with lifelihood?](required-data-format.html)
 - [Setting up the configuration file](setting-up-the-configuration-file.html)
-- [How to use the lifelihood package](how-to-use-lifelihood.html)
+- [How to use the lifelihood package](fitting-your-first-model-in-lifelihood.html)
 
 # Load libraries
 ***
@@ -75,7 +75,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
-  model_specs = c("gam", "lgn", "wei")
+  dist = c("gam", "lgn", "wei")
 )
 ```
 
@@ -112,7 +112,7 @@ To address this warning, you can consider increasing the maximum bound of the `i
 
 ## Customize parameter boundaries
 
-You can get the parameter boundaries with the `default_bounds_df()` function and by passing the `lifelihoodData` object:
+You can get the **default** parameter boundaries with the `default_bounds_df()` function and by passing the `lifelihoodData` object:
 
 ```{r}
 bounds_df <- default_bounds_df(dataLFH)

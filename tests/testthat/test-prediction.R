@@ -27,7 +27,7 @@ test_that("predictions work", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    model_specs = c("wei", "gam", "exp")
+    dist = c("wei", "gam", "exp")
   )
 
   results <- lifelihood(
@@ -82,7 +82,7 @@ test_that("Prediction with ratio expt death", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    model_specs = c("wei", "gam", "lgn")
+    dist = c("wei", "gam", "lgn")
   )
 
   results <- lifelihood(

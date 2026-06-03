@@ -27,7 +27,7 @@ test_that("simulations work", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    model_specs = c("wei", "gam", "exp")
+    dist = c("wei", "gam", "exp")
   )
 
   results <- lifelihood(
@@ -87,7 +87,7 @@ test_that("censoring works for reproduction and validates block in newdata", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    model_specs = c("wei", "gam", "exp"),
+    dist = c("wei", "gam", "exp"),
     block = "geno",
     matclutch = FALSE
   )

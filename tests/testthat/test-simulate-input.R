@@ -83,7 +83,7 @@ test_that("create_simulation_input builds a simulation-ready results object", {
   expect_s3_class(results, "lifelihoodResults")
   expect_s3_class(results$lifelihoodData, "lifelihoodData")
   expect_equal(results$sample_size, n)
-  expect_equal(results$lifelihoodData$model_specs, rep("wei", 3))
+  expect_equal(results$lifelihoodData$dist, rep("wei", 3))
   expect_true(all(
     c(
       "name",

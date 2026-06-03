@@ -57,7 +57,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  model_specs = c("wei", "lgn", "wei")
+  dist = c("wei", "lgn", "wei")
 )
 ```
 

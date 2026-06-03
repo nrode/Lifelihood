@@ -125,7 +125,7 @@ goodness_of_fit <- function(
       clutchs = lfh$clutchs,
       death_start = lfh$death_start,
       death_end = lfh$death_end,
-      model_specs = lfh$model_specs,
+      dist = lfh$dist,
       covariates = lfh$covariates,
       block = lfh$block,
       matclutch = lfh$matclutch,
