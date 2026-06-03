@@ -38,7 +38,7 @@ Absolute path to the configuration file
 
 ``` r
 use_test_config("config")
-#> [1] "/private/var/folders/8d/778wjbv96mq1760tv6gk374m0000gn/T/RtmpLjqWyU/temp_libpath4c8460b45683/lifelihood/configs/config.yaml"
+#> [1] "/private/var/folders/8d/778wjbv96mq1760tv6gk374m0000gn/T/RtmpYg0fXK/temp_libpath1f314ff865f3/lifelihood/configs/config.yaml"
 use_test_config("config2")
-#> [1] "/private/var/folders/8d/778wjbv96mq1760tv6gk374m0000gn/T/RtmpLjqWyU/temp_libpath4c8460b45683/lifelihood/configs/config2.yaml"
+#> [1] "/private/var/folders/8d/778wjbv96mq1760tv6gk374m0000gn/T/RtmpYg0fXK/temp_libpath1f314ff865f3/lifelihood/configs/config2.yaml"
 ```
