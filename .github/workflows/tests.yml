@@ -8,10 +8,31 @@ on:
 
 jobs:
   unit-tests:
+    name: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - platform: linux-x86_64
+            os: ubuntu-24.04
+            expected_os: Linux
+            expected_arch: x86_64
+          - platform: linux-aarch64
+            os: ubuntu-24.04-arm
+            expected_os: Linux
+            expected_arch: aarch64
+          - platform: macos-x86_64
+            os: macos-15-intel
+            expected_os: Darwin
+            expected_arch: x86_64
+          - platform: macos-aarch64
+            os: macos-15
+            expected_os: Darwin
+            expected_arch: aarch64
+          - platform: windows-x86
+            os: windows-latest
+            expected_os: Windows
+            expected_arch: x86_64
 
     runs-on: ${{ matrix.os }}
 
@@ -31,6 +52,36 @@ jobs:
 
       - name: Set up Pandoc
         uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Verify runner platform
+        shell: Rscript {0}
+        run: |
+          normalize_machine <- function(machine) {
+            machine <- tolower(machine)
+            machine <- gsub("-", "_", machine, fixed = TRUE)
+            switch(
+              machine,
+              "amd64" = "x86_64",
+              "x64" = "x86_64",
+              "arm64" = "aarch64",
+              machine
+            )
+          }
+
+          actual_os <- Sys.info()[["sysname"]]
+          actual_arch <- normalize_machine(Sys.info()[["machine"]])
+          expected_os <- "${{ matrix.expected_os }}"
+          expected_arch <- "${{ matrix.expected_arch }}"
+
+          message("Runner OS: ", actual_os)
+          message("Runner architecture: ", actual_arch)
+
+          if (!identical(actual_os, expected_os)) {
+            stop("Expected OS ", expected_os, ", got ", actual_os)
+          }
+          if (!identical(actual_arch, expected_arch)) {
+            stop("Expected architecture ", expected_arch, ", got ", actual_arch)
+          }
 
       - name: Install R package dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
