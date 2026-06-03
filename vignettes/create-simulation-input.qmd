@@ -29,7 +29,7 @@ flowchart LR
 ## Load packages
 
 ```{r}
-devtools::load_all()
+library(lifelihood)
 library(tidyverse)
 ```
 

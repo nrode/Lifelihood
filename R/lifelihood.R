@@ -22,7 +22,7 @@
 #' @param tc critical age (after the juvenile mortality peak) at which the survival model starts to be fitted
 #' @param tinf maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)
 #' @param sub_interval sub-interval used to integrate the left and right censoring dates of each event
-#' @param ntr Number of thread for the paralelisation ?
+#' @param ntr Number of temperature steps in each simulated annealing run; the temperature decreases from To to Tf in exactly ntr steps, with nst Metropolis trials at each step.
 #' @param nst Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)
 #' @param To Initial temperature for the simulated annealing
 #' @param Tf Initial temperature for the simulated annealing
