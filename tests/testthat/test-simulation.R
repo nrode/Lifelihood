@@ -17,6 +17,7 @@ test_that("simulations work", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",
@@ -82,7 +83,8 @@ test_that("censoring works for reproduction and validates block in newdata", {
     death_end = "death_end",
     covariates = c("par", "spore"),
     model_specs = c("wei", "gam", "exp"),
-    block = "geno"
+    block = "geno",
+    matclutch = FALSE
   )
 
   results <- lifelihood(

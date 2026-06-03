@@ -18,6 +18,7 @@ test_that("goodness_of_fit returns expected object structure", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",

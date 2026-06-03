@@ -17,6 +17,7 @@ df_100 <- bind_rows(replicate(100, df, simplify = FALSE))
 
 lifelihoodData <- as_lifelihoodData(
   df = df_100,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -57,6 +58,7 @@ clutchs <- generate_clutch_vector(9)
 
 lifelihoodData <- as_lifelihoodData(
   df = simul_with_tradeoff,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "death_start",
   sex_end = "death_end",
@@ -86,6 +88,7 @@ df <- data_no_lin_decrease_hazard |> as_tibble()
 
 lifelihoodData <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",

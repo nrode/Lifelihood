@@ -17,6 +17,7 @@ test_that("predictions work", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",
@@ -71,6 +72,7 @@ test_that("Prediction with ratio expt death", {
 
   lifelihoodData <- as_lifelihoodData(
     df = df,
+    matclutch = FALSE,
     sex = "sex",
     sex_start = "sex_start",
     sex_end = "sex_end",

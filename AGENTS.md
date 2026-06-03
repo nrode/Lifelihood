@@ -34,6 +34,7 @@ clutchs <- c(
 dataLFH <- as_lifelihoodData(
   df = df,
   sex = "sex",
+  matclutch = FALSE,
   sex_start = "sex_start",
   sex_end = "sex_end",
   maturity_start = "mat_start",
