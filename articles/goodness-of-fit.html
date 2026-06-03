@@ -18,7 +18,11 @@
 <!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Goodness of fit">
 </head>
-<body>
+<body>pkgdown/assets/header.html
+
+  
+
+  
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -48,14 +52,20 @@
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
-    <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Prediction</h6></li>
+    <li><a class="dropdown-item" href="../articles/prediction.html">Prediction (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/prediction-with-standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -160,7 +170,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1138_7037_6608_4648/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1138_7037_6608_4648/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1138 7037 6608 4648 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_71_9782_5228_1360/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_71_9782_5228_1360/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 71 9782 5228 1360 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="goodness-of-fit">Goodness of fit<a class="anchor" aria-label="anchor" href="#goodness-of-fit"></a>
 </h2>
@@ -168,19 +178,19 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gof</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/goodness_of_fit.html">goodness_of_fit</a></span><span class="op">(</span><span class="va">results</span>, nsim <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6288_2564_4143_6853/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6288_2564_4143_6853/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6288 2564 4143 6853 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4853_1635_4625_5726/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4853_1635_4625_5726/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4853 1635 4625 5726 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2844_7668_1752_6150/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2844_7668_1752_6150/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2844 7668 1752 6150 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_123_3903_5028_931/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_123_3903_5028_931/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 123 3903 5028 931 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8240_986_50_7268/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8240_986_50_7268/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8240 986 50 7268 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1526_6654_1225_5834/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1526_6654_1225_5834/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1526 6654 1225 5834 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6418_2010_3843_9642/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6418_2010_3843_9642/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6418 2010 3843 9642 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5309_6850_3674_7090/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5309_6850_3674_7090/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 5309 6850 3674 7090 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4389_4630_2064_7781/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4389_4630_2064_7781/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4389 4630 2064 7781 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3402_1633_1202_8546/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3402_1633_1202_8546/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3402 1633 1202 8546 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 <p>The <code><a href="../reference/goodness_of_fit.html">goodness_of_fit()</a></code> function returns an instance of class <code>lifelihoodGOF</code>, with the following attributes:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gof</span><span class="op">$</span><span class="va">original_loglik</span></span>
-<span><span class="co">#&gt; [1] -7616.286</span></span>
+<span><span class="co">#&gt; [1] -7270.108</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">simulated_loglik</span></span>
-<span><span class="co">#&gt; [1] -890.6328 -890.6258 -890.6557 -890.6883 -890.6262</span></span>
+<span><span class="co">#&gt; [1] -863.5809 -863.3672 -863.3679 -863.3932 -863.3705</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_success</span></span>
 <span><span class="co">#&gt; [1] 5</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_failed</span></span>
@@ -306,5 +316,6 @@
 
 
 
-  </body>
+  
+</body>
 </html>

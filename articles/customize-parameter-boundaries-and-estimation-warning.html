@@ -18,7 +18,11 @@
 <!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Customize parameter boundaries and estimation warning">
 </head>
-<body>
+<body>pkgdown/assets/header.html
+
+  
+
+  
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -48,14 +52,20 @@
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
-    <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
-    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Prediction</h6></li>
+    <li><a class="dropdown-item" href="../articles/prediction.html">Prediction (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/prediction-with-standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -201,7 +211,7 @@ If you haven’t check it yet, have a look at:
 <span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span>
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_389_4818_8009_5700/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_389_4818_8009_5700/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 389 4818 8009 5700 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2094_7069_2670_108/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2094_7069_2670_108/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2094 7069 2670 108 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
 </h2>
@@ -258,7 +268,7 @@ If you haven’t check it yet, have a look at:
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8737_3864_4773_3205/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8737_3864_4773_3205/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8737 3864 4773 3205 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8017_3818_4395_8290/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8017_3818_4395_8290/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8017 3818 4395 8290 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 <p>Now we don’t get any warning!</p>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
@@ -364,5 +374,6 @@ If you haven’t check it yet, have a look at:
 
 
 
-  </body>
+  
+</body>
 </html>

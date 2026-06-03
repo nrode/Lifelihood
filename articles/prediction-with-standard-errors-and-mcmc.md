@@ -66,7 +66,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5809_4008_5360_1367/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5809_4008_5360_1367/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 5809 4008 5360 1367 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7308_8473_1156_960/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7308_8473_1156_960/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 7308 8473 1156 960 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 summary(results)
 #> 
 #> === LIFELIHOOD RESULTS ===
@@ -74,17 +74,17 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343785.405
-#> AIC:             687578.8
-#> BIC:             687596.0
+#> Log-likelihood:  -343812.716
+#> AIC:             687633.4
+#> BIC:             687650.7
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.941 (0.077)
-#>   expt_death eff_expt_death_par_1 0.265 (0.083)
-#>   expt_death eff_expt_death_par_2 0.243 (0.089)
-#>   survival_param2 (Intercept) -0.220 (0.116)
+#>   expt_death (Intercept)    -1.442 (-1.000)
+#>   expt_death eff_expt_death_par_1 -0.249 (-1.000)
+#>   expt_death eff_expt_death_par_2 -0.276 (-1.000)
+#>   survival_param2 (Intercept) -0.452 (-1.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -100,10 +100,10 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -1.94    0.0766 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1      0.265   0.0830 expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2      0.243   0.0886 expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.220   0.116  survival_param2 intercept       mort…
+#> 1 int_expt_death           -1.44        -1 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1     -0.249       -1 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2     -0.276       -1 expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2      -0.452       -1 survival_param2 intercept       mort…
 ```
 
 ### Prediction
@@ -118,14 +118,15 @@ prediction(results, "expt_death", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
 #> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.
+#> Warning in sqrt(var_cov_fitted_predictors): NaNs produced
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -1.94    0.0766
-#> 2  -1.94    0.0766
-#> 3  -1.94    0.0766
-#> 4  -1.94    0.0766
-#> 5  -1.68    0.0294
+#> 1  -1.44  NaN     
+#> 2  -1.69    0.0293
+#> 3  -1.44  NaN     
+#> 4  -1.44  NaN     
+#> 5  -1.44  NaN
 ```
 
 - Response scale
@@ -135,14 +136,15 @@ prediction(results, "expt_death", se.fit = TRUE) |>
 prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
+#> Warning in sqrt(var_fitted_predictors): NaNs produced
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   40.7      2.73
-#> 2   51.1      1.26
-#> 3   40.7      2.73
-#> 4   40.7      2.73
-#> 5   40.7      2.73
+#> 1   49.3      1.93
+#> 2   62.0    NaN   
+#> 3   50.4      1.25
+#> 4   62.0    NaN   
+#> 5   62.0    NaN
 ```
 
 ## MCMC
@@ -158,7 +160,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_mcmc"),
   MCMC = 30
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1824_7965_9403_4765/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1824_7965_9403_4765/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 1824 7965 9403 4765 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5263_6617_5613_8522/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5263_6617_5613_8522/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 5263 6617 5613 8522 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### Visualization
@@ -186,4 +188,4 @@ plot_fitted_event_rate(
 #> (`geom_point()`).
 ```
 
-![](standard-errors-and-mcmc_files/figure-html/unnamed-chunk-6-1.png)
+![](prediction-with-standard-errors-and-mcmc_files/figure-html/unnamed-chunk-6-1.png)
