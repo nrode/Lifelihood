@@ -305,7 +305,9 @@ simulate_life_history_tradeoff <- function(
       iter <- iter + 1
 
       if (length(clutch_times_i) > 0) {
-        offspring_effect <- clutch_sizes_i
+        # When `n_offspring` isn't fitted, clutch_sizes_i may hold NAs; the
+        # offspring-dependent hazard is undefined in that case, so treat as 0.
+        offspring_effect <- ifelse(is.na(clutch_sizes_i), 0, clutch_sizes_i)
         elapsed <- t - clutch_times_i
         if (da[i] == 0) {
           decay <- rep(1, length(elapsed))
