@@ -5,10 +5,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>How to use lifelihood • lifelihood</title>
+<title>Goodness of fit • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="goodness-of-fit_files/libs/quarto-html/popper.min.js"></script><script src="goodness-of-fit_files/libs/quarto-html/tippy.umd.min.js"></script><link href="goodness-of-fit_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="goodness-of-fit_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="How to use lifelihood">
+<meta property="og:title" content="Goodness of fit">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -47,9 +47,10 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -81,7 +82,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>How to use lifelihood</h1>
+      <h1>Goodness of fit</h1>
 
 
 
@@ -102,11 +103,11 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tidyverse</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.2.0</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.2.1     ✔ readr     2.2.0</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.3     ✔ tibble    3.3.1</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
+<span><span class="co">#&gt; ✔ purrr     1.2.2     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
 <span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
@@ -128,7 +129,7 @@
 <span></span>
 <span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"pon"</span>,</span>
+<span>    <span class="st">"clutch"</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
@@ -137,6 +138,7 @@
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
@@ -154,7 +156,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3041_5709_6029_8530/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3041_5709_6029_8530/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3041 5709 6029 8530 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_378_4739_8682_3628/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_378_4739_8682_3628/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 378 4739 8682 3628 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="goodness-of-fit">Goodness of fit<a class="anchor" aria-label="anchor" href="#goodness-of-fit"></a>
 </h2>
@@ -162,25 +164,25 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gof</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/goodness_of_fit.html">goodness_of_fit</a></span><span class="op">(</span><span class="va">results</span>, nsim <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9423_7101_7184_5681/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9423_7101_7184_5681/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9423 7101 7184 5681 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8202_9851_7721_3073/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8202_9851_7721_3073/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8202 9851 7721 3073 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6677_7068_362_3546/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6677_7068_362_3546/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6677 7068 362 3546 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6662_2012_7512_7460/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6662_2012_7512_7460/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6662 2012 7512 7460 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4720_7660_4920_5884/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4720_7660_4920_5884/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4720 7660 4920 5884 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2001_5867_2316_182/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2001_5867_2316_182/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2001 5867 2316 182 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1091_2052_2936_5371/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1091_2052_2936_5371/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1091 2052 2936 5371 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4141_4760_9989_7824/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4141_4760_9989_7824/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4141 4760 9989 7824 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8434_5207_6717_353/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8434_5207_6717_353/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8434 5207 6717 353 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9527_8723_7294_7238/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9527_8723_7294_7238/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9527 8723 7294 7238 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 <p>The <code><a href="../reference/goodness_of_fit.html">goodness_of_fit()</a></code> function returns an instance of class <code>lifelihoodGOF</code>, with the following attributes:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gof</span><span class="op">$</span><span class="va">original_loglik</span></span>
-<span><span class="co">#&gt; [1] -8033.151</span></span>
+<span><span class="co">#&gt; [1] -7531.88</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">simulated_loglik</span></span>
-<span><span class="co">#&gt; [1] -11142.25 -11250.14 -10676.88 -10881.32 -10775.33</span></span>
+<span><span class="co">#&gt; [1] -853.6773 -853.6539 -853.6556 -853.7477 -853.6739</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_success</span></span>
 <span><span class="co">#&gt; [1] 5</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_failed</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">p_lower_or_equal</span></span>
-<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 </div>
 <p>You can also read the <code>gof$fits</code> attribute for all underlying fits. Use <code>gof$fits[[1]]</code> for the first one, <code>gof$fits[[2]]</code> for the second, and so on.</p>
 </section><section class="level2"><h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>

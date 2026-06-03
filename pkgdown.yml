@@ -1,9 +1,10 @@
-pandoc: '3.9'
+pandoc: 3.9.0.2
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   compilation: compilation.html
   contributing: contributing.html
+  create-simulation-input: create-simulation-input.html
   customize-parameter-boundaries-and-estimation-warning: customize-parameter-boundaries-and-estimation-warning.html
   fit-saturated-model: fit-saturated-model.html
   generate-clutch-names: generate-clutch-names.html
@@ -15,7 +16,7 @@ articles:
   setting-up-the-configuration-file: setting-up-the-configuration-file.html
   simulation-and-visit-masks: simulation-and-visit-masks.html
   standard-errors-and-mcmc: standard-errors-and-mcmc.html
-last_built: 2026-02-24T11:37Z
+last_built: 2026-06-03T11:04Z
 urls:
   reference: https://nrode.github.io/Lifelihood/reference
   article: https://nrode.github.io/Lifelihood/articles

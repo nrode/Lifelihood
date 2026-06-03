@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Fit saturated model using group_by_group = TRUE • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -47,9 +47,10 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -103,11 +104,11 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tidyverse</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.2.0</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.2.1     ✔ readr     2.2.0</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.3     ✔ tibble    3.3.1</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
+<span><span class="co">#&gt; ✔ purrr     1.2.2     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
 <span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
@@ -124,7 +125,7 @@
 <span></span>
 <span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"pon"</span>,</span>
+<span>    <span class="st">"clutch"</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
@@ -134,6 +135,7 @@
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
@@ -156,55 +158,41 @@
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">time_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">results_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>    <span class="va">lifelihoodData</span>,</span>
 <span>    path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_gbg"</span><span class="op">)</span>,</span>
 <span>    group_by_group <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># Default value</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="va">time_default</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  23.228   0.293  23.979</span></span></code></pre></div>
+<span><span class="co">#&gt;  22.180   0.334  24.361</span></span></code></pre></div>
 </div>
 <ul>
 <li>Group by group model</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">time_gbg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">results_gbg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>    <span class="va">lifelihoodData</span>,</span>
 <span>    path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_gbg"</span><span class="op">)</span>,</span>
 <span>    group_by_group <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Fitting group: 0.0</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9092 5404 933 9190 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190"</span></span>
-<span><span class="co">#&gt; Fitting group: 1.0</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9093 5405 934 9191 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191"</span></span>
-<span><span class="co">#&gt; Fitting group: 2.0</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9094 5406 935 9192 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192"</span></span>
-<span><span class="co">#&gt; Fitting group: 0.1</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9095 5407 936 9193 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193"</span></span>
-<span><span class="co">#&gt; Fitting group: 1.1</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9096 5408 937 9194 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194"</span></span>
-<span><span class="co">#&gt; Fitting group: 0.2</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9097 5409 938 9195 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195"</span></span>
-<span><span class="co">#&gt; Fitting group: 0.3</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9098 5410 939 9196 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196"</span></span>
-<span><span class="co">#&gt; Fitting group: 2.3</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "Intermediate files are stored at: /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197"</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9092 5404 933 9190 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9093 5405 934 9191 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9094 5406 935 9192 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9095 5407 936 9193 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9096 5408 937 9194 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9097 5409 938 9195 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9098 5410 939 9196 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="va">time_gbg</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.440   0.094   1.624</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.401   0.075   1.700</span></span></code></pre></div>
 </div>
 <p>Fitting saturated model with group by group is faster than default model.</p>
 <ul>

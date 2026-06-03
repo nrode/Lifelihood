@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Compilation • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -47,9 +47,10 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -119,7 +120,7 @@
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"devtools"</span>, <span class="st">"testthat"</span>, <span class="st">"roxygen2"</span>, <span class="st">"pkgdown"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html" class="external-link">install_local</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_local</span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>When developing an R package, you should <strong>not</strong> use <code><a href="https://nrode.github.io/Lifelihood/">library(lifelihood)</a></code>, but rather:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -137,11 +138,19 @@
 <ul>
 <li>On macOS</li>
 </ul>
-<p>Run <code>just macos</code>. This runs the <code>macos</code> script inside <code>justfile</code>, and will automatically update <code>inst/bin/lifelihood-macos</code>.</p>
+<p>Run <code>just macos</code>. This runs the <code>macos</code> recipes inside <code>justfile</code>, and will automatically update:</p>
 <ul>
-<li>On Linux</li>
+<li><p><code>inst/bin/lifelihood-macos-x86_64</code></p></li>
+<li><p><code>inst/bin/lifelihood-macos-aarch64</code></p></li>
+<li><p>On Linux</p></li>
 </ul>
-<p>Run <code>just linux</code>. This runs the <code>linux</code> script inside <code>justfile</code>, and will automatically update <code>inst/bin/lifelihood-linux</code>. If this is the first time you’re compiling, this might take some time as it will build a Docker image first.</p>
+<p>Run <code>just linux</code>. This runs the <code>linux</code> recipes inside <code>justfile</code>, and will automatically update:</p>
+<ul>
+<li><code>inst/bin/lifelihood-linux-x86_64</code></li>
+<li><code>inst/bin/lifelihood-linux-aarch64</code></li>
+</ul>
+<p>The Linux builds use Docker with <code>linux/amd64</code> and <code>linux/arm64</code> images. If this is the first time you’re compiling, this might take some time as it will build Docker images first.</p>
+<p>To build every supported macOS and Linux target, run <code>just</code>.</p>
 <blockquote>
 <p>Note that except if you’re on a Linux machine, you’ll need to have Docker installed and the Docker daemon running.</p>
 </blockquote>

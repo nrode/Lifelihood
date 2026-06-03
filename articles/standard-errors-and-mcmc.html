@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Standard errors and MCMC • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -47,9 +47,10 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -102,11 +103,11 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tidyverse</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.2.0</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.2.1     ✔ readr     2.2.0</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.3     ✔ tibble    3.3.1</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
+<span><span class="co">#&gt; ✔ purrr     1.2.2     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
 <span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
@@ -124,7 +125,7 @@
 <span></span>
 <span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"pon"</span>,</span>
+<span>    <span class="st">"clutch"</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
@@ -134,6 +135,7 @@
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
@@ -157,7 +159,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_se"</span><span class="op">)</span>,</span>
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2826_9893_4331_7519/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2826_9893_4331_7519/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 2826 9893 4331 7519 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3229_1347_1709_5386/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3229_1347_1709_5386/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 3229 1347 1709 5386 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
@@ -165,17 +167,17 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343784.808</span></span>
-<span><span class="co">#&gt; AIC:             687577.6</span></span>
-<span><span class="co">#&gt; BIC:             687594.9</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -343802.792</span></span>
+<span><span class="co">#&gt; AIC:             687613.6</span></span>
+<span><span class="co">#&gt; BIC:             687630.8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.962 (0.072)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.302 (0.078)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.254 (0.084)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.210 (0.115)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.611 (0.319)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.092 (0.340)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.109 (0.340)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.391 (0.200)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -189,10 +191,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.96    0.0724 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1      0.302   0.0785 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2      0.254   0.0841 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -0.210   0.115  survival_param2 intercept       mort…</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 int_expt_death          -1.61      0.319 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1    -0.0920    0.340 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2    -0.109     0.340 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2     -0.391     0.200 survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
 <section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h3>
@@ -205,14 +207,15 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.</span></span>
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.96    0.0724</span></span>
-<span><span class="co">#&gt; 2  -1.96    0.0724</span></span>
-<span><span class="co">#&gt; 3  -1.71    0.0420</span></span>
-<span><span class="co">#&gt; 4  -1.96    0.0724</span></span>
-<span><span class="co">#&gt; 5  -1.66    0.0293</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  -1.70    0.0374</span></span>
+<span><span class="co">#&gt; 2  -1.61    0.319 </span></span>
+<span><span class="co">#&gt; 3  -1.61    0.319 </span></span>
+<span><span class="co">#&gt; 4  -1.61    0.319 </span></span>
+<span><span class="co">#&gt; 5  -1.61    0.319</span></span></code></pre></div>
 </div>
 <ul>
 <li>Response scale</li>
@@ -225,11 +228,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   39.9      2.53</span></span>
-<span><span class="co">#&gt; 2   39.9      2.53</span></span>
-<span><span class="co">#&gt; 3   39.9      2.53</span></span>
-<span><span class="co">#&gt; 4   51.8      1.27</span></span>
-<span><span class="co">#&gt; 5   39.9      2.53</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   53.9      14.3</span></span>
+<span><span class="co">#&gt; 2   53.9      14.3</span></span>
+<span><span class="co">#&gt; 3   53.9      14.3</span></span>
+<span><span class="co">#&gt; 4   53.9      14.3</span></span>
+<span><span class="co">#&gt; 5   53.9      14.3</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
 </h2>
@@ -245,9 +248,9 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_mcmc"</span><span class="op">)</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">30</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3606_9522_1067_2829/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3606_9522_1067_2829/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 3606 9522 1067 2829 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_726_4492_2714_3742/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_726_4492_2714_3742/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 726 4492 2714 3742 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="co">#&gt; Warning in check_estimation(results): Estimation of 'fitness' is close to the</span></span>
-<span><span class="co">#&gt; maximum bound: fitness~=999.932386277238 (bound=995). Consider increasing</span></span>
+<span><span class="co">#&gt; maximum bound: fitness~=999.945522049138 (bound=995). Consider increasing</span></span>
 <span><span class="co">#&gt; maximum bound.</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
@@ -265,6 +268,10 @@
 <span>  ylab <span class="op">=</span> <span class="st">"Fitted Mortality Rate"</span>,</span>
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of</span></span>
+<span><span class="co">#&gt; MCMC iterations (30) must be higher than number of individuals (48).</span></span>
+<span><span class="co">#&gt; Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of</span></span>
+<span><span class="co">#&gt; MCMC iterations (30) must be higher than number of individuals (48).</span></span>
 <span><span class="co">#&gt; Warning: Removed 20 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <div class="cell-output-display">

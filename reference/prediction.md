@@ -1,6 +1,7 @@
-# Prediction with lifelihood estimations
+# Prediction from a lifelihood model at new data values
 
-S3 method to use to make prediction using fitted results from
+S3 method used to make predictions using `lifelihoodResults` objects,
+i.e. results from
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
 
 ## Usage
@@ -11,8 +12,10 @@ prediction(
   parameter_name,
   newdata = NULL,
   mcmc.fit = FALSE,
+  keep_mcmc_samples = FALSE,
   type = c("link", "response"),
-  se.fit = FALSE
+  se.fit = FALSE,
+  .warning_ratio_male = TRUE
 )
 ```
 
@@ -31,21 +34,28 @@ prediction(
 
 - newdata:
 
-  Data for prediction. If absent, predictions are for the subjects used
-  in the original fit.
+  Data for prediction. If absent, predictions are for each individual in
+  the original dataset provided by the user.
+
+- keep_mcmc_samples:
+
+  Whether or not to also retrieve MCMC samples in output. If `TRUE`,
+  output is a list with 2 elements: pred and mcmc_samples.
 
 - type:
 
-  The type of the predicted value: if "response," it is on the original
-  data scale; if "link," it is on the lifelihood scale.
+  The type of the predicted value: if type="response," predictions are
+  on the original data scale; if type="link," predictions are on the
+  lifelihood scale.
 
 - se.fit:
 
-  Whether or not to include standard errors in the prediction.
+  Whether or not to include standard errors in the prediction (computed
+  on the response scale using the delta method).
 
 ## Value
 
-A vector containing the predicted values for the parameter.
+A vector or list containing the predicted values for the parameter.
 
 ## Examples
 
@@ -74,6 +84,7 @@ dataLFH <- as_lifelihoodData(
   covariates = c("geno", "type"),
   model_specs = c("gam", "lgn", "wei")
 )
+#> Error in as_lifelihoodData(df = df, sex = "sex", sex_start = "sex_start",     sex_end = "sex_end", maturity_start = "mat_start", maturity_end = "mat_end",     clutchs = clutchs, death_start = "death_start", death_end = "death_end",     covariates = c("geno", "type"), model_specs = c("gam", "lgn",         "wei")): argument "matclutch" is missing, with no default
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
@@ -81,8 +92,7 @@ results <- lifelihood(
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/9r/xzfp9lgn603578400ms53lr00000gn/T/Rtmpl7dmnd/temp_libpath1e8b23a8b4ad/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1_2_3_4/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1 2 3 4 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> Error in (start + 1):length(lines): argument of length 0
+#> Error: object 'dataLFH' not found
 
 prediction(results, "expt_death")
 #> Error: object 'results' not found

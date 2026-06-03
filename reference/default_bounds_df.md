@@ -71,19 +71,16 @@ dataLFH <- as_lifelihoodData(
   covariates = c("geno", "type"),
   model_specs = c("gam", "lgn", "wei")
 )
+#> Error in as_lifelihoodData(df = df, sex = "sex", sex_start = "sex_start",     sex_end = "sex_end", maturity_start = "mat_start", maturity_end = "mat_end",     clutchs = clutchs, death_start = "death_end", death_end = "death_end",     covariates = c("geno", "type"), model_specs = c("gam", "lgn",         "wei")): argument "matclutch" is missing, with no default
 
 bounds_df <- default_bounds_df(dataLFH)
+#> Error: object 'dataLFH' not found
 head(bounds_df)
-#>              param   min     max
-#> 1       expt_death 0.001      40
-#> 2  survival_param2  0.05     500
-#> 3 ratio_expt_death  0.01     100
-#> 4       prob_death 1e-05 0.99999
-#> 5        sex_ratio 1e-05 0.99999
-#> 6    expt_maturity 0.001       8
+#> Error: object 'bounds_df' not found
 
 # for example, we want to change this value
 bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
+#> Error: object 'bounds_df' not found
 
 # then we pass it to lifelihood()
 results <- lifelihood(
@@ -92,5 +89,5 @@ results <- lifelihood(
   param_bounds_df = bounds_df,
   raise_estimation_warning = FALSE
 )
-#> [1] "/private/var/folders/9r/xzfp9lgn603578400ms53lr00000gn/T/Rtmpl7dmnd/temp_libpath1e8b23a8b4ad/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2607_1476_8166_2245/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2607_1476_8166_2245/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2607 1476 8166 2245 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> Error: object 'dataLFH' not found
 ```

@@ -7,11 +7,11 @@
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.1     
+#> ✔ purrr     1.2.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -29,7 +29,7 @@ df <- datapierrick |>
 
 generate_clutch_vector <- function(N) {
   return(paste(
-    "pon",
+    "clutch",
     rep(c("start", "end", "size"), N),
     rep(1:N, each = 3),
     sep = "_"
@@ -39,6 +39,7 @@ clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -65,7 +66,7 @@ results <- lifelihood(
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2826_9893_4331_7519/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2826_9893_4331_7519/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 2826 9893 4331 7519 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3229_1347_1709_5386/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3229_1347_1709_5386/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 3229 1347 1709 5386 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 summary(results)
 #> 
 #> === LIFELIHOOD RESULTS ===
@@ -73,17 +74,17 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343784.808
-#> AIC:             687577.6
-#> BIC:             687594.9
+#> Log-likelihood:  -343802.792
+#> AIC:             687613.6
+#> BIC:             687630.8
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.962 (0.072)
-#>   expt_death eff_expt_death_par_1 0.302 (0.078)
-#>   expt_death eff_expt_death_par_2 0.254 (0.084)
-#>   survival_param2 (Intercept) -0.210 (0.115)
+#>   expt_death (Intercept)    -1.611 (0.319)
+#>   expt_death eff_expt_death_par_1 -0.092 (0.340)
+#>   expt_death eff_expt_death_par_2 -0.109 (0.340)
+#>   survival_param2 (Intercept) -0.391 (0.200)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -99,10 +100,10 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -1.96    0.0724 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1      0.302   0.0785 expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2      0.254   0.0841 expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.210   0.115  survival_param2 intercept       mort…
+#> 1 int_expt_death          -1.61      0.319 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1    -0.0920    0.340 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2    -0.109     0.340 expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2     -0.391     0.200 survival_param2 intercept       mort…
 ```
 
 ### Prediction
@@ -116,14 +117,15 @@ We can predict with standard errors.
 prediction(results, "expt_death", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
+#> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -1.96    0.0724
-#> 2  -1.96    0.0724
-#> 3  -1.71    0.0420
-#> 4  -1.96    0.0724
-#> 5  -1.66    0.0293
+#> 1  -1.70    0.0374
+#> 2  -1.61    0.319 
+#> 3  -1.61    0.319 
+#> 4  -1.61    0.319 
+#> 5  -1.61    0.319
 ```
 
 - Response scale
@@ -136,11 +138,11 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   39.9      2.53
-#> 2   39.9      2.53
-#> 3   39.9      2.53
-#> 4   51.8      1.27
-#> 5   39.9      2.53
+#> 1   53.9      14.3
+#> 2   53.9      14.3
+#> 3   53.9      14.3
+#> 4   53.9      14.3
+#> 5   53.9      14.3
 ```
 
 ## MCMC
@@ -156,9 +158,9 @@ results <- lifelihood(
   path_config = use_test_config("example_config_mcmc"),
   MCMC = 30
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3606_9522_1067_2829/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3606_9522_1067_2829/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 3606 9522 1067 2829 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_726_4492_2714_3742/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_726_4492_2714_3742/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 726 4492 2714 3742 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 #> Warning in check_estimation(results): Estimation of 'fitness' is close to the
-#> maximum bound: fitness~=999.932386277238 (bound=995). Consider increasing
+#> maximum bound: fitness~=999.945522049138 (bound=995). Consider increasing
 #> maximum bound.
 ```
 
@@ -179,6 +181,10 @@ plot_fitted_event_rate(
   ylab = "Fitted Mortality Rate",
   se.fit = TRUE
 )
+#> Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of
+#> MCMC iterations (30) must be higher than number of individuals (48).
+#> Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of
+#> MCMC iterations (30) must be higher than number of individuals (48).
 #> Warning: Removed 20 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```

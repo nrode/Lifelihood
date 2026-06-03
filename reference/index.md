@@ -19,12 +19,16 @@
   : Compute empirical event rate
 - [`compute_reproduction_intervals()`](https://nrode.github.io/Lifelihood/reference/compute_reproduction_intervals.md)
   : Compute time interval between clutches
+- [`create_simulation_input()`](https://nrode.github.io/Lifelihood/reference/create_simulation_input.md)
+  : Create a lifelihood-like object for simulation
 - [`datapierrick`](https://nrode.github.io/Lifelihood/reference/datapierrick.md)
   : Pierrick data
 - [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
+- [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
+  : Retrieve visit masks from a lifelihood data object
 - [`goodness_of_fit()`](https://nrode.github.io/Lifelihood/reference/goodness_of_fit.md)
   : Parametric goodness-of-fit from simulated datasets
 - [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
@@ -33,14 +37,10 @@
   : Likelihood
 - [`mcmc()`](https://nrode.github.io/Lifelihood/reference/mcmc.md) :
   MCMC
-- [`parallel.simulate()`](https://nrode.github.io/Lifelihood/reference/parallel.simulate.md)
-  : Parallelized simulations
 - [`plot(`*`<lifelihoodGOF>`*`)`](https://nrode.github.io/Lifelihood/reference/plot.lifelihoodGOF.md)
   : Plot goodness-of-fit histogram
 - [`prediction()`](https://nrode.github.io/Lifelihood/reference/prediction.md)
-  : Prediction with lifelihood estimations
-- [`remove_lifelihood_tempfiles()`](https://nrode.github.io/Lifelihood/reference/remove_lifelihood_tempfiles.md)
-  : Remove all lifelihood temporary files
+  : Prediction from a lifelihood model at new data values
 - [`simulate_life_history()`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)
   : Simulate outcomes from a fitted lifelihood model
 - [`summary(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.md)

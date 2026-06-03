@@ -7,11 +7,11 @@
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.1     
+#> ✔ purrr     1.2.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -32,7 +32,7 @@ df <- datapierrick |>
 
 generate_clutch_vector <- function(N) {
   return(paste(
-    "pon",
+    "clutch",
     rep(c("start", "end", "size"), N),
     rep(1:N, each = 3),
     sep = "_"
@@ -40,111 +40,132 @@ generate_clutch_vector <- function(N) {
 }
 clutchs <- generate_clutch_vector(28)
 df |> head()
-#>   par geno spore sex_start sex_end sex mat_start mat_end mat pon_start_1
-#> 1   0    0     0        13    1000   0        12      13   6          20
-#> 2   0    0     0        13    1000   0        12      13   3          19
-#> 3   0    0     0        15    1000   0        14      15   1          18
-#> 4   0    0     0        14    1000   0        13      14   6          20
-#> 5   0    0     0        19    1000   0        18      19   2          21
-#> 6   0    0     0        12    1000   0        11      12   1          18
-#>   pon_end_1 pon_size_1 pon_start_2 pon_end_2 pon_size_2 pon_start_3 pon_end_3
-#> 1        21          3          23        24          9          26        27
-#> 2        20          5          23        24          6          27        28
-#> 3        19          5          22        23         10          25        26
-#> 4        21          7          24        25          6          27        28
-#> 5        22          9          25        26          6          29        30
-#> 6        19          6          23        24          6          26        27
-#>   pon_size_3 pon_start_4 pon_end_4 pon_size_4 pon_start_5 pon_end_5 pon_size_5
-#> 1          3          30        31          2          33        34          8
-#> 2          3          31        32          6          35        36          9
-#> 3          5          29        30          5          33        34          6
-#> 4          5          31        32          8          35        36          8
-#> 5          6          33        34          6          38        39          3
-#> 6          4          30        31          4          34        35          5
-#>   pon_start_6 pon_end_6 pon_size_6 pon_start_7 pon_end_7 pon_size_7 pon_start_8
-#> 1          37        38          5          41        42          5          45
-#> 2          39        40          9          43        44          4          47
-#> 3          37        38          4          41        42          8          45
-#> 4          39        40          7          43        44          7          47
-#> 5          41        42          9          45        46          6          49
-#> 6          38        39          8          42        43          6          46
-#>   pon_end_8 pon_size_8 pon_start_9 pon_end_9 pon_size_9 pon_start_10 pon_end_10
-#> 1        46          7          48        49          3           53         54
-#> 2        48          7          51        52          2           56         57
-#> 3        46          6          49        50          3           54         55
-#> 4        48          8          51        52          5           57         58
-#> 5        50          2          54        55          3           58         59
-#> 6        47          7          51        52          5           56         57
-#>   pon_size_10 pon_start_11 pon_end_11 pon_size_11 pon_start_12 pon_end_12
-#> 1           4           58         59           3           62         63
-#> 2           3           60         61           4           65         66
-#> 3           2           57         58           4           62         63
-#> 4           3           61         62           2           65         66
-#> 5           6           65         66           1           68         69
-#> 6           4           60         61           4           65         66
-#>   pon_size_12 pon_start_13 pon_end_13 pon_size_13 pon_start_14 pon_end_14
-#> 1           4           67         68           3           72         73
-#> 2           3           70         71           2           74         75
-#> 3           5           66         67           3           72         73
-#> 4           3           NA         NA          NA           NA         NA
-#> 5           4           73         74           2           77         78
-#> 6           2           NA         NA          NA           NA         NA
-#>   pon_size_14 pon_start_15 pon_end_15 pon_size_15 pon_start_16 pon_end_16
-#> 1           2           77         78           2           82         83
-#> 2           7           80         81           3           84         85
-#> 3           2           76         77           5           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5           2           82         83           4           87         88
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_16 pon_start_17 pon_end_17 pon_size_17 pon_start_18 pon_end_18
-#> 1           2           87         88           3           92         93
-#> 2           2           90         91           1           NA         NA
-#> 3          NA           NA         NA          NA           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5           2           93         94           2           97         98
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_18 pon_start_19 pon_end_19 pon_size_19 pon_start_20 pon_end_20
-#> 1           3           97         98           3           NA         NA
-#> 2          NA           NA         NA          NA           NA         NA
-#> 3          NA           NA         NA          NA           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5           6          103        104           3          124        125
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_20 pon_start_21 pon_end_21 pon_size_21 pon_start_22 pon_end_22
-#> 1          NA           NA         NA          NA           NA         NA
-#> 2          NA           NA         NA          NA           NA         NA
-#> 3          NA           NA         NA          NA           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5           4          128        129           4           NA         NA
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_22 pon_start_23 pon_end_23 pon_size_23 pon_start_24 pon_end_24
-#> 1          NA           NA         NA          NA           NA         NA
-#> 2          NA           NA         NA          NA           NA         NA
-#> 3          NA           NA         NA          NA           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5          NA           NA         NA          NA           NA         NA
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_24 pon_start_25 pon_end_25 pon_size_25 pon_start_26 pon_end_26
-#> 1          NA           NA         NA          NA           NA         NA
-#> 2          NA           NA         NA          NA           NA         NA
-#> 3          NA           NA         NA          NA           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5          NA           NA         NA          NA           NA         NA
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_26 pon_start_27 pon_end_27 pon_size_27 pon_start_28 pon_end_28
-#> 1          NA           NA         NA          NA           NA         NA
-#> 2          NA           NA         NA          NA           NA         NA
-#> 3          NA           NA         NA          NA           NA         NA
-#> 4          NA           NA         NA          NA           NA         NA
-#> 5          NA           NA         NA          NA           NA         NA
-#> 6          NA           NA         NA          NA           NA         NA
-#>   pon_size_28 death_start death_end
-#> 1          NA         102       103
-#> 2          NA          95        96
-#> 3          NA          78        79
-#> 4          NA          66        67
-#> 5          NA         135       136
-#> 6          NA          74        75
+#>   par geno spore sex_start sex_end sex mat_start mat_end mat clutch_start_1
+#> 1   0    0     0        13    1000   0        12      13   6             20
+#> 2   0    0     0        13    1000   0        12      13   3             19
+#> 3   0    0     0        15    1000   0        14      15   1             18
+#> 4   0    0     0        14    1000   0        13      14   6             20
+#> 5   0    0     0        19    1000   0        18      19   2             21
+#> 6   0    0     0        12    1000   0        11      12   1             18
+#>   clutch_end_1 clutch_size_1 clutch_start_2 clutch_end_2 clutch_size_2
+#> 1           21             3             23           24             9
+#> 2           20             5             23           24             6
+#> 3           19             5             22           23            10
+#> 4           21             7             24           25             6
+#> 5           22             9             25           26             6
+#> 6           19             6             23           24             6
+#>   clutch_start_3 clutch_end_3 clutch_size_3 clutch_start_4 clutch_end_4
+#> 1             26           27             3             30           31
+#> 2             27           28             3             31           32
+#> 3             25           26             5             29           30
+#> 4             27           28             5             31           32
+#> 5             29           30             6             33           34
+#> 6             26           27             4             30           31
+#>   clutch_size_4 clutch_start_5 clutch_end_5 clutch_size_5 clutch_start_6
+#> 1             2             33           34             8             37
+#> 2             6             35           36             9             39
+#> 3             5             33           34             6             37
+#> 4             8             35           36             8             39
+#> 5             6             38           39             3             41
+#> 6             4             34           35             5             38
+#>   clutch_end_6 clutch_size_6 clutch_start_7 clutch_end_7 clutch_size_7
+#> 1           38             5             41           42             5
+#> 2           40             9             43           44             4
+#> 3           38             4             41           42             8
+#> 4           40             7             43           44             7
+#> 5           42             9             45           46             6
+#> 6           39             8             42           43             6
+#>   clutch_start_8 clutch_end_8 clutch_size_8 clutch_start_9 clutch_end_9
+#> 1             45           46             7             48           49
+#> 2             47           48             7             51           52
+#> 3             45           46             6             49           50
+#> 4             47           48             8             51           52
+#> 5             49           50             2             54           55
+#> 6             46           47             7             51           52
+#>   clutch_size_9 clutch_start_10 clutch_end_10 clutch_size_10 clutch_start_11
+#> 1             3              53            54              4              58
+#> 2             2              56            57              3              60
+#> 3             3              54            55              2              57
+#> 4             5              57            58              3              61
+#> 5             3              58            59              6              65
+#> 6             5              56            57              4              60
+#>   clutch_end_11 clutch_size_11 clutch_start_12 clutch_end_12 clutch_size_12
+#> 1            59              3              62            63              4
+#> 2            61              4              65            66              3
+#> 3            58              4              62            63              5
+#> 4            62              2              65            66              3
+#> 5            66              1              68            69              4
+#> 6            61              4              65            66              2
+#>   clutch_start_13 clutch_end_13 clutch_size_13 clutch_start_14 clutch_end_14
+#> 1              67            68              3              72            73
+#> 2              70            71              2              74            75
+#> 3              66            67              3              72            73
+#> 4              NA            NA             NA              NA            NA
+#> 5              73            74              2              77            78
+#> 6              NA            NA             NA              NA            NA
+#>   clutch_size_14 clutch_start_15 clutch_end_15 clutch_size_15 clutch_start_16
+#> 1              2              77            78              2              82
+#> 2              7              80            81              3              84
+#> 3              2              76            77              5              NA
+#> 4             NA              NA            NA             NA              NA
+#> 5              2              82            83              4              87
+#> 6             NA              NA            NA             NA              NA
+#>   clutch_end_16 clutch_size_16 clutch_start_17 clutch_end_17 clutch_size_17
+#> 1            83              2              87            88              3
+#> 2            85              2              90            91              1
+#> 3            NA             NA              NA            NA             NA
+#> 4            NA             NA              NA            NA             NA
+#> 5            88              2              93            94              2
+#> 6            NA             NA              NA            NA             NA
+#>   clutch_start_18 clutch_end_18 clutch_size_18 clutch_start_19 clutch_end_19
+#> 1              92            93              3              97            98
+#> 2              NA            NA             NA              NA            NA
+#> 3              NA            NA             NA              NA            NA
+#> 4              NA            NA             NA              NA            NA
+#> 5              97            98              6             103           104
+#> 6              NA            NA             NA              NA            NA
+#>   clutch_size_19 clutch_start_20 clutch_end_20 clutch_size_20 clutch_start_21
+#> 1              3              NA            NA             NA              NA
+#> 2             NA              NA            NA             NA              NA
+#> 3             NA              NA            NA             NA              NA
+#> 4             NA              NA            NA             NA              NA
+#> 5              3             124           125              4             128
+#> 6             NA              NA            NA             NA              NA
+#>   clutch_end_21 clutch_size_21 clutch_start_22 clutch_end_22 clutch_size_22
+#> 1            NA             NA              NA            NA             NA
+#> 2            NA             NA              NA            NA             NA
+#> 3            NA             NA              NA            NA             NA
+#> 4            NA             NA              NA            NA             NA
+#> 5           129              4              NA            NA             NA
+#> 6            NA             NA              NA            NA             NA
+#>   clutch_start_23 clutch_end_23 clutch_size_23 clutch_start_24 clutch_end_24
+#> 1              NA            NA             NA              NA            NA
+#> 2              NA            NA             NA              NA            NA
+#> 3              NA            NA             NA              NA            NA
+#> 4              NA            NA             NA              NA            NA
+#> 5              NA            NA             NA              NA            NA
+#> 6              NA            NA             NA              NA            NA
+#>   clutch_size_24 clutch_start_25 clutch_end_25 clutch_size_25 clutch_start_26
+#> 1             NA              NA            NA             NA              NA
+#> 2             NA              NA            NA             NA              NA
+#> 3             NA              NA            NA             NA              NA
+#> 4             NA              NA            NA             NA              NA
+#> 5             NA              NA            NA             NA              NA
+#> 6             NA              NA            NA             NA              NA
+#>   clutch_end_26 clutch_size_26 clutch_start_27 clutch_end_27 clutch_size_27
+#> 1            NA             NA              NA            NA             NA
+#> 2            NA             NA              NA            NA             NA
+#> 3            NA             NA              NA            NA             NA
+#> 4            NA             NA              NA            NA             NA
+#> 5            NA             NA              NA            NA             NA
+#> 6            NA             NA              NA            NA             NA
+#>   clutch_start_28 clutch_end_28 clutch_size_28 death_start death_end
+#> 1              NA            NA             NA         102       103
+#> 2              NA            NA             NA          95        96
+#> 3              NA            NA             NA          78        79
+#> 4              NA            NA             NA          66        67
+#> 5              NA            NA             NA         135       136
+#> 6              NA            NA             NA          74        75
 ```
 
 ### Creata a data lifelihood object
@@ -153,6 +174,7 @@ df |> head()
 
 dataLFH <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -172,7 +194,7 @@ dataLFH <- as_lifelihoodData(
 
 results <- dataLFH |>
   lifelihood(path_config = use_test_config("config_pierrick"))
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1176_2869_2483_9068/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1176_2869_2483_9068/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1176 2869 2483 9068 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9245_9771_5478_2984/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9245_9771_5478_2984/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9245 9771 5478 2984 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### AIC & BIC
@@ -180,9 +202,9 @@ results <- dataLFH |>
 ``` r
 
 AIC(results)
-#> [1] 64529.24
+#> [1] 64960.43
 BIC(results)
-#> [1] 64632.68
+#> [1] 65003.53
 ```
 
 ### Summary results
@@ -190,54 +212,28 @@ BIC(results)
 ``` r
 
 coef(results)
-#>                int_expt_death          eff_expt_death_par_1 
-#>                   -0.90961216                   -0.20421606 
-#>          eff_expt_death_par_2        eff_expt_death_spore_1 
-#>                   -0.01951431                   -0.15835680 
-#>        eff_expt_death_spore_2        eff_expt_death_spore_3 
-#>                    0.02974091                   -0.26312236 
-#>  eff_expt_death_par_1:spore_1  eff_expt_death_par_2:spore_1 
-#>                   -0.46568017                    0.87205781 
-#>  eff_expt_death_par_1:spore_2  eff_expt_death_par_2:spore_2 
-#>                   -0.57850629                    3.74400822 
-#>  eff_expt_death_par_1:spore_3  eff_expt_death_par_2:spore_3 
-#>                    0.76146154                   -0.52739000 
-#>           int_survival_param2             int_expt_maturity 
-#>                   -4.87204346                   -1.43346981 
-#>       eff_expt_maturity_par_1       eff_expt_maturity_par_2 
-#>                    0.11947443                   -0.01326348 
-#>           int_maturity_param2         int_expt_reproduction 
-#>                   -7.44439230                   -1.79165329 
-#>   eff_expt_reproduction_par_1   eff_expt_reproduction_par_2 
-#>                   -1.68804414                   -1.10219229 
-#>       int_reproduction_param2 eff_reproduction_param2_par_1 
-#>                   -1.12049868                   -0.43909110 
-#> eff_reproduction_param2_par_2               int_n_offspring 
-#>                   -0.80383871                   -2.54257607
+#>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 
+#>               -0.911175               -1.560680               -1.579087 
+#>     int_survival_param2    int_ratio_expt_death       int_expt_maturity 
+#>               -4.878733               -3.903737               -1.469884 
+#>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 
+#>               -7.354207               -1.803183               -1.152709 
+#>         int_n_offspring 
+#>               -2.552755
 coeff(results, "expt_death")
-#>               int_expt_death         eff_expt_death_par_1 
-#>                  -0.90961216                  -0.20421606 
-#>         eff_expt_death_par_2       eff_expt_death_spore_1 
-#>                  -0.01951431                  -0.15835680 
-#>       eff_expt_death_spore_2       eff_expt_death_spore_3 
-#>                   0.02974091                  -0.26312236 
-#> eff_expt_death_par_1:spore_1 eff_expt_death_par_2:spore_1 
-#>                  -0.46568017                   0.87205781 
-#> eff_expt_death_par_1:spore_2 eff_expt_death_par_2:spore_2 
-#>                  -0.57850629                   3.74400822 
-#> eff_expt_death_par_1:spore_3 eff_expt_death_par_2:spore_3 
-#>                   0.76146154                  -0.52739000
+#>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 
+#>            -0.911175            -1.560680            -1.579087
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>           -4.872043
+#>           -4.878733
 
 AIC(results)
-#> [1] 64529.24
+#> [1] 64960.43
 BIC(results)
-#> [1] 64632.68
+#> [1] 65003.53
 
 logLik(results)
-#> [1] -32240.62
+#> [1] -32470.21
 ```
 
 ### Prediction on new data
@@ -254,7 +250,7 @@ newdata <- tibble(
   )
 
 prediction(results, "expt_death", newdata = newdata)
-#> [1] -0.9096122 -1.7378652  2.8446227 -1.0679690 -1.1138282 -0.2154255 -1.7378652
+#> [1] -0.911175 -2.471855 -2.490262 -0.911175 -2.471855 -2.490262 -2.471855
 prediction(results, "expt_death", newdata = newdata, type = "response")
-#> [1]  93.01438  48.46616 306.19303  82.87655  80.07991 144.61826  48.46616
+#> numeric(0)
 ```

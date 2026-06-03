@@ -15,11 +15,11 @@ First, we need to fit the model with
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.1     
+#> ✔ purrr     1.2.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -35,7 +35,7 @@ df <- datapierrick |>
 
 generate_clutch_vector <- function(N) {
   return(paste(
-    "pon",
+    "clutch",
     rep(c("start", "end", "size"), N),
     rep(1:N, each = 3),
     sep = "_"
@@ -45,6 +45,7 @@ clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -62,10 +63,7 @@ results <- lifelihood(
   lifelihoodData,
   path_config = use_test_config("config_pierrick")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7289_8302_5270_8561/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7289_8302_5270_8561/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 7289 8302 5270 8561 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> Warning in check_estimation(results): Estimation of 'expt_death' is close to
-#> the maximum bound: expt_death~=323.958894644731 (bound=322.38). Consider
-#> increasing maximum bound.
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9233_8516_2559_1897/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9233_8516_2559_1897/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9233 8516 2559 1897 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 
 summary(results)
 #> 
@@ -74,41 +72,27 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -32234.677
-#> AIC:             64517.4
-#> BIC:             64620.8
+#> Log-likelihood:  -32472.561
+#> AIC:             64965.1
+#> BIC:             65008.2
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -0.909 (0.000)
-#>   expt_death eff_expt_death_par_1 -0.084 (0.000)
-#>   expt_death eff_expt_death_par_2 -0.010 (0.000)
-#>   expt_death eff_expt_death_spore_1 -0.753 (0.000)
-#>   expt_death eff_expt_death_spore_2 -0.036 (0.000)
-#>   expt_death eff_expt_death_spore_3 -0.418 (0.000)
-#>   expt_death eff_expt_death_par_1:spore_1 0.008 (0.000)
-#>   expt_death eff_expt_death_par_2:spore_1 3.575 (0.000)
-#>   expt_death eff_expt_death_par_1:spore_2 -0.634 (0.000)
-#>   expt_death eff_expt_death_par_2:spore_2 -1.121 (0.000)
-#>   expt_death eff_expt_death_par_1:spore_3 9.736 (0.000)
-#>   expt_death eff_expt_death_par_2:spore_3 -0.382 (0.000)
-#>   survival_param2 (Intercept) -4.877 (0.000)
+#>   expt_death (Intercept)    -0.922 (0.000)
+#>   expt_death eff_expt_death_par_1 -2.315 (0.000)
+#>   expt_death eff_expt_death_par_2 -2.334 (0.000)
+#>   survival_param2 (Intercept) -4.883 (0.000)
+#>   ratio_expt_death (Intercept) -3.152 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.518 (0.000)
-#>   expt_maturity eff_expt_maturity_par_1 0.148 (0.000)
-#>   expt_maturity eff_expt_maturity_par_2 0.081 (0.000)
-#>   maturity_param2 (Intercept) -7.405 (0.000)
+#>   expt_maturity (Intercept) -1.418 (0.000)
+#>   maturity_param2 (Intercept) -7.380 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.789 (0.000)
-#>   expt_reproduction eff_expt_reproduction_par_1 -1.696 (0.000)
-#>   expt_reproduction eff_expt_reproduction_par_2 -1.103 (0.000)
-#>   reproduction_param2 (Intercept) -1.122 (0.000)
-#>   reproduction_param2 eff_reproduction_param2_par_1 -0.439 (0.000)
-#>   reproduction_param2 eff_reproduction_param2_par_2 -0.800 (0.000)
-#>   n_offspring (Intercept)   -2.543 (0.000)
+#>   expt_reproduction (Intercept) -1.802 (0.000)
+#>   reproduction_param2 (Intercept) -1.152 (0.000)
+#>   n_offspring (Intercept)   -2.551 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -124,22 +108,22 @@ By default, `lifelihood` will simulate all life history events
 ``` r
 
 simulate_life_history(results) |> head()
-#> # A tibble: 6 × 149
-#>   mortality maturity clutch_1 n_offspring_clutch_1 clutch_2 n_offspring_clutch_2
-#>       <dbl>    <dbl>    <dbl>                <int>    <dbl>                <int>
-#> 1     149.      12.8     15.2                    3     20.6                    3
-#> 2      98.7     12.0     14.7                    8     22.7                   11
-#> 3      84.2     12.6     22.3                    3     24.0                    2
-#> 4     135.      12.7     18.1                    5     24.1                    3
-#> 5     129.      12.3     15.3                    3     20.0                    5
-#> 6      67.8     13.4     20.7                    4     22.3                    2
-#> # ℹ 143 more variables: clutch_3 <dbl>, n_offspring_clutch_3 <int>,
-#> #   clutch_4 <dbl>, n_offspring_clutch_4 <int>, clutch_5 <dbl>,
-#> #   n_offspring_clutch_5 <int>, clutch_6 <dbl>, n_offspring_clutch_6 <int>,
-#> #   clutch_7 <dbl>, n_offspring_clutch_7 <int>, clutch_8 <dbl>,
-#> #   n_offspring_clutch_8 <int>, clutch_9 <dbl>, n_offspring_clutch_9 <int>,
-#> #   clutch_10 <dbl>, n_offspring_clutch_10 <int>, clutch_11 <dbl>,
-#> #   n_offspring_clutch_11 <int>, clutch_12 <dbl>, …
+#> # A tibble: 6 × 113
+#>   death_start death_end total_n_offspring maturity_start maturity_end
+#>         <dbl>     <dbl>             <dbl>          <dbl>        <dbl>
+#> 1       127.      127.                113           13.5         13.5
+#> 2        52.8      52.8                36           12.4         12.4
+#> 3       106.      106.                103           13.4         13.4
+#> 4       101.      101.                 94           14.0         14.0
+#> 5        97.0      97.0                70           13.6         13.6
+#> 6       135.      135.                119           14.3         14.3
+#> # ℹ 108 more variables: clutch_size_1 <int>, clutch_size_2 <int>,
+#> #   clutch_size_3 <int>, clutch_size_4 <int>, clutch_size_5 <int>,
+#> #   clutch_size_6 <int>, clutch_size_7 <int>, clutch_size_8 <int>,
+#> #   clutch_size_9 <int>, clutch_size_10 <int>, clutch_size_11 <int>,
+#> #   clutch_size_12 <int>, clutch_size_13 <int>, clutch_size_14 <int>,
+#> #   clutch_size_15 <int>, clutch_size_16 <int>, clutch_size_17 <int>,
+#> #   clutch_size_18 <int>, clutch_size_19 <int>, clutch_size_20 <int>, …
 ```
 
 But you can specify which event you want:
@@ -147,15 +131,15 @@ But you can specify which event you want:
 ``` r
 
 simulate_life_history(results, event = "maturity") |> head()
-#> # A tibble: 6 × 1
-#>   maturity
-#>      <dbl>
-#> 1     14.4
-#> 2     12.4
-#> 3     12.3
-#> 4     14.5
-#> 5     12.0
-#> 6     13.0
+#> # A tibble: 6 × 2
+#>   maturity_start maturity_end
+#>            <dbl>        <dbl>
+#> 1           14.3         14.3
+#> 2           13.5         13.5
+#> 3           13.5         13.5
+#> 4           13.9         13.9
+#> 5           13.3         13.3
+#> 6           13.4         13.4
 ```
 
 ## Simulations with visit masks
@@ -166,45 +150,64 @@ constraints to the interval dates.
 
 If you scroll to the top, you’ll see that we passed a column name from
 our dataframe to the `block` argument. This column represents the block
-to which each individual belongs. Since we provided this value, we just
-need to add `use_censoring = TRUE` to include censoring time intervals
-in the simulation:
+to which each individual belongs. Use
+[`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
+to retrieve the visit masks inferred from the original dataset:
+
+``` r
+
+visits <- get_visits(lifelihoodData)
+visits |> head()
+#> # A tibble: 6 × 2
+#>   block visit
+#>   <int> <int>
+#> 1     1     0
+#> 2     1     7
+#> 3     1     8
+#> 4     1     9
+#> 5     1    10
+#> 6     1    11
+```
+
+Then pass these visits explicitly with `use_censoring = TRUE` to include
+censoring time intervals in the simulation:
 
 ``` r
 
 results |>
-  simulate_life_history(event = "maturity", use_censoring = TRUE) |>
+  simulate_life_history(
+    event = "maturity",
+    use_censoring = TRUE,
+    visits = visits
+  ) |>
   head()
 #> # A tibble: 6 × 3
 #>   maturity maturity_start maturity_end
-#>      <dbl>          <int>        <int>
-#> 1     12.5             12           13
-#> 2     12.3             12           13
-#> 3     13.5             13           14
-#> 4     11.9             11           12
-#> 5     13.1             13           14
-#> 6     13.3             13           14
+#>      <dbl>          <dbl>        <dbl>
+#> 1     12.8             12           13
+#> 2     14.7             14           15
+#> 3     13.6             13           14
+#> 4     13.1             13           14
+#> 5     13.5             13           14
+#> 6     12.7             12           13
 ```
 
-Right now, visit masks are “deduced” from the original dataset, but you
-can provide your own visit masks with the `visits` argument.
-
-It must be a dataframe with 2 columns: `block` (the same name as passed
-to
+You can also provide your own visit masks with the `visits` argument. It
+must be a dataframe with 2 columns: `block` (the same name as passed to
 [`lifelihood::as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 in the `block` argument) and exactly `visit`. For each block, `visit`
 corresponds to the ages at which the events of individuals were
 recorded.
 
-Let’s define this visits dataframe:
+Let’s define a custom visits dataframe:
 
 ``` r
 
-visits <- tibble(
+custom_visits <- tibble(
   block = rep(1:2, nrow(datapierrick) / 2),
-  visit = 1:nrow(datapierrick)
+  visit = seq_len(nrow(datapierrick))
 )
-visits |> head()
+custom_visits |> head()
 #> # A tibble: 6 × 2
 #>   block visit
 #>   <int> <int>
@@ -226,16 +229,16 @@ results |>
   simulate_life_history(
     event = "maturity",
     use_censoring = TRUE,
-    visits = visits
+    visits = custom_visits
   ) |>
   head()
 #> # A tibble: 6 × 3
 #>   maturity maturity_start maturity_end
-#>      <dbl>          <int>        <int>
-#> 1     12.9             11           13
-#> 2     12.6             11           13
-#> 3     13.4             13           15
-#> 4     12.3             11           13
-#> 5     13.0             11           13
-#> 6     12.8             11           13
+#>      <dbl>          <dbl>        <dbl>
+#> 1     14.2             13           15
+#> 2     14.2             13           15
+#> 3     14.7             13           15
+#> 4     13.1             13           15
+#> 5     13.0             13           15
+#> 6     13.0             13           15
 ```

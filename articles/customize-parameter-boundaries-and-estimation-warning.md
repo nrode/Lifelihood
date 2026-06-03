@@ -18,11 +18,11 @@ If you haven’t already check it, have a look at:
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.1     
+#> ✔ purrr     1.2.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -94,6 +94,7 @@ vignette.*
 
 dataLFH <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -119,7 +120,7 @@ results <- lifelihood(
   lifelihoodData = dataLFH,
   path_config = use_test_config("config")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3450_719_2309_3733/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3450_719_2309_3733/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3450 719 2309 3733 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8687_126_7785_6924/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8687_126_7785_6924/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8687 126 7785 6924 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ## Warning
@@ -162,27 +163,27 @@ function and by passing the `lifelihoodData` object:
 
 bounds_df <- default_bounds_df(dataLFH)
 bounds_df
-#>                       param    min     max
-#> 1                expt_death  0.001      40
-#> 2           survival_param2   0.05     500
-#> 3          ratio_expt_death   0.01     100
-#> 4                prob_death  1e-05 0.99999
-#> 5                 sex_ratio  1e-05 0.99999
-#> 6             expt_maturity  0.001       8
-#> 7           maturity_param2  0.005     600
-#> 8       ratio_expt_maturity   0.01     100
-#> 9         expt_reproduction  0.001      10
-#> 10      reproduction_param2 0.0025      10
-#> 11              n_offspring      1      50
-#> 12    increase_death_hazard  1e-05      10
-#> 13       tof_reduction_rate  1e-07      10
-#> 14 increase_tof_n_offspring  1e-07      10
-#> 15      lin_decrease_hazard    -20      20
-#> 16          quad_senescence    -20      20
-#> 17     quad_decrease_hazard    -10      10
-#> 18  quad_change_n_offspring    -10      10
-#> 19          tof_n_offspring    -10      10
-#> 20                  fitness  0.001    1000
+#>                                param    min     max
+#> 1                         expt_death  0.001      40
+#> 2                    survival_param2   0.05     500
+#> 3                   ratio_expt_death   0.01     100
+#> 4                         prob_death  1e-05 0.99999
+#> 5                          sex_ratio  1e-05 0.99999
+#> 6                      expt_maturity  0.001       8
+#> 7                    maturity_param2  0.005     600
+#> 8                ratio_expt_maturity   0.01     100
+#> 9                  expt_reproduction  0.001      10
+#> 10               reproduction_param2 0.0025      10
+#> 11                       n_offspring      1      50
+#> 12             increase_death_hazard  1e-05      10
+#> 13                         tof_decay  1e-07      10
+#> 14 increase_death_hazard_n_offspring  1e-07      10
+#> 15               lin_decrease_hazard    -20      20
+#> 16                   quad_senescence    -20      20
+#> 17              quad_decrease_hazard    -10      10
+#> 18           quad_change_n_offspring    -10      10
+#> 19                   tof_n_offspring    -10      10
+#> 20                           fitness  0.001    1000
 ```
 
 Since 10 seems to not be high enough, let’s try with 80:
@@ -203,7 +204,7 @@ results <- lifelihood(
   path_config = use_test_config("config"),
   param_bounds_df = bounds_df
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6413_92_8212_8973/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6413_92_8212_8973/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6413 92 8212 8973 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6096_9818_5028_8290/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6096_9818_5028_8290/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6096 9818 5028 8290 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 Now we don’t get any warning!

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Overview of all features in lifelihood • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -47,9 +47,10 @@
     <li><a class="dropdown-item" href="../articles/how-to-use-lifelihood.html">How to use lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/simulation-and-visit-masks.html">Simulation and visit masks</a></li>
+    <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><a class="dropdown-item" href="../articles/fit-saturated-model.html">Fit saturated model using `group_by_group = TRUE`</a></li>
     <li><a class="dropdown-item" href="../articles/standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
-    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">How to use lifelihood</a></li>
+    <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
@@ -103,11 +104,11 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: tidyverse</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.2.0</span></span>
+<span><span class="co">#&gt; ✔ dplyr     1.2.1     ✔ readr     2.2.0</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.3     ✔ tibble    3.3.1</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
+<span><span class="co">#&gt; ✔ purrr     1.2.2     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
 <span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
@@ -127,7 +128,7 @@
 <span></span>
 <span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"pon"</span>,</span>
+<span>    <span class="st">"clutch"</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
@@ -135,111 +136,132 @@
 <span><span class="op">}</span></span>
 <span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   par geno spore sex_start sex_end sex mat_start mat_end mat pon_start_1</span></span>
-<span><span class="co">#&gt; 1   0    0     0        13    1000   0        12      13   6          20</span></span>
-<span><span class="co">#&gt; 2   0    0     0        13    1000   0        12      13   3          19</span></span>
-<span><span class="co">#&gt; 3   0    0     0        15    1000   0        14      15   1          18</span></span>
-<span><span class="co">#&gt; 4   0    0     0        14    1000   0        13      14   6          20</span></span>
-<span><span class="co">#&gt; 5   0    0     0        19    1000   0        18      19   2          21</span></span>
-<span><span class="co">#&gt; 6   0    0     0        12    1000   0        11      12   1          18</span></span>
-<span><span class="co">#&gt;   pon_end_1 pon_size_1 pon_start_2 pon_end_2 pon_size_2 pon_start_3 pon_end_3</span></span>
-<span><span class="co">#&gt; 1        21          3          23        24          9          26        27</span></span>
-<span><span class="co">#&gt; 2        20          5          23        24          6          27        28</span></span>
-<span><span class="co">#&gt; 3        19          5          22        23         10          25        26</span></span>
-<span><span class="co">#&gt; 4        21          7          24        25          6          27        28</span></span>
-<span><span class="co">#&gt; 5        22          9          25        26          6          29        30</span></span>
-<span><span class="co">#&gt; 6        19          6          23        24          6          26        27</span></span>
-<span><span class="co">#&gt;   pon_size_3 pon_start_4 pon_end_4 pon_size_4 pon_start_5 pon_end_5 pon_size_5</span></span>
-<span><span class="co">#&gt; 1          3          30        31          2          33        34          8</span></span>
-<span><span class="co">#&gt; 2          3          31        32          6          35        36          9</span></span>
-<span><span class="co">#&gt; 3          5          29        30          5          33        34          6</span></span>
-<span><span class="co">#&gt; 4          5          31        32          8          35        36          8</span></span>
-<span><span class="co">#&gt; 5          6          33        34          6          38        39          3</span></span>
-<span><span class="co">#&gt; 6          4          30        31          4          34        35          5</span></span>
-<span><span class="co">#&gt;   pon_start_6 pon_end_6 pon_size_6 pon_start_7 pon_end_7 pon_size_7 pon_start_8</span></span>
-<span><span class="co">#&gt; 1          37        38          5          41        42          5          45</span></span>
-<span><span class="co">#&gt; 2          39        40          9          43        44          4          47</span></span>
-<span><span class="co">#&gt; 3          37        38          4          41        42          8          45</span></span>
-<span><span class="co">#&gt; 4          39        40          7          43        44          7          47</span></span>
-<span><span class="co">#&gt; 5          41        42          9          45        46          6          49</span></span>
-<span><span class="co">#&gt; 6          38        39          8          42        43          6          46</span></span>
-<span><span class="co">#&gt;   pon_end_8 pon_size_8 pon_start_9 pon_end_9 pon_size_9 pon_start_10 pon_end_10</span></span>
-<span><span class="co">#&gt; 1        46          7          48        49          3           53         54</span></span>
-<span><span class="co">#&gt; 2        48          7          51        52          2           56         57</span></span>
-<span><span class="co">#&gt; 3        46          6          49        50          3           54         55</span></span>
-<span><span class="co">#&gt; 4        48          8          51        52          5           57         58</span></span>
-<span><span class="co">#&gt; 5        50          2          54        55          3           58         59</span></span>
-<span><span class="co">#&gt; 6        47          7          51        52          5           56         57</span></span>
-<span><span class="co">#&gt;   pon_size_10 pon_start_11 pon_end_11 pon_size_11 pon_start_12 pon_end_12</span></span>
-<span><span class="co">#&gt; 1           4           58         59           3           62         63</span></span>
-<span><span class="co">#&gt; 2           3           60         61           4           65         66</span></span>
-<span><span class="co">#&gt; 3           2           57         58           4           62         63</span></span>
-<span><span class="co">#&gt; 4           3           61         62           2           65         66</span></span>
-<span><span class="co">#&gt; 5           6           65         66           1           68         69</span></span>
-<span><span class="co">#&gt; 6           4           60         61           4           65         66</span></span>
-<span><span class="co">#&gt;   pon_size_12 pon_start_13 pon_end_13 pon_size_13 pon_start_14 pon_end_14</span></span>
-<span><span class="co">#&gt; 1           4           67         68           3           72         73</span></span>
-<span><span class="co">#&gt; 2           3           70         71           2           74         75</span></span>
-<span><span class="co">#&gt; 3           5           66         67           3           72         73</span></span>
-<span><span class="co">#&gt; 4           3           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5           4           73         74           2           77         78</span></span>
-<span><span class="co">#&gt; 6           2           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_14 pon_start_15 pon_end_15 pon_size_15 pon_start_16 pon_end_16</span></span>
-<span><span class="co">#&gt; 1           2           77         78           2           82         83</span></span>
-<span><span class="co">#&gt; 2           7           80         81           3           84         85</span></span>
-<span><span class="co">#&gt; 3           2           76         77           5           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5           2           82         83           4           87         88</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_16 pon_start_17 pon_end_17 pon_size_17 pon_start_18 pon_end_18</span></span>
-<span><span class="co">#&gt; 1           2           87         88           3           92         93</span></span>
-<span><span class="co">#&gt; 2           2           90         91           1           NA         NA</span></span>
-<span><span class="co">#&gt; 3          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5           2           93         94           2           97         98</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_18 pon_start_19 pon_end_19 pon_size_19 pon_start_20 pon_end_20</span></span>
-<span><span class="co">#&gt; 1           3           97         98           3           NA         NA</span></span>
-<span><span class="co">#&gt; 2          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 3          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5           6          103        104           3          124        125</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_20 pon_start_21 pon_end_21 pon_size_21 pon_start_22 pon_end_22</span></span>
-<span><span class="co">#&gt; 1          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 2          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 3          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5           4          128        129           4           NA         NA</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_22 pon_start_23 pon_end_23 pon_size_23 pon_start_24 pon_end_24</span></span>
-<span><span class="co">#&gt; 1          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 2          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 3          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_24 pon_start_25 pon_end_25 pon_size_25 pon_start_26 pon_end_26</span></span>
-<span><span class="co">#&gt; 1          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 2          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 3          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_26 pon_start_27 pon_end_27 pon_size_27 pon_start_28 pon_end_28</span></span>
-<span><span class="co">#&gt; 1          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 2          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 3          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 4          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 5          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt; 6          NA           NA         NA          NA           NA         NA</span></span>
-<span><span class="co">#&gt;   pon_size_28 death_start death_end</span></span>
-<span><span class="co">#&gt; 1          NA         102       103</span></span>
-<span><span class="co">#&gt; 2          NA          95        96</span></span>
-<span><span class="co">#&gt; 3          NA          78        79</span></span>
-<span><span class="co">#&gt; 4          NA          66        67</span></span>
-<span><span class="co">#&gt; 5          NA         135       136</span></span>
-<span><span class="co">#&gt; 6          NA          74        75</span></span></code></pre></div>
+<span><span class="co">#&gt;   par geno spore sex_start sex_end sex mat_start mat_end mat clutch_start_1</span></span>
+<span><span class="co">#&gt; 1   0    0     0        13    1000   0        12      13   6             20</span></span>
+<span><span class="co">#&gt; 2   0    0     0        13    1000   0        12      13   3             19</span></span>
+<span><span class="co">#&gt; 3   0    0     0        15    1000   0        14      15   1             18</span></span>
+<span><span class="co">#&gt; 4   0    0     0        14    1000   0        13      14   6             20</span></span>
+<span><span class="co">#&gt; 5   0    0     0        19    1000   0        18      19   2             21</span></span>
+<span><span class="co">#&gt; 6   0    0     0        12    1000   0        11      12   1             18</span></span>
+<span><span class="co">#&gt;   clutch_end_1 clutch_size_1 clutch_start_2 clutch_end_2 clutch_size_2</span></span>
+<span><span class="co">#&gt; 1           21             3             23           24             9</span></span>
+<span><span class="co">#&gt; 2           20             5             23           24             6</span></span>
+<span><span class="co">#&gt; 3           19             5             22           23            10</span></span>
+<span><span class="co">#&gt; 4           21             7             24           25             6</span></span>
+<span><span class="co">#&gt; 5           22             9             25           26             6</span></span>
+<span><span class="co">#&gt; 6           19             6             23           24             6</span></span>
+<span><span class="co">#&gt;   clutch_start_3 clutch_end_3 clutch_size_3 clutch_start_4 clutch_end_4</span></span>
+<span><span class="co">#&gt; 1             26           27             3             30           31</span></span>
+<span><span class="co">#&gt; 2             27           28             3             31           32</span></span>
+<span><span class="co">#&gt; 3             25           26             5             29           30</span></span>
+<span><span class="co">#&gt; 4             27           28             5             31           32</span></span>
+<span><span class="co">#&gt; 5             29           30             6             33           34</span></span>
+<span><span class="co">#&gt; 6             26           27             4             30           31</span></span>
+<span><span class="co">#&gt;   clutch_size_4 clutch_start_5 clutch_end_5 clutch_size_5 clutch_start_6</span></span>
+<span><span class="co">#&gt; 1             2             33           34             8             37</span></span>
+<span><span class="co">#&gt; 2             6             35           36             9             39</span></span>
+<span><span class="co">#&gt; 3             5             33           34             6             37</span></span>
+<span><span class="co">#&gt; 4             8             35           36             8             39</span></span>
+<span><span class="co">#&gt; 5             6             38           39             3             41</span></span>
+<span><span class="co">#&gt; 6             4             34           35             5             38</span></span>
+<span><span class="co">#&gt;   clutch_end_6 clutch_size_6 clutch_start_7 clutch_end_7 clutch_size_7</span></span>
+<span><span class="co">#&gt; 1           38             5             41           42             5</span></span>
+<span><span class="co">#&gt; 2           40             9             43           44             4</span></span>
+<span><span class="co">#&gt; 3           38             4             41           42             8</span></span>
+<span><span class="co">#&gt; 4           40             7             43           44             7</span></span>
+<span><span class="co">#&gt; 5           42             9             45           46             6</span></span>
+<span><span class="co">#&gt; 6           39             8             42           43             6</span></span>
+<span><span class="co">#&gt;   clutch_start_8 clutch_end_8 clutch_size_8 clutch_start_9 clutch_end_9</span></span>
+<span><span class="co">#&gt; 1             45           46             7             48           49</span></span>
+<span><span class="co">#&gt; 2             47           48             7             51           52</span></span>
+<span><span class="co">#&gt; 3             45           46             6             49           50</span></span>
+<span><span class="co">#&gt; 4             47           48             8             51           52</span></span>
+<span><span class="co">#&gt; 5             49           50             2             54           55</span></span>
+<span><span class="co">#&gt; 6             46           47             7             51           52</span></span>
+<span><span class="co">#&gt;   clutch_size_9 clutch_start_10 clutch_end_10 clutch_size_10 clutch_start_11</span></span>
+<span><span class="co">#&gt; 1             3              53            54              4              58</span></span>
+<span><span class="co">#&gt; 2             2              56            57              3              60</span></span>
+<span><span class="co">#&gt; 3             3              54            55              2              57</span></span>
+<span><span class="co">#&gt; 4             5              57            58              3              61</span></span>
+<span><span class="co">#&gt; 5             3              58            59              6              65</span></span>
+<span><span class="co">#&gt; 6             5              56            57              4              60</span></span>
+<span><span class="co">#&gt;   clutch_end_11 clutch_size_11 clutch_start_12 clutch_end_12 clutch_size_12</span></span>
+<span><span class="co">#&gt; 1            59              3              62            63              4</span></span>
+<span><span class="co">#&gt; 2            61              4              65            66              3</span></span>
+<span><span class="co">#&gt; 3            58              4              62            63              5</span></span>
+<span><span class="co">#&gt; 4            62              2              65            66              3</span></span>
+<span><span class="co">#&gt; 5            66              1              68            69              4</span></span>
+<span><span class="co">#&gt; 6            61              4              65            66              2</span></span>
+<span><span class="co">#&gt;   clutch_start_13 clutch_end_13 clutch_size_13 clutch_start_14 clutch_end_14</span></span>
+<span><span class="co">#&gt; 1              67            68              3              72            73</span></span>
+<span><span class="co">#&gt; 2              70            71              2              74            75</span></span>
+<span><span class="co">#&gt; 3              66            67              3              72            73</span></span>
+<span><span class="co">#&gt; 4              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 5              73            74              2              77            78</span></span>
+<span><span class="co">#&gt; 6              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt;   clutch_size_14 clutch_start_15 clutch_end_15 clutch_size_15 clutch_start_16</span></span>
+<span><span class="co">#&gt; 1              2              77            78              2              82</span></span>
+<span><span class="co">#&gt; 2              7              80            81              3              84</span></span>
+<span><span class="co">#&gt; 3              2              76            77              5              NA</span></span>
+<span><span class="co">#&gt; 4             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 5              2              82            83              4              87</span></span>
+<span><span class="co">#&gt; 6             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt;   clutch_end_16 clutch_size_16 clutch_start_17 clutch_end_17 clutch_size_17</span></span>
+<span><span class="co">#&gt; 1            83              2              87            88              3</span></span>
+<span><span class="co">#&gt; 2            85              2              90            91              1</span></span>
+<span><span class="co">#&gt; 3            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 4            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 5            88              2              93            94              2</span></span>
+<span><span class="co">#&gt; 6            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt;   clutch_start_18 clutch_end_18 clutch_size_18 clutch_start_19 clutch_end_19</span></span>
+<span><span class="co">#&gt; 1              92            93              3              97            98</span></span>
+<span><span class="co">#&gt; 2              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 3              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 4              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 5              97            98              6             103           104</span></span>
+<span><span class="co">#&gt; 6              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt;   clutch_size_19 clutch_start_20 clutch_end_20 clutch_size_20 clutch_start_21</span></span>
+<span><span class="co">#&gt; 1              3              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 2             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 3             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 4             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 5              3             124           125              4             128</span></span>
+<span><span class="co">#&gt; 6             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt;   clutch_end_21 clutch_size_21 clutch_start_22 clutch_end_22 clutch_size_22</span></span>
+<span><span class="co">#&gt; 1            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 2            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 3            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 4            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 5           129              4              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 6            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt;   clutch_start_23 clutch_end_23 clutch_size_23 clutch_start_24 clutch_end_24</span></span>
+<span><span class="co">#&gt; 1              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 2              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 3              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 4              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 5              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt; 6              NA            NA             NA              NA            NA</span></span>
+<span><span class="co">#&gt;   clutch_size_24 clutch_start_25 clutch_end_25 clutch_size_25 clutch_start_26</span></span>
+<span><span class="co">#&gt; 1             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 2             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 3             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 4             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 5             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt; 6             NA              NA            NA             NA              NA</span></span>
+<span><span class="co">#&gt;   clutch_end_26 clutch_size_26 clutch_start_27 clutch_end_27 clutch_size_27</span></span>
+<span><span class="co">#&gt; 1            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 2            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 3            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 4            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 5            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt; 6            NA             NA              NA            NA             NA</span></span>
+<span><span class="co">#&gt;   clutch_start_28 clutch_end_28 clutch_size_28 death_start death_end</span></span>
+<span><span class="co">#&gt; 1              NA            NA             NA         102       103</span></span>
+<span><span class="co">#&gt; 2              NA            NA             NA          95        96</span></span>
+<span><span class="co">#&gt; 3              NA            NA             NA          78        79</span></span>
+<span><span class="co">#&gt; 4              NA            NA             NA          66        67</span></span>
+<span><span class="co">#&gt; 5              NA            NA             NA         135       136</span></span>
+<span><span class="co">#&gt; 6              NA            NA             NA          74        75</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="creata-a-data-lifelihood-object">Creata a data lifelihood object<a class="anchor" aria-label="anchor" href="#creata-a-data-lifelihood-object"></a>
 </h3>
@@ -247,6 +269,7 @@
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span>
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
@@ -265,70 +288,44 @@
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">dataLFH</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span>path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1176_2869_2483_9068/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1176_2869_2483_9068/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1176 2869 2483 9068 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9245_9771_5478_2984/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9245_9771_5478_2984/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9245 9771 5478 2984 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="aic-bic">AIC &amp; BIC<a class="anchor" aria-label="anchor" href="#aic-bic"></a>
 </h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64529.24</span></span>
+<span><span class="co">#&gt; [1] 64960.43</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64632.68</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 65003.53</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="summary-results">Summary results<a class="anchor" aria-label="anchor" href="#summary-results"></a>
 </h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coef.html">coef</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                int_expt_death          eff_expt_death_par_1 </span></span>
-<span><span class="co">#&gt;                   -0.90961216                   -0.20421606 </span></span>
-<span><span class="co">#&gt;          eff_expt_death_par_2        eff_expt_death_spore_1 </span></span>
-<span><span class="co">#&gt;                   -0.01951431                   -0.15835680 </span></span>
-<span><span class="co">#&gt;        eff_expt_death_spore_2        eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;                    0.02974091                   -0.26312236 </span></span>
-<span><span class="co">#&gt;  eff_expt_death_par_1:spore_1  eff_expt_death_par_2:spore_1 </span></span>
-<span><span class="co">#&gt;                   -0.46568017                    0.87205781 </span></span>
-<span><span class="co">#&gt;  eff_expt_death_par_1:spore_2  eff_expt_death_par_2:spore_2 </span></span>
-<span><span class="co">#&gt;                   -0.57850629                    3.74400822 </span></span>
-<span><span class="co">#&gt;  eff_expt_death_par_1:spore_3  eff_expt_death_par_2:spore_3 </span></span>
-<span><span class="co">#&gt;                    0.76146154                   -0.52739000 </span></span>
-<span><span class="co">#&gt;           int_survival_param2             int_expt_maturity </span></span>
-<span><span class="co">#&gt;                   -4.87204346                   -1.43346981 </span></span>
-<span><span class="co">#&gt;       eff_expt_maturity_par_1       eff_expt_maturity_par_2 </span></span>
-<span><span class="co">#&gt;                    0.11947443                   -0.01326348 </span></span>
-<span><span class="co">#&gt;           int_maturity_param2         int_expt_reproduction </span></span>
-<span><span class="co">#&gt;                   -7.44439230                   -1.79165329 </span></span>
-<span><span class="co">#&gt;   eff_expt_reproduction_par_1   eff_expt_reproduction_par_2 </span></span>
-<span><span class="co">#&gt;                   -1.68804414                   -1.10219229 </span></span>
-<span><span class="co">#&gt;       int_reproduction_param2 eff_reproduction_param2_par_1 </span></span>
-<span><span class="co">#&gt;                   -1.12049868                   -0.43909110 </span></span>
-<span><span class="co">#&gt; eff_reproduction_param2_par_2               int_n_offspring </span></span>
-<span><span class="co">#&gt;                   -0.80383871                   -2.54257607</span></span>
+<span><span class="co">#&gt;          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 </span></span>
+<span><span class="co">#&gt;               -0.911175               -1.560680               -1.579087 </span></span>
+<span><span class="co">#&gt;     int_survival_param2    int_ratio_expt_death       int_expt_maturity </span></span>
+<span><span class="co">#&gt;               -4.878733               -3.903737               -1.469884 </span></span>
+<span><span class="co">#&gt;     int_maturity_param2   int_expt_reproduction int_reproduction_param2 </span></span>
+<span><span class="co">#&gt;               -7.354207               -1.803183               -1.152709 </span></span>
+<span><span class="co">#&gt;         int_n_offspring </span></span>
+<span><span class="co">#&gt;               -2.552755</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               int_expt_death         eff_expt_death_par_1 </span></span>
-<span><span class="co">#&gt;                  -0.90961216                  -0.20421606 </span></span>
-<span><span class="co">#&gt;         eff_expt_death_par_2       eff_expt_death_spore_1 </span></span>
-<span><span class="co">#&gt;                  -0.01951431                  -0.15835680 </span></span>
-<span><span class="co">#&gt;       eff_expt_death_spore_2       eff_expt_death_spore_3 </span></span>
-<span><span class="co">#&gt;                   0.02974091                  -0.26312236 </span></span>
-<span><span class="co">#&gt; eff_expt_death_par_1:spore_1 eff_expt_death_par_2:spore_1 </span></span>
-<span><span class="co">#&gt;                  -0.46568017                   0.87205781 </span></span>
-<span><span class="co">#&gt; eff_expt_death_par_1:spore_2 eff_expt_death_par_2:spore_2 </span></span>
-<span><span class="co">#&gt;                  -0.57850629                   3.74400822 </span></span>
-<span><span class="co">#&gt; eff_expt_death_par_1:spore_3 eff_expt_death_par_2:spore_3 </span></span>
-<span><span class="co">#&gt;                   0.76146154                  -0.52739000</span></span>
+<span><span class="co">#&gt;       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 </span></span>
+<span><span class="co">#&gt;            -0.911175            -1.560680            -1.579087</span></span>
 <span><span class="fu"><a href="../reference/coef.html">coeff</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"survival_param2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; int_survival_param2 </span></span>
-<span><span class="co">#&gt;           -4.872043</span></span>
+<span><span class="co">#&gt;           -4.878733</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64529.24</span></span>
+<span><span class="co">#&gt; [1] 64960.43</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 64632.68</span></span>
+<span><span class="co">#&gt; [1] 65003.53</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -32240.62</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -32470.21</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="prediction-on-new-data">Prediction on new data<a class="anchor" aria-label="anchor" href="#prediction-on-new-data"></a>
 </h3>
@@ -344,9 +341,9 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -0.9096122 -1.7378652  2.8446227 -1.0679690 -1.1138282 -0.2154255 -1.7378652</span></span>
+<span><span class="co">#&gt; [1] -0.911175 -2.471855 -2.490262 -0.911175 -2.471855 -2.490262 -2.471855</span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1]  93.01438  48.46616 306.19303  82.87655  80.07991 144.61826  48.46616</span></span></code></pre></div>
+<span><span class="co">#&gt; numeric(0)</span></span></code></pre></div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

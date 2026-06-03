@@ -68,15 +68,26 @@ Duration: 4.8 s
 
 - On macOS
 
-Run `just macos`. This runs the `macos` script inside `justfile`, and
-will automatically update `inst/bin/lifelihood-macos`.
+Run `just macos`. This runs the `macos` recipes inside `justfile`, and
+will automatically update:
+
+- `inst/bin/lifelihood-macos-x86_64`
+
+- `inst/bin/lifelihood-macos-aarch64`
 
 - On Linux
 
-Run `just linux`. This runs the `linux` script inside `justfile`, and
-will automatically update `inst/bin/lifelihood-linux`. If this is the
-first time you’re compiling, this might take some time as it will build
-a Docker image first.
+Run `just linux`. This runs the `linux` recipes inside `justfile`, and
+will automatically update:
+
+- `inst/bin/lifelihood-linux-x86_64`
+- `inst/bin/lifelihood-linux-aarch64`
+
+The Linux builds use Docker with `linux/amd64` and `linux/arm64` images.
+If this is the first time you’re compiling, this might take some time as
+it will build Docker images first.
+
+To build every supported macOS and Linux target, run `just`.
 
 > Note that except if you’re on a Linux machine, you’ll need to have
 > Docker installed and the Docker daemon running.

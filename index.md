@@ -6,11 +6,8 @@ individual life-history (time of maturity, reproductive events, death).
 
 [Documentation](https://nrode.github.io/Lifelihood/)
 
-It requires R 4.1.0 or later, and:
-
-- macOS (Apple silicon)
-- Windows (Still some known issues)
-- Linux
+It requires R 4.1.0 or later, and work on all of: - macOS (arm64 and
+x86) - Linux (arm64 and x86) - Windows (x86)
 
 \
 
@@ -41,6 +38,7 @@ clutchs <- c(
 
 dataLFH <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -143,6 +141,7 @@ plot_fitted_event_rate(
 
 ![](img/example-1.png)
 
+\
 \
 
 Learn more and find more examples in the

@@ -37,8 +37,7 @@ The key directories and files in the package are organized as follows:
 - `vignettes/`: Quarto files used for the documentation website.
 - `R/`: Contains all R functions, user interface code, and helper
   functions.
-- `source/`: Houses the Pascal source code and executables. Only the one
-  in `/lazarus/` should be used.
+- `source/`: Houses the Pascal source code.
 - `inst/`: Utility files used such as the binary files and config
   examples.
 - `man/`: Documentation files for each function, generated via Roxygen2.
@@ -54,9 +53,6 @@ The key directories and files in the package are organized as follows:
     ├── vignettes/
     ├── R/
     ├── source/
-    │   └── source_pascal/
-    │       ├── lazarus/
-    │       └── delphi/
     ├── inst/
     │   ├── bin/
     │   └── configs/
@@ -95,17 +91,20 @@ the program, reads the output, and formats it.
 
 Unlike R, Pascal is a compiled programming language, meaning the code
 must first be compiled into a machine-readable format (binary) before
-execution. Additionally, it must be compiled separately for both macOS
-and Windows systems.
+execution. Additionally, it must be compiled separately for each
+operating system (and for Linux, by CPU architecture).
 
 The `/` directory includes both the source (`.pas`) and compiled files:
 
-- `lifelihood` for Unix systems (macOS)
-- `lifelihood.exe` for Windows
+- `lifelihood-macos-x86_64`
+- `lifelihood-macos-aarch64`
+- `lifelihood-linux-x86_64`
+- `lifelihood-linux-aarch64`
+- `lifelihood-windows.exe` for Windows
 
 A utility function in **Lifelihood** determines the user’s operating
-system to run the appropriate executable.
+system and architecture to run the appropriate executable.
 
 The Pascal program uses Lazarus, which supports cross-platform
-compilation, simplifying the process of building the code for both macOS
-and Windows.
+compilation, simplifying the process of building the code for macOS,
+Linux, and Windows.

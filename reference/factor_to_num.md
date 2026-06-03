@@ -1,7 +1,6 @@
-# Convert a factor variable to integers
+# Convert a vector to factor codes
 
-Function necessary because the Pascal program expects integers for
-factor levels.
+Convert values to 0-based factor codes for the Pascal program.
 
 ## Usage
 
@@ -13,8 +12,8 @@ factor_to_num(x)
 
 - x:
 
-  A column name
+  A vector
 
 ## Value
 
-The integer
+Numeric vector of 0-based factor codes

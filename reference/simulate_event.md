@@ -6,7 +6,15 @@ Internal function used to simulate one of the life history event
 ## Usage
 
 ``` r
-simulate_event(object, ev, newdata, lifelihoodData, use_censoring, visits)
+simulate_event(
+  object,
+  ev,
+  newdata,
+  lifelihoodData,
+  use_censoring,
+  visits,
+  block_values = NULL
+)
 ```
 
 ## Arguments

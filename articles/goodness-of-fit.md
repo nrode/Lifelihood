@@ -1,4 +1,4 @@
-# How to use lifelihood
+# Goodness of fit
 
 ## Load libraries
 
@@ -7,11 +7,11 @@
 library(lifelihood)
 #> Loading required package: tidyverse
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.1     
+#> ✔ purrr     1.2.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -34,7 +34,7 @@ df <- datapierrick |>
 
 generate_clutch_vector <- function(N) {
   return(paste(
-    "pon",
+    "clutch",
     rep(c("start", "end", "size"), N),
     rep(1:N, each = 3),
     sep = "_"
@@ -43,6 +43,7 @@ generate_clutch_vector <- function(N) {
 
 lifelihoodData <- as_lifelihoodData(
   df = df,
+  matclutch = FALSE,
   sex = "sex",
   sex_start = "sex_start",
   sex_end = "sex_end",
@@ -60,7 +61,7 @@ results <- lifelihood(
   path_config = use_test_config("config_pierrick"),
   raise_estimation_warning = FALSE
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3041_5709_6029_8530/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3041_5709_6029_8530/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3041 5709 6029 8530 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_378_4739_8682_3628/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_378_4739_8682_3628/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 378 4739 8682 3628 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ## Goodness of fit
@@ -72,11 +73,11 @@ simulated log-likelihood values to the original fit.
 ``` r
 
 gof <- goodness_of_fit(results, nsim = 5)
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9423_7101_7184_5681/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9423_7101_7184_5681/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9423 7101 7184 5681 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8202_9851_7721_3073/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8202_9851_7721_3073/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8202 9851 7721 3073 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6677_7068_362_3546/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6677_7068_362_3546/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6677 7068 362 3546 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6662_2012_7512_7460/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6662_2012_7512_7460/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6662 2012 7512 7460 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4720_7660_4920_5884/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4720_7660_4920_5884/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4720 7660 4920 5884 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2001_5867_2316_182/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2001_5867_2316_182/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2001 5867 2316 182 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1091_2052_2936_5371/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1091_2052_2936_5371/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1091 2052 2936 5371 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4141_4760_9989_7824/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4141_4760_9989_7824/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4141 4760 9989 7824 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8434_5207_6717_353/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8434_5207_6717_353/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 8434 5207 6717 353 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9527_8723_7294_7238/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9527_8723_7294_7238/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9527 8723 7294 7238 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 The
@@ -87,15 +88,15 @@ following attributes:
 ``` r
 
 gof$original_loglik
-#> [1] -8033.151
+#> [1] -7531.88
 gof$simulated_loglik
-#> [1] -11142.25 -11250.14 -10676.88 -10881.32 -10775.33
+#> [1] -853.6773 -853.6539 -853.6556 -853.7477 -853.6739
 gof$n_success
 #> [1] 5
 gof$n_failed
 #> [1] 0
 gof$p_lower_or_equal
-#> [1] 1
+#> [1] 0
 ```
 
 You can also read the `gof$fits` attribute for all underlying fits. Use

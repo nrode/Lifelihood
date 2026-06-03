@@ -72,14 +72,18 @@ they should be the name of one of your columns in your dataset.*
 - `reproduction_param2`: Reproduction shape parameter
 - `n_offspring`: Number of offspring per reproduction event or fitness
 - `increase_death_hazard`: Increase in death hazard following a
-  reproduction event
-- `tof_reduction_rate`: Trade-off of reduction rate
-- `increase_tof_n_offspring`: Increase in trade-off proportional to the
-  number of offspring
-- `lin_decrease_hazard`: Linear decrease in hazard rate with time since
-  maturity
-- `quad_decrease_hazard`: Quadratic decrease in hazard rate with time
-  since maturity
+  reproduction event (increases in hazard throughout life)
+- `tof_decay`: Trade-off of reduction rate (exponential decay of the
+  increased hazard due to `increase_death_hazard` +
+  `increase_death_hazard_n_offspring`)
+- `increase_death_hazard_n_offspring`: Increase in death hazard
+  proportional to the number of offspring
+- `lin_decrease_hazard`: Linear decrease in reproduction hazard rate
+  with time since maturity (interval between consecutive clutches
+  increases linearly as time since maturity increases)
+- `quad_decrease_hazard`: Quadratic decrease in reproduction hazard rate
+  with time since maturity (interval between consecutive clutches
+  increases quadratically as time since maturity increases)
 - `lin_change_n_offspring`: Linear change in number of offspring with
   time since maturity
 - `quad_change_n_offspring`: Quadratic change in number of offsprings
@@ -108,8 +112,8 @@ reproduction:
   reproduction_param2: not_fitted
   n_offspring: geno
   increase_death_hazard: geno + type + geno*type
-  tof_reduction_rate: geno
-  increase_tof_n_offspring: geno
+  tof_decay: geno
+  increase_death_hazard_n_offspring: geno
   lin_decrease_hazard: geno + type + geno*type
   quad_decrease_hazard: geno
   lin_change_n_offspring: geno

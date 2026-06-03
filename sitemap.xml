@@ -1,9 +1,11 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://nrode.github.io/Lifelihood/404.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/AGENTS.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/LICENSE-text.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/LICENSE.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/compilation.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/contributing.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/articles/create-simulation-input.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/fit-saturated-model.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/articles/generate-clutch-names.html</loc></url>
@@ -34,13 +36,14 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/check_mcmc_consistency.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/coef.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/compute_fitted_event_rate.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/compute_max_longevity.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/compute_observed_event_rate.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/compute_reproduction_intervals.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/count_parameters.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/create_intercept_only_config.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/create_simulation_input.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/datapierrick.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/default_bounds_df.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/delink.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/derivLink.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/detect_os.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/execute_bin.html</loc></url>
@@ -52,9 +55,11 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/format_config.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/format_dataframe_to_txt.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/format_row.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/get_visits.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/goodness_of_fit.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/has_valid_factor_levels.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/index.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/is_parameter_fitted.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/lifelihood.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/lifelihood_fit.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/lifelihood_fit_group_by_group.html</loc></url>
@@ -64,16 +69,15 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/map_parameter_name.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/mcmc.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/merge_group_results.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/parallel.simulate.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/parse_output.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/plot.lifelihoodGOF.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/plot_event_rate.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/predict_or_default.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/prediction.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/print_coef_table.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/prob_event_interval_dt.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/read_formula.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/read_output_from_file.html</loc></url>
-<url><loc>https://nrode.github.io/Lifelihood/reference/remove_lifelihood_tempfiles.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/safe_access.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/simulate_event.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/simulate_life_history.html</loc></url>
@@ -82,6 +86,7 @@
 <url><loc>https://nrode.github.io/Lifelihood/reference/surv.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/translator.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/use_test_config.html</loc></url>
+<url><loc>https://nrode.github.io/Lifelihood/reference/uses_tradeoff_simulation.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/validate_group_by_group_config.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/validate_groupby_arg.html</loc></url>
 <url><loc>https://nrode.github.io/Lifelihood/reference/vcov.lifelihoodResults.html</loc></url>

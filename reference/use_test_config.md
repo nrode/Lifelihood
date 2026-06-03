@@ -13,8 +13,8 @@ For more info about configuration files, see
 
 ``` r
 use_test_config(
-  config_name = c("config", "config2", "config_pierrick", "example_config_se",
-    "example_config_mcmc", "config_gbg")
+  config_name = c("config", "config2", "config_pierrick", "config_with_tradeoff",
+    "config_without_tradeoff", "example_config_se", "example_config_mcmc", "config_gbg")
 )
 ```
 
@@ -38,7 +38,7 @@ Absolute path to the configuration file
 
 ``` r
 use_test_config("config")
-#> [1] "/private/var/folders/9r/xzfp9lgn603578400ms53lr00000gn/T/Rtmpl7dmnd/temp_libpath1e8b23a8b4ad/lifelihood/configs/config.yaml"
+#> [1] "/private/var/folders/8d/778wjbv96mq1760tv6gk374m0000gn/T/RtmpLjqWyU/temp_libpath4c8460b45683/lifelihood/configs/config.yaml"
 use_test_config("config2")
-#> [1] "/private/var/folders/9r/xzfp9lgn603578400ms53lr00000gn/T/Rtmpl7dmnd/temp_libpath1e8b23a8b4ad/lifelihood/configs/config2.yaml"
+#> [1] "/private/var/folders/8d/778wjbv96mq1760tv6gk374m0000gn/T/RtmpLjqWyU/temp_libpath4c8460b45683/lifelihood/configs/config2.yaml"
 ```

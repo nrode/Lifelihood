@@ -21,7 +21,10 @@ simulate_life_history(
 
 - object:
 
-  A fitted `lifelihoodResults` object.
+  A fitted `lifelihoodResults` object created either with
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
+  or
+  [`create_simulation_input()`](https://nrode.github.io/Lifelihood/reference/create_simulation_input.md).
 
 - event:
 
@@ -38,21 +41,23 @@ simulate_life_history(
 
 - use_censoring:
 
-  Whether to retrieve censoring time interval for each event. For
-  example, the time for "mortality_start" and "mortality_end" instead of
-  just the time for "mortality". In this case, it's advised to use the
-  `visits` argument and provide you own visit data. Otherwise, they are
-  determined only using ages where events have been observed not ages
-  where people went to the lab and no event was observed.
+  Whether to retrieve censoring time intervals for scalar events
+  (`maturity`, `mortality`). For example, returns `mortality_start` and
+  `mortality_end` instead of only `mortality`. If `newdata` is provided
+  and censoring is enabled, `newdata` must include the block column.
+  When `use_censoring = TRUE`, `visits` must be provided explicitly. Use
+  [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
+  to derive visit data from the fitted data, or pass a custom visit data
+  frame.
 
 - visits:
 
-  Optionnal dataframe with 2 columns: "block" (must be the same name as
-  passed in
+  Optional data frame with 2 columns: one column with the same name as
+  the `block` argument passed to
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
-  `block` argument) and exactly "visit". For each block, "visit"
+  and one column named exactly `visit`. For each block, `visit`
   corresponds to the ages where the events of individuals have been
-  recorded.
+  recorded. Required when `use_censoring = TRUE`.
 
 - seed:
 
