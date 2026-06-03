@@ -85,15 +85,15 @@ right censoring dates of each event.}
 
 \item{ntr}{Number of thread for the paralelisation.}
 
-\item{nst}{TBD - Check the actual meaning.}
+\item{nst}{Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)}
 
 \item{To}{Initial temperature for the simulated annealing.}
 
 \item{Tf}{Final temperature for the simulated annealing.}
 
-\item{climbrate}{Rate for the simulated annealing.}
+\item{climbrate}{Initial cooling rate of the adaptive annealing schedule: scales how fast the temperature is lowered between annealing runs (self-adjusting during the fit).}
 
-\item{precision}{Precision parameter for the algorithm.}
+\item{precision}{Convergence tolerance of the final local search: fitting stops when an additional batch of local-search iterations improves the log-likelihood by less than this amount.}
 }
 \description{
 Run lifelihood program in console mode.

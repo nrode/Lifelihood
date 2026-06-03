@@ -118,11 +118,11 @@
 #' right censoring dates of each event.
 #' @param path_continuous_var Path to the continuous variables file.
 #' @param ntr Number of thread for the paralelisation.
-#' @param nst TBD - Check the actual meaning.
+#' @param nst Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)
 #' @param To Initial temperature for the simulated annealing.
 #' @param Tf Final temperature for the simulated annealing.
-#' @param climbrate Rate for the simulated annealing.
-#' @param precision Precision parameter for the algorithm.
+#' @param climbrate Initial cooling rate of the adaptive annealing schedule: scales how fast the temperature is lowered between annealing runs (self-adjusting during the fit).
+#' @param precision Convergence tolerance of the final local search: fitting stops when an additional batch of local-search iterations improves the log-likelihood by less than this amount.
 execute_bin <- function(
   path_to_Lifelihood,
   path_input_data,

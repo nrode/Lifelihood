@@ -46,3 +46,5 @@ release.sh
 LLfunctions.R
 simulation-tradeoff-old.R
 t.R
+
+*.rmarkdown

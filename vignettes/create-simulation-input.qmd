@@ -29,10 +29,8 @@ flowchart LR
 ## Load packages
 
 ```{r}
-library(lifelihood)
+devtools::load_all()
 library(tidyverse)
-
-theme_set(theme_minimal(base_size = 12))
 ```
 
 ## Create the population to simulate
@@ -44,23 +42,14 @@ create for that combination.
 
 ```{r}
 population <- crossing(
-  par = factor(c("none", "low", "high"), levels = c("none", "low", "high")),
-  spore = factor(c("absent", "present"), levels = c("absent", "present")),
-  sex = c(0, 1)
+  par = as.factor(c("none", "low", "high")),
+  spore = as.factor(c("absent", "present")),
+  sex = 0
 ) |>
-  mutate(
-    n_individuals = case_when(
-      sex == 1 ~ 25L,
-      spore == "present" ~ 35L,
-      TRUE ~ 30L
-    ),
-    sex_label = if_else(sex == 1, "male", "female")
-  )
+  mutate(n_individuals = 100)
 
 population
 ```
-
-If your `data` already has one row per individual, omit `n_per_combination`.
 
 ## Define the fitted formulas
 
@@ -141,12 +130,16 @@ simulation_input <- create_simulation_input(
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  model = "lgn",
+  dist = c("lgn", "wei", "exp"),
   n_per_combination = "n_individuals"
 )
 
 simulation_input$sample_size
+
+simulation_input$lifelihoodData$block <- 1
 ```
+
+> If your `data` already has one row per individual, omit `n_per_combination`.
 
 ## Simulate life histories
 
@@ -154,17 +147,13 @@ The object returned by `create_simulation_input()` can be passed directly to
 `simulate_life_history()`.
 
 ```{r}
-simulated <- simulate_life_history(simulation_input, seed = 1)
+visits <- data.frame(
+  block = 1,
+  visit = 1:simulation_input$lifelihoodData$right_censoring_date
+)
+simulated <- simulate_life_history(simulation_input, seed = 1, visits = visits)
 
-simulated |>
-  select(
-    death_start,
-    death_end,
-    maturity_start,
-    maturity_end,
-    total_n_offspring
-  ) |>
-  head()
+simulated |> head()
 ```
 
 ## Refit the simulated data
@@ -177,41 +166,36 @@ the refitted estimates with the values used for simulation.
 simulation_config_path <- tempfile(fileext = ".yaml")
 yaml::write_yaml(simulation_config, simulation_config_path)
 
-clutch_numbers <- simulated |>
-  select(matches("^clutch_start_[0-9]+$")) |>
-  names() |>
-  str_extract("[0-9]+$") |>
-  as.integer() |>
-  sort()
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "clutch",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(43)
 
-simulated_clutchs <- as.vector(rbind(
-  paste0("clutch_start_", clutch_numbers),
-  paste0("clutch_end_", clutch_numbers),
-  paste0("clutch_size_", clutch_numbers)
-))
-
-simulated_for_fit <- bind_cols(
-  simulation_input$lifelihoodData$df |>
-    select(par, spore, sex, .simulation_sex_start, .simulation_sex_end),
-  simulated
-) |>
+simulated_for_fit <- simulation_input$lifelihoodData$df |>
+  select(par, spore, sex, sex_start, sex_end) |>
+  bind_cols(simulated) |>
   mutate(
-    .simulation_sex_start = 0,
-    .simulation_sex_end = simulation_input$lifelihoodData$right_censoring_date
+    sex_start = 0,
+    sex_end = simulation_input$lifelihoodData$right_censoring_date
   )
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
   sex = "sex",
-  sex_start = ".simulation_sex_start",
-  sex_end = ".simulation_sex_end",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
-  clutchs = simulated_clutchs,
+  clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  dist = rep("lgn", 3),
+  dist = c("lgn", "wei", "exp"),
   matclutch = FALSE
 )
 
@@ -219,8 +203,9 @@ refit <- lifelihood(
   lifelihoodData = simulated_lifelihood_data,
   path_config = simulation_config_path,
   param_bounds_df = simulation_input$param_bounds_df,
-  seeds = c(1, 2, 3, 4),
-  raise_estimation_warning = FALSE
+  raise_estimation_warning = FALSE,
+  delete_temp_files = FALSE,
+  n_fit = 10
 )
 ```
 

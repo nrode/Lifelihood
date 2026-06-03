@@ -60,9 +60,7 @@
 #'   param_bounds_df = bounds_df,
 #'   raise_estimation_warning = FALSE
 #' )
-default_bounds_df <- function(
-  lifelihoodData
-) {
+default_bounds_df <- function(lifelihoodData) {
   if (!inherits(lifelihoodData, "lifelihoodData")) {
     stop("lifelihoodData must be of class lifelihoodData")
   }
@@ -160,9 +158,13 @@ default_bounds_df <- function(
       max = 10
     ),
     lin_decrease_hazard = c(name = "lin_decrease_hazard", min = -20, max = 20),
-    quad_senescence = c(name = "quad_senescence", min = -20, max = 20),
     quad_decrease_hazard = c(
       name = "quad_decrease_hazard",
+      min = -10,
+      max = 10
+    ),
+    lin_change_n_offspring = c(
+      name = "lin_change_n_offspring",
       min = -10,
       max = 10
     ),

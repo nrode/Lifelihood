@@ -23,11 +23,11 @@
 #' @param tinf maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)
 #' @param sub_interval sub-interval used to integrate the left and right censoring dates of each event
 #' @param ntr Number of thread for the paralelisation ?
-#' @param nst TBD - Check the actual meaning
+#' @param nst Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)
 #' @param To Initial temperature for the simulated annealing
 #' @param Tf Initial temperature for the simulated annealing
-#' @param climbrate Rate for the simulated annealing ?
-#' @param precision TBD - Check the actual meaning
+#' @param climbrate Initial cooling rate of the adaptive annealing schedule: scales how fast the temperature is lowered between annealing runs (self-adjusting during the fit).
+#' @param precision Convergence tolerance of the final local search: fitting stops when an additional batch of local-search iterations improves the log-likelihood by less than this amount.
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
 #'

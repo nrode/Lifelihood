@@ -74,7 +74,7 @@ begin
     savedseed[3] := seed3;
     seed4 := StrToInt(list[11]);
     savedseed[4] := seed4;
-    marsini(seed1, seed2, seed3, seed4);
+    mersenne(seed1, seed2, seed3, seed4);
 
     // ratiomax for clutch size when senescence present
     ratiomax := StrToFloat(list[12]);

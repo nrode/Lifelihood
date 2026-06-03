@@ -23,11 +23,13 @@ articles:
       - generate-clutch-names
   - title: Miscellaneous
     navbar: Miscellaneous
+    contents:
       - standard-errors-and-mcmc
       - goodness-of-fit
-      - fit-saturated-model
+      - fitting-interaction-model
   - title: Simulation
     navbar: Simulation
+    contents:
       - simulation-and-visit-masks
       - create-simulation-input
   - title: Developer

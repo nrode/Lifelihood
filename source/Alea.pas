@@ -5,7 +5,7 @@ unit Alea;
 interface
 
 procedure mars;
-procedure marsini(var iu, ju, ku, lu: integer);
+procedure mersenne(var iu, ju, ku, lu: integer);
 
 var
   uni: double;
@@ -38,7 +38,7 @@ begin
   if (uni < 0.0) then uni := uni + 1.0;
 end;
 {*********************************************}
-procedure marsini(var iu, ju, ku, lu: integer);
+procedure mersenne(var iu, ju, ku, lu: integer);
 begin
 {randomize;
 iu:=random(168);ju:=random(168);ku:=random(168);lu:=random(168);}

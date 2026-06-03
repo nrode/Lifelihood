@@ -10,10 +10,11 @@ create_simulation_input(
   covariates,
   sex,
   config,
-  model,
+  dist,
   n_per_combination = NULL,
   param_bounds_df = NULL,
-  right_censoring_date = 1000
+  right_censoring_date = 1000,
+  max_clutch_size = 100
 )
 }
 \arguments{
@@ -30,10 +31,6 @@ the columns named in \code{covariates} and \code{sex}.}
 \item{config}{Path to a YAML configuration file or an already-loaded
 configuration list.}
 
-\item{model}{Character vector with one model family to reuse for mortality,
-maturity and reproduction, or three model families in that order. Values
-must be \code{"wei"}, \code{"exp"}, \code{"gam"} or \code{"lgn"}.}
-
 \item{n_per_combination}{Optional name of a column in \code{data} containing the
 number of individuals to create for each row.}
 
@@ -42,6 +39,10 @@ number of individuals to create for each row.}
 
 \item{right_censoring_date}{Numeric right censoring date stored in the
 internal \code{lifelihoodData} object.}
+
+\item{model}{Character vector with one model family to reuse for mortality,
+maturity and reproduction, or three model families in that order. Values
+must be \code{"wei"}, \code{"exp"}, \code{"gam"} or \code{"lgn"}.}
 }
 \value{
 A \code{lifelihoodResults} object suitable for \code{\link[=simulate_life_history]{simulate_life_history()}}.

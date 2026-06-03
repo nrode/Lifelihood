@@ -585,6 +585,12 @@ simulate_life_history <- function(
     }
   }
 
+  if ("maturity" %in% events) {
+    # Convert to NA maturity that occurred after simulated death
+    df_sims <- df_sims |>
+      mutate(maturity = ifelse(maturity > mortality, NA, maturity))
+  }
+
   if ("reproduction" %in% events) {
     ## Compute actual age for each reproduction event (=age at maturity + sum over all previous reproduction events)
     df_sims_up <- df_sims |>
