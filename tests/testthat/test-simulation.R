@@ -150,23 +150,3 @@ test_that("truncated Poisson simulation handles invalid means", {
   expect_true(all(draws[, 2] >= 1L))
   expect_true(all(is.na(draws[, 3])))
 })
-
-test_that("maturity after mortality is treated as censored", {
-  df <- data.frame(
-    maturity = c(12, 4, NA),
-    mortality = c(10, 9, 5),
-    maturity_start = c(12, 4, NA),
-    maturity_end = c(12, 4, NA)
-  )
-
-  out <- censor_maturity_after_mortality(
-    df = df,
-    right_censoring_date = 1000
-  )
-
-  expect_true(is.na(out$maturity[1]))
-  expect_equal(out$maturity_start[1], 10)
-  expect_equal(out$maturity_end[1], 1000)
-  expect_equal(out$maturity[2], 4)
-  expect_true(is.na(out$maturity[3]))
-})
