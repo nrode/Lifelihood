@@ -4,6 +4,8 @@ template:
   bootswatch: flatly
   github: https://github.com/nrode/Lifelihood
   light-switch: true
+  includes:
+    in_header: pkgdown/assets/header.html
   bslib:
     base_font: { google: "Roboto" }
     heading_font: { google: "Roboto Slab" }

@@ -17,7 +17,7 @@ embed-resources: true
 
 ```{r}
 #| label: setup
-devtools::load_all()
+library(lifelihood)
 library(tidyverse)
 
 generate_clutch_vector <- function(N) {

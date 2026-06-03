@@ -20,6 +20,7 @@ docs/
 
 *cache*
 *.html
+!header.html
 *_files/
 data_internals/
 inst/doc
