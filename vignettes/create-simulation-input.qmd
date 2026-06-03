@@ -205,7 +205,7 @@ refit <- lifelihood(
   param_bounds_df = simulation_input$param_bounds_df,
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
-  n_fit = 10
+  n_fit = 3
 )
 ```
 

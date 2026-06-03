@@ -585,7 +585,7 @@ simulate_life_history <- function(
     }
   }
 
-  if ("maturity" %in% events) {
+  if ("maturity" %in% events && "mortality" %in% events) {
     # Convert to NA maturity that occurred after simulated death
     df_sims <- df_sims |>
       mutate(maturity = ifelse(maturity > mortality, NA, maturity))

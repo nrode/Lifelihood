@@ -45,10 +45,6 @@ results_without_tradeoff <- lifelihood(
   n_fit = 1
 )
 
-#####
-object <- results_with_tradeoff
-newdata <- NULL
-
 
 simulate_life_history(results_without_tradeoff)
 simulate_life_history(results_with_tradeoff)
