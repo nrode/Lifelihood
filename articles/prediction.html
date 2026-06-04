@@ -173,7 +173,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_se"</span><span class="op">)</span>,</span>
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5371_1460_4030_2606/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5371_1460_4030_2606/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 5371 1460 4030 2606 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1958_41_4147_9929/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1958_41_4147_9929/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 1958 41 4147 9929 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
@@ -181,17 +181,17 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343784.106</span></span>
-<span><span class="co">#&gt; AIC:             687576.2</span></span>
-<span><span class="co">#&gt; BIC:             687593.5</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -343783.579</span></span>
+<span><span class="co">#&gt; AIC:             687575.2</span></span>
+<span><span class="co">#&gt; BIC:             687592.4</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.980 (0.070)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.305 (0.076)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.283 (0.082)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.225 (0.114)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -2.000 (0.068)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.324 (0.074)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.296 (0.080)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -0.241 (0.113)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -205,10 +205,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.98    0.0702 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1      0.305   0.0761 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2      0.283   0.0823 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -0.225   0.114  survival_param2 intercept       mort…</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 int_expt_death           -2.00    0.0681 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1      0.324   0.0738 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2      0.296   0.0802 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2      -0.241   0.113  survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
 <section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h3>
@@ -225,11 +225,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.98    0.0702</span></span>
-<span><span class="co">#&gt; 2  -1.68    0.0294</span></span>
-<span><span class="co">#&gt; 3  -1.98    0.0702</span></span>
-<span><span class="co">#&gt; 4  -1.98    0.0702</span></span>
-<span><span class="co">#&gt; 5  -1.98    0.0702</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  -2.00    0.0681</span></span>
+<span><span class="co">#&gt; 2  -2.00    0.0681</span></span>
+<span><span class="co">#&gt; 3  -1.68    0.0296</span></span>
+<span><span class="co">#&gt; 4  -2.00    0.0681</span></span>
+<span><span class="co">#&gt; 5  -2.00    0.0681</span></span></code></pre></div>
 </div>
 <ul>
 <li>Response scale</li>
@@ -242,11 +242,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   39.3      2.43</span></span>
-<span><span class="co">#&gt; 2   51.1      1.26</span></span>
-<span><span class="co">#&gt; 3   39.3      2.43</span></span>
-<span><span class="co">#&gt; 4   50.2      1.82</span></span>
-<span><span class="co">#&gt; 5   39.3      2.43</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   38.6      2.32</span></span>
+<span><span class="co">#&gt; 2   51.1      1.27</span></span>
+<span><span class="co">#&gt; 3   38.6      2.32</span></span>
+<span><span class="co">#&gt; 4   38.6      2.32</span></span>
+<span><span class="co">#&gt; 5   38.6      2.32</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
 </h2>
@@ -262,10 +262,7 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_mcmc"</span><span class="op">)</span>,</span>
 <span>  MCMC <span class="op">=</span> <span class="fl">30</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7511_6119_1395_7839/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7511_6119_1395_7839/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 7511 6119 1395 7839 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; Warning in check_estimation(results): Estimation of 'fitness' is close to the</span></span>
-<span><span class="co">#&gt; maximum bound: fitness~=999.999995217013 (bound=995). Consider increasing</span></span>
-<span><span class="co">#&gt; maximum bound.</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1351_6185_329_3499/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1351_6185_329_3499/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 1351 6185 329 3499 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h3>

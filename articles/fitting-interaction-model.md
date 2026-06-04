@@ -71,7 +71,7 @@ time_default <- system.time({
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 time_default
 #>    user  system elapsed 
-#>  18.594   0.153  19.151
+#>  16.729   0.072  17.157
 ```
 
 - Interaction model using the `group_by_group` argument (default to
@@ -96,7 +96,7 @@ time_gbg <- system.time({
 #> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 time_gbg
 #>    user  system elapsed 
-#>   1.183   0.046   1.383
+#>   1.104   0.038   1.178
 ```
 
 Fitting interaction model with group by group is faster than default
