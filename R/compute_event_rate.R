@@ -431,7 +431,7 @@ compute_observed_event_rate <- function(
       # Number of individuals dead/mature/that reproduced at the end of the time interval
       num_failures <- sum(
         group_data[[start_col]] >= interval_start &
-          group_data[[end_col]] < interval_end
+          group_data[[end_col]] <= interval_end
       )
 
       event_rate$Event_Rate[
