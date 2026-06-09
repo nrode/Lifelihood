@@ -61,7 +61,7 @@ results <- lifelihood(
   path_config = use_test_config("config_pierrick"),
   raise_estimation_warning = FALSE
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6136_1508_8801_772/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6136_1508_8801_772/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6136 1508 8801 772 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_920_8824_7891_3886/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_920_8824_7891_3886/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 920 8824 7891 3886 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ## Goodness of fit
@@ -73,11 +73,11 @@ simulated log-likelihood values to the original fit.
 ``` r
 
 gof <- goodness_of_fit(results, nsim = 5)
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4228_1242_8212_7521/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4228_1242_8212_7521/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 4228 1242 8212 7521 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2516_1870_6902_8547/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2516_1870_6902_8547/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2516 1870 6902 8547 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6053_5814_9464_1225/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6053_5814_9464_1225/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6053 5814 9464 1225 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6349_5788_4347_2659/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6349_5788_4347_2659/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6349 5788 4347 2659 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7147_4532_3354_7190/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_7147_4532_3354_7190/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 7147 4532 3354 7190 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9149_4198_9260_8309/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9149_4198_9260_8309/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9149 4198 9260 8309 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1216_2507_2891_7462/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_1216_2507_2891_7462/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 1216 2507 2891 7462 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_802_4569_3191_7404/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_802_4569_3191_7404/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 802 4569 3191 7404 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2286_7193_6549_6449/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2286_7193_6549_6449/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2286 7193 6549 6449 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3043_3305_5475_5464/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3043_3305_5475_5464/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3043 3305 5475 5464 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 The
@@ -88,9 +88,9 @@ following attributes:
 ``` r
 
 gof$original_loglik
-#> [1] -7293.279
+#> [1] -7053.636
 gof$simulated_loglik
-#> [1] -875.0212 -875.6622 -874.9545 -875.1008 -874.9539
+#> [1] -872.8759 -872.8517 -872.9514 -872.8468 -872.8686
 gof$n_success
 #> [1] 5
 gof$n_failed

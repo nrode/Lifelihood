@@ -6,8 +6,11 @@ individual life-history (time of maturity, reproductive events, death).
 
 [Documentation](https://nrode.github.io/Lifelihood/)
 
-It requires R 4.1.0 or later, and work on all of: - macOS (arm64 and
-x86) - Linux (arm64 and x86) - Windows (x86)
+It requires R 4.1.0 or later, and work on all of:
+
+- macOS (arm64 and x86)
+- Linux (arm64 and x86)
+- Windows (x86)
 
 \
 

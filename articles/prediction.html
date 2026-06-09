@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Prediction (TODO) • lifelihood</title>
+<title>Prediction • lifelihood</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
@@ -16,7 +16,7 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="prediction_files/libs/quarto-html/popper.min.js"></script><script src="prediction_files/libs/quarto-html/tippy.umd.min.js"></script><link href="prediction_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="prediction_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Prediction (TODO)">
+<meta property="og:title" content="Prediction">
 </head>
 <body>pkgdown/assets/header.html
 
@@ -53,7 +53,7 @@
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Prediction</h6></li>
-    <li><a class="dropdown-item" href="../articles/prediction.html">Prediction (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/prediction.html">Prediction</a></li>
     <li><a class="dropdown-item" href="../articles/prediction-with-standard-errors-and-mcmc.html">Standard errors and MCMC</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Simulation</h6></li>
@@ -96,7 +96,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Prediction (TODO)</h1>
+      <h1>Prediction</h1>
 
 
 
@@ -110,44 +110,52 @@
 
 
 
-    <section class="level2"><h2 id="create-a-lifelihooddata-object">Create a <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-a-lifelihooddata-object"></a>
+    <p><code><a href="../reference/prediction.html">prediction()</a></code> converts the coefficients of a fitted <code>lifelihood</code> model into parameter values for individuals or combinations of covariates. It can return predictions:</p>
+<ul>
+<li>for the data used to fit the model or for a new dataset;</li>
+<li>on the internal lifelihood scale or on the response scale;</li>
+<li>with standard errors or MCMC uncertainty when these were requested during model fitting.</li>
+</ul>
+<p>This vignette covers the first two points, explains how predictions differ between females and males, and shows how those predictions are used in simulations. See the <a href="prediction-with-standard-errors-and-mcmc.html">standard errors and MCMC vignette</a> for uncertainty estimates.</p>
+<section class="level2"><h2 id="fit-an-example-model">Fit an example model<a class="anchor" aria-label="anchor" href="#fit-an-example-model"></a>
 </h2>
+<p>We first create paired female and male observations from <code>datadaphnia</code>. The observed male death intervals are multiplied by 10, while the female death intervals are left unchanged. Reproduction data are set to <code>NA</code> for males.</p>
+<p>The mortality formula in <code>config_pierrick</code> models <code>expt_death</code> as a function of <code>par</code> and also fits <code>ratio_expt_death</code>, which represents the male-to-female ratio in expected longevity.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nrode.github.io/Lifelihood/">lifelihood</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: tidyverse</span></span>
-<span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.2.1     ✔ readr     2.2.0</span></span>
-<span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.3     ✔ tibble    3.3.1</span></span>
-<span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.2.2     </span></span>
-<span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
-<span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
-<span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">datapierrick</span> <span class="op">|&gt;</span></span>
+<span><span class="va">df_female</span> <span class="op">&lt;-</span> <span class="va">datadaphnia</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">par</span><span class="op">)</span>, spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">spore</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_male</span> <span class="op">&lt;-</span> <span class="va">df_female</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">par</span><span class="op">)</span>,</span>
-<span>    geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span>,</span>
-<span>    spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">spore</span><span class="op">)</span>,</span>
-<span>    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">datapierrick</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>    sex <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"clutch"</span><span class="op">)</span>, <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span>,</span>
+<span>    death_start <span class="op">=</span> <span class="va">death_start</span> <span class="op">*</span> <span class="fl">10</span>,</span>
+<span>    death_end <span class="op">=</span> <span class="va">death_end</span> <span class="op">*</span> <span class="fl">10</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">df_female</span>, <span class="va">df_male</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df_female</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df_male</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
+<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
+<span>    <span class="st">"clutch"</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">n</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">lifelihood_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
@@ -155,149 +163,320 @@
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
 <span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
 <span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
-<span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  block <span class="op">=</span> <span class="st">"block"</span>,</span>
+<span>  clutchs <span class="op">=</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span>,</span>
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
+<span>  block <span class="op">=</span> <span class="st">"block"</span>,</span>
 <span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"gam"</span>, <span class="st">"lgn"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<span>  lifelihoodData <span class="op">=</span> <span class="va">lifelihood_data</span>,</span>
+<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3699</span>, <span class="fl">783</span>, <span class="fl">5401</span>, <span class="fl">6502</span><span class="op">)</span>,</span>
+<span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
-</section><section class="level2"><h2 id="standard-errors">Standard errors<a class="anchor" aria-label="anchor" href="#standard-errors"></a>
-</h2>
-<p>By default, lifelihood will not try to fit standard errors. But, you can use the <code>se.fit</code> argument for this purpose:</p>
+<p>The mean midpoint of the observed death intervals is exactly 10 times larger for males because the male rows were constructed that way:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
-<span>  lifelihoodData <span class="op">=</span> <span class="va">lifelihoodData</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_se"</span><span class="op">)</span>,</span>
-<span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5424_6454_9128_5844/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_5424_6454_9128_5844/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 5424 6454 9128 5844 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; === LIFELIHOOD RESULTS ===</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Sample size: 550 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343815.264</span></span>
-<span><span class="co">#&gt; AIC:             687638.5</span></span>
-<span><span class="co">#&gt; BIC:             687655.8</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --- Key Parameters ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.399 (-1.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.296 (-1.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.322 (-1.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.476 (-1.000)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; --- Convergence ---</span></span>
-<span><span class="co">#&gt; All parameters within bounds</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ======================</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>observed_death <span class="op">=</span> <span class="op">(</span><span class="va">death_start</span> <span class="op">+</span> <span class="va">death_end</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    mean_observed_death <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">observed_death</span><span class="op">)</span>,</span>
+<span>    .by <span class="op">=</span> <span class="va">sex</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    sex <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>,</span>
+<span>    relative_to_female <span class="op">=</span> <span class="va">mean_observed_death</span> <span class="op">/</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span><span class="op">(</span><span class="va">mean_observed_death</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 3</span></span>
+<span><span class="co">#&gt;   sex    mean_observed_death relative_to_female</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                &lt;dbl&gt;              &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 female                81.6                1  </span></span>
+<span><span class="co">#&gt; 2 male                 816.                10.0</span></span></code></pre></div>
 </div>
-<p>Now if we have a look at the estimations we have standard errors:</p>
+<p><code>parameter_name</code> must identify a parameter fitted by the model. The available parameters can be read from the results:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">effects</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
-<span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.40        -1 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1     -0.296       -1 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2     -0.322       -1 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -0.476       -1 survival_param2 intercept       mort…</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">results</span><span class="op">$</span><span class="va">effects</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">event</span>, <span class="va">parameter</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          event           parameter</span></span>
+<span><span class="co">#&gt; 1    mortality          expt_death</span></span>
+<span><span class="co">#&gt; 2    mortality     survival_param2</span></span>
+<span><span class="co">#&gt; 3    mortality    ratio_expt_death</span></span>
+<span><span class="co">#&gt; 4     maturity       expt_maturity</span></span>
+<span><span class="co">#&gt; 5     maturity     maturity_param2</span></span>
+<span><span class="co">#&gt; 6 reproduction   expt_reproduction</span></span>
+<span><span class="co">#&gt; 7 reproduction reproduction_param2</span></span>
+<span><span class="co">#&gt; 8 reproduction         n_offspring</span></span></code></pre></div>
 </div>
-<section class="level3"><h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
-</h3>
-<p>We can predict with standard errors.</p>
-<ul>
-<li>Default scale</li>
-</ul>
+</section><section class="level2"><h2 id="predict-for-the-fitted-data">Predict for the fitted data<a class="anchor" aria-label="anchor" href="#predict-for-the-fitted-data"></a>
+</h2>
+<p>When <code>newdata</code> is omitted, <code><a href="../reference/prediction.html">prediction()</a></code> returns one value for each individual in the data used to fit the model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var_cov_fitted_predictors): NaNs produced</span></span>
-<span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
-<span><span class="co">#&gt;   fitted se.fitted</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.40  NaN     </span></span>
-<span><span class="co">#&gt; 2  -1.40  NaN     </span></span>
-<span><span class="co">#&gt; 3  -1.69    0.0305</span></span>
-<span><span class="co">#&gt; 4  -1.40  NaN     </span></span>
-<span><span class="co">#&gt; 5  -1.40  NaN</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">expected_longevity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span></span>
+<span>  <span class="va">results</span>,</span>
+<span>  parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"response"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">expected_longevity</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1100</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">expected_longevity</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 91.39348 91.39348 91.39348 91.39348 91.39348 91.39348</span></span></code></pre></div>
 </div>
-<ul>
-<li>Response scale</li>
-</ul>
+<p>The result is a numeric vector when neither standard errors nor MCMC predictions are requested. It can therefore be added directly to the original data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span>, se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var_fitted_predictors): NaNs produced</span></span>
-<span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
-<span><span class="co">#&gt;   fitted se.fitted</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   64.2    NaN   </span></span>
-<span><span class="co">#&gt; 2   50.3      1.30</span></span>
-<span><span class="co">#&gt; 3   64.2    NaN   </span></span>
-<span><span class="co">#&gt; 4   64.2    NaN   </span></span>
-<span><span class="co">#&gt; 5   64.2    NaN</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">par</span>, <span class="va">spore</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>expected_longevity <span class="op">=</span> <span class="va">expected_longevity</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span><span class="co">#&gt;     sex par   spore expected_longevity</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;              &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     0 0     0                   91.4</span></span>
+<span><span class="co">#&gt; 2     0 0     0                   91.4</span></span>
+<span><span class="co">#&gt; 3     0 0     0                   91.4</span></span>
+<span><span class="co">#&gt; 4     0 0     0                   91.4</span></span>
+<span><span class="co">#&gt; 5     0 0     0                   91.4</span></span>
+<span><span class="co">#&gt; 6     0 0     0                   91.4</span></span></code></pre></div>
 </div>
-</section></section><section class="level2"><h2 id="mcmc">MCMC<a class="anchor" aria-label="anchor" href="#mcmc"></a>
-</h2>
-<blockquote>
-<p>MCMC stands for <strong>M</strong>arkov <strong>C</strong>hain <strong>M</strong>onte <strong>C</strong>arlo.</p>
-</blockquote>
-<section class="level3"><h3 id="fitting-with-mcmc">Fitting with MCMC<a class="anchor" aria-label="anchor" href="#fitting-with-mcmc"></a>
-</h3>
+<p>The same approach applies to any fitted parameter:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
-<span>  lifelihoodData <span class="op">=</span> <span class="va">lifelihoodData</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"example_config_mcmc"</span><span class="op">)</span>,</span>
-<span>  MCMC <span class="op">=</span> <span class="fl">30</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2351_9056_1905_2140/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2351_9056_1905_2140/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 2351 9056 1905 2140 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; Warning in check_estimation(results): Estimation of 'fitness' is close to the</span></span>
-<span><span class="co">#&gt; maximum bound: fitness~=999.607197202812 (bound=995). Consider increasing</span></span>
-<span><span class="co">#&gt; maximum bound.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_reproduction"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 4.705965 4.705965 4.705965 4.705965 4.705965 4.705965</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span></span>
+<span>  <span class="va">results</span>,</span>
+<span>  parameter_name <span class="op">=</span> <span class="st">"reproduction_param2"</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"response"</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.3542137 0.3542137 0.3542137 0.3542137 0.3542137 0.3542137</span></span></code></pre></div>
 </div>
-</section><section class="level3"><h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
-</h3>
-<p>We can represent the confidence interval computed thanks to the standard errors:</p>
+</section><section class="level2"><h2 id="choose-the-prediction-scale">Choose the prediction scale<a class="anchor" aria-label="anchor" href="#choose-the-prediction-scale"></a>
+</h2>
+<p>By default, <code>type = "link"</code>. This returns the linear predictor on the internal lifelihood scale:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_event_rate.html">plot_fitted_event_rate</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"link"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.</span></span>
+<span><span class="co">#&gt; [1] -3.028431 -3.028431 -3.028431 -3.028431 -3.028431 -3.028431</span></span></code></pre></div>
+</div>
+<p>Use <code>type = "response"</code> for values on the parameter’s original scale. For <code>expt_death</code>, these values are expected longevity in the time unit used by the input data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 91.39348 91.39348 91.39348 91.39348 91.39348 91.39348</span></span></code></pre></div>
+</div>
+<p>When a male ratio parameter is fitted, sex-specific values are applied only on the response scale. The link-scale prediction therefore emits a message when the prediction data include males.</p>
+</section><section class="level2"><h2 id="predict-on-new-data">Predict on new data<a class="anchor" aria-label="anchor" href="#predict-on-new-data"></a>
+</h2>
+<p>Pass a data frame to <code>newdata</code> to predict for selected combinations of covariates. It must contain:</p>
+<ul>
+<li>the sex column defined in <code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code>;</li>
+<li>every covariate in the formula of the requested parameter.</li>
+</ul>
+<p>Factor covariates must use levels from the fitted data. Preserving all original levels is useful even when only a subset is present in <code>newdata</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">crossing</a></span><span class="op">(</span>par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">par</span><span class="op">)</span>, sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">par</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">par</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    sex_label <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">sex_predictions</span> <span class="op">&lt;-</span> <span class="va">newdata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    expected_longevity <span class="op">=</span> <span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span></span>
+<span>      <span class="va">results</span>,</span>
+<span>      parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>,</span>
+<span>      newdata <span class="op">=</span> <span class="va">newdata</span>,</span>
+<span>      type <span class="op">=</span> <span class="st">"response"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">sex_predictions</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span><span class="co">#&gt;   par     sex sex_label expected_longevity</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0         0 female                  91.4</span></span>
+<span><span class="co">#&gt; 2 0         1 male                   763. </span></span>
+<span><span class="co">#&gt; 3 1         0 female                  56.0</span></span>
+<span><span class="co">#&gt; 4 1         1 male                   468. </span></span>
+<span><span class="co">#&gt; 5 2         0 female                  55.0</span></span>
+<span><span class="co">#&gt; 6 2         1 male                   459.</span></span></code></pre></div>
+</div>
+<p>Only <code>par</code> is required here because the fitted formula for <code>expt_death</code> is <code>par</code>. Other columns from the original dataset are not needed.</p>
+</section><section class="level2"><h2 id="predictions-for-females-and-males">Predictions for females and males<a class="anchor" aria-label="anchor" href="#predictions-for-females-and-males"></a>
+</h2>
+<p>For <code>expt_death</code> and <code>expt_maturity</code>, lifelihood can fit a corresponding ratio parameter:</p>
+<ul>
+<li>
+<code>ratio_expt_death</code>;</li>
+<li>
+<code>ratio_expt_maturity</code>.</li>
+</ul>
+<p>On the response scale, the prediction for a male is the female prediction multiplied by the fitted ratio. The previous table therefore has different values for females and males even when they have the same <code>par</code> level.</p>
+<p>We can make this comparison explicit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sex_predictions</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">par</span>, <span class="va">sex_label</span>, <span class="va">expected_longevity</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span>
+<span>    names_from <span class="op">=</span> <span class="va">sex_label</span>,</span>
+<span>    values_from <span class="op">=</span> <span class="va">expected_longevity</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>male_to_female <span class="op">=</span> <span class="va">male</span> <span class="op">/</span> <span class="va">female</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 4</span></span>
+<span><span class="co">#&gt;   par   female  male male_to_female</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0       91.4  763.           8.35</span></span>
+<span><span class="co">#&gt; 2 1       56.0  468.           8.35</span></span>
+<span><span class="co">#&gt; 3 2       55.0  459.           8.35</span></span></code></pre></div>
+</div>
+<p>The ratio itself can also be predicted:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">newdata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    longevity_ratio <span class="op">=</span> <span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span></span>
+<span>      <span class="va">results</span>,</span>
+<span>      parameter_name <span class="op">=</span> <span class="st">"ratio_expt_death"</span>,</span>
+<span>      newdata <span class="op">=</span> <span class="va">newdata</span>,</span>
+<span>      type <span class="op">=</span> <span class="st">"response"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Parameter 'ratio_expt_death' set to NA for females.</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span><span class="co">#&gt;   par     sex sex_label longevity_ratio</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0         0 female              NA   </span></span>
+<span><span class="co">#&gt; 2 0         1 male                 8.35</span></span>
+<span><span class="co">#&gt; 3 1         0 female              NA   </span></span>
+<span><span class="co">#&gt; 4 1         1 male                 8.35</span></span>
+<span><span class="co">#&gt; 5 2         0 female              NA   </span></span>
+<span><span class="co">#&gt; 6 2         1 male                 8.35</span></span></code></pre></div>
+</div>
+<p>The ratio is <code>NA</code> for females because it is only used to modify male predictions. If the corresponding ratio parameter is not fitted, no additional male adjustment is applied. Here the estimated ratio is close to, but not exactly, 10. The model estimates the parameters of a distribution from interval-censored observations rather than reproducing the raw multiplier directly.</p>
+</section><section class="level2"><h2 id="simulate-females-and-males">Simulate females and males<a class="anchor" aria-label="anchor" href="#simulate-females-and-males"></a>
+</h2>
+<p><code><a href="../reference/simulate_life_history.html">simulate_life_history()</a></code> uses response-scale predictions internally. A mortality-only simulation therefore uses <code>ratio_expt_death</code> for males:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simulated_mortality</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span></span>
 <span>  <span class="va">results</span>,</span>
-<span>  interval_width <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  event <span class="op">=</span> <span class="st">"mortality"</span>,</span>
-<span>  use_facet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  groupby <span class="op">=</span> <span class="st">"par"</span>,</span>
-<span>  xlab <span class="op">=</span> <span class="st">"Age (days)"</span>,</span>
-<span>  ylab <span class="op">=</span> <span class="st">"Fitted Mortality Rate"</span>,</span>
-<span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  seed <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sex <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">simulated_mortality</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    mean_simulated_longevity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">death_end</span><span class="op">)</span>,</span>
+<span>    .by <span class="op">=</span> <span class="va">sex</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    sex <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>,</span>
+<span>    relative_to_female <span class="op">=</span> <span class="va">mean_simulated_longevity</span> <span class="op">/</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first</a></span><span class="op">(</span><span class="va">mean_simulated_longevity</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 3</span></span>
+<span><span class="co">#&gt;   sex    mean_simulated_longevity relative_to_female</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;              &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 female                     82.1               1   </span></span>
+<span><span class="co">#&gt; 2 male                      692.                8.43</span></span></code></pre></div>
+</div>
+<p>The simulated ratio is close to the fitted ratio. It will vary between simulations unless a fixed <code>seed</code> is used.</p>
+<p>We can also simulate all fitted events for the same six combinations used in <code>newdata</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simulated_life_histories</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span></span>
+<span>  <span class="va">results</span>,</span>
+<span>  newdata <span class="op">=</span> <span class="va">newdata</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">newdata</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sex_label</span>, <span class="va">par</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">sex_label</span>, <span class="va">par</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">simulated_life_histories</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">sex_label</span>,</span>
+<span>    <span class="va">par</span>,</span>
+<span>    <span class="va">death_end</span>,</span>
+<span>    <span class="va">maturity_end</span>,</span>
+<span>    <span class="va">clutch_size_1</span>,</span>
+<span>    <span class="va">clutch_size_2</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span><span class="co">#&gt;   sex_label par   death_end maturity_end clutch_size_1 clutch_size_2</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;fct&gt;     &lt;dbl&gt;        &lt;dbl&gt;         &lt;int&gt;         &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 female    0         121.          9.63             6             4</span></span>
+<span><span class="co">#&gt; 2 male      0         749.         18.3             NA            NA</span></span>
+<span><span class="co">#&gt; 3 female    1          68.2        18.0              5             2</span></span>
+<span><span class="co">#&gt; 4 male      1         362.         13.9             NA            NA</span></span>
+<span><span class="co">#&gt; 5 female    2          11.2         6.53            NA            NA</span></span>
+<span><span class="co">#&gt; 6 male      2         486.         14.2             NA            NA</span></span></code></pre></div>
+</div>
+<p>Reproduction-related columns are always <code>NA</code> for males because lifelihood does not simulate male reproductive events. For females, a clutch can also be <code>NA</code> when it did not occur before the simulated death. Mortality is still simulated for both sexes, using the sex-specific expected longevity.</p>
+</section><section class="level2"><h2 id="prediction-options">Prediction options<a class="anchor" aria-label="anchor" href="#prediction-options"></a>
+</h2>
+<p>The return value changes when uncertainty is requested:</p>
+<table class="table caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>Arguments</th>
+<th>Return value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Default</td>
+<td>Numeric vector of fitted values</td>
+</tr>
+<tr class="even">
+<td><code>se.fit = TRUE</code></td>
+<td>Data frame with <code>fitted</code> and <code>se.fitted</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>mcmc.fit = TRUE</code></td>
+<td>Data frame with <code>fitted</code>, <code>mcmc_est</code>, and <code>mcmc_se</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>mcmc.fit = TRUE, keep_mcmc_samples = TRUE</code></td>
+<td>List containing <code>pred</code> and <code>mcmc_samples</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p><code>se.fit = TRUE</code> requires a model fitted with <code>lifelihood(..., se.fit = TRUE)</code>. Similarly, <code>mcmc.fit = TRUE</code> requires a model fitted with <code>lifelihood(..., MCMC = n)</code>, where <code>n</code> is greater than zero.</p>
+<p>For example, after fitting with MCMC:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mcmc_prediction</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span></span>
+<span>  <span class="va">results</span>,</span>
+<span>  parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>,</span>
+<span>  newdata <span class="op">=</span> <span class="va">newdata</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"response"</span>,</span>
+<span>  mcmc.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  keep_mcmc_samples <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of</span></span>
-<span><span class="co">#&gt; MCMC iterations (30) must be higher than number of individuals (48).</span></span>
-<span><span class="co">#&gt; Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of</span></span>
-<span><span class="co">#&gt; MCMC iterations (30) must be higher than number of individuals (48).</span></span>
-<span><span class="co">#&gt; Warning: Removed 20 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="prediction_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
-</figure>
+<span></span>
+<span><span class="va">mcmc_prediction</span><span class="op">$</span><span class="va">pred</span></span>
+<span><span class="va">mcmc_prediction</span><span class="op">$</span><span class="va">mcmc_samples</span></span></code></pre></div>
 </div>
-</div>
-</div>
-</section></section><script id="quarto-html-after-body" type="application/javascript">
+</section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);

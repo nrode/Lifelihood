@@ -15,8 +15,7 @@
 
 ### Prediction
 
-- [Prediction
-  (TODO)](https://nrode.github.io/Lifelihood/articles/prediction.md):
+- [Prediction](https://nrode.github.io/Lifelihood/articles/prediction.md):
 - [Standard errors and
   MCMC](https://nrode.github.io/Lifelihood/articles/prediction-with-standard-errors-and-mcmc.md):
 
