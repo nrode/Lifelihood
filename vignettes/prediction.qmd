@@ -23,17 +23,21 @@ predictions:
 - with standard errors or MCMC uncertainty when these were requested during
   model fitting.
 
-This vignette covers the first two points and explains how predictions differ
-between females and males. See the
+This vignette covers the first two points, explains how predictions differ
+between females and males, and shows how those predictions are used in
+simulations. See the
 [standard errors and MCMC vignette](prediction-with-standard-errors-and-mcmc.html)
 for uncertainty estimates.
 
 ## Fit an example model
 
-We first prepare `datapierrick` and fit the model used in the development
-examples. The mortality formula in `config_pierrick` models `expt_death` as a
-function of `par` and also fits `ratio_expt_death`, which represents the
-male-to-female ratio in expected longevity.
+We first create paired female and male observations from `datadaphnia`. The
+observed male death intervals are multiplied by 10, while the female death
+intervals are left unchanged. Reproduction data are set to `NA` for males.
+
+The mortality formula in `config_pierrick` models `expt_death` as a function of
+`par` and also fits `ratio_expt_death`, which represents the male-to-female
+ratio in expected longevity.
 
 ```{r}
 #| label: setup
@@ -41,9 +45,25 @@ male-to-female ratio in expected longevity.
 library(lifelihood)
 library(tidyverse)
 
-df <- datapierrick |>
+df_female <- datadaphnia |>
   as_tibble() |>
   mutate(par = as.factor(par), spore = as.factor(spore))
+
+df_male <- df_female |>
+  mutate(
+    sex = 1,
+    across(starts_with("clutch"), ~ NA_real_),
+    death_start = death_start * 10,
+    death_end = death_end * 10
+  )
+
+df <- bind_rows(df_female, df_male) |>
+  mutate(
+    block = rep(
+      c("female", "male"),
+      c(nrow(df_female), nrow(df_male))
+    )
+  )
 
 generate_clutch_vector <- function(n) {
   paste(
@@ -66,6 +86,7 @@ lifelihood_data <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
+  block = "block",
   dist = c("wei", "gam", "lgn")
 )
 
@@ -75,6 +96,22 @@ results <- lifelihood(
   seeds = c(3699, 783, 5401, 6502),
   raise_estimation_warning = FALSE
 )
+```
+
+The mean midpoint of the observed death intervals is exactly 10 times larger
+for males because the male rows were constructed that way:
+
+```{r}
+df |>
+  mutate(observed_death = (death_start + death_end) / 2) |>
+  summarise(
+    mean_observed_death = mean(observed_death),
+    .by = sex
+  ) |>
+  mutate(
+    sex = if_else(sex == 0, "female", "male"),
+    relative_to_female = mean_observed_death / first(mean_observed_death)
+  )
 ```
 
 `parameter_name` must identify a parameter fitted by the model. The available
@@ -166,7 +203,7 @@ newdata <- crossing(par = levels(df$par), sex = c(0, 1)) |>
     sex_label = if_else(sex == 0, "female", "male")
   )
 
-newdata |>
+sex_predictions <- newdata |>
   mutate(
     expected_longevity = prediction(
       results,
@@ -175,6 +212,8 @@ newdata |>
       type = "response"
     )
   )
+
+sex_predictions
 ```
 
 Only `par` is required here because the fitted formula for `expt_death` is
@@ -192,6 +231,18 @@ On the response scale, the prediction for a male is the female prediction
 multiplied by the fitted ratio. The previous table therefore has different
 values for females and males even when they have the same `par` level.
 
+We can make this comparison explicit:
+
+```{r}
+sex_predictions |>
+  select(par, sex_label, expected_longevity) |>
+  pivot_wider(
+    names_from = sex_label,
+    values_from = expected_longevity
+  ) |>
+  mutate(male_to_female = male / female)
+```
+
 The ratio itself can also be predicted:
 
 ```{r}
@@ -208,7 +259,66 @@ newdata |>
 
 The ratio is `NA` for females because it is only used to modify male
 predictions. If the corresponding ratio parameter is not fitted, no additional
-male adjustment is applied.
+male adjustment is applied. Here the estimated ratio is close to, but not
+exactly, 10. The model estimates the parameters of a distribution from
+interval-censored observations rather than reproducing the raw multiplier
+directly.
+
+## Simulate females and males
+
+`simulate_life_history()` uses response-scale predictions internally. A
+mortality-only simulation therefore uses `ratio_expt_death` for males:
+
+```{r}
+simulated_mortality <- simulate_life_history(
+  results,
+  event = "mortality",
+  seed = 1
+) |>
+  mutate(sex = df$sex)
+
+simulated_mortality |>
+  summarise(
+    mean_simulated_longevity = mean(death_end),
+    .by = sex
+  ) |>
+  mutate(
+    sex = if_else(sex == 0, "female", "male"),
+    relative_to_female = mean_simulated_longevity /
+      first(mean_simulated_longevity)
+  )
+```
+
+The simulated ratio is close to the fitted ratio. It will vary between
+simulations unless a fixed `seed` is used.
+
+We can also simulate all fitted events for the same six combinations used in
+`newdata`:
+
+```{r}
+simulated_life_histories <- simulate_life_history(
+  results,
+  newdata = newdata,
+  seed = 1
+) |>
+  bind_cols(newdata |> select(sex_label, par)) |>
+  relocate(sex_label, par)
+
+simulated_life_histories |>
+  select(
+    sex_label,
+    par,
+    death_end,
+    maturity_end,
+    clutch_size_1,
+    clutch_size_2
+  )
+```
+
+Reproduction-related columns are always `NA` for males because lifelihood does
+not simulate male reproductive events. For females, a clutch can also be `NA`
+when it did not occur before the simulated death. Mortality is still simulated
+for both sexes, using the sex-specific expected longevity.
 
 ## Prediction options
 
