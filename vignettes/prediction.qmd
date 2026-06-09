@@ -1,5 +1,5 @@
 ---
-title: "Prediction (TODO)"
+title: "Prediction"
 vignette: >
   %\VignetteIndexEntry{prediction}
   %\VignetteEngine{quarto::html}
@@ -14,34 +14,47 @@ execute:
 embed-resources: true
 ---
 
-## Create a `lifelihoodData` object
+`prediction()` converts the coefficients of a fitted `lifelihood` model into
+parameter values for individuals or combinations of covariates. It can return
+predictions:
 
+- for the data used to fit the model or for a new dataset;
+- on the internal lifelihood scale or on the response scale;
+- with standard errors or MCMC uncertainty when these were requested during
+  model fitting.
+
+This vignette covers the first two points and explains how predictions differ
+between females and males. See the
+[standard errors and MCMC vignette](prediction-with-standard-errors-and-mcmc.html)
+for uncertainty estimates.
+
+## Fit an example model
+
+We first prepare `datapierrick` and fit the model used in the development
+examples. The mortality formula in `config_pierrick` models `expt_death` as a
+function of `par` and also fits `ratio_expt_death`, which represents the
+male-to-female ratio in expected longevity.
 
 ```{r}
 #| label: setup
+#| output: false
 library(lifelihood)
 library(tidyverse)
 
 df <- datapierrick |>
   as_tibble() |>
-  mutate(
-    par = as.factor(par),
-    geno = as.factor(geno),
-    spore = as.factor(spore),
-    block = rep(1:2, each = nrow(datapierrick) / 2)
-  )
+  mutate(par = as.factor(par), spore = as.factor(spore))
 
-generate_clutch_vector <- function(N) {
-  return(paste(
+generate_clutch_vector <- function(n) {
+  paste(
     "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
+    rep(c("start", "end", "size"), n),
+    rep(seq_len(n), each = 3),
     sep = "_"
-  ))
+  )
 }
-clutchs <- generate_clutch_vector(28)
 
-lifelihoodData <- as_lifelihoodData(
+lifelihood_data <- as_lifelihoodData(
   df = df,
   matclutch = FALSE,
   sex = "sex",
@@ -49,82 +62,182 @@ lifelihoodData <- as_lifelihoodData(
   sex_end = "sex_end",
   maturity_start = "mat_start",
   maturity_end = "mat_end",
-  clutchs = clutchs,
-  block = "block",
+  clutchs = generate_clutch_vector(28),
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
   dist = c("wei", "gam", "lgn")
 )
-```
 
-## Standard errors
-
-By default, lifelihood will not try to fit standard errors. But, you can use the `se.fit` argument for this purpose:
-
-```{r}
 results <- lifelihood(
-  lifelihoodData = lifelihoodData,
-  path_config = use_test_config("example_config_se"),
-  se.fit = TRUE,
-)
-summary(results)
-```
-
-Now if we have a look at the estimations we have standard errors:
-
-```{r}
-results$effects |> as_tibble()
-```
-
-### Prediction
-
-We can predict with standard errors.
-
-- Default scale
-
-```{r}
-prediction(results, "expt_death", se.fit = TRUE) |>
-  as_tibble() |>
-  sample_n(5)
-```
-
-- Response scale
-
-```{r}
-prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
-  as_tibble() |>
-  sample_n(5)
-```
-
-
-## MCMC
-
-> MCMC stands for **M**arkov **C**hain **M**onte **C**arlo.
-
-### Fitting with MCMC
-
-```{r}
-results <- lifelihood(
-  lifelihoodData = lifelihoodData,
-  path_config = use_test_config("example_config_mcmc"),
-  MCMC = 30
+  lifelihoodData = lifelihood_data,
+  path_config = use_test_config("config_pierrick"),
+  seeds = c(3699, 783, 5401, 6502),
+  raise_estimation_warning = FALSE
 )
 ```
 
-### Visualization
-
-We can represent the confidence interval computed thanks to the standard errors:
+`parameter_name` must identify a parameter fitted by the model. The available
+parameters can be read from the results:
 
 ```{r}
-plot_fitted_event_rate(
+results$effects |> distinct(event, parameter)
+```
+
+## Predict for the fitted data
+
+When `newdata` is omitted, `prediction()` returns one value for each individual
+in the data used to fit the model.
+
+```{r}
+expected_longevity <- prediction(
   results,
-  interval_width = 10,
-  event = "mortality",
-  use_facet = TRUE,
-  groupby = "par",
-  xlab = "Age (days)",
-  ylab = "Fitted Mortality Rate",
-  se.fit = TRUE
+  parameter_name = "expt_death",
+  type = "response"
 )
+
+length(expected_longevity)
+head(expected_longevity)
+```
+
+The result is a numeric vector when neither standard errors nor MCMC
+predictions are requested. It can therefore be added directly to the original
+data:
+
+```{r}
+df |>
+  select(sex, par, spore) |>
+  mutate(expected_longevity = expected_longevity) |>
+  head()
+```
+
+The same approach applies to any fitted parameter:
+
+```{r}
+prediction(results, parameter_name = "expt_reproduction", type = "response") |>
+  head()
+
+prediction(
+  results,
+  parameter_name = "reproduction_param2",
+  type = "response"
+) |>
+  head()
+```
+
+## Choose the prediction scale
+
+By default, `type = "link"`. This returns the linear predictor on the internal
+lifelihood scale:
+
+```{r}
+prediction(results, parameter_name = "expt_death", type = "link") |>
+  head()
+```
+
+Use `type = "response"` for values on the parameter's original scale. For
+`expt_death`, these values are expected longevity in the time unit used by the
+input data:
+
+```{r}
+prediction(results, parameter_name = "expt_death", type = "response") |>
+  head()
+```
+
+When a male ratio parameter is fitted, sex-specific values are applied only on
+the response scale. The link-scale prediction therefore emits a message when
+the prediction data include males.
+
+## Predict on new data
+
+Pass a data frame to `newdata` to predict for selected combinations of
+covariates. It must contain:
+
+- the sex column defined in `as_lifelihoodData()`;
+- every covariate in the formula of the requested parameter.
+
+Factor covariates must use levels from the fitted data. Preserving all original
+levels is useful even when only a subset is present in `newdata`.
+
+```{r}
+newdata <- crossing(par = levels(df$par), sex = c(0, 1)) |>
+  mutate(
+    par = factor(par, levels = levels(df$par)),
+    sex_label = if_else(sex == 0, "female", "male")
+  )
+
+newdata |>
+  mutate(
+    expected_longevity = prediction(
+      results,
+      parameter_name = "expt_death",
+      newdata = newdata,
+      type = "response"
+    )
+  )
+```
+
+Only `par` is required here because the fitted formula for `expt_death` is
+`par`. Other columns from the original dataset are not needed.
+
+## Predictions for females and males
+
+For `expt_death` and `expt_maturity`, lifelihood can fit a corresponding ratio
+parameter:
+
+- `ratio_expt_death`;
+- `ratio_expt_maturity`.
+
+On the response scale, the prediction for a male is the female prediction
+multiplied by the fitted ratio. The previous table therefore has different
+values for females and males even when they have the same `par` level.
+
+The ratio itself can also be predicted:
+
+```{r}
+newdata |>
+  mutate(
+    longevity_ratio = prediction(
+      results,
+      parameter_name = "ratio_expt_death",
+      newdata = newdata,
+      type = "response"
+    )
+  )
+```
+
+The ratio is `NA` for females because it is only used to modify male
+predictions. If the corresponding ratio parameter is not fitted, no additional
+male adjustment is applied.
+
+## Prediction options
+
+The return value changes when uncertainty is requested:
+
+| Arguments | Return value |
+|---|---|
+| Default | Numeric vector of fitted values |
+| `se.fit = TRUE` | Data frame with `fitted` and `se.fitted` |
+| `mcmc.fit = TRUE` | Data frame with `fitted`, `mcmc_est`, and `mcmc_se` |
+| `mcmc.fit = TRUE, keep_mcmc_samples = TRUE` | List containing `pred` and `mcmc_samples` |
+
+`se.fit = TRUE` requires a model fitted with `lifelihood(..., se.fit = TRUE)`.
+Similarly, `mcmc.fit = TRUE` requires a model fitted with
+`lifelihood(..., MCMC = n)`, where `n` is greater than zero.
+
+For example, after fitting with MCMC:
+
+```{r}
+#| eval: false
+mcmc_prediction <- prediction(
+  results,
+  parameter_name = "expt_death",
+  newdata = newdata,
+  type = "response",
+  mcmc.fit = TRUE,
+  keep_mcmc_samples = TRUE
+)
+
+mcmc_prediction$pred
+mcmc_prediction$mcmc_samples
 ```
