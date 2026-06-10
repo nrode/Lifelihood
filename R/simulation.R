@@ -285,40 +285,55 @@ simulate_life_history_tradeoff <- function(
 
   maturity <- rep(NA_real_, n_ind)
   mortality <- rep(NA_real_, n_ind)
+  ## Empty lists for the reproduction of each of the n_ind invididuals in newdata
   clutch_times <- vector("list", n_ind)
   clutch_sizes <- vector("list", n_ind)
+
 
   for (i in seq_len(n_ind)) {
     t <- 0
     alive <- TRUE
-    matured <- FALSE
-    maturity_time <- NA_real_
+    matured <- FALSE ## Individual born immature
     last_reproduction_time <- NA_real_
-    clutch_times_i <- numeric(0)
-    clutch_sizes_i <- integer(0)
     max_iter <- ceiling(max_long[i] / dt) + 1
     iter <- 0
 
-    # while individual is alive and time interval before max longevity
+    sex=3 ## Undefined sex by default
+    #sex<-ifelse(runif(1)<sexratiomale,1,0) ## Definition of the sex of the individual (if the sex ratio is not provided in "object")
+    
+    # simulate life-history while individual is alive and time interval before max longevity
     # and below maximum iteration
     while (alive && t < max_long[i] && iter <= max_iter) {
+      ## Update iteration
       iter <- iter + 1
 
-      if (length(clutch_times_i) > 0) {
+      if (length(clutch_times[[i]]) > 0) { #Compute discount only if at least one reproduction event
+        #print(paste("Clutch times for individual ", i))
+        #print(unlist(clutch_times[[i]]))
         # When `n_offspring` isn't fitted, clutch_sizes_i may hold NAs; the
         # offspring-dependent hazard is undefined in that case, so treat as 0.
-        offspring_effect <- ifelse(is.na(clutch_sizes_i), 0, clutch_sizes_i)
-        elapsed <- t - clutch_times_i
+        offspring_effect <- ifelse(is.na(clutch_sizes[[i]]), 0, clutch_sizes[[i]])
+        elapsed <- t - clutch_times[[i]]
         if (da[i] == 0) {
           decay <- rep(1, length(elapsed))
         } else {
           decay <- exp(-da[i] * elapsed)
         }
+        ## For each reproduction, increase in hazard rate with an intercept which increase with (d[i] and dn[i] * offspring_effect-  i.e. an constant intercept that does not depend on clutch size and a slope proportional to clutch size 
+        
         discount <- sum((d[i] + dn[i] * offspring_effect) * decay)
       } else {
         discount <- 0
       }
 
+      #Reproduction-survival trade-off for females
+      #Death probability over the interval [x, x+dx] with a discount traoff
+      # The discount traoff  can be null, proportional to the number of clutch or number of offspring produced before x.
+      #for a female: h(t)=a t^(a-1)/(mu^a)
+      #for a male: h(t)=a t^(a-1)/((mu*Rmortum)^a)
+      #traoff=(d+dn*nb offspring)*exp(-dat)
+      #probmort=integral between x and x+dx of [traoff +h(t)]
+      
       p_die <- prob_event_interval_dt(
         t = t,
         dt = dt,
@@ -327,15 +342,19 @@ simulate_life_history_tradeoff <- function(
         family = family_mortality
       ) +
         discount * dt
-
+      
+      ## Stop simulation if individual dies in the interval between t and t+dt ( with probability p_die)
       # probability of dying between t and t+dt
       if (runif(1) < p_die) {
         mortality[i] <- t + dt / 2
         alive <- FALSE
-        break
+        #print(paste("Death of individual", i))
+        #print(mortality[i])
+        #print(p_die)
+        break ## Exit the 'while' loop
       }
 
-      has_matured_this_interval <- FALSE
+      has_matured_this_interval <- FALSE ## Indicator to avoid that maturity and reproduction occur in the same interval
       if (!matured) {
         p_maturity <- prob_event_interval_dt(
           t = t,
@@ -347,26 +366,29 @@ simulate_life_history_tradeoff <- function(
 
         # probability of maturing between t and t+dt
         if (runif(1) < p_maturity) {
-          maturity_time <- t + dt / 2
-          maturity[i] <- maturity_time
-          last_reproduction_time <- maturity_time
+          maturity[i] <- t + dt / 2 #Maturation occured in that interval
+          last_reproduction_time <- t + dt / 2 ## Time since last reproduction or maturity 
           matured <- TRUE
           has_matured_this_interval <- TRUE
-        }
+          #print(paste("Maturity for individual ", i))
+          #print( maturity[i])
+          }
       }
 
       if (matured && !has_matured_this_interval) {
-        t_from_last <- t - last_reproduction_time
-        t_from_maturity <- t - maturity_time
+
+        t_from_maturity <- t - maturity[i]
 
         # Interval between reproduction events increases as time from maturity increases
+        #Reproduction hazard is calculated between t and t+dt only if lastev>0 and no maturity or reproduction event occured in this interval
         expt_reproduction <- link(
           estimate = expt_reproduction_link[i] + senput[i] * t_from_maturity,
           min = expt_reproduction_min,
           max = expt_reproduction_max
         )
+        #Reproduction propensity is calculated from the age of maturity or the last reproductive event (lastev)
         p_reproduction <- prob_event_interval_dt(
-          t = t_from_last,
+          t =  t - last_reproduction_time,
           dt = dt,
           param1 = expt_reproduction,
           param2 = reproduction_param2[i],
@@ -375,60 +397,53 @@ simulate_life_history_tradeoff <- function(
 
         # probability of reproduction between t and t+dt
         if (runif(1) < p_reproduction) {
-          reproduction_time <- t + dt / 2
-          clutch_times_i <- c(clutch_times_i, reproduction_time)
-          clutch_size_i <- simulate_truncPois_single(n_offspring[i])
-          clutch_sizes_i <- c(clutch_sizes_i, clutch_size_i)
-          last_reproduction_time <- reproduction_time
+          last_reproduction_time <- t + dt / 2 ##Update last reproduction event
+          clutch_times[[i]] <- c(clutch_times[[i]], t + dt / 2) ## Append simulated clutch time
+          clutch_sizes[[i]] <- c(clutch_sizes[[i]], simulate_truncPois_single(n_offspring[i])) ## Append simulated clutch size
+          
         }
       }
 
       t <- t + dt
-    }
+    } ## End of while loop (individual dead or max_iteration reached)
 
     # individual censored if individual didn't die before maximum longevity
     if (is.na(mortality[i])) {
       mortality[i] <- lifelihoodData$right_censoring_date
     }
 
-    clutch_times[[i]] <- clutch_times_i
-    clutch_sizes[[i]] <- clutch_sizes_i
   }
-
-  clutch_intervals <- vector("list", n_ind)
-  for (i in seq_len(n_ind)) {
-    clutch_times_i <- clutch_times[[i]]
-    if (length(clutch_times_i) == 0 || is.na(maturity[i])) {
-      clutch_intervals[[i]] <- numeric(0)
-      next
-    }
-
-    clutch_intervals_i <- clutch_times_i
-    clutch_intervals_i[1] <- clutch_times_i[1] - maturity[i]
-    if (length(clutch_times_i) > 1) {
-      clutch_intervals_i[2:length(clutch_times_i)] <- diff(clutch_times_i)
-    }
-    clutch_intervals[[i]] <- clutch_intervals_i
-  }
-
-  n_clutch <- max(1L, lengths(clutch_intervals))
-  clutch_matrix <- matrix(NA_real_, nrow = n_ind, ncol = n_clutch)
-  n_offspring_matrix <- matrix(NA_integer_, nrow = n_ind, ncol = n_clutch)
-
-  for (i in seq_len(n_ind)) {
-    n_i <- length(clutch_intervals[[i]])
-    if (n_i > 0) {
-      clutch_matrix[i, seq_len(n_i)] <- clutch_intervals[[i]]
-      n_offspring_matrix[i, seq_len(n_i)] <- as.integer(clutch_sizes[[i]])
-    }
-  }
-
+  ## Export smulations as tibble
   sim_df <- tibble(mortality = mortality)
-  for (j in seq_len(n_clutch)) {
-    sim_df[[paste0("clutch_", j)]] <- clutch_matrix[, j]
-    sim_df[[paste0("clutch_size_", j)]] <- n_offspring_matrix[, j]
-  }
   sim_df$maturity <- maturity
+  
+  ## Compute maximum number of clutches in the datasets
+  n_clutch <- max(lengths(clutch_times))
+  
+  if(n_clutch>0){
+    clutch_time_df <- as.data.frame(do.call(rbind, lapply(clutch_times, function(x) {
+      length(x) <- n_clutch
+      x
+    })))
+    names(clutch_time_df) <- paste0("clutch_", seq_len(ncol(clutch_time_df)))
+    
+    clutch_size_df <- as.data.frame(do.call(rbind, lapply(clutch_sizes, function(x) {
+      length(x) <- n_clutch
+      x
+    })))
+    names(clutch_size_df) <- paste0("clutch_size_", seq_len(ncol(clutch_size_df)))
+    
+    sim_df <- bind_cols(sim_df, clutch_time_df, clutch_size_df)
+    #print("original simulated data with reproduction events:")
+    #print(sim_df)
+  }else{
+    #print("original simulated data without reproduction events:")
+    #print(sim_df)
+    sim_df$clutch_1 <- rep(NA_real_, n_ind)
+    sim_df$clutch_size_1 <- rep(NA_real_, n_ind)
+  }
+
+  
   print("original simulated data:")
   print(sim_df)
   return(sim_df)
@@ -549,13 +564,13 @@ simulate_life_history <- function(
 
   if (use_tradeoff_path) {
     # Simulation with tradeoffs
-    df_sims <- simulate_life_history_tradeoff(
+    df_sims_up_na <- simulate_life_history_tradeoff(
       object,
       newdata = newdata,
       lifelihoodData = lifelihoodData
     )
     if (!is.null(lifelihoodData$block) && use_censoring) {
-      df_sims <- df_sims |>
+      df_sims_up_na <- df_sims_up_na |>
         add_visit_masks(
           lifelihoodData = lifelihoodData,
           event = "maturity",
@@ -584,7 +599,7 @@ simulate_life_history <- function(
       )
       df_sims <- bind_cols(sim, df_sims)
     }
-  }
+  
 
   if ("maturity" %in% events && "mortality" %in% events) {
     # Convert to NA maturity that occurred after simulated death
@@ -600,7 +615,7 @@ simulate_life_history <- function(
 
     clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up), value = TRUE)
 
-    # Sum duration between clutches to get age at which clutches are made on if more than one clutch
+    # Sum duration between clutches to get age at which clutches are produced, only if more than one clutch
     if(ncol(df_sims_up[clutch_cols])>1){
       df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
     }
@@ -612,7 +627,9 @@ simulate_life_history <- function(
     for (clutch_col in clutch_cols) {
       ## Colnames of column with information about clutch sizes
       n_offspring_col <- sub("^clutch_", "clutch_size_", clutch_col)
-      if (n_offspring_col %in% names(df_sims_up_na)) {
+      ## Check whether some reproduction time are NA because they occured after death
+      if (any(is.na(df_sims_up_na[[clutch_col]]))) {
+      #if (n_offspring_col %in% names(df_sims_up_na)) {
         df_sims_up_na[[n_offspring_col]][is.na(df_sims_up_na[[
           clutch_col
         ]])] <-
@@ -630,9 +647,25 @@ simulate_life_history <- function(
       which(colnames(df_sims_up_na) %in% remove_cols)
     )]
     df_sims_up_na <- df_sims_up_na |> select(-all_of(remove_cols_all))
+  }else{
+    df_sims_up_na <- df_sims 
+  } ## End of reproduction events
 
+} ## End of simulation without
+  
+    # Compute total number of offspring during life
+    df_sims_up_na <- df_sims_up_na |>
+    mutate(
+      total_n_offspring = rowSums(
+        across(starts_with("clutch_size_")),
+        na.rm = TRUE
+      )
+    )  
+  
+  
     if (object$lifelihoodData$matclutch) {
       ## Remove maturity which is not observed when matclutch is TRUE
+      print("Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided")
       df_sims_up_na <- df_sims_up_na |>
         select(-maturity) |>
         rename(
@@ -642,7 +675,8 @@ simulate_life_history <- function(
           ) := clutch_size_1
         )
     }
-
+    
+    if ("reproduction" %in% events) {
     df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
 
     df_sims_up_na <- df_sims_up_na |>
@@ -652,26 +686,16 @@ simulate_life_history <- function(
           c(starts_with("clutch_"), starts_with("clutch_size_")),
           ~ if_else(df[[lifelihoodData$sex]] == 1, NA, .x)
         )
-      ) |>
-      # Compute total number of offspring during life
-      mutate(
-        total_n_offspring = rowSums(
-          across(starts_with("clutch_size_")),
-          na.rm = TRUE
-        )
-      )
-  } else {
-    df_sims_up_na <- df_sims
+      ) 
   }
 
-  if (use_censoring) {
-    df_sims_up_na <- df_sims_up_na
-  } else {
+
+  if (!use_censoring) {
     if ("maturity" %in% events) {
       if ("mortality" %in% events) {
         df_sims_up_na <- df_sims_up_na |>
           mutate(
-            maturity_start = if_else(is.na(maturity), mortality, maturity),
+            maturity_start = if_else(is.na(maturity), mortality, maturity), ## Censoring of maturity at the age of death if the individual did not mature before
             maturity_end = if_else(
               is.na(maturity),
               lifelihoodData$right_censoring_date,
@@ -693,8 +717,9 @@ simulate_life_history <- function(
         select(-mortality) |>
         relocate(death_start, death_end)
     }
-
+    ## Rename the columns for clutches and reorder them such as we have: "death_start death_end maturity_start maturity_end clutch_start_1 clutch_end_1 clutch_size_1       "maturity"        "clutch_size_1"
     if ("reproduction" %in% events) {
+      ## Vector with the names of clutches: "clutch_1", etc.
       clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up_na), value = TRUE)
       df_sims_up_na <- df_sims_up_na |>
         mutate(across(
@@ -708,8 +733,8 @@ simulate_life_history <- function(
   }
 
   df_sims_up_na
-}
 
+}
 #' @keywords internal
 simulate_weibull <- function(expected, shape, n) {
   # expected = scale * gamma(1 + 1 / shape)
