@@ -429,7 +429,8 @@ simulate_life_history_tradeoff <- function(
     sim_df[[paste0("clutch_size_", j)]] <- n_offspring_matrix[, j]
   }
   sim_df$maturity <- maturity
-
+  print("original simulated data:")
+  print(sim_df)
   return(sim_df)
 }
 
@@ -599,20 +600,23 @@ simulate_life_history <- function(
 
     clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up), value = TRUE)
 
-    # Sum duration between clutches to get age at which clutches are made
-    df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
-
+    # Sum duration between clutches to get age at which clutches are made on if more than one clutch
+    if(ncol(df_sims_up[clutch_cols])>1){
+      df_sims_up[clutch_cols] <- t(apply(df_sims_up[clutch_cols], 1, cumsum))
+    }
+    
     # Convert to NA clutches that occurred after simulated death
     df_sims_up_na <- df_sims_up |>
       mutate(across(matches("^clutch_[0-9]+$"), ~ ifelse(. > mortality, NA, .)))
 
     for (clutch_col in clutch_cols) {
+      ## Colnames of column with information about clutch sizes
       n_offspring_col <- sub("^clutch_", "clutch_size_", clutch_col)
       if (n_offspring_col %in% names(df_sims_up_na)) {
         df_sims_up_na[[n_offspring_col]][is.na(df_sims_up_na[[
           clutch_col
         ]])] <-
-          NA
+          NA ## Replace by NA the number of offspring that have been produced after death
       }
     }
 

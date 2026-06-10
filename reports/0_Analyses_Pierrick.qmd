@@ -67,6 +67,7 @@ lifelihoodData <- as_lifelihoodData(
 m1 <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = "./config_pierrick_geno_death.yaml",
+  #path_config = "./reports/config_pierrick_geno_death.yaml",
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE, seed=c(6707,9944,5442,5766)
 )
@@ -75,6 +76,7 @@ m1 <- lifelihood(
 m1 <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = "./config_pierrick_geno_death.yaml",
+  #path_config = "./reports/config_pierrick_geno_death.yaml",
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE, 
   seed=c(2054, 9713, 3767, 8573),
@@ -100,9 +102,6 @@ plot_fitted_event_rate(
   xlab = "Age (days)",
   ylab = "Fitted Mortality Rate",
 )
-
-
-
 
 
 ```
@@ -184,7 +183,10 @@ simulation_input$sample_size
 
 simulation_input$lifelihoodData$block <- 1
 
-simulate_life_history(simulation_input, event = "all") |>
+
+simulate_life_history(object=simulation_input, event = "all")
+
+simulate_life_history(object=simulation_input, event = "all") |>
   mutate(geno=simulation_input$lifelihoodData$df$geno)|>
   group_by(geno)|>
   summarise(longevity=mean((death_start+death_end)/2))
