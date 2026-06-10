@@ -158,7 +158,6 @@ simulation_config <- list(
 effects <- list(
   expt_death = list(intercept = coef(m1)[1], geno = coef(m1)[2:4]),
   survival_param2 = coef(m1)[5],
- # increase_death_hazard = 10,
   expt_maturity = coef(m1)[6],
   maturity_param2 = coef(m1)[7],
   expt_reproduction = coef(m1)[8],
@@ -238,7 +237,7 @@ simulation_config <- list(
 effects <- list(
   expt_death = list(intercept = coef(m1)[1], geno = coef(m1)[2:4]),
   survival_param2 = coef(m1)[5],
-  increase_death_hazard = -100,
+  increase_death_hazard = -10,
   expt_maturity = coef(m1)[6],
   maturity_param2 = coef(m1)[7],
   expt_reproduction = coef(m1)[8],
@@ -252,7 +251,7 @@ simulation_input <- create_simulation_input(
   data = population,
   covariates = c("geno"),
   sex = "sex",
-  matclutch =TRUE,
+  matclutch =FALSE,
   matclutch_size="first_clutch_size",
   block=1,
   config = simulation_config,
@@ -273,5 +272,52 @@ sim_data |>
   group_by(geno)|>
   summarise(longevity=mean((death_start+death_end)/2))
 
+
+```
+
+# Analyse simulations
+```{r }
+
+sim_data|>
+  group_by(geno)|>
+  summarise(longevity=mean((death_start+death_end)/2))
+
+generate_clutch_vector <- function(N) {
+  return(paste(
+    "clutch",
+    rep(c("start", "end", "size"), N),
+    rep(1:N, each = 3),
+    sep = "_"
+  ))
+}
+clutchs <- generate_clutch_vector(47)
+
+lifelihoodData <- as_lifelihoodData(
+  df = sim_data,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "maturity_start",
+  maturity_end = "maturity_end",
+  clutchs = clutchs,
+  death_start = "death_start",
+  death_end = "death_end",
+  matclutch = FALSE,
+  covariates = c("geno"),
+  dist = c("wei", "gam", "lgn")
+)
+
+## Right convergence
+#m1 <- lifelihood(
+#  lifelihoodData = lifelihoodData,
+  #path_config = "./config_pierrick_geno_death.yaml",
+#  path_config = "./reports/config_pierrick_geno_death.yaml",
+#  raise_estimation_warning = FALSE,
+#  delete_temp_files = FALSE, 
+#  seed=c(2054, 9713, 3767, 8573),
+  #  n_fit=10
+#)
+
+#AICc(m1)
 
 ```

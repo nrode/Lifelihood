@@ -731,8 +731,16 @@ simulate_life_history <- function(
         select(-all_of(clutch_cols))
     }
   }
-
-  df_sims_up_na
+  ## Add covariates
+  if (is.null(newdata)){
+    df_sims_up_na <-object$lifelihoodData$df|>
+      select(c(object$lifelihoodData$covariates, object$lifelihoodData$sex, object$lifelihoodData$sex_start, object$lifelihoodData$sex_end))|>
+      bind_cols(df_sims_up_na)
+  }else{
+    df_sims_up_na <- bind_cols(newdata, df_sims_up_na)
+  } 
+    
+    return(as_tibble(df_sims_up_na))
 
 }
 #' @keywords internal
