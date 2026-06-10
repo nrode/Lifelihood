@@ -16,7 +16,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 devtools::load_all()
-options( "digits"=2)
+options( "digits"=10)
 library(tidyverse)
 ```
 
@@ -115,7 +115,87 @@ simulate_life_history(m1, event = "mortality") |>
   summarise(longevity=mean((death_start+death_end)/2))
 ```
 
-## From scratch
+## From scratch without tradeoffs
+```{r }
+population <- crossing(
+  geno = as.factor(0:3),
+  sex = 0
+) |>
+  mutate(n_individuals = 100)
+
+
+## Define model to simulate
+simulation_config <- list(
+  mortality = list(
+    expt_death = "geno",
+    survival_param2 = 1,
+    ratio_expt_death = "not_fitted",
+    prob_death = "not_fitted",
+    sex_ratio = "not_fitted"
+  ),
+  maturity = list(
+    expt_maturity = 1,
+    maturity_param2 = 1,
+    ratio_expt_maturity = "not_fitted"
+  ),
+  reproduction = list(
+    expt_reproduction = 1,
+    reproduction_param2 = 1,
+    n_offspring = 1,
+    increase_death_hazard = "not_fitted",
+    tof_decay = "not_fitted",
+    increase_death_hazard_n_offspring = "not_fitted",
+    lin_decrease_hazard = "not_fitted",
+    quad_decrease_hazard = "not_fitted",
+    lin_change_n_offspring = "not_fitted",
+    quad_change_n_offspring = "not_fitted",
+    tof_n_offspring = "not_fitted",
+    fitness = "not_fitted"
+  )
+)
+
+## Define effects
+effects <- list(
+  expt_death = list(intercept = coef(m1)[1], geno = coef(m1)[2:4]),
+  survival_param2 = coef(m1)[5],
+ # increase_death_hazard = 10,
+  expt_maturity = coef(m1)[6],
+  maturity_param2 = coef(m1)[7],
+  expt_reproduction = coef(m1)[8],
+  reproduction_param2 = coef(m1)[9],
+  n_offspring = coef(m1)[10]
+)
+
+## Inputs with distributions
+simulation_input <- create_simulation_input(
+  effects = effects,
+  data = population,
+  covariates = c("geno"),
+  sex = "sex",
+  matclutch =TRUE,
+  matclutch_size="first_clutch_size",
+  block=1,
+  config = simulation_config,
+  dist = c("wei", "gam", "lgn"),
+  n_per_combination = "n_individuals",
+  param_bounds_df=m1$param_bounds_df
+)
+
+simulation_input$sample_size
+
+sim_data <- simulate_life_history(object=simulation_input, event = "all")
+sim_data
+
+sim_data |>
+  mutate(geno=simulation_input$lifelihoodData$df$geno)|>
+  group_by(geno)|>
+  summarise(longevity=mean((death_start+death_end)/2))
+
+
+```
+
+
+## From scratch with tradeoffs
 ```{r }
 population <- crossing(
   geno = as.factor(0:3),
@@ -158,7 +238,7 @@ simulation_config <- list(
 effects <- list(
   expt_death = list(intercept = coef(m1)[1], geno = coef(m1)[2:4]),
   survival_param2 = coef(m1)[5],
-  increase_death_hazard = 10,
+  increase_death_hazard = -100,
   expt_maturity = coef(m1)[6],
   maturity_param2 = coef(m1)[7],
   expt_reproduction = coef(m1)[8],
@@ -172,6 +252,9 @@ simulation_input <- create_simulation_input(
   data = population,
   covariates = c("geno"),
   sex = "sex",
+  matclutch =TRUE,
+  matclutch_size="first_clutch_size",
+  block=1,
   config = simulation_config,
   dist = c("wei", "gam", "lgn"),
   n_per_combination = "n_individuals",
@@ -179,14 +262,13 @@ simulation_input <- create_simulation_input(
 )
 
 simulation_input$sample_size
-#> [1] 600
 
-simulation_input$lifelihoodData$block <- 1
+set.seed(123)
+sim_data <- simulate_life_history(object=simulation_input, event = "all")
+sim_data
+colnames(sim_data)
 
-
-simulate_life_history(object=simulation_input, event = "all")
-
-simulate_life_history(object=simulation_input, event = "all") |>
+sim_data |>
   mutate(geno=simulation_input$lifelihoodData$df$geno)|>
   group_by(geno)|>
   summarise(longevity=mean((death_start+death_end)/2))
