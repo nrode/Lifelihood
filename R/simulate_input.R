@@ -706,8 +706,8 @@ build_simulation_lifelihood_data <- function(
 ) {
   df <- df |>
     mutate(
-      sex_start = 1e-6,
-      sex_end = 1e-6,
+      sex_start = right_censoring_date * 0.99,
+      sex_end = right_censoring_date,
       maturity_start = 1e-6,
       maturity_end = right_censoring_date * 0.99,
       clutch_start1 = 1e-6,
