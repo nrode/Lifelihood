@@ -49,3 +49,6 @@ simulation-tradeoff-old.R
 t.R
 
 *.rmarkdown
+
+/.quarto/
+**/*.quarto_ipynb
