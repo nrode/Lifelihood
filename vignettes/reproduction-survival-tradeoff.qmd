@@ -106,7 +106,7 @@ simulate_life_history(m1, event = "mortality") |>
 ```
 
 ## From scratch without tradeoffs
-```{r}
+```{r }
 population <- crossing(
   geno = as.factor(0:3),
   sex = 0
@@ -161,35 +161,42 @@ simulation_input <- create_simulation_input(
   data = population,
   covariates = c("geno"),
   sex = "sex",
-  matclutch = TRUE,
-  matclutch_size = "first_clutch_size",
-  block = 1,
+  matclutch =TRUE,
+  matclutch_size="first_clutch_size",
+  block="block",
   config = simulation_config,
   dist = c("wei", "gam", "lgn"),
   n_per_combination = "n_individuals",
-  param_bounds_df = m1$param_bounds_df
+  param_bounds_df=m1$param_bounds_df
 )
 
-simulation_input$sample_size
+## Add block to dataset
+simulation_input$lifelihoodData$df <- data.frame(block = rep(1, nrow(simulation_input$lifelihoodData$df)), simulation_input$lifelihoodData$df)
 
-sim_data <- simulate_life_history(object = simulation_input, event = "all")
+visits <- data.frame(block = 1, visit = seq(1, 200, by=0.1))
+
+sim_data <- simulate_life_history(object = simulation_input,
+                                  event = "all",
+                                  use_censoring = TRUE,
+                                  visits = visits)
 sim_data
 
 sim_data |>
-  mutate(geno = simulation_input$lifelihoodData$df$geno) |>
-  group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+  mutate(geno=simulation_input$lifelihoodData$df$geno)|>
+  group_by(geno)|>
+  summarise(longevity=mean((death_start+death_end)/2))
+
+
 ```
 
 
 ## From scratch with tradeoffs
-```{r}
+```{r }
 population <- crossing(
   geno = as.factor(0:3),
   sex = 0
 ) |>
-  mutate(n_individuals = 100)
-
+  mutate(n_individuals = 10)
 
 ## Define model to simulate
 simulation_config <- list(
@@ -239,33 +246,47 @@ simulation_input <- create_simulation_input(
   data = population,
   covariates = c("geno"),
   sex = "sex",
-  matclutch = FALSE,
-  matclutch_size = "first_clutch_size",
-  block = 1,
+  matclutch =FALSE,
+  matclutch_size="first_clutch_size",
+  block="block",
   config = simulation_config,
   dist = c("wei", "gam", "lgn"),
   n_per_combination = "n_individuals",
-  param_bounds_df = m1$param_bounds_df
+  param_bounds_df=m1$param_bounds_df
 )
 
-simulation_input$sample_size
+## Add block to dataset
+simulation_input$lifelihoodData$df <- data.frame(block=rep(1, nrow(simulation_input$lifelihoodData$df)), simulation_input$lifelihoodData$df)
 
+visits <- data.frame(block = 1, visit = seq(1, 200, by = 0.1))
 set.seed(123)
-sim_data <- simulate_life_history(object = simulation_input, event = "all")
+sim_data <- simulate_life_history(object = simulation_input,
+                                  event = "all",
+                                  use_censoring = FALSE)
+                                  #visits = visits)
+
 sim_data
 colnames(sim_data)
 
-sim_data |>
-  mutate(geno = simulation_input$lifelihoodData$df$geno) |>
-  group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+## Remove LRS
+sim_data <- sim_data |>
+  select(-total_n_offspring)
+
+
 ```
 
 # Analyse simulations
-```{r}
-sim_data |>
-  group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+```{r }
+
+sim_data|>
+  group_by(geno)|>
+  summarise(longevity=mean((death_start+death_end)/2))
+
+sim_data|>
+#mutate(toto=death_start-maturity_start)|>
+#mutate(toto=clutch_start_1-maturity_start)|>
+mutate(toto=death_start-clutch_start_39)|>
+ summarize(min(toto, na.rm = TRUE))
 
 generate_clutch_vector <- function(N) {
   return(paste(
@@ -275,7 +296,7 @@ generate_clutch_vector <- function(N) {
     sep = "_"
   ))
 }
-clutchs <- generate_clutch_vector(47)
+clutchs <- generate_clutch_vector(39)
 
 lifelihoodData <- as_lifelihoodData(
   df = sim_data,
@@ -293,15 +314,17 @@ lifelihoodData <- as_lifelihoodData(
 )
 
 ## Right convergence
-#m1 <- lifelihood(
-#  lifelihoodData = lifelihoodData,
+m1 <- lifelihood(
+ lifelihoodData = lifelihoodData,
 #path_config = "./config_pierrick_geno_death.yaml",
-#  path_config = "./reports/config_pierrick_geno_death.yaml",
-#  raise_estimation_warning = FALSE,
-#  delete_temp_files = FALSE,
-#  seed=c(2054, 9713, 3767, 8573),
-#  n_fit=10
-#)
+path_config = "./reports/config_pierrick_geno_death.yaml",
+raise_estimation_warning = FALSE,
+delete_temp_files = FALSE,
+seed=c(2054, 9713, 3767, 8573),
+sub_interval = 0.05
+ #n_fit=10
+)
 
 #AICc(m1)
+
 ```
