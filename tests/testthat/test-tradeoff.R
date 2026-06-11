@@ -54,8 +54,21 @@ test_that("trade-off simulations work for reproduction events", {
   expect_true(length(clutch_cols) > 0)
   expect_true(length(n_offspring_cols) > 0)
   expect_type(sim_reproduction[[n_offspring_cols[1]]], "integer")
+  expect_equal(nrow(sim_reproduction), nrow(df))
 
   sim_mortality <- simulate_life_history(results, event = "mortality", seed = 1)
-  expect_true(identical(names(sim_mortality), c("death_start", "death_end")))
+  expect_identical(
+    names(sim_mortality),
+    c(
+      "par",
+      "geno",
+      "sex",
+      "sex_start",
+      "sex_end",
+      "death_start",
+      "death_end",
+      "total_n_offspring"
+    )
+  )
   expect_true(nrow(sim_mortality) == nrow(df))
 })

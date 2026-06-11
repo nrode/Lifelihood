@@ -176,9 +176,7 @@ generate_clutch_vector <- function(N) {
 }
 clutchs <- generate_clutch_vector(43)
 
-simulated_for_fit <- simulation_input$lifelihoodData$df |>
-  select(par, spore, sex, sex_start, sex_end) |>
-  bind_cols(simulated) |>
+simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,
     sex_end = simulation_input$lifelihoodData$right_censoring_date
