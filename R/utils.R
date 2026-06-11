@@ -220,6 +220,7 @@ use_test_config <- function(
     "config_without_tradeoff",
     "example_config_se",
     "example_config_mcmc",
+    "config_pierrick_geno_death",
     "config_gbg"
   )
 ) {
