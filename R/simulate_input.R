@@ -20,15 +20,21 @@
 #' @param sex Name of the sex column in `data`.
 #' @param config Path to a YAML configuration file or an already-loaded
 #'   configuration list.
-#' @param model Character vector with one model family to reuse for mortality,
-#'   maturity and reproduction, or three model families in that order. Values
+#' @param dist Character vector with one distribution family for mortality,
+#'   maturity and reproduction, in that order. Values
 #'   must be `"wei"`, `"exp"`, `"gam"` or `"lgn"`.
+#' @param matclutch Whether maturity corresponds to the first clutch.
+#' @param matclutch_size Optional name of the first clutch size column when
+#'   `matclutch = TRUE`.
+#' @param block Optional name of the block column in `data`.
 #' @param n_per_combination Optional name of a column in `data` containing the
 #'   number of individuals to create for each row.
 #' @param param_bounds_df Optional data frame with columns `param`, `min` and
 #'   `max`. If `NULL`, defaults are created with [default_bounds_df()].
 #' @param right_censoring_date Numeric right censoring date stored in the
 #'   internal `lifelihoodData` object.
+#' @param max_clutch_size Numeric maximum clutch size stored in the internal
+#'   `lifelihoodData` object.
 #'
 #' @return A `lifelihoodResults` object suitable for [simulate_life_history()].
 #'
@@ -38,11 +44,11 @@ create_simulation_input <- function(
   data,
   covariates,
   sex,
-  matclutch,
-  matclutch_size,
   config,
-  block,
   dist,
+  matclutch = FALSE,
+  matclutch_size = NULL,
+  block = NULL,
   n_per_combination = NULL,
   param_bounds_df = NULL,
   right_censoring_date = 1000,
@@ -86,9 +92,9 @@ create_simulation_input <- function(
     df = df,
     covariates = covariates,
     sex = sex,
-    matclutch=matclutch,
-    matclutch_size=matclutch_size,
-    block=block,
+    matclutch = matclutch,
+    matclutch_size = matclutch_size,
+    block = block,
     dist = dist,
     right_censoring_date = right_censoring_date,
     max_clutch_size = max_clutch_size

@@ -666,6 +666,19 @@ simulate_life_history <- function(
     } ## End of reproduction events
   } ## End of simulation without
 
+  if ("reproduction" %in% events) {
+    df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
+
+    df_sims_up_na <- df_sims_up_na |>
+      # Set reproduction-related columns to NA for males
+      mutate(
+        across(
+          c(starts_with("clutch_"), starts_with("clutch_size_")),
+          ~ if_else(df[[lifelihoodData$sex]] == 1, NA, .x)
+        )
+      )
+  }
+
   # Compute total number of offspring during life
   df_sims_up_na <- df_sims_up_na |>
     mutate(
@@ -687,19 +700,6 @@ simulate_life_history <- function(
         !!as.symbol(
           object$lifelihoodData$matclutch_size
         ) := clutch_size_1
-      )
-  }
-
-  if ("reproduction" %in% events) {
-    df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
-
-    df_sims_up_na <- df_sims_up_na |>
-      # Set reproduction-related columns to NA for males
-      mutate(
-        across(
-          c(starts_with("clutch_"), starts_with("clutch_size_")),
-          ~ if_else(df[[lifelihoodData$sex]] == 1, NA, .x)
-        )
       )
   }
 
