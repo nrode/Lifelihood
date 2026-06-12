@@ -724,16 +724,14 @@ simulate_life_history <- function(
       }
     }
 
-    if ("mortality" %in% events) {
-      df_sims_up_na <- df_sims_up_na |>
-        mutate(death_start = mortality, death_end = mortality) |>
-        select(-mortality) |>
-        relocate(death_start, death_end)
-    }
+
     ## Rename the columns for clutches and reorder them such as we have: "death_start death_end maturity_start maturity_end clutch_start_1 clutch_end_1 clutch_size_1       "maturity"        "clutch_size_1"
     if ("reproduction" %in% events) {
       ## Vector with the names of clutches: "clutch_1", etc.
       clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up_na), value = TRUE)
+      print(clutch_cols)
+      n_clutches <- length(clutch_cols)/2
+      print(n_clutches)
       df_sims_up_na <- df_sims_up_na |>
         mutate(across(
           all_of(clutch_cols),
@@ -742,6 +740,30 @@ simulate_life_history <- function(
         )) |>
         relocate(matches("^clutch_(start|end|size)_"), .after = last_col()) |>
         select(-all_of(clutch_cols))
+      
+      ## Reorder columns
+      new_order <- c(
+        names(df_sims_up_na)[!grepl("^clutch_", names(df_sims_up_na))],  # keep the first non-clutch columns
+        unlist(
+          lapply(seq_len(n_clutches), function(i) {
+            c(
+              paste0("clutch_start_", i),
+              paste0("clutch_end_", i),
+              paste0("clutch_size_", i)
+            )
+          })
+        )
+      )
+      
+      df_sims_up_na <- df_sims_up_na |>
+        select(all_of(new_order))
+    }
+    
+    if ("mortality" %in% events) {
+      df_sims_up_na <- df_sims_up_na |>
+        mutate(death_start = mortality, death_end = mortality) |>
+        select(-mortality) |>
+        relocate(death_start, death_end, .after = last_col())
     }
   }
   ## Add covariates
