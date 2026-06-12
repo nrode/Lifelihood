@@ -196,7 +196,7 @@ population <- crossing(
   geno = as.factor(0:3),
   sex = 0
 ) |>
-  mutate(n_individuals = 10)
+  mutate(n_individuals = 5)
 
 ## Define model to simulate
 simulation_config <- list(
@@ -272,7 +272,6 @@ colnames(sim_data)
 sim_data <- sim_data |>
   select(-total_n_offspring)
 
-
 ```
 
 # Analyse simulations
@@ -285,7 +284,7 @@ sim_data|>
 sim_data|>
 #mutate(toto=death_start-maturity_start)|>
 #mutate(toto=clutch_start_1-maturity_start)|>
-mutate(toto=death_start-clutch_start_39)|>
+mutate(toto=death_start-clutch_start_22)|>
  summarize(min(toto, na.rm = TRUE))
 
 generate_clutch_vector <- function(N) {
@@ -296,7 +295,7 @@ generate_clutch_vector <- function(N) {
     sep = "_"
   ))
 }
-clutchs <- generate_clutch_vector(39)
+clutchs <- generate_clutch_vector(19)
 
 lifelihoodData <- as_lifelihoodData(
   df = sim_data,
@@ -316,8 +315,7 @@ lifelihoodData <- as_lifelihoodData(
 ## Right convergence
 m1 <- lifelihood(
  lifelihoodData = lifelihoodData,
-#path_config = "./config_pierrick_geno_death.yaml",
-path_config = "./reports/config_pierrick_geno_death.yaml",
+path_config = use_test_config("config_pierrick_geno_death"),
 raise_estimation_warning = FALSE,
 delete_temp_files = FALSE,
 seed=c(2054, 9713, 3767, 8573),

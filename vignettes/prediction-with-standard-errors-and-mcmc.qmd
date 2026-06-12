@@ -16,7 +16,6 @@ embed-resources: true
 
 ## Create a `lifelihoodData` object
 
-
 ```{r}
 #| label: setup
 library(lifelihood)
@@ -63,12 +62,31 @@ lifelihoodData <- as_lifelihoodData(
 By default, lifelihood will not try to fit standard errors. But, you can use the `se.fit` argument for this purpose:
 
 ```{r}
+
+## Fail to compute standard errors due to absence of convergence to the ML optimum
+results_wrong <- lifelihood(
+  lifelihoodData = lifelihoodData,
+  path_config = use_test_config("example_config_se"),
+  se.fit = TRUE,
+  seed = c(103, 349, 1213, 1283)
+)
+
+## Change sees to converge to the ML optimum
+set.seed(123)
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
+  n_fit=5
 )
+
+## New model has better convergence
+logLik(results_wrong)
+logLik(results)
+
 summary(results)
+
+
 ```
 
 Now if we have a look at the estimations we have standard errors:
@@ -77,7 +95,7 @@ Now if we have a look at the estimations we have standard errors:
 results$effects |> as_tibble()
 ```
 
-### Prediction
+## Prediction
 
 We can predict with standard errors.
 
@@ -98,7 +116,7 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 ```
 
 
-## MCMC
+## SE fails with interaction model with MCMC
 
 > MCMC stands for **M**arkov **C**hain **M**onte **C**arlo.
 
