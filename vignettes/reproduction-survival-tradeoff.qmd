@@ -94,6 +94,7 @@ plot_fitted_event_rate(
   xlab = "Age (days)",
   ylab = "Fitted Mortality Rate",
 )
+
 ```
 
 # Simulations

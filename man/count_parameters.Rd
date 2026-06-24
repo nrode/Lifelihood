@@ -7,7 +7,7 @@
 count_parameters(x)
 }
 \arguments{
-\item{x}{Config file parsed by \code{\link[yaml:yaml.load]{yaml::yaml.load_file()}}.}
+\item{x}{Config file parsed by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.}
 }
 \value{
 Total number of parameter to fit.

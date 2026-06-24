@@ -32,10 +32,11 @@ If set to NULL, the time of the last observed death is used.}
 at the beggining of a time interval for computing the observed
 event rate.}
 
-\item{groupby}{One or multiple covariates used to group the
-computation. If NULL, calculates a single overall rate. If
-\code{"all"}, calculates rate over each combination of covariates.
-Otherwise must be a character or character vector with covariate
+\item{groupby}{One or multiple factors used to define a group
+for which the event rate the will be computed.
+If NULL, calculates a single overall rate. If \code{"all"},
+calculates rate over each combination of all factors
+Otherwise must be a character or character vector with factors
 names.}
 }
 \value{

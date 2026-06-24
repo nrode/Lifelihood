@@ -52,7 +52,7 @@ lifelihood_fit_group_by_group(
 
 \item{seeds}{Vector of length four with seed integers used to reproduce results using Mersenne Twister pseudorandom number generator (same seeds = same results). This argument should be \code{NULL} (default) when \code{n_fit} > 1. \href{https://en.wikipedia.org/wiki/Random_seed}{Learn more}.}
 
-\item{ntr}{Number of thread for the paralelisation ?}
+\item{ntr}{Number of temperature steps in each simulated annealing run; the temperature decreases from To to Tf in exactly ntr steps, with nst Metropolis trials at each step.}
 
 \item{nst}{Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)}
 

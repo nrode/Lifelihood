@@ -66,7 +66,7 @@ third is used for reproduction.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{block}{Name of the block to which each individual belong to.}
+\item{block}{Column name containing the block to which each individual belong to.}
 
 \item{matclutch}{Whether the maturity event (designated by
 \code{maturity_start} and \code{maturity_end}) is a clutch event or not.

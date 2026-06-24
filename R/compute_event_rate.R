@@ -271,10 +271,11 @@ compute_fitted_event_rate <- function(
 #' @param min_sample_size The minimum number of individuals alive
 #' at the beggining of a time interval for computing the observed
 #' event rate.
-#' @param groupby One or multiple covariates used to group the
-#' computation. If NULL, calculates a single overall rate. If
-#' `"all"`, calculates rate over each combination of covariates.
-#' Otherwise must be a character or character vector with covariate
+#' @param groupby One or multiple factors used to define a group
+#' for which the event rate the will be computed.
+#' If NULL, calculates a single overall rate. If `"all"`, 
+#' calculates rate over each combination of all factors
+#' Otherwise must be a character or character vector with factors
 #' names.
 #'
 #' @return A dataframe with 3 columns: Interval (time interval, based
@@ -390,7 +391,14 @@ compute_observed_event_rate <- function(
       )) |>
       tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE) |>
       dplyr::filter(group %in% groups) |>
-      dplyr::mutate(group = as.factor(group))
+      dplyr::mutate(group = as.factor(group)) |>
+      dplyr::mutate(
+        across(
+          all_of(groupby),
+          ~ sub(paste0("^", cur_column(), "="), "", .x)
+        )
+      ) ## Level of each factor back to original one
+    
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"
