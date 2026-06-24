@@ -15,7 +15,7 @@ It requires R 4.1.0 or later, and work on all of:
 ## Installation
 
 ```r
-devtools::install_github("nrode/Lifelihood")
+pak::pak("nrode/Lifelihood")
 ```
 
 <br>
