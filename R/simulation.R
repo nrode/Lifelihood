@@ -541,10 +541,10 @@ simulate_life_history <- function(
   lifelihoodData <- object$lifelihoodData
   block_values <- NULL
   if (use_censoring) {
-    if (is.null(lifelihoodData$block)) {
+    if (is.null(lifelihoodData$block) || !is.null(lifelihoodData$block) && !block%in%colnames(lifelihoodData$df)) {
       stop(
-        "`use_censoring = TRUE` requires `object$lifelihoodData$block`. ",
-        "Set `block` when creating the lifelihoodData object."
+        "`use_censoring = TRUE` requires the dataset in `object$lifelihoodData$df` includes a column whose name correspond to `object$lifelihoodData$block`. ",
+        "Please set `block` when creating the lifelihoodData object."
       )
     }
     if (is.null(visits)) {
