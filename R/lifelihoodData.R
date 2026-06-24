@@ -37,7 +37,7 @@
 #' used for mortality, the second one is used for maturity and the
 #' third is used for reproduction.
 #' @param covariates Vector containing the names of the covariates.
-#' @param block Name of the block to which each individual belong to.
+#' @param block Column name containing the block to which each individual belong to.
 #' @param matclutch Whether the maturity event (designated by
 #' `maturity_start` and `maturity_end`) is a clutch event or not.
 #' If `TRUE`, must specify the `matclutch_size` argument. Default
@@ -88,6 +88,10 @@ as_lifelihoodData <- function(
 
   if (isTRUE(matclutch) && is.null(matclutch_size)) {
     stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
+  }
+  
+  if (!is.null(block) && !block%in%colnames(df)) {
+    stop("`block` argument does not match any of the column names in the dataframe `df` provided.")
   }
 
   dataObject <- list(
