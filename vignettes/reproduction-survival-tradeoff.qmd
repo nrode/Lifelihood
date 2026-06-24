@@ -184,7 +184,7 @@ sim_data
 sim_data |>
   mutate(geno=simulation_input$lifelihoodData$df$geno)|>
   group_by(geno)|>
-  summarise(longevity=mean((death_start+death_end)/2))
+  summarise(longevity=mean((mortality_start+mortality_end)/2))
 
 
 ```
@@ -284,7 +284,7 @@ sim_data|>
 sim_data|>
 #mutate(toto=death_start-maturity_start)|>
 #mutate(toto=clutch_start_1-maturity_start)|>
-mutate(toto=death_start-clutch_start_22)|>
+mutate(toto=death_start-clutch_start_19)|>
  summarize(min(toto, na.rm = TRUE))
 
 generate_clutch_vector <- function(N) {
