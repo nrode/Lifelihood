@@ -180,6 +180,19 @@ execute_bin <- function(
     path <- path_to_Lifelihood
   }
 
-  print(paste0(path, " ", arg_string))
-  system(path, input = arg_string)
+  output <- suppressWarnings(
+    system2(
+      command = path,
+      input = arg_string,
+      stdout = TRUE,
+      stderr = TRUE
+    )
+  )
+  status <- attr(output, "status")
+
+  if (!is.null(status) || any(grepl("^Lifelihood Pascal error$", output))) {
+    stop(paste(output, collapse = "\n"), call. = FALSE)
+  }
+
+  invisible(output)
 }
