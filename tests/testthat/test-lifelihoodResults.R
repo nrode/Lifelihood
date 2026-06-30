@@ -74,7 +74,6 @@ test_that("lifelihoodResults works", {
 
     expect_s3_class(df_effects, "data.frame")
 
-    print(names(df_effects))
     expect_true(
       all(
         c("name", "estimation", "stderror", "parameter", "kind", "event") %in%

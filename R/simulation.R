@@ -297,7 +297,7 @@ simulate_life_history_tradeoff <- function(
     max_iter <- ceiling(max_long[i] / dt) + 1
     iter <- 0
 
-    sex = 3 ## Undefined sex by default
+    sex <- 3 ## Undefined sex by default
     #sex<-ifelse(runif(1)<sexratiomale,1,0) ## Definition of the sex of the individual (if the sex ratio is not provided in "object")
 
     # simulate life-history while individual is alive and time interval before max longevity
@@ -308,8 +308,7 @@ simulate_life_history_tradeoff <- function(
 
       if (length(clutch_times[[i]]) > 0) {
         #Compute discount only if at least one reproduction event
-        #print(paste("Clutch times for individual ", i))
-        #print(unlist(clutch_times[[i]]))
+
         # When `n_offspring` isn't fitted, clutch_sizes_i may hold NAs; the
         # offspring-dependent hazard is undefined in that case, so treat as 0.
         offspring_effect <- ifelse(
@@ -352,9 +351,7 @@ simulate_life_history_tradeoff <- function(
       if (runif(1) < p_die) {
         mortality[i] <- t + dt / 2
         alive <- FALSE
-        #print(paste("Death of individual", i))
-        #print(mortality[i])
-        #print(p_die)
+
         break ## Exit the 'while' loop
       }
 
@@ -374,8 +371,6 @@ simulate_life_history_tradeoff <- function(
           last_reproduction_time <- t + dt / 2 ## Time since last reproduction or maturity
           matured <- TRUE
           has_matured_this_interval <- TRUE
-          #print(paste("Maturity for individual ", i))
-          #print( maturity[i])
         }
       }
 
@@ -447,17 +442,11 @@ simulate_life_history_tradeoff <- function(
     )
 
     sim_df <- bind_cols(sim_df, clutch_time_df, clutch_size_df)
-    #print("original simulated data with reproduction events:")
-    #print(sim_df)
   } else {
-    #print("original simulated data without reproduction events:")
-    #print(sim_df)
     sim_df$clutch_1 <- rep(NA_real_, n_ind)
     sim_df$clutch_size_1 <- rep(NA_real_, n_ind)
   }
 
-  print("original simulated data:")
-  print(sim_df)
   return(sim_df)
 }
 
@@ -541,7 +530,11 @@ simulate_life_history <- function(
   lifelihoodData <- object$lifelihoodData
   block_values <- NULL
   if (use_censoring) {
-    if (is.null(lifelihoodData$block) || !is.null(lifelihoodData$block) && !block%in%colnames(lifelihoodData$df)) {
+    if (
+      is.null(lifelihoodData$block) ||
+        !is.null(lifelihoodData$block) &&
+          !lifelihoodData$block %in% colnames(lifelihoodData$df)
+    ) {
       stop(
         "`use_censoring = TRUE` requires the dataset in `object$lifelihoodData$df` includes a column whose name correspond to `object$lifelihoodData$block`. ",
         "Please set `block` when creating the lifelihoodData object."
@@ -724,14 +717,11 @@ simulate_life_history <- function(
       }
     }
 
-
     ## Rename the columns for clutches and reorder them such as we have: "death_start death_end maturity_start maturity_end clutch_start_1 clutch_end_1 clutch_size_1       "maturity"        "clutch_size_1"
     if ("reproduction" %in% events) {
       ## Vector with the names of clutches: "clutch_1", etc.
       clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up_na), value = TRUE)
-      print(clutch_cols)
-      n_clutches <- length(clutch_cols)/2
-      print(n_clutches)
+      n_clutches <- length(clutch_cols) / 2
       df_sims_up_na <- df_sims_up_na |>
         mutate(across(
           all_of(clutch_cols),
@@ -740,10 +730,10 @@ simulate_life_history <- function(
         )) |>
         relocate(matches("^clutch_(start|end|size)_"), .after = last_col()) |>
         select(-all_of(clutch_cols))
-      
+
       ## Reorder columns
       new_order <- c(
-        names(df_sims_up_na)[!grepl("^clutch_", names(df_sims_up_na))],  # keep the first non-clutch columns
+        names(df_sims_up_na)[!grepl("^clutch_", names(df_sims_up_na))], # keep the first non-clutch columns
         unlist(
           lapply(seq_len(n_clutches), function(i) {
             c(
@@ -754,11 +744,11 @@ simulate_life_history <- function(
           })
         )
       )
-      
+
       df_sims_up_na <- df_sims_up_na |>
         select(all_of(new_order))
     }
-    
+
     if ("mortality" %in% events) {
       df_sims_up_na <- df_sims_up_na |>
         mutate(death_start = mortality, death_end = mortality) |>

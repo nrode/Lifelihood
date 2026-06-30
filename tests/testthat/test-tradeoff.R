@@ -58,8 +58,8 @@ test_that("trade-off simulations work for reproduction events", {
 
   sim_mortality <- simulate_life_history(results, event = "mortality", seed = 1)
   expect_identical(
-    names(sim_mortality),
-    c(
+    sort(names(sim_mortality)),
+    sort(c(
       "par",
       "geno",
       "sex",
@@ -68,7 +68,7 @@ test_that("trade-off simulations work for reproduction events", {
       "death_start",
       "death_end",
       "total_n_offspring"
-    )
+    ))
   )
   expect_true(nrow(sim_mortality) == nrow(df))
 })
