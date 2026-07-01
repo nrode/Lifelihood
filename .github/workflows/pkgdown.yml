@@ -34,6 +34,7 @@ jobs:
         with:
           extra-packages: |
             any::devtools
+            any::pkgdown
             any::quarto
             any::tidyverse
           cache: true
@@ -41,7 +42,10 @@ jobs:
       - name: Build pkgdown site
         run: |
           Rscript -e 'devtools::install()'
-          Rscript -e 'pkgdown::build_site()'
+          Rscript -e '
+            cat("pkgdown ", as.character(utils::packageVersion("pkgdown")), "\n", sep = "")
+            pkgdown::build_site(quiet = FALSE)
+          '
 
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
