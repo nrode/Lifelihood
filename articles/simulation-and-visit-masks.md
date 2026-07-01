@@ -63,7 +63,6 @@ results <- lifelihood(
   lifelihoodData,
   path_config = use_test_config("config_pierrick")
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6296_9729_229_4502/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_6296_9729_229_4502/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 6296 9729 229 4502 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 
 summary(results)
 #> 
@@ -72,27 +71,27 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -32471.271
-#> AIC:             64962.5
-#> BIC:             65005.6
+#> Log-likelihood:  -32470.948
+#> AIC:             64961.9
+#> BIC:             65005.0
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -0.914 (0.000)
-#>   expt_death eff_expt_death_par_1 -1.457 (0.000)
-#>   expt_death eff_expt_death_par_2 -1.478 (0.000)
-#>   survival_param2 (Intercept) -4.880 (0.000)
-#>   ratio_expt_death (Intercept) -3.997 (0.000)
+#>   expt_death (Intercept)    -0.903 (0.000)
+#>   expt_death eff_expt_death_par_1 -3.904 (0.000)
+#>   expt_death eff_expt_death_par_2 -3.903 (0.000)
+#>   survival_param2 (Intercept) -4.878 (0.000)
+#>   ratio_expt_death (Intercept) -1.475 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.481 (0.000)
-#>   maturity_param2 (Intercept) -7.347 (0.000)
+#>   expt_maturity (Intercept) -1.461 (0.000)
+#>   maturity_param2 (Intercept) -7.359 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.807 (0.000)
-#>   reproduction_param2 (Intercept) -1.152 (0.000)
-#>   n_offspring (Intercept)   -2.553 (0.000)
+#>   expt_reproduction (Intercept) -1.798 (0.000)
+#>   reproduction_param2 (Intercept) -1.149 (0.000)
+#>   n_offspring (Intercept)   -2.555 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -108,22 +107,22 @@ By default, `lifelihood` will simulate all life history events
 ``` r
 
 simulate_life_history(results) |> head()
-#> # A tibble: 6 × 113
-#>   death_start death_end total_n_offspring maturity_start maturity_end
-#>         <dbl>     <dbl>             <dbl>          <dbl>        <dbl>
-#> 1        68.3      68.3                30           13.4         13.4
-#> 2       147.      147.                140           12.6         12.6
-#> 3        98.6      98.6               110           12.9         12.9
-#> 4        96.5      96.5                60           14.1         14.1
-#> 5       116.      116.                 97           12.6         12.6
-#> 6       142.      142.                104           13.7         13.7
-#> # ℹ 108 more variables: clutch_size_1 <int>, clutch_size_2 <int>,
-#> #   clutch_size_3 <int>, clutch_size_4 <int>, clutch_size_5 <int>,
-#> #   clutch_size_6 <int>, clutch_size_7 <int>, clutch_size_8 <int>,
-#> #   clutch_size_9 <int>, clutch_size_10 <int>, clutch_size_11 <int>,
-#> #   clutch_size_12 <int>, clutch_size_13 <int>, clutch_size_14 <int>,
-#> #   clutch_size_15 <int>, clutch_size_16 <int>, clutch_size_17 <int>,
-#> #   clutch_size_18 <int>, clutch_size_19 <int>, clutch_size_20 <int>, …
+#> # A tibble: 6 × 61
+#>   par   spore   sex sex_start sex_end total_n_offspring maturity_start
+#>   <fct> <fct> <int>     <int>   <int>             <dbl>          <dbl>
+#> 1 0     0         0        13    1000                47           13.2
+#> 2 0     0         0        13    1000                54           13.2
+#> 3 0     0         0        15    1000                94           13.6
+#> 4 0     0         0        14    1000                91           12.1
+#> 5 0     0         0        19    1000                90           13.1
+#> 6 0     0         0        12    1000                59           13.9
+#> # ℹ 54 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
+#> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
+#> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
+#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
+#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_start_5 <dbl>,
+#> #   clutch_end_5 <dbl>, clutch_size_5 <int>, clutch_start_6 <dbl>,
+#> #   clutch_end_6 <dbl>, clutch_size_6 <int>, clutch_start_7 <dbl>, …
 ```
 
 But you can specify which event you want:
@@ -131,15 +130,16 @@ But you can specify which event you want:
 ``` r
 
 simulate_life_history(results, event = "maturity") |> head()
-#> # A tibble: 6 × 2
-#>   maturity_start maturity_end
-#>            <dbl>        <dbl>
-#> 1           13.0         13.0
-#> 2           12.2         12.2
-#> 3           12.0         12.0
-#> 4           12.8         12.8
-#> 5           13.0         13.0
-#> 6           12.5         12.5
+#> # A tibble: 6 × 8
+#>   par   spore   sex sex_start sex_end maturity_start maturity_end
+#>   <fct> <fct> <int>     <int>   <int>          <dbl>        <dbl>
+#> 1 0     0         0        13    1000           12.6         12.6
+#> 2 0     0         0        13    1000           13.5         13.5
+#> 3 0     0         0        15    1000           13.6         13.6
+#> 4 0     0         0        14    1000           13.6         13.6
+#> 5 0     0         0        19    1000           13.0         13.0
+#> 6 0     0         0        12    1000           13.8         13.8
+#> # ℹ 1 more variable: total_n_offspring <dbl>
 ```
 
 ## Simulations with visit masks
@@ -181,15 +181,16 @@ results |>
     visits = visits
   ) |>
   head()
-#> # A tibble: 6 × 3
-#>   maturity maturity_start maturity_end
-#>      <dbl>          <dbl>        <dbl>
-#> 1     13.3             13           14
-#> 2     13.0             12           13
-#> 3     12.5             12           13
-#> 4     13.4             13           14
-#> 5     12.2             12           13
-#> 6     13.7             13           14
+#> # A tibble: 6 × 9
+#>   par   spore   sex sex_start sex_end maturity maturity_start maturity_end
+#>   <fct> <fct> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
+#> 1 0     0         0        13    1000     12.0             11           12
+#> 2 0     0         0        13    1000     13.2             13           14
+#> 3 0     0         0        15    1000     12.5             12           13
+#> 4 0     0         0        14    1000     12.1             12           13
+#> 5 0     0         0        19    1000     14.0             13           14
+#> 6 0     0         0        12    1000     14.2             14           15
+#> # ℹ 1 more variable: total_n_offspring <dbl>
 ```
 
 You can also provide your own visit masks with the `visits` argument. It
@@ -232,13 +233,14 @@ results |>
     visits = custom_visits
   ) |>
   head()
-#> # A tibble: 6 × 3
-#>   maturity maturity_start maturity_end
-#>      <dbl>          <dbl>        <dbl>
-#> 1     12.9             11           13
-#> 2     13.6             13           15
-#> 3     13.0             11           13
-#> 4     12.5             11           13
-#> 5     12.8             11           13
-#> 6     12.3             11           13
+#> # A tibble: 6 × 9
+#>   par   spore   sex sex_start sex_end maturity maturity_start maturity_end
+#>   <fct> <fct> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
+#> 1 0     0         0        13    1000     13.6             13           15
+#> 2 0     0         0        13    1000     13.4             13           15
+#> 3 0     0         0        15    1000     13.4             13           15
+#> 4 0     0         0        14    1000     12.0             11           13
+#> 5 0     0         0        19    1000     13.1             13           15
+#> 6 0     0         0        12    1000     14.2             13           15
+#> # ℹ 1 more variable: total_n_offspring <dbl>
 ```

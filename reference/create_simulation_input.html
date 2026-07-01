@@ -56,7 +56,7 @@ effects."></head><body>pkgdown/assets/header.html
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
-    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
@@ -110,6 +110,9 @@ effects.</p>
 <span>  <span class="va">sex</span>,</span>
 <span>  <span class="va">config</span>,</span>
 <span>  <span class="va">dist</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  matclutch_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  block <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_per_combination <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  right_censoring_date <span class="op">=</span> <span class="fl">1000</span>,</span>
@@ -144,6 +147,25 @@ the columns named in <code>covariates</code> and <code>sex</code>.</p></dd>
 configuration list.</p></dd>
 
 
+<dt id="arg-dist">dist<a class="anchor" aria-label="anchor" href="#arg-dist"></a></dt>
+<dd><p>Character vector with one distribution family for mortality,
+maturity and reproduction, in that order. Values
+must be <code>"wei"</code>, <code>"exp"</code>, <code>"gam"</code> or <code>"lgn"</code>.</p></dd>
+
+
+<dt id="arg-matclutch">matclutch<a class="anchor" aria-label="anchor" href="#arg-matclutch"></a></dt>
+<dd><p>Whether maturity corresponds to the first clutch.</p></dd>
+
+
+<dt id="arg-matclutch-size">matclutch_size<a class="anchor" aria-label="anchor" href="#arg-matclutch-size"></a></dt>
+<dd><p>Optional name of the first clutch size column when
+<code>matclutch = TRUE</code>.</p></dd>
+
+
+<dt id="arg-block">block<a class="anchor" aria-label="anchor" href="#arg-block"></a></dt>
+<dd><p>Optional name of the block column in <code>data</code>.</p></dd>
+
+
 <dt id="arg-n-per-combination">n_per_combination<a class="anchor" aria-label="anchor" href="#arg-n-per-combination"></a></dt>
 <dd><p>Optional name of a column in <code>data</code> containing the
 number of individuals to create for each row.</p></dd>
@@ -159,10 +181,9 @@ number of individuals to create for each row.</p></dd>
 internal <code>lifelihoodData</code> object.</p></dd>
 
 
-<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Character vector with one model family to reuse for mortality,
-maturity and reproduction, or three model families in that order. Values
-must be <code>"wei"</code>, <code>"exp"</code>, <code>"gam"</code> or <code>"lgn"</code>.</p></dd>
+<dt id="arg-max-clutch-size">max_clutch_size<a class="anchor" aria-label="anchor" href="#arg-max-clutch-size"></a></dt>
+<dd><p>Numeric maximum clutch size stored in the internal
+<code>lifelihoodData</code> object.</p></dd>
 
 </dl></div>
     <div class="section level2">

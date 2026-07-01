@@ -94,7 +94,9 @@ lifelihood_fit(
 
 - ntr:
 
-  Number of thread for the paralelisation ?
+  Number of temperature steps in each simulated annealing run; the
+  temperature decreases from To to Tf in exactly ntr steps, with nst
+  Metropolis trials at each step.
 
 - nst:
 

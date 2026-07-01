@@ -61,7 +61,7 @@
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
-    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
@@ -403,7 +403,6 @@
 <span>  newdata <span class="op">=</span> <span class="va">newdata</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">newdata</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sex_label</span>, <span class="va">par</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">sex_label</span>, <span class="va">par</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulated_life_histories</span> <span class="op">|&gt;</span></span>

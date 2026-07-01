@@ -18,7 +18,7 @@ It requires R 4.1.0 or later, and work on all of:
 
 ``` r
 
-devtools::install_github("nrode/Lifelihood")
+pak::pak("nrode/Lifelihood")
 ```
 
 \
@@ -232,8 +232,8 @@ Learn more and find more examples in the
 
 ### Trade-offs
 
-- [Reproduction survival tradeoff
-  (TODO)](https://nrode.github.io/Lifelihood/articles/reproduction-survival-tradeoff.md):
+- [Reproduction survival
+  tradeoff](https://nrode.github.io/Lifelihood/articles/reproduction-survival-tradeoff.md):
 
 ### Miscellaneous
 

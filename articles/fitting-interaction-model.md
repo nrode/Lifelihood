@@ -45,7 +45,6 @@ lifelihoodData <- as_lifelihoodData(
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
-  block = "block",
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "geno"),
@@ -68,10 +67,9 @@ time_default <- system.time({
     group_by_group = FALSE # Default value
   )
 })
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 time_default
 #>    user  system elapsed 
-#>  20.356   0.183  21.073
+#>  17.435   0.103  17.899
 ```
 
 - Interaction model using the `group_by_group` argument (default to
@@ -86,17 +84,9 @@ time_gbg <- system.time({
     group_by_group = TRUE
   )
 })
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9092 5404 933 9190 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9093 5405 934 9191 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9094 5406 935 9192 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9095 5407 936 9193 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9096 5408 937 9194 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9097 5409 938 9195 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9098 5410 939 9196 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 time_gbg
 #>    user  system elapsed 
-#>   1.333   0.060   1.423
+#>   1.096   0.040   1.147
 ```
 
 Fitting interaction model with group by group is faster than default

@@ -23,6 +23,9 @@ create_simulation_input(
   sex,
   config,
   dist,
+  matclutch = FALSE,
+  matclutch_size = NULL,
+  block = NULL,
   n_per_combination = NULL,
   param_bounds_df = NULL,
   right_censoring_date = 1000,
@@ -55,6 +58,24 @@ create_simulation_input(
   Path to a YAML configuration file or an already-loaded configuration
   list.
 
+- dist:
+
+  Character vector with one distribution family for mortality, maturity
+  and reproduction, in that order. Values must be `"wei"`, `"exp"`,
+  `"gam"` or `"lgn"`.
+
+- matclutch:
+
+  Whether maturity corresponds to the first clutch.
+
+- matclutch_size:
+
+  Optional name of the first clutch size column when `matclutch = TRUE`.
+
+- block:
+
+  Optional name of the block column in `data`.
+
 - n_per_combination:
 
   Optional name of a column in `data` containing the number of
@@ -71,11 +92,10 @@ create_simulation_input(
   Numeric right censoring date stored in the internal `lifelihoodData`
   object.
 
-- model:
+- max_clutch_size:
 
-  Character vector with one model family to reuse for mortality,
-  maturity and reproduction, or three model families in that order.
-  Values must be `"wei"`, `"exp"`, `"gam"` or `"lgn"`.
+  Numeric maximum clutch size stored in the internal `lifelihoodData`
+  object.
 
 ## Value
 

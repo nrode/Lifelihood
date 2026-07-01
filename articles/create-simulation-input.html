@@ -62,7 +62,7 @@
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
-    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
@@ -268,22 +268,22 @@
 <span><span class="va">simulated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">simulation_input</span>, seed <span class="op">=</span> <span class="fl">1</span>, visits <span class="op">=</span> <span class="va">visits</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulated</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 134</span></span>
-<span><span class="co">#&gt;   death_start death_end total_n_offspring maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;         &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1        176.      176.               176           98.9         98.9</span></span>
-<span><span class="co">#&gt; 2        180.      180.                96           87.1         87.1</span></span>
-<span><span class="co">#&gt; 3        162.      162.               105           68.0         68.0</span></span>
-<span><span class="co">#&gt; 4        192.      192.               158           31.9         31.9</span></span>
-<span><span class="co">#&gt; 5        197.      197.               130          107.         107. </span></span>
-<span><span class="co">#&gt; 6        154.      154.               155           33.4         33.4</span></span>
-<span><span class="co">#&gt; # ℹ 129 more variables: clutch_size_1 &lt;int&gt;, clutch_size_2 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_size_4 &lt;int&gt;, clutch_size_5 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_6 &lt;int&gt;, clutch_size_7 &lt;int&gt;, clutch_size_8 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_9 &lt;int&gt;, clutch_size_10 &lt;int&gt;, clutch_size_11 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_12 &lt;int&gt;, clutch_size_13 &lt;int&gt;, clutch_size_14 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_15 &lt;int&gt;, clutch_size_16 &lt;int&gt;, clutch_size_17 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_18 &lt;int&gt;, clutch_size_19 &lt;int&gt;, clutch_size_20 &lt;int&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 6 × 73</span></span>
+<span><span class="co">#&gt;   par   spore    sex sex_start sex_end total_n_offspring maturity_start</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 high  absent     0       990    1000               176           98.9</span></span>
+<span><span class="co">#&gt; 2 high  absent     0       990    1000                96           87.1</span></span>
+<span><span class="co">#&gt; 3 high  absent     0       990    1000               105           68.0</span></span>
+<span><span class="co">#&gt; 4 high  absent     0       990    1000               158           31.9</span></span>
+<span><span class="co">#&gt; 5 high  absent     0       990    1000               130          107. </span></span>
+<span><span class="co">#&gt; 6 high  absent     0       990    1000               155           33.4</span></span>
+<span><span class="co">#&gt; # ℹ 66 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_start_5 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;, clutch_start_6 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_6 &lt;dbl&gt;, clutch_size_6 &lt;int&gt;, clutch_start_7 &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="refit-the-simulated-data">Refit the simulated data<a class="anchor" aria-label="anchor" href="#refit-the-simulated-data"></a>
 </h2>
@@ -293,23 +293,41 @@
 <code class="sourceCode R"><span><span class="va">simulation_config_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".yaml"</span><span class="op">)</span></span>
 <span><span class="fu">yaml</span><span class="fu">::</span><span class="fu"><a href="https://yaml.r-lib.org/reference/write_yaml.html" class="external-link">write_yaml</a></span><span class="op">(</span><span class="va">simulation_config</span>, <span class="va">simulation_config_path</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">ids</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
 <span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ids</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">ids</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">43</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">simulated_for_fit</span> <span class="op">&lt;-</span> <span class="va">simulation_input</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">par</span>, <span class="va">spore</span>, <span class="va">sex</span>, <span class="va">sex_start</span>, <span class="va">sex_end</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">simulated</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">simulated_for_fit</span> <span class="op">&lt;-</span> <span class="va">simulated</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    sex_start <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    sex_end <span class="op">=</span> <span class="va">simulation_input</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">right_censoring_date</span></span>
 <span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">clutch_start_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span></span>
+<span>  <span class="st">"^clutch_start_"</span>,</span>
+<span>  <span class="st">""</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^clutch_start_[0-9]+$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">simulated_for_fit</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">clutch_end_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span></span>
+<span>  <span class="st">"^clutch_end_"</span>,</span>
+<span>  <span class="st">""</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^clutch_end_[0-9]+$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">simulated_for_fit</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">clutch_size_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span></span>
+<span>  <span class="st">"^clutch_size_"</span>,</span>
+<span>  <span class="st">""</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^clutch_size_[0-9]+$"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">simulated_for_fit</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">clutch_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span></span>
+<span>  <span class="va">intersect</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">clutch_start_ids</span>, <span class="va">clutch_end_ids</span>, <span class="va">clutch_size_ids</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">clutch_ids</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulated_lifelihood_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">simulated_for_fit</span>,</span>
@@ -333,10 +351,7 @@
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  delete_temp_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  n_fit <span class="op">=</span> <span class="fl">3</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3012_3271_9445_7316/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3012_3271_9445_7316/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3012 3271 9445 7316 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3962_7209_8141_7592/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3962_7209_8141_7592/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3962 7209 8141 7592 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3634_5390_9070_7966/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3634_5390_9070_7966/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3634 5390 9070 7966 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>Because this is one finite simulated sample, the refitted estimates are not expected to be exactly equal to the values used for simulation.</p>
 <div class="cell">

@@ -46,10 +46,10 @@ compute_observed_event_rate(
 
 - groupby:
 
-  One or multiple covariates used to group the computation. If NULL,
-  calculates a single overall rate. If `"all"`, calculates rate over
-  each combination of covariates. Otherwise must be a character or
-  character vector with covariate names.
+  One or multiple factors used to define a group for which the event
+  rate the will be computed. If NULL, calculates a single overall rate.
+  If `"all"`, calculates rate over each combination of all factors
+  Otherwise must be a character or character vector with factors names.
 
 ## Value
 

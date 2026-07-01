@@ -95,7 +95,7 @@ as_lifelihoodData(
 
 - block:
 
-  Name of the block to which each individual belong to.
+  Column name containing the block to which each individual belong to.
 
 - matclutch:
 

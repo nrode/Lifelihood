@@ -61,7 +61,7 @@
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
-    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
@@ -156,7 +156,6 @@
 <span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
 <span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
 <span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  block <span class="op">=</span> <span class="st">"block"</span>,</span>
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"geno"</span><span class="op">)</span>,</span>
@@ -179,10 +178,9 @@
 <span>    group_by_group <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># Default value</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_2369_5273_9290_1252/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 2369 5273 9290 1252 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="va">time_default</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  20.356   0.183  21.073</span></span></code></pre></div>
+<span><span class="co">#&gt;  17.435   0.103  17.899</span></span></code></pre></div>
 </div>
 <ul>
 <li>Interaction model using the <code>group_by_group</code> argument (default to <code>FALSE</code>)</li>
@@ -196,17 +194,9 @@
 <span>    group_by_group <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9092_5404_933_9190/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9092 5404 933 9190 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9093_5405_934_9191/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9093 5405 934 9191 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9094_5406_935_9192/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9094 5406 935 9192 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9095_5407_936_9193/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9095 5407 936 9193 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9096_5408_937_9194/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9096 5408 937 9194 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9097_5409_938_9195/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9097 5409 938 9195 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9098_5410_939_9196/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9098 5410 939 9196 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
-<span><span class="co">#&gt; [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9099_5411_940_9197/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9099 5411 940 9197 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"</span></span>
 <span><span class="va">time_gbg</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.333   0.060   1.423</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.096   0.040   1.147</span></span></code></pre></div>
 </div>
 <p>Fitting interaction model with group by group is faster than default model.</p>
 <ul>

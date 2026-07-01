@@ -365,7 +365,6 @@ simulated_life_histories <- simulate_life_history(
   newdata = newdata,
   seed = 1
 ) |>
-  bind_cols(newdata |> select(sex_label, par)) |>
   relocate(sex_label, par)
 
 simulated_life_histories |>

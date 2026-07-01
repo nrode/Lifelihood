@@ -40,7 +40,7 @@
     <li><a class="dropdown-item" href="../articles/create-simulation-input.html">Create simulation inputs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Trade-offs</h6></li>
-    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff (TODO)</a></li>
+    <li><a class="dropdown-item" href="../articles/reproduction-survival-tradeoff.html">Reproduction survival tradeoff</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
@@ -122,10 +122,11 @@ event rate.</p></dd>
 
 
 <dt id="arg-groupby">groupby<a class="anchor" aria-label="anchor" href="#arg-groupby"></a></dt>
-<dd><p>One or multiple covariates used to group the
-computation. If NULL, calculates a single overall rate. If
-<code>"all"</code>, calculates rate over each combination of covariates.
-Otherwise must be a character or character vector with covariate
+<dd><p>One or multiple factors used to define a group
+for which the event rate the will be computed.
+If NULL, calculates a single overall rate. If <code>"all"</code>,
+calculates rate over each combination of all factors
+Otherwise must be a character or character vector with factors
 names.</p></dd>
 
 </dl></div>

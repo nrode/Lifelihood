@@ -28,8 +28,8 @@
 
 ### Trade-offs
 
-- [Reproduction survival tradeoff
-  (TODO)](https://nrode.github.io/Lifelihood/articles/reproduction-survival-tradeoff.md):
+- [Reproduction survival
+  tradeoff](https://nrode.github.io/Lifelihood/articles/reproduction-survival-tradeoff.md):
 
 ### Miscellaneous
 

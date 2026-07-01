@@ -194,7 +194,6 @@ dataLFH <- as_lifelihoodData(
 
 results <- dataLFH |>
   lifelihood(path_config = use_test_config("config_pierrick"))
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9659_8113_2482_3556/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_9659_8113_2482_3556/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 9659 8113 2482 3556 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 ### AIC & BIC
@@ -202,9 +201,9 @@ results <- dataLFH |>
 ``` r
 
 AIC(results)
-#> [1] 64984.67
+#> [1] 150673.5
 BIC(results)
-#> [1] 65027.77
+#> [1] 150716.6
 ```
 
 ### Summary results
@@ -213,27 +212,27 @@ BIC(results)
 
 coef(results)
 #>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 
-#>              -0.8964766              -2.9389134              -2.9611107 
+#>              -0.9185382              -1.7490667              -1.7620772 
 #>     int_survival_param2    int_ratio_expt_death       int_expt_maturity 
-#>              -4.8842204              -2.5332460              -1.5040122 
+#>              -4.8736392              -3.7107220              -4.5923530 
 #>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 
-#>              -7.2984108              -1.8048662              -1.1613788 
+#>              -1.6529634              -1.8037698              -1.1357439 
 #>         int_n_offspring 
-#>              -2.5472220
+#>              -2.5545285
 coeff(results, "expt_death")
 #>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 
-#>           -0.8964766           -2.9389134           -2.9611107
+#>           -0.9185382           -1.7490667           -1.7620772
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>            -4.88422
+#>           -4.873639
 
 AIC(results)
-#> [1] 64984.67
+#> [1] 150673.5
 BIC(results)
-#> [1] 65027.77
+#> [1] 150716.6
 
 logLik(results)
-#> [1] -32482.33
+#> [1] -75326.73
 ```
 
 ### Prediction on new data
@@ -250,7 +249,7 @@ newdata <- tibble(
   )
 
 prediction(results, "expt_death", newdata = newdata)
-#> [1] -0.8964766 -3.8353900 -3.8575873 -0.8964766 -3.8353900 -3.8575873 -3.8353900
+#> [1] -0.9185382 -2.6676050 -2.6806154 -0.9185382 -2.6676050 -2.6806154 -2.6676050
 prediction(results, "expt_death", newdata = newdata, type = "response")
 #> numeric(0)
 ```

@@ -61,12 +61,34 @@ use the `se.fit` argument for this purpose:
 
 ``` r
 
+
+## Fail to compute standard errors due to absence of convergence to the ML optimum
+results_wrong <- lifelihood(
+  lifelihoodData = lifelihoodData,
+  path_config = use_test_config("example_config_se"),
+  se.fit = TRUE,
+  seed = c(103, 349, 1213, 1283)
+)
+
+## Change sees to converge to the ML optimum
+set.seed(123)
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
+  n_fit=5
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4882_1037_7197_4670/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_4882_1037_7197_4670/temp_param_range_path.txt 0 25 TRUE 0 FALSE 0 4882 1037 7197 4670 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> Warning in lifelihood(lifelihoodData = lifelihoodData, path_config =
+#> use_test_config("example_config_se"), : Best and second-best likelihoods differ
+#> by 7.296 (> 0.1). Consider increasing n_fit (currently 5) to be sure of model
+#> convergence and find the model with highest log-likelihood.
+
+## New model has better convergence
+logLik(results_wrong)
+#> [1] -343801.3
+logLik(results)
+#> [1] -343782.7
+
 summary(results)
 #> 
 #> === LIFELIHOOD RESULTS ===
@@ -74,17 +96,17 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343816.293
-#> AIC:             687640.6
-#> BIC:             687657.8
+#> Log-likelihood:  -343782.662
+#> AIC:             687573.3
+#> BIC:             687590.6
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -1.382 (-1.000)
-#>   expt_death eff_expt_death_par_1 -0.324 (-1.000)
-#>   expt_death eff_expt_death_par_2 -0.336 (-1.000)
-#>   survival_param2 (Intercept) -0.490 (-1.000)
+#>   expt_death (Intercept)    -2.049 (0.062)
+#>   expt_death eff_expt_death_par_1 0.367 (0.067)
+#>   expt_death eff_expt_death_par_2 0.346 (0.074)
+#>   survival_param2 (Intercept) -0.247 (0.113)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -100,13 +122,13 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -1.38        -1 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1     -0.324       -1 expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2     -0.336       -1 expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.490       -1 survival_param2 intercept       mort…
+#> 1 int_expt_death           -2.05    0.0623 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1      0.367   0.0673 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2      0.346   0.0744 expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2      -0.247   0.113  survival_param2 intercept       mort…
 ```
 
-### Prediction
+## Prediction
 
 We can predict with standard errors.
 
@@ -118,15 +140,14 @@ prediction(results, "expt_death", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
 #> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.
-#> Warning in sqrt(var_cov_fitted_predictors): NaNs produced
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -1.72    0.0483
-#> 2  -1.71    0.0303
-#> 3  -1.38  NaN     
-#> 4  -1.38  NaN     
-#> 5  -1.72    0.0483
+#> 1  -2.05    0.0623
+#> 2  -2.05    0.0623
+#> 3  -2.05    0.0623
+#> 4  -2.05    0.0623
+#> 5  -2.05    0.0623
 ```
 
 - Response scale
@@ -136,18 +157,17 @@ prediction(results, "expt_death", se.fit = TRUE) |>
 prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
   as_tibble() |>
   sample_n(5)
-#> Warning in sqrt(var_fitted_predictors): NaNs produced
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   65.0    NaN   
-#> 2   65.0    NaN   
-#> 3   65.0    NaN   
-#> 4   49.8      1.28
-#> 5   65.0    NaN
+#> 1   37.0      2.04
+#> 2   50.8      1.27
+#> 3   37.0      2.04
+#> 4   37.0      2.04
+#> 5   50.8      1.27
 ```
 
-## MCMC
+## SE fails with interaction model with MCMC
 
 > MCMC stands for **M**arkov **C**hain **M**onte **C**arlo.
 
@@ -160,7 +180,9 @@ results <- lifelihood(
   path_config = use_test_config("example_config_mcmc"),
   MCMC = 30
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8107_5484_4855_5092/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_8107_5484_4855_5092/temp_param_range_path.txt 30 25 FALSE 0 TRUE 0 8107 5484 4855 5092 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
+#> Warning in check_estimation(results): Estimation of 'expt_reproduction' is
+#> close to the maximum bound: expt_reproduction~=31.999970323285 (bound=31.84).
+#> Consider increasing maximum bound.
 ```
 
 ### Visualization

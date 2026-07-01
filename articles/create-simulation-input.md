@@ -177,22 +177,22 @@ visits <- data.frame(
 simulated <- simulate_life_history(simulation_input, seed = 1, visits = visits)
 
 simulated |> head()
-#> # A tibble: 6 × 134
-#>   death_start death_end total_n_offspring maturity_start maturity_end
-#>         <dbl>     <dbl>             <dbl>          <dbl>        <dbl>
-#> 1        176.      176.               176           98.9         98.9
-#> 2        180.      180.                96           87.1         87.1
-#> 3        162.      162.               105           68.0         68.0
-#> 4        192.      192.               158           31.9         31.9
-#> 5        197.      197.               130          107.         107. 
-#> 6        154.      154.               155           33.4         33.4
-#> # ℹ 129 more variables: clutch_size_1 <int>, clutch_size_2 <int>,
-#> #   clutch_size_3 <int>, clutch_size_4 <int>, clutch_size_5 <int>,
-#> #   clutch_size_6 <int>, clutch_size_7 <int>, clutch_size_8 <int>,
-#> #   clutch_size_9 <int>, clutch_size_10 <int>, clutch_size_11 <int>,
-#> #   clutch_size_12 <int>, clutch_size_13 <int>, clutch_size_14 <int>,
-#> #   clutch_size_15 <int>, clutch_size_16 <int>, clutch_size_17 <int>,
-#> #   clutch_size_18 <int>, clutch_size_19 <int>, clutch_size_20 <int>, …
+#> # A tibble: 6 × 73
+#>   par   spore    sex sex_start sex_end total_n_offspring maturity_start
+#>   <fct> <fct>  <dbl>     <dbl>   <dbl>             <dbl>          <dbl>
+#> 1 high  absent     0       990    1000               176           98.9
+#> 2 high  absent     0       990    1000                96           87.1
+#> 3 high  absent     0       990    1000               105           68.0
+#> 4 high  absent     0       990    1000               158           31.9
+#> 5 high  absent     0       990    1000               130          107. 
+#> 6 high  absent     0       990    1000               155           33.4
+#> # ℹ 66 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
+#> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
+#> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
+#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
+#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_start_5 <dbl>,
+#> #   clutch_end_5 <dbl>, clutch_size_5 <int>, clutch_start_6 <dbl>,
+#> #   clutch_end_6 <dbl>, clutch_size_6 <int>, clutch_start_7 <dbl>, …
 ```
 
 ## Refit the simulated data
@@ -207,23 +207,41 @@ and compare the refitted estimates with the values used for simulation.
 simulation_config_path <- tempfile(fileext = ".yaml")
 yaml::write_yaml(simulation_config, simulation_config_path)
 
-generate_clutch_vector <- function(N) {
+generate_clutch_vector <- function(ids) {
   return(paste(
     "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
+    rep(c("start", "end", "size"), length(ids)),
+    rep(ids, each = 3),
     sep = "_"
   ))
 }
-clutchs <- generate_clutch_vector(43)
 
-simulated_for_fit <- simulation_input$lifelihoodData$df |>
-  select(par, spore, sex, sex_start, sex_end) |>
-  bind_cols(simulated) |>
+simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,
     sex_end = simulation_input$lifelihoodData$right_censoring_date
   )
+
+clutch_start_ids <- sub(
+  "^clutch_start_",
+  "",
+  grep("^clutch_start_[0-9]+$", names(simulated_for_fit), value = TRUE)
+)
+clutch_end_ids <- sub(
+  "^clutch_end_",
+  "",
+  grep("^clutch_end_[0-9]+$", names(simulated_for_fit), value = TRUE)
+)
+clutch_size_ids <- sub(
+  "^clutch_size_",
+  "",
+  grep("^clutch_size_[0-9]+$", names(simulated_for_fit), value = TRUE)
+)
+clutch_ids <- Reduce(
+  intersect,
+  list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
+)
+clutchs <- generate_clutch_vector(sort(as.integer(clutch_ids)))
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
@@ -248,9 +266,6 @@ refit <- lifelihood(
   delete_temp_files = FALSE,
   n_fit = 3
 )
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3012_3271_9445_7316/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3012_3271_9445_7316/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3012 3271 9445 7316 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3962_7209_8141_7592/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3962_7209_8141_7592/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3962 7209 8141 7592 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
-#> [1] "/Users/runner/work/_temp/Library/lifelihood/bin/lifelihood-macos-aarch64 /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3634_5390_9070_7966/temp_file_data_lifelihood.txt /Users/runner/work/Lifelihood/Lifelihood/lifelihood_3634_5390_9070_7966/temp_param_range_path.txt 0 25 FALSE 0 FALSE 0 3634 5390 9070 7966 10 20 1000 0.3 NULL 2 2 50 1 1 0.001"
 ```
 
 Because this is one finite simulated sample, the refitted estimates are
