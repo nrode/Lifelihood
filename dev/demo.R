@@ -144,5 +144,5 @@ plot_fitted_event_rate(
   use_facet = TRUE,
   groupby = "par",
   xlab = "Age (days)",
-  ylab = "Fitted Mortality Rate",
+  ylab = "Fitted Mortality Rate"
 )

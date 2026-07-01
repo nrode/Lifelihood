@@ -166,21 +166,41 @@ the refitted estimates with the values used for simulation.
 simulation_config_path <- tempfile(fileext = ".yaml")
 yaml::write_yaml(simulation_config, simulation_config_path)
 
-generate_clutch_vector <- function(N) {
+generate_clutch_vector <- function(ids) {
   return(paste(
     "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
+    rep(c("start", "end", "size"), length(ids)),
+    rep(ids, each = 3),
     sep = "_"
   ))
 }
-clutchs <- generate_clutch_vector(43)
 
 simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,
     sex_end = simulation_input$lifelihoodData$right_censoring_date
   )
+
+clutch_start_ids <- sub(
+  "^clutch_start_",
+  "",
+  grep("^clutch_start_[0-9]+$", names(simulated_for_fit), value = TRUE)
+)
+clutch_end_ids <- sub(
+  "^clutch_end_",
+  "",
+  grep("^clutch_end_[0-9]+$", names(simulated_for_fit), value = TRUE)
+)
+clutch_size_ids <- sub(
+  "^clutch_size_",
+  "",
+  grep("^clutch_size_[0-9]+$", names(simulated_for_fit), value = TRUE)
+)
+clutch_ids <- Reduce(
+  intersect,
+  list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
+)
+clutchs <- generate_clutch_vector(sort(as.integer(clutch_ids)))
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,

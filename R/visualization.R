@@ -107,7 +107,7 @@ plot_fitted_event_rate <- function(
             y = Event_Rate,
             color = group,
             shape = "Observed"
-          ),
+          )
         )
     } else {
       pfitted <- pfitted +
