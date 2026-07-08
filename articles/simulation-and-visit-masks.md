@@ -71,27 +71,27 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -32469.879
-#> AIC:             64959.8
-#> BIC:             65002.9
+#> Log-likelihood:  -32482.859
+#> AIC:             64985.7
+#> BIC:             65028.8
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -0.912 (0.000)
-#>   expt_death eff_expt_death_par_1 -2.020 (0.000)
-#>   expt_death eff_expt_death_par_2 -2.048 (0.000)
+#>   expt_death (Intercept)    -0.909 (0.000)
+#>   expt_death eff_expt_death_par_1 -2.583 (0.000)
+#>   expt_death eff_expt_death_par_2 -2.603 (0.000)
 #>   survival_param2 (Intercept) -4.867 (0.000)
-#>   ratio_expt_death (Intercept) -3.457 (0.000)
+#>   ratio_expt_death (Intercept) -2.896 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.460 (0.000)
-#>   maturity_param2 (Intercept) -7.360 (0.000)
+#>   expt_maturity (Intercept) -1.368 (0.000)
+#>   maturity_param2 (Intercept) -7.413 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.802 (0.000)
-#>   reproduction_param2 (Intercept) -1.147 (0.000)
-#>   n_offspring (Intercept)   -2.554 (0.000)
+#>   expt_reproduction (Intercept) -1.805 (0.000)
+#>   reproduction_param2 (Intercept) -1.153 (0.000)
+#>   n_offspring (Intercept)   -2.552 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -107,16 +107,16 @@ By default, `lifelihood` will simulate all life history events
 ``` r
 
 simulate_life_history(results) |> head()
-#> # A tibble: 6 × 61
+#> # A tibble: 6 × 58
 #>   par   spore   sex sex_start sex_end total_n_offspring maturity_start
 #>   <fct> <fct> <int>     <int>   <int>             <dbl>          <dbl>
-#> 1 0     0         0        13    1000                99           13.1
-#> 2 0     0         0        13    1000                45           12.8
-#> 3 0     0         0        15    1000               105           13.0
-#> 4 0     0         0        14    1000                44           13.9
-#> 5 0     0         0        19    1000                68           13.2
-#> 6 0     0         0        12    1000               103           14.0
-#> # ℹ 54 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
+#> 1 0     0         0        13    1000               138           14.8
+#> 2 0     0         0        13    1000                77           13.9
+#> 3 0     0         0        15    1000                73           14.1
+#> 4 0     0         0        14    1000                82           13.4
+#> 5 0     0         0        19    1000               121           14.6
+#> 6 0     0         0        12    1000                50           13.3
+#> # ℹ 51 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
 #> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
 #> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
 #> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
@@ -133,12 +133,12 @@ simulate_life_history(results, event = "maturity") |> head()
 #> # A tibble: 6 × 8
 #>   par   spore   sex sex_start sex_end maturity_start maturity_end
 #>   <fct> <fct> <int>     <int>   <int>          <dbl>        <dbl>
-#> 1 0     0         0        13    1000           14.2         14.2
-#> 2 0     0         0        13    1000           12.9         12.9
-#> 3 0     0         0        15    1000           14.5         14.5
-#> 4 0     0         0        14    1000           12.6         12.6
-#> 5 0     0         0        19    1000           12.9         12.9
-#> 6 0     0         0        12    1000           13.8         13.8
+#> 1 0     0         0        13    1000           15.2         15.2
+#> 2 0     0         0        13    1000           13.7         13.7
+#> 3 0     0         0        15    1000           14.0         14.0
+#> 4 0     0         0        14    1000           13.5         13.5
+#> 5 0     0         0        19    1000           14.5         14.5
+#> 6 0     0         0        12    1000           14.7         14.7
 #> # ℹ 1 more variable: total_n_offspring <dbl>
 ```
 
@@ -184,12 +184,12 @@ results |>
 #> # A tibble: 6 × 9
 #>   par   spore   sex sex_start sex_end maturity maturity_start maturity_end
 #>   <fct> <fct> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
-#> 1 0     0         0        13    1000     11.8             11           12
-#> 2 0     0         0        13    1000     13.1             13           14
-#> 3 0     0         0        15    1000     13.4             13           14
-#> 4 0     0         0        14    1000     11.6             11           12
-#> 5 0     0         0        19    1000     13.0             13           14
-#> 6 0     0         0        12    1000     13.3             13           14
+#> 1 0     0         0        13    1000     14.2             14           15
+#> 2 0     0         0        13    1000     14.4             14           15
+#> 3 0     0         0        15    1000     12.9             12           13
+#> 4 0     0         0        14    1000     14.2             14           15
+#> 5 0     0         0        19    1000     13.1             13           14
+#> 6 0     0         0        12    1000     14.4             14           15
 #> # ℹ 1 more variable: total_n_offspring <dbl>
 ```
 
@@ -236,11 +236,11 @@ results |>
 #> # A tibble: 6 × 9
 #>   par   spore   sex sex_start sex_end maturity maturity_start maturity_end
 #>   <fct> <fct> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
-#> 1 0     0         0        13    1000     11.8             11           13
-#> 2 0     0         0        13    1000     13.8             13           15
-#> 3 0     0         0        15    1000     14.1             13           15
-#> 4 0     0         0        14    1000     13.9             13           15
-#> 5 0     0         0        19    1000     13.5             13           15
-#> 6 0     0         0        12    1000     13.2             13           15
+#> 1 0     0         0        13    1000     15.2             15           17
+#> 2 0     0         0        13    1000     13.5             13           15
+#> 3 0     0         0        15    1000     14.0             13           15
+#> 4 0     0         0        14    1000     13.5             13           15
+#> 5 0     0         0        19    1000     13.3             13           15
+#> 6 0     0         0        12    1000     14.2             13           15
 #> # ℹ 1 more variable: total_n_offspring <dbl>
 ```

@@ -56,3 +56,63 @@ compute_observed_event_rate(
 A dataframe with 3 columns: Interval (time interval, based on
 `interval_width` value), group (identifier of a given subgroup, or
 "Overall" if groupby = NULL), and Event_rate (event rate at this time).
+
+## Examples
+
+``` r
+df <- datapierrick |>
+as_tibble() |>
+ mutate(par = as.factor(par))
+ 
+# name of the columns of the clutchs into a single vector
+generate_clutch_vector <- function(N) {
+ return(paste(
+   "clutch",
+   rep(c("start", "end", "size"), N),
+   rep(1:N, each = 3),
+   sep = "_"
+ ))
+}
+clutchs <- generate_clutch_vector(28)
+dataLFH <- as_lifelihoodData(
+ df = df,
+ sex = "sex",
+ sex_start = "sex_start",
+ sex_end = "sex_end",
+ maturity_start = "mat_start",
+ maturity_end = "mat_end",
+ clutchs = clutchs,
+ death_start = "death_start",
+ death_end = "death_end",
+ matclutch = FALSE,
+ covariates = c("par", "geno"),
+ dist = c("wei", "gam", "lgn")
+)
+observed_emergence_rate <- compute_observed_event_rate(
+ lifelihoodData = dataLFH,
+ interval_width = 5,
+ event = c("mortality"),
+ min_sample_size = 1,
+ max_time=150,
+ groupby=c("par"))
+p <- observed_emergence_rate |>
+ ggplot2::ggplot(
+   ggplot2::aes(
+     x = Mean_Interval,
+     y = Event_Rate,
+     color = par,
+     shape = par
+   )
+ )+ 
+ geom_point()+ 
+ geom_line(linewidth=0.5)+
+ xlab("Time (days)")+
+ ylab("Observed mortality rate over 5 day-periods")+
+ facet_wrap(vars(par))
+p
+#> Warning: Removed 30 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
+#> Warning: Removed 30 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+
+```

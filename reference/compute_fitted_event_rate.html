@@ -143,6 +143,72 @@ and their death is greater than <code>interval_width</code> the individuals are
 included in the computation of reproduction rate</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">datapierrick</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">mutate</span><span class="op">(</span>par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">par</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span></span>
+<span class="r-in"><span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   <span class="st">"clutch"</span>,</span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   sep <span class="op">=</span> <span class="st">"_"</span></span></span>
+<span class="r-in"><span> <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span> df <span class="op">=</span> <span class="va">df</span>,</span></span>
+<span class="r-in"><span> sex <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
+<span class="r-in"><span> sex_start <span class="op">=</span> <span class="st">"sex_start"</span>,</span></span>
+<span class="r-in"><span> sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span></span>
+<span class="r-in"><span> maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span></span>
+<span class="r-in"><span> maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span></span>
+<span class="r-in"><span> clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span></span>
+<span class="r-in"><span> death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span></span>
+<span class="r-in"><span> death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span></span>
+<span class="r-in"><span> matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span> covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"geno"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span> dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"gam"</span>, <span class="st">"lgn"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihood.html">lifelihood</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span></span>
+<span class="r-in"><span>path_config <span class="op">=</span> <span class="fu"><a href="use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fitted_emergence_rate</span> <span class="op">&lt;-</span> <span class="fu">compute_fitted_event_rate</span><span class="op">(</span></span></span>
+<span class="r-in"><span> lifelihoodResults <span class="op">=</span> <span class="va">results</span>,</span></span>
+<span class="r-in"><span> interval_width <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span> event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mortality"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span> max_time<span class="op">=</span><span class="fl">150</span>,</span></span>
+<span class="r-in"><span> groupby<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span><span class="op">)</span><span class="op">)</span><span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sex="</span>, <span class="va">sex</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">fitted_emergence_rate</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>     x <span class="op">=</span> <span class="va">Mean_Interval</span>,</span></span>
+<span class="r-in"><span>     y <span class="op">=</span> <span class="va">Event_Rate</span>,</span></span>
+<span class="r-in"><span>     color <span class="op">=</span> <span class="va">par</span>,</span></span>
+<span class="r-in"><span>     shape <span class="op">=</span> <span class="va">par</span></span></span>
+<span class="r-in"><span>   <span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">)</span><span class="op">+</span> </span></span>
+<span class="r-in"><span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span> </span></span>
+<span class="r-in"><span> <span class="fu">geom_line</span><span class="op">(</span>linewidth<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span></span></span>
+<span class="r-in"><span> <span class="fu">xlab</span><span class="op">(</span><span class="st">"Time (days)"</span><span class="op">)</span><span class="op">+</span></span></span>
+<span class="r-in"><span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Fitted mortality rate over 5 day-periods"</span><span class="op">)</span><span class="op">+</span></span></span>
+<span class="r-in"><span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">sex</span>, <span class="va">par</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 14 rows containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 14 rows containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_line()`).</span>
+<span class="r-plt img"><img src="compute_fitted_event_rate-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

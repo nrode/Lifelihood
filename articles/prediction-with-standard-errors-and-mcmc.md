@@ -203,9 +203,9 @@ plot_fitted_event_rate(
   se.fit = TRUE
 )
 #> Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of
-#> MCMC iterations (30) must be higher than number of individuals (48).
+#> MCMC iterations (30) must be higher than number of individuals (96).
 #> Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of
-#> MCMC iterations (30) must be higher than number of individuals (48).
+#> MCMC iterations (30) must be higher than number of individuals (96).
 #> Warning: Removed 20 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```

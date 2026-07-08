@@ -148,9 +148,9 @@ simulate_life_history(m1, event = "mortality") |>
 #> # A tibble: 4 × 2
 #>   geno  longevity
 #>   <fct>     <dbl>
-#> 1 0         278. 
-#> 2 1         116. 
-#> 3 2          88.4
+#> 1 0         263. 
+#> 2 1         115. 
+#> 3 2          88.3
 #> 4 3         114.
 ```
 
@@ -237,21 +237,21 @@ sim_data <- simulate_life_history(
 )
 #> [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"
 sim_data
-#> # A tibble: 400 × 174
+#> # A tibble: 400 × 194
 #>    geno    sex sex_start sex_end mortality mortality_start mortality_end
 #>    <fct> <dbl>     <dbl>   <dbl>     <dbl>           <dbl>         <dbl>
-#>  1 0         0       990    1000      332.            200            NA 
-#>  2 0         0       990    1000      165.            165.          165.
-#>  3 0         0       990    1000      373.            200            NA 
-#>  4 0         0       990    1000      157.            157.          158.
-#>  5 0         0       990    1000      259.            200            NA 
-#>  6 0         0       990    1000      240.            200            NA 
-#>  7 0         0       990    1000      246.            200            NA 
-#>  8 0         0       990    1000      194.            194.          194.
-#>  9 0         0       990    1000      305.            200            NA 
-#> 10 0         0       990    1000      291.            200            NA 
+#>  1 0         0       990    1000      248.            200            NA 
+#>  2 0         0       990    1000      246.            200            NA 
+#>  3 0         0       990    1000      334.            200            NA 
+#>  4 0         0       990    1000      270.            200            NA 
+#>  5 0         0       990    1000      325.            200            NA 
+#>  6 0         0       990    1000      201.            200            NA 
+#>  7 0         0       990    1000      346.            200            NA 
+#>  8 0         0       990    1000      263.            200            NA 
+#>  9 0         0       990    1000      225.            200            NA 
+#> 10 0         0       990    1000      167.            166.          167.
 #> # ℹ 390 more rows
-#> # ℹ 167 more variables: maturity <dbl>, first_clutch_size <int>,
+#> # ℹ 187 more variables: maturity <dbl>, first_clutch_size <int>,
 #> #   clutch_2 <dbl>, clutch_size_2 <int>, clutch_3 <dbl>, clutch_size_3 <int>,
 #> #   clutch_4 <dbl>, clutch_size_4 <int>, clutch_5 <dbl>, clutch_size_5 <int>,
 #> #   clutch_6 <dbl>, clutch_size_6 <int>, clutch_7 <dbl>, clutch_size_7 <int>,
@@ -266,9 +266,9 @@ sim_data |>
 #>   geno  longevity
 #>   <fct>     <dbl>
 #> 1 0          NA  
-#> 2 1         116. 
-#> 3 2          89.4
-#> 4 3         113.
+#> 2 1         121. 
+#> 3 2          89.9
+#> 4 3          NA
 ```
 
 ### From scratch with tradeoffs
