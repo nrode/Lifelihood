@@ -28,6 +28,63 @@
 #' included in the computation of reproduction rate
 #'
 #' @import dplyr
+#' @examples
+#' df <- datapierrick |>
+#'as_tibble() |>
+#'  mutate(par = as.factor(par))
+#'  
+#' # name of the columns of the clutchs into a single vector
+#'generate_clutch_vector <- function(N) {
+#'  return(paste(
+#'    "clutch",
+#'    rep(c("start", "end", "size"), N),
+#'    rep(1:N, each = 3),
+#'    sep = "_"
+#'  ))
+#'}
+#'clutchs <- generate_clutch_vector(28)
+#'dataLFH <- as_lifelihoodData(
+#'  df = df,
+#'  sex = "sex",
+#'  sex_start = "sex_start",
+#'  sex_end = "sex_end",
+#'  maturity_start = "mat_start",
+#'  maturity_end = "mat_end",
+#'  clutchs = clutchs,
+#'  death_start = "death_start",
+#'  death_end = "death_end",
+#'  matclutch = FALSE,
+#'  covariates = c("par", "geno"),
+#'  dist = c("wei", "gam", "lgn")
+#')
+#' results <- lifelihood(
+#'lifelihoodData = dataLFH,
+#'path_config = use_test_config("config_pierrick"),
+#'seeds = c(1, 2, 3, 4)
+#')
+#' fitted_emergence_rate <- compute_fitted_event_rate(
+#'  lifelihoodResults = results,
+#'  interval_width = 5,
+#'  event = c("mortality"),
+#'  max_time=150,
+#'  groupby=c("par"))|>
+#'  dplyr::mutate(sex = paste0("sex=", sex))
+#'  
+#' p <- fitted_emergence_rate |>
+#'  ggplot2::ggplot(
+#'    ggplot2::aes(
+#'      x = Mean_Interval,
+#'      y = Event_Rate,
+#'      color = par,
+#'      shape = par
+#'    )
+#'  )+ 
+#'  geom_point()+ 
+#'  geom_line(linewidth=0.5)+
+#'  xlab("Time (days)")+
+#'  ylab("Fitted mortality rate over 5 day-periods")+
+#'  facet_wrap(vars(sex, par))
+#' p
 #'
 #' @export
 compute_fitted_event_rate <- function(
@@ -41,7 +98,11 @@ compute_fitted_event_rate <- function(
 ) {
   event <- match.arg(event)
   check_lifelihoodResults(lifelihoodResults)
-
+  if (!is.null(newdata)&!lifelihoodResults$lifelihoodData$sex%in%colnames(newdata)) {
+    stop(
+      paste("Dataframe provided as argument newdata should include a column for the sex of individuals with the following name :", lifelihoodResults$lifelihoodData$sex)
+    )
+  }
   if (isTRUE(lifelihoodResults$group_by_group)) {
     stop(
       "compute_fitted_event_rate() is not supported for group_by_group results. ",
@@ -50,7 +111,9 @@ compute_fitted_event_rate <- function(
   }
 
   lifelihoodData <- lifelihoodResults$lifelihoodData
-
+  covar_sex <- c(lifelihoodData$sex, covar)
+  
+  
   if (event == "mortality") {
     end_col <- lifelihoodData$death_end
     family <- lifelihoodData$dist[1]
@@ -79,8 +142,8 @@ compute_fitted_event_rate <- function(
       setdiff("intercept")
   }
 
-  if (!all(groupby %in% covar)) {
-    missing_vars <- groupby[!groupby %in% covar]
+  if (!all(groupby %in% covar_sex)) {
+    missing_vars <- groupby[!groupby %in% covar_sex]
     stop(
       "`groupby` argument contains invalid values. ",
       paste0(
@@ -130,15 +193,21 @@ compute_fitted_event_rate <- function(
 
   if (is.null(newdata)) {
     params <- setNames(
-      lapply(covar, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
-      covar
+      lapply(covar_sex, function(x) levels(as.factor(lifelihoodData$df[[x]]))),
+      covar_sex
     )
+
     params$time <- seq(
       from = 0,
       to = (n_intervals - 1) * interval_width,
       by = interval_width
     )
-    newdata <- expand.grid(params) |> relocate(time)
+    
+    newdata <- expand.grid(params) |>
+      relocate(time)|>
+      mutate(
+        !!lifelihoodData$sex := as.numeric(as.character(.data[[lifelihoodData$sex]]))
+      )
     newdata <- newdata |>
       dplyr::mutate(
         Interval_start = time,
@@ -188,6 +257,7 @@ compute_fitted_event_rate <- function(
     mcmc.fit = mcmc.ci.fit,
     type = "response"
   )
+
   param2 <- prediction(
     object = lifelihoodResults,
     parameter_name = parameter_name2,
@@ -195,7 +265,7 @@ compute_fitted_event_rate <- function(
     mcmc.fit = mcmc.ci.fit,
     type = "response"
   )
-
+  
   if (mcmc.ci.fit) {
     # param1 and param2 are data.frames with MCMC samples in columns
     # We need to compute event rate for each MCMC sample
@@ -232,6 +302,7 @@ compute_fitted_event_rate <- function(
       ) |>
       bind_cols(mcmc.ci)
   } else {
+  
     newdata$Event_Rate <- prob_event_interval_dt(
       t = newdata$time,
       dt = interval_width,
@@ -284,6 +355,57 @@ compute_fitted_event_rate <- function(
 #' at this time).
 #'
 #' @importFrom dplyr mutate if_else select
+#' @examples
+#' df <- datapierrick |>
+#'as_tibble() |>
+#'  mutate(par = as.factor(par))
+#'  
+#' # name of the columns of the clutchs into a single vector
+#'generate_clutch_vector <- function(N) {
+#'  return(paste(
+#'    "clutch",
+#'    rep(c("start", "end", "size"), N),
+#'    rep(1:N, each = 3),
+#'    sep = "_"
+#'  ))
+#'}
+#'clutchs <- generate_clutch_vector(28)
+#'dataLFH <- as_lifelihoodData(
+#'  df = df,
+#'  sex = "sex",
+#'  sex_start = "sex_start",
+#'  sex_end = "sex_end",
+#'  maturity_start = "mat_start",
+#'  maturity_end = "mat_end",
+#'  clutchs = clutchs,
+#'  death_start = "death_start",
+#'  death_end = "death_end",
+#'  matclutch = FALSE,
+#'  covariates = c("par", "geno"),
+#'  dist = c("wei", "gam", "lgn")
+#')
+#' observed_emergence_rate <- compute_observed_event_rate(
+#'  lifelihoodData = dataLFH,
+#'  interval_width = 5,
+#'  event = c("mortality"),
+#'  min_sample_size = 1,
+#'  max_time=150,
+#'  groupby=c("par"))
+#' p <- observed_emergence_rate |>
+#'  ggplot2::ggplot(
+#'    ggplot2::aes(
+#'      x = Mean_Interval,
+#'      y = Event_Rate,
+#'      color = par,
+#'      shape = par
+#'    )
+#'  )+ 
+#'  geom_point()+ 
+#'  geom_line(linewidth=0.5)+
+#'  xlab("Time (days)")+
+#'  ylab("Observed mortality rate over 5 day-periods")+
+#'  facet_wrap(vars(par))
+#' p
 #'
 #' @export
 compute_observed_event_rate <- function(
