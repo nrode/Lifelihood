@@ -32,7 +32,7 @@
 #' df <- datapierrick |>
 #'as_tibble() |>
 #'  mutate(par = as.factor(par))
-#'  
+#'
 #' # name of the columns of the clutchs into a single vector
 #'generate_clutch_vector <- function(N) {
 #'  return(paste(
@@ -69,7 +69,7 @@
 #'  max_time=150,
 #'  groupby=c("par"))|>
 #'  dplyr::mutate(sex = paste0("sex=", sex))
-#'  
+#'
 #' p <- fitted_emergence_rate |>
 #'  ggplot2::ggplot(
 #'    ggplot2::aes(
@@ -78,8 +78,8 @@
 #'      color = par,
 #'      shape = par
 #'    )
-#'  )+ 
-#'  geom_point()+ 
+#'  )+
+#'  geom_point()+
 #'  geom_line(linewidth=0.5)+
 #'  xlab("Time (days)")+
 #'  ylab("Fitted mortality rate over 5 day-periods")+
@@ -98,9 +98,15 @@ compute_fitted_event_rate <- function(
 ) {
   event <- match.arg(event)
   check_lifelihoodResults(lifelihoodResults)
-  if (!is.null(newdata)&!lifelihoodResults$lifelihoodData$sex%in%colnames(newdata)) {
+  if (
+    !is.null(newdata) &&
+      !lifelihoodResults$lifelihoodData$sex %in% colnames(newdata)
+  ) {
     stop(
-      paste("Dataframe provided as argument `newdata` should include a column for the sex of individuals with the following name :", lifelihoodResults$lifelihoodData$sex)
+      paste(
+        "Dataframe provided as argument `newdata` should include a column for the sex of individuals with the following name :",
+        lifelihoodResults$lifelihoodData$sex
+      )
     )
   }
   if (isTRUE(lifelihoodResults$group_by_group)) {
@@ -202,11 +208,13 @@ compute_fitted_event_rate <- function(
       to = (n_intervals - 1) * interval_width,
       by = interval_width
     )
-    
+
     newdata <- expand.grid(params) |>
-      relocate(time)|>
+      relocate(time) |>
       mutate(
-        !!lifelihoodData$sex := as.numeric(as.character(.data[[lifelihoodData$sex]]))
+        !!lifelihoodData$sex := as.numeric(as.character(.data[[
+          lifelihoodData$sex
+        ]]))
       )
     newdata <- newdata |>
       dplyr::mutate(
@@ -265,7 +273,7 @@ compute_fitted_event_rate <- function(
     mcmc.fit = mcmc.ci.fit,
     type = "response"
   )
-  
+
   if (mcmc.ci.fit) {
     # param1 and param2 are data.frames with MCMC samples in columns
     # We need to compute event rate for each MCMC sample
@@ -302,7 +310,6 @@ compute_fitted_event_rate <- function(
       ) |>
       bind_cols(mcmc.ci)
   } else {
-  
     newdata$Event_Rate <- prob_event_interval_dt(
       t = newdata$time,
       dt = interval_width,
@@ -344,7 +351,7 @@ compute_fitted_event_rate <- function(
 #' event rate.
 #' @param groupby One or multiple factors used to define a group
 #' for which the event rate the will be computed.
-#' If NULL, calculates a single overall rate. If `"all"`, 
+#' If NULL, calculates a single overall rate. If `"all"`,
 #' calculates rate over each combination of all factors
 #' Otherwise must be a character or character vector with factors
 #' names.
@@ -359,7 +366,7 @@ compute_fitted_event_rate <- function(
 #' df <- datapierrick |>
 #'as_tibble() |>
 #'  mutate(par = as.factor(par))
-#'  
+#'
 #' # name of the columns of the clutchs into a single vector
 #'generate_clutch_vector <- function(N) {
 #'  return(paste(
@@ -399,8 +406,8 @@ compute_fitted_event_rate <- function(
 #'      color = par,
 #'      shape = par
 #'    )
-#'  )+ 
-#'  geom_point()+ 
+#'  )+
+#'  geom_point()+
 #'  geom_line(linewidth=0.5)+
 #'  xlab("Time (days)")+
 #'  ylab("Observed mortality rate over 5 day-periods")+
@@ -514,13 +521,12 @@ compute_observed_event_rate <- function(
       tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE) |>
       dplyr::filter(group %in% groups) |>
       dplyr::mutate(group = as.factor(group))
-#      dplyr::mutate(
-#        across(
-#          all_of(groupby),
-#          ~ sub(paste0("^", cur_column(), "="), "", .x)
-#        )
-#      ) ## Level of each factor back to original one
-    
+    #      dplyr::mutate(
+    #        across(
+    #          all_of(groupby),
+    #          ~ sub(paste0("^", cur_column(), "="), "", .x)
+    #        )
+    #      ) ## Level of each factor back to original one
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"

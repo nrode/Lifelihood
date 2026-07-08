@@ -252,7 +252,7 @@ lifelihood_fit <- function(
     path_continuous_var <- file.path(temp_dir, "temp_continuous_variables.txt")
     writeLines(numeric_vec, con = path_continuous_var)
   } else {
-    path_continuous_var = "NULL"
+    path_continuous_var <- "NULL"
   }
 
   df_encoded <- df_encoded |>

@@ -56,7 +56,7 @@ results <- lifelihood(
 ###############
 object <- results
 event <- "all"
-newdata = NULL
-use_censoring = FALSE
-visits = NULL
-seed = NULL
+newdata <- NULL
+use_censoring <- FALSE
+visits <- NULL
+seed <- NULL

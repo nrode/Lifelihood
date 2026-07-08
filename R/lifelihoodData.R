@@ -89,9 +89,11 @@ as_lifelihoodData <- function(
   if (isTRUE(matclutch) && is.null(matclutch_size)) {
     stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
   }
-  
-  if (!is.null(block) && !block%in%colnames(df)) {
-    stop("`block` argument does not match any of the column names in the dataframe `df` provided.")
+
+  if (!is.null(block) && !block %in% colnames(df)) {
+    stop(
+      "`block` argument does not match any of the column names in the dataframe `df` provided."
+    )
   }
 
   dataObject <- list(
