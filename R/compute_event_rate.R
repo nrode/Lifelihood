@@ -391,13 +391,13 @@ compute_observed_event_rate <- function(
       )) |>
       tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE) |>
       dplyr::filter(group %in% groups) |>
-      dplyr::mutate(group = as.factor(group)) |>
-      dplyr::mutate(
-        across(
-          all_of(groupby),
-          ~ sub(paste0("^", cur_column(), "="), "", .x)
-        )
-      ) ## Level of each factor back to original one
+      dplyr::mutate(group = as.factor(group))
+#      dplyr::mutate(
+#        across(
+#          all_of(groupby),
+#          ~ sub(paste0("^", cur_column(), "="), "", .x)
+#        )
+#      ) ## Level of each factor back to original one
     
   } else {
     newdata$group <- "Overall"
