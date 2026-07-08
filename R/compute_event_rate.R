@@ -111,9 +111,7 @@ compute_fitted_event_rate <- function(
   }
 
   lifelihoodData <- lifelihoodResults$lifelihoodData
-  covar_sex <- c(lifelihoodData$sex, covar)
-  
-  
+
   if (event == "mortality") {
     end_col <- lifelihoodData$death_end
     family <- lifelihoodData$dist[1]
@@ -141,6 +139,8 @@ compute_fitted_event_rate <- function(
       unique() |>
       setdiff("intercept")
   }
+
+  covar_sex <- c(lifelihoodData$sex, covar)
 
   if (!all(groupby %in% covar_sex)) {
     missing_vars <- groupby[!groupby %in% covar_sex]
