@@ -12,6 +12,7 @@
 
 # outputs
 lifelihood_*/
+lifelihood-fpc-units/
 figure/
 vignettes/*.html
 /compiled*

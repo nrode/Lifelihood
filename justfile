@@ -18,6 +18,10 @@ linux_x86_64_platform := env_var_or_default("LIFELIHOOD_LINUX_X86_64_PLATFORM", 
 linux_aarch64_platform := env_var_or_default("LIFELIHOOD_LINUX_AARCH64_PLATFORM", "linux/arm64")
 linux_x86_64_image := env_var_or_default("LIFELIHOOD_LINUX_X86_64_IMAGE", "pascal-builder-linux-x86_64")
 linux_aarch64_image := env_var_or_default("LIFELIHOOD_LINUX_AARCH64_IMAGE", "pascal-builder-linux-aarch64")
+project_dir_win := env_var_or_default("CD", invocation_directory())
+build_dir_win := project_dir_win / "inst" / "bin"
+src_dir_win := project_dir_win / "source"
+lazarus_dir_win := env_var_or_default("USERPROFILE", "") / ".lazarus"
 
 default: cross
 
@@ -77,7 +81,10 @@ build-image-linux-aarch64:
 
 # ---- Windows Build ----
 windows:
-    {{ fpc }} -MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -l -vabq -Fi{{ build_dir }} -Fu{{ lazarus_dir }}\lib\units\i386-win32\win32 -Fu{{ lazarus_dir }}\lib\LCLBase\units\i386-win32 -Fu{{ lazarus_dir }}\lib\freetypelaz\lib\i386-win32 -Fu{{ lazarus_dir }}\lib\LazUtils\lib\i386-win32 -Fu{{ lazarus_dir }}\lib\units\i386-win32 -Fu{{ src_dir }} -FE{{ build_dir }} -o{{ build_dir }}\lifelihood-windows.exe -dLCL -dLCLwin32 -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL {{ src_dir }}\lifelihood.lpr
+    mkdir inst\bin 2>NUL || exit /b 0
+    mkdir lifelihood-fpc-units 2>NUL || exit /b 0
+    mkdir lifelihood-fpc-units\windows 2>NUL || exit /b 0
+    {{ fpc }} -MDelphi -Scghi -O1 -gw2 -godwarfsets -gl -l -vabq -Fisource -Fusource -FUlifelihood-fpc-units\windows -FEinst\bin -oinst\bin\lifelihood-windows.exe -dLCL -dLCLwin32 -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL source\lifelihood.lpr
 
 clean:
     find . -maxdepth 1 -type d -regex '.*/lifelihood_[0-9]\{2,4\}_[0-9]\{2,4\}_[0-9]\{2,4\}_[0-9]\{2,4\}' -exec rm -rf {} +
