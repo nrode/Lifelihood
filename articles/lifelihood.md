@@ -201,9 +201,9 @@ results <- dataLFH |>
 ``` r
 
 AIC(results)
-#> [1] 150673.5
+#> [1] 64960.6
 BIC(results)
-#> [1] 150716.6
+#> [1] 65003.7
 ```
 
 ### Summary results
@@ -212,27 +212,27 @@ BIC(results)
 
 coef(results)
 #>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 
-#>              -0.9185382              -1.7490667              -1.7620772 
+#>              -0.9090498              -1.8197603              -1.8373904 
 #>     int_survival_param2    int_ratio_expt_death       int_expt_maturity 
-#>              -4.8736392              -3.7107220              -4.5923530 
+#>              -4.8742795              -3.6576176              -1.4753080 
 #>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 
-#>              -1.6529634              -1.8037698              -1.1357439 
+#>              -7.3528052              -1.8044652              -1.1513538 
 #>         int_n_offspring 
-#>              -2.5545285
+#>              -2.5525587
 coeff(results, "expt_death")
 #>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 
-#>           -0.9185382           -1.7490667           -1.7620772
+#>           -0.9090498           -1.8197603           -1.8373904
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>           -4.873639
+#>           -4.874279
 
 AIC(results)
-#> [1] 150673.5
+#> [1] 64960.6
 BIC(results)
-#> [1] 150716.6
+#> [1] 65003.7
 
 logLik(results)
-#> [1] -75326.73
+#> [1] -32470.3
 ```
 
 ### Prediction on new data
@@ -249,7 +249,7 @@ newdata <- tibble(
   )
 
 prediction(results, "expt_death", newdata = newdata)
-#> [1] -0.9185382 -2.6676050 -2.6806154 -0.9185382 -2.6676050 -2.6806154 -2.6676050
+#> [1] -0.9090498 -2.7288102 -2.7464403 -0.9090498 -2.7288102 -2.7464403 -2.7288102
 prediction(results, "expt_death", newdata = newdata, type = "response")
 #> numeric(0)
 ```

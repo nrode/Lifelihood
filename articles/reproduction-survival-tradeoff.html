@@ -261,10 +261,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0         281. </span></span>
-<span><span class="co">#&gt; 2 1         118. </span></span>
-<span><span class="co">#&gt; 3 2          88.5</span></span>
-<span><span class="co">#&gt; 4 3         111.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0         278. </span></span>
+<span><span class="co">#&gt; 2 1         116. </span></span>
+<span><span class="co">#&gt; 3 2          88.4</span></span>
+<span><span class="co">#&gt; 4 3         114.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-without-tradeoffs">From scratch without tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-without-tradeoffs"></a>
 </h3>
@@ -349,21 +349,21 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"</span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 400 × 200</span></span>
+<span><span class="co">#&gt; # A tibble: 400 × 174</span></span>
 <span><span class="co">#&gt;    geno    sex sex_start sex_end mortality mortality_start mortality_end</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         0       990    1000      287.             200            NA</span></span>
-<span><span class="co">#&gt;  2 0         0       990    1000      250.             200            NA</span></span>
-<span><span class="co">#&gt;  3 0         0       990    1000      250.             200            NA</span></span>
-<span><span class="co">#&gt;  4 0         0       990    1000      378.             200            NA</span></span>
-<span><span class="co">#&gt;  5 0         0       990    1000      363.             200            NA</span></span>
-<span><span class="co">#&gt;  6 0         0       990    1000      267.             200            NA</span></span>
-<span><span class="co">#&gt;  7 0         0       990    1000      235.             200            NA</span></span>
-<span><span class="co">#&gt;  8 0         0       990    1000      273.             200            NA</span></span>
-<span><span class="co">#&gt;  9 0         0       990    1000      363.             200            NA</span></span>
-<span><span class="co">#&gt; 10 0         0       990    1000      286.             200            NA</span></span>
+<span><span class="co">#&gt;  1 0         0       990    1000      332.            200            NA </span></span>
+<span><span class="co">#&gt;  2 0         0       990    1000      165.            165.          165.</span></span>
+<span><span class="co">#&gt;  3 0         0       990    1000      373.            200            NA </span></span>
+<span><span class="co">#&gt;  4 0         0       990    1000      157.            157.          158.</span></span>
+<span><span class="co">#&gt;  5 0         0       990    1000      259.            200            NA </span></span>
+<span><span class="co">#&gt;  6 0         0       990    1000      240.            200            NA </span></span>
+<span><span class="co">#&gt;  7 0         0       990    1000      246.            200            NA </span></span>
+<span><span class="co">#&gt;  8 0         0       990    1000      194.            194.          194.</span></span>
+<span><span class="co">#&gt;  9 0         0       990    1000      305.            200            NA </span></span>
+<span><span class="co">#&gt; 10 0         0       990    1000      291.            200            NA </span></span>
 <span><span class="co">#&gt; # ℹ 390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 193 more variables: maturity &lt;dbl&gt;, first_clutch_size &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 167 more variables: maturity &lt;dbl&gt;, first_clutch_size &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_6 &lt;dbl&gt;, clutch_size_6 &lt;int&gt;, clutch_7 &lt;dbl&gt;, clutch_size_7 &lt;int&gt;,</span></span>
@@ -378,9 +378,9 @@
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 0          NA  </span></span>
-<span><span class="co">#&gt; 2 1         118. </span></span>
-<span><span class="co">#&gt; 3 2          89.9</span></span>
-<span><span class="co">#&gt; 4 3         114.</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 1         116. </span></span>
+<span><span class="co">#&gt; 3 2          89.4</span></span>
+<span><span class="co">#&gt; 4 3         113.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-with-tradeoffs">From scratch with tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-with-tradeoffs"></a>
 </h3>
@@ -820,7 +820,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
