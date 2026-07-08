@@ -100,7 +100,7 @@ compute_fitted_event_rate <- function(
   check_lifelihoodResults(lifelihoodResults)
   if (!is.null(newdata)&!lifelihoodResults$lifelihoodData$sex%in%colnames(newdata)) {
     stop(
-      paste("Dataframe provided as argument newdata should include a column for the sex of individuals with the following name :", lifelihoodResults$lifelihoodData$sex)
+      paste("Dataframe provided as argument `newdata` should include a column for the sex of individuals with the following name :", lifelihoodResults$lifelihoodData$sex)
     )
   }
   if (isTRUE(lifelihoodResults$group_by_group)) {
