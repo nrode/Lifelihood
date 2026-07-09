@@ -30,14 +30,7 @@
   )
 
   if (length(candidates) == 0) {
-    stop(
-      "No bundled Lifelihood executable for ",
-      os,
-      "/",
-      machine,
-      ". ",
-      "Build one with `just` or provide `path_to_Lifelihood`."
-    )
+    stop("No bundled Lifelihood executable for ", os, "/", machine, ".", )
   }
 
   candidates
@@ -51,12 +44,7 @@
   paths <- vapply(
     candidates,
     function(candidate) {
-      system.file(
-        "bin",
-        candidate,
-        package = "lifelihood",
-        mustWork = FALSE
-      )
+      system.file("bin", candidate, package = "lifelihood", mustWork = FALSE)
     },
     character(1)
   )
@@ -73,7 +61,6 @@
     machine,
     ". Expected one of: ",
     paste(candidates, collapse = ", "),
-    ". Build one with `just` or provide `path_to_Lifelihood`."
   )
 }
 
