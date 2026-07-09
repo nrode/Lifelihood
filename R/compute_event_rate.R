@@ -83,7 +83,7 @@
 #'  geom_line(linewidth=0.5)+
 #'  xlab("Time (days)")+
 #'  ylab("Fitted mortality rate over 5 day-periods")+
-#'  facet_wrap(vars(sex, par))
+#'  facet_wrap(vars(sex, par), labeller = "label_both")
 #' p
 #'
 #' @export
@@ -117,6 +117,7 @@ compute_fitted_event_rate <- function(
   }
 
   lifelihoodData <- lifelihoodResults$lifelihoodData
+  fitted_params <- names(lifelihoodResults$formula)
 
   if (event == "mortality") {
     end_col <- lifelihoodData$death_end
@@ -127,6 +128,20 @@ compute_fitted_event_rate <- function(
     ) |>
       unique() |>
       setdiff("intercept")
+
+    if ("ratio_expt_death" %in% fitted_params) {
+      covar_sex <- c(lifelihoodData$sex, covar)
+      if (!(lifelihoodData$sex %in% groupby)) {
+        warning(
+          "Sex covariate fitted for ratio_expt_death but ",
+          "not included in `groupby` argument. Include '",
+          lifelihoodData$sex,
+          "' if you want separate plots for males and females."
+        )
+      }
+    } else {
+      covar_sex <- covar
+    }
   } else if (event == "maturity") {
     end_col <- lifelihoodData$maturity_end
     family <- lifelihoodData$dist[2]
@@ -136,17 +151,29 @@ compute_fitted_event_rate <- function(
     ) |>
       unique() |>
       setdiff("intercept")
+
+    if ("ratio_expt_maturity" %in% fitted_params) {
+      if (!(lifelihoodData$sex %in% groupby)) {
+        warning(
+          "Sex covariate fitted for ratio_expt_maturity but ",
+          "not included in `groupby` argument. Include '",
+          lifelihoodData$sex,
+          "' if you want separate plots for males and females."
+        )
+      }
+      covar_sex <- c(lifelihoodData$sex, covar)
+    } else {
+      covar_sex <- covar
+    }
   } else if (event == "reproduction") {
     family <- lifelihoodData$dist[3]
-    covar <- c(
+    covar_sex <- c(
       lifelihoodResults$formula$expt_reproduction,
       lifelihoodResults$formula$reproduction_param2
     ) |>
       unique() |>
       setdiff("intercept")
   }
-
-  covar_sex <- c(lifelihoodData$sex, covar)
 
   if (!all(groupby %in% covar_sex)) {
     missing_vars <- groupby[!groupby %in% covar_sex]
@@ -238,9 +265,9 @@ compute_fitted_event_rate <- function(
       dplyr::mutate(across(
         all_of(groupby),
         ~ paste0(cur_column(), "=", .),
-        .names = "{.col}"
+        .names = "{.col}_tmp"
       )) |>
-      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE)
+      tidyr::unite("group", all_of(paste0(groupby, "_tmp")), sep = ".")
   } else {
     newdata$group <- "Overall"
   }
@@ -328,7 +355,12 @@ compute_fitted_event_rate <- function(
     )
   }
 
-  return(newdata)
+  return(
+    newdata |>
+      mutate(
+        !!lifelihoodData$sex := as.factor(.data[[lifelihoodData$sex]])
+      )
+  )
 }
 
 #' @title Compute empirical event rate
@@ -411,7 +443,7 @@ compute_fitted_event_rate <- function(
 #'  geom_line(linewidth=0.5)+
 #'  xlab("Time (days)")+
 #'  ylab("Observed mortality rate over 5 day-periods")+
-#'  facet_wrap(vars(par))
+#'  facet_wrap(vars(par), labeller = "label_both")
 #' p
 #'
 #' @export
@@ -516,17 +548,11 @@ compute_observed_event_rate <- function(
       dplyr::mutate(across(
         all_of(groupby),
         ~ paste0(cur_column(), "=", .),
-        .names = "{.col}"
+        .names = "{.col}_tmp"
       )) |>
-      tidyr::unite("group", all_of(groupby), sep = ".", remove = FALSE) |>
+      tidyr::unite("group", all_of(paste0(groupby, "_tmp")), sep = ".") |>
       dplyr::filter(group %in% groups) |>
       dplyr::mutate(group = as.factor(group))
-    #      dplyr::mutate(
-    #        across(
-    #          all_of(groupby),
-    #          ~ sub(paste0("^", cur_column(), "="), "", .x)
-    #        )
-    #      ) ## Level of each factor back to original one
   } else {
     newdata$group <- "Overall"
     groups <- "Overall"
@@ -716,7 +742,9 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
 #' computed (default is `NULL`).
 #' - If NULL, calculates a single overall mortality rate.
 #' - If `"all"`, calculates mortality rate over each combination
-#' of covariates listed in the`lifelihoodData` object provided.
+#' of covariates including the column for sex listed in the
+#' `lifelihoodData` object provided (`lifelihoodData$covariates` and
+#' `lifelihoodData$sex`).
 #' - Otherwise must be a character (`"covariate1"`) or a
 #' character vector (`c("covariate1", "covariate2")`).
 #' Note that the function will consider continuous covariates as factors
@@ -728,19 +756,19 @@ validate_groupby_arg <- function(lifelihoodData, groupby) {
   if (is.null(groupby)) {
     return(NULL)
   } else if (length(groupby) == 1 && groupby == "all") {
-    return(lifelihoodData$covariates)
+    return(c(lifelihoodData$covariates, lifelihoodData$sex))
   } else {
-    covariates <- lifelihoodData$covariates
+    covariates_sex <- c(lifelihoodData$covariates, lifelihoodData$sex)
 
-    if (!all(groupby %in% covariates)) {
-      missing_vars <- groupby[!groupby %in% covariates]
+    if (!all(groupby %in% covariates_sex)) {
+      missing_vars <- groupby[!groupby %in% covariates_sex]
       stop(
         "`groupby` argument contains invalid values. ",
         "These are not in the covariates of the `lifelihoodData` object: ",
         paste0(missing_vars, collapse = ", "),
         ".\n",
         "Valid covariates are: ",
-        paste0(covariates, collapse = ", ")
+        paste0(covariates_sex, collapse = ", ")
       )
     } else {
       return(groupby)

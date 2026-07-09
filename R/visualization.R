@@ -343,10 +343,13 @@ plot_event_rate <- function(
 
   if (use_facet && !is.null(groupby)) {
     plot <- plot +
-      ggh4x::facet_nested(as.formula(paste(
-        "~",
-        paste(groupby, collapse = " + ")
-      )))
+      ggh4x::facet_nested(
+        as.formula(paste(
+          "~",
+          paste(groupby, collapse = " + ")
+        )),
+        labeller = "label_both"
+      )
   }
 
   return(plot)
