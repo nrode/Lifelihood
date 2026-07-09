@@ -166,15 +166,6 @@ the refitted estimates with the values used for simulation.
 simulation_config_path <- tempfile(fileext = ".yaml")
 yaml::write_yaml(simulation_config, simulation_config_path)
 
-generate_clutch_vector <- function(ids) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), length(ids)),
-    rep(ids, each = 3),
-    sep = "_"
-  ))
-}
-
 simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,

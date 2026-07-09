@@ -14,7 +14,9 @@ computed (default is \code{NULL}).
 \itemize{
 \item If NULL, calculates a single overall mortality rate.
 \item If \code{"all"}, calculates mortality rate over each combination
-of covariates listed in the\code{lifelihoodData} object provided.
+of covariates including the column for sex listed in the
+\code{lifelihoodData} object provided (\code{lifelihoodData$covariates} and
+\code{lifelihoodData$sex}).
 \item Otherwise must be a character (\code{"covariate1"}) or a
 character vector (\code{c("covariate1", "covariate2")}).
 Note that the function will consider continuous covariates as factors

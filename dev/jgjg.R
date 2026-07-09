@@ -20,14 +20,6 @@ df <- rbind(df_female, df_male) |>
   mutate(block = c(rep(1, nrow(df_female)), rep(2, nrow(df_male))))
 
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(

@@ -32,14 +32,6 @@ visits <- data.frame(
 )
 
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(

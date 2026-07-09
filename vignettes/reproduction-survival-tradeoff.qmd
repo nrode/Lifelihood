@@ -40,14 +40,6 @@ df |>
   group_by(geno) |>
   summarise(longevity = mean((death_start + death_end) / 2))
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
@@ -295,14 +287,6 @@ sim_data |>
   mutate(toto = death_start - clutch_start_19) |>
   summarize(min(toto, na.rm = TRUE))
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(19)
 
 lifelihoodData <- as_lifelihoodData(

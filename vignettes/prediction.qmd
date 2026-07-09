@@ -52,7 +52,7 @@ df_female <- datadaphnia |>
 df_male <- df_female |>
   mutate(
     sex = 1,
-    across(starts_with("clutch"), ~ NA_real_),
+    across(starts_with("clutch"), ~NA_real_),
     death_start = death_start * 10,
     death_end = death_end * 10
   )
@@ -64,15 +64,6 @@ df <- bind_rows(df_female, df_male) |>
       c(nrow(df_female), nrow(df_male))
     )
   )
-
-generate_clutch_vector <- function(n) {
-  paste(
-    "clutch",
-    rep(c("start", "end", "size"), n),
-    rep(seq_len(n), each = 3),
-    sep = "_"
-  )
-}
 
 lifelihood_data <- as_lifelihoodData(
   df = df,

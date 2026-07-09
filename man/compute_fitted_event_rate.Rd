@@ -53,16 +53,8 @@ on some new data.
 df <- datapierrick |>
 as_tibble() |>
  mutate(par = as.factor(par))
- 
+
 # name of the columns of the clutchs into a single vector
-generate_clutch_vector <- function(N) {
- return(paste(
-   "clutch",
-   rep(c("start", "end", "size"), N),
-   rep(1:N, each = 3),
-   sep = "_"
- ))
-}
 clutchs <- generate_clutch_vector(28)
 dataLFH <- as_lifelihoodData(
  df = df,
@@ -90,7 +82,7 @@ fitted_emergence_rate <- compute_fitted_event_rate(
  max_time=150,
  groupby=c("par"))|>
  dplyr::mutate(sex = paste0("sex=", sex))
- 
+
 p <- fitted_emergence_rate |>
  ggplot2::ggplot(
    ggplot2::aes(
@@ -99,12 +91,12 @@ p <- fitted_emergence_rate |>
      color = par,
      shape = par
    )
- )+ 
- geom_point()+ 
+ )+
+ geom_point()+
  geom_line(linewidth=0.5)+
  xlab("Time (days)")+
  ylab("Fitted mortality rate over 5 day-periods")+
- facet_wrap(vars(sex, par))
+ facet_wrap(vars(sex, par), labeller = "label_both")
 p
 
 }

@@ -44,14 +44,6 @@ Prepare arguments for the `as_lifelihoodData()` function:
 
 ```{r}
 # name of the columns of the clutchs into a single vector
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 ```
 

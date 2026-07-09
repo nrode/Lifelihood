@@ -1,6 +1,6 @@
 devtools::load_all()
 
-df_female <- datadaphnia |>
+df <- datadaphnia |>
   as_tibble() |>
   mutate(
     par = as.factor(par),
@@ -15,18 +15,10 @@ df_male <- df_female |>
     death_end = death_end * 10,
     death_start = death_start * 10
   )
-df <- rbind(df_female, df_male) |>
-  mutate(block = c(rep(1, nrow(df_female)), rep(2, nrow(df_male))))
+#df <- rbind(df_female, df_male) |>
+#  mutate(block = c(rep(1, nrow(df_female)), rep(2, nrow(df_male))))
 
 # name of the columns of the clutchs into a single vector
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 dataLFH <- as_lifelihoodData(
   df = df,
@@ -71,8 +63,8 @@ plot_fitted_event_rate(
   results,
   interval_width = 5,
   event = "mortality",
-  max_time = 1500,
-  groupby = c("par", "sex"),
+  max_time = 150,
+  groupby = c("par"),
   add_observed_event_rate = TRUE,
   use_facet = TRUE
 )

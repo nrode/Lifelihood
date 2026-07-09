@@ -2,14 +2,6 @@ devtools::load_all()
 
 library(tibble)
 
-generate_clutch_vector <- function(n) {
-  paste(
-    "clutch",
-    rep(c("start", "end", "size"), n),
-    rep(seq_len(n), each = 3),
-    sep = "_"
-  )
-}
 
 make_lifelihood_data <- function() {
   df <- datadaphnia |>

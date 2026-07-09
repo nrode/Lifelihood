@@ -34,14 +34,6 @@
 #'  mutate(par = as.factor(par))
 #'
 #' # name of the columns of the clutchs into a single vector
-#'generate_clutch_vector <- function(N) {
-#'  return(paste(
-#'    "clutch",
-#'    rep(c("start", "end", "size"), N),
-#'    rep(1:N, each = 3),
-#'    sep = "_"
-#'  ))
-#'}
 #'clutchs <- generate_clutch_vector(28)
 #'dataLFH <- as_lifelihoodData(
 #'  df = df,
@@ -237,12 +229,17 @@ compute_fitted_event_rate <- function(
     )
 
     newdata <- expand.grid(params) |>
-      relocate(time) |>
-      mutate(
-        !!lifelihoodData$sex := as.numeric(as.character(.data[[
-          lifelihoodData$sex
-        ]]))
-      )
+      relocate(time)
+
+    if (lifelihoodData$sex %in% covar_sex) {
+      newdata <- newdata |>
+        mutate(
+          !!lifelihoodData$sex := as.numeric(as.character(.data[[
+            lifelihoodData$sex
+          ]]))
+        )
+    }
+
     newdata <- newdata |>
       dplyr::mutate(
         Interval_start = time,
@@ -355,12 +352,14 @@ compute_fitted_event_rate <- function(
     )
   }
 
-  return(
-    newdata |>
+  if (lifelihoodData$sex %in% covar_sex) {
+    newdata <- newdata |>
       mutate(
         !!lifelihoodData$sex := as.factor(.data[[lifelihoodData$sex]])
       )
-  )
+  }
+
+  return(newdata)
 }
 
 #' @title Compute empirical event rate
@@ -400,14 +399,6 @@ compute_fitted_event_rate <- function(
 #'  mutate(par = as.factor(par))
 #'
 #' # name of the columns of the clutchs into a single vector
-#'generate_clutch_vector <- function(N) {
-#'  return(paste(
-#'    "clutch",
-#'    rep(c("start", "end", "size"), N),
-#'    rep(1:N, each = 3),
-#'    sep = "_"
-#'  ))
-#'}
 #'clutchs <- generate_clutch_vector(28)
 #'dataLFH <- as_lifelihoodData(
 #'  df = df,
