@@ -107,13 +107,15 @@ plot_fitted_event_rate <- function(
             y = Event_Rate,
             color = group,
             shape = "Observed"
-          )
+          ),
+          alpha = 0.6
         )
     } else {
       pfitted <- pfitted +
         geom_point(
           data = obs_rate_df,
-          aes(x = Mean_Interval, y = Event_Rate, shape = "Observed")
+          aes(x = Mean_Interval, y = Event_Rate, shape = "Observed"),
+          alpha = 0.6
         )
     }
     pfitted <- pfitted +

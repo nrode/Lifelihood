@@ -10,7 +10,7 @@ knitr:
     comment: '#>'
 code-annotations: hover
 execute: 
-  cache: true
+  cache: false
 embed-resources: true
 ---
 
@@ -94,7 +94,7 @@ plot_fitted_event_rate(
 simulate_life_history(m1, event = "mortality") |>
   mutate(geno = df$geno) |>
   group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+  summarise(longevity = mean((mortality_start + mortality_end) / 2))
 ```
 
 ## From scratch without tradeoffs
@@ -191,7 +191,7 @@ population <- crossing(
   geno = as.factor(0:3),
   sex = 0
 ) |>
-  mutate(n_individuals = 5)
+  mutate(n_individuals = 20)
 
 ## Define model to simulate
 simulation_config <- list(
@@ -261,9 +261,14 @@ set.seed(123)
 sim_data <- simulate_life_history(
   object = simulation_input,
   event = "all",
-  use_censoring = FALSE
-)
-#visits = visits)
+  use_censoring = FALSE,
+  visits = NULL
+) |>
+  mutate(
+    maturity_end = maturity_start + 0.005,
+    mortality_end = mortality_start + 0.005,
+    across(starts_with("clutch_end_"), ~ .x + 0.005)
+  )
 
 sim_data
 colnames(sim_data)
@@ -275,19 +280,18 @@ sim_data <- sim_data |>
 
 # Analyse simulations
 ```{r }
-#| eval: false
 
 sim_data |>
   group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+  summarise(longevity = mean((mortality_start + mortality_end) / 2))
 
 sim_data |>
-  #mutate(toto=death_start-maturity_start)|>
+  #mutate(toto=mortality_start-maturity_start)|>
   #mutate(toto=clutch_start_1-maturity_start)|>
-  mutate(toto = death_start - clutch_start_19) |>
+  mutate(toto = mortality_start - clutch_start_19) |>
   summarize(min(toto, na.rm = TRUE))
 
-clutchs <- generate_clutch_vector(19)
+clutchs <- generate_clutch_vector(17)
 
 lifelihoodData <- as_lifelihoodData(
   df = sim_data,
@@ -297,8 +301,8 @@ lifelihoodData <- as_lifelihoodData(
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
   clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
+  death_start = "mortality_start",
+  death_end = "mortality_end",
   matclutch = FALSE,
   covariates = c("geno"),
   dist = c("wei", "gam", "lgn")
@@ -310,10 +314,17 @@ m1 <- lifelihood(
   path_config = use_test_config("config_pierrick_geno_death"),
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
-  seeds = c(2054, 9713, 3767, 8573),
+  seeds = c(2055, 9713, 3767, 8573),
   sub_interval = 0.05
   #n_fit=10
 )
 
 #AICc(m1)
+plot_fitted_event_rate(
+  m1,
+  interval_width = 5,
+  event = "mortality",
+  groupby = "geno",
+  use_facet = TRUE
+)
 ```
