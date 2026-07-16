@@ -191,7 +191,7 @@ clutch_ids <- Reduce(
   intersect,
   list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
 )
-clutchs <- generate_clutch_vector(sort(as.integer(clutch_ids)))
+clutchs <- generate_clutch_vector(length(clutch_ids))
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
