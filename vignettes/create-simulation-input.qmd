@@ -201,8 +201,10 @@ simulated_lifelihood_data <- as_lifelihoodData(
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
   clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
+  # `simulate_life_history()` names the mortality event `mortality_start` /
+  # `mortality_end`, so point the death columns at those.
+  death_start = "mortality_start",
+  death_end = "mortality_end",
   covariates = c("par", "spore"),
   dist = c("lgn", "wei", "exp"),
   matclutch = FALSE
