@@ -116,3 +116,33 @@ results |>
   ) |>
   head()
 ```
+
+## Details
+
+Requesting `event = "reproduction"` also simulates maturity and mortality, because both events are required to determine when reproduction can occur (e.g., after the maturity and before the death). Visit masks apply to reproduction in both the standard simulation and the reproduction-survival trade-off simulation.
+
+```{r}
+results |>
+  simulate_life_history(
+    event = "reproduction",
+    use_censoring = TRUE,
+    visits = visits,
+    seed = 1
+  ) |>
+  select(
+    starts_with("clutch_"),
+    starts_with("maturity"),
+    starts_with("mortality")
+  ) |>
+  head()
+```
+
+The following rules define how visit masks are constructed and applied:
+
+- Visit masks are block-specific. The `visits` data frame must contain the configured block column and a `visit` column, with visit times for every block represented in the simulation. When `newdata` is supplied, it must also contain the configured block column.
+- `get_visits()` collects the observed sex, maturity, and clutch interval bounds. It removes missing values and the right-censoring date, then deduplicates and sorts visit times within each block.
+- An event is bounded by the last visit at or before its simulated age and the following visit. The lower bound is `NA` when the event precedes the first visit, and the upper bound is `NA` when it follows the last visit.
+- Reproduction masks are computed from absolute clutch ages. Maturity is added to the first inter-clutch duration, later durations are accumulated, and clutches after mortality are removed before visit bounds are assigned.
+- If several clutches from one individual occur between the same visits, they are represented by one clutch slot. The earliest simulated age is retained in `clutch_i`, and their known `clutch_size_i` values are summed. If every contributing clutch size is missing, the merged size remains `NA`.
+- The retained clutches are numbered chronologically. Their latent ages remain available as `clutch_i` alongside `clutch_start_i`, `clutch_end_i`, and `clutch_size_i`; missing slots are represented by `NA`.
+- Reproduction values are `NA` for males. `total_n_offspring` is calculated after same-interval clutches have been merged, so aggregation does not change the lifetime total.

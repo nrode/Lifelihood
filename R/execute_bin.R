@@ -30,7 +30,7 @@
   )
 
   if (length(candidates) == 0) {
-    stop("No bundled Lifelihood executable for ", os, "/", machine, ".", )
+    stop("No bundled Lifelihood executable for ", os, "/", machine, ".")
   }
 
   candidates
@@ -60,7 +60,7 @@
     "/",
     machine,
     ". Expected one of: ",
-    paste(candidates, collapse = ", "),
+    paste(candidates, collapse = ", ")
   )
 }
 

@@ -123,10 +123,23 @@ test_that("censoring works for reproduction and validates block in newdata", {
       "maturity_start",
       "maturity_end",
       "mortality_start",
-      "mortality_end"
+      "mortality_end",
+      "clutch_1",
+      "clutch_start_1",
+      "clutch_end_1",
+      "clutch_size_1"
     ) %in%
       names(sim)
   ))
+  size_cols <- grep("^clutch_size_[0-9]+$", names(sim), value = TRUE)
+  no_repro_data <- rowSums(!is.na(sim[size_cols])) == 0
+  # Individuals with no clutch-size data at all (e.g. males) must stay NA so
+  # "no reproduction data" is distinct from a genuine zero-offspring female.
+  expect_true(all(is.na(sim$total_n_offspring[no_repro_data])))
+  expect_equal(
+    sim$total_n_offspring[!no_repro_data],
+    rowSums(sim[size_cols], na.rm = TRUE)[!no_repro_data]
+  )
 
   newdata_without_block <- df[1:5, c("par", "spore")]
   expect_error(

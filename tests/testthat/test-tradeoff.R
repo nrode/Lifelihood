@@ -27,7 +27,8 @@ test_that("trade-off simulations work for reproduction events", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "geno"),
-    dist = c("wei", "gam", "lgn")
+    dist = c("wei", "gam", "lgn"),
+    block = "geno"
   )
 
   results <- lifelihood(
@@ -55,6 +56,19 @@ test_that("trade-off simulations work for reproduction events", {
   expect_true(length(n_offspring_cols) > 0)
   expect_type(sim_reproduction[[n_offspring_cols[1]]], "integer")
   expect_equal(nrow(sim_reproduction), nrow(df))
+
+  sim_reproduction_censored <- simulate_life_history(
+    results,
+    event = "reproduction",
+    use_censoring = TRUE,
+    visits = get_visits(lifelihoodData),
+    seed = 1
+  )
+  expect_true(all(
+    c("clutch_1", "clutch_start_1", "clutch_end_1", "clutch_size_1") %in%
+      names(sim_reproduction_censored)
+  ))
+  expect_equal(nrow(sim_reproduction_censored), nrow(df))
 
   sim_mortality <- simulate_life_history(results, event = "mortality", seed = 1)
   expect_identical(
