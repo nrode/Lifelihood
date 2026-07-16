@@ -39,8 +39,8 @@ test_that("simulations work", {
   suppressWarnings({
     simul <- simulate_life_history(results)
     expect_true(ncol(simul) >= 100)
-    expect_type(simul$death_start, "double")
-    expect_type(simul$death_end, "double")
+    expect_type(simul$mortality_start, "double")
+    expect_type(simul$mortality_end, "double")
     expect_type(simul$maturity_start, "double")
     expect_type(simul$maturity_end, "double")
     expect_type(simul$clutch_start_1, "double")
@@ -48,8 +48,8 @@ test_that("simulations work", {
     expect_type(simul$clutch_size_1, "integer")
 
     simul <- simulate_life_history(results, event = "mortality")
-    expect_type(simul$death_start, "double")
-    expect_type(simul$death_end, "double")
+    expect_type(simul$mortality_start, "double")
+    expect_type(simul$mortality_end, "double")
     expect_true(nrow(simul) == 550)
 
     simul <- simulate_life_history(results, event = "maturity")

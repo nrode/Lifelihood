@@ -122,10 +122,12 @@ test_that("manual simulation input produces coherent offspring totals", {
   expect_true(any(simul$total_n_offspring > 0))
   expect_true(any(rowSums(!is.na(simul[clutch_cols])) == 0))
 
+  # Individuals with no clutches have NA offspring totals (not 0), so ignore
+  # NAs: the coherence check is that no clutchless individual has offspring > 0.
   positive_offspring_without_clutch <- simul$total_n_offspring > 0 &
     rowSums(!is.na(simul[clutch_cols])) == 0
 
-  expect_false(any(positive_offspring_without_clutch))
+  expect_false(any(positive_offspring_without_clutch, na.rm = TRUE))
 
   for (clutch_col in clutch_cols) {
     suffix <- sub("^clutch_", "", clutch_col)
@@ -165,6 +167,7 @@ test_that("create_simulation_input accepts explicit covariate data", {
   expect_true(length(clutch_cols) > 0)
   expect_false(any(
     simul$total_n_offspring > 0 &
-      rowSums(!is.na(simul[clutch_cols])) == 0
+      rowSums(!is.na(simul[clutch_cols])) == 0,
+    na.rm = TRUE
   ))
 })

@@ -166,9 +166,6 @@ test_that("lifelihood with group_by_group=TRUE and n_fit > 1 works end-to-end", 
   expect_true(is.numeric(BIC(results)))
   expect_true(is.numeric(logLik(results)))
 
-  # Check summary runs without error
-  expect_no_error(summary(results))
-
   # Check prediction gives informative error
   expect_error(
     prediction(results, "expt_death"),

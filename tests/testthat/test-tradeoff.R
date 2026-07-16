@@ -43,7 +43,7 @@ test_that("trade-off simulations work for reproduction events", {
     seed = 1
   )
   expect_true(all(
-    c("death_start", "death_end", "maturity_start", "maturity_end") %in%
+    c("mortality_start", "mortality_end", "maturity_start", "maturity_end") %in%
       names(sim_reproduction)
   ))
   clutch_cols <- grep("^clutch_", names(sim_reproduction), value = TRUE)
@@ -79,8 +79,8 @@ test_that("trade-off simulations work for reproduction events", {
       "sex",
       "sex_start",
       "sex_end",
-      "death_start",
-      "death_end",
+      "mortality_start",
+      "mortality_end",
       "total_n_offspring"
     ))
   )
