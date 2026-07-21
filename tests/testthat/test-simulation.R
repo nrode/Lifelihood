@@ -39,6 +39,7 @@ test_that("simulations work", {
   suppressWarnings({
     simul <- simulate_life_history(results)
     expect_true(ncol(simul) >= 100)
+    expect_identical(simul$sex, df$sex)
     expect_type(simul$mortality_start, "double")
     expect_type(simul$mortality_end, "double")
     expect_type(simul$maturity_start, "double")

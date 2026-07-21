@@ -265,8 +265,7 @@ simulated_mortality <- simulate_life_history(
   results,
   event = "mortality",
   seed = 1
-) |>
-  mutate(sex = df$sex)
+)
 
 simulated_mortality |>
   summarise(
