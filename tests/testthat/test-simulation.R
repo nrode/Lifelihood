@@ -128,6 +128,7 @@ test_that("censoring works for reproduction and validates block in newdata", {
     visits = visits,
     seed = 1
   )
+  expect_identical(sim$geno, df$geno)
   expect_true(all(
     c(
       "maturity_start",

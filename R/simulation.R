@@ -791,13 +791,15 @@ simulate_life_history <- function(
   }
   ## Add covariates
   if (is.null(newdata)) {
+    simulation_data_cols <- unique(c(
+      object$lifelihoodData$covariates,
+      object$lifelihoodData$block,
+      object$lifelihoodData$sex,
+      object$lifelihoodData$sex_start,
+      object$lifelihoodData$sex_end
+    ))
     df_sims_up_na <- object$lifelihoodData$df |>
-      select(c(
-        object$lifelihoodData$covariates,
-        object$lifelihoodData$sex,
-        object$lifelihoodData$sex_start,
-        object$lifelihoodData$sex_end
-      )) |>
+      select(all_of(simulation_data_cols)) |>
       bind_cols(df_sims_up_na)
   } else {
     df_sims_up_na <- bind_cols(newdata, df_sims_up_na)
