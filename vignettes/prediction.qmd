@@ -265,12 +265,11 @@ simulated_mortality <- simulate_life_history(
   results,
   event = "mortality",
   seed = 1
-) |>
-  mutate(sex = df$sex)
+)
 
 simulated_mortality |>
   summarise(
-    mean_simulated_longevity = mean(death_end),
+    mean_simulated_longevity = mean(mortality_end),
     .by = sex
   ) |>
   mutate(
@@ -298,7 +297,7 @@ simulated_life_histories |>
   select(
     sex_label,
     par,
-    death_end,
+    mortality_end,
     maturity_end,
     clutch_size_1,
     clutch_size_2

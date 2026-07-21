@@ -24,10 +24,10 @@ Default is \code{"all"}, which simulates all fitted events.}
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
 If \code{NULL}, the original model data are used.}
 
-\item{use_censoring}{Whether to retrieve censoring time intervals for scalar
-events (\code{maturity}, \code{mortality}). For example, returns \code{mortality_start} and
-\code{mortality_end} instead of only \code{mortality}. If \code{newdata} is provided and
-censoring is enabled, \code{newdata} must include the block column.
+\item{use_censoring}{Whether to retrieve censoring time intervals for
+\code{maturity}, \code{mortality}, and reproduction events. For example, adds
+\code{mortality_start} and \code{mortality_end} alongside \code{mortality}. If \code{newdata} is
+provided and censoring is enabled, \code{newdata} must include the block column.
 When \code{use_censoring = TRUE}, \code{visits} must be provided explicitly.
 Use \code{\link[=get_visits]{get_visits()}} to derive visit data from the fitted data, or pass a
 custom visit data frame.}

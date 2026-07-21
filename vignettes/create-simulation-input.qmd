@@ -135,8 +135,6 @@ simulation_input <- create_simulation_input(
 )
 
 simulation_input$sample_size
-
-simulation_input$lifelihoodData$block <- 1
 ```
 
 > If your `data` already has one row per individual, omit `n_per_combination`.
@@ -147,11 +145,7 @@ The object returned by `create_simulation_input()` can be passed directly to
 `simulate_life_history()`.
 
 ```{r}
-visits <- data.frame(
-  block = 1,
-  visit = 1:simulation_input$lifelihoodData$right_censoring_date
-)
-simulated <- simulate_life_history(simulation_input, seed = 1, visits = visits)
+simulated <- simulate_life_history(simulation_input, seed = 1)
 
 simulated |> head()
 ```
@@ -191,7 +185,7 @@ clutch_ids <- Reduce(
   intersect,
   list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
 )
-clutchs <- generate_clutch_vector(sort(as.integer(clutch_ids)))
+clutchs <- generate_clutch_vector(length(clutch_ids))
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
@@ -201,8 +195,10 @@ simulated_lifelihood_data <- as_lifelihoodData(
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
   clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
+  # `simulate_life_history()` names the mortality event `mortality_start` /
+  # `mortality_end`, so point the death columns at those.
+  death_start = "mortality_start",
+  death_end = "mortality_end",
   covariates = c("par", "spore"),
   dist = c("lgn", "wei", "exp"),
   matclutch = FALSE

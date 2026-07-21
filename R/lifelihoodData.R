@@ -90,6 +90,28 @@ as_lifelihoodData <- function(
     stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
   }
 
+  if (isTRUE(matclutch)) {
+    if (
+      !is.character(matclutch_size) ||
+        length(matclutch_size) != 1 ||
+        !matclutch_size %in% colnames(df)
+    ) {
+      stop(
+        "`matclutch_size` must name a column in `df` when `matclutch` is TRUE."
+      )
+    }
+
+    if (!is.numeric(df[[matclutch_size]])) {
+      stop(
+        "`matclutch_size` must refer to a numeric column in `df` when `matclutch` is TRUE."
+      )
+    }
+  }
+
+  if (isFALSE(matclutch) && !is.null(matclutch_size)) {
+    warning("`matclutch_size` is ignored when `matclutch` is FALSE.")
+  }
+
   if (!is.null(block) && !block %in% colnames(df)) {
     stop(
       "`block` argument does not match any of the column names in the dataframe `df` provided."

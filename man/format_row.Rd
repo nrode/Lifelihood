@@ -14,7 +14,9 @@ format_row(
   clutchs,
   death_start,
   death_end,
-  covariates
+  covariates,
+  matclutch = FALSE,
+  matclutch_size = NULL
 )
 }
 \arguments{
@@ -44,6 +46,11 @@ interval in which the death was determined.}
 interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
+
+\item{matclutch}{Whether the maturity event is also a clutch event.}
+
+\item{matclutch_size}{Column name containing the clutch size for the
+maturity event.}
 }
 \value{
 A string of the well formated row.

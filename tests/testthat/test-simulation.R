@@ -39,17 +39,28 @@ test_that("simulations work", {
   suppressWarnings({
     simul <- simulate_life_history(results)
     expect_true(ncol(simul) >= 100)
-    expect_type(simul$death_start, "double")
-    expect_type(simul$death_end, "double")
+    expect_identical(simul$sex, df$sex)
+    expect_type(simul$mortality_start, "double")
+    expect_type(simul$mortality_end, "double")
     expect_type(simul$maturity_start, "double")
     expect_type(simul$maturity_end, "double")
     expect_type(simul$clutch_start_1, "double")
     expect_type(simul$clutch_end_1, "double")
     expect_type(simul$clutch_size_1, "integer")
+    clutch_columns <- grep(
+      "^clutch_(start|end|size)_[0-9]+$",
+      names(simul),
+      value = TRUE
+    )
+    clutch_ids <- unique(sub("^clutch_(start|end|size)_", "", clutch_columns))
+    expected_clutch_order <- unlist(lapply(clutch_ids, function(i) {
+      paste0("clutch_", c("start_", "end_", "size_"), i)
+    }))
+    expect_identical(clutch_columns, expected_clutch_order)
 
     simul <- simulate_life_history(results, event = "mortality")
-    expect_type(simul$death_start, "double")
-    expect_type(simul$death_end, "double")
+    expect_type(simul$mortality_start, "double")
+    expect_type(simul$mortality_end, "double")
     expect_true(nrow(simul) == 550)
 
     simul <- simulate_life_history(results, event = "maturity")
@@ -118,15 +129,29 @@ test_that("censoring works for reproduction and validates block in newdata", {
     visits = visits,
     seed = 1
   )
+  expect_identical(sim$geno, df$geno)
   expect_true(all(
     c(
       "maturity_start",
       "maturity_end",
       "mortality_start",
-      "mortality_end"
+      "mortality_end",
+      "clutch_1",
+      "clutch_start_1",
+      "clutch_end_1",
+      "clutch_size_1"
     ) %in%
       names(sim)
   ))
+  size_cols <- grep("^clutch_size_[0-9]+$", names(sim), value = TRUE)
+  no_repro_data <- rowSums(!is.na(sim[size_cols])) == 0
+  # Individuals with no clutch-size data at all (e.g. males) must stay NA so
+  # "no reproduction data" is distinct from a genuine zero-offspring female.
+  expect_true(all(is.na(sim$total_n_offspring[no_repro_data])))
+  expect_equal(
+    sim$total_n_offspring[!no_repro_data],
+    rowSums(sim[size_cols], na.rm = TRUE)[!no_repro_data]
+  )
 
   newdata_without_block <- df[1:5, c("par", "spore")]
   expect_error(

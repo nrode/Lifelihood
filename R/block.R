@@ -45,6 +45,22 @@ get_visits <- function(lifelihoodData) {
 }
 
 #' @keywords internal
+compute_visit_bounds <- function(ages, v) {
+  visit_id <- findInterval(ages, v)
+  visit_start <- rep(NA_real_, length(ages))
+  visit_end <- rep(NA_real_, length(ages))
+
+  has_start <- !is.na(visit_id) & visit_id > 0
+  visit_start[has_start] <- v[visit_id[has_start]]
+
+  end_id <- visit_id + 1
+  has_end <- !is.na(end_id) & end_id <= length(v)
+  visit_end[has_end] <- v[end_id[has_end]]
+
+  list(start = visit_start, end = visit_end)
+}
+
+#' @keywords internal
 add_visit_masks <- function(
   simul_df,
   lifelihoodData,
@@ -56,7 +72,7 @@ add_visit_masks <- function(
   if (is.null(block_col) || !(block_col %in% names(lifelihoodData$df))) {
     stop("`lifelihoodData$block` must be a valid column name.")
   }
-  if (!(event %in% names(simul_df))) {
+  if (event != "reproduction" && !(event %in% names(simul_df))) {
     stop("`event` must match a column name in `simul_df`.")
   }
   if (is.null(block_values)) {
@@ -83,32 +99,150 @@ add_visit_masks <- function(
   visits_by_block <- split(visits$visit, visit_block_keys)
   visits_by_block <- lapply(visits_by_block, sort)
 
-  # For each age of event in simulated df, get the block and the
-  # last visits before and after observing the event
-  simul_df <- simul_df |>
-    group_by(!!as.symbol(block_col)) |>
-    group_modify(
-      ~ {
-        block_key <- as.character(.y[[block_col]][[1]])
-        v <- visits_by_block[[block_key]]
-        visit_id <- findInterval(.x[[event]], v)
-        visit_start <- rep(NA_real_, length(visit_id))
-        visit_end <- rep(NA_real_, length(visit_id))
+  # Reproduction has several paired time and size columns, so its visit masks
+  # must be calculated in long form rather than from one scalar event column.
+  if (event == "reproduction") {
+    clutch_cols <- grep(
+      "^clutch_[0-9]+$",
+      names(simul_df),
+      value = TRUE
+    )
+    clutch_cols <- clutch_cols[order(as.integer(sub(
+      "^clutch_",
+      "",
+      clutch_cols
+    )))]
 
-        has_start <- visit_id > 0
-        visit_start[has_start] <- v[visit_id[has_start]]
+    clutch_size_cols <- sub("^clutch_", "clutch_size_", clutch_cols)
+    existing_size_cols <- intersect(clutch_size_cols, names(simul_df))
 
-        end_id <- visit_id + 1
-        has_end <- end_id <= length(v)
-        visit_end[has_end] <- v[end_id[has_end]]
+    # Preserve individual identity while clutch slots are reshaped and merged.
+    simul_df$.visit_mask_row <- seq_len(nrow(simul_df))
 
-        .x[[paste0(event, "_start")]] <- visit_start
-        .x[[paste0(event, "_end")]] <- visit_end
-        .x
+    if (length(clutch_cols) > 0) {
+      long_cols <- c(clutch_cols, existing_size_cols)
+      clutch_long <- simul_df |>
+        select(all_of(c(".visit_mask_row", block_col)), all_of(long_cols)) |>
+        pivot_longer(
+          all_of(long_cols),
+          names_to = c(".value", ".clutch_slot"),
+          names_pattern = "^(clutch|clutch_size)_([0-9]+)$"
+        ) |>
+        mutate(.clutch_slot = as.integer(.clutch_slot)) |>
+        rename(.clutch = clutch)
+
+      # `clutch_size` is absent only when no size columns exist for these clutches
+      if ("clutch_size" %in% names(clutch_long)) {
+        clutch_long <- clutch_long |> rename(.clutch_size = clutch_size)
+      } else {
+        clutch_long$.clutch_size <- NA_real_
       }
-    ) |>
-    ungroup() |>
-    select(-all_of(block_col))
+
+      clutch_long <- clutch_long |>
+        filter(!is.na(.clutch))
+    } else {
+      # Every simulated clutch was removed, for example because all clutches
+      # occurred after mortality. An empty frame flows into the single-slot NA
+      # schema below, so the stable schema lives in exactly one place.
+      clutch_long <- tibble(
+        .visit_mask_row = integer(0),
+        .clutch = numeric(0),
+        .clutch_size = numeric(0)
+      )
+    }
+
+    if (nrow(clutch_long) > 0) {
+      # Compute visit bounds for every observed clutch age. Bounds are assigned
+      # by row index, as in the scalar path (see the per-block loop below), so a
+      # single strategy covers both instead of a parallel group_modify variant.
+      block_key_long <- as.character(clutch_long[[block_col]])
+      clutch_long$.visit_start <- NA_real_
+      clutch_long$.visit_end <- NA_real_
+      for (bk in unique(block_key_long)) {
+        idx <- which(block_key_long == bk)
+        bounds <- compute_visit_bounds(
+          clutch_long$.clutch[idx],
+          visits_by_block[[bk]]
+        )
+        clutch_long$.visit_start[idx] <- bounds$start
+        clutch_long$.visit_end[idx] <- bounds$end
+      }
+
+      # Clutches between the same visits are observationally indistinguishable:
+      # retain their earliest latent age and combine their offspring counts.
+      merged_clutches <- clutch_long |>
+        group_by(.visit_mask_row, .visit_start, .visit_end) |>
+        summarise(
+          .clutch = min(.clutch),
+          .clutch_size = if (all(is.na(.clutch_size))) {
+            .clutch_size[[1]]
+          } else {
+            sum(.clutch_size, na.rm = TRUE)
+          },
+          .groups = "drop"
+        ) |>
+        arrange(.visit_mask_row, .clutch) |>
+        group_by(.visit_mask_row) |>
+        mutate(.clutch_slot = row_number()) |>
+        ungroup()
+
+      # Restore one row per individual and pad individuals with fewer merged
+      # clutches so all reconstructed columns have a consistent length.
+      max_clutches <- max(merged_clutches$.clutch_slot)
+      clutch_grid <- expand_grid(
+        .visit_mask_row = seq_len(nrow(simul_df)),
+        .clutch_slot = seq_len(max_clutches)
+      ) |>
+        left_join(merged_clutches, by = c(".visit_mask_row", ".clutch_slot"))
+    } else {
+      max_clutches <- 1L
+      clutch_grid <- tibble(
+        .visit_mask_row = seq_len(nrow(simul_df)),
+        .clutch_slot = 1L,
+        .visit_start = NA_real_,
+        .visit_end = NA_real_,
+        .clutch = NA_real_,
+        .clutch_size = NA_integer_
+      )
+    }
+
+    # Replace the original clutch pairs with chronological age/bounds/size
+    # groups while retaining every non-reproduction simulation column.
+    simul_df <- simul_df |>
+      select(
+        -all_of(c(block_col, clutch_cols, existing_size_cols)),
+        -.visit_mask_row
+      )
+
+    for (i in seq_len(max_clutches)) {
+      clutch_i <- clutch_grid |> filter(.clutch_slot == i)
+      simul_df[[paste0("clutch_", i)]] <- clutch_i$.clutch
+      simul_df[[paste0("clutch_start_", i)]] <- clutch_i$.visit_start
+      simul_df[[paste0("clutch_end_", i)]] <- clutch_i$.visit_end
+      simul_df[[paste0("clutch_size_", i)]] <- clutch_i$.clutch_size
+    }
+
+    return(simul_df)
+  }
+
+  # For each age of event in simulated df, get the block and the last visits
+  # before and after observing the event. Bounds are assigned by row index so
+  # the input row order is preserved (grouping would reorder rows by block).
+  event_ages <- simul_df[[event]]
+  block_key_vec <- as.character(block_values)
+  visit_start <- rep(NA_real_, nrow(simul_df))
+  visit_end <- rep(NA_real_, nrow(simul_df))
+
+  for (bk in unique(block_key_vec)) {
+    idx <- which(block_key_vec == bk)
+    bounds <- compute_visit_bounds(event_ages[idx], visits_by_block[[bk]])
+    visit_start[idx] <- bounds$start
+    visit_end[idx] <- bounds$end
+  }
+
+  simul_df[[paste0(event, "_start")]] <- visit_start
+  simul_df[[paste0(event, "_end")]] <- visit_end
+  simul_df <- simul_df |> select(-all_of(block_col))
 
   return(simul_df)
 }

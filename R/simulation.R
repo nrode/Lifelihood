@@ -462,10 +462,10 @@ simulate_life_history_tradeoff <- function(
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
-#' @param use_censoring Whether to retrieve censoring time intervals for scalar
-#' events (`maturity`, `mortality`). For example, returns `mortality_start` and
-#' `mortality_end` instead of only `mortality`. If `newdata` is provided and
-#' censoring is enabled, `newdata` must include the block column.
+#' @param use_censoring Whether to retrieve censoring time intervals for
+#' `maturity`, `mortality`, and reproduction events. For example, adds
+#' `mortality_start` and `mortality_end` alongside `mortality`. If `newdata` is
+#' provided and censoring is enabled, `newdata` must include the block column.
 #' When `use_censoring = TRUE`, `visits` must be provided explicitly.
 #' Use [get_visits()] to derive visit data from the fitted data, or pass a
 #' custom visit data frame.
@@ -672,13 +672,36 @@ simulate_life_history <- function(
       )
   }
 
-  # Compute total number of offspring during life
+  if (
+    "reproduction" %in%
+      events &&
+      !is.null(lifelihoodData$block) &&
+      use_censoring
+  ) {
+    # Both simulation paths contain absolute, post-mortality clutch ages,
+    # so visit masking here gives them the same reproduction censoring rules.
+    df_sims_up_na <- df_sims_up_na |>
+      add_visit_masks(
+        lifelihoodData = lifelihoodData,
+        event = "reproduction",
+        visits = visits,
+        block_values = block_values
+      )
+  }
+
+  # Compute total number of offspring during life. Individuals with no clutch
+  # size data at all (males, or individuals whose clutches were all removed)
+  # keep NA so that "no reproduction data" stays distinct from a genuine zero.
   df_sims_up_na <- df_sims_up_na |>
     mutate(
-      total_n_offspring = rowSums(
-        across(starts_with("clutch_size_")),
-        na.rm = TRUE
-      )
+      total_n_offspring = {
+        clutch_sizes <- across(starts_with("clutch_size_"))
+        if_else(
+          rowSums(!is.na(clutch_sizes)) == 0L,
+          NA_real_,
+          rowSums(clutch_sizes, na.rm = TRUE)
+        )
+      }
     )
 
   if (object$lifelihoodData$matclutch) {
@@ -694,6 +717,16 @@ simulate_life_history <- function(
           object$lifelihoodData$matclutch_size
         ) := clutch_size_1
       )
+    if (use_censoring) {
+      # The first clutch is maturity, so its visit bounds become the maturity
+      # censoring interval, replacing the now-stale maturity-event bounds.
+      df_sims_up_na <- df_sims_up_na |>
+        select(-any_of(c("maturity_start", "maturity_end"))) |>
+        rename(
+          maturity_start = clutch_start_1,
+          maturity_end = clutch_end_1
+        )
+    }
   }
 
   if (!use_censoring) {
@@ -721,7 +754,7 @@ simulate_life_history <- function(
     if ("reproduction" %in% events) {
       ## Vector with the names of clutches: "clutch_1", etc.
       clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up_na), value = TRUE)
-      n_clutches <- length(clutch_cols) / 2
+      n_clutches <- length(clutch_cols)
       df_sims_up_na <- df_sims_up_na |>
         mutate(across(
           all_of(clutch_cols),
@@ -758,13 +791,15 @@ simulate_life_history <- function(
   }
   ## Add covariates
   if (is.null(newdata)) {
+    simulation_data_cols <- unique(c(
+      object$lifelihoodData$covariates,
+      object$lifelihoodData$block,
+      object$lifelihoodData$sex,
+      object$lifelihoodData$sex_start,
+      object$lifelihoodData$sex_end
+    ))
     df_sims_up_na <- object$lifelihoodData$df |>
-      select(c(
-        object$lifelihoodData$covariates,
-        object$lifelihoodData$sex,
-        object$lifelihoodData$sex_start,
-        object$lifelihoodData$sex_end
-      )) |>
+      select(all_of(simulation_data_cols)) |>
       bind_cols(df_sims_up_na)
   } else {
     df_sims_up_na <- bind_cols(newdata, df_sims_up_na)
