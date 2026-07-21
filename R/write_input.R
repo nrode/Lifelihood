@@ -64,6 +64,9 @@ format_dataframe_to_txt <- function(
     death_end,
     clutchs
   )
+  if (isTRUE(matclutch)) {
+    all_column_names <- c(all_column_names, matclutch_size)
+  }
 
   for (column_name in all_column_names) {
     if (!(column_name %in% colnames(df))) {
@@ -103,7 +106,9 @@ format_dataframe_to_txt <- function(
         clutchs,
         death_start,
         death_end,
-        covariates
+        covariates,
+        matclutch = matclutch,
+        matclutch_size = matclutch_size
       )
     }
   )
@@ -177,6 +182,9 @@ format_dataframe_to_txt <- function(
 #' @param death_end Column name containing the second date of the
 #' interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
+#' @param matclutch Whether the maturity event is also a clutch event.
+#' @param matclutch_size Column name containing the clutch size for the
+#' maturity event.
 #'
 #' @return A string of the well formated row.
 format_row <- function(
@@ -189,7 +197,9 @@ format_row <- function(
   clutchs,
   death_start,
   death_end,
-  covariates
+  covariates,
+  matclutch = FALSE,
+  matclutch_size = NULL
 ) {
   # add variables from covariate columns
   cov_values <- ""
@@ -208,6 +218,9 @@ format_row <- function(
     row[maturity_start],
     row[maturity_end]
   )
+  if (isTRUE(matclutch)) {
+    formatted_row <- paste(formatted_row, row[matclutch_size])
+  }
 
   # extract clutch columns dynamically
   clutch_cols <- clutchs

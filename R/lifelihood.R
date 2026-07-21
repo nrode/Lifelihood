@@ -270,6 +270,7 @@ lifelihood_fit <- function(
     death_end = lifelihoodData$death_end,
     covariates = lifelihoodData$covariates,
     matclutch = lifelihoodData$matclutch,
+    matclutch_size = lifelihoodData$matclutch_size,
     dist = lifelihoodData$dist,
     path_config = path_config,
     temp_dir = temp_dir
