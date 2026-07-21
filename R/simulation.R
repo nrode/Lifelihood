@@ -754,7 +754,7 @@ simulate_life_history <- function(
     if ("reproduction" %in% events) {
       ## Vector with the names of clutches: "clutch_1", etc.
       clutch_cols <- grep("^clutch_[0-9]+$", names(df_sims_up_na), value = TRUE)
-      n_clutches <- length(clutch_cols) / 2
+      n_clutches <- length(clutch_cols)
       df_sims_up_na <- df_sims_up_na |>
         mutate(across(
           all_of(clutch_cols),

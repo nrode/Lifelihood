@@ -46,6 +46,16 @@ test_that("simulations work", {
     expect_type(simul$clutch_start_1, "double")
     expect_type(simul$clutch_end_1, "double")
     expect_type(simul$clutch_size_1, "integer")
+    clutch_columns <- grep(
+      "^clutch_(start|end|size)_[0-9]+$",
+      names(simul),
+      value = TRUE
+    )
+    clutch_ids <- unique(sub("^clutch_(start|end|size)_", "", clutch_columns))
+    expected_clutch_order <- unlist(lapply(clutch_ids, function(i) {
+      paste0("clutch_", c("start_", "end_", "size_"), i)
+    }))
+    expect_identical(clutch_columns, expected_clutch_order)
 
     simul <- simulate_life_history(results, event = "mortality")
     expect_type(simul$mortality_start, "double")
