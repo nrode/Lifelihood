@@ -135,8 +135,6 @@ simulation_input <- create_simulation_input(
 )
 
 simulation_input$sample_size
-
-simulation_input$lifelihoodData$block <- 1
 ```
 
 > If your `data` already has one row per individual, omit `n_per_combination`.
@@ -147,11 +145,7 @@ The object returned by `create_simulation_input()` can be passed directly to
 `simulate_life_history()`.
 
 ```{r}
-visits <- data.frame(
-  block = 1,
-  visit = 1:simulation_input$lifelihoodData$right_censoring_date
-)
-simulated <- simulate_life_history(simulation_input, seed = 1, visits = visits)
+simulated <- simulate_life_history(simulation_input, seed = 1)
 
 simulated |> head()
 ```
