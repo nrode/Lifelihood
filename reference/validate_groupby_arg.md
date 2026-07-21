@@ -23,7 +23,9 @@ validate_groupby_arg(lifelihoodData, groupby)
   - If NULL, calculates a single overall mortality rate.
 
   - If `"all"`, calculates mortality rate over each combination of
-    covariates listed in the`lifelihoodData` object provided.
+    covariates including the column for sex listed in the
+    `lifelihoodData` object provided (`lifelihoodData$covariates` and
+    `lifelihoodData$sex`).
 
   - Otherwise must be a character (`"covariate1"`) or a character vector
     (`c("covariate1", "covariate2")`). Note that the function will

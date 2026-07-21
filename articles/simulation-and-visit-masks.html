@@ -137,15 +137,7 @@
 <span>    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">datapierrick</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
@@ -175,27 +167,27 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -75325.328</span></span>
-<span><span class="co">#&gt; AIC:             150670.7</span></span>
-<span><span class="co">#&gt; BIC:             150713.8</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -32470.847</span></span>
+<span><span class="co">#&gt; AIC:             64961.7</span></span>
+<span><span class="co">#&gt; BIC:             65004.8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -0.904 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -3.308 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -3.329 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -4.869 (0.000)</span></span>
-<span><span class="co">#&gt;   ratio_expt_death (Intercept) -2.134 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -0.914 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -3.726 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -3.741 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -4.880 (0.000)</span></span>
+<span><span class="co">#&gt;   ratio_expt_death (Intercept) -1.648 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) 1.284 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -2.928 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.478 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -7.350 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.802 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -1.149 (0.000)</span></span>
-<span><span class="co">#&gt;   n_offspring (Intercept)   -2.553 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.805 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -1.157 (0.000)</span></span>
+<span><span class="co">#&gt;   n_offspring (Intercept)   -2.552 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -208,16 +200,16 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 46</span></span>
-<span><span class="co">#&gt;   par   spore   sex sex_start sex_end total_n_offspring maturity_start</span></span>
-<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;             &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         0        13    1000                52           54.5</span></span>
-<span><span class="co">#&gt; 2 0     0         0        13    1000                36           57.6</span></span>
-<span><span class="co">#&gt; 3 0     0         0        15    1000                23           59.5</span></span>
-<span><span class="co">#&gt; 4 0     0         0        14    1000                 4           53.5</span></span>
-<span><span class="co">#&gt; 5 0     0         0        19    1000                38           49.1</span></span>
-<span><span class="co">#&gt; 6 0     0         0        12    1000                21           55.0</span></span>
-<span><span class="co">#&gt; # ℹ 39 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 119</span></span>
+<span><span class="co">#&gt;   par   spore block   sex sex_start sex_end total_n_offspring maturity_start</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;             &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000               112           13.4</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000               144           12.2</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000               105           13.3</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000                87           12.5</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000                41           12.6</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000                68           12.8</span></span>
+<span><span class="co">#&gt; # ℹ 111 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
@@ -229,15 +221,15 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">results</span>, event <span class="op">=</span> <span class="st">"maturity"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 8</span></span>
-<span><span class="co">#&gt;   par   spore   sex sex_start sex_end maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         0        13    1000           65.4         65.4</span></span>
-<span><span class="co">#&gt; 2 0     0         0        13    1000           50.2         50.2</span></span>
-<span><span class="co">#&gt; 3 0     0         0        15    1000           60.8         60.8</span></span>
-<span><span class="co">#&gt; 4 0     0         0        14    1000           51.1         51.1</span></span>
-<span><span class="co">#&gt; 5 0     0         0        19    1000           44.5         44.5</span></span>
-<span><span class="co">#&gt; 6 0     0         0        12    1000           51.1         51.1</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 9</span></span>
+<span><span class="co">#&gt;   par   spore block   sex sex_start sex_end maturity_start maturity_end</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000           13.5         13.5</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000           13.1         13.1</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000           12.2         12.2</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000           12.8         12.8</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000           12.2         12.2</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000           12.8         12.8</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: total_n_offspring &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="simulations-with-visit-masks">Simulations with visit masks<a class="anchor" aria-label="anchor" href="#simulations-with-visit-masks"></a>
@@ -268,15 +260,15 @@
 <span>    visits <span class="op">=</span> <span class="va">visits</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 9</span></span>
-<span><span class="co">#&gt;   par   spore   sex sex_start sex_end maturity maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         0        13    1000     55.0             54           55</span></span>
-<span><span class="co">#&gt; 2 0     0         0        13    1000     56.7             56           57</span></span>
-<span><span class="co">#&gt; 3 0     0         0        15    1000     48.9             48           49</span></span>
-<span><span class="co">#&gt; 4 0     0         0        14    1000     52.4             52           53</span></span>
-<span><span class="co">#&gt; 5 0     0         0        19    1000     52.6             52           53</span></span>
-<span><span class="co">#&gt; 6 0     0         0        12    1000     67.3             67           68</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
+<span><span class="co">#&gt;   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000     13.4             13           14</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000     13.9             13           14</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000     13.4             13           14</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000     13.1             13           14</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000     13.6             13           14</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000     13.0             12           13</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: total_n_offspring &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <p>You can also provide your own visit masks with the <code>visits</code> argument. It must be a dataframe with 2 columns: <code>block</code> (the same name as passed to <code><a href="../reference/as_lifelihoodData.html">lifelihood::as_lifelihoodData()</a></code> in the <code>block</code> argument) and exactly <code>visit</code>. For each block, <code>visit</code> corresponds to the ages at which the events of individuals were recorded.</p>
@@ -308,18 +300,63 @@
 <span>    visits <span class="op">=</span> <span class="va">custom_visits</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 9</span></span>
-<span><span class="co">#&gt;   par   spore   sex sex_start sex_end maturity maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         0        13    1000     47.3             47           49</span></span>
-<span><span class="co">#&gt; 2 0     0         0        13    1000     52.6             51           53</span></span>
-<span><span class="co">#&gt; 3 0     0         0        15    1000     58.7             57           59</span></span>
-<span><span class="co">#&gt; 4 0     0         0        14    1000     55.6             55           57</span></span>
-<span><span class="co">#&gt; 5 0     0         0        19    1000     51.9             51           53</span></span>
-<span><span class="co">#&gt; 6 0     0         0        12    1000     58.9             57           59</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
+<span><span class="co">#&gt;   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000     12.9             11           13</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000     13.1             13           15</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000     12.7             11           13</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000     13.3             13           15</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000     13.6             13           15</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000     13.4             13           15</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: total_n_offspring &lt;dbl&gt;</span></span></code></pre></div>
 </div>
-</section><script id="quarto-html-after-body" type="application/javascript">
+</section><section class="level2"><h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
+</h2>
+<p>Requesting <code>event = "reproduction"</code> also simulates maturity and mortality, because both events are required to determine when reproduction can occur (e.g., after the maturity and before the death). Visit masks apply to reproduction in both the standard simulation and the reproduction-survival trade-off simulation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span></span>
+<span>    event <span class="op">=</span> <span class="st">"reproduction"</span>,</span>
+<span>    use_censoring <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    visits <span class="op">=</span> <span class="va">visits</span>,</span>
+<span>    seed <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"clutch_"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"maturity"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"mortality"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 134</span></span>
+<span><span class="co">#&gt;   clutch_1 clutch_start_1 clutch_end_1 clutch_size_1 clutch_2 clutch_start_2</span></span>
+<span><span class="co">#&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;         &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     18.7             18           19             5     20.2             20</span></span>
+<span><span class="co">#&gt; 2     18.5             18           19             2     28.6             28</span></span>
+<span><span class="co">#&gt; 3     18.2             18           19             3     21.9             21</span></span>
+<span><span class="co">#&gt; 4     17.2             17           18             6     22.3             22</span></span>
+<span><span class="co">#&gt; 5     16.0             16           17             4     19.1             19</span></span>
+<span><span class="co">#&gt; 6     17.8             17           18             3     20.2             20</span></span>
+<span><span class="co">#&gt; # ℹ 128 more variables: clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_3 &lt;dbl&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_4 &lt;dbl&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_5 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_5 &lt;dbl&gt;, clutch_end_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_6 &lt;dbl&gt;, clutch_start_6 &lt;dbl&gt;, clutch_end_6 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_6 &lt;int&gt;, clutch_7 &lt;dbl&gt;, clutch_start_7 &lt;dbl&gt;, …</span></span></code></pre></div>
+</div>
+<p>The following rules define how visit masks are constructed and applied:</p>
+<ul>
+<li>Visit masks are block-specific. The <code>visits</code> data frame must contain the configured block column and a <code>visit</code> column, with visit times for every block represented in the simulation. When <code>newdata</code> is supplied, it must also contain the configured block column.</li>
+<li>
+<code><a href="../reference/get_visits.html">get_visits()</a></code> collects the observed sex, maturity, and clutch interval bounds. It removes missing values and the right-censoring date, then deduplicates and sorts visit times within each block.</li>
+<li>An event is bounded by the last visit at or before its simulated age and the following visit. The lower bound is <code>NA</code> when the event precedes the first visit, and the upper bound is <code>NA</code> when it follows the last visit.</li>
+<li>Reproduction masks are computed from absolute clutch ages. Maturity is added to the first inter-clutch duration, later durations are accumulated, and clutches after mortality are removed before visit bounds are assigned.</li>
+<li>If several clutches from one individual occur between the same visits, they are represented by one clutch slot. The earliest simulated age is retained in <code>clutch_i</code>, and their known <code>clutch_size_i</code> values are summed. If every contributing clutch size is missing, the merged size remains <code>NA</code>.</li>
+<li>The retained clutches are numbered chronologically. Their latent ages remain available as <code>clutch_i</code> alongside <code>clutch_start_i</code>, <code>clutch_end_i</code>, and <code>clutch_size_i</code>; missing slots are represented by <code>NA</code>.</li>
+<li>Reproduction values are <code>NA</code> for males. <code>total_n_offspring</code> is calculated after same-interval clutches have been merged, so aggregation does not change the lifetime total.</li>
+</ul></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);

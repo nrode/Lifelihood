@@ -113,10 +113,10 @@ If <code>NULL</code>, the original model data are used.</p></dd>
 
 
 <dt id="arg-use-censoring">use_censoring<a class="anchor" aria-label="anchor" href="#arg-use-censoring"></a></dt>
-<dd><p>Whether to retrieve censoring time intervals for scalar
-events (<code>maturity</code>, <code>mortality</code>). For example, returns <code>mortality_start</code> and
-<code>mortality_end</code> instead of only <code>mortality</code>. If <code>newdata</code> is provided and
-censoring is enabled, <code>newdata</code> must include the block column.
+<dd><p>Whether to retrieve censoring time intervals for
+<code>maturity</code>, <code>mortality</code>, and reproduction events. For example, adds
+<code>mortality_start</code> and <code>mortality_end</code> alongside <code>mortality</code>. If <code>newdata</code> is
+provided and censoring is enabled, <code>newdata</code> must include the block column.
 When <code>use_censoring = TRUE</code>, <code>visits</code> must be provided explicitly.
 Use <code><a href="get_visits.html">get_visits()</a></code> to derive visit data from the fitted data, or pass a
 custom visit data frame.</p></dd>

@@ -27,14 +27,6 @@ df <- datapierrick |>
     block = rep(1:2, each = nrow(datapierrick) / 2)
   )
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
@@ -76,7 +68,7 @@ results <- lifelihood(
   lifelihoodData = lifelihoodData,
   path_config = use_test_config("example_config_se"),
   se.fit = TRUE,
-  n_fit=5
+  n_fit = 5
 )
 #> Warning in lifelihood(lifelihoodData = lifelihoodData, path_config =
 #> use_test_config("example_config_se"), : Best and second-best likelihoods differ
@@ -203,9 +195,9 @@ plot_fitted_event_rate(
   se.fit = TRUE
 )
 #> Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of
-#> MCMC iterations (30) must be higher than number of individuals (96).
+#> MCMC iterations (30) must be higher than number of individuals (48).
 #> Warning in value[[3L]](cond): Could not compute MCMC standard errors. Number of
-#> MCMC iterations (30) must be higher than number of individuals (96).
+#> MCMC iterations (30) must be higher than number of individuals (48).
 #> Warning: Removed 20 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```

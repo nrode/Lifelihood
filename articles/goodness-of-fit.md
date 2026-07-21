@@ -32,15 +32,6 @@ df <- datapierrick |>
   ) |>
   sample_n(120)
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
-
 lifelihoodData <- as_lifelihoodData(
   df = df,
   matclutch = FALSE,
@@ -82,9 +73,9 @@ following attributes:
 ``` r
 
 gof$original_loglik
-#> [1] -8412.633
+#> [1] -8241.597
 gof$simulated_loglik
-#> [1] -873.8001 -873.8195 -873.7900 -873.8015 -873.7939
+#> [1] -880.5608 -880.2920 -880.3120 -880.3936 -880.3140
 gof$n_success
 #> [1] 5
 gof$n_failed

@@ -249,9 +249,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulation_input</span><span class="op">$</span><span class="va">sample_size</span></span>
-<span><span class="co">#&gt; [1] 600</span></span>
-<span></span>
-<span><span class="va">simulation_input</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">block</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 600</span></span></code></pre></div>
 </div>
 <blockquote>
 <p>If your <code>data</code> already has one row per individual, omit <code>n_per_combination</code>.</p>
@@ -261,14 +259,10 @@
 <p>The object returned by <code><a href="../reference/create_simulation_input.html">create_simulation_input()</a></code> can be passed directly to <code><a href="../reference/simulate_life_history.html">simulate_life_history()</a></code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  block <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  visit <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">simulation_input</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">right_censoring_date</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">simulated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">simulation_input</span>, seed <span class="op">=</span> <span class="fl">1</span>, visits <span class="op">=</span> <span class="va">visits</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">simulated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">simulation_input</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulated</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 73</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 139</span></span>
 <span><span class="co">#&gt;   par   spore    sex sex_start sex_end total_n_offspring maturity_start</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 high  absent     0       990    1000               176           98.9</span></span>
@@ -277,7 +271,7 @@
 <span><span class="co">#&gt; 4 high  absent     0       990    1000               158           31.9</span></span>
 <span><span class="co">#&gt; 5 high  absent     0       990    1000               130          107. </span></span>
 <span><span class="co">#&gt; 6 high  absent     0       990    1000               155           33.4</span></span>
-<span><span class="co">#&gt; # ℹ 66 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 132 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
@@ -292,15 +286,6 @@
 <div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation_config_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".yaml"</span><span class="op">)</span></span>
 <span><span class="fu">yaml</span><span class="fu">::</span><span class="fu"><a href="https://yaml.r-lib.org/reference/write_yaml.html" class="external-link">write_yaml</a></span><span class="op">(</span><span class="va">simulation_config</span>, <span class="va">simulation_config_path</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">ids</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ids</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">ids</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">simulated_for_fit</span> <span class="op">&lt;-</span> <span class="va">simulated</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
@@ -327,7 +312,7 @@
 <span>  <span class="va">intersect</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">clutch_start_ids</span>, <span class="va">clutch_end_ids</span>, <span class="va">clutch_size_ids</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">clutch_ids</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">clutch_ids</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulated_lifelihood_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">simulated_for_fit</span>,</span>
@@ -337,8 +322,10 @@
 <span>  maturity_start <span class="op">=</span> <span class="st">"maturity_start"</span>,</span>
 <span>  maturity_end <span class="op">=</span> <span class="st">"maturity_end"</span>,</span>
 <span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
-<span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
+<span>  <span class="co"># `simulate_life_history()` names the mortality event `mortality_start` /</span></span>
+<span>  <span class="co"># `mortality_end`, so point the death columns at those.</span></span>
+<span>  death_start <span class="op">=</span> <span class="st">"mortality_start"</span>,</span>
+<span>  death_end <span class="op">=</span> <span class="st">"mortality_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
 <span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lgn"</span>, <span class="st">"wei"</span>, <span class="st">"exp"</span><span class="op">)</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span></span>

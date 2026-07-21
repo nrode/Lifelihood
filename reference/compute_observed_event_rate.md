@@ -63,16 +63,8 @@ A dataframe with 3 columns: Interval (time interval, based on
 df <- datapierrick |>
 as_tibble() |>
  mutate(par = as.factor(par))
- 
+
 # name of the columns of the clutchs into a single vector
-generate_clutch_vector <- function(N) {
- return(paste(
-   "clutch",
-   rep(c("start", "end", "size"), N),
-   rep(1:N, each = 3),
-   sep = "_"
- ))
-}
 clutchs <- generate_clutch_vector(28)
 dataLFH <- as_lifelihoodData(
  df = df,
@@ -103,12 +95,12 @@ p <- observed_emergence_rate |>
      color = par,
      shape = par
    )
- )+ 
- geom_point()+ 
+ )+
+ geom_point()+
  geom_line(linewidth=0.5)+
  xlab("Time (days)")+
  ylab("Observed mortality rate over 5 day-periods")+
- facet_wrap(vars(par))
+ facet_wrap(vars(par), labeller = "label_both")
 p
 #> Warning: Removed 30 rows containing missing values or values outside the scale range
 #> (`geom_point()`).

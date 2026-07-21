@@ -41,11 +41,12 @@ simulate_life_history(
 
 - use_censoring:
 
-  Whether to retrieve censoring time intervals for scalar events
-  (`maturity`, `mortality`). For example, returns `mortality_start` and
-  `mortality_end` instead of only `mortality`. If `newdata` is provided
-  and censoring is enabled, `newdata` must include the block column.
-  When `use_censoring = TRUE`, `visits` must be provided explicitly. Use
+  Whether to retrieve censoring time intervals for `maturity`,
+  `mortality`, and reproduction events. For example, adds
+  `mortality_start` and `mortality_end` alongside `mortality`. If
+  `newdata` is provided and censoring is enabled, `newdata` must include
+  the block column. When `use_censoring = TRUE`, `visits` must be
+  provided explicitly. Use
   [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
   to derive visit data from the fitted data, or pass a custom visit data
   frame.

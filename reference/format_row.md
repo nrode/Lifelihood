@@ -17,7 +17,9 @@ format_row(
   clutchs,
   death_start,
   death_end,
-  covariates
+  covariates,
+  matclutch = FALSE,
+  matclutch_size = NULL
 )
 ```
 
@@ -70,6 +72,14 @@ format_row(
 - covariates:
 
   Vector containing the names of the covariates.
+
+- matclutch:
+
+  Whether the maturity event is also a clutch event.
+
+- matclutch_size:
+
+  Column name containing the clutch size for the maturity event.
 
 ## Value
 

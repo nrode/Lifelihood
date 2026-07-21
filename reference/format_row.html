@@ -95,7 +95,9 @@ into a large string (required format for the data input file).</p>
 <span>  <span class="va">clutchs</span>,</span>
 <span>  <span class="va">death_start</span>,</span>
 <span>  <span class="va">death_end</span>,</span>
-<span>  <span class="va">covariates</span></span>
+<span>  <span class="va">covariates</span>,</span>
+<span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  matclutch_size <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -148,6 +150,15 @@ interval in which the death was determined.</p></dd>
 
 <dt id="arg-covariates">covariates<a class="anchor" aria-label="anchor" href="#arg-covariates"></a></dt>
 <dd><p>Vector containing the names of the covariates.</p></dd>
+
+
+<dt id="arg-matclutch">matclutch<a class="anchor" aria-label="anchor" href="#arg-matclutch"></a></dt>
+<dd><p>Whether the maturity event is also a clutch event.</p></dd>
+
+
+<dt id="arg-matclutch-size">matclutch_size<a class="anchor" aria-label="anchor" href="#arg-matclutch-size"></a></dt>
+<dd><p>Column name containing the clutch size for the
+maturity event.</p></dd>
 
 </dl></div>
     <div class="section level2">

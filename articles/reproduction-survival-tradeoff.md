@@ -40,14 +40,6 @@ df |>
 #> 3 2          81.7
 #> 4 3         104.
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
@@ -144,14 +136,14 @@ plot_fitted_event_rate(
 simulate_life_history(m1, event = "mortality") |>
   mutate(geno = df$geno) |>
   group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+  summarise(longevity = mean((mortality_start + mortality_end) / 2))
 #> # A tibble: 4 × 2
 #>   geno  longevity
 #>   <fct>     <dbl>
-#> 1 0         272. 
-#> 2 1         116. 
-#> 3 2          85.6
-#> 4 3         117.
+#> 1 0         254. 
+#> 2 1         114. 
+#> 3 2          87.9
+#> 4 3         111.
 ```
 
 ### From scratch without tradeoffs
@@ -237,26 +229,26 @@ sim_data <- simulate_life_history(
 )
 #> [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"
 sim_data
-#> # A tibble: 400 × 200
-#>    geno    sex sex_start sex_end mortality mortality_start mortality_end
-#>    <fct> <dbl>     <dbl>   <dbl>     <dbl>           <dbl>         <dbl>
-#>  1 0         0       990    1000      298.            200            NA 
-#>  2 0         0       990    1000      323.            200            NA 
-#>  3 0         0       990    1000      316.            200            NA 
-#>  4 0         0       990    1000      320.            200            NA 
-#>  5 0         0       990    1000      288.            200            NA 
-#>  6 0         0       990    1000      240.            200            NA 
-#>  7 0         0       990    1000      365.            200            NA 
-#>  8 0         0       990    1000      337.            200            NA 
-#>  9 0         0       990    1000      190.            190.          190.
-#> 10 0         0       990    1000      309.            200            NA 
+#> # A tibble: 400 × 185
+#>    geno  block   sex sex_start sex_end mortality mortality_start mortality_end
+#>    <fct> <dbl> <dbl>     <dbl>   <dbl>     <dbl>           <dbl>         <dbl>
+#>  1 0         1     0       990    1000      225.            200            NA 
+#>  2 0         1     0       990    1000      255.            200            NA 
+#>  3 0         1     0       990    1000      112.            112.          112.
+#>  4 0         1     0       990    1000      282.            200            NA 
+#>  5 0         1     0       990    1000      316.            200            NA 
+#>  6 0         1     0       990    1000      232.            200            NA 
+#>  7 0         1     0       990    1000      119.            119.          119.
+#>  8 0         1     0       990    1000      336.            200            NA 
+#>  9 0         1     0       990    1000      298.            200            NA 
+#> 10 0         1     0       990    1000      178.            178.          178.
 #> # ℹ 390 more rows
-#> # ℹ 193 more variables: maturity <dbl>, first_clutch_size <int>,
-#> #   clutch_2 <dbl>, clutch_size_2 <int>, clutch_3 <dbl>, clutch_size_3 <int>,
-#> #   clutch_4 <dbl>, clutch_size_4 <int>, clutch_5 <dbl>, clutch_size_5 <int>,
-#> #   clutch_6 <dbl>, clutch_size_6 <int>, clutch_7 <dbl>, clutch_size_7 <int>,
-#> #   clutch_8 <dbl>, clutch_size_8 <int>, clutch_9 <dbl>, clutch_size_9 <int>,
-#> #   clutch_10 <dbl>, clutch_size_10 <int>, clutch_11 <dbl>, …
+#> # ℹ 177 more variables: maturity <dbl>, maturity_start <dbl>,
+#> #   maturity_end <dbl>, first_clutch_size <int>, clutch_2 <dbl>,
+#> #   clutch_start_2 <dbl>, clutch_end_2 <dbl>, clutch_size_2 <int>,
+#> #   clutch_3 <dbl>, clutch_start_3 <dbl>, clutch_end_3 <dbl>,
+#> #   clutch_size_3 <int>, clutch_4 <dbl>, clutch_start_4 <dbl>,
+#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_5 <dbl>, …
 
 sim_data |>
   mutate(geno = simulation_input$lifelihoodData$df$geno) |>
@@ -266,9 +258,9 @@ sim_data |>
 #>   geno  longevity
 #>   <fct>     <dbl>
 #> 1 0          NA  
-#> 2 1          NA  
-#> 3 2          90.3
-#> 4 3         115.
+#> 2 1         119. 
+#> 3 2          87.7
+#> 4 3         114.
 ```
 
 ### From scratch with tradeoffs
@@ -279,7 +271,7 @@ population <- crossing(
   geno = as.factor(0:3),
   sex = 0
 ) |>
-  mutate(n_individuals = 5)
+  mutate(n_individuals = 20)
 
 ## Define model to simulate
 simulation_config <- list(
@@ -349,64 +341,88 @@ set.seed(123)
 sim_data <- simulate_life_history(
   object = simulation_input,
   event = "all",
-  use_censoring = FALSE
-)
-#visits = visits)
+  use_censoring = FALSE,
+  visits = NULL
+) |>
+  mutate(
+    maturity_end = maturity_start + 0.005,
+    mortality_end = mortality_start + 0.005,
+    across(starts_with("clutch_end_"), ~ .x + 0.005)
+  )
 
 sim_data
-#> # A tibble: 20 × 66
-#>    geno    sex sex_start sex_end total_n_offspring maturity_start maturity_end
-#>    <fct> <dbl>     <dbl>   <dbl>             <dbl>          <dbl>        <dbl>
-#>  1 0         0       990    1000               190          13.5         13.5 
-#>  2 0         0       990    1000               167          10.0         10.0 
-#>  3 0         0       990    1000                51          11.5         11.5 
-#>  4 0         0       990    1000               159          11.5         11.5 
-#>  5 0         0       990    1000                67          10.6         10.6 
-#>  6 1         0       990    1000                71          11.8         11.8 
-#>  7 1         0       990    1000                84          13.3         13.3 
-#>  8 1         0       990    1000                94          12.5         12.5 
-#>  9 1         0       990    1000               135          14.0         14.0 
-#> 10 1         0       990    1000                79          13.7         13.7 
-#> 11 2         0       990    1000                87           7.95         7.95
-#> 12 2         0       990    1000                70          14.6         14.6 
-#> 13 2         0       990    1000                80           9.45         9.45
-#> 14 2         0       990    1000                33           7.55         7.55
-#> 15 2         0       990    1000                70          10.7         10.7 
-#> 16 3         0       990    1000               176          15.7         15.7 
-#> 17 3         0       990    1000                67          13.4         13.4 
-#> 18 3         0       990    1000                47           7.75         7.75
-#> 19 3         0       990    1000                57          10.1         10.1 
-#> 20 3         0       990    1000                44           9.85         9.85
-#> # ℹ 59 more variables: clutch_start_1 <dbl>, clutch_end_1 <dbl>,
-#> #   clutch_size_1 <int>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,
-#> #   clutch_size_2 <int>, clutch_start_3 <dbl>, clutch_end_3 <dbl>,
-#> #   clutch_size_3 <int>, clutch_start_4 <dbl>, clutch_end_4 <dbl>,
-#> #   clutch_size_4 <int>, clutch_start_5 <dbl>, clutch_end_5 <dbl>,
-#> #   clutch_size_5 <int>, clutch_start_6 <dbl>, clutch_end_6 <dbl>,
-#> #   clutch_size_6 <int>, clutch_start_7 <dbl>, clutch_end_7 <dbl>, …
+#> # A tibble: 80 × 151
+#>    geno  block   sex sex_start sex_end total_n_offspring maturity_start
+#>    <fct> <dbl> <dbl>     <dbl>   <dbl>             <dbl>          <dbl>
+#>  1 0         1     0       990    1000               190          13.5 
+#>  2 0         1     0       990    1000               167          10.0 
+#>  3 0         1     0       990    1000                51          11.5 
+#>  4 0         1     0       990    1000               159          11.5 
+#>  5 0         1     0       990    1000                67          10.6 
+#>  6 0         1     0       990    1000                71          11.8 
+#>  7 0         1     0       990    1000               199          13.3 
+#>  8 0         1     0       990    1000               226          14.0 
+#>  9 0         1     0       990    1000               103           7.95
+#> 10 0         1     0       990    1000                85          17.6 
+#> # ℹ 70 more rows
+#> # ℹ 144 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
+#> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
+#> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
+#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
+#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_start_5 <dbl>,
+#> #   clutch_end_5 <dbl>, clutch_size_5 <int>, clutch_start_6 <dbl>, …
 colnames(sim_data)
-#>  [1] "geno"              "sex"               "sex_start"        
-#>  [4] "sex_end"           "total_n_offspring" "maturity_start"   
-#>  [7] "maturity_end"      "clutch_start_1"    "clutch_end_1"     
-#> [10] "clutch_size_1"     "clutch_start_2"    "clutch_end_2"     
-#> [13] "clutch_size_2"     "clutch_start_3"    "clutch_end_3"     
-#> [16] "clutch_size_3"     "clutch_start_4"    "clutch_end_4"     
-#> [19] "clutch_size_4"     "clutch_start_5"    "clutch_end_5"     
-#> [22] "clutch_size_5"     "clutch_start_6"    "clutch_end_6"     
-#> [25] "clutch_size_6"     "clutch_start_7"    "clutch_end_7"     
-#> [28] "clutch_size_7"     "clutch_start_8"    "clutch_end_8"     
-#> [31] "clutch_size_8"     "clutch_start_9"    "clutch_end_9"     
-#> [34] "clutch_size_9"     "clutch_start_10"   "clutch_end_10"    
-#> [37] "clutch_size_10"    "clutch_start_11"   "clutch_end_11"    
-#> [40] "clutch_size_11"    "clutch_start_12"   "clutch_end_12"    
-#> [43] "clutch_size_12"    "clutch_start_13"   "clutch_end_13"    
-#> [46] "clutch_size_13"    "clutch_start_14"   "clutch_end_14"    
-#> [49] "clutch_size_14"    "clutch_start_15"   "clutch_end_15"    
-#> [52] "clutch_size_15"    "clutch_start_16"   "clutch_end_16"    
-#> [55] "clutch_size_16"    "clutch_start_17"   "clutch_end_17"    
-#> [58] "clutch_size_17"    "clutch_start_18"   "clutch_end_18"    
-#> [61] "clutch_size_18"    "clutch_start_19"   "clutch_end_19"    
-#> [64] "clutch_size_19"    "death_start"       "death_end"
+#>   [1] "geno"              "block"             "sex"              
+#>   [4] "sex_start"         "sex_end"           "total_n_offspring"
+#>   [7] "maturity_start"    "maturity_end"      "clutch_start_1"   
+#>  [10] "clutch_end_1"      "clutch_size_1"     "clutch_start_2"   
+#>  [13] "clutch_end_2"      "clutch_size_2"     "clutch_start_3"   
+#>  [16] "clutch_end_3"      "clutch_size_3"     "clutch_start_4"   
+#>  [19] "clutch_end_4"      "clutch_size_4"     "clutch_start_5"   
+#>  [22] "clutch_end_5"      "clutch_size_5"     "clutch_start_6"   
+#>  [25] "clutch_end_6"      "clutch_size_6"     "clutch_start_7"   
+#>  [28] "clutch_end_7"      "clutch_size_7"     "clutch_start_8"   
+#>  [31] "clutch_end_8"      "clutch_size_8"     "clutch_start_9"   
+#>  [34] "clutch_end_9"      "clutch_size_9"     "clutch_start_10"  
+#>  [37] "clutch_end_10"     "clutch_size_10"    "clutch_start_11"  
+#>  [40] "clutch_end_11"     "clutch_size_11"    "clutch_start_12"  
+#>  [43] "clutch_end_12"     "clutch_size_12"    "clutch_start_13"  
+#>  [46] "clutch_end_13"     "clutch_size_13"    "clutch_start_14"  
+#>  [49] "clutch_end_14"     "clutch_size_14"    "clutch_start_15"  
+#>  [52] "clutch_end_15"     "clutch_size_15"    "clutch_start_16"  
+#>  [55] "clutch_end_16"     "clutch_size_16"    "clutch_start_17"  
+#>  [58] "clutch_end_17"     "clutch_size_17"    "clutch_start_18"  
+#>  [61] "clutch_end_18"     "clutch_size_18"    "clutch_start_19"  
+#>  [64] "clutch_end_19"     "clutch_size_19"    "clutch_start_20"  
+#>  [67] "clutch_end_20"     "clutch_size_20"    "clutch_start_21"  
+#>  [70] "clutch_end_21"     "clutch_size_21"    "clutch_start_22"  
+#>  [73] "clutch_end_22"     "clutch_size_22"    "clutch_start_23"  
+#>  [76] "clutch_end_23"     "clutch_size_23"    "clutch_start_24"  
+#>  [79] "clutch_end_24"     "clutch_size_24"    "clutch_start_25"  
+#>  [82] "clutch_end_25"     "clutch_size_25"    "clutch_start_26"  
+#>  [85] "clutch_end_26"     "clutch_size_26"    "clutch_start_27"  
+#>  [88] "clutch_end_27"     "clutch_size_27"    "clutch_start_28"  
+#>  [91] "clutch_end_28"     "clutch_size_28"    "clutch_start_29"  
+#>  [94] "clutch_end_29"     "clutch_size_29"    "clutch_start_30"  
+#>  [97] "clutch_end_30"     "clutch_size_30"    "clutch_start_31"  
+#> [100] "clutch_end_31"     "clutch_size_31"    "clutch_start_32"  
+#> [103] "clutch_end_32"     "clutch_size_32"    "clutch_start_33"  
+#> [106] "clutch_end_33"     "clutch_size_33"    "clutch_start_34"  
+#> [109] "clutch_end_34"     "clutch_size_34"    "clutch_start_35"  
+#> [112] "clutch_end_35"     "clutch_size_35"    "clutch_start_36"  
+#> [115] "clutch_end_36"     "clutch_size_36"    "clutch_start_37"  
+#> [118] "clutch_end_37"     "clutch_size_37"    "clutch_start_38"  
+#> [121] "clutch_end_38"     "clutch_size_38"    "clutch_start_39"  
+#> [124] "clutch_end_39"     "clutch_size_39"    "clutch_start_40"  
+#> [127] "clutch_end_40"     "clutch_size_40"    "clutch_start_41"  
+#> [130] "clutch_end_41"     "clutch_size_41"    "clutch_start_42"  
+#> [133] "clutch_end_42"     "clutch_size_42"    "clutch_start_43"  
+#> [136] "clutch_end_43"     "clutch_size_43"    "clutch_start_44"  
+#> [139] "clutch_end_44"     "clutch_size_44"    "clutch_start_45"  
+#> [142] "clutch_end_45"     "clutch_size_45"    "clutch_start_46"  
+#> [145] "clutch_end_46"     "clutch_size_46"    "clutch_start_47"  
+#> [148] "clutch_end_47"     "clutch_size_47"    "mortality_start"  
+#> [151] "mortality_end"
 
 ## Remove LRS
 sim_data <- sim_data |>
@@ -417,25 +433,29 @@ sim_data <- sim_data |>
 
 ``` r
 
+
 sim_data |>
   group_by(geno) |>
-  summarise(longevity = mean((death_start + death_end) / 2))
+  summarise(longevity = mean((mortality_start + mortality_end) / 2))
+#> # A tibble: 4 × 2
+#>   geno  longevity
+#>   <fct>     <dbl>
+#> 1 0         132. 
+#> 2 1         108. 
+#> 3 2          73.9
+#> 4 3          71.3
 
 sim_data |>
-  #mutate(toto=death_start-maturity_start)|>
+  #mutate(toto=mortality_start-maturity_start)|>
   #mutate(toto=clutch_start_1-maturity_start)|>
-  mutate(toto = death_start - clutch_start_19) |>
+  mutate(toto = mortality_start - clutch_start_19) |>
   summarize(min(toto, na.rm = TRUE))
+#> # A tibble: 1 × 1
+#>   `min(toto, na.rm = TRUE)`
+#>                       <dbl>
+#> 1                     0.900
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
-clutchs <- generate_clutch_vector(19)
+clutchs <- generate_clutch_vector(17)
 
 lifelihoodData <- as_lifelihoodData(
   df = sim_data,
@@ -445,8 +465,8 @@ lifelihoodData <- as_lifelihoodData(
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
   clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
+  death_start = "mortality_start",
+  death_end = "mortality_end",
   matclutch = FALSE,
   covariates = c("geno"),
   dist = c("wei", "gam", "lgn")
@@ -458,10 +478,21 @@ m1 <- lifelihood(
   path_config = use_test_config("config_pierrick_geno_death"),
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
-  seeds = c(2054, 9713, 3767, 8573),
+  seeds = c(2055, 9713, 3767, 8573),
   sub_interval = 0.05
   #n_fit=10
 )
 
 #AICc(m1)
+plot_fitted_event_rate(
+  m1,
+  interval_width = 5,
+  event = "mortality",
+  groupby = "geno",
+  use_facet = TRUE
+)
+#> Warning: Removed 63 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
 ```
+
+![](reproduction-survival-tradeoff_files/figure-html/unnamed-chunk-5-1.png)

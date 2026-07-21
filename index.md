@@ -29,15 +29,15 @@ pak::pak("nrode/Lifelihood")
 
 library(lifelihood)
 
-df <- fakesample
-head(df)
-df$type <- as.factor(df$type)
-df$geno <- as.factor(df$geno)
+df <- datadaphnia |>
+  as_tibble() |>
+  mutate(
+    par = as.factor(par),
+    geno = as.factor(geno),
+    spore = as.factor(spore)
+  )
 
-clutchs <- c(
-  "clutch_start1", "clutch_end1", "clutch_size1",
-  "clutch_start2", "clutch_end2", "clutch_size2"
-)
+clutchs <- generate_clutch_vector(28)
 
 dataLFH <- as_lifelihoodData(
   df = df,

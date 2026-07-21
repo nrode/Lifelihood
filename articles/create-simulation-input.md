@@ -154,8 +154,6 @@ simulation_input <- create_simulation_input(
 
 simulation_input$sample_size
 #> [1] 600
-
-simulation_input$lifelihoodData$block <- 1
 ```
 
 > If your `data` already has one row per individual, omit
@@ -170,14 +168,10 @@ can be passed directly to
 
 ``` r
 
-visits <- data.frame(
-  block = 1,
-  visit = 1:simulation_input$lifelihoodData$right_censoring_date
-)
-simulated <- simulate_life_history(simulation_input, seed = 1, visits = visits)
+simulated <- simulate_life_history(simulation_input, seed = 1)
 
 simulated |> head()
-#> # A tibble: 6 × 73
+#> # A tibble: 6 × 139
 #>   par   spore    sex sex_start sex_end total_n_offspring maturity_start
 #>   <fct> <fct>  <dbl>     <dbl>   <dbl>             <dbl>          <dbl>
 #> 1 high  absent     0       990    1000               176           98.9
@@ -186,7 +180,7 @@ simulated |> head()
 #> 4 high  absent     0       990    1000               158           31.9
 #> 5 high  absent     0       990    1000               130          107. 
 #> 6 high  absent     0       990    1000               155           33.4
-#> # ℹ 66 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
+#> # ℹ 132 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
 #> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
 #> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
 #> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
@@ -206,15 +200,6 @@ and compare the refitted estimates with the values used for simulation.
 
 simulation_config_path <- tempfile(fileext = ".yaml")
 yaml::write_yaml(simulation_config, simulation_config_path)
-
-generate_clutch_vector <- function(ids) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), length(ids)),
-    rep(ids, each = 3),
-    sep = "_"
-  ))
-}
 
 simulated_for_fit <- simulated |>
   mutate(
@@ -241,7 +226,7 @@ clutch_ids <- Reduce(
   intersect,
   list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
 )
-clutchs <- generate_clutch_vector(sort(as.integer(clutch_ids)))
+clutchs <- generate_clutch_vector(length(clutch_ids))
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
@@ -251,8 +236,10 @@ simulated_lifelihood_data <- as_lifelihoodData(
   maturity_start = "maturity_start",
   maturity_end = "maturity_end",
   clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
+  # `simulate_life_history()` names the mortality event `mortality_start` /
+  # `mortality_end`, so point the death columns at those.
+  death_start = "mortality_start",
+  death_end = "mortality_end",
   covariates = c("par", "spore"),
   dist = c("lgn", "wei", "exp"),
   matclutch = FALSE

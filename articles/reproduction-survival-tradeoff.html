@@ -150,15 +150,7 @@
 <span><span class="co">#&gt; 3 2          81.7</span></span>
 <span><span class="co">#&gt; 4 3         104.</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
@@ -257,14 +249,14 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span><span class="va">m1</span>, event <span class="op">=</span> <span class="st">"mortality"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>geno <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>longevity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">death_start</span> <span class="op">+</span> <span class="va">death_end</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>longevity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">mortality_start</span> <span class="op">+</span> <span class="va">mortality_end</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0         272. </span></span>
-<span><span class="co">#&gt; 2 1         116. </span></span>
-<span><span class="co">#&gt; 3 2          85.6</span></span>
-<span><span class="co">#&gt; 4 3         117.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0         254. </span></span>
+<span><span class="co">#&gt; 2 1         114. </span></span>
+<span><span class="co">#&gt; 3 2          87.9</span></span>
+<span><span class="co">#&gt; 4 3         111.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-without-tradeoffs">From scratch without tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-without-tradeoffs"></a>
 </h3>
@@ -349,26 +341,26 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"</span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 400 × 200</span></span>
-<span><span class="co">#&gt;    geno    sex sex_start sex_end mortality mortality_start mortality_end</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         0       990    1000      298.            200            NA </span></span>
-<span><span class="co">#&gt;  2 0         0       990    1000      323.            200            NA </span></span>
-<span><span class="co">#&gt;  3 0         0       990    1000      316.            200            NA </span></span>
-<span><span class="co">#&gt;  4 0         0       990    1000      320.            200            NA </span></span>
-<span><span class="co">#&gt;  5 0         0       990    1000      288.            200            NA </span></span>
-<span><span class="co">#&gt;  6 0         0       990    1000      240.            200            NA </span></span>
-<span><span class="co">#&gt;  7 0         0       990    1000      365.            200            NA </span></span>
-<span><span class="co">#&gt;  8 0         0       990    1000      337.            200            NA </span></span>
-<span><span class="co">#&gt;  9 0         0       990    1000      190.            190.          190.</span></span>
-<span><span class="co">#&gt; 10 0         0       990    1000      309.            200            NA </span></span>
+<span><span class="co">#&gt; # A tibble: 400 × 185</span></span>
+<span><span class="co">#&gt;    geno  block   sex sex_start sex_end mortality mortality_start mortality_end</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000      225.            200            NA </span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000      255.            200            NA </span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000      112.            112.          112.</span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000      282.            200            NA </span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000      316.            200            NA </span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000      232.            200            NA </span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000      119.            119.          119.</span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000      336.            200            NA </span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000      298.            200            NA </span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000      178.            178.          178.</span></span>
 <span><span class="co">#&gt; # ℹ 390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 193 more variables: maturity &lt;dbl&gt;, first_clutch_size &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_6 &lt;dbl&gt;, clutch_size_6 &lt;int&gt;, clutch_7 &lt;dbl&gt;, clutch_size_7 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_8 &lt;dbl&gt;, clutch_size_8 &lt;int&gt;, clutch_9 &lt;dbl&gt;, clutch_size_9 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_10 &lt;dbl&gt;, clutch_size_10 &lt;int&gt;, clutch_11 &lt;dbl&gt;, …</span></span>
+<span><span class="co">#&gt; # ℹ 177 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   maturity_end &lt;dbl&gt;, first_clutch_size &lt;int&gt;, clutch_2 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_3 &lt;dbl&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_4 &lt;dbl&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_5 &lt;dbl&gt;, …</span></span>
 <span></span>
 <span><span class="va">sim_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>geno <span class="op">=</span> <span class="va">simulation_input</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">df</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -378,9 +370,9 @@
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 0          NA  </span></span>
-<span><span class="co">#&gt; 2 1          NA  </span></span>
-<span><span class="co">#&gt; 3 2          90.3</span></span>
-<span><span class="co">#&gt; 4 3         115.</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 1         119. </span></span>
+<span><span class="co">#&gt; 3 2          87.7</span></span>
+<span><span class="co">#&gt; 4 3         114.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-with-tradeoffs">From scratch with tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-with-tradeoffs"></a>
 </h3>
@@ -390,7 +382,7 @@
 <span>  geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,</span>
 <span>  sex <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_individuals <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_individuals <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Define model to simulate</span></span>
 <span><span class="va">simulation_config</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -460,64 +452,88 @@
 <span><span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span></span>
 <span>  object <span class="op">=</span> <span class="va">simulation_input</span>,</span>
 <span>  event <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  use_censoring <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#visits = visits)</span></span>
+<span>  use_censoring <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  visits <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    maturity_end <span class="op">=</span> <span class="va">maturity_start</span> <span class="op">+</span> <span class="fl">0.005</span>,</span>
+<span>    mortality_end <span class="op">=</span> <span class="va">mortality_start</span> <span class="op">+</span> <span class="fl">0.005</span>,</span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"clutch_end_"</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">+</span> <span class="fl">0.005</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 20 × 66</span></span>
-<span><span class="co">#&gt;    geno    sex sex_start sex_end total_n_offspring maturity_start maturity_end</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         0       990    1000               190          13.5         13.5 </span></span>
-<span><span class="co">#&gt;  2 0         0       990    1000               167          10.0         10.0 </span></span>
-<span><span class="co">#&gt;  3 0         0       990    1000                51          11.5         11.5 </span></span>
-<span><span class="co">#&gt;  4 0         0       990    1000               159          11.5         11.5 </span></span>
-<span><span class="co">#&gt;  5 0         0       990    1000                67          10.6         10.6 </span></span>
-<span><span class="co">#&gt;  6 1         0       990    1000                71          11.8         11.8 </span></span>
-<span><span class="co">#&gt;  7 1         0       990    1000                84          13.3         13.3 </span></span>
-<span><span class="co">#&gt;  8 1         0       990    1000                94          12.5         12.5 </span></span>
-<span><span class="co">#&gt;  9 1         0       990    1000               135          14.0         14.0 </span></span>
-<span><span class="co">#&gt; 10 1         0       990    1000                79          13.7         13.7 </span></span>
-<span><span class="co">#&gt; 11 2         0       990    1000                87           7.95         7.95</span></span>
-<span><span class="co">#&gt; 12 2         0       990    1000                70          14.6         14.6 </span></span>
-<span><span class="co">#&gt; 13 2         0       990    1000                80           9.45         9.45</span></span>
-<span><span class="co">#&gt; 14 2         0       990    1000                33           7.55         7.55</span></span>
-<span><span class="co">#&gt; 15 2         0       990    1000                70          10.7         10.7 </span></span>
-<span><span class="co">#&gt; 16 3         0       990    1000               176          15.7         15.7 </span></span>
-<span><span class="co">#&gt; 17 3         0       990    1000                67          13.4         13.4 </span></span>
-<span><span class="co">#&gt; 18 3         0       990    1000                47           7.75         7.75</span></span>
-<span><span class="co">#&gt; 19 3         0       990    1000                57          10.1         10.1 </span></span>
-<span><span class="co">#&gt; 20 3         0       990    1000                44           9.85         9.85</span></span>
-<span><span class="co">#&gt; # ℹ 59 more variables: clutch_start_1 &lt;dbl&gt;, clutch_end_1 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;, clutch_end_4 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_4 &lt;int&gt;, clutch_start_5 &lt;dbl&gt;, clutch_end_5 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_5 &lt;int&gt;, clutch_start_6 &lt;dbl&gt;, clutch_end_6 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_6 &lt;int&gt;, clutch_start_7 &lt;dbl&gt;, clutch_end_7 &lt;dbl&gt;, …</span></span>
+<span><span class="co">#&gt; # A tibble: 80 × 151</span></span>
+<span><span class="co">#&gt;    geno  block   sex sex_start sex_end total_n_offspring maturity_start</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000               190          13.5 </span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000               167          10.0 </span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000                51          11.5 </span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000               159          11.5 </span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000                67          10.6 </span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000                71          11.8 </span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000               199          13.3 </span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000               226          14.0 </span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000               103           7.95</span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000                85          17.6 </span></span>
+<span><span class="co">#&gt; # ℹ 70 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 144 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_start_5 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_end_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;, clutch_start_6 &lt;dbl&gt;, …</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sim_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "geno"              "sex"               "sex_start"        </span></span>
-<span><span class="co">#&gt;  [4] "sex_end"           "total_n_offspring" "maturity_start"   </span></span>
-<span><span class="co">#&gt;  [7] "maturity_end"      "clutch_start_1"    "clutch_end_1"     </span></span>
-<span><span class="co">#&gt; [10] "clutch_size_1"     "clutch_start_2"    "clutch_end_2"     </span></span>
-<span><span class="co">#&gt; [13] "clutch_size_2"     "clutch_start_3"    "clutch_end_3"     </span></span>
-<span><span class="co">#&gt; [16] "clutch_size_3"     "clutch_start_4"    "clutch_end_4"     </span></span>
-<span><span class="co">#&gt; [19] "clutch_size_4"     "clutch_start_5"    "clutch_end_5"     </span></span>
-<span><span class="co">#&gt; [22] "clutch_size_5"     "clutch_start_6"    "clutch_end_6"     </span></span>
-<span><span class="co">#&gt; [25] "clutch_size_6"     "clutch_start_7"    "clutch_end_7"     </span></span>
-<span><span class="co">#&gt; [28] "clutch_size_7"     "clutch_start_8"    "clutch_end_8"     </span></span>
-<span><span class="co">#&gt; [31] "clutch_size_8"     "clutch_start_9"    "clutch_end_9"     </span></span>
-<span><span class="co">#&gt; [34] "clutch_size_9"     "clutch_start_10"   "clutch_end_10"    </span></span>
-<span><span class="co">#&gt; [37] "clutch_size_10"    "clutch_start_11"   "clutch_end_11"    </span></span>
-<span><span class="co">#&gt; [40] "clutch_size_11"    "clutch_start_12"   "clutch_end_12"    </span></span>
-<span><span class="co">#&gt; [43] "clutch_size_12"    "clutch_start_13"   "clutch_end_13"    </span></span>
-<span><span class="co">#&gt; [46] "clutch_size_13"    "clutch_start_14"   "clutch_end_14"    </span></span>
-<span><span class="co">#&gt; [49] "clutch_size_14"    "clutch_start_15"   "clutch_end_15"    </span></span>
-<span><span class="co">#&gt; [52] "clutch_size_15"    "clutch_start_16"   "clutch_end_16"    </span></span>
-<span><span class="co">#&gt; [55] "clutch_size_16"    "clutch_start_17"   "clutch_end_17"    </span></span>
-<span><span class="co">#&gt; [58] "clutch_size_17"    "clutch_start_18"   "clutch_end_18"    </span></span>
-<span><span class="co">#&gt; [61] "clutch_size_18"    "clutch_start_19"   "clutch_end_19"    </span></span>
-<span><span class="co">#&gt; [64] "clutch_size_19"    "death_start"       "death_end"</span></span>
+<span><span class="co">#&gt;   [1] "geno"              "block"             "sex"              </span></span>
+<span><span class="co">#&gt;   [4] "sex_start"         "sex_end"           "total_n_offspring"</span></span>
+<span><span class="co">#&gt;   [7] "maturity_start"    "maturity_end"      "clutch_start_1"   </span></span>
+<span><span class="co">#&gt;  [10] "clutch_end_1"      "clutch_size_1"     "clutch_start_2"   </span></span>
+<span><span class="co">#&gt;  [13] "clutch_end_2"      "clutch_size_2"     "clutch_start_3"   </span></span>
+<span><span class="co">#&gt;  [16] "clutch_end_3"      "clutch_size_3"     "clutch_start_4"   </span></span>
+<span><span class="co">#&gt;  [19] "clutch_end_4"      "clutch_size_4"     "clutch_start_5"   </span></span>
+<span><span class="co">#&gt;  [22] "clutch_end_5"      "clutch_size_5"     "clutch_start_6"   </span></span>
+<span><span class="co">#&gt;  [25] "clutch_end_6"      "clutch_size_6"     "clutch_start_7"   </span></span>
+<span><span class="co">#&gt;  [28] "clutch_end_7"      "clutch_size_7"     "clutch_start_8"   </span></span>
+<span><span class="co">#&gt;  [31] "clutch_end_8"      "clutch_size_8"     "clutch_start_9"   </span></span>
+<span><span class="co">#&gt;  [34] "clutch_end_9"      "clutch_size_9"     "clutch_start_10"  </span></span>
+<span><span class="co">#&gt;  [37] "clutch_end_10"     "clutch_size_10"    "clutch_start_11"  </span></span>
+<span><span class="co">#&gt;  [40] "clutch_end_11"     "clutch_size_11"    "clutch_start_12"  </span></span>
+<span><span class="co">#&gt;  [43] "clutch_end_12"     "clutch_size_12"    "clutch_start_13"  </span></span>
+<span><span class="co">#&gt;  [46] "clutch_end_13"     "clutch_size_13"    "clutch_start_14"  </span></span>
+<span><span class="co">#&gt;  [49] "clutch_end_14"     "clutch_size_14"    "clutch_start_15"  </span></span>
+<span><span class="co">#&gt;  [52] "clutch_end_15"     "clutch_size_15"    "clutch_start_16"  </span></span>
+<span><span class="co">#&gt;  [55] "clutch_end_16"     "clutch_size_16"    "clutch_start_17"  </span></span>
+<span><span class="co">#&gt;  [58] "clutch_end_17"     "clutch_size_17"    "clutch_start_18"  </span></span>
+<span><span class="co">#&gt;  [61] "clutch_end_18"     "clutch_size_18"    "clutch_start_19"  </span></span>
+<span><span class="co">#&gt;  [64] "clutch_end_19"     "clutch_size_19"    "clutch_start_20"  </span></span>
+<span><span class="co">#&gt;  [67] "clutch_end_20"     "clutch_size_20"    "clutch_start_21"  </span></span>
+<span><span class="co">#&gt;  [70] "clutch_end_21"     "clutch_size_21"    "clutch_start_22"  </span></span>
+<span><span class="co">#&gt;  [73] "clutch_end_22"     "clutch_size_22"    "clutch_start_23"  </span></span>
+<span><span class="co">#&gt;  [76] "clutch_end_23"     "clutch_size_23"    "clutch_start_24"  </span></span>
+<span><span class="co">#&gt;  [79] "clutch_end_24"     "clutch_size_24"    "clutch_start_25"  </span></span>
+<span><span class="co">#&gt;  [82] "clutch_end_25"     "clutch_size_25"    "clutch_start_26"  </span></span>
+<span><span class="co">#&gt;  [85] "clutch_end_26"     "clutch_size_26"    "clutch_start_27"  </span></span>
+<span><span class="co">#&gt;  [88] "clutch_end_27"     "clutch_size_27"    "clutch_start_28"  </span></span>
+<span><span class="co">#&gt;  [91] "clutch_end_28"     "clutch_size_28"    "clutch_start_29"  </span></span>
+<span><span class="co">#&gt;  [94] "clutch_end_29"     "clutch_size_29"    "clutch_start_30"  </span></span>
+<span><span class="co">#&gt;  [97] "clutch_end_30"     "clutch_size_30"    "clutch_start_31"  </span></span>
+<span><span class="co">#&gt; [100] "clutch_end_31"     "clutch_size_31"    "clutch_start_32"  </span></span>
+<span><span class="co">#&gt; [103] "clutch_end_32"     "clutch_size_32"    "clutch_start_33"  </span></span>
+<span><span class="co">#&gt; [106] "clutch_end_33"     "clutch_size_33"    "clutch_start_34"  </span></span>
+<span><span class="co">#&gt; [109] "clutch_end_34"     "clutch_size_34"    "clutch_start_35"  </span></span>
+<span><span class="co">#&gt; [112] "clutch_end_35"     "clutch_size_35"    "clutch_start_36"  </span></span>
+<span><span class="co">#&gt; [115] "clutch_end_36"     "clutch_size_36"    "clutch_start_37"  </span></span>
+<span><span class="co">#&gt; [118] "clutch_end_37"     "clutch_size_37"    "clutch_start_38"  </span></span>
+<span><span class="co">#&gt; [121] "clutch_end_38"     "clutch_size_38"    "clutch_start_39"  </span></span>
+<span><span class="co">#&gt; [124] "clutch_end_39"     "clutch_size_39"    "clutch_start_40"  </span></span>
+<span><span class="co">#&gt; [127] "clutch_end_40"     "clutch_size_40"    "clutch_start_41"  </span></span>
+<span><span class="co">#&gt; [130] "clutch_end_41"     "clutch_size_41"    "clutch_start_42"  </span></span>
+<span><span class="co">#&gt; [133] "clutch_end_42"     "clutch_size_42"    "clutch_start_43"  </span></span>
+<span><span class="co">#&gt; [136] "clutch_end_43"     "clutch_size_43"    "clutch_start_44"  </span></span>
+<span><span class="co">#&gt; [139] "clutch_end_44"     "clutch_size_44"    "clutch_start_45"  </span></span>
+<span><span class="co">#&gt; [142] "clutch_end_45"     "clutch_size_45"    "clutch_start_46"  </span></span>
+<span><span class="co">#&gt; [145] "clutch_end_46"     "clutch_size_46"    "clutch_start_47"  </span></span>
+<span><span class="co">#&gt; [148] "clutch_end_47"     "clutch_size_47"    "mortality_start"  </span></span>
+<span><span class="co">#&gt; [151] "mortality_end"</span></span>
 <span></span>
 <span><span class="co">## Remove LRS</span></span>
 <span><span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="va">sim_data</span> <span class="op">|&gt;</span></span>
@@ -527,25 +543,29 @@
 </h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim_data</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">sim_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>longevity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">death_start</span> <span class="op">+</span> <span class="va">death_end</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>longevity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">mortality_start</span> <span class="op">+</span> <span class="va">mortality_end</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span><span class="co">#&gt;   geno  longevity</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0         132. </span></span>
+<span><span class="co">#&gt; 2 1         108. </span></span>
+<span><span class="co">#&gt; 3 2          73.9</span></span>
+<span><span class="co">#&gt; 4 3          71.3</span></span>
 <span></span>
 <span><span class="va">sim_data</span> <span class="op">|&gt;</span></span>
-<span>  <span class="co">#mutate(toto=death_start-maturity_start)|&gt;</span></span>
+<span>  <span class="co">#mutate(toto=mortality_start-maturity_start)|&gt;</span></span>
 <span>  <span class="co">#mutate(toto=clutch_start_1-maturity_start)|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>toto <span class="op">=</span> <span class="va">death_start</span> <span class="op">-</span> <span class="va">clutch_start_19</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>toto <span class="op">=</span> <span class="va">mortality_start</span> <span class="op">-</span> <span class="va">clutch_start_19</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">toto</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 1</span></span>
+<span><span class="co">#&gt;   `min(toto, na.rm = TRUE)`</span></span>
+<span><span class="co">#&gt;                       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1                     0.900</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">19</span><span class="op">)</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">17</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">sim_data</span>,</span>
@@ -555,8 +575,8 @@
 <span>  maturity_start <span class="op">=</span> <span class="st">"maturity_start"</span>,</span>
 <span>  maturity_end <span class="op">=</span> <span class="st">"maturity_end"</span>,</span>
 <span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span>
-<span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
-<span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
+<span>  death_start <span class="op">=</span> <span class="st">"mortality_start"</span>,</span>
+<span>  death_end <span class="op">=</span> <span class="st">"mortality_end"</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span><span class="op">)</span>,</span>
 <span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"gam"</span>, <span class="st">"lgn"</span><span class="op">)</span></span>
@@ -568,12 +588,27 @@
 <span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick_geno_death"</span><span class="op">)</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  delete_temp_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2054</span>, <span class="fl">9713</span>, <span class="fl">3767</span>, <span class="fl">8573</span><span class="op">)</span>,</span>
+<span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2055</span>, <span class="fl">9713</span>, <span class="fl">3767</span>, <span class="fl">8573</span><span class="op">)</span>,</span>
 <span>  sub_interval <span class="op">=</span> <span class="fl">0.05</span></span>
 <span>  <span class="co">#n_fit=10</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#AICc(m1)</span></span></code></pre></div>
+<span><span class="co">#AICc(m1)</span></span>
+<span><span class="fu"><a href="../reference/plot_event_rate.html">plot_fitted_event_rate</a></span><span class="op">(</span></span>
+<span>  <span class="va">m1</span>,</span>
+<span>  interval_width <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  event <span class="op">=</span> <span class="st">"mortality"</span>,</span>
+<span>  groupby <span class="op">=</span> <span class="st">"geno"</span>,</span>
+<span>  use_facet <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 63 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="reproduction-survival-tradeoff_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

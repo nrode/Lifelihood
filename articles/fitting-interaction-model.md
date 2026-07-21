@@ -26,14 +26,6 @@ df <- datapierrick |>
     spore = as.factor(spore)
   )
 
-generate_clutch_vector <- function(N) {
-  return(paste(
-    "clutch",
-    rep(c("start", "end", "size"), N),
-    rep(1:N, each = 3),
-    sep = "_"
-  ))
-}
 clutchs <- generate_clutch_vector(28)
 
 lifelihoodData <- as_lifelihoodData(
@@ -69,7 +61,7 @@ time_default <- system.time({
 })
 time_default
 #>    user  system elapsed 
-#>  23.444   0.411  26.688
+#>  19.374   0.159  19.895
 ```
 
 - Interaction model using the `group_by_group` argument (default to
@@ -86,7 +78,7 @@ time_gbg <- system.time({
 })
 time_gbg
 #>    user  system elapsed 
-#>   1.741   0.128   2.306
+#>   1.368   0.067   1.454
 ```
 
 Fitting interaction model with group by group is faster than default

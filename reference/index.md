@@ -27,6 +27,8 @@
   : Get dataframe with default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
+- [`generate_clutch_vector()`](https://nrode.github.io/Lifelihood/reference/generate_clutch_vector.md)
+  : Utility to generate vector of clutch names.
 - [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
   : Retrieve visit masks from a lifelihood data object
 - [`goodness_of_fit()`](https://nrode.github.io/Lifelihood/reference/goodness_of_fit.md)

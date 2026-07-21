@@ -137,15 +137,7 @@
 <span>    spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">spore</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
@@ -180,7 +172,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_default</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  23.444   0.411  26.688</span></span></code></pre></div>
+<span><span class="co">#&gt;  19.374   0.159  19.895</span></span></code></pre></div>
 </div>
 <ul>
 <li>Interaction model using the <code>group_by_group</code> argument (default to <code>FALSE</code>)</li>
@@ -196,7 +188,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_gbg</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.741   0.128   2.306</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.368   0.067   1.454</span></span></code></pre></div>
 </div>
 <p>Fitting interaction model with group by group is faster than default model.</p>
 <ul>

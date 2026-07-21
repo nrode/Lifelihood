@@ -169,15 +169,7 @@ If you haven’t check it yet, have a look at:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># name of the columns of the clutchs into a single vector</span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p><em>Note: If you have a large number of clutches, it is easier to generate this vector programmatically. See the <a href="generate-clutch-names.html">Generate clutch names</a> vignette.</em></p>
 </section><section class="section level2"><h2 id="create-the-lifelihooddata-object">Create the <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-the-lifelihooddata-object"></a>

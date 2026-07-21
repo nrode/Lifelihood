@@ -39,7 +39,7 @@ df_female <- datadaphnia |>
 df_male <- df_female |>
   mutate(
     sex = 1,
-    across(starts_with("clutch"), ~ NA_real_),
+    across(starts_with("clutch"), ~NA_real_),
     death_start = death_start * 10,
     death_end = death_end * 10
   )
@@ -51,15 +51,6 @@ df <- bind_rows(df_female, df_male) |>
       c(nrow(df_female), nrow(df_male))
     )
   )
-
-generate_clutch_vector <- function(n) {
-  paste(
-    "clutch",
-    rep(c("start", "end", "size"), n),
-    rep(seq_len(n), each = 3),
-    sep = "_"
-  )
-}
 
 lifelihood_data <- as_lifelihoodData(
   df = df,
@@ -332,12 +323,11 @@ simulated_mortality <- simulate_life_history(
   results,
   event = "mortality",
   seed = 1
-) |>
-  mutate(sex = df$sex)
+)
 
 simulated_mortality |>
   summarise(
-    mean_simulated_longevity = mean(death_end),
+    mean_simulated_longevity = mean(mortality_end),
     .by = sex
   ) |>
   mutate(
@@ -371,20 +361,20 @@ simulated_life_histories |>
   select(
     sex_label,
     par,
-    death_end,
+    mortality_end,
     maturity_end,
     clutch_size_1,
     clutch_size_2
   )
 #> # A tibble: 6 × 6
-#>   sex_label par   death_end maturity_end clutch_size_1 clutch_size_2
-#>   <chr>     <fct>     <dbl>        <dbl>         <int>         <int>
-#> 1 female    0         121.          9.63             6             4
-#> 2 male      0         749.         18.3             NA            NA
-#> 3 female    1          68.2        18.0              5             2
-#> 4 male      1         362.         13.9             NA            NA
-#> 5 female    2          11.2         6.53            NA            NA
-#> 6 male      2         486.         14.2             NA            NA
+#>   sex_label par   mortality_end maturity_end clutch_size_1 clutch_size_2
+#>   <chr>     <fct>         <dbl>        <dbl>         <int>         <int>
+#> 1 female    0             121.          9.63             6             4
+#> 2 male      0             749.         18.3             NA            NA
+#> 3 female    1              68.2        18.0              5             2
+#> 4 male      1             362.         13.9             NA            NA
+#> 5 female    2              11.2         6.53            NA            NA
+#> 6 male      2             486.         14.2             NA            NA
 ```
 
 Reproduction-related columns are always `NA` for males because

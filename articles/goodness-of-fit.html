@@ -141,15 +141,6 @@
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">generate_clutch_vector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">N</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span>    <span class="st">"clutch"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"size"</span><span class="op">)</span>, <span class="va">N</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    sep <span class="op">=</span> <span class="st">"_"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
 <span><span class="va">lifelihoodData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -158,7 +149,7 @@
 <span>  sex_end <span class="op">=</span> <span class="st">"sex_end"</span>,</span>
 <span>  maturity_start <span class="op">=</span> <span class="st">"mat_start"</span>,</span>
 <span>  maturity_end <span class="op">=</span> <span class="st">"mat_end"</span>,</span>
-<span>  clutchs <span class="op">=</span> <span class="fu">generate_clutch_vector</span><span class="op">(</span><span class="fl">28</span><span class="op">)</span>,</span>
+<span>  clutchs <span class="op">=</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">28</span><span class="op">)</span>,</span>
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
@@ -182,9 +173,9 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gof</span><span class="op">$</span><span class="va">original_loglik</span></span>
-<span><span class="co">#&gt; [1] -8412.633</span></span>
+<span><span class="co">#&gt; [1] -8241.597</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">simulated_loglik</span></span>
-<span><span class="co">#&gt; [1] -873.8001 -873.8195 -873.7900 -873.8015 -873.7939</span></span>
+<span><span class="co">#&gt; [1] -880.5608 -880.2920 -880.3120 -880.3936 -880.3140</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_success</span></span>
 <span><span class="co">#&gt; [1] 5</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_failed</span></span>
