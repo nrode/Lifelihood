@@ -701,6 +701,14 @@ simulate_life_history <- function(
           NA_real_,
           rowSums(clutch_sizes, na.rm = TRUE)
         )
+      },
+      total_n_clutches = {
+        clutch_sizes <- across(starts_with("clutch_size_"))
+        if_else(
+          rowSums(!is.na(clutch_sizes)) == 0L,
+          NA_real_,
+          rowSums(!is.na(clutch_sizes))
+        )
       }
     )
 

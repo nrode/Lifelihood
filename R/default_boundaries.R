@@ -89,20 +89,23 @@ default_bounds_df <- function(lifelihoodData) {
     max_default = c(500, 600, 10, 1000)
   )
 
-  maturity_model <- dist[1]
+  # `dist` follows the (mortality, maturity, reproduction) convention used
+  # throughout the package, so each shape parameter must take its bounds from
+  # the family of its own event.
+  mortality_model <- dist[1]
+  mortality_specs <- subset(models_bounds, name == mortality_model)
+  death_shape_min <- mortality_specs$min_default
+  death_shape_max <- mortality_specs$max_default
+
+  maturity_model <- dist[2]
   maturity_specs <- subset(models_bounds, name == maturity_model)
   maturity_param2_min <- maturity_specs$min_default
   maturity_param2_max <- maturity_specs$max_default
 
-  clutch_model <- dist[2]
-  clutch_specs <- subset(models_bounds, name == clutch_model)
-  clutch_shape_min <- clutch_specs$min_default
-  clutch_shape_max <- clutch_specs$max_default
-
-  death_model <- dist[3]
-  death_specs <- subset(models_bounds, name == death_model)
-  death_shape_min <- death_specs$min_default
-  death_shape_max <- death_specs$max_default
+  reproduction_model <- dist[3]
+  reproduction_specs <- subset(models_bounds, name == reproduction_model)
+  clutch_shape_min <- reproduction_specs$min_default
+  clutch_shape_max <- reproduction_specs$max_default
 
   boundaries <- list(
     expt_death = c(name = "expt_death", min = 0.001, max = max_death),

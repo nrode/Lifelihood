@@ -29,7 +29,7 @@ flowchart LR
 ## Load packages
 
 ```{r}
-library(lifelihood)
+devtools::load_all()
 library(tidyverse)
 ```
 
@@ -64,21 +64,21 @@ parameter uses. This example uses:
 ```{r}
 simulation_config <- list(
   mortality = list(
-    expt_death = "par + spore",
+    expt_death = 1,
     survival_param2 = 1,
     ratio_expt_death = "not_fitted",
     prob_death = "not_fitted",
     sex_ratio = "not_fitted"
   ),
   maturity = list(
-    expt_maturity = "par",
+    expt_maturity = 1,
     maturity_param2 = 1,
     ratio_expt_maturity = "not_fitted"
   ),
   reproduction = list(
-    expt_reproduction = "par + spore",
+    expt_reproduction = 1,
     reproduction_param2 = 1,
-    n_offspring = "par",
+    n_offspring = 1,
     increase_death_hazard = "not_fitted",
     tof_decay = "not_fitted",
     increase_death_hazard_n_offspring = "not_fitted",
@@ -104,15 +104,17 @@ contains two effects: one for `low` and one for `high`.
 
 ```{r}
 effects <- list(
-  expt_death = list(intercept = -2.3, par = c(0.5, -0.4), spore = -0.5),
-  survival_param2 = -1.2,
-  expt_maturity = list(intercept = -3.2, par = c(-0.3, -0.6)),
-  maturity_param2 = -1.2,
-  expt_reproduction = list(intercept = -3.5, par = c(0.3, 0.6), spore = -0.25),
-  reproduction_param2 = -1,
-  n_offspring = list(intercept = -1.5, par = c(0.2, 0.5))
+  expt_death = list(intercept = 0), #, par = c(0.5, -0.4), spore = -0.5),
+  survival_param2 = 0,
+  expt_maturity = list(intercept = 0), # par = c(-0.3, -0.6)),
+  maturity_param2 = 0,
+  expt_reproduction = list(intercept = 0), # par = c(0.3, 0.6), spore = -0.25),
+  reproduction_param2 = 0,
+  n_offspring = list(intercept = 0) #, par = c(0.2, 0.5))
 )
 ```
+
+Be careful that an intercept set at 0 on the Lifelihood scale corresponds to an intercept set at the mean between the min and max bounds of the parameter defined via `default_bounds_df()` or via the `param_bounds_df` argument in `create_simulation_input()`.
 
 ## Build the simulation input
 
@@ -124,20 +126,48 @@ If `param_bounds_df` is not supplied, `create_simulation_input()` uses
 `default_bounds_df()` internally.
 
 ```{r}
-simulation_input <- create_simulation_input(
+pseudo_results <- create_simulation_input(
   effects = effects,
   data = population,
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  dist = c("lgn", "wei", "exp"),
+  dist = c("wei", "wei", "wei"),
   n_per_combination = "n_individuals"
 )
 
-simulation_input$sample_size
+bounds_df <- default_bounds_df(pseudo_results$lifelihoodData)
+bounds_df$max[bounds_df$param == "expt_death"] <- 100
+bounds_df$max[bounds_df$param == "survival_param2"] <- 2
+bounds_df$max[bounds_df$param == "expt_maturity"] <- 10
+bounds_df$max[bounds_df$param == "maturity_param2"] <- 2
+bounds_df$max[bounds_df$param == "expt_reproduction"] <- 5
+bounds_df$max[bounds_df$param == "reproduction_param2"] <- 2
+
+pseudo_results$param_bounds_df <- bounds_df
+pseudo_results$sample_size
 ```
 
 > If your `data` already has one row per individual, omit `n_per_combination`.
+
+
+## Verify values of the parameters on the response scale
+
+Please check that the values provided on the Lifelihood scales (defined in `effects` above) are realistic on the response scale.
+
+```{r}
+prediction(pseudo_results, "expt_maturity", type = "response") |>
+  as_tibble() |>
+  bind_cols(pseudo_results$lifelihoodData$df) |>
+  distinct(par, spore, value)
+```
+
+```{r}
+prediction(pseudo_results, "maturity_param2", type = "response") |>
+  as_tibble() |>
+  bind_cols(pseudo_results$lifelihoodData$df) |>
+  distinct(par, spore, value)
+```
 
 ## Simulate life histories
 
@@ -145,7 +175,16 @@ The object returned by `create_simulation_input()` can be passed directly to
 `simulate_life_history()`.
 
 ```{r}
-simulated <- simulate_life_history(simulation_input, seed = 1)
+visits <- data.frame(block = 1, visit = seq(0.001, 1000, by = 0.1))
+pseudo_results$lifelihoodData$block <- "block"
+pseudo_results$lifelihoodData$df$block <- 1
+
+simulated <- simulate_life_history(
+  pseudo_results,
+  seed = 1,
+  use_censoring = TRUE,
+  visits = visits
+)
 
 simulated |> head()
 ```
@@ -163,29 +202,11 @@ yaml::write_yaml(simulation_config, simulation_config_path)
 simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,
-    sex_end = simulation_input$lifelihoodData$right_censoring_date
+    sex_end = pseudo_results$lifelihoodData$right_censoring_date
   )
 
-clutch_start_ids <- sub(
-  "^clutch_start_",
-  "",
-  grep("^clutch_start_[0-9]+$", names(simulated_for_fit), value = TRUE)
-)
-clutch_end_ids <- sub(
-  "^clutch_end_",
-  "",
-  grep("^clutch_end_[0-9]+$", names(simulated_for_fit), value = TRUE)
-)
-clutch_size_ids <- sub(
-  "^clutch_size_",
-  "",
-  grep("^clutch_size_[0-9]+$", names(simulated_for_fit), value = TRUE)
-)
-clutch_ids <- Reduce(
-  intersect,
-  list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
-)
-clutchs <- generate_clutch_vector(length(clutch_ids))
+max_n_clutches <- max(simulated$total_n_clutches, na.rm = TRUE)
+clutchs <- generate_clutch_vector(max_n_clutches)
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
@@ -200,14 +221,14 @@ simulated_lifelihood_data <- as_lifelihoodData(
   death_start = "mortality_start",
   death_end = "mortality_end",
   covariates = c("par", "spore"),
-  dist = c("lgn", "wei", "exp"),
+  dist = c("wei", "wei", "wei"),
   matclutch = FALSE
 )
 
 refit <- lifelihood(
   lifelihoodData = simulated_lifelihood_data,
   path_config = simulation_config_path,
-  param_bounds_df = simulation_input$param_bounds_df,
+  param_bounds_df = pseudo_results$param_bounds_df,
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
   n_fit = 3
@@ -218,16 +239,28 @@ Because this is one finite simulated sample, the refitted estimates are not
 expected to be exactly equal to the values used for simulation.
 
 ```{r}
-simulation_input$effects |>
-  select(parameter, name, simulated = estimation) |>
+pseudo_results$effects |>
+  select(parameter, name, expected = estimation) |>
   inner_join(
     refit$effects |>
-      select(parameter, name, refitted = estimation),
+      select(parameter, name, fitted = estimation),
     by = c("parameter", "name")
   ) |>
-  mutate(difference = refitted - simulated) |>
+  mutate(relative_difference = (expected - fitted) / expected) |>
   arrange(parameter, name) |>
   mutate(across(where(is.numeric), \(x) round(x, digits = 3)))
+```
+
+```{r}
+prediction(pseudo_results, "expt_reproduction", type = "response") |>
+  as_tibble() |>
+  bind_cols(pseudo_results$lifelihoodData$df) |>
+  distinct(par, spore, value)
+
+prediction(refit, "expt_reproduction", type = "response") |>
+  as_tibble() |>
+  bind_cols(refit$lifelihoodData$df) |>
+  distinct(par, spore, value)
 ```
 
 The fitted model also has a regular log-likelihood, AIC, and BIC:
