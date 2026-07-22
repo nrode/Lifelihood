@@ -61,7 +61,7 @@ time_default <- system.time({
 })
 time_default
 #>    user  system elapsed 
-#>  23.636   0.266  25.585
+#>  23.399   0.089  23.593
 ```
 
 - Interaction model using the `group_by_group` argument (default to
@@ -78,7 +78,7 @@ time_gbg <- system.time({
 })
 time_gbg
 #>    user  system elapsed 
-#>   1.250   0.057   1.336
+#>   1.320   0.054   1.406
 ```
 
 Fitting interaction model with group by group is faster than default

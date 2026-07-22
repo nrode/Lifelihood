@@ -73,9 +73,9 @@ following attributes:
 ``` r
 
 gof$original_loglik
-#> [1] -7540.346
+#> [1] -7464.96
 gof$simulated_loglik
-#> [1] -904.4984 -904.5023 -904.6896 -904.5914 -904.5908
+#> [1] -899.3136 -899.3084 -899.3295 -899.3446 -899.3108
 gof$n_success
 #> [1] 5
 gof$n_failed
