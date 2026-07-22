@@ -82,12 +82,6 @@ default_bounds_df <- function(lifelihoodData) {
     na.rm = TRUE
   ) *
     2
-  clutchs_size_cols <- clutchs[seq(3, length(clutchs), 3)]
-  max_clutch <- max(
-    suppressWarnings(as.numeric(trimws(unlist(df[clutchs_size_cols])))),
-    na.rm = TRUE
-  ) *
-    2
 
   models_bounds <- data.frame(
     name = c("wei", "gam", "lgn", "exp"),
@@ -134,7 +128,7 @@ default_bounds_df <- function(lifelihoodData) {
     expt_reproduction = c(
       name = "expt_reproduction",
       min = 0.001,
-      max = max_clutch
+      max = max_death
     ),
     reproduction_param2 = c(
       name = "reproduction_param2",
