@@ -587,6 +587,18 @@ simulate_life_history <- function(
           event = "mortality",
           visits = visits,
           block_values = block_values
+        ) |>
+        mutate(
+          maturity_start = if_else(
+            is.na(maturity_start),
+            mortality_start,
+            maturity_start
+          ),
+          maturity_end = if_else(
+            is.na(maturity_end),
+            object$lifelihoodData$right_censoring_date,
+            maturity_end
+          )
         )
     }
   } else {
@@ -797,6 +809,7 @@ simulate_life_history <- function(
         relocate(mortality_start, mortality_end, .after = last_col())
     }
   }
+
   ## Add covariates
   if (is.null(newdata)) {
     simulation_data_cols <- unique(c(
@@ -815,6 +828,7 @@ simulate_life_history <- function(
 
   return(as_tibble(df_sims_up_na))
 }
+
 #' @keywords internal
 simulate_weibull <- function(expected, shape, n) {
   # expected = scale * gamma(1 + 1 / shape)
