@@ -12,8 +12,10 @@ First, we need to fit the model with
 
 ``` r
 
-library(lifelihood)
+devtools::load_all()
+#> ℹ Loading lifelihood
 #> Loading required package: tidyverse
+#> 
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
@@ -24,6 +26,10 @@ library(lifelihood)
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
 #> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+```
+
+``` r
+
 library(tidyverse)
 
 df <- datapierrick |>
@@ -63,27 +69,27 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -32470.847
-#> AIC:             64961.7
-#> BIC:             65004.8
+#> Log-likelihood:  -32472.896
+#> AIC:             64965.8
+#> BIC:             65008.9
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -0.914 (0.000)
-#>   expt_death eff_expt_death_par_1 -3.726 (0.000)
-#>   expt_death eff_expt_death_par_2 -3.741 (0.000)
-#>   survival_param2 (Intercept) -4.880 (0.000)
-#>   ratio_expt_death (Intercept) -1.648 (0.000)
+#>   expt_death (Intercept)    -0.919 (0.000)
+#>   expt_death eff_expt_death_par_1 -2.463 (0.000)
+#>   expt_death eff_expt_death_par_2 -2.484 (0.000)
+#>   survival_param2 (Intercept) -4.882 (0.000)
+#>   ratio_expt_death (Intercept) -3.002 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.478 (0.000)
-#>   maturity_param2 (Intercept) -7.350 (0.000)
+#>   expt_maturity (Intercept) -1.479 (0.000)
+#>   maturity_param2 (Intercept) -3.260 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.805 (0.000)
-#>   reproduction_param2 (Intercept) -1.157 (0.000)
-#>   n_offspring (Intercept)   -2.552 (0.000)
+#>   expt_reproduction (Intercept) -4.253 (0.000)
+#>   reproduction_param2 (Intercept) -5.357 (0.000)
+#>   n_offspring (Intercept)   -2.563 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -99,22 +105,22 @@ By default, `lifelihood` will simulate all life history events
 ``` r
 
 simulate_life_history(results) |> head()
-#> # A tibble: 6 × 119
-#>   par   spore block   sex sex_start sex_end total_n_offspring maturity_start
-#>   <fct> <fct> <int> <int>     <int>   <int>             <dbl>          <dbl>
-#> 1 0     0         1     0        13    1000               112           13.4
-#> 2 0     0         1     0        13    1000               144           12.2
-#> 3 0     0         1     0        15    1000               105           13.3
-#> 4 0     0         1     0        14    1000                87           12.5
-#> 5 0     0         1     0        19    1000                41           12.6
-#> 6 0     0         1     0        12    1000                68           12.8
-#> # ℹ 111 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
-#> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
-#> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
-#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
-#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_start_5 <dbl>,
-#> #   clutch_end_5 <dbl>, clutch_size_5 <int>, clutch_start_6 <dbl>,
-#> #   clutch_end_6 <dbl>, clutch_size_6 <int>, clutch_start_7 <dbl>, …
+#> # A tibble: 6 × 108
+#>   par   spore block   sex sex_start sex_end total_n_offspring total_n_clutches
+#>   <fct> <fct> <int> <int>     <int>   <int>             <dbl>            <dbl>
+#> 1 0     0         1     0        13    1000                25                6
+#> 2 0     0         1     0        13    1000                64               14
+#> 3 0     0         1     0        15    1000               110               25
+#> 4 0     0         1     0        14    1000                30                8
+#> 5 0     0         1     0        19    1000                53               16
+#> 6 0     0         1     0        12    1000                58               11
+#> # ℹ 100 more variables: maturity_start <dbl>, maturity_end <dbl>,
+#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,
+#> #   clutch_start_2 <dbl>, clutch_end_2 <dbl>, clutch_size_2 <int>,
+#> #   clutch_start_3 <dbl>, clutch_end_3 <dbl>, clutch_size_3 <int>,
+#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>,
+#> #   clutch_start_5 <dbl>, clutch_end_5 <dbl>, clutch_size_5 <int>,
+#> #   clutch_start_6 <dbl>, clutch_end_6 <dbl>, clutch_size_6 <int>, …
 ```
 
 But you can specify which event you want:
@@ -122,16 +128,16 @@ But you can specify which event you want:
 ``` r
 
 simulate_life_history(results, event = "maturity") |> head()
-#> # A tibble: 6 × 9
+#> # A tibble: 6 × 10
 #>   par   spore block   sex sex_start sex_end maturity_start maturity_end
 #>   <fct> <fct> <int> <int>     <int>   <int>          <dbl>        <dbl>
-#> 1 0     0         1     0        13    1000           13.5         13.5
-#> 2 0     0         1     0        13    1000           13.1         13.1
-#> 3 0     0         1     0        15    1000           12.2         12.2
-#> 4 0     0         1     0        14    1000           12.8         12.8
-#> 5 0     0         1     0        19    1000           12.2         12.2
-#> 6 0     0         1     0        12    1000           12.8         12.8
-#> # ℹ 1 more variable: total_n_offspring <dbl>
+#> 1 0     0         1     0        13    1000           13.0         13.0
+#> 2 0     0         1     0        13    1000           13.8         13.8
+#> 3 0     0         1     0        15    1000           13.1         13.1
+#> 4 0     0         1     0        14    1000           11.7         11.7
+#> 5 0     0         1     0        19    1000           12.6         12.6
+#> 6 0     0         1     0        12    1000           13.5         13.5
+#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>
 ```
 
 ## Simulations with visit masks
@@ -161,8 +167,8 @@ visits |> head()
 #> 6     1    11
 ```
 
-Then pass these visits explicitly with `use_censoring = TRUE` to include
-censoring time intervals in the simulation:
+To use censoring intervals in the simulation, you can pass visits
+explicitly along with `use_censoring = TRUE`:
 
 ``` r
 
@@ -173,17 +179,25 @@ results |>
     visits = visits
   ) |>
   head()
-#> # A tibble: 6 × 10
+#> # A tibble: 6 × 11
 #>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end
 #>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
-#> 1 0     0         1     0        13    1000     13.4             13           14
+#> 1 0     0         1     0        13    1000     12.1             12           13
 #> 2 0     0         1     0        13    1000     13.9             13           14
-#> 3 0     0         1     0        15    1000     13.4             13           14
-#> 4 0     0         1     0        14    1000     13.1             13           14
-#> 5 0     0         1     0        19    1000     13.6             13           14
-#> 6 0     0         1     0        12    1000     13.0             12           13
-#> # ℹ 1 more variable: total_n_offspring <dbl>
+#> 3 0     0         1     0        15    1000     14.3             14           15
+#> 4 0     0         1     0        14    1000     13.9             13           14
+#> 5 0     0         1     0        19    1000     12.3             12           13
+#> 6 0     0         1     0        12    1000     13.0             13           14
+#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>
 ```
+
+Ideally, we recommend to provide explicitly the date where each visit
+occured for each block in the simulation. Indeed, that we see that, by
+default, with the function
+[`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
+above, Lifelihood considers that there was no visits for block 1 between
+t=0 and t=7 (as no events occured in this time interval), also visits
+occured every day.
 
 You can also provide your own visit masks with the `visits` argument. It
 must be a dataframe with 2 columns: `block` (the same name as passed to
@@ -225,16 +239,16 @@ results |>
     visits = custom_visits
   ) |>
   head()
-#> # A tibble: 6 × 10
+#> # A tibble: 6 × 11
 #>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end
 #>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
-#> 1 0     0         1     0        13    1000     12.9             11           13
-#> 2 0     0         1     0        13    1000     13.1             13           15
-#> 3 0     0         1     0        15    1000     12.7             11           13
-#> 4 0     0         1     0        14    1000     13.3             13           15
-#> 5 0     0         1     0        19    1000     13.6             13           15
+#> 1 0     0         1     0        13    1000     13.1             13           15
+#> 2 0     0         1     0        13    1000     12.7             11           13
+#> 3 0     0         1     0        15    1000     14.0             13           15
+#> 4 0     0         1     0        14    1000     12.4             11           13
+#> 5 0     0         1     0        19    1000     11.9             11           13
 #> 6 0     0         1     0        12    1000     13.4             13           15
-#> # ℹ 1 more variable: total_n_offspring <dbl>
+#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>
 ```
 
 ## Details
@@ -254,28 +268,23 @@ results |>
     visits = visits,
     seed = 1
   ) |>
-  select(
-    starts_with("clutch_"),
-    starts_with("maturity"),
-    starts_with("mortality")
-  ) |>
   head()
-#> # A tibble: 6 × 134
-#>   clutch_1 clutch_start_1 clutch_end_1 clutch_size_1 clutch_2 clutch_start_2
-#>      <dbl>          <dbl>        <dbl>         <int>    <dbl>          <dbl>
-#> 1     18.7             18           19             5     20.2             20
-#> 2     18.5             18           19             2     28.6             28
-#> 3     18.2             18           19             3     21.9             21
-#> 4     17.2             17           18             6     22.3             22
-#> 5     16.0             16           17             4     19.1             19
-#> 6     17.8             17           18             3     20.2             20
-#> # ℹ 128 more variables: clutch_end_2 <dbl>, clutch_size_2 <int>,
-#> #   clutch_3 <dbl>, clutch_start_3 <dbl>, clutch_end_3 <dbl>,
-#> #   clutch_size_3 <int>, clutch_4 <dbl>, clutch_start_4 <dbl>,
-#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_5 <dbl>,
-#> #   clutch_start_5 <dbl>, clutch_end_5 <dbl>, clutch_size_5 <int>,
-#> #   clutch_6 <dbl>, clutch_start_6 <dbl>, clutch_end_6 <dbl>,
-#> #   clutch_size_6 <int>, clutch_7 <dbl>, clutch_start_7 <dbl>, …
+#> # A tibble: 6 × 142
+#>   par   spore block   sex sex_start sex_end mortality mortality_start
+#>   <fct> <fct> <int> <int>     <int>   <int>     <dbl>           <dbl>
+#> 1 0     0         1     0        13    1000      79.2              79
+#> 2 0     0         1     0        13    1000      80.3              80
+#> 3 0     0         1     0        15    1000      82.6              82
+#> 4 0     0         1     0        14    1000      93.2              93
+#> 5 0     0         1     0        19    1000      91.5              91
+#> 6 0     0         1     0        12    1000      70.4              70
+#> # ℹ 134 more variables: mortality_end <dbl>, maturity <dbl>,
+#> #   maturity_start <dbl>, maturity_end <dbl>, clutch_1 <dbl>,
+#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,
+#> #   clutch_2 <dbl>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,
+#> #   clutch_size_2 <int>, clutch_3 <dbl>, clutch_start_3 <dbl>,
+#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_4 <dbl>,
+#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>, …
 ```
 
 The following rules define how visit masks are constructed and applied:
@@ -288,23 +297,19 @@ The following rules define how visit masks are constructed and applied:
   collects the observed sex, maturity, and clutch interval bounds. It
   removes missing values and the right-censoring date, then deduplicates
   and sorts visit times within each block.
-- An event is bounded by the last visit at or before its simulated age
-  and the following visit. The lower bound is `NA` when the event
-  precedes the first visit, and the upper bound is `NA` when it follows
-  the last visit.
+- An event is censored by the last visit before it occured and the first
+  visit after it occured. The start date is set to `NA` when the event
+  precedes the first visit, and the end date is set to `NA` when it
+  follows the last visit.
 - Reproduction masks are computed from absolute clutch ages. Maturity is
   added to the first inter-clutch duration, later durations are
   accumulated, and clutches after mortality are removed before visit
-  bounds are assigned.
+  intervals are assigned.
 - If several clutches from one individual occur between the same visits,
-  they are represented by one clutch slot. The earliest simulated age is
-  retained in `clutch_i`, and their known `clutch_size_i` values are
-  summed. If every contributing clutch size is missing, the merged size
-  remains `NA`.
-- The retained clutches are numbered chronologically. Their latent ages
-  remain available as `clutch_i` alongside `clutch_start_i`,
-  `clutch_end_i`, and `clutch_size_i`; missing slots are represented by
-  `NA`.
+  they are represented by a single clutch slot and the values of clutch
+  sizes are summed. The exact simulated age is kept and named
+  `clutch_{i}`.
+- The clutches are numbered chronologically.
 - Reproduction values are `NA` for males. `total_n_offspring` is
   calculated after same-interval clutches have been merged, so
   aggregation does not change the lifetime total.

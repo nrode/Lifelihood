@@ -164,15 +164,15 @@ bounds_df <- default_bounds_df(dataLFH)
 bounds_df
 #>                                param    min     max
 #> 1                         expt_death  0.001      40
-#> 2                    survival_param2   0.05     500
+#> 2                    survival_param2  0.005     600
 #> 3                   ratio_expt_death   0.01     100
 #> 4                         prob_death  1e-05 0.99999
 #> 5                          sex_ratio  1e-05 0.99999
 #> 6                      expt_maturity  0.001       8
-#> 7                    maturity_param2  0.005     600
+#> 7                    maturity_param2 0.0025      10
 #> 8                ratio_expt_maturity   0.01     100
-#> 9                  expt_reproduction  0.001      10
-#> 10               reproduction_param2 0.0025      10
+#> 9                  expt_reproduction  0.001      40
+#> 10               reproduction_param2   0.05     500
 #> 11                       n_offspring      1      50
 #> 12             increase_death_hazard  1e-05      10
 #> 13                         tof_decay  1e-07      10

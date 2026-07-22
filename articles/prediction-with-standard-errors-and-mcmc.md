@@ -72,14 +72,14 @@ results <- lifelihood(
 )
 #> Warning in lifelihood(lifelihoodData = lifelihoodData, path_config =
 #> use_test_config("example_config_se"), : Best and second-best likelihoods differ
-#> by 7.296 (> 0.1). Consider increasing n_fit (currently 5) to be sure of model
+#> by 0.552 (> 0.1). Consider increasing n_fit (currently 5) to be sure of model
 #> convergence and find the model with highest log-likelihood.
 
 ## New model has better convergence
 logLik(results_wrong)
-#> [1] -343801.3
+#> [1] -343783.4
 logLik(results)
-#> [1] -343782.7
+#> [1] -343783.9
 
 summary(results)
 #> 
@@ -88,17 +88,17 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -343782.662
-#> AIC:             687573.3
-#> BIC:             687590.6
+#> Log-likelihood:  -343783.924
+#> AIC:             687575.8
+#> BIC:             687593.1
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -2.049 (0.062)
-#>   expt_death eff_expt_death_par_1 0.367 (0.067)
-#>   expt_death eff_expt_death_par_2 0.346 (0.074)
-#>   survival_param2 (Intercept) -0.247 (0.113)
+#>   expt_death (Intercept)    -1.991 (0.070)
+#>   expt_death eff_expt_death_par_1 0.306 (0.075)
+#>   expt_death eff_expt_death_par_2 0.280 (0.082)
+#>   survival_param2 (Intercept) -4.738 (0.065)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -114,10 +114,10 @@ results$effects |> as_tibble()
 #> # A tibble: 4 × 6
 #>   name                 estimation stderror parameter       kind            event
 #>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>
-#> 1 int_expt_death           -2.05    0.0623 expt_death      intercept       mort…
-#> 2 eff_expt_death_par_1      0.367   0.0673 expt_death      coefficient_ca… mort…
-#> 3 eff_expt_death_par_2      0.346   0.0744 expt_death      coefficient_ca… mort…
-#> 4 int_survival_param2      -0.247   0.113  survival_param2 intercept       mort…
+#> 1 int_expt_death           -1.99    0.0696 expt_death      intercept       mort…
+#> 2 eff_expt_death_par_1      0.306   0.0755 expt_death      coefficient_ca… mort…
+#> 3 eff_expt_death_par_2      0.280   0.0815 expt_death      coefficient_ca… mort…
+#> 4 int_survival_param2      -4.74    0.0653 survival_param2 intercept       mort…
 ```
 
 ## Prediction
@@ -135,11 +135,11 @@ prediction(results, "expt_death", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1  -2.05    0.0623
-#> 2  -2.05    0.0623
-#> 3  -2.05    0.0623
-#> 4  -2.05    0.0623
-#> 5  -2.05    0.0623
+#> 1  -1.99    0.0696
+#> 2  -1.99    0.0696
+#> 3  -1.99    0.0696
+#> 4  -1.99    0.0696
+#> 5  -1.99    0.0696
 ```
 
 - Response scale
@@ -152,11 +152,11 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 #> # A tibble: 5 × 2
 #>   fitted se.fitted
 #>    <dbl>     <dbl>
-#> 1   37.0      2.04
-#> 2   50.8      1.27
-#> 3   37.0      2.04
-#> 4   37.0      2.04
-#> 5   50.8      1.27
+#> 1   38.9      2.38
+#> 2   50.7      1.27
+#> 3   38.9      2.38
+#> 4   38.9      2.38
+#> 5   50.7      1.27
 ```
 
 ## SE fails with interaction model with MCMC
@@ -172,9 +172,6 @@ results <- lifelihood(
   path_config = use_test_config("example_config_mcmc"),
   MCMC = 30
 )
-#> Warning in check_estimation(results): Estimation of 'expt_reproduction' is
-#> close to the maximum bound: expt_reproduction~=31.999970323285 (bound=31.84).
-#> Consider increasing maximum bound.
 ```
 
 ### Visualization

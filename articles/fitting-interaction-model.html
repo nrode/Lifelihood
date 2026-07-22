@@ -172,7 +172,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_default</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  19.374   0.159  19.895</span></span></code></pre></div>
+<span><span class="co">#&gt;  23.636   0.266  25.585</span></span></code></pre></div>
 </div>
 <ul>
 <li>Interaction model using the <code>group_by_group</code> argument (default to <code>FALSE</code>)</li>
@@ -188,7 +188,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_gbg</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.368   0.067   1.454</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.250   0.057   1.336</span></span></code></pre></div>
 </div>
 <p>Fitting interaction model with group by group is faster than default model.</p>
 <ul>
@@ -197,9 +197,9 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results_default</span><span class="op">$</span><span class="va">likelihood</span></span>
-<span><span class="co">#&gt; [1] -343782.3</span></span>
+<span><span class="co">#&gt; [1] -343781.9</span></span>
 <span><span class="va">results_gbg</span><span class="op">$</span><span class="va">likelihood</span></span>
-<span><span class="co">#&gt; [1] -343766.5</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -343764.9</span></span></code></pre></div>
 </div>
 <p>Log-likelihood is also higher with group by group indicating better convergence towards the maximum log-likelihood value.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">

@@ -118,9 +118,9 @@ p <- fitted_emergence_rate |>
  ylab("Fitted mortality rate over 5 day-periods")+
  facet_wrap(vars(sex, par), labeller = "label_both")
 p
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
+#> Warning: Removed 8 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
-#> Warning: Removed 14 rows containing missing values or values outside the scale range
+#> Warning: Removed 8 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 
 ```

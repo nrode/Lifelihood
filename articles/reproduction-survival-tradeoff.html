@@ -178,7 +178,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/AICc.html">AICc</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 57830.36629</span></span>
+<span><span class="co">#&gt; [1] 57647.76337</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -187,28 +187,28 @@
 <span><span class="co">#&gt; Sample size: 411 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -28903.852</span></span>
-<span><span class="co">#&gt; AIC:             57829.7</span></span>
-<span><span class="co">#&gt; BIC:             57873.9</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -28812.551</span></span>
+<span><span class="co">#&gt; AIC:             57647.1</span></span>
+<span><span class="co">#&gt; BIC:             57691.3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    1.592 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_geno_1 -2.182 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_geno_2 -2.573 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_geno_3 -2.199 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -0.416 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.015 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_geno_1 0.212 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_geno_2 -0.065 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_geno_3 0.226 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -4.871 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -0.974 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -6.922 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -0.975 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -7.018 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -1.772 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -7.521 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -4.230 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -3.386 (0.000)</span></span>
 <span><span class="co">#&gt;   n_offspring (Intercept)   -2.538 (0.000)</span></span>
-<span><span class="co">#&gt;   increase_death_hazard (Intercept) -9.789 (0.000)</span></span>
+<span><span class="co">#&gt;   increase_death_hazard (Intercept) -19.274 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -220,7 +220,7 @@
 <span><span class="va">newdata</span><span class="op">$</span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">m1</span>, <span class="st">"expt_death"</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 269.20488675 115.51339904  88.34365683 114.26951930</span></span>
+<span><span class="co">#&gt; [1]  86.21394060 100.29320697  82.16615269 101.26472405</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plot_event_rate.html">plot_fitted_event_rate</a></span><span class="op">(</span></span>
 <span>  <span class="va">m1</span>,</span>
@@ -253,10 +253,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0         254. </span></span>
-<span><span class="co">#&gt; 2 1         114. </span></span>
-<span><span class="co">#&gt; 3 2          87.9</span></span>
-<span><span class="co">#&gt; 4 3         111.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          82.1</span></span>
+<span><span class="co">#&gt; 2 1         102. </span></span>
+<span><span class="co">#&gt; 3 2          82.6</span></span>
+<span><span class="co">#&gt; 4 3          99.2</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-without-tradeoffs">From scratch without tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-without-tradeoffs"></a>
 </h3>
@@ -341,21 +341,21 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"</span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 400 × 185</span></span>
+<span><span class="co">#&gt; # A tibble: 400 × 142</span></span>
 <span><span class="co">#&gt;    geno  block   sex sex_start sex_end mortality mortality_start mortality_end</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         1     0       990    1000      225.            200            NA </span></span>
-<span><span class="co">#&gt;  2 0         1     0       990    1000      255.            200            NA </span></span>
-<span><span class="co">#&gt;  3 0         1     0       990    1000      112.            112.          112.</span></span>
-<span><span class="co">#&gt;  4 0         1     0       990    1000      282.            200            NA </span></span>
-<span><span class="co">#&gt;  5 0         1     0       990    1000      316.            200            NA </span></span>
-<span><span class="co">#&gt;  6 0         1     0       990    1000      232.            200            NA </span></span>
-<span><span class="co">#&gt;  7 0         1     0       990    1000      119.            119.          119.</span></span>
-<span><span class="co">#&gt;  8 0         1     0       990    1000      336.            200            NA </span></span>
-<span><span class="co">#&gt;  9 0         1     0       990    1000      298.            200            NA </span></span>
-<span><span class="co">#&gt; 10 0         1     0       990    1000      178.            178.          178.</span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000     112.            112.          112. </span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000     104.            104.          104. </span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000      79.5            79.5          79.6</span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000      85.6            85.6          85.7</span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000      80.1            80            80.1</span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000      92.7            92.6          92.7</span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000      95.8            95.7          95.8</span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000      81.9            81.8          81.9</span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000      25.5            25.5          25.6</span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000      97.0            96.9          97  </span></span>
 <span><span class="co">#&gt; # ℹ 390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 177 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 134 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   maturity_end &lt;dbl&gt;, first_clutch_size &lt;int&gt;, clutch_2 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_3 &lt;dbl&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
@@ -369,10 +369,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          NA  </span></span>
-<span><span class="co">#&gt; 2 1         119. </span></span>
-<span><span class="co">#&gt; 3 2          87.7</span></span>
-<span><span class="co">#&gt; 4 3         114.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          88.3</span></span>
+<span><span class="co">#&gt; 2 1         105. </span></span>
+<span><span class="co">#&gt; 3 2          78.4</span></span>
+<span><span class="co">#&gt; 4 3         105.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-with-tradeoffs">From scratch with tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-with-tradeoffs"></a>
 </h3>
@@ -462,78 +462,67 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 80 × 151</span></span>
-<span><span class="co">#&gt;    geno  block   sex sex_start sex_end total_n_offspring maturity_start</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         1     0       990    1000               190          13.5 </span></span>
-<span><span class="co">#&gt;  2 0         1     0       990    1000               167          10.0 </span></span>
-<span><span class="co">#&gt;  3 0         1     0       990    1000                51          11.5 </span></span>
-<span><span class="co">#&gt;  4 0         1     0       990    1000               159          11.5 </span></span>
-<span><span class="co">#&gt;  5 0         1     0       990    1000                67          10.6 </span></span>
-<span><span class="co">#&gt;  6 0         1     0       990    1000                71          11.8 </span></span>
-<span><span class="co">#&gt;  7 0         1     0       990    1000               199          13.3 </span></span>
-<span><span class="co">#&gt;  8 0         1     0       990    1000               226          14.0 </span></span>
-<span><span class="co">#&gt;  9 0         1     0       990    1000               103           7.95</span></span>
-<span><span class="co">#&gt; 10 0         1     0       990    1000                85          17.6 </span></span>
+<span><span class="co">#&gt; # A tibble: 80 × 119</span></span>
+<span><span class="co">#&gt;    geno  block   sex sex_start sex_end total_n_offspring total_n_clutches</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000               100               19</span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000                75               17</span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000               118               24</span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000                34                8</span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000                51               13</span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000               109               19</span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000                53               10</span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000                67               15</span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000                38                9</span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000               119               23</span></span>
 <span><span class="co">#&gt; # ℹ 70 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 144 more variables: maturity_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_start_5 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;, clutch_start_6 &lt;dbl&gt;, …</span></span>
+<span><span class="co">#&gt; # ℹ 112 more variables: maturity_start &lt;dbl&gt;, maturity_end &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_1 &lt;dbl&gt;, clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_4 &lt;dbl&gt;, clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_start_5 &lt;dbl&gt;, clutch_end_5 &lt;dbl&gt;, clutch_size_5 &lt;int&gt;, …</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sim_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   [1] "geno"              "block"             "sex"              </span></span>
 <span><span class="co">#&gt;   [4] "sex_start"         "sex_end"           "total_n_offspring"</span></span>
-<span><span class="co">#&gt;   [7] "maturity_start"    "maturity_end"      "clutch_start_1"   </span></span>
-<span><span class="co">#&gt;  [10] "clutch_end_1"      "clutch_size_1"     "clutch_start_2"   </span></span>
-<span><span class="co">#&gt;  [13] "clutch_end_2"      "clutch_size_2"     "clutch_start_3"   </span></span>
-<span><span class="co">#&gt;  [16] "clutch_end_3"      "clutch_size_3"     "clutch_start_4"   </span></span>
-<span><span class="co">#&gt;  [19] "clutch_end_4"      "clutch_size_4"     "clutch_start_5"   </span></span>
-<span><span class="co">#&gt;  [22] "clutch_end_5"      "clutch_size_5"     "clutch_start_6"   </span></span>
-<span><span class="co">#&gt;  [25] "clutch_end_6"      "clutch_size_6"     "clutch_start_7"   </span></span>
-<span><span class="co">#&gt;  [28] "clutch_end_7"      "clutch_size_7"     "clutch_start_8"   </span></span>
-<span><span class="co">#&gt;  [31] "clutch_end_8"      "clutch_size_8"     "clutch_start_9"   </span></span>
-<span><span class="co">#&gt;  [34] "clutch_end_9"      "clutch_size_9"     "clutch_start_10"  </span></span>
-<span><span class="co">#&gt;  [37] "clutch_end_10"     "clutch_size_10"    "clutch_start_11"  </span></span>
-<span><span class="co">#&gt;  [40] "clutch_end_11"     "clutch_size_11"    "clutch_start_12"  </span></span>
-<span><span class="co">#&gt;  [43] "clutch_end_12"     "clutch_size_12"    "clutch_start_13"  </span></span>
-<span><span class="co">#&gt;  [46] "clutch_end_13"     "clutch_size_13"    "clutch_start_14"  </span></span>
-<span><span class="co">#&gt;  [49] "clutch_end_14"     "clutch_size_14"    "clutch_start_15"  </span></span>
-<span><span class="co">#&gt;  [52] "clutch_end_15"     "clutch_size_15"    "clutch_start_16"  </span></span>
-<span><span class="co">#&gt;  [55] "clutch_end_16"     "clutch_size_16"    "clutch_start_17"  </span></span>
-<span><span class="co">#&gt;  [58] "clutch_end_17"     "clutch_size_17"    "clutch_start_18"  </span></span>
-<span><span class="co">#&gt;  [61] "clutch_end_18"     "clutch_size_18"    "clutch_start_19"  </span></span>
-<span><span class="co">#&gt;  [64] "clutch_end_19"     "clutch_size_19"    "clutch_start_20"  </span></span>
-<span><span class="co">#&gt;  [67] "clutch_end_20"     "clutch_size_20"    "clutch_start_21"  </span></span>
-<span><span class="co">#&gt;  [70] "clutch_end_21"     "clutch_size_21"    "clutch_start_22"  </span></span>
-<span><span class="co">#&gt;  [73] "clutch_end_22"     "clutch_size_22"    "clutch_start_23"  </span></span>
-<span><span class="co">#&gt;  [76] "clutch_end_23"     "clutch_size_23"    "clutch_start_24"  </span></span>
-<span><span class="co">#&gt;  [79] "clutch_end_24"     "clutch_size_24"    "clutch_start_25"  </span></span>
-<span><span class="co">#&gt;  [82] "clutch_end_25"     "clutch_size_25"    "clutch_start_26"  </span></span>
-<span><span class="co">#&gt;  [85] "clutch_end_26"     "clutch_size_26"    "clutch_start_27"  </span></span>
-<span><span class="co">#&gt;  [88] "clutch_end_27"     "clutch_size_27"    "clutch_start_28"  </span></span>
-<span><span class="co">#&gt;  [91] "clutch_end_28"     "clutch_size_28"    "clutch_start_29"  </span></span>
-<span><span class="co">#&gt;  [94] "clutch_end_29"     "clutch_size_29"    "clutch_start_30"  </span></span>
-<span><span class="co">#&gt;  [97] "clutch_end_30"     "clutch_size_30"    "clutch_start_31"  </span></span>
-<span><span class="co">#&gt; [100] "clutch_end_31"     "clutch_size_31"    "clutch_start_32"  </span></span>
-<span><span class="co">#&gt; [103] "clutch_end_32"     "clutch_size_32"    "clutch_start_33"  </span></span>
-<span><span class="co">#&gt; [106] "clutch_end_33"     "clutch_size_33"    "clutch_start_34"  </span></span>
-<span><span class="co">#&gt; [109] "clutch_end_34"     "clutch_size_34"    "clutch_start_35"  </span></span>
-<span><span class="co">#&gt; [112] "clutch_end_35"     "clutch_size_35"    "clutch_start_36"  </span></span>
-<span><span class="co">#&gt; [115] "clutch_end_36"     "clutch_size_36"    "clutch_start_37"  </span></span>
-<span><span class="co">#&gt; [118] "clutch_end_37"     "clutch_size_37"    "clutch_start_38"  </span></span>
-<span><span class="co">#&gt; [121] "clutch_end_38"     "clutch_size_38"    "clutch_start_39"  </span></span>
-<span><span class="co">#&gt; [124] "clutch_end_39"     "clutch_size_39"    "clutch_start_40"  </span></span>
-<span><span class="co">#&gt; [127] "clutch_end_40"     "clutch_size_40"    "clutch_start_41"  </span></span>
-<span><span class="co">#&gt; [130] "clutch_end_41"     "clutch_size_41"    "clutch_start_42"  </span></span>
-<span><span class="co">#&gt; [133] "clutch_end_42"     "clutch_size_42"    "clutch_start_43"  </span></span>
-<span><span class="co">#&gt; [136] "clutch_end_43"     "clutch_size_43"    "clutch_start_44"  </span></span>
-<span><span class="co">#&gt; [139] "clutch_end_44"     "clutch_size_44"    "clutch_start_45"  </span></span>
-<span><span class="co">#&gt; [142] "clutch_end_45"     "clutch_size_45"    "clutch_start_46"  </span></span>
-<span><span class="co">#&gt; [145] "clutch_end_46"     "clutch_size_46"    "clutch_start_47"  </span></span>
-<span><span class="co">#&gt; [148] "clutch_end_47"     "clutch_size_47"    "mortality_start"  </span></span>
-<span><span class="co">#&gt; [151] "mortality_end"</span></span>
+<span><span class="co">#&gt;   [7] "total_n_clutches"  "maturity_start"    "maturity_end"     </span></span>
+<span><span class="co">#&gt;  [10] "clutch_start_1"    "clutch_end_1"      "clutch_size_1"    </span></span>
+<span><span class="co">#&gt;  [13] "clutch_start_2"    "clutch_end_2"      "clutch_size_2"    </span></span>
+<span><span class="co">#&gt;  [16] "clutch_start_3"    "clutch_end_3"      "clutch_size_3"    </span></span>
+<span><span class="co">#&gt;  [19] "clutch_start_4"    "clutch_end_4"      "clutch_size_4"    </span></span>
+<span><span class="co">#&gt;  [22] "clutch_start_5"    "clutch_end_5"      "clutch_size_5"    </span></span>
+<span><span class="co">#&gt;  [25] "clutch_start_6"    "clutch_end_6"      "clutch_size_6"    </span></span>
+<span><span class="co">#&gt;  [28] "clutch_start_7"    "clutch_end_7"      "clutch_size_7"    </span></span>
+<span><span class="co">#&gt;  [31] "clutch_start_8"    "clutch_end_8"      "clutch_size_8"    </span></span>
+<span><span class="co">#&gt;  [34] "clutch_start_9"    "clutch_end_9"      "clutch_size_9"    </span></span>
+<span><span class="co">#&gt;  [37] "clutch_start_10"   "clutch_end_10"     "clutch_size_10"   </span></span>
+<span><span class="co">#&gt;  [40] "clutch_start_11"   "clutch_end_11"     "clutch_size_11"   </span></span>
+<span><span class="co">#&gt;  [43] "clutch_start_12"   "clutch_end_12"     "clutch_size_12"   </span></span>
+<span><span class="co">#&gt;  [46] "clutch_start_13"   "clutch_end_13"     "clutch_size_13"   </span></span>
+<span><span class="co">#&gt;  [49] "clutch_start_14"   "clutch_end_14"     "clutch_size_14"   </span></span>
+<span><span class="co">#&gt;  [52] "clutch_start_15"   "clutch_end_15"     "clutch_size_15"   </span></span>
+<span><span class="co">#&gt;  [55] "clutch_start_16"   "clutch_end_16"     "clutch_size_16"   </span></span>
+<span><span class="co">#&gt;  [58] "clutch_start_17"   "clutch_end_17"     "clutch_size_17"   </span></span>
+<span><span class="co">#&gt;  [61] "clutch_start_18"   "clutch_end_18"     "clutch_size_18"   </span></span>
+<span><span class="co">#&gt;  [64] "clutch_start_19"   "clutch_end_19"     "clutch_size_19"   </span></span>
+<span><span class="co">#&gt;  [67] "clutch_start_20"   "clutch_end_20"     "clutch_size_20"   </span></span>
+<span><span class="co">#&gt;  [70] "clutch_start_21"   "clutch_end_21"     "clutch_size_21"   </span></span>
+<span><span class="co">#&gt;  [73] "clutch_start_22"   "clutch_end_22"     "clutch_size_22"   </span></span>
+<span><span class="co">#&gt;  [76] "clutch_start_23"   "clutch_end_23"     "clutch_size_23"   </span></span>
+<span><span class="co">#&gt;  [79] "clutch_start_24"   "clutch_end_24"     "clutch_size_24"   </span></span>
+<span><span class="co">#&gt;  [82] "clutch_start_25"   "clutch_end_25"     "clutch_size_25"   </span></span>
+<span><span class="co">#&gt;  [85] "clutch_start_26"   "clutch_end_26"     "clutch_size_26"   </span></span>
+<span><span class="co">#&gt;  [88] "clutch_start_27"   "clutch_end_27"     "clutch_size_27"   </span></span>
+<span><span class="co">#&gt;  [91] "clutch_start_28"   "clutch_end_28"     "clutch_size_28"   </span></span>
+<span><span class="co">#&gt;  [94] "clutch_start_29"   "clutch_end_29"     "clutch_size_29"   </span></span>
+<span><span class="co">#&gt;  [97] "clutch_start_30"   "clutch_end_30"     "clutch_size_30"   </span></span>
+<span><span class="co">#&gt; [100] "clutch_start_31"   "clutch_end_31"     "clutch_size_31"   </span></span>
+<span><span class="co">#&gt; [103] "clutch_start_32"   "clutch_end_32"     "clutch_size_32"   </span></span>
+<span><span class="co">#&gt; [106] "clutch_start_33"   "clutch_end_33"     "clutch_size_33"   </span></span>
+<span><span class="co">#&gt; [109] "clutch_start_34"   "clutch_end_34"     "clutch_size_34"   </span></span>
+<span><span class="co">#&gt; [112] "clutch_start_35"   "clutch_end_35"     "clutch_size_35"   </span></span>
+<span><span class="co">#&gt; [115] "clutch_start_36"   "clutch_end_36"     "clutch_size_36"   </span></span>
+<span><span class="co">#&gt; [118] "mortality_start"   "mortality_end"</span></span>
 <span></span>
 <span><span class="co">## Remove LRS</span></span>
 <span><span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="va">sim_data</span> <span class="op">|&gt;</span></span>
@@ -550,10 +539,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0         132. </span></span>
-<span><span class="co">#&gt; 2 1         108. </span></span>
-<span><span class="co">#&gt; 3 2          73.9</span></span>
-<span><span class="co">#&gt; 4 3          71.3</span></span>
+<span><span class="co">#&gt; 1 0          84.1</span></span>
+<span><span class="co">#&gt; 2 1         103. </span></span>
+<span><span class="co">#&gt; 3 2          84.4</span></span>
+<span><span class="co">#&gt; 4 3          68.2</span></span>
 <span></span>
 <span><span class="va">sim_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co">#mutate(toto=mortality_start-maturity_start)|&gt;</span></span>
@@ -563,7 +552,7 @@
 <span><span class="co">#&gt; # A tibble: 1 × 1</span></span>
 <span><span class="co">#&gt;   `min(toto, na.rm = TRUE)`</span></span>
 <span><span class="co">#&gt;                       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1                     0.900</span></span>
+<span><span class="co">#&gt; 1                     0.200</span></span>
 <span></span>
 <span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">17</span><span class="op">)</span></span>
 <span></span>
@@ -601,7 +590,7 @@
 <span>  groupby <span class="op">=</span> <span class="st">"geno"</span>,</span>
 <span>  use_facet <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 63 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; Warning: Removed 39 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>

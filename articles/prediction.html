@@ -216,7 +216,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">expected_longevity</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1100</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">expected_longevity</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 91.39348 91.39348 91.39348 91.39348 91.39348 91.39348</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 91.67703 91.67703 91.67703 91.67703 91.67703 91.67703</span></span></code></pre></div>
 </div>
 <p>The result is a numeric vector when neither standard errors nor MCMC predictions are requested. It can therefore be added directly to the original data:</p>
 <div class="cell">
@@ -228,19 +228,19 @@
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;     sex par   spore expected_longevity</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;              &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1     0 0     0                   91.4</span></span>
-<span><span class="co">#&gt; 2     0 0     0                   91.4</span></span>
-<span><span class="co">#&gt; 3     0 0     0                   91.4</span></span>
-<span><span class="co">#&gt; 4     0 0     0                   91.4</span></span>
-<span><span class="co">#&gt; 5     0 0     0                   91.4</span></span>
-<span><span class="co">#&gt; 6     0 0     0                   91.4</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     0 0     0                   91.7</span></span>
+<span><span class="co">#&gt; 2     0 0     0                   91.7</span></span>
+<span><span class="co">#&gt; 3     0 0     0                   91.7</span></span>
+<span><span class="co">#&gt; 4     0 0     0                   91.7</span></span>
+<span><span class="co">#&gt; 5     0 0     0                   91.7</span></span>
+<span><span class="co">#&gt; 6     0 0     0                   91.7</span></span></code></pre></div>
 </div>
 <p>The same approach applies to any fitted parameter:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_reproduction"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 4.705965 4.705965 4.705965 4.705965 4.705965 4.705965</span></span>
+<span><span class="co">#&gt; [1] 4.67445 4.67445 4.67445 4.67445 4.67445 4.67445</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span></span>
 <span>  <span class="va">results</span>,</span>
@@ -248,7 +248,7 @@
 <span>  type <span class="op">=</span> <span class="st">"response"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.3542137 0.3542137 0.3542137 0.3542137 0.3542137 0.3542137</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.3561403 0.3561403 0.3561403 0.3561403 0.3561403 0.3561403</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="choose-the-prediction-scale">Choose the prediction scale<a class="anchor" aria-label="anchor" href="#choose-the-prediction-scale"></a>
 </h2>
@@ -258,14 +258,14 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"link"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.</span></span>
-<span><span class="co">#&gt; [1] -3.028431 -3.028431 -3.028431 -3.028431 -3.028431 -3.028431</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -3.025183 -3.025183 -3.025183 -3.025183 -3.025183 -3.025183</span></span></code></pre></div>
 </div>
 <p>Use <code>type = "response"</code> for values on the parameter’s original scale. For <code>expt_death</code>, these values are expected longevity in the time unit used by the input data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 91.39348 91.39348 91.39348 91.39348 91.39348 91.39348</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 91.67703 91.67703 91.67703 91.67703 91.67703 91.67703</span></span></code></pre></div>
 </div>
 <p>When a male ratio parameter is fitted, sex-specific values are applied only on the response scale. The link-scale prediction therefore emits a message when the prediction data include males.</p>
 </section><section class="level2"><h2 id="predict-on-new-data">Predict on new data<a class="anchor" aria-label="anchor" href="#predict-on-new-data"></a>
@@ -298,12 +298,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;   par     sex sex_label expected_longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0         0 female                  91.4</span></span>
-<span><span class="co">#&gt; 2 0         1 male                   763. </span></span>
-<span><span class="co">#&gt; 3 1         0 female                  56.0</span></span>
-<span><span class="co">#&gt; 4 1         1 male                   468. </span></span>
-<span><span class="co">#&gt; 5 2         0 female                  55.0</span></span>
-<span><span class="co">#&gt; 6 2         1 male                   459.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0         0 female                  91.7</span></span>
+<span><span class="co">#&gt; 2 0         1 male                   759. </span></span>
+<span><span class="co">#&gt; 3 1         0 female                  57.0</span></span>
+<span><span class="co">#&gt; 4 1         1 male                   472. </span></span>
+<span><span class="co">#&gt; 5 2         0 female                  55.4</span></span>
+<span><span class="co">#&gt; 6 2         1 male                   458.</span></span></code></pre></div>
 </div>
 <p>Only <code>par</code> is required here because the fitted formula for <code>expt_death</code> is <code>par</code>. Other columns from the original dataset are not needed.</p>
 </section><section class="level2"><h2 id="predictions-for-females-and-males">Predictions for females and males<a class="anchor" aria-label="anchor" href="#predictions-for-females-and-males"></a>
@@ -329,9 +329,9 @@
 <span><span class="co">#&gt; # A tibble: 3 × 4</span></span>
 <span><span class="co">#&gt;   par   female  male male_to_female</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0       91.4  763.           8.35</span></span>
-<span><span class="co">#&gt; 2 1       56.0  468.           8.35</span></span>
-<span><span class="co">#&gt; 3 2       55.0  459.           8.35</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0       91.7  759.           8.27</span></span>
+<span><span class="co">#&gt; 2 1       57.0  472.           8.27</span></span>
+<span><span class="co">#&gt; 3 2       55.4  458.           8.27</span></span></code></pre></div>
 </div>
 <p>The ratio itself can also be predicted:</p>
 <div class="cell">
@@ -350,11 +350,11 @@
 <span><span class="co">#&gt;   par     sex sex_label longevity_ratio</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 0         0 female              NA   </span></span>
-<span><span class="co">#&gt; 2 0         1 male                 8.35</span></span>
+<span><span class="co">#&gt; 2 0         1 male                 8.27</span></span>
 <span><span class="co">#&gt; 3 1         0 female              NA   </span></span>
-<span><span class="co">#&gt; 4 1         1 male                 8.35</span></span>
+<span><span class="co">#&gt; 4 1         1 male                 8.27</span></span>
 <span><span class="co">#&gt; 5 2         0 female              NA   </span></span>
-<span><span class="co">#&gt; 6 2         1 male                 8.35</span></span></code></pre></div>
+<span><span class="co">#&gt; 6 2         1 male                 8.27</span></span></code></pre></div>
 </div>
 <p>The ratio is <code>NA</code> for females because it is only used to modify male predictions. If the corresponding ratio parameter is not fitted, no additional male adjustment is applied. Here the estimated ratio is close to, but not exactly, 10. The model estimates the parameters of a distribution from interval-censored observations rather than reproducing the raw multiplier directly.</p>
 </section><section class="level2"><h2 id="simulate-females-and-males">Simulate females and males<a class="anchor" aria-label="anchor" href="#simulate-females-and-males"></a>
@@ -381,8 +381,8 @@
 <span><span class="co">#&gt; # A tibble: 2 × 3</span></span>
 <span><span class="co">#&gt;   sex    mean_simulated_longevity relative_to_female</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 female                     82.1               1   </span></span>
-<span><span class="co">#&gt; 2 male                      692.                8.43</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 female                     82.6               1   </span></span>
+<span><span class="co">#&gt; 2 male                      689.                8.35</span></span></code></pre></div>
 </div>
 <p>The simulated ratio is close to the fitted ratio. It will vary between simulations unless a fixed <code>seed</code> is used.</p>
 <p>We can also simulate all fitted events for the same six combinations used in <code>newdata</code>:</p>
@@ -407,12 +407,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
 <span><span class="co">#&gt;   sex_label par   mortality_end maturity_end clutch_size_1 clutch_size_2</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;        &lt;dbl&gt;         &lt;int&gt;         &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 female    0             121.          9.63             6             4</span></span>
-<span><span class="co">#&gt; 2 male      0             749.         18.3             NA            NA</span></span>
-<span><span class="co">#&gt; 3 female    1              68.2        18.0              5             2</span></span>
-<span><span class="co">#&gt; 4 male      1             362.         13.9             NA            NA</span></span>
-<span><span class="co">#&gt; 5 female    2              11.2         6.53            NA            NA</span></span>
-<span><span class="co">#&gt; 6 male      2             486.         14.2             NA            NA</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 female    0              87.7         9.62             6             4</span></span>
+<span><span class="co">#&gt; 2 male      0             374.         18.3             NA            NA</span></span>
+<span><span class="co">#&gt; 3 female    1              24.4        18.0              2            NA</span></span>
+<span><span class="co">#&gt; 4 male      1             596.         13.9             NA            NA</span></span>
+<span><span class="co">#&gt; 5 female    2              33.1         6.52             2             4</span></span>
+<span><span class="co">#&gt; 6 male      2             303.         14.2             NA            NA</span></span></code></pre></div>
 </div>
 <p>Reproduction-related columns are always <code>NA</code> for males because lifelihood does not simulate male reproductive events. For females, a clutch can also be <code>NA</code> when it did not occur before the simulated death. Mortality is still simulated for both sexes, using the sex-specific expected longevity.</p>
 </section><section class="level2"><h2 id="prediction-options">Prediction options<a class="anchor" aria-label="anchor" href="#prediction-options"></a>

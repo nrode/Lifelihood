@@ -20,8 +20,10 @@ flowchart LR
 
 ``` r
 
-library(lifelihood)
+devtools::load_all()
+#> ℹ Loading lifelihood
 #> Loading required package: tidyverse
+#> 
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
@@ -77,21 +79,21 @@ covariates each parameter uses. This example uses:
 
 simulation_config <- list(
   mortality = list(
-    expt_death = "par + spore",
+    expt_death = 1,
     survival_param2 = 1,
     ratio_expt_death = "not_fitted",
     prob_death = "not_fitted",
     sex_ratio = "not_fitted"
   ),
   maturity = list(
-    expt_maturity = "par",
+    expt_maturity = 1,
     maturity_param2 = 1,
     ratio_expt_maturity = "not_fitted"
   ),
   reproduction = list(
-    expt_reproduction = "par + spore",
+    expt_reproduction = 1,
     reproduction_param2 = 1,
-    n_offspring = "par",
+    n_offspring = 1,
     increase_death_hazard = "not_fitted",
     tof_decay = "not_fitted",
     increase_death_hazard_n_offspring = "not_fitted",
@@ -118,15 +120,22 @@ level. In this example, `par` has levels `none`, `low`, and `high`, so
 ``` r
 
 effects <- list(
-  expt_death = list(intercept = -2.3, par = c(0.5, -0.4), spore = -0.5),
-  survival_param2 = -1.2,
-  expt_maturity = list(intercept = -3.2, par = c(-0.3, -0.6)),
-  maturity_param2 = -1.2,
-  expt_reproduction = list(intercept = -3.5, par = c(0.3, 0.6), spore = -0.25),
-  reproduction_param2 = -1,
-  n_offspring = list(intercept = -1.5, par = c(0.2, 0.5))
+  expt_death = list(intercept = 0), #, par = c(0.5, -0.4), spore = -0.5),
+  survival_param2 = 0,
+  expt_maturity = list(intercept = 0), # par = c(-0.3, -0.6)),
+  maturity_param2 = 0,
+  expt_reproduction = list(intercept = 0), # par = c(0.3, 0.6), spore = -0.25),
+  reproduction_param2 = 0,
+  n_offspring = list(intercept = 0) #, par = c(0.2, 0.5))
 )
 ```
+
+Be careful that an intercept set at 0 on the Lifelihood scale
+corresponds to an intercept set at the mean between the min and max
+bounds of the parameter defined via
+[`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
+or via the `param_bounds_df` argument in
+[`create_simulation_input()`](https://nrode.github.io/Lifelihood/reference/create_simulation_input.md).
 
 ## Build the simulation input
 
@@ -142,22 +151,70 @@ internally.
 
 ``` r
 
-simulation_input <- create_simulation_input(
+pseudo_results <- create_simulation_input(
   effects = effects,
   data = population,
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  dist = c("lgn", "wei", "exp"),
+  dist = c("wei", "wei", "wei"),
   n_per_combination = "n_individuals"
 )
 
-simulation_input$sample_size
+bounds_df <- default_bounds_df(pseudo_results$lifelihoodData)
+bounds_df$max[bounds_df$param == "expt_death"] <- 100
+bounds_df$max[bounds_df$param == "survival_param2"] <- 2
+bounds_df$max[bounds_df$param == "expt_maturity"] <- 10
+bounds_df$max[bounds_df$param == "maturity_param2"] <- 2
+bounds_df$max[bounds_df$param == "expt_reproduction"] <- 5
+bounds_df$max[bounds_df$param == "reproduction_param2"] <- 2
+
+pseudo_results$param_bounds_df <- bounds_df
+pseudo_results$sample_size
 #> [1] 600
 ```
 
 > If your `data` already has one row per individual, omit
 > `n_per_combination`.
+
+## Verify values of the parameters on the response scale
+
+Please check that the values provided on the Lifelihood scales (defined
+in `effects` above) are realistic on the response scale.
+
+``` r
+
+prediction(pseudo_results, "expt_maturity", type = "response") |>
+  as_tibble() |>
+  bind_cols(pseudo_results$lifelihoodData$df) |>
+  distinct(par, spore, value)
+#> # A tibble: 6 × 3
+#>   par   spore   value
+#>   <fct> <fct>   <dbl>
+#> 1 high  absent   5.00
+#> 2 high  present  5.00
+#> 3 low   absent   5.00
+#> 4 low   present  5.00
+#> 5 none  absent   5.00
+#> 6 none  present  5.00
+```
+
+``` r
+
+prediction(pseudo_results, "maturity_param2", type = "response") |>
+  as_tibble() |>
+  bind_cols(pseudo_results$lifelihoodData$df) |>
+  distinct(par, spore, value)
+#> # A tibble: 6 × 3
+#>   par   spore   value
+#>   <fct> <fct>   <dbl>
+#> 1 high  absent   1.02
+#> 2 high  present  1.02
+#> 3 low   absent   1.02
+#> 4 low   present  1.02
+#> 5 none  absent   1.02
+#> 6 none  present  1.02
+```
 
 ## Simulate life histories
 
@@ -168,25 +225,34 @@ can be passed directly to
 
 ``` r
 
-simulated <- simulate_life_history(simulation_input, seed = 1)
+visits <- data.frame(block = 1, visit = seq(0.001, 1000, by = 0.1))
+pseudo_results$lifelihoodData$block <- "block"
+pseudo_results$lifelihoodData$df$block <- 1
+
+simulated <- simulate_life_history(
+  pseudo_results,
+  seed = 1,
+  use_censoring = TRUE,
+  visits = visits
+)
 
 simulated |> head()
-#> # A tibble: 6 × 139
-#>   par   spore    sex sex_start sex_end total_n_offspring maturity_start
-#>   <fct> <fct>  <dbl>     <dbl>   <dbl>             <dbl>          <dbl>
-#> 1 high  absent     0       990    1000               176           98.9
-#> 2 high  absent     0       990    1000                96           87.1
-#> 3 high  absent     0       990    1000               105           68.0
-#> 4 high  absent     0       990    1000               158           31.9
-#> 5 high  absent     0       990    1000               130          107. 
-#> 6 high  absent     0       990    1000               155           33.4
-#> # ℹ 132 more variables: maturity_end <dbl>, clutch_start_1 <dbl>,
-#> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_start_2 <dbl>,
-#> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,
-#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,
-#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_start_5 <dbl>,
-#> #   clutch_end_5 <dbl>, clutch_size_5 <int>, clutch_start_6 <dbl>,
-#> #   clutch_end_6 <dbl>, clutch_size_6 <int>, clutch_start_7 <dbl>, …
+#> # A tibble: 6 × 658
+#>   par   spore  block   sex sex_start sex_end mortality mortality_start
+#>   <fct> <fct>  <dbl> <dbl>     <dbl>   <dbl>     <dbl>           <dbl>
+#> 1 high  absent     1     0       990    1000     16.8            16.8 
+#> 2 high  absent     1     0       990    1000     11.9            11.9 
+#> 3 high  absent     1     0       990    1000     28.4            28.4 
+#> 4 high  absent     1     0       990    1000     49.4            49.4 
+#> 5 high  absent     1     0       990    1000      6.79            6.70
+#> 6 high  absent     1     0       990    1000      7.67            7.60
+#> # ℹ 650 more variables: mortality_end <dbl>, maturity <dbl>,
+#> #   maturity_start <dbl>, maturity_end <dbl>, clutch_1 <dbl>,
+#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,
+#> #   clutch_2 <dbl>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,
+#> #   clutch_size_2 <int>, clutch_3 <dbl>, clutch_start_3 <dbl>,
+#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_4 <dbl>,
+#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>, …
 ```
 
 ## Refit the simulated data
@@ -204,29 +270,11 @@ yaml::write_yaml(simulation_config, simulation_config_path)
 simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,
-    sex_end = simulation_input$lifelihoodData$right_censoring_date
+    sex_end = pseudo_results$lifelihoodData$right_censoring_date
   )
 
-clutch_start_ids <- sub(
-  "^clutch_start_",
-  "",
-  grep("^clutch_start_[0-9]+$", names(simulated_for_fit), value = TRUE)
-)
-clutch_end_ids <- sub(
-  "^clutch_end_",
-  "",
-  grep("^clutch_end_[0-9]+$", names(simulated_for_fit), value = TRUE)
-)
-clutch_size_ids <- sub(
-  "^clutch_size_",
-  "",
-  grep("^clutch_size_[0-9]+$", names(simulated_for_fit), value = TRUE)
-)
-clutch_ids <- Reduce(
-  intersect,
-  list(clutch_start_ids, clutch_end_ids, clutch_size_ids)
-)
-clutchs <- generate_clutch_vector(length(clutch_ids))
+max_n_clutches <- max(simulated$total_n_clutches, na.rm = TRUE)
+clutchs <- generate_clutch_vector(max_n_clutches)
 
 simulated_lifelihood_data <- as_lifelihoodData(
   df = simulated_for_fit,
@@ -241,14 +289,14 @@ simulated_lifelihood_data <- as_lifelihoodData(
   death_start = "mortality_start",
   death_end = "mortality_end",
   covariates = c("par", "spore"),
-  dist = c("lgn", "wei", "exp"),
+  dist = c("wei", "wei", "wei"),
   matclutch = FALSE
 )
 
 refit <- lifelihood(
   lifelihoodData = simulated_lifelihood_data,
   path_config = simulation_config_path,
-  param_bounds_df = simulation_input$param_bounds_df,
+  param_bounds_df = pseudo_results$param_bounds_df,
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
   n_fit = 3
@@ -260,52 +308,63 @@ not expected to be exactly equal to the values used for simulation.
 
 ``` r
 
-simulation_input$effects |>
-  select(parameter, name, simulated = estimation) |>
+pseudo_results$effects |>
+  select(parameter, name, expected = estimation) |>
   inner_join(
     refit$effects |>
-      select(parameter, name, refitted = estimation),
+      select(parameter, name, fitted = estimation),
     by = c("parameter", "name")
   ) |>
-  mutate(difference = refitted - simulated) |>
+  mutate(relative_difference = (expected - fitted) / expected) |>
   arrange(parameter, name) |>
   mutate(across(where(is.numeric), \(x) round(x, digits = 3)))
-#>              parameter                                name simulated refitted
-#> 1           expt_death              eff_expt_death_par_low      0.50   -0.440
-#> 2           expt_death             eff_expt_death_par_none     -0.40   -1.254
-#> 3           expt_death        eff_expt_death_spore_present     -0.50    0.556
-#> 4           expt_death                      int_expt_death     -2.30    3.000
-#> 5        expt_maturity           eff_expt_maturity_par_low     -0.30    0.574
-#> 6        expt_maturity          eff_expt_maturity_par_none     -0.60    3.726
-#> 7        expt_maturity                   int_expt_maturity     -3.20    2.457
-#> 8    expt_reproduction       eff_expt_reproduction_par_low      0.30    0.164
-#> 9    expt_reproduction      eff_expt_reproduction_par_none      0.60    2.189
-#> 10   expt_reproduction eff_expt_reproduction_spore_present     -0.25   -1.443
-#> 11   expt_reproduction               int_expt_reproduction     -3.50   -3.195
-#> 12     maturity_param2                 int_maturity_param2     -1.20    0.515
-#> 13         n_offspring             eff_n_offspring_par_low      0.20   -1.244
-#> 14         n_offspring            eff_n_offspring_par_none      0.50    0.387
-#> 15         n_offspring                     int_n_offspring     -1.50   -1.245
-#> 16 reproduction_param2             int_reproduction_param2     -1.00   -2.416
-#> 17     survival_param2                 int_survival_param2     -1.20   -2.046
-#>    difference
-#> 1      -0.940
-#> 2      -0.854
-#> 3       1.056
-#> 4       5.300
-#> 5       0.874
-#> 6       4.326
-#> 7       5.657
-#> 8      -0.136
-#> 9       1.589
-#> 10     -1.193
-#> 11      0.305
-#> 12      1.715
-#> 13     -1.444
-#> 14     -0.113
-#> 15      0.255
-#> 16     -1.416
-#> 17     -0.846
+#>             parameter                    name expected fitted
+#> 1          expt_death          int_expt_death        0 -0.046
+#> 2       expt_maturity       int_expt_maturity        0 -0.092
+#> 3   expt_reproduction   int_expt_reproduction        0 -0.063
+#> 4     maturity_param2     int_maturity_param2        0  0.084
+#> 5         n_offspring         int_n_offspring        0  0.033
+#> 6 reproduction_param2 int_reproduction_param2        0  0.105
+#> 7     survival_param2     int_survival_param2        0 -0.056
+#>   relative_difference
+#> 1                 Inf
+#> 2                 Inf
+#> 3                 Inf
+#> 4                -Inf
+#> 5                -Inf
+#> 6                -Inf
+#> 7                 Inf
+```
+
+``` r
+
+prediction(pseudo_results, "expt_reproduction", type = "response") |>
+  as_tibble() |>
+  bind_cols(pseudo_results$lifelihoodData$df) |>
+  distinct(par, spore, value)
+#> # A tibble: 6 × 3
+#>   par   spore   value
+#>   <fct> <fct>   <dbl>
+#> 1 high  absent   2.50
+#> 2 high  present  2.50
+#> 3 low   absent   2.50
+#> 4 low   present  2.50
+#> 5 none  absent   2.50
+#> 6 none  present  2.50
+
+prediction(refit, "expt_reproduction", type = "response") |>
+  as_tibble() |>
+  bind_cols(refit$lifelihoodData$df) |>
+  distinct(par, spore, value)
+#> # A tibble: 6 × 3
+#>   par   spore   value
+#>   <fct> <fct>   <dbl>
+#> 1 high  absent   2.42
+#> 2 high  present  2.42
+#> 3 low   absent   2.42
+#> 4 low   present  2.42
+#> 5 none  absent   2.42
+#> 6 none  present  2.42
 ```
 
 The fitted model also has a regular log-likelihood, AIC, and BIC:
@@ -318,7 +377,7 @@ c(
   BIC = BIC(refit)
 )
 #>    logLik       AIC       BIC 
-#> -415202.1  830438.3  830513.0
+#> -87464.05 174942.09 174972.87
 ```
 
 ## Common patterns

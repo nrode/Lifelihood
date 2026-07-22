@@ -147,27 +147,27 @@ summary(results)
 #> Sample size: 550 
 #> 
 #> --- Model Fit ---
-#> Log-likelihood:  -31588.744
-#> AIC:             63197.5
-#> BIC:             63240.6
+#> Log-likelihood:  -31598.613
+#> AIC:             63217.2
+#> BIC:             63260.3
 #> 
 #> --- Key Parameters ---
 #> 
 #> Mortality:
-#>   expt_death (Intercept)    -0.913 (0.000)
-#>   expt_death eff_expt_death_par_1 -1.946 (0.000)
-#>   expt_death eff_expt_death_par_2 -1.976 (0.000)
-#>   survival_param2 (Intercept) -0.480 (0.000)
-#>   ratio_expt_death (Intercept) -3.525 (0.000)
+#>   expt_death (Intercept)    -0.895 (0.000)
+#>   expt_death eff_expt_death_par_1 -1.821 (0.000)
+#>   expt_death eff_expt_death_par_2 -1.840 (0.000)
+#>   survival_param2 (Intercept) -4.866 (0.000)
+#>   ratio_expt_death (Intercept) -3.668 (0.000)
 #> 
 #> Maturity:
-#>   expt_maturity (Intercept) -1.497 (0.000)
-#>   maturity_param2 (Intercept) -5.881 (0.000)
+#>   expt_maturity (Intercept) -1.494 (0.000)
+#>   maturity_param2 (Intercept) -6.034 (0.000)
 #> 
 #> Reproduction:
-#>   expt_reproduction (Intercept) -1.769 (0.000)
-#>   reproduction_param2 (Intercept) -7.303 (0.000)
-#>   n_offspring (Intercept)   -2.596 (0.000)
+#>   expt_reproduction (Intercept) -4.234 (0.000)
+#>   reproduction_param2 (Intercept) -3.155 (0.000)
+#>   n_offspring (Intercept)   -2.581 (0.000)
 #> 
 #> --- Convergence ---
 #> All parameters within bounds
@@ -186,33 +186,33 @@ the analysis. We can get specific results by calling the list element.
 
 coef(results)
 #>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 
-#>              -0.9133659              -1.9460199              -1.9763243 
+#>              -0.8945988              -1.8210310              -1.8399792 
 #>     int_survival_param2    int_ratio_expt_death       int_expt_maturity 
-#>              -0.4795909              -3.5245392              -1.4966132 
+#>              -4.8656529              -3.6679045              -1.4938977 
 #>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 
-#>              -5.8814605              -1.7690031              -7.3034247 
+#>              -6.0343392              -4.2344424              -3.1554742 
 #>         int_n_offspring 
-#>              -2.5960814
+#>              -2.5814995
 coeff(results, "expt_death")
 #>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 
-#>           -0.9133659           -1.9460199           -1.9763243
+#>           -0.8945988           -1.8210310           -1.8399792
 coeff(results, "survival_param2")
 #> int_survival_param2 
-#>          -0.4795909
+#>           -4.865653
 
 AIC(results)
-#> [1] 63197.49
+#> [1] 63217.23
 BIC(results)
-#> [1] 63240.59
+#> [1] 63260.33
 
 logLik(results)
-#> [1] -31588.74
+#> [1] -31598.61
 
 prediction(results, parameter_name = "expt_death") |> head()
 #> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.
-#> [1] -0.9133659 -0.9133659 -0.9133659 -0.9133659 -0.9133659 -0.9133659
+#> [1] -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988
 prediction(results, parameter_name = "expt_death", type = "response") |> head()
-#> [1] 92.76566 92.76566 92.76566 92.76566 92.76566 92.76566
+#> [1] 94.0131 94.0131 94.0131 94.0131 94.0131 94.0131
 ```
 
 ## Next step

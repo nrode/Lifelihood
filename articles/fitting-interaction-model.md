@@ -61,7 +61,7 @@ time_default <- system.time({
 })
 time_default
 #>    user  system elapsed 
-#>  19.374   0.159  19.895
+#>  23.636   0.266  25.585
 ```
 
 - Interaction model using the `group_by_group` argument (default to
@@ -78,7 +78,7 @@ time_gbg <- system.time({
 })
 time_gbg
 #>    user  system elapsed 
-#>   1.368   0.067   1.454
+#>   1.250   0.057   1.336
 ```
 
 Fitting interaction model with group by group is faster than default
@@ -89,9 +89,9 @@ model.
 ``` r
 
 results_default$likelihood
-#> [1] -343782.3
+#> [1] -343781.9
 results_gbg$likelihood
-#> [1] -343766.5
+#> [1] -343764.9
 ```
 
 Log-likelihood is also higher with group by group indicating better

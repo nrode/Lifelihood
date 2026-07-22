@@ -132,7 +132,7 @@ expected_longevity <- prediction(
 length(expected_longevity)
 #> [1] 1100
 head(expected_longevity)
-#> [1] 91.39348 91.39348 91.39348 91.39348 91.39348 91.39348
+#> [1] 91.67703 91.67703 91.67703 91.67703 91.67703 91.67703
 ```
 
 The result is a numeric vector when neither standard errors nor MCMC
@@ -148,12 +148,12 @@ df |>
 #> # A tibble: 6 × 4
 #>     sex par   spore expected_longevity
 #>   <dbl> <fct> <fct>              <dbl>
-#> 1     0 0     0                   91.4
-#> 2     0 0     0                   91.4
-#> 3     0 0     0                   91.4
-#> 4     0 0     0                   91.4
-#> 5     0 0     0                   91.4
-#> 6     0 0     0                   91.4
+#> 1     0 0     0                   91.7
+#> 2     0 0     0                   91.7
+#> 3     0 0     0                   91.7
+#> 4     0 0     0                   91.7
+#> 5     0 0     0                   91.7
+#> 6     0 0     0                   91.7
 ```
 
 The same approach applies to any fitted parameter:
@@ -162,7 +162,7 @@ The same approach applies to any fitted parameter:
 
 prediction(results, parameter_name = "expt_reproduction", type = "response") |>
   head()
-#> [1] 4.705965 4.705965 4.705965 4.705965 4.705965 4.705965
+#> [1] 4.67445 4.67445 4.67445 4.67445 4.67445 4.67445
 
 prediction(
   results,
@@ -170,7 +170,7 @@ prediction(
   type = "response"
 ) |>
   head()
-#> [1] 0.3542137 0.3542137 0.3542137 0.3542137 0.3542137 0.3542137
+#> [1] 0.3561403 0.3561403 0.3561403 0.3561403 0.3561403 0.3561403
 ```
 
 ## Choose the prediction scale
@@ -183,7 +183,7 @@ internal lifelihood scale:
 prediction(results, parameter_name = "expt_death", type = "link") |>
   head()
 #> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.
-#> [1] -3.028431 -3.028431 -3.028431 -3.028431 -3.028431 -3.028431
+#> [1] -3.025183 -3.025183 -3.025183 -3.025183 -3.025183 -3.025183
 ```
 
 Use `type = "response"` for values on the parameter’s original scale.
@@ -194,7 +194,7 @@ used by the input data:
 
 prediction(results, parameter_name = "expt_death", type = "response") |>
   head()
-#> [1] 91.39348 91.39348 91.39348 91.39348 91.39348 91.39348
+#> [1] 91.67703 91.67703 91.67703 91.67703 91.67703 91.67703
 ```
 
 When a male ratio parameter is fitted, sex-specific values are applied
@@ -236,12 +236,12 @@ sex_predictions
 #> # A tibble: 6 × 4
 #>   par     sex sex_label expected_longevity
 #>   <fct> <dbl> <chr>                  <dbl>
-#> 1 0         0 female                  91.4
-#> 2 0         1 male                   763. 
-#> 3 1         0 female                  56.0
-#> 4 1         1 male                   468. 
-#> 5 2         0 female                  55.0
-#> 6 2         1 male                   459.
+#> 1 0         0 female                  91.7
+#> 2 0         1 male                   759. 
+#> 3 1         0 female                  57.0
+#> 4 1         1 male                   472. 
+#> 5 2         0 female                  55.4
+#> 6 2         1 male                   458.
 ```
 
 Only `par` is required here because the fitted formula for `expt_death`
@@ -274,9 +274,9 @@ sex_predictions |>
 #> # A tibble: 3 × 4
 #>   par   female  male male_to_female
 #>   <fct>  <dbl> <dbl>          <dbl>
-#> 1 0       91.4  763.           8.35
-#> 2 1       56.0  468.           8.35
-#> 3 2       55.0  459.           8.35
+#> 1 0       91.7  759.           8.27
+#> 2 1       57.0  472.           8.27
+#> 3 2       55.4  458.           8.27
 ```
 
 The ratio itself can also be predicted:
@@ -297,11 +297,11 @@ newdata |>
 #>   par     sex sex_label longevity_ratio
 #>   <fct> <dbl> <chr>               <dbl>
 #> 1 0         0 female              NA   
-#> 2 0         1 male                 8.35
+#> 2 0         1 male                 8.27
 #> 3 1         0 female              NA   
-#> 4 1         1 male                 8.35
+#> 4 1         1 male                 8.27
 #> 5 2         0 female              NA   
-#> 6 2         1 male                 8.35
+#> 6 2         1 male                 8.27
 ```
 
 The ratio is `NA` for females because it is only used to modify male
@@ -338,8 +338,8 @@ simulated_mortality |>
 #> # A tibble: 2 × 3
 #>   sex    mean_simulated_longevity relative_to_female
 #>   <chr>                     <dbl>              <dbl>
-#> 1 female                     82.1               1   
-#> 2 male                      692.                8.43
+#> 1 female                     82.6               1   
+#> 2 male                      689.                8.35
 ```
 
 The simulated ratio is close to the fitted ratio. It will vary between
@@ -369,12 +369,12 @@ simulated_life_histories |>
 #> # A tibble: 6 × 6
 #>   sex_label par   mortality_end maturity_end clutch_size_1 clutch_size_2
 #>   <chr>     <fct>         <dbl>        <dbl>         <int>         <int>
-#> 1 female    0             121.          9.63             6             4
-#> 2 male      0             749.         18.3             NA            NA
-#> 3 female    1              68.2        18.0              5             2
-#> 4 male      1             362.         13.9             NA            NA
-#> 5 female    2              11.2         6.53            NA            NA
-#> 6 male      2             486.         14.2             NA            NA
+#> 1 female    0              87.7         9.62             6             4
+#> 2 male      0             374.         18.3             NA            NA
+#> 3 female    1              24.4        18.0              2            NA
+#> 4 male      1             596.         13.9             NA            NA
+#> 5 female    2              33.1         6.52             2             4
+#> 6 male      2             303.         14.2             NA            NA
 ```
 
 Reproduction-related columns are always `NA` for males because
