@@ -94,7 +94,7 @@ simulation_config <- list(
     expt_reproduction = 1,
     reproduction_param2 = 1,
     n_offspring = 1,
-    increase_death_hazard = "not_fitted",
+    increase_death_hazard = 1,
     tof_decay = "not_fitted",
     increase_death_hazard_n_offspring = "not_fitted",
     lin_decrease_hazard = "not_fitted",
@@ -124,6 +124,7 @@ effects <- list(
   survival_param2 = 0,
   expt_maturity = list(intercept = 0), # par = c(-0.3, -0.6)),
   maturity_param2 = 0,
+  increase_death_hazard = 0,
   expt_reproduction = list(intercept = 0), # par = c(0.3, 0.6), spore = -0.25),
   reproduction_param2 = 0,
   n_offspring = list(intercept = 0) #, par = c(0.2, 0.5))
@@ -168,6 +169,7 @@ bounds_df$max[bounds_df$param == "expt_maturity"] <- 10
 bounds_df$max[bounds_df$param == "maturity_param2"] <- 2
 bounds_df$max[bounds_df$param == "expt_reproduction"] <- 5
 bounds_df$max[bounds_df$param == "reproduction_param2"] <- 2
+bounds_df$max[bounds_df$param == "increase_death_hazard"] <- 0.1
 
 pseudo_results$param_bounds_df <- bounds_df
 pseudo_results$sample_size
@@ -237,22 +239,22 @@ simulated <- simulate_life_history(
 )
 
 simulated |> head()
-#> # A tibble: 6 × 658
-#>   par   spore  block   sex sex_start sex_end mortality mortality_start
-#>   <fct> <fct>  <dbl> <dbl>     <dbl>   <dbl>     <dbl>           <dbl>
-#> 1 high  absent     1     0       990    1000     16.8            16.8 
-#> 2 high  absent     1     0       990    1000     11.9            11.9 
-#> 3 high  absent     1     0       990    1000     28.4            28.4 
-#> 4 high  absent     1     0       990    1000     49.4            49.4 
-#> 5 high  absent     1     0       990    1000      6.79            6.70
-#> 6 high  absent     1     0       990    1000      7.67            7.60
-#> # ℹ 650 more variables: mortality_end <dbl>, maturity <dbl>,
-#> #   maturity_start <dbl>, maturity_end <dbl>, clutch_1 <dbl>,
-#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,
-#> #   clutch_2 <dbl>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,
-#> #   clutch_size_2 <int>, clutch_3 <dbl>, clutch_start_3 <dbl>,
-#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_4 <dbl>,
-#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>, …
+#> # A tibble: 6 × 62
+#>   par   spore  block   sex sex_start sex_end mortality maturity maturity_start
+#>   <fct> <fct>  <dbl> <dbl>     <dbl>   <dbl>     <dbl>    <dbl>          <dbl>
+#> 1 high  absent     1     0       990    1000     23.2      5.75          5.70 
+#> 2 high  absent     1     0       990    1000      1.25    NA             1.20 
+#> 3 high  absent     1     0       990    1000     20.2     19.4          19.3  
+#> 4 high  absent     1     0       990    1000      9.05     0.35          0.301
+#> 5 high  absent     1     0       990    1000     15.5      7.75          7.70 
+#> 6 high  absent     1     0       990    1000     11.5      1.85          1.80 
+#> # ℹ 53 more variables: maturity_end <dbl>, mortality_start <dbl>,
+#> #   mortality_end <dbl>, clutch_1 <dbl>, clutch_start_1 <dbl>,
+#> #   clutch_end_1 <dbl>, clutch_size_1 <int>, clutch_2 <dbl>,
+#> #   clutch_start_2 <dbl>, clutch_end_2 <dbl>, clutch_size_2 <int>,
+#> #   clutch_3 <dbl>, clutch_start_3 <dbl>, clutch_end_3 <dbl>,
+#> #   clutch_size_3 <int>, clutch_4 <dbl>, clutch_start_4 <dbl>,
+#> #   clutch_end_4 <dbl>, clutch_size_4 <int>, clutch_5 <dbl>, …
 ```
 
 ## Refit the simulated data
@@ -318,22 +320,24 @@ pseudo_results$effects |>
   mutate(relative_difference = (expected - fitted) / expected) |>
   arrange(parameter, name) |>
   mutate(across(where(is.numeric), \(x) round(x, digits = 3)))
-#>             parameter                    name expected fitted
-#> 1          expt_death          int_expt_death        0 -0.046
-#> 2       expt_maturity       int_expt_maturity        0 -0.092
-#> 3   expt_reproduction   int_expt_reproduction        0 -0.063
-#> 4     maturity_param2     int_maturity_param2        0  0.084
-#> 5         n_offspring         int_n_offspring        0  0.033
-#> 6 reproduction_param2 int_reproduction_param2        0  0.105
-#> 7     survival_param2     int_survival_param2        0 -0.056
+#>               parameter                      name expected fitted
+#> 1            expt_death            int_expt_death        0 -1.533
+#> 2         expt_maturity         int_expt_maturity        0 -0.050
+#> 3     expt_reproduction     int_expt_reproduction        0 -0.379
+#> 4 increase_death_hazard int_increase_death_hazard        0 -1.105
+#> 5       maturity_param2       int_maturity_param2        0  0.006
+#> 6           n_offspring           int_n_offspring        0  0.020
+#> 7   reproduction_param2   int_reproduction_param2        0  0.070
+#> 8       survival_param2       int_survival_param2        0  0.837
 #>   relative_difference
 #> 1                 Inf
 #> 2                 Inf
 #> 3                 Inf
-#> 4                -Inf
+#> 4                 Inf
 #> 5                -Inf
 #> 6                -Inf
-#> 7                 Inf
+#> 7                -Inf
+#> 8                -Inf
 ```
 
 ``` r
@@ -359,12 +363,12 @@ prediction(refit, "expt_reproduction", type = "response") |>
 #> # A tibble: 6 × 3
 #>   par   spore   value
 #>   <fct> <fct>   <dbl>
-#> 1 high  absent   2.42
-#> 2 high  present  2.42
-#> 3 low   absent   2.42
-#> 4 low   present  2.42
-#> 5 none  absent   2.42
-#> 6 none  present  2.42
+#> 1 high  absent   2.03
+#> 2 high  present  2.03
+#> 3 low   absent   2.03
+#> 4 low   present  2.03
+#> 5 none  absent   2.03
+#> 6 none  present  2.03
 ```
 
 The fitted model also has a regular log-likelihood, AIC, and BIC:
@@ -377,7 +381,7 @@ c(
   BIC = BIC(refit)
 )
 #>    logLik       AIC       BIC 
-#> -87464.05 174942.09 174972.87
+#> -20292.96  40601.92  40637.09
 ```
 
 ## Common patterns

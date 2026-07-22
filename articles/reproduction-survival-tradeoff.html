@@ -253,10 +253,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          85.3</span></span>
-<span><span class="co">#&gt; 2 1          98.6</span></span>
-<span><span class="co">#&gt; 3 2          84.4</span></span>
-<span><span class="co">#&gt; 4 3         105.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          88.9</span></span>
+<span><span class="co">#&gt; 2 1         104. </span></span>
+<span><span class="co">#&gt; 3 2          78.9</span></span>
+<span><span class="co">#&gt; 4 3          99.2</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-without-tradeoffs">From scratch without tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-without-tradeoffs"></a>
 </h3>
@@ -341,21 +341,21 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"</span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 400 × 150</span></span>
+<span><span class="co">#&gt; # A tibble: 400 × 154</span></span>
 <span><span class="co">#&gt;    geno  block   sex sex_start sex_end mortality mortality_start mortality_end</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         1     0       990    1000      42.2            42.1          42.2</span></span>
-<span><span class="co">#&gt;  2 0         1     0       990    1000      71.2            71.2          71.3</span></span>
-<span><span class="co">#&gt;  3 0         1     0       990    1000      81.4            81.4          81.5</span></span>
-<span><span class="co">#&gt;  4 0         1     0       990    1000     121.            121.          121. </span></span>
-<span><span class="co">#&gt;  5 0         1     0       990    1000      81.7            81.6          81.7</span></span>
-<span><span class="co">#&gt;  6 0         1     0       990    1000      86.1            86.1          86.2</span></span>
-<span><span class="co">#&gt;  7 0         1     0       990    1000      75.8            75.7          75.8</span></span>
-<span><span class="co">#&gt;  8 0         1     0       990    1000      66.6            66.6          66.7</span></span>
-<span><span class="co">#&gt;  9 0         1     0       990    1000      52.2            52.2          52.3</span></span>
-<span><span class="co">#&gt; 10 0         1     0       990    1000      85.3            85.2          85.3</span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000     108.            108.          108. </span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000      75.9            75.8          75.9</span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000     108.            108.          108. </span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000      78.4            78.4          78.5</span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000      67.8            67.8          67.9</span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000      84.5            84.4          84.5</span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000      44.7            44.7          44.8</span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000      72.3            72.3          72.4</span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000      72.6            72.6          72.7</span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000     104.            104.          104. </span></span>
 <span><span class="co">#&gt; # ℹ 390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 142 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 146 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   maturity_end &lt;dbl&gt;, first_clutch_size &lt;int&gt;, clutch_2 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_3 &lt;dbl&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
@@ -369,10 +369,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          82.2</span></span>
-<span><span class="co">#&gt; 2 1         101. </span></span>
-<span><span class="co">#&gt; 3 2          77.3</span></span>
-<span><span class="co">#&gt; 4 3          97.6</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          87.9</span></span>
+<span><span class="co">#&gt; 2 1         100. </span></span>
+<span><span class="co">#&gt; 3 2          81.3</span></span>
+<span><span class="co">#&gt; 4 3         100.0</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-with-tradeoffs">From scratch with tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-with-tradeoffs"></a>
 </h3>
