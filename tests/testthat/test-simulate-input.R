@@ -76,14 +76,17 @@ test_that("create_simulation_input builds a simulation-ready results object", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
   expect_s3_class(results, "lifelihoodResults")
   expect_s3_class(results$lifelihoodData, "lifelihoodData")
   expect_equal(results$sample_size, n)
-  expect_equal(results$lifelihoodData$dist, rep("wei", 3))
+  expect_identical(
+    results$lifelihoodData$dist,
+    c(mortality = "wei", maturity = "wei", reproduction = "wei")
+  )
   expect_true(all(
     c(
       "name",
@@ -110,7 +113,7 @@ test_that("manual simulation input produces coherent offspring totals", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
@@ -147,7 +150,7 @@ test_that("simulated life-history events are ordered", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
@@ -204,7 +207,7 @@ test_that("create_simulation_input accepts explicit covariate data", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 

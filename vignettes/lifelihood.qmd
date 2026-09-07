@@ -49,7 +49,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("par", "spore"),
-  dist = c("wei", "lgn", "wei")
+  dist = c(mortality = "wei", maturity = "lgn", reproduction = "wei")
 )
 ```
 
@@ -95,4 +95,3 @@ newdata <- tibble(
 prediction(results, "expt_death", newdata = newdata)
 prediction(results, "expt_death", newdata = newdata, type = "response")
 ```
-

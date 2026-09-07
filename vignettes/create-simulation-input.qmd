@@ -133,7 +133,7 @@ pseudo_results <- create_simulation_input(
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  dist = c("wei", "wei", "wei"),
+  dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
   n_per_combination = "n_individuals"
 )
 
@@ -223,7 +223,7 @@ simulated_lifelihood_data <- as_lifelihoodData(
   death_start = "mortality_start",
   death_end = "mortality_end",
   covariates = c("par", "spore"),
-  dist = c("wei", "wei", "wei"),
+  dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
   matclutch = FALSE
 )
 

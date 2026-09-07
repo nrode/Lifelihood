@@ -27,7 +27,7 @@ lifelihoodData <- as_lifelihoodData(
   matclutch = FALSE,
   covariates = c("par", "geno"),
   block = "block", # <- enables per-block visit masks
-  dist = c("wei", "gam", "lgn")
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 results <- lifelihood(

@@ -26,20 +26,17 @@ simulate_event <- function(
   if (ev == "mortality") {
     expt_name <- "expt_death"
     shape_name <- "survival_param2"
-    fam_id <- 1
     n <- 1
   } else if (ev == "reproduction") {
     expt_name <- "expt_reproduction"
     shape_name <- "reproduction_param2"
-    fam_id <- 3
   } else if (ev == "maturity") {
     expt_name <- "expt_maturity"
     shape_name <- "maturity_param2"
-    fam_id <- 2
     n <- 1
   }
 
-  family <- object$lifelihoodData$dist[[fam_id]]
+  family <- object$lifelihoodData$dist[[ev]]
 
   expected <- prediction(
     object,
@@ -68,7 +65,7 @@ simulate_event <- function(
       newdata = newdata
     )
 
-    family_mortality <- object$lifelihoodData$dist[[1]]
+    family_mortality <- object$lifelihoodData$dist[["mortality"]]
     if (family_mortality != "exp") {
       survival_param2 <- prediction(
         object,
@@ -181,9 +178,9 @@ simulate_life_history_tradeoff <- function(
 ) {
   n_ind <- if (is.null(newdata)) nrow(lifelihoodData$df) else nrow(newdata)
 
-  family_mortality <- lifelihoodData$dist[[1]]
-  family_maturity <- lifelihoodData$dist[[2]]
-  family_reproduction <- lifelihoodData$dist[[3]]
+  family_mortality <- lifelihoodData$dist[["mortality"]]
+  family_maturity <- lifelihoodData$dist[["maturity"]]
+  family_reproduction <- lifelihoodData$dist[["reproduction"]]
 
   expt_death <- prediction(
     object,

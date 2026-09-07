@@ -78,7 +78,7 @@ lifelihood_data <- as_lifelihoodData(
   death_end = "death_end",
   covariates = c("par", "spore"),
   block = "block",
-  dist = c("wei", "gam", "lgn")
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 results <- lifelihood(

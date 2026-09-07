@@ -29,8 +29,9 @@
 #' @param death_end Column name containing the second date of the
 #' interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
-#' @param dist Vector of characters with the name of the
-#' statistical law to use.
+#' @param dist Named character vector with one distribution family for each
+#' event. It must contain entries named `mortality`, `maturity`, and
+#' `reproduction`.
 #' @param path_config A character string specifying the file path
 #' to the YAML configuration file.
 #' @param temp_dir Name of the temporary directory with temporary
