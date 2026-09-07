@@ -116,6 +116,7 @@ test_that("trade-off simulations work for reproduction events", {
       "sex_end",
       "mortality_start",
       "mortality_end",
+      "total_n_clutches",
       "total_n_offspring"
     ))
   )
