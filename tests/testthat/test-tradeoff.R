@@ -37,6 +37,11 @@ test_that("trade-off simulations work for reproduction events", {
     raise_estimation_warning = FALSE
   )
 
+  simulation_visits <- tidyr::expand_grid(
+    geno = unique(df$geno),
+    visit = seq(0, lifelihoodData$right_censoring_date)
+  )
+
   sim_reproduction <- simulate_life_history(
     results,
     event = "reproduction",
@@ -61,7 +66,7 @@ test_that("trade-off simulations work for reproduction events", {
     results,
     event = "reproduction",
     use_censoring = TRUE,
-    visits = get_visits(lifelihoodData),
+    visits = simulation_visits,
     seed = 1
   )
   expect_true(all(
@@ -76,7 +81,7 @@ test_that("trade-off simulations work for reproduction events", {
     event = "reproduction",
     use_censoring = TRUE,
     remove_exact_clutch_dates = FALSE,
-    visits = get_visits(lifelihoodData),
+    visits = simulation_visits,
     seed = 1
   )
   expect_true(any(grepl(

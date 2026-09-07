@@ -177,7 +177,7 @@ The object returned by `create_simulation_input()` can be passed directly to
 `simulate_life_history()`.
 
 ```{r}
-visits <- data.frame(block = 1, visit = seq(0.001, 1000, by = 0.1))
+visits <- data.frame(block = 1, visit = seq(0, 1000, by = 0.1))
 pseudo_results$lifelihoodData$block <- "block"
 pseudo_results$lifelihoodData$df$block <- 1
 

@@ -168,7 +168,7 @@ simulation_input$lifelihoodData$df <- data.frame(
   simulation_input$lifelihoodData$df
 )
 
-visits <- data.frame(block = 1, visit = seq(1, 200, by = 0.1))
+visits <- data.frame(block = 1, visit = seq(0, 1000, by = 0.1))
 
 sim_data <- simulate_life_history(
   object = simulation_input,

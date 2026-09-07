@@ -111,6 +111,20 @@ test_that("censoring works for reproduction and validates block in newdata", {
 
   visits <- get_visits(lifelihoodData)
   expect_true(all(c("geno", "visit") %in% names(visits)))
+  expect_error(
+    simulate_life_history(
+      results,
+      event = "maturity",
+      use_censoring = TRUE,
+      visits = visits,
+      seed = 1
+    ),
+    "Event ages for `maturity`"
+  )
+  simulation_visits <- tidyr::expand_grid(
+    geno = unique(df$geno),
+    visit = seq(0, lifelihoodData$right_censoring_date)
+  )
 
   expect_error(
     simulate_life_history(
@@ -126,7 +140,7 @@ test_that("censoring works for reproduction and validates block in newdata", {
     results,
     event = "reproduction",
     use_censoring = TRUE,
-    visits = visits,
+    visits = simulation_visits,
     seed = 1
   )
   expect_identical(sim$geno, df$geno)
@@ -158,7 +172,7 @@ test_that("censoring works for reproduction and validates block in newdata", {
     event = "reproduction",
     use_censoring = TRUE,
     remove_exact_clutch_dates = FALSE,
-    visits = visits,
+    visits = simulation_visits,
     seed = 1
   )
   expect_true(any(grepl(
