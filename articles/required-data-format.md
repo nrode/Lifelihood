@@ -1,21 +1,19 @@
 # Required data format
 
-``` r
-
-library(lifelihood)
-#> Loading required package: tidyverse
-#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
-#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.2     
-#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
-#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-library(tidyverse)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
+`#> Loading required package: tidyverse`\
+`#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
+`#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
+`#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
+`#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1`\
+`#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2`\
+`#> ✔ purrr     1.2.2     `\
+`#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
+`#> ✖ dplyr::filter() masks stats::filter()`\
+`#> ✖ dplyr::lag()    masks stats::lag()`\
+`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`
 
 ## Introduction
 
@@ -59,54 +57,50 @@ columns:
   which the death was determined.
 - `geno` Column name of the first column to add in the input data file
 
-``` r
+\
+`df`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
+`  sex ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0``, ``0``, ``0``, ``0``, ``0``, ``0``, ``0``)``,`\
+`  sex_start ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``3``, ``2``, ``10``, ``3``, ``4``, ``5``)``,`\
+`  sex_end ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2``, ``4``, ``3``, ``11``, ``4``, ``5``, ``6``)``,`\
+`  maturity_start ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2``, ``1``, ``0``, ``1``, ``0``, ``2``, ``1``)``,`\
+`  maturity_end ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``4``, ``2``, ``1000``, ``2``, ``1000``, ``3``, ``2``)``,`\
+`  clutch_start1 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``3``, ``2``, ``NA``, ``2``, ``NA``, ``3``, ``2``)``,`\
+`  clutch_end1 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``4``, ``3``, ``NA``, ``3``, ``NA``, ``4``, ``3``)``,`\
+`  clutch_size1 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``4``, ``6``, ``NA``, ``5``, ``NA``, ``2``, ``30``)``,`\
+`  clutch_start2 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``NA``, ``NA``, ``5``, ``NA``, ``4``, ``3``)``,`\
+`  clutch_end2 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``6``, ``NA``, ``NA``, ``6``, ``NA``, ``5``, ``4``)``,`\
+`  clutch_size2 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``5``, ``NA``, ``NA``, ``7``, ``NA``, ``10``, ``5``)``,`\
+`  clutch_start3 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``7``, ``NA``, ``NA``, ``6``, ``NA``, ``NA``, ``5``)``,`\
+`  clutch_end3 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``8``, ``NA``, ``NA``, ``7``, ``NA``, ``NA``, ``6``)``,`\
+`  clutch_size3 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``NA``, ``NA``, ``1``, ``NA``, ``NA``, ``2``)``,`\
+`  death_start ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``8``, ``11``, ``0``, ``11``, ``0``, ``7``, ``9``)``,`\
+`  death_end ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``12``, ``11``, ``1``, ``12``, ``1``, ``8``, ``10``)``,`\
+`  geno ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``3``, ``1``, ``0``, ``2``, ``0``, ``1``)`\
+`)`
 
-df <- data.frame(
-  sex = c(0, 0, 0, 0, 0, 0, 0),
-  sex_start = c(1, 3, 2, 10, 3, 4, 5),
-  sex_end = c(2, 4, 3, 11, 4, 5, 6),
-  maturity_start = c(2, 1, 0, 1, 0, 2, 1),
-  maturity_end = c(4, 2, 1000, 2, 1000, 3, 2),
-  clutch_start1 = c(3, 2, NA, 2, NA, 3, 2),
-  clutch_end1 = c(4, 3, NA, 3, NA, 4, 3),
-  clutch_size1 = c(4, 6, NA, 5, NA, 2, 30),
-  clutch_start2 = c(5, NA, NA, 5, NA, 4, 3),
-  clutch_end2 = c(6, NA, NA, 6, NA, 5, 4),
-  clutch_size2 = c(5, NA, NA, 7, NA, 10, 5),
-  clutch_start3 = c(7, NA, NA, 6, NA, NA, 5),
-  clutch_end3 = c(8, NA, NA, 7, NA, NA, 6),
-  clutch_size3 = c(1, NA, NA, 1, NA, NA, 2),
-  death_start = c(8, 11, 0, 11, 0, 7, 9),
-  death_end = c(12, 11, 1, 12, 1, 8, 10),
-  geno = c(1, 3, 1, 0, 2, 0, 1)
-)
-```
-
-``` r
-
-df |> head()
-#>   sex sex_start sex_end maturity_start maturity_end clutch_start1 clutch_end1
-#> 1   0         1       2              2            4             3           4
-#> 2   0         3       4              1            2             2           3
-#> 3   0         2       3              0         1000            NA          NA
-#> 4   0        10      11              1            2             2           3
-#> 5   0         3       4              0         1000            NA          NA
-#> 6   0         4       5              2            3             3           4
-#>   clutch_size1 clutch_start2 clutch_end2 clutch_size2 clutch_start3 clutch_end3
-#> 1            4             5           6            5             7           8
-#> 2            6            NA          NA           NA            NA          NA
-#> 3           NA            NA          NA           NA            NA          NA
-#> 4            5             5           6            7             6           7
-#> 5           NA            NA          NA           NA            NA          NA
-#> 6            2             4           5           10            NA          NA
-#>   clutch_size3 death_start death_end geno
-#> 1            1           8        12    1
-#> 2           NA          11        11    3
-#> 3           NA           0         1    1
-#> 4            1          11        12    0
-#> 5           NA           0         1    2
-#> 6           NA           7         8    0
-```
+\
+`df`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#>   sex sex_start sex_end maturity_start maturity_end clutch_start1 clutch_end1`\
+`#> 1   0         1       2              2            4             3           4`\
+`#> 2   0         3       4              1            2             2           3`\
+`#> 3   0         2       3              0         1000            NA          NA`\
+`#> 4   0        10      11              1            2             2           3`\
+`#> 5   0         3       4              0         1000            NA          NA`\
+`#> 6   0         4       5              2            3             3           4`\
+`#>   clutch_size1 clutch_start2 clutch_end2 clutch_size2 clutch_start3 clutch_end3`\
+`#> 1            4             5           6            5             7           8`\
+`#> 2            6            NA          NA           NA            NA          NA`\
+`#> 3           NA            NA          NA           NA            NA          NA`\
+`#> 4            5             5           6            7             6           7`\
+`#> 5           NA            NA          NA           NA            NA          NA`\
+`#> 6            2             4           5           10            NA          NA`\
+`#>   clutch_size3 death_start death_end geno`\
+`#> 1            1           8        12    1`\
+`#> 2           NA          11        11    3`\
+`#> 3           NA           0         1    1`\
+`#> 4            1          11        12    0`\
+`#> 5           NA           0         1    2`\
+`#> 6           NA           7         8    0`
 
 As you can see, some observations made more ponts, leading to the
 presence of NULL values.

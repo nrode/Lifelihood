@@ -83,11 +83,10 @@ as_lifelihoodData(
 
 - dist:
 
-  Vector of characters with the name of the statistical law to use. Must
-  be of length 3 and each element must be one of "wei" (Weibull law),
-  "exp" (Exponential law), "gam" (Gamma law) or "lgn" (Log-normal law).
-  The first one is used for mortality, the second one is used for
-  maturity and the third is used for reproduction.
+  Named character vector specifying the statistical law to use for each
+  event. It must contain entries named `mortality`, `maturity`, and
+  `reproduction`, with each value one of "wei" (Weibull law), "exp"
+  (Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).
 
 - covariates:
 

@@ -36,11 +36,9 @@ git checkout -b feature-name
   dependencies for development, including **Lifelihood** itself, by
   running:
 
-``` r
-
-install.packages(c("devtools", "testthat", "roxygen2", "pkgdown"))
-remotes::install_local(dependencies = TRUE)
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"devtools"``, ``"testthat"``, ``"roxygen2"``, ``"pkgdown"``)``)`\
+`remotes``::``install_local``(``dependencies ``=`` ``TRUE``)`
 
 ### Make changes
 
@@ -50,10 +48,8 @@ are included in the package.
 After making changes, you can verify that everything works as expected
 by running:
 
-``` r
-
-devtools::load_all()
-```
+\
+`devtools``::`[`load_all`](https://devtools.r-lib.org/reference/load_all.html)`(``)`
 
 This allows you to work with `lifelihood` functions using your latest
 local modifications.
@@ -63,10 +59,8 @@ local modifications.
 Documentation for **Lifelihood** is managed with **Roxygen2**. If you
 add or modify functions, update the documentation by running:
 
-``` r
-
-devtools::document()
-```
+\
+`devtools``::`[`document`](https://devtools.r-lib.org/reference/document.html)`(``)`
 
 ### Testing and Validation
 
@@ -74,10 +68,8 @@ devtools::document()
 directory. These tests help ensure that changes don’t break existing
 functionality. Run tests using:
 
-``` r
-
-devtools::test()
-```
+\
+`devtools``::`[`test`](https://devtools.r-lib.org/reference/test.html)`(``)`
 
 Ensure all tests pass before submitting a pull request. Adding new tests
 for new features or bug fixes is highly encouraged.

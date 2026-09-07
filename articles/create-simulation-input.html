@@ -248,7 +248,7 @@
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  config <span class="op">=</span> <span class="va">simulation_config</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"wei"</span>, <span class="st">"wei"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"wei"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span>,</span>
 <span>  n_per_combination <span class="op">=</span> <span class="st">"n_individuals"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -308,34 +308,33 @@
 <p>The object returned by <code><a href="../reference/create_simulation_input.html">create_simulation_input()</a></code> can be passed directly to <code><a href="../reference/simulate_life_history.html">simulate_life_history()</a></code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fl">1</span>, visit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">1000</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>block <span class="op">=</span> <span class="fl">1</span>, visit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1000</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pseudo_results</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">block</span> <span class="op">&lt;-</span> <span class="st">"block"</span></span>
 <span><span class="va">pseudo_results</span><span class="op">$</span><span class="va">lifelihoodData</span><span class="op">$</span><span class="va">df</span><span class="op">$</span><span class="va">block</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="va">simulated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_life_history.html">simulate_life_history</a></span><span class="op">(</span></span>
 <span>  <span class="va">pseudo_results</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  use_censoring <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  visits <span class="op">=</span> <span class="va">visits</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">simulated</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 62</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 50</span></span>
 <span><span class="co">#&gt;   par   spore  block   sex sex_start sex_end mortality maturity maturity_start</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 high  absent     1     0       990    1000     23.2      5.75          5.70 </span></span>
-<span><span class="co">#&gt; 2 high  absent     1     0       990    1000      1.25    NA             1.20 </span></span>
-<span><span class="co">#&gt; 3 high  absent     1     0       990    1000     20.2     19.4          19.3  </span></span>
-<span><span class="co">#&gt; 4 high  absent     1     0       990    1000      9.05     0.35          0.301</span></span>
-<span><span class="co">#&gt; 5 high  absent     1     0       990    1000     15.5      7.75          7.70 </span></span>
-<span><span class="co">#&gt; 6 high  absent     1     0       990    1000     11.5      1.85          1.80 </span></span>
-<span><span class="co">#&gt; # ℹ 53 more variables: maturity_end &lt;dbl&gt;, mortality_start &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   mortality_end &lt;dbl&gt;, clutch_1 &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;, clutch_2 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_3 &lt;dbl&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_4 &lt;dbl&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   clutch_end_4 &lt;dbl&gt;, clutch_size_4 &lt;int&gt;, clutch_5 &lt;dbl&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 high  absent     1     0       990    1000     23.2      5.75            5.7</span></span>
+<span><span class="co">#&gt; 2 high  absent     1     0       990    1000      1.25    NA               1.2</span></span>
+<span><span class="co">#&gt; 3 high  absent     1     0       990    1000     20.2     19.4            19.3</span></span>
+<span><span class="co">#&gt; 4 high  absent     1     0       990    1000      9.05     0.35            0.3</span></span>
+<span><span class="co">#&gt; 5 high  absent     1     0       990    1000     15.5      7.75            7.7</span></span>
+<span><span class="co">#&gt; 6 high  absent     1     0       990    1000     11.5      1.85            1.8</span></span>
+<span><span class="co">#&gt; # ℹ 41 more variables: maturity_end &lt;dbl&gt;, mortality_start &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   mortality_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;, clutch_end_1 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;, clutch_end_3 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;, clutch_end_4 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_4 &lt;int&gt;, clutch_start_5 &lt;dbl&gt;, clutch_end_5 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   clutch_size_5 &lt;int&gt;, clutch_start_6 &lt;dbl&gt;, clutch_end_6 &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="refit-the-simulated-data">Refit the simulated data<a class="anchor" aria-label="anchor" href="#refit-the-simulated-data"></a>
 </h2>
@@ -367,7 +366,7 @@
 <span>  death_start <span class="op">=</span> <span class="st">"mortality_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"mortality_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"wei"</span>, <span class="st">"wei"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"wei"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -394,14 +393,14 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               parameter                      name expected fitted</span></span>
-<span><span class="co">#&gt; 1            expt_death            int_expt_death        0 -1.533</span></span>
+<span><span class="co">#&gt; 1            expt_death            int_expt_death        0 -1.534</span></span>
 <span><span class="co">#&gt; 2         expt_maturity         int_expt_maturity        0 -0.050</span></span>
 <span><span class="co">#&gt; 3     expt_reproduction     int_expt_reproduction        0 -0.379</span></span>
-<span><span class="co">#&gt; 4 increase_death_hazard int_increase_death_hazard        0 -1.105</span></span>
+<span><span class="co">#&gt; 4 increase_death_hazard int_increase_death_hazard        0 -1.113</span></span>
 <span><span class="co">#&gt; 5       maturity_param2       int_maturity_param2        0  0.006</span></span>
 <span><span class="co">#&gt; 6           n_offspring           int_n_offspring        0  0.020</span></span>
 <span><span class="co">#&gt; 7   reproduction_param2   int_reproduction_param2        0  0.070</span></span>
-<span><span class="co">#&gt; 8       survival_param2       int_survival_param2        0  0.837</span></span>
+<span><span class="co">#&gt; 8       survival_param2       int_survival_param2        0  0.844</span></span>
 <span><span class="co">#&gt;   relative_difference</span></span>
 <span><span class="co">#&gt; 1                 Inf</span></span>
 <span><span class="co">#&gt; 2                 Inf</span></span>
@@ -451,7 +450,7 @@
 <span>  BIC <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">refit</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    logLik       AIC       BIC </span></span>
-<span><span class="co">#&gt; -20292.96  40601.92  40637.09</span></span></code></pre></div>
+<span><span class="co">#&gt; -20292.86  40601.73  40636.90</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="common-patterns">Common patterns<a class="anchor" aria-label="anchor" href="#common-patterns"></a>
 </h2>

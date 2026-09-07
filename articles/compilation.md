@@ -29,30 +29,24 @@ git clone https://github.com/nrode/Lifelihood.git
 - Install development dependencies: install all necessary dependencies
   for development, including **Lifelihood** itself, by running:
 
-``` r
-
-install.packages(c("devtools", "testthat", "roxygen2", "pkgdown"))
-remotes::install_local(dependencies = TRUE)
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"devtools"``, ``"testthat"``, ``"roxygen2"``, ``"pkgdown"``)``)`\
+`remotes``::``install_local``(``dependencies ``=`` ``TRUE``)`
 
 When developing an R package, you should **not** use
 [`library(lifelihood)`](https://nrode.github.io/Lifelihood/), but
 rather:
 
-``` r
-
-devtools::load_all()
-```
+\
+`devtools``::`[`load_all`](https://devtools.r-lib.org/reference/load_all.html)`(``)`
 
 This allows to use the latest local version and not having re-install
 the package every time you make a change.
 
 To check that everything worked as expected, run:
 
-``` r
-
-devtools::test()
-```
+\
+`devtools``::`[`test`](https://devtools.r-lib.org/reference/test.html)`(``)`
 
 This will run all unit tests inside the package. If everything is okay,
 it should print many things and ends with something like this:

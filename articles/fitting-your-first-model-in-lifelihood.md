@@ -11,22 +11,20 @@ If you haven’t check it yet, have a look at:
 
 ------------------------------------------------------------------------
 
-``` r
-
-library(lifelihood)
-#> Loading required package: tidyverse
-#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
-#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.2     
-#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
-#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-library(tidyverse)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
+`#> Loading required package: tidyverse`\
+`#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
+`#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
+`#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
+`#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1`\
+`#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2`\
+`#> ✔ purrr     1.2.2     `\
+`#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
+`#> ✖ dplyr::filter() masks stats::filter()`\
+`#> ✖ dplyr::lag()    masks stats::lag()`\
+`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`
 
 ## Data preparation
 
@@ -34,41 +32,37 @@ library(tidyverse)
 
 Load the dataset from `.csv` file:
 
-``` r
-
-# input data
-df <- datapierrick |>
-  as_tibble() |>
-  mutate(par = as.factor(par), geno = as.factor(geno), spore = as.factor(spore))
-
-df |> head()
-#> # A tibble: 6 × 95
-#>   par   geno  spore sex_start sex_end   sex mat_start mat_end   mat
-#>   <fct> <fct> <fct>     <int>   <int> <int>     <int>   <int> <int>
-#> 1 0     0     0            13    1000     0        12      13     6
-#> 2 0     0     0            13    1000     0        12      13     3
-#> 3 0     0     0            15    1000     0        14      15     1
-#> 4 0     0     0            14    1000     0        13      14     6
-#> 5 0     0     0            19    1000     0        18      19     2
-#> 6 0     0     0            12    1000     0        11      12     1
-#> # ℹ 86 more variables: clutch_start_1 <int>, clutch_end_1 <int>,
-#> #   clutch_size_1 <int>, clutch_start_2 <int>, clutch_end_2 <int>,
-#> #   clutch_size_2 <int>, clutch_start_3 <int>, clutch_end_3 <int>,
-#> #   clutch_size_3 <int>, clutch_start_4 <int>, clutch_end_4 <int>,
-#> #   clutch_size_4 <int>, clutch_start_5 <int>, clutch_end_5 <int>,
-#> #   clutch_size_5 <int>, clutch_start_6 <int>, clutch_end_6 <int>,
-#> #   clutch_size_6 <int>, clutch_start_7 <int>, clutch_end_7 <int>, …
-```
+\
+`# input data`\
+`df`` ``<-`` ``datapierrick`` ``|>`\
+`  `[`as_tibble`](https://tibble.tidyverse.org/reference/as_tibble.html)`(``)`` ``|>`\
+`  `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(``par ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``par``)``, geno ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``geno``)``, spore ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``spore``)``)`\
+\
+`df`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 95`\
+`#>   par   geno  spore sex_start sex_end   sex mat_start mat_end   mat`\
+`#>   <fct> <fct> <fct>     <int>   <int> <int>     <int>   <int> <int>`\
+`#> 1 0     0     0            13    1000     0        12      13     6`\
+`#> 2 0     0     0            13    1000     0        12      13     3`\
+`#> 3 0     0     0            15    1000     0        14      15     1`\
+`#> 4 0     0     0            14    1000     0        13      14     6`\
+`#> 5 0     0     0            19    1000     0        18      19     2`\
+`#> 6 0     0     0            12    1000     0        11      12     1`\
+`#> # ℹ 86 more variables: clutch_start_1 <int>, clutch_end_1 <int>,`\
+`#> #   clutch_size_1 <int>, clutch_start_2 <int>, clutch_end_2 <int>,`\
+`#> #   clutch_size_2 <int>, clutch_start_3 <int>, clutch_end_3 <int>,`\
+`#> #   clutch_size_3 <int>, clutch_start_4 <int>, clutch_end_4 <int>,`\
+`#> #   clutch_size_4 <int>, clutch_start_5 <int>, clutch_end_5 <int>,`\
+`#> #   clutch_size_5 <int>, clutch_start_6 <int>, clutch_end_6 <int>,`\
+`#> #   clutch_size_6 <int>, clutch_start_7 <int>, clutch_end_7 <int>, …`
 
 Prepare arguments for the
 [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 function:
 
-``` r
-
-# name of the columns of the clutchs into a single vector
-clutchs <- generate_clutch_vector(28)
-```
+\
+`# name of the columns of the clutchs into a single vector`\
+`clutchs`` ``<-`` `[`generate_clutch_vector`](https://nrode.github.io/Lifelihood/reference/generate_clutch_vector.md)`(``28``)`
 
 *Note: If you have a large number of clutches, it is easier to generate
 this vector programmatically. See the [Generate clutch
@@ -84,30 +78,27 @@ individual life history.
 
 This function mostly takes as input your dataset, your column names.
 
-It also has the `dist` argument, which is a vector of characters with
-the name of the statistical distribution to use. Must be of length 3 and
-each element must be one of `"wei"` (Weibull distribution), `"exp"`
-(exponential distribution), `"gam"` (gamma distribution) or `"lgn"`
-(log-normal distribution). The first one is used for **death**, the
-second one is used for **maturity** and the third one for **clutchs**.
+It also has the `dist` argument, which is a named character vector
+specifying the statistical distribution for each event. It must contain
+`mortality`, `maturity`, and `reproduction` entries, each with one of
+`"wei"` (Weibull distribution), `"exp"` (exponential distribution),
+`"gam"` (gamma distribution), or `"lgn"` (log-normal distribution).
 
-``` r
-
-dataLFH <- as_lifelihoodData(
-  df = df,
-  sex = "sex",
-  sex_start = "sex_start",
-  sex_end = "sex_end",
-  maturity_start = "mat_start",
-  maturity_end = "mat_end",
-  clutchs = clutchs,
-  death_start = "death_start",
-  death_end = "death_end",
-  matclutch = FALSE,
-  covariates = c("par", "geno"),
-  dist = c("wei", "gam", "lgn")
-)
-```
+\
+`dataLFH`` ``<-`` `[`as_lifelihoodData`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)`(`\
+`  df ``=`` ``df``,`\
+`  sex ``=`` ``"sex"``,`\
+`  sex_start ``=`` ``"sex_start"``,`\
+`  sex_end ``=`` ``"sex_end"``,`\
+`  maturity_start ``=`` ``"mat_start"``,`\
+`  maturity_end ``=`` ``"mat_end"``,`\
+`  clutchs ``=`` ``clutchs``,`\
+`  death_start ``=`` ``"death_start"``,`\
+`  death_end ``=`` ``"death_end"``,`\
+`  matclutch ``=`` ``FALSE``,`\
+`  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"geno"``)``,`\
+`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
+`)`
 
 ## Get the results
 
@@ -132,48 +123,46 @@ pseudorandom number generator of the lifelihood program). The
 `raise_estimation_warning` argument will be the focus of the [next
 vignette](https://nrode.github.io/Lifelihood/articles/4-custom-param-boundaries-and-estimation-warning.md).
 
-``` r
-
-results <- lifelihood(
-  lifelihoodData = dataLFH,
-  path_config = use_test_config("config_pierrick"),
-  seeds = c(1, 2, 3, 4),
-  raise_estimation_warning = FALSE
-)
-summary(results)
-#> 
-#> === LIFELIHOOD RESULTS ===
-#> 
-#> Sample size: 550 
-#> 
-#> --- Model Fit ---
-#> Log-likelihood:  -31598.613
-#> AIC:             63217.2
-#> BIC:             63260.3
-#> 
-#> --- Key Parameters ---
-#> 
-#> Mortality:
-#>   expt_death (Intercept)    -0.895 (0.000)
-#>   expt_death eff_expt_death_par_1 -1.821 (0.000)
-#>   expt_death eff_expt_death_par_2 -1.840 (0.000)
-#>   survival_param2 (Intercept) -4.866 (0.000)
-#>   ratio_expt_death (Intercept) -3.668 (0.000)
-#> 
-#> Maturity:
-#>   expt_maturity (Intercept) -1.494 (0.000)
-#>   maturity_param2 (Intercept) -6.034 (0.000)
-#> 
-#> Reproduction:
-#>   expt_reproduction (Intercept) -4.234 (0.000)
-#>   reproduction_param2 (Intercept) -3.155 (0.000)
-#>   n_offspring (Intercept)   -2.581 (0.000)
-#> 
-#> --- Convergence ---
-#> All parameters within bounds
-#> 
-#> ======================
-```
+\
+`results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
+`  lifelihoodData ``=`` ``dataLFH``,`\
+`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_pierrick"``)``,`\
+`  seeds ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``3``, ``4``)``,`\
+`  raise_estimation_warning ``=`` ``FALSE`\
+`)`\
+[`summary`](https://rdrr.io/r/base/summary.html)`(``results``)`\
+`#> `\
+`#> === LIFELIHOOD RESULTS ===`\
+`#> `\
+`#> Sample size: 550 `\
+`#> `\
+`#> --- Model Fit ---`\
+`#> Log-likelihood:  -31598.613`\
+`#> AIC:             63217.2`\
+`#> BIC:             63260.3`\
+`#> `\
+`#> --- Key Parameters ---`\
+`#> `\
+`#> Mortality:`\
+`#>   expt_death (Intercept)    -0.895 (0.000)`\
+`#>   expt_death eff_expt_death_par_1 -1.821 (0.000)`\
+`#>   expt_death eff_expt_death_par_2 -1.840 (0.000)`\
+`#>   survival_param2 (Intercept) -4.866 (0.000)`\
+`#>   ratio_expt_death (Intercept) -3.668 (0.000)`\
+`#> `\
+`#> Maturity:`\
+`#>   expt_maturity (Intercept) -1.494 (0.000)`\
+`#>   maturity_param2 (Intercept) -6.034 (0.000)`\
+`#> `\
+`#> Reproduction:`\
+`#>   expt_reproduction (Intercept) -4.234 (0.000)`\
+`#>   reproduction_param2 (Intercept) -3.155 (0.000)`\
+`#>   n_offspring (Intercept)   -2.581 (0.000)`\
+`#> `\
+`#> --- Convergence ---`\
+`#> All parameters within bounds`\
+`#> `\
+`#> ======================`
 
 ## Get specific results
 
@@ -182,38 +171,36 @@ summary(results)
 The `lifelihoodResults` object is a list containing all the results of
 the analysis. We can get specific results by calling the list element.
 
-``` r
-
-coef(results)
-#>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 
-#>              -0.8945988              -1.8210310              -1.8399792 
-#>     int_survival_param2    int_ratio_expt_death       int_expt_maturity 
-#>              -4.8656529              -3.6679045              -1.4938977 
-#>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 
-#>              -6.0343392              -4.2344424              -3.1554742 
-#>         int_n_offspring 
-#>              -2.5814995
-coeff(results, "expt_death")
-#>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 
-#>           -0.8945988           -1.8210310           -1.8399792
-coeff(results, "survival_param2")
-#> int_survival_param2 
-#>           -4.865653
-
-AIC(results)
-#> [1] 63217.23
-BIC(results)
-#> [1] 63260.33
-
-logLik(results)
-#> [1] -31598.61
-
-prediction(results, parameter_name = "expt_death") |> head()
-#> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.
-#> [1] -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988
-prediction(results, parameter_name = "expt_death", type = "response") |> head()
-#> [1] 94.0131 94.0131 94.0131 94.0131 94.0131 94.0131
-```
+\
+[`coef`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``)`\
+`#>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 `\
+`#>              -0.8945988              -1.8210310              -1.8399792 `\
+`#>     int_survival_param2    int_ratio_expt_death       int_expt_maturity `\
+`#>              -4.8656529              -3.6679045              -1.4938977 `\
+`#>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 `\
+`#>              -6.0343392              -4.2344424              -3.1554742 `\
+`#>         int_n_offspring `\
+`#>              -2.5814995`\
+[`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"expt_death"``)`\
+`#>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 `\
+`#>           -0.8945988           -1.8210310           -1.8399792`\
+[`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"survival_param2"``)`\
+`#> int_survival_param2 `\
+`#>           -4.865653`\
+\
+[`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
+`#> [1] 63217.23`\
+[`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
+`#> [1] 63260.33`\
+\
+[`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results``)`\
+`#> [1] -31598.61`\
+\
+[`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, parameter_name ``=`` ``"expt_death"``)`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.`\
+`#> [1] -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988`\
+[`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, parameter_name ``=`` ``"expt_death"``, type ``=`` ``"response"``)`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> [1] 94.0131 94.0131 94.0131 94.0131 94.0131 94.0131`
 
 ## Next step
 

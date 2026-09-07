@@ -89,7 +89,9 @@ format_dataframe_to_txt(
 
 - dist:
 
-  Vector of characters with the name of the statistical law to use.
+  Named character vector with one distribution family for each event. It
+  must contain entries named `mortality`, `maturity`, and
+  `reproduction`.
 
 - path_config:
 

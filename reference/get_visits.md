@@ -2,7 +2,7 @@
 
 Builds the visit-mask data frame used by
 [`simulate_life_history()`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)
-when `use_censoring = TRUE`. The returned visits are inferred from the
+when visits are supplied. The returned visits are inferred from the
 observed interval bounds in the original data.
 
 ## Usage

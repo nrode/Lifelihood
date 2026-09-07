@@ -11,9 +11,9 @@ simulate_life_history(
   object,
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
-  use_censoring = FALSE,
   visits = NULL,
-  seed = NULL
+  seed = NULL,
+  remove_exact_clutch_dates = TRUE
 )
 ```
 
@@ -39,18 +39,6 @@ simulate_life_history(
   Optional `data.frame` providing covariate values for prediction. If
   `NULL`, the original model data are used.
 
-- use_censoring:
-
-  Whether to retrieve censoring time intervals for `maturity`,
-  `mortality`, and reproduction events. For example, adds
-  `mortality_start` and `mortality_end` alongside `mortality`. If
-  `newdata` is provided and censoring is enabled, `newdata` must include
-  the block column. When `use_censoring = TRUE`, `visits` must be
-  provided explicitly. Use
-  [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
-  to derive visit data from the fitted data, or pass a custom visit data
-  frame.
-
 - visits:
 
   Optional data frame with 2 columns: one column with the same name as
@@ -58,12 +46,21 @@ simulate_life_history(
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
   and one column named exactly `visit`. For each block, `visit`
   corresponds to the ages where the events of individuals have been
-  recorded. Required when `use_censoring = TRUE`.
+  recorded. Supplying `visits` enables censoring; use
+  [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
+  to derive visit data from the fitted data, or pass a custom visit data
+  frame.
 
 - seed:
 
   Optional integer. If provided, sets the random seed for
   reproducibility.
+
+- remove_exact_clutch_dates:
+
+  Logical. Whether to remove exact simulated clutch-date columns from
+  the output. If `FALSE`, these columns are kept and renamed to
+  `exact_clutch_date_{i}`. Default is `TRUE`.
 
 ## Value
 

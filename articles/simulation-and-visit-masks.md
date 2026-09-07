@@ -10,135 +10,127 @@ made.
 First, we need to fit the model with
 [`lifelihood::lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md):
 
-``` r
+\
+`devtools``::`[`load_all`](https://devtools.r-lib.org/reference/load_all.html)`(``)`\
+`#> ℹ Loading lifelihood`\
+`#> Loading required package: tidyverse`\
+`#> `\
+`#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
+`#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
+`#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
+`#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1`\
+`#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2`\
+`#> ✔ purrr     1.2.2     `\
+`#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
+`#> ✖ dplyr::filter() masks stats::filter()`\
+`#> ✖ dplyr::lag()    masks stats::lag()`\
+`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`
 
-devtools::load_all()
-#> ℹ Loading lifelihood
-#> Loading required package: tidyverse
-#> 
-#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
-#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.2     
-#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
-#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-```
-
-``` r
-
-library(tidyverse)
-
-df <- datapierrick |>
-  mutate(
-    par = as.factor(par),
-    spore = as.factor(spore),
-    block = rep(1:2, each = nrow(datapierrick) / 2)
-  )
-
-clutchs <- generate_clutch_vector(28)
-
-lifelihoodData <- as_lifelihoodData(
-  df = df,
-  matclutch = FALSE,
-  sex = "sex",
-  sex_start = "sex_start",
-  sex_end = "sex_end",
-  maturity_start = "mat_start",
-  maturity_end = "mat_end",
-  clutchs = clutchs,
-  block = "block",
-  death_start = "death_start",
-  death_end = "death_end",
-  covariates = c("par", "spore"),
-  dist = c("wei", "lgn", "wei")
-)
-
-results <- lifelihood(
-  lifelihoodData,
-  path_config = use_test_config("config_pierrick")
-)
-
-summary(results)
-#> 
-#> === LIFELIHOOD RESULTS ===
-#> 
-#> Sample size: 550 
-#> 
-#> --- Model Fit ---
-#> Log-likelihood:  -32470.054
-#> AIC:             64960.1
-#> BIC:             65003.2
-#> 
-#> --- Key Parameters ---
-#> 
-#> Mortality:
-#>   expt_death (Intercept)    -0.909 (0.000)
-#>   expt_death eff_expt_death_par_1 -3.063 (0.000)
-#>   expt_death eff_expt_death_par_2 -3.089 (0.000)
-#>   survival_param2 (Intercept) -4.878 (0.000)
-#>   ratio_expt_death (Intercept) -2.391 (0.000)
-#> 
-#> Maturity:
-#>   expt_maturity (Intercept) -1.469 (0.000)
-#>   maturity_param2 (Intercept) -3.269 (0.000)
-#> 
-#> Reproduction:
-#>   expt_reproduction (Intercept) -4.260 (0.000)
-#>   reproduction_param2 (Intercept) -5.353 (0.000)
-#>   n_offspring (Intercept)   -2.554 (0.000)
-#> 
-#> --- Convergence ---
-#> All parameters within bounds
-#> 
-#> ======================
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
+\
+`df`` ``<-`` ``datapierrick`` ``|>`\
+`  `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(`\
+`    par ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``par``)``,`\
+`    spore ``=`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``spore``)``,`\
+`    block ``=`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``1``:``2``, each ``=`` `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``datapierrick``)`` ``/`` ``2``)`\
+`  ``)`\
+\
+`clutchs`` ``<-`` `[`generate_clutch_vector`](https://nrode.github.io/Lifelihood/reference/generate_clutch_vector.md)`(``28``)`\
+\
+`lifelihoodData`` ``<-`` `[`as_lifelihoodData`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)`(`\
+`  df ``=`` ``df``,`\
+`  matclutch ``=`` ``FALSE``,`\
+`  sex ``=`` ``"sex"``,`\
+`  sex_start ``=`` ``"sex_start"``,`\
+`  sex_end ``=`` ``"sex_end"``,`\
+`  maturity_start ``=`` ``"mat_start"``,`\
+`  maturity_end ``=`` ``"mat_end"``,`\
+`  clutchs ``=`` ``clutchs``,`\
+`  block ``=`` ``"block"``,`\
+`  death_start ``=`` ``"death_start"``,`\
+`  death_end ``=`` ``"death_end"``,`\
+`  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
+`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
+`)`\
+\
+`results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
+`  ``lifelihoodData``,`\
+`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_pierrick"``)`\
+`)`\
+\
+[`summary`](https://rdrr.io/r/base/summary.html)`(``results``)`\
+`#> `\
+`#> === LIFELIHOOD RESULTS ===`\
+`#> `\
+`#> Sample size: 550 `\
+`#> `\
+`#> --- Model Fit ---`\
+`#> Log-likelihood:  -32470.705`\
+`#> AIC:             64961.4`\
+`#> BIC:             65004.5`\
+`#> `\
+`#> --- Key Parameters ---`\
+`#> `\
+`#> Mortality:`\
+`#>   expt_death (Intercept)    -0.914 (0.000)`\
+`#>   expt_death eff_expt_death_par_1 -3.139 (0.000)`\
+`#>   expt_death eff_expt_death_par_2 -3.159 (0.000)`\
+`#>   survival_param2 (Intercept) -4.879 (0.000)`\
+`#>   ratio_expt_death (Intercept) -2.307 (0.000)`\
+`#> `\
+`#> Maturity:`\
+`#>   expt_maturity (Intercept) -1.480 (0.000)`\
+`#>   maturity_param2 (Intercept) -3.263 (0.000)`\
+`#> `\
+`#> Reproduction:`\
+`#>   expt_reproduction (Intercept) -4.256 (0.000)`\
+`#>   reproduction_param2 (Intercept) -5.353 (0.000)`\
+`#>   n_offspring (Intercept)   -2.553 (0.000)`\
+`#> `\
+`#> --- Convergence ---`\
+`#> All parameters within bounds`\
+`#> `\
+`#> ======================`
 
 ## Default simulations
 
 By default, `lifelihood` will simulate all life history events
 (maturity, reproduction, and death):
 
-``` r
-
-simulate_life_history(results) |> head()
-#> # A tibble: 6 × 114
-#>   par   spore block   sex sex_start sex_end total_n_offspring total_n_clutches
-#>   <fct> <fct> <int> <int>     <int>   <int>             <dbl>            <dbl>
-#> 1 0     0         1     0        13    1000                41               11
-#> 2 0     0         1     0        13    1000                80               14
-#> 3 0     0         1     0        15    1000                72               15
-#> 4 0     0         1     0        14    1000                78               18
-#> 5 0     0         1     0        19    1000                59               14
-#> 6 0     0         1     0        12    1000                40                9
-#> # ℹ 106 more variables: maturity_start <dbl>, maturity_end <dbl>,
-#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,
-#> #   clutch_start_2 <dbl>, clutch_end_2 <dbl>, clutch_size_2 <int>,
-#> #   clutch_start_3 <dbl>, clutch_end_3 <dbl>, clutch_size_3 <int>,
-#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>,
-#> #   clutch_start_5 <dbl>, clutch_end_5 <dbl>, clutch_size_5 <int>,
-#> #   clutch_start_6 <dbl>, clutch_end_6 <dbl>, clutch_size_6 <int>, …
-```
+\
+[`simulate_life_history`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)`(``results``)`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 132`\
+`#>   par   spore block   sex sex_start sex_end total_n_offspring total_n_clutches`\
+`#>   <fct> <fct> <int> <int>     <int>   <int>             <dbl>            <dbl>`\
+`#> 1 0     0         1     0        13    1000                63               13`\
+`#> 2 0     0         1     0        13    1000               100               20`\
+`#> 3 0     0         1     0        15    1000                58               11`\
+`#> 4 0     0         1     0        14    1000               111               31`\
+`#> 5 0     0         1     0        19    1000               112               21`\
+`#> 6 0     0         1     0        12    1000               118               24`\
+`#> # ℹ 124 more variables: maturity_start <dbl>, maturity_end <dbl>,`\
+`#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,`\
+`#> #   clutch_start_2 <dbl>, clutch_end_2 <dbl>, clutch_size_2 <int>,`\
+`#> #   clutch_start_3 <dbl>, clutch_end_3 <dbl>, clutch_size_3 <int>,`\
+`#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>,`\
+`#> #   clutch_start_5 <dbl>, clutch_end_5 <dbl>, clutch_size_5 <int>,`\
+`#> #   clutch_start_6 <dbl>, clutch_end_6 <dbl>, clutch_size_6 <int>, …`
 
 But you can specify which event you want:
 
-``` r
-
-simulate_life_history(results, event = "maturity") |> head()
-#> # A tibble: 6 × 10
-#>   par   spore block   sex sex_start sex_end maturity_start maturity_end
-#>   <fct> <fct> <int> <int>     <int>   <int>          <dbl>        <dbl>
-#> 1 0     0         1     0        13    1000           12.6         12.6
-#> 2 0     0         1     0        13    1000           12.5         12.5
-#> 3 0     0         1     0        15    1000           12.3         12.3
-#> 4 0     0         1     0        14    1000           12.7         12.7
-#> 5 0     0         1     0        19    1000           13.1         13.1
-#> 6 0     0         1     0        12    1000           13.1         13.1
-#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>
-```
+\
+[`simulate_life_history`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)`(``results``, event ``=`` ``"maturity"``)`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 10`\
+`#>   par   spore block   sex sex_start sex_end maturity_start maturity_end`\
+`#>   <fct> <fct> <int> <int>     <int>   <int>          <dbl>        <dbl>`\
+`#> 1 0     0         1     0        13    1000           13.2         13.2`\
+`#> 2 0     0         1     0        13    1000           13.7         13.7`\
+`#> 3 0     0         1     0        15    1000           13.4         13.4`\
+`#> 4 0     0         1     0        14    1000           12.3         12.3`\
+`#> 5 0     0         1     0        19    1000           12.7         12.7`\
+`#> 6 0     0         1     0        12    1000           12.2         12.2`\
+`#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>`
 
 ## Simulations with visit masks
 
@@ -152,44 +144,43 @@ to which each individual belongs. Use
 [`get_visits()`](https://nrode.github.io/Lifelihood/reference/get_visits.md)
 to retrieve the visit masks inferred from the original dataset:
 
-``` r
+\
+`visits`` ``<-`` `[`get_visits`](https://nrode.github.io/Lifelihood/reference/get_visits.md)`(``lifelihoodData``)`\
+`visits`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 2`\
+`#>   block visit`\
+`#>   <int> <int>`\
+`#> 1     1     0`\
+`#> 2     1     7`\
+`#> 3     1     8`\
+`#> 4     1     9`\
+`#> 5     1    10`\
+`#> 6     1    11`\
+\
+`custom_visits`` ``<-`` ``tidyr``::`[`expand_grid`](https://tidyr.tidyverse.org/reference/expand_grid.html)`(`\
+`  block ``=`` `[`unique`](https://rdrr.io/r/base/unique.html)`(``df``$``block``)``,`\
+`  visit ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``lifelihoodData``$``right_censoring_date``)`\
+`)`
 
-visits <- get_visits(lifelihoodData)
-visits |> head()
-#> # A tibble: 6 × 2
-#>   block visit
-#>   <int> <int>
-#> 1     1     0
-#> 2     1     7
-#> 3     1     8
-#> 4     1     9
-#> 5     1    10
-#> 6     1    11
-```
+To use censoring intervals in the simulation, pass visits explicitly:
 
-To use censoring intervals in the simulation, you can pass visits
-explicitly along with `use_censoring = TRUE`:
-
-``` r
-
-results |>
-  simulate_life_history(
-    event = "maturity",
-    use_censoring = TRUE,
-    visits = visits
-  ) |>
-  head()
-#> # A tibble: 6 × 11
-#>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end
-#>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
-#> 1 0     0         1     0        13    1000     13.0             12           13
-#> 2 0     0         1     0        13    1000     13.5             13           14
-#> 3 0     0         1     0        15    1000     13.6             13           14
-#> 4 0     0         1     0        14    1000     13.5             13           14
-#> 5 0     0         1     0        19    1000     11.8             11           12
-#> 6 0     0         1     0        12    1000     13.0             12           13
-#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>
-```
+\
+`results`` ``|>`\
+`  `[`simulate_life_history`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)`(`\
+`    event ``=`` ``"maturity"``,`\
+`    visits ``=`` ``custom_visits`\
+`  ``)`` ``|>`\
+`  `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 11`\
+`#>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end`\
+`#>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>`\
+`#> 1 0     0         1     0        13    1000     12.6             12           13`\
+`#> 2 0     0         1     0        13    1000     13.3             13           14`\
+`#> 3 0     0         1     0        15    1000     12.9             12           13`\
+`#> 4 0     0         1     0        14    1000     13.9             13           14`\
+`#> 5 0     0         1     0        19    1000     12.8             12           13`\
+`#> 6 0     0         1     0        12    1000     12.9             12           13`\
+`#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>`
 
 Ideally, we recommend to provide explicitly the date where each visit
 occured for each block in the simulation. Indeed, that we see that, by
@@ -206,50 +197,41 @@ in the `block` argument) and exactly `visit`. For each block, `visit`
 corresponds to the ages at which the events of individuals were
 recorded.
 
-Let’s define a custom visits dataframe:
+Let’s inspect the custom visits dataframe:
 
-``` r
-
-custom_visits <- tibble(
-  block = rep(1:2, nrow(datapierrick) / 2),
-  visit = seq_len(nrow(datapierrick))
-)
-custom_visits |> head()
-#> # A tibble: 6 × 2
-#>   block visit
-#>   <int> <int>
-#> 1     1     1
-#> 2     2     2
-#> 3     1     3
-#> 4     2     4
-#> 5     1     5
-#> 6     2     6
-```
+\
+`custom_visits`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 2`\
+`#>   block visit`\
+`#>   <int> <int>`\
+`#> 1     1     0`\
+`#> 2     1     1`\
+`#> 3     1     2`\
+`#> 4     1     3`\
+`#> 5     1     4`\
+`#> 6     1     5`
 
 Now we can pass this to the
 [`simulate_life_history()`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)
 function:
 
-``` r
-
-results |>
-  simulate_life_history(
-    event = "maturity",
-    use_censoring = TRUE,
-    visits = custom_visits
-  ) |>
-  head()
-#> # A tibble: 6 × 11
-#>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end
-#>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>
-#> 1 0     0         1     0        13    1000     12.5             11           13
-#> 2 0     0         1     0        13    1000     12.9             11           13
-#> 3 0     0         1     0        15    1000     13.1             13           15
-#> 4 0     0         1     0        14    1000     12.9             11           13
-#> 5 0     0         1     0        19    1000     13.5             13           15
-#> 6 0     0         1     0        12    1000     12.5             11           13
-#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>
-```
+\
+`results`` ``|>`\
+`  `[`simulate_life_history`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)`(`\
+`    event ``=`` ``"maturity"``,`\
+`    visits ``=`` ``custom_visits`\
+`  ``)`` ``|>`\
+`  `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 11`\
+`#>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end`\
+`#>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>`\
+`#> 1 0     0         1     0        13    1000     13.3             13           14`\
+`#> 2 0     0         1     0        13    1000     12.4             12           13`\
+`#> 3 0     0         1     0        15    1000     13.7             13           14`\
+`#> 4 0     0         1     0        14    1000     13.1             13           14`\
+`#> 5 0     0         1     0        19    1000     12.3             12           13`\
+`#> 6 0     0         1     0        12    1000     13.3             13           14`\
+`#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>`
 
 ## Details
 
@@ -259,33 +241,30 @@ reproduction can occur (e.g., after the maturity and before the death).
 Visit masks apply to reproduction in both the standard simulation and
 the reproduction-survival trade-off simulation.
 
-``` r
-
-results |>
-  simulate_life_history(
-    event = "reproduction",
-    use_censoring = TRUE,
-    visits = visits,
-    seed = 1
-  ) |>
-  head()
-#> # A tibble: 6 × 142
-#>   par   spore block   sex sex_start sex_end mortality mortality_start
-#>   <fct> <fct> <int> <int>     <int>   <int>     <dbl>           <dbl>
-#> 1 0     0         1     0        13    1000      79.8              79
-#> 2 0     0         1     0        13    1000      81.0              80
-#> 3 0     0         1     0        15    1000      83.2              83
-#> 4 0     0         1     0        14    1000      93.9              93
-#> 5 0     0         1     0        19    1000      92.1              92
-#> 6 0     0         1     0        12    1000      71.0              71
-#> # ℹ 134 more variables: mortality_end <dbl>, maturity <dbl>,
-#> #   maturity_start <dbl>, maturity_end <dbl>, clutch_1 <dbl>,
-#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,
-#> #   clutch_2 <dbl>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,
-#> #   clutch_size_2 <int>, clutch_3 <dbl>, clutch_start_3 <dbl>,
-#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_4 <dbl>,
-#> #   clutch_start_4 <dbl>, clutch_end_4 <dbl>, clutch_size_4 <int>, …
-```
+\
+`results`` ``|>`\
+`  `[`simulate_life_history`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)`(`\
+`    event ``=`` ``"reproduction"``,`\
+`    visits ``=`` ``custom_visits``,`\
+`    seed ``=`` ``1`\
+`  ``)`` ``|>`\
+`  `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 116`\
+`#>   par   spore block   sex sex_start sex_end mortality maturity maturity_start`\
+`#>   <fct> <fct> <int> <int>     <int>   <int>     <dbl>    <dbl>          <dbl>`\
+`#> 1 0     0         1     0        13    1000      79.6     12.6             12`\
+`#> 2 0     0         1     0        13    1000      80.7     13.1             13`\
+`#> 3 0     0         1     0        15    1000      82.9     12.5             12`\
+`#> 4 0     0         1     0        14    1000      93.6     14.0             13`\
+`#> 5 0     0         1     0        19    1000      91.8     13.2             13`\
+`#> 6 0     0         1     0        12    1000      70.7     12.5             12`\
+`#> # ℹ 107 more variables: maturity_end <dbl>, mortality_start <dbl>,`\
+`#> #   mortality_end <dbl>, clutch_start_1 <dbl>, clutch_end_1 <dbl>,`\
+`#> #   clutch_size_1 <int>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,`\
+`#> #   clutch_size_2 <int>, clutch_start_3 <dbl>, clutch_end_3 <dbl>,`\
+`#> #   clutch_size_3 <int>, clutch_start_4 <dbl>, clutch_end_4 <dbl>,`\
+`#> #   clutch_size_4 <int>, clutch_start_5 <dbl>, clutch_end_5 <dbl>,`\
+`#> #   clutch_size_5 <int>, clutch_start_6 <dbl>, clutch_end_6 <dbl>, …`
 
 The following rules define how visit masks are constructed and applied:
 
@@ -298,9 +277,9 @@ The following rules define how visit masks are constructed and applied:
   removes missing values and the right-censoring date, then deduplicates
   and sorts visit times within each block.
 - An event is censored by the last visit before it occured and the first
-  visit after it occured. The start date is set to `NA` when the event
-  precedes the first visit, and the end date is set to `NA` when it
-  follows the last visit.
+  visit after it occured. The supplied visits must cover every
+  non-missing event age for its block; an error is raised when an event
+  precedes the first visit or follows the last visit.
 - Reproduction masks are computed from absolute clutch ages. Maturity is
   added to the first inter-clutch duration, later durations are
   accumulated, and clutches after mortality are removed before visit

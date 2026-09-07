@@ -82,15 +82,7 @@ life history event (maturity, reproduction, mortality).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simulate_event</span><span class="op">(</span></span>
-<span>  <span class="va">object</span>,</span>
-<span>  <span class="va">ev</span>,</span>
-<span>  <span class="va">newdata</span>,</span>
-<span>  <span class="va">lifelihoodData</span>,</span>
-<span>  <span class="va">use_censoring</span>,</span>
-<span>  <span class="va">visits</span>,</span>
-<span>  block_values <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simulate_event</span><span class="op">(</span><span class="va">object</span>, <span class="va">ev</span>, <span class="va">newdata</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -108,17 +100,6 @@ life history event (maturity, reproduction, mortality).</p>
 
 <dt id="arg-newdata">newdata<a class="anchor" aria-label="anchor" href="#arg-newdata"></a></dt>
 <dd><p>An optional dataset used for prediction</p></dd>
-
-
-<dt id="arg-lifelihooddata">lifelihoodData<a class="anchor" aria-label="anchor" href="#arg-lifelihooddata"></a></dt>
-<dd><p>Output of <code><a href="as_lifelihoodData.html">as_lifelihoodData()</a></code>.</p></dd>
-
-
-<dt id="arg-visits">visits<a class="anchor" aria-label="anchor" href="#arg-visits"></a></dt>
-<dd><p>Dataframe with 2 columns: "block" (must be the same as passed
-in <code><a href="as_lifelihoodData.html">as_lifelihoodData()</a></code> <code>block</code> argument) and exactly "visit". For
-each block, "visit" corresponds to the ages where the events of individuals
-have been recorded.</p></dd>
 
 </dl></div>
 

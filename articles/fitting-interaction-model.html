@@ -151,7 +151,7 @@
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"geno"</span><span class="op">)</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"gam"</span>, <span class="st">"lgn"</span><span class="op">)</span></span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"gam"</span>, reproduction <span class="op">=</span> <span class="st">"lgn"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></code></pre></div>
@@ -172,7 +172,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_default</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  24.483   0.185  24.871</span></span></code></pre></div>
+<span><span class="co">#&gt;  31.393   0.348  32.914</span></span></code></pre></div>
 </div>
 <ul>
 <li>Interaction model using the <code>group_by_group</code> argument (default to <code>FALSE</code>)</li>
@@ -188,7 +188,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_gbg</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.404   0.062   1.506</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.975   0.100   2.129</span></span></code></pre></div>
 </div>
 <p>Fitting interaction model with group by group is faster than default model.</p>
 <ul>

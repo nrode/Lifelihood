@@ -87,7 +87,7 @@ dataLFH <- as_lifelihoodData(
  death_end = "death_end",
  matclutch = FALSE,
  covariates = c("par", "geno"),
- dist = c("wei", "gam", "lgn")
+ dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 results <- lifelihood(
 lifelihoodData = dataLFH,

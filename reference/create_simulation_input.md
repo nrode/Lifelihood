@@ -60,9 +60,9 @@ create_simulation_input(
 
 - dist:
 
-  Character vector with one distribution family for mortality, maturity
-  and reproduction, in that order. Values must be `"wei"`, `"exp"`,
-  `"gam"` or `"lgn"`.
+  Named character vector with one distribution family for each event. It
+  must contain entries named `mortality`, `maturity`, and
+  `reproduction`, with values `"wei"`, `"exp"`, `"gam"`, or `"lgn"`.
 
 - matclutch:
 
