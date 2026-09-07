@@ -7,21 +7,12 @@
 #' @param ev A character of the event (must be one of "mortality",
 #' "reproduction" or "maturity")
 #' @param newdata An optional dataset used for prediction
-#' @param lifelihoodData Output of [lifelihood::as_lifelihoodData()].
-#' @param visits Dataframe with 2 columns: "block" (must be the same as passed
-#' in [lifelihood::as_lifelihoodData()] `block` argument) and exactly "visit". For
-#' each block, "visit" corresponds to the ages where the events of individuals
-#' have been recorded.
 #'
 #' @keywords internal
 simulate_event <- function(
   object,
   ev,
-  newdata,
-  lifelihoodData,
-  use_censoring,
-  visits,
-  block_values = NULL
+  newdata
 ) {
   if (ev == "mortality") {
     expt_name <- "expt_death"
@@ -153,17 +144,6 @@ simulate_event <- function(
     column_names <- ev
     simul_df_full <- simul |> as_tibble(.name_repair = "minimal")
     colnames(simul_df_full) <- column_names
-  }
-
-  # add blocks, if provided
-  if (!is.null(lifelihoodData$block) && use_censoring && ev != "reproduction") {
-    simul_df_full <- add_visit_masks(
-      simul_df = simul_df_full,
-      lifelihoodData = lifelihoodData,
-      event = ev,
-      visits = visits,
-      block_values = block_values
-    )
   }
 
   return(simul_df_full)
@@ -459,18 +439,12 @@ simulate_life_history_tradeoff <- function(
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, the original model data are used.
-#' @param use_censoring Whether to retrieve censoring time intervals for
-#' `maturity`, `mortality`, and reproduction events. For example, adds
-#' `mortality_start` and `mortality_end` alongside `mortality`. If `newdata` is
-#' provided and censoring is enabled, `newdata` must include the block column.
-#' When `use_censoring = TRUE`, `visits` must be provided explicitly.
-#' Use [get_visits()] to derive visit data from the fitted data, or pass a
-#' custom visit data frame.
 #' @param visits Optional data frame with 2 columns: one column with the same
 #' name as the `block` argument passed to [lifelihood::as_lifelihoodData()] and
 #' one column named exactly `visit`. For each block, `visit` corresponds to the
-#' ages where the events of individuals have been recorded. Required when
-#' `use_censoring = TRUE`.
+#' ages where the events of individuals have been recorded. Supplying `visits`
+#' enables censoring; use [get_visits()] to derive visit data from the fitted
+#' data, or pass a custom visit data frame.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.
 #' @param remove_exact_clutch_dates Logical. Whether to remove exact simulated
 #'   clutch-date columns from the output. If `FALSE`, these columns are kept
@@ -484,7 +458,6 @@ simulate_life_history <- function(
   object,
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
-  use_censoring = FALSE,
   visits = NULL,
   seed = NULL,
   remove_exact_clutch_dates = TRUE
@@ -529,23 +502,17 @@ simulate_life_history <- function(
   }
 
   lifelihoodData <- object$lifelihoodData
+  censoring <- !is.null(visits)
   block_values <- NULL
-  if (use_censoring) {
+  if (censoring) {
     if (
       is.null(lifelihoodData$block) ||
         !is.null(lifelihoodData$block) &&
           !lifelihoodData$block %in% colnames(lifelihoodData$df)
     ) {
       stop(
-        "`use_censoring = TRUE` requires the dataset in `object$lifelihoodData$df` includes a column whose name correspond to `object$lifelihoodData$block`. ",
+        "Supplying `visits` requires the dataset in `object$lifelihoodData$df` to include a column whose name corresponds to `object$lifelihoodData$block`. ",
         "Please set `block` when creating the lifelihoodData object."
-      )
-    }
-    if (is.null(visits)) {
-      stop(
-        "`visits` cannot be NULL when `use_censoring = TRUE`. ",
-        "Use `get_visits(object$lifelihoodData)` to derive visit masks from ",
-        "the fitted data, or provide a custom visits data frame."
       )
     }
 
@@ -555,7 +522,7 @@ simulate_life_history <- function(
     } else {
       if (!(block_col %in% names(newdata))) {
         stop(
-          "`use_censoring = TRUE` with `newdata` requires a `",
+          "Supplying `visits` with `newdata` requires a `",
           block_col,
           "` column."
         )
@@ -582,11 +549,7 @@ simulate_life_history <- function(
       sim <- simulate_event(
         object,
         ev,
-        newdata,
-        lifelihoodData,
-        use_censoring = FALSE,
-        visits = visits,
-        block_values = block_values
+        newdata
       )
       df_sims <- bind_cols(sim, df_sims)
     }
@@ -647,7 +610,7 @@ simulate_life_history <- function(
 
   df_sims_up_na <- enforce_simulation_event_order(df_sims_up_na)
 
-  if (!is.null(lifelihoodData$block) && use_censoring) {
+  if (!is.null(lifelihoodData$block) && censoring) {
     if ("maturity" %in% events) {
       df_sims_up_na <- add_visit_masks(
         simul_df = df_sims_up_na,
@@ -701,7 +664,7 @@ simulate_life_history <- function(
     "reproduction" %in%
       events &&
       !is.null(lifelihoodData$block) &&
-      use_censoring
+      censoring
   ) {
     # Both simulation paths contain absolute, post-mortality clutch ages,
     # so visit masking here gives them the same reproduction censoring rules.
@@ -750,7 +713,7 @@ simulate_life_history <- function(
           object$lifelihoodData$matclutch_size
         ) := clutch_size_1
       )
-    if (use_censoring) {
+    if (censoring) {
       # The first clutch is maturity, so its visit bounds become the maturity
       # censoring interval, replacing the now-stale maturity-event bounds.
       df_sims_up_na <- df_sims_up_na |>
@@ -762,7 +725,7 @@ simulate_life_history <- function(
     }
   }
 
-  if (!use_censoring) {
+  if (!censoring) {
     if ("maturity" %in% events) {
       if ("mortality" %in% events) {
         df_sims_up_na <- df_sims_up_na |>
@@ -823,7 +786,7 @@ simulate_life_history <- function(
     }
   }
 
-  if ("reproduction" %in% events && use_censoring) {
+  if ("reproduction" %in% events && censoring) {
     exact_clutch_cols <- grep(
       "^clutch_[0-9]+$",
       names(df_sims_up_na),

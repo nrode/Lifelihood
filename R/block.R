@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Builds the visit-mask data frame used by [simulate_life_history()] when
-#' `use_censoring = TRUE`. The returned visits are inferred from the observed
+#' visits are supplied. The returned visits are inferred from the observed
 #' interval bounds in the original data.
 #'
 #' @param lifelihoodData Output of [as_lifelihoodData()]. It must include a

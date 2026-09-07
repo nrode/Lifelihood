@@ -184,7 +184,6 @@ pseudo_results$lifelihoodData$df$block <- 1
 simulated <- simulate_life_history(
   pseudo_results,
   seed = 1,
-  use_censoring = TRUE,
   visits = visits
 )
 

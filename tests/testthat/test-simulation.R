@@ -1,4 +1,6 @@
 test_that("simulations work", {
+  expect_false("use_censoring" %in% names(formals(simulate_life_history)))
+
   path_config <- if (rlang::is_interactive()) {
     "tests/testthat/config.yaml"
   } else {
@@ -115,7 +117,6 @@ test_that("censoring works for reproduction and validates block in newdata", {
     simulate_life_history(
       results,
       event = "maturity",
-      use_censoring = TRUE,
       visits = visits,
       seed = 1
     ),
@@ -126,20 +127,18 @@ test_that("censoring works for reproduction and validates block in newdata", {
     visit = seq(0, lifelihoodData$right_censoring_date)
   )
 
-  expect_error(
-    simulate_life_history(
-      results,
-      event = "maturity",
-      use_censoring = TRUE,
-      seed = 1
-    ),
-    "`visits` cannot be NULL"
+  sim_uncensored <- simulate_life_history(
+    results,
+    event = "maturity",
+    seed = 1
   )
+  expect_true(all(
+    c("maturity_start", "maturity_end") %in% names(sim_uncensored)
+  ))
 
   sim <- simulate_life_history(
     results,
     event = "reproduction",
-    use_censoring = TRUE,
     visits = simulation_visits,
     seed = 1
   )
@@ -170,7 +169,6 @@ test_that("censoring works for reproduction and validates block in newdata", {
   sim_with_exact_dates <- simulate_life_history(
     results,
     event = "reproduction",
-    use_censoring = TRUE,
     remove_exact_clutch_dates = FALSE,
     visits = simulation_visits,
     seed = 1
@@ -194,7 +192,6 @@ test_that("censoring works for reproduction and validates block in newdata", {
       results,
       event = "mortality",
       newdata = newdata_without_block,
-      use_censoring = TRUE,
       visits = visits
     ),
     "requires a `geno` column"

@@ -65,7 +65,6 @@ test_that("trade-off simulations work for reproduction events", {
   sim_reproduction_censored <- simulate_life_history(
     results,
     event = "reproduction",
-    use_censoring = TRUE,
     visits = simulation_visits,
     seed = 1
   )
@@ -79,7 +78,6 @@ test_that("trade-off simulations work for reproduction events", {
   sim_reproduction_censored_exact <- simulate_life_history(
     results,
     event = "reproduction",
-    use_censoring = TRUE,
     remove_exact_clutch_dates = FALSE,
     visits = simulation_visits,
     seed = 1

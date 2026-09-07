@@ -89,13 +89,12 @@ custom_visits <- tidyr::expand_grid(
 )
 ```
 
-To use censoring intervals in the simulation, you can pass visits explicitly along with `use_censoring = TRUE`:
+To use censoring intervals in the simulation, pass visits explicitly:
 
 ```{r}
 results |>
   simulate_life_history(
     event = "maturity",
-    use_censoring = TRUE,
     visits = custom_visits
   ) |>
   head()
@@ -117,7 +116,6 @@ Now we can pass this to the `simulate_life_history()` function:
 results |>
   simulate_life_history(
     event = "maturity",
-    use_censoring = TRUE,
     visits = custom_visits
   ) |>
   head()
@@ -131,7 +129,6 @@ Requesting `event = "reproduction"` also simulates maturity and mortality, becau
 results |>
   simulate_life_history(
     event = "reproduction",
-    use_censoring = TRUE,
     visits = custom_visits,
     seed = 1
   ) |>

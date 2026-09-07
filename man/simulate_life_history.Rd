@@ -8,7 +8,6 @@ simulate_life_history(
   object,
   event = c("all", "mortality", "reproduction", "maturity"),
   newdata = NULL,
-  use_censoring = FALSE,
   visits = NULL,
   seed = NULL,
   remove_exact_clutch_dates = TRUE
@@ -25,19 +24,12 @@ Default is \code{"all"}, which simulates all fitted events.}
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
 If \code{NULL}, the original model data are used.}
 
-\item{use_censoring}{Whether to retrieve censoring time intervals for
-\code{maturity}, \code{mortality}, and reproduction events. For example, adds
-\code{mortality_start} and \code{mortality_end} alongside \code{mortality}. If \code{newdata} is
-provided and censoring is enabled, \code{newdata} must include the block column.
-When \code{use_censoring = TRUE}, \code{visits} must be provided explicitly.
-Use \code{\link[=get_visits]{get_visits()}} to derive visit data from the fitted data, or pass a
-custom visit data frame.}
-
 \item{visits}{Optional data frame with 2 columns: one column with the same
 name as the \code{block} argument passed to \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} and
 one column named exactly \code{visit}. For each block, \code{visit} corresponds to the
-ages where the events of individuals have been recorded. Required when
-\code{use_censoring = TRUE}.}
+ages where the events of individuals have been recorded. Supplying \code{visits}
+enables censoring; use \code{\link[=get_visits]{get_visits()}} to derive visit data from the fitted
+data, or pass a custom visit data frame.}
 
 \item{seed}{Optional integer. If provided, sets the random seed for reproducibility.}
 

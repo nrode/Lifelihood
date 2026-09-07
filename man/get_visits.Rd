@@ -16,6 +16,6 @@ one column named \code{visit}.
 }
 \description{
 Builds the visit-mask data frame used by \code{\link[=simulate_life_history]{simulate_life_history()}} when
-\code{use_censoring = TRUE}. The returned visits are inferred from the observed
+visits are supplied. The returned visits are inferred from the observed
 interval bounds in the original data.
 }
