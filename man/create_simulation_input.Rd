@@ -34,9 +34,9 @@ the columns named in \code{covariates} and \code{sex}.}
 \item{config}{Path to a YAML configuration file or an already-loaded
 configuration list.}
 
-\item{dist}{Character vector with one distribution family for mortality,
-maturity and reproduction, in that order. Values
-must be \code{"wei"}, \code{"exp"}, \code{"gam"} or \code{"lgn"}.}
+\item{dist}{Named character vector with one distribution family for each
+event. It must contain entries named \code{mortality}, \code{maturity}, and
+\code{reproduction}, with values \code{"wei"}, \code{"exp"}, \code{"gam"}, or \code{"lgn"}.}
 
 \item{matclutch}{Whether maturity corresponds to the first clutch.}
 

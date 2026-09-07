@@ -57,12 +57,10 @@ the interval in which the death was determined.}
 \item{death_end}{Column name containing the second date of
 the interval in which the death was determined.}
 
-\item{dist}{Vector of characters with the name of the
-statistical law to use. Must be of length 3 and each element
-must be one of "wei" (Weibull law), "exp" (Exponential law),
-"gam" (Gamma law) or "lgn" (Log-normal law). The first one is
-used for mortality, the second one is used for maturity and the
-third is used for reproduction.}
+\item{dist}{Named character vector specifying the statistical law to use
+for each event. It must contain entries named \code{mortality}, \code{maturity}, and
+\code{reproduction}, with each value one of "wei" (Weibull law), "exp"
+(Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).}
 
 \item{covariates}{Vector containing the names of the covariates.}
 

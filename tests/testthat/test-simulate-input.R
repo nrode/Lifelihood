@@ -76,14 +76,17 @@ test_that("create_simulation_input builds a simulation-ready results object", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
   expect_s3_class(results, "lifelihoodResults")
   expect_s3_class(results$lifelihoodData, "lifelihoodData")
   expect_equal(results$sample_size, n)
-  expect_equal(results$lifelihoodData$dist, rep("wei", 3))
+  expect_identical(
+    results$lifelihoodData$dist,
+    c(mortality = "wei", maturity = "wei", reproduction = "wei")
+  )
   expect_true(all(
     c(
       "name",
@@ -110,7 +113,7 @@ test_that("manual simulation input produces coherent offspring totals", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 
@@ -140,6 +143,55 @@ test_that("manual simulation input produces coherent offspring totals", {
   }
 })
 
+test_that("simulated life-history events are ordered", {
+  results <- create_simulation_input(
+    effects = simulation_input_effects(),
+    data = simulation_input_data(1000),
+    covariates = c("par", "spore"),
+    sex = "sex",
+    config = simulation_input_config(),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
+    param_bounds_df = simulation_input_bounds()
+  )
+
+  simul <- simulate_life_history(results, seed = 1)
+  clutch_cols <- grep("^clutch_start_[0-9]+$", names(simul), value = TRUE)
+  maturity_observed <- simul$maturity_start < simul$mortality_start
+
+  expect_true(all(
+    simul$maturity_start[maturity_observed] <
+      simul$mortality_start[maturity_observed]
+  ))
+
+  for (clutch_col in clutch_cols) {
+    clutch <- simul[[clutch_col]]
+    has_clutch <- !is.na(clutch)
+    expect_true(all(
+      maturity_observed[has_clutch] &
+        clutch[has_clutch] > simul$maturity_start[has_clutch] &
+        clutch[has_clutch] < simul$mortality_start[has_clutch]
+    ))
+  }
+})
+
+test_that("invalid event boundaries are censored", {
+  simulated <- tibble(
+    maturity = c(5, 10, 5, NA_real_),
+    mortality = c(10, 10, 5, 10),
+    clutch_1 = c(6, 6, 5, 4),
+    clutch_size_1 = as.integer(c(2, 3, 4, 5))
+  )
+
+  ordered <- enforce_simulation_event_order(simulated)
+
+  expect_equal(ordered$maturity, c(5, NA_real_, NA_real_, NA_real_))
+  expect_equal(ordered$clutch_1, c(6, NA_real_, NA_real_, NA_real_))
+  expect_equal(
+    ordered$clutch_size_1,
+    as.integer(c(2, NA, NA, NA))
+  )
+})
+
 test_that("create_simulation_input accepts explicit covariate data", {
   n <- 1000
   set.seed(1)
@@ -155,7 +207,7 @@ test_that("create_simulation_input accepts explicit covariate data", {
     covariates = c("par", "spore"),
     sex = "sex",
     config = simulation_input_config(),
-    dist = c("wei", "wei", "wei"),
+    dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
     param_bounds_df = simulation_input_bounds()
   )
 

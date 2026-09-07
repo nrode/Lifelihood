@@ -47,7 +47,7 @@
 #'  death_end = "death_end",
 #'  matclutch = FALSE,
 #'  covariates = c("par", "geno"),
-#'  dist = c("wei", "gam", "lgn")
+#'  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 #')
 #' results <- lifelihood(
 #'lifelihoodData = dataLFH,
@@ -113,7 +113,7 @@ compute_fitted_event_rate <- function(
 
   if (event == "mortality") {
     end_col <- lifelihoodData$death_end
-    family <- lifelihoodData$dist[1]
+    family <- lifelihoodData$dist[["mortality"]]
     covar <- c(
       lifelihoodResults$formula$expt_death,
       lifelihoodResults$formula$survival_param2
@@ -136,7 +136,7 @@ compute_fitted_event_rate <- function(
     }
   } else if (event == "maturity") {
     end_col <- lifelihoodData$maturity_end
-    family <- lifelihoodData$dist[2]
+    family <- lifelihoodData$dist[["maturity"]]
     covar <- c(
       lifelihoodResults$formula$expt_maturity,
       lifelihoodResults$formula$maturity_param2
@@ -158,7 +158,7 @@ compute_fitted_event_rate <- function(
       covar_sex <- covar
     }
   } else if (event == "reproduction") {
-    family <- lifelihoodData$dist[3]
+    family <- lifelihoodData$dist[["reproduction"]]
     covar_sex <- c(
       lifelihoodResults$formula$expt_reproduction,
       lifelihoodResults$formula$reproduction_param2
@@ -412,7 +412,7 @@ compute_fitted_event_rate <- function(
 #'  death_end = "death_end",
 #'  matclutch = FALSE,
 #'  covariates = c("par", "geno"),
-#'  dist = c("wei", "gam", "lgn")
+#'  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 #')
 #' observed_emergence_rate <- compute_observed_event_rate(
 #'  lifelihoodData = dataLFH,

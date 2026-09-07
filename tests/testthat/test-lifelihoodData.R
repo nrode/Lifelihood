@@ -21,7 +21,7 @@ test_that("as_lifelihoodData works", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c("wei", "gam", "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
 
   expect_true(!is.null(lifelihoodData$df))
@@ -33,13 +33,38 @@ test_that("as_lifelihoodData works", {
   expect_true(all(lifelihoodData$clutchs == clutchs))
   expect_true(lifelihoodData$death_start == "death_start")
   expect_true(lifelihoodData$death_end == "death_end")
-  expect_true(all(lifelihoodData$dist == c("wei", "gam", "exp")))
+  expect_identical(
+    lifelihoodData$dist,
+    c(mortality = "wei", maturity = "gam", reproduction = "exp")
+  )
   expect_true(all(lifelihoodData$covariates == c("par", "spore")))
   expect_true(!lifelihoodData$matclutch)
   expect_true(lifelihoodData$right_censoring_date == 1000)
   expect_true(lifelihoodData$critical_age == 20)
   expect_true(lifelihoodData$ratiomax == 10)
   expect_null(lifelihoodData$block)
+})
+
+test_that("distribution families must be named by event", {
+  expect_identical(
+    validate_dist(c(
+      reproduction = "exp",
+      mortality = "wei",
+      maturity = "gam"
+    )),
+    c(mortality = "wei", maturity = "gam", reproduction = "exp")
+  )
+
+  expect_error(
+    validate_dist(c("wei", "gam", "exp")),
+    "`dist` must be a named character vector",
+    fixed = TRUE
+  )
+  expect_error(
+    validate_dist(c(mortality = "wei", maturity = "gam", reproduction = "bad")),
+    "`dist` must be a named character vector",
+    fixed = TRUE
+  )
 })
 
 test_that("as_lifelihoodData validates matclutch_size", {
@@ -54,7 +79,7 @@ test_that("as_lifelihoodData validates matclutch_size", {
     clutchs = character(),
     death_start = "death_start",
     death_end = "death_end",
-    dist = c("wei", "gam", "lgn"),
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
     covariates = character()
   )
 
@@ -125,7 +150,7 @@ test_that("the intermediate file includes matclutch_size", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = "par",
-    dist = c("wei", "gam", "lgn"),
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
     path_config = use_test_config("config_pierrick"),
     temp_dir = temp_dir
   )

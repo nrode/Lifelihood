@@ -54,7 +54,7 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "death_end",
   matclutch = FALSE,
   covariates = c("par", "geno"),
-  dist = c("wei", "gam", "lgn")
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 ## Right convergence
@@ -157,7 +157,7 @@ simulation_input <- create_simulation_input(
   matclutch_size = "first_clutch_size",
   block = "block",
   config = simulation_config,
-  dist = c("wei", "gam", "lgn"),
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
   n_per_combination = "n_individuals",
   param_bounds_df = m1$param_bounds_df
 )
@@ -168,12 +168,11 @@ simulation_input$lifelihoodData$df <- data.frame(
   simulation_input$lifelihoodData$df
 )
 
-visits <- data.frame(block = 1, visit = seq(1, 200, by = 0.1))
+visits <- data.frame(block = 1, visit = seq(0, 1000, by = 0.1))
 
 sim_data <- simulate_life_history(
   object = simulation_input,
   event = "all",
-  use_censoring = TRUE,
   visits = visits
 )
 sim_data
@@ -245,7 +244,7 @@ simulation_input <- create_simulation_input(
   matclutch_size = "first_clutch_size",
   block = "block",
   config = simulation_config,
-  dist = c("wei", "gam", "lgn"),
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
   n_per_combination = "n_individuals",
   param_bounds_df = m1$param_bounds_df
 )
@@ -260,9 +259,7 @@ visits <- data.frame(block = 1, visit = seq(1, 200, by = 0.1))
 set.seed(123)
 sim_data <- simulate_life_history(
   object = simulation_input,
-  event = "all",
-  use_censoring = FALSE,
-  visits = NULL
+  event = "all"
 ) |>
   mutate(
     maturity_end = maturity_start + 0.005,
@@ -305,7 +302,7 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "mortality_end",
   matclutch = FALSE,
   covariates = c("geno"),
-  dist = c("wei", "gam", "lgn")
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 ## Right convergence

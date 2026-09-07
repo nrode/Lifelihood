@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Builds the visit-mask data frame used by [simulate_life_history()] when
-#' `use_censoring = TRUE`. The returned visits are inferred from the observed
+#' visits are supplied. The returned visits are inferred from the observed
 #' interval bounds in the original data.
 #'
 #' @param lifelihoodData Output of [as_lifelihoodData()]. It must include a
@@ -45,7 +45,29 @@ get_visits <- function(lifelihoodData) {
 }
 
 #' @keywords internal
-compute_visit_bounds <- function(ages, v) {
+compute_visit_bounds <- function(ages, v, event, block) {
+  first_visit <- min(v)
+  last_visit <- max(v)
+  outside_visit_range <- !is.na(ages) &
+    (ages < first_visit | ages > last_visit)
+
+  if (any(outside_visit_range, na.rm = TRUE)) {
+    stop(
+      "Event ages for `",
+      event,
+      "` in block `",
+      block,
+      "` fall outside the supplied visit range [",
+      first_visit,
+      ", ",
+      last_visit,
+      "]. Offending age(s): ",
+      paste(unique(ages[outside_visit_range]), collapse = ", "),
+      ". Visit dates must cover all non-missing event ages.",
+      call. = FALSE
+    )
+  }
+
   visit_id <- findInterval(ages, v)
   visit_start <- rep(NA_real_, length(ages))
   visit_end <- rep(NA_real_, length(ages))
@@ -162,7 +184,9 @@ add_visit_masks <- function(
         idx <- which(block_key_long == bk)
         bounds <- compute_visit_bounds(
           clutch_long$.clutch[idx],
-          visits_by_block[[bk]]
+          visits_by_block[[bk]],
+          event = event,
+          block = bk
         )
         clutch_long$.visit_start[idx] <- bounds$start
         clutch_long$.visit_end[idx] <- bounds$end
@@ -235,7 +259,12 @@ add_visit_masks <- function(
 
   for (bk in unique(block_key_vec)) {
     idx <- which(block_key_vec == bk)
-    bounds <- compute_visit_bounds(event_ages[idx], visits_by_block[[bk]])
+    bounds <- compute_visit_bounds(
+      event_ages[idx],
+      visits_by_block[[bk]],
+      event = event,
+      block = bk
+    )
     visit_start[idx] <- bounds$start
     visit_end[idx] <- bounds$end
   }

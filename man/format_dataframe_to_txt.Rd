@@ -57,8 +57,9 @@ interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{dist}{Vector of characters with the name of the
-statistical law to use.}
+\item{dist}{Named character vector with one distribution family for each
+event. It must contain entries named \code{mortality}, \code{maturity}, and
+\code{reproduction}.}
 
 \item{path_config}{A character string specifying the file path
 to the YAML configuration file.}

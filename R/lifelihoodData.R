@@ -30,12 +30,10 @@
 #' the interval in which the death was determined.
 #' @param death_end Column name containing the second date of
 #' the interval in which the death was determined.
-#' @param dist Vector of characters with the name of the
-#' statistical law to use. Must be of length 3 and each element
-#' must be one of "wei" (Weibull law), "exp" (Exponential law),
-#' "gam" (Gamma law) or "lgn" (Log-normal law). The first one is
-#' used for mortality, the second one is used for maturity and the
-#' third is used for reproduction.
+#' @param dist Named character vector specifying the statistical law to use
+#' for each event. It must contain entries named `mortality`, `maturity`, and
+#' `reproduction`, with each value one of "wei" (Weibull law), "exp"
+#' (Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).
 #' @param covariates Vector containing the names of the covariates.
 #' @param block Column name containing the block to which each individual belong to.
 #' @param matclutch Whether the maturity event (designated by
@@ -79,12 +77,7 @@ as_lifelihoodData <- function(
   critical_age = 20,
   ratiomax = 10
 ) {
-  valid_dist <- c("wei", "gam", "lgn", "exp")
-  if (length(dist) != 3 || !all(dist %in% valid_dist)) {
-    stop(
-      "'dist' must be a character vector of length 3 containing only 'wei', 'exp', 'gam', or 'lgn'"
-    )
-  }
+  dist <- validate_dist(dist)
 
   if (isTRUE(matclutch) && is.null(matclutch_size)) {
     stop("`matclutch_size` argument cannot be NULL when `matclutch` is TRUE.")
@@ -139,4 +132,29 @@ as_lifelihoodData <- function(
   )
   class(dataObject) <- "lifelihoodData"
   return(dataObject)
+}
+
+#' @keywords internal
+validate_dist <- function(dist) {
+  required_names <- c("mortality", "maturity", "reproduction")
+  valid_values <- c("wei", "gam", "lgn", "exp")
+
+  if (
+    !is.character(dist) ||
+      length(dist) != length(required_names) ||
+      is.null(names(dist)) ||
+      anyDuplicated(names(dist)) ||
+      !setequal(names(dist), required_names) ||
+      anyNA(dist) ||
+      !all(dist %in% valid_values)
+  ) {
+    stop(
+      "`dist` must be a named character vector with exactly the names ",
+      "`mortality`, `maturity`, and `reproduction`; each value must be one ",
+      "of `wei`, `exp`, `gam`, or `lgn`.",
+      call. = FALSE
+    )
+  }
+
+  dist[required_names]
 }

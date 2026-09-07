@@ -84,7 +84,7 @@ test_that("split_data_by_groups creates correct sub-datasets", {
     clutchs = c(),
     death_start = "death_start",
     death_end = "death_end",
-    dist = c("wei", "gam", "exp"),
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp"),
     block = NULL,
     matclutch = FALSE,
     matclutch_size = NULL,
@@ -133,7 +133,7 @@ test_that("lifelihood with group_by_group=TRUE and n_fit > 1 works end-to-end", 
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par"),
-    dist = c("wei", "gam", "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
 
   results <- suppressWarnings(
@@ -212,7 +212,7 @@ test_that("lifelihood rejects seeds when group_by_group=TRUE and n_fit > 1", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par"),
-    dist = c("wei", "gam", "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
 
   expect_error(

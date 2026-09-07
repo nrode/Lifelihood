@@ -28,7 +28,7 @@ test_that("lifelihoodResults works", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c("wei", "gam", "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
 
   args_list <- list(

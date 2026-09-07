@@ -20,9 +20,9 @@
 #' @param sex Name of the sex column in `data`.
 #' @param config Path to a YAML configuration file or an already-loaded
 #'   configuration list.
-#' @param dist Character vector with one distribution family for mortality,
-#'   maturity and reproduction, in that order. Values
-#'   must be `"wei"`, `"exp"`, `"gam"` or `"lgn"`.
+#' @param dist Named character vector with one distribution family for each
+#'   event. It must contain entries named `mortality`, `maturity`, and
+#'   `reproduction`, with values `"wei"`, `"exp"`, `"gam"`, or `"lgn"`.
 #' @param matclutch Whether maturity corresponds to the first clutch.
 #' @param matclutch_size Optional name of the first clutch size column when
 #'   `matclutch = TRUE`.
@@ -59,6 +59,7 @@ create_simulation_input <- function(
   }
 
   config <- load_simulation_config(config)
+  dist <- validate_dist(dist)
 
   df <- as.data.frame(data)
 

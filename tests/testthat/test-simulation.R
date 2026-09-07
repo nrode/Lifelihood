@@ -1,4 +1,6 @@
 test_that("simulations work", {
+  expect_false("use_censoring" %in% names(formals(simulate_life_history)))
+
   path_config <- if (rlang::is_interactive()) {
     "tests/testthat/config.yaml"
   } else {
@@ -27,7 +29,7 @@ test_that("simulations work", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c("wei", "gam", "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
 
   results <- lifelihood(
@@ -98,7 +100,7 @@ test_that("censoring works for reproduction and validates block in newdata", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c("wei", "gam", "exp"),
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp"),
     block = "geno",
     matclutch = FALSE
   )
@@ -111,22 +113,33 @@ test_that("censoring works for reproduction and validates block in newdata", {
 
   visits <- get_visits(lifelihoodData)
   expect_true(all(c("geno", "visit") %in% names(visits)))
-
   expect_error(
     simulate_life_history(
       results,
       event = "maturity",
-      use_censoring = TRUE,
+      visits = visits,
       seed = 1
     ),
-    "`visits` cannot be NULL"
+    "Event ages for `maturity`"
   )
+  simulation_visits <- tidyr::expand_grid(
+    geno = unique(df$geno),
+    visit = seq(0, lifelihoodData$right_censoring_date)
+  )
+
+  sim_uncensored <- simulate_life_history(
+    results,
+    event = "maturity",
+    seed = 1
+  )
+  expect_true(all(
+    c("maturity_start", "maturity_end") %in% names(sim_uncensored)
+  ))
 
   sim <- simulate_life_history(
     results,
     event = "reproduction",
-    use_censoring = TRUE,
-    visits = visits,
+    visits = simulation_visits,
     seed = 1
   )
   expect_identical(sim$geno, df$geno)
@@ -136,13 +149,13 @@ test_that("censoring works for reproduction and validates block in newdata", {
       "maturity_end",
       "mortality_start",
       "mortality_end",
-      "clutch_1",
       "clutch_start_1",
       "clutch_end_1",
       "clutch_size_1"
     ) %in%
       names(sim)
   ))
+  expect_false(any(grepl("^clutch_[0-9]+$", names(sim))))
   size_cols <- grep("^clutch_size_[0-9]+$", names(sim), value = TRUE)
   no_repro_data <- rowSums(!is.na(sim[size_cols])) == 0
   # Individuals with no clutch-size data at all (e.g. males) must stay NA so
@@ -153,13 +166,32 @@ test_that("censoring works for reproduction and validates block in newdata", {
     rowSums(sim[size_cols], na.rm = TRUE)[!no_repro_data]
   )
 
+  sim_with_exact_dates <- simulate_life_history(
+    results,
+    event = "reproduction",
+    remove_exact_clutch_dates = FALSE,
+    visits = simulation_visits,
+    seed = 1
+  )
+  expect_true(any(grepl(
+    "^exact_clutch_date_[0-9]+$",
+    names(sim_with_exact_dates)
+  )))
+  expect_false(any(grepl(
+    "^clutch_[0-9]+$",
+    names(sim_with_exact_dates)
+  )))
+  expect_equal(
+    sim_with_exact_dates$total_n_offspring,
+    sim$total_n_offspring
+  )
+
   newdata_without_block <- df[1:5, c("par", "spore")]
   expect_error(
     simulate_life_history(
       results,
       event = "mortality",
       newdata = newdata_without_block,
-      use_censoring = TRUE,
       visits = visits
     ),
     "requires a `geno` column"

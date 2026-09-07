@@ -133,7 +133,7 @@ pseudo_results <- create_simulation_input(
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  dist = c("wei", "wei", "wei"),
+  dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
   n_per_combination = "n_individuals"
 )
 
@@ -177,14 +177,13 @@ The object returned by `create_simulation_input()` can be passed directly to
 `simulate_life_history()`.
 
 ```{r}
-visits <- data.frame(block = 1, visit = seq(0.001, 1000, by = 0.1))
+visits <- data.frame(block = 1, visit = seq(0, 1000, by = 0.1))
 pseudo_results$lifelihoodData$block <- "block"
 pseudo_results$lifelihoodData$df$block <- 1
 
 simulated <- simulate_life_history(
   pseudo_results,
   seed = 1,
-  use_censoring = TRUE,
   visits = visits
 )
 
@@ -223,7 +222,7 @@ simulated_lifelihood_data <- as_lifelihoodData(
   death_start = "mortality_start",
   death_end = "mortality_end",
   covariates = c("par", "spore"),
-  dist = c("wei", "wei", "wei"),
+  dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
   matclutch = FALSE
 )
 
