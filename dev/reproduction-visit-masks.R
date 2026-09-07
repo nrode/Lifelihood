@@ -52,6 +52,7 @@ sim_raw <- simulate_life_history(
   results,
   event = "reproduction",
   use_censoring = TRUE,
+  remove_exact_clutch_dates = FALSE,
   visits = data.frame(block = c(1), visit = c(1:13, 14, 19, 19:200)),
   seed = 1
 )
@@ -60,6 +61,7 @@ sim_cens <- simulate_life_history(
   results,
   event = "reproduction",
   use_censoring = TRUE,
+  remove_exact_clutch_dates = FALSE,
   visits = visits,
   seed = 1
 )

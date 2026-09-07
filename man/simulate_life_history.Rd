@@ -10,7 +10,8 @@ simulate_life_history(
   newdata = NULL,
   use_censoring = FALSE,
   visits = NULL,
-  seed = NULL
+  seed = NULL,
+  remove_exact_clutch_dates = TRUE
 )
 }
 \arguments{
@@ -39,6 +40,10 @@ ages where the events of individuals have been recorded. Required when
 \code{use_censoring = TRUE}.}
 
 \item{seed}{Optional integer. If provided, sets the random seed for reproducibility.}
+
+\item{remove_exact_clutch_dates}{Logical. Whether to remove exact simulated
+clutch-date columns from the output. If \code{FALSE}, these columns are kept
+and renamed to \verb{exact_clutch_date_\{i\}}. Default is \code{TRUE}.}
 }
 \value{
 A list of \code{data.frame} with one column per simulated event.

@@ -65,10 +65,28 @@ test_that("trade-off simulations work for reproduction events", {
     seed = 1
   )
   expect_true(all(
-    c("clutch_1", "clutch_start_1", "clutch_end_1", "clutch_size_1") %in%
+    c("clutch_start_1", "clutch_end_1", "clutch_size_1") %in%
       names(sim_reproduction_censored)
   ))
+  expect_false(any(grepl("^clutch_[0-9]+$", names(sim_reproduction_censored))))
   expect_equal(nrow(sim_reproduction_censored), nrow(df))
+
+  sim_reproduction_censored_exact <- simulate_life_history(
+    results,
+    event = "reproduction",
+    use_censoring = TRUE,
+    remove_exact_clutch_dates = FALSE,
+    visits = get_visits(lifelihoodData),
+    seed = 1
+  )
+  expect_true(any(grepl(
+    "^exact_clutch_date_[0-9]+$",
+    names(sim_reproduction_censored_exact)
+  )))
+  expect_false(any(grepl(
+    "^clutch_[0-9]+$",
+    names(sim_reproduction_censored_exact)
+  )))
 
   maturity_observed <- sim_reproduction$maturity_start <
     sim_reproduction$mortality_start

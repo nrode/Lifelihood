@@ -136,13 +136,13 @@ test_that("censoring works for reproduction and validates block in newdata", {
       "maturity_end",
       "mortality_start",
       "mortality_end",
-      "clutch_1",
       "clutch_start_1",
       "clutch_end_1",
       "clutch_size_1"
     ) %in%
       names(sim)
   ))
+  expect_false(any(grepl("^clutch_[0-9]+$", names(sim))))
   size_cols <- grep("^clutch_size_[0-9]+$", names(sim), value = TRUE)
   no_repro_data <- rowSums(!is.na(sim[size_cols])) == 0
   # Individuals with no clutch-size data at all (e.g. males) must stay NA so
@@ -151,6 +151,27 @@ test_that("censoring works for reproduction and validates block in newdata", {
   expect_equal(
     sim$total_n_offspring[!no_repro_data],
     rowSums(sim[size_cols], na.rm = TRUE)[!no_repro_data]
+  )
+
+  sim_with_exact_dates <- simulate_life_history(
+    results,
+    event = "reproduction",
+    use_censoring = TRUE,
+    remove_exact_clutch_dates = FALSE,
+    visits = visits,
+    seed = 1
+  )
+  expect_true(any(grepl(
+    "^exact_clutch_date_[0-9]+$",
+    names(sim_with_exact_dates)
+  )))
+  expect_false(any(grepl(
+    "^clutch_[0-9]+$",
+    names(sim_with_exact_dates)
+  )))
+  expect_equal(
+    sim_with_exact_dates$total_n_offspring,
+    sim$total_n_offspring
   )
 
   newdata_without_block <- df[1:5, c("par", "spore")]

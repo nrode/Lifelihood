@@ -475,6 +475,9 @@ simulate_life_history_tradeoff <- function(
 #' ages where the events of individuals have been recorded. Required when
 #' `use_censoring = TRUE`.
 #' @param seed Optional integer. If provided, sets the random seed for reproducibility.
+#' @param remove_exact_clutch_dates Logical. Whether to remove exact simulated
+#'   clutch-date columns from the output. If `FALSE`, these columns are kept
+#'   and renamed to `exact_clutch_date_{i}`. Default is `TRUE`.
 #'
 #' @return A list of `data.frame` with one column per simulated event.
 #'   Each column contains simulated values for that event.
@@ -486,7 +489,8 @@ simulate_life_history <- function(
   newdata = NULL,
   use_censoring = FALSE,
   visits = NULL,
-  seed = NULL
+  seed = NULL,
+  remove_exact_clutch_dates = TRUE
 ) {
   if (!is.null(seed)) {
     set.seed(seed)
@@ -819,6 +823,24 @@ simulate_life_history <- function(
         mutate(mortality_start = mortality, mortality_end = mortality) |>
         select(-mortality) |>
         relocate(mortality_start, mortality_end, .after = last_col())
+    }
+  }
+
+  if ("reproduction" %in% events && use_censoring) {
+    exact_clutch_cols <- grep(
+      "^clutch_[0-9]+$",
+      names(df_sims_up_na),
+      value = TRUE
+    )
+
+    if (length(exact_clutch_cols) > 0) {
+      if (remove_exact_clutch_dates) {
+        df_sims_up_na <- df_sims_up_na |>
+          select(-all_of(exact_clutch_cols))
+      } else {
+        names(df_sims_up_na)[match(exact_clutch_cols, names(df_sims_up_na))] <-
+          sub("^clutch_", "exact_clutch_date_", exact_clutch_cols)
+      }
     }
   }
 
