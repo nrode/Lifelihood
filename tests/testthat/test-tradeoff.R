@@ -70,6 +70,23 @@ test_that("trade-off simulations work for reproduction events", {
   ))
   expect_equal(nrow(sim_reproduction_censored), nrow(df))
 
+  maturity_observed <- sim_reproduction$maturity_start <
+    sim_reproduction$mortality_start
+  clutch_cols <- grep(
+    "^clutch_start_[0-9]+$",
+    names(sim_reproduction),
+    value = TRUE
+  )
+  for (clutch_col in clutch_cols) {
+    clutch <- sim_reproduction[[clutch_col]]
+    has_clutch <- !is.na(clutch)
+    expect_true(all(
+      maturity_observed[has_clutch] &
+        clutch[has_clutch] > sim_reproduction$maturity_start[has_clutch] &
+        clutch[has_clutch] < sim_reproduction$mortality_start[has_clutch]
+    ))
+  }
+
   sim_mortality <- simulate_life_history(results, event = "mortality", seed = 1)
   expect_identical(
     sort(names(sim_mortality)),

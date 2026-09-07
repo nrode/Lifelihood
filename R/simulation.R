@@ -574,33 +574,6 @@ simulate_life_history <- function(
       newdata = newdata,
       lifelihoodData = lifelihoodData
     )
-    if (!is.null(lifelihoodData$block) && use_censoring) {
-      df_sims_up_na <- df_sims_up_na |>
-        add_visit_masks(
-          lifelihoodData = lifelihoodData,
-          event = "maturity",
-          visits = visits,
-          block_values = block_values
-        ) |>
-        add_visit_masks(
-          lifelihoodData = lifelihoodData,
-          event = "mortality",
-          visits = visits,
-          block_values = block_values
-        ) |>
-        mutate(
-          maturity_start = if_else(
-            is.na(maturity_start),
-            mortality_start,
-            maturity_start
-          ),
-          maturity_end = if_else(
-            is.na(maturity_end),
-            object$lifelihoodData$right_censoring_date,
-            maturity_end
-          )
-        )
-    }
   } else {
     # Simulation without tradeoffs
     df_sims <- NULL
@@ -610,9 +583,9 @@ simulate_life_history <- function(
         ev,
         newdata,
         lifelihoodData,
-        use_censoring,
-        visits,
-        block_values
+        use_censoring = FALSE,
+        visits = visits,
+        block_values = block_values
       )
       df_sims <- bind_cols(sim, df_sims)
     }
@@ -670,6 +643,45 @@ simulate_life_history <- function(
       df_sims_up_na <- df_sims
     } ## End of reproduction events
   } ## End of simulation without
+
+  df_sims_up_na <- enforce_simulation_event_order(df_sims_up_na)
+
+  if (!is.null(lifelihoodData$block) && use_censoring) {
+    if ("maturity" %in% events) {
+      df_sims_up_na <- add_visit_masks(
+        simul_df = df_sims_up_na,
+        lifelihoodData = lifelihoodData,
+        event = "maturity",
+        visits = visits,
+        block_values = block_values
+      )
+    }
+    if ("mortality" %in% events) {
+      df_sims_up_na <- add_visit_masks(
+        simul_df = df_sims_up_na,
+        lifelihoodData = lifelihoodData,
+        event = "mortality",
+        visits = visits,
+        block_values = block_values
+      )
+    }
+
+    if (all(c("maturity", "mortality") %in% events)) {
+      df_sims_up_na <- df_sims_up_na |>
+        mutate(
+          maturity_start = if_else(
+            is.na(maturity_start),
+            mortality_start,
+            maturity_start
+          ),
+          maturity_end = if_else(
+            is.na(maturity_end),
+            lifelihoodData$right_censoring_date,
+            maturity_end
+          )
+        )
+    }
+  }
 
   if ("reproduction" %in% events) {
     df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
@@ -827,6 +839,39 @@ simulate_life_history <- function(
   }
 
   return(as_tibble(df_sims_up_na))
+}
+
+#' @keywords internal
+enforce_simulation_event_order <- function(simul_df) {
+  if (!all(c("maturity", "mortality") %in% names(simul_df))) {
+    return(simul_df)
+  }
+
+  maturity <- simul_df$maturity
+  mortality <- simul_df$mortality
+  valid_maturity <- is.finite(maturity) &
+    is.finite(mortality) &
+    maturity < mortality
+
+  simul_df$maturity[!valid_maturity] <- NA_real_
+
+  clutch_cols <- grep("^clutch_[0-9]+$", names(simul_df), value = TRUE)
+  for (clutch_col in clutch_cols) {
+    clutch <- simul_df[[clutch_col]]
+    valid_clutch <- valid_maturity &
+      is.finite(clutch) &
+      clutch > maturity &
+      clutch < mortality
+
+    simul_df[[clutch_col]][!valid_clutch] <- NA_real_
+
+    clutch_size_col <- sub("^clutch_", "clutch_size_", clutch_col)
+    if (clutch_size_col %in% names(simul_df)) {
+      simul_df[[clutch_size_col]][!valid_clutch] <- NA
+    }
+  }
+
+  simul_df
 }
 
 #' @keywords internal
