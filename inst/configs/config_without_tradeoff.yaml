@@ -12,7 +12,6 @@ reproduction:
   tof_decay: not_fitted
   increase_death_hazard_n_offspring: not_fitted
   lin_decrease_hazard: not_fitted
-  quad_senescence: not_fitted
   quad_decrease_hazard: not_fitted
   lin_change_n_offspring: not_fitted
   quad_change_n_offspring: not_fitted

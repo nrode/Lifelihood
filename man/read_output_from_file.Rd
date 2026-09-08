@@ -4,18 +4,25 @@
 \alias{read_output_from_file}
 \title{Read and format the output file of the program}
 \usage{
-read_output_from_file(file_path, covariates = NULL, path_config, MCMC)
+read_output_from_file(
+  file_path,
+  covariates = NULL,
+  config = NULL,
+  MCMC,
+  path_config = NULL
+)
 }
 \arguments{
 \item{file_path}{Location of the output file of the program.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{path_config}{A character string specifying the file path
-to the YAML configuration file.}
+\item{config}{A complete configuration list.}
 
 \item{MCMC}{Perform MCMC sampling of the parameter after
 convergence to estimate their 95\% confidence interval.}
+
+\item{path_config}{Deprecated alias for \code{config}.}
 }
 \value{
 An object of class \code{lifelihoodResults} with all results

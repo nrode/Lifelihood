@@ -32,6 +32,137 @@ safe_access <- function(config, path) {
   result
 }
 
+#' @keywords internal
+config_parameter_sections <- function() {
+  list(
+    mortality = c(
+      "expt_death",
+      "survival_param2",
+      "ratio_expt_death",
+      "prob_death",
+      "sex_ratio"
+    ),
+    maturity = c(
+      "expt_maturity",
+      "maturity_param2",
+      "ratio_expt_maturity"
+    ),
+    reproduction = c(
+      "expt_reproduction",
+      "reproduction_param2",
+      "n_offspring",
+      "increase_death_hazard",
+      "tof_decay",
+      "increase_death_hazard_n_offspring",
+      "lin_decrease_hazard",
+      "quad_decrease_hazard",
+      "lin_change_n_offspring",
+      "quad_change_n_offspring",
+      "tof_n_offspring",
+      "fitness"
+    )
+  )
+}
+
+#' @keywords internal
+validate_config_input <- function(config) {
+  if (is.character(config) && length(config) == 1) {
+    if (!file.exists(config)) {
+      stop("Configuration file not found: ", config, call. = FALSE)
+    }
+    config <- yaml::yaml.load_file(config, readLines.warn = FALSE)
+  }
+
+  if (!is.list(config) || (length(config) > 0 && is.null(names(config)))) {
+    stop(
+      "`config` must be an existing YAML file path or a named configuration list.",
+      call. = FALSE
+    )
+  }
+
+  sections <- config_parameter_sections()
+  if (
+    length(config) > 0 &&
+      (anyDuplicated(names(config)) > 0 || any(names(config) == ""))
+  ) {
+    stop(
+      "Configuration sections must have unique, non-empty names.",
+      call. = FALSE
+    )
+  }
+
+  unknown_sections <- setdiff(names(config), names(sections))
+  if (length(unknown_sections) > 0) {
+    stop(
+      "Unknown configuration section(s): ",
+      paste(unknown_sections, collapse = ", "),
+      call. = FALSE
+    )
+  }
+
+  validated_config <- lapply(
+    sections,
+    function(parameters) {
+      setNames(as.list(rep("not_fitted", length(parameters))), parameters)
+    }
+  )
+
+  for (section in names(config)) {
+    section_config <- config[[section]]
+    if (
+      !is.list(section_config) ||
+        (length(section_config) > 0 && is.null(names(section_config)))
+    ) {
+      stop(
+        "Configuration section `",
+        section,
+        "` must be a named list.",
+        call. = FALSE
+      )
+    }
+    if (
+      length(section_config) > 0 &&
+        (anyDuplicated(names(section_config)) > 0 ||
+          any(names(section_config) == ""))
+    ) {
+      stop(
+        "Parameters in configuration section `",
+        section,
+        "` must have unique, non-empty names.",
+        call. = FALSE
+      )
+    }
+
+    unknown_parameters <- setdiff(names(section_config), sections[[section]])
+    if (length(unknown_parameters) > 0) {
+      stop(
+        "Unknown parameter(s) in configuration section `",
+        section,
+        "`: ",
+        paste(unknown_parameters, collapse = ", "),
+        call. = FALSE
+      )
+    }
+
+    for (parameter in names(section_config)) {
+      value <- section_config[[parameter]]
+      if (!is.atomic(value) || length(value) != 1 || is.na(value)) {
+        stop(
+          "Configuration value `",
+          section,
+          ".",
+          parameter,
+          "` must be a single non-missing value.",
+          call. = FALSE
+        )
+      }
+      validated_config[[section]][[parameter]] <- value
+    }
+  }
+
+  validated_config
+}
+
 #' @title Read and parse the configuration file (YAML).
 #'
 #' @description
@@ -39,8 +170,7 @@ safe_access <- function(config, path) {
 #' This function is used in [lifelihood()] when creating the
 #' input text file.
 #'
-#' @param path_config A character string specifying the file path
-#' to the YAML configuration file.
+#' @param config A complete configuration list.
 #' @param covariates Vector containing the names of the covariates.
 #' @param covar_types Vector containing the types of the covariates
 #' (either "cat" for categorical or "num" for numerical).
@@ -48,17 +178,7 @@ safe_access <- function(config, path) {
 #' @keywords internal
 #'
 #' @return A character vector that will be used under the model tag in the input text file.
-format_config <- function(path_config, covariates, covar_types) {
-  if (!file.exists(path_config)) {
-    stop(paste(
-      "Configuration file",
-      path_config,
-      "not found. Current working directory: ",
-      getwd()
-    ))
-  }
-  config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
-
+format_config <- function(config, covariates, covar_types) {
   formatted_config <- c(
     paste(
       "expt_death",

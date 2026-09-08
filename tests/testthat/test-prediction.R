@@ -1,9 +1,13 @@
 test_that("predictions work", {
-  path_config <- if (rlang::is_interactive()) {
-    "tests/testthat/config.yaml"
-  } else {
-    "config.yaml"
-  }
+  path_config <- list(
+    mortality = list(expt_death = "par + spore", survival_param2 = 1),
+    maturity = list(expt_maturity = "par", maturity_param2 = 1),
+    reproduction = list(
+      expt_reproduction = "par",
+      reproduction_param2 = 1,
+      n_offspring = 1
+    )
+  )
 
   df <- datapierrick |>
     as_tibble() |>
@@ -32,7 +36,7 @@ test_that("predictions work", {
 
   results <- lifelihood(
     lifelihoodData,
-    path_config = path_config,
+    config = path_config,
     raise_estimation_warning = FALSE
   )
 
@@ -50,6 +54,18 @@ test_that("predictions work", {
   expect_true(class(pred) == "numeric")
   expect_true(class(pred_resp) == "numeric")
   expect_true(all(pred <= pred_resp))
+
+  pred_multi <- prediction(
+    results,
+    parameter_name = c("expt_death", "survival_param2"),
+    type = "response"
+  )
+  expect_named(pred_multi, c("expt_death", "survival_param2"))
+  expect_equal(pred_multi$expt_death, pred_resp)
+  expect_equal(
+    pred_multi$survival_param2,
+    prediction(results, "survival_param2", type = "response")
+  )
 })
 
 test_that("Prediction with ratio expt death", {
@@ -87,7 +103,19 @@ test_that("Prediction with ratio expt death", {
 
   results <- lifelihood(
     lifelihoodData = lifelihoodData,
-    path_config = use_test_config("config_pierrick"),
+    config = list(
+      mortality = list(
+        expt_death = "par",
+        survival_param2 = 1,
+        ratio_expt_death = 1
+      ),
+      maturity = list(expt_maturity = 1, maturity_param2 = 1),
+      reproduction = list(
+        expt_reproduction = 1,
+        reproduction_param2 = 1,
+        n_offspring = 1
+      )
+    ),
     seeds = c(9614, 1017, 8004, 4775),
     se.fit = TRUE
   )
@@ -103,6 +131,30 @@ test_that("Prediction with ratio expt death", {
   expect_true(!all(is.na(tail(preds$fitted))))
   expect_true(all(is.na(head(preds$se.fitted))))
   expect_true(!all(is.na(tail(preds$se.fitted))))
+
+  preds_multi <- prediction(
+    results,
+    c("expt_death", "survival_param2"),
+    type = "response",
+    se.fit = TRUE
+  )
+  expect_named(
+    preds_multi,
+    c(
+      "expt_death_fitted",
+      "expt_death_se.fitted",
+      "survival_param2_fitted",
+      "survival_param2_se.fitted"
+    )
+  )
+  expt_death_preds <- prediction(
+    results,
+    "expt_death",
+    type = "response",
+    se.fit = TRUE
+  )
+  expect_equal(preds_multi$expt_death_fitted, expt_death_preds$fitted)
+  expect_equal(preds_multi$expt_death_se.fitted, expt_death_preds$se.fitted)
 })
 
 test_that("prediction reports fitted factor covariates with one level", {
@@ -216,5 +268,62 @@ test_that("prediction reports link-scale male message only with males", {
     ),
     "Lifelihood parameter estimate(s) for males are identical to that of females.",
     fixed = TRUE
+  )
+})
+
+test_that("prediction combines MCMC predictions for multiple parameters", {
+  results <- list(
+    lifelihoodData = list(
+      df = data.frame(sex = c(0, 1)),
+      sex = "sex"
+    ),
+    formula = list(
+      expt_death = "1",
+      survival_param2 = "1"
+    ),
+    config = list(
+      mortality = list(
+        expt_death = "1",
+        survival_param2 = "1"
+      )
+    ),
+    effects = data.frame(
+      parameter = c("expt_death", "survival_param2"),
+      estimation = c(1, 0.2)
+    ),
+    MCMC = 200,
+    se.fit = FALSE,
+    mcmc_sample = data.frame(
+      int_expt_death = seq(0.5, 1.5, length.out = 200),
+      int_survival_param2 = seq(0.1, 0.3, length.out = 200)
+    )
+  )
+  class(results) <- "lifelihoodResults"
+
+  predictions <- prediction(
+    results,
+    c("expt_death", "survival_param2"),
+    newdata = data.frame(sex = 0),
+    mcmc.fit = TRUE,
+    keep_mcmc_samples = TRUE
+  )
+
+  expect_named(
+    predictions$pred,
+    c(
+      "expt_death_fitted",
+      "expt_death_mcmc_est",
+      "expt_death_mcmc_se",
+      "survival_param2_fitted",
+      "survival_param2_mcmc_est",
+      "survival_param2_mcmc_se"
+    )
+  )
+  expect_named(
+    predictions$mcmc_samples,
+    c(
+      paste0("expt_death_mcmc_sample_", seq_len(200)),
+      paste0("survival_param2_mcmc_sample_", seq_len(200))
+    )
   )
 })

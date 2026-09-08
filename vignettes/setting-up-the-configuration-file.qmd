@@ -1,5 +1,5 @@
 ---
-title: "Setting up YAML configuration file"
+title: "Setting up a configuration"
 vignette: >
   %\VignetteIndexEntry{setting-up-the-configuration-file}
   %\VignetteEngine{quarto::html}
@@ -18,9 +18,28 @@ embed-resources: true
 # Introduction
 ***
 
-Since `lifelihood` allows for a large number of combinations on which parameters to estimate for a given dataset, it makes it easier to have a separate **configuration file** to specify what you want to fit. Under the hood, the program will use this file to only estimate what you have specified and returns the estimations.
+Since `lifelihood` allows for a large number of combinations on which parameters to estimate for a given dataset, it makes it easier to have a separate configuration to specify what you want to fit. Under the hood, the program will use this configuration to only estimate what you have specified and returns the estimations.
 
-The needed configuration file must be in the `YAML` format, a convenient kind of file that is both easy to **read** (for humans) and to **parse** (for the program). It relies on **indentation** to represent structure. Learn more about [YAML](https://en.wikipedia.org/wiki/YAML).
+The configuration can be supplied either as a `YAML` file or as a named R
+list. YAML is convenient when the configuration is large or reused across
+analyses, while a named list is concise for simple models. Missing sections and
+parameters in a named list default to `not_fitted`.
+
+For example, this fits only the expected mortality time as a function of
+`geno`:
+
+```{r}
+config <- list(
+  mortality = list(expt_death = "geno")
+)
+```
+
+The equivalent YAML configuration contains all three sections and parameters,
+with every omitted value written as `not_fitted`.
+
+The YAML format is convenient when the configuration is large or reused across
+analyses. It relies on **indentation** to represent structure. Learn more about
+[YAML](https://en.wikipedia.org/wiki/YAML).
 
 
 # Parameters

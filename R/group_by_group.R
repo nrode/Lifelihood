@@ -306,7 +306,7 @@ merge_group_results <- function(
 #' @keywords internal
 lifelihood_fit_group_by_group <- function(
   lifelihoodData,
-  path_config,
+  config,
   path_to_Lifelihood = NULL,
   n_fit = 1,
   param_bounds_df = NULL,
@@ -343,7 +343,7 @@ lifelihood_fit_group_by_group <- function(
       "lifelihood_fit_{fit_i}"
     )]] <- lifelihood_fit_group_by_group_once(
       lifelihoodData = lifelihoodData,
-      path_config = path_config,
+      config = config,
       path_to_Lifelihood = path_to_Lifelihood,
       param_bounds_df = param_bounds_df,
       MCMC = MCMC,
@@ -388,7 +388,7 @@ lifelihood_fit_group_by_group <- function(
 
 lifelihood_fit_group_by_group_once <- function(
   lifelihoodData,
-  path_config,
+  config,
   path_to_Lifelihood = NULL,
   param_bounds_df = NULL,
   MCMC = 0,
@@ -409,8 +409,6 @@ lifelihood_fit_group_by_group_once <- function(
   sub_interval = 0.3,
   delete_temp_files = TRUE
 ) {
-  config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
-
   common_formula <- validate_group_by_group_config(config)
   group_covariates <- extract_group_covariates(common_formula)
   sub_datasets <- split_data_by_groups(lifelihoodData, group_covariates)
@@ -441,7 +439,7 @@ lifelihood_fit_group_by_group_once <- function(
       {
         lifelihood_fit(
           lifelihoodData = sub_data,
-          path_config = intercept_config_path,
+          config = validate_config_input(intercept_config_path),
           path_to_Lifelihood = path_to_Lifelihood,
           param_bounds_df = param_bounds_df,
           group_by_group = FALSE,

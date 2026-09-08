@@ -35,7 +35,19 @@ run_lifelihood_case <- function(title, param_bounds_df, seeds) {
 
   lifelihood(
     lifelihoodData = lifelihood_data,
-    path_config = use_test_config("config_pierrick"),
+    config = list(
+      mortality = list(
+        expt_death = "par",
+        survival_param2 = 1,
+        ratio_expt_death = 1
+      ),
+      maturity = list(expt_maturity = 1, maturity_param2 = 1),
+      reproduction = list(
+        expt_reproduction = 1,
+        reproduction_param2 = 1,
+        n_offspring = 1
+      )
+    ),
     param_bounds_df = param_bounds_df,
     seeds = seeds,
     delete_temp_files = FALSE,

@@ -51,7 +51,15 @@
 #')
 #' results <- lifelihood(
 #'lifelihoodData = dataLFH,
-#'path_config = use_test_config("config_pierrick"),
+#'config = list(
+#'  mortality = list(expt_death = "par", survival_param2 = 1),
+#'  maturity = list(expt_maturity = 1, maturity_param2 = 1),
+#'  reproduction = list(
+#'    expt_reproduction = 1,
+#'    reproduction_param2 = 1,
+#'    n_offspring = 1
+#'  )
+#'),
 #'seeds = c(1, 2, 3, 4)
 #')
 #' fitted_emergence_rate <- compute_fitted_event_rate(

@@ -52,7 +52,11 @@ dataLFH <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = system.file("configs/config.yaml", package = "lifelihood"),
+  config = list(
+    mortality = list(expt_death = "geno + type", survival_param2 = 1),
+    maturity = list(expt_maturity = "geno + type", maturity_param2 = 1),
+    reproduction = list(expt_reproduction = "geno", reproduction_param2 = 1)
+  ),
   seeds = c(1, 2, 3, 4)
 )
 summary(results)

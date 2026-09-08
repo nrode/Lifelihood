@@ -33,7 +33,7 @@ test_that("trade-off simulations work for reproduction events", {
 
   results <- lifelihood(
     lifelihoodData,
-    path_config = path_config,
+    config = path_config,
     raise_estimation_warning = FALSE
   )
 

@@ -85,9 +85,19 @@ dataLFH <- as_lifelihoodData(
 Let's run the analysis with default parameters.
 
 ```{r}
+config <- list(
+  mortality = list(expt_death = "geno + type", survival_param2 = 1),
+  maturity = list(expt_maturity = "geno * type", maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = "geno",
+    reproduction_param2 = 1,
+    n_offspring = "geno"
+  )
+)
+
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = use_test_config("config")
+  config = config
 )
 ```
 
@@ -131,7 +141,7 @@ Once it's changed, you just have to call `lifelihood()` again with the `param_bo
 ```{r}
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = use_test_config("config"),
+  config = config,
   param_bounds_df = bounds_df
 )
 ```

@@ -58,7 +58,7 @@ set.seed(42)
 time_default <- system.time({
   results_default <- lifelihood(
     lifelihoodData,
-    path_config = use_test_config("config_gbg"),
+    config = use_test_config("config_gbg"),
     group_by_group = FALSE # Default value
   )
 })
@@ -71,7 +71,7 @@ time_default
 time_gbg <- system.time({
   results_gbg <- lifelihood(
     lifelihoodData,
-    path_config = use_test_config("config_gbg"),
+    config = use_test_config("config_gbg"),
     group_by_group = TRUE
   )
 })

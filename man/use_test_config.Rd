@@ -5,17 +5,17 @@
 \title{Get the path to a built-in configuration file.}
 \usage{
 use_test_config(
-  config_name = c("config", "config2", "config_pierrick", "config_with_tradeoff",
-    "config_without_tradeoff", "example_config_se", "example_config_mcmc",
-    "config_pierrick_geno_death", "config_gbg")
+  config_name = c("config", "config_with_tradeoff", "config_without_tradeoff",
+    "config_gbg")
 )
 }
 \arguments{
 \item{config_name}{Configuration name. Currently available options:
 \itemize{
 \item config
-\item config2
-\item config_pierrick
+\item config_with_tradeoff
+\item config_without_tradeoff
+\item config_gbg
 By default, it will use "config".
 }}
 }
@@ -34,6 +34,5 @@ For more info about configuration files, see
 }
 \examples{
 use_test_config("config")
-use_test_config("config2")
 
 }

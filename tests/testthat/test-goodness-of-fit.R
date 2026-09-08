@@ -1,8 +1,12 @@
-path_config <- if (rlang::is_interactive()) {
-  "tests/testthat/config.yaml"
-} else {
-  "config.yaml"
-}
+path_config <- list(
+  mortality = list(expt_death = "par + spore", survival_param2 = 1),
+  maturity = list(expt_maturity = "par", maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = "par",
+    reproduction_param2 = 1,
+    n_offspring = 1
+  )
+)
 
 test_that("goodness_of_fit returns expected object structure", {
   df <- datapierrick |>
@@ -33,7 +37,7 @@ test_that("goodness_of_fit returns expected object structure", {
 
   results <- lifelihood(
     lifelihoodData,
-    path_config = path_config,
+    config = path_config,
     raise_estimation_warning = FALSE
   )
 

@@ -6,7 +6,7 @@
 \usage{
 lifelihood(
   lifelihoodData,
-  path_config,
+  config = NULL,
   path_to_Lifelihood = NULL,
   n_fit = 1,
   param_bounds_df = NULL,
@@ -28,13 +28,16 @@ lifelihood(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE
+  delete_temp_files = TRUE,
+  path_config = NULL
 )
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 
-\item{path_config}{A character string specifying the file path to the YAML configuration file.}
+\item{config}{An existing YAML configuration file path or a named
+configuration list. Missing sections and parameters default to
+\code{"not_fitted"}.}
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 
@@ -79,6 +82,9 @@ lifelihood(
 \item{raise_estimation_warning}{Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.}
 
 \item{delete_temp_files}{Indicates whether temporary files should be deleted. TRUE by default and recommended.}
+
+\item{path_config}{Deprecated alias for \code{config}. A warning is raised when
+this argument is used.}
 }
 \value{
 A \code{lifelihoodResults} object

@@ -27,7 +27,7 @@ lifelihoodData <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData,
-  path_config = path_config,
+  config = path_config,
   raise_estimation_warning = FALSE
 )
 

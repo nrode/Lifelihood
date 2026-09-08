@@ -83,12 +83,22 @@ Once you have created your `lifelihoodData` object with `as_lifelihoodData()`, y
 
 It returns a `lifelihoodResults` object, which is a list containing all the results of the analysis.
 
-Here it's a minimalist usage of the function, where we only specify the `lifelihoodData` object, the path to the [configuration file](2-setting-up-the-configuration-file.html) and the seeds to use (four integers used by Mersenne Twister pseudorandom number generator of the lifelihood program). The `raise_estimation_warning` argument will be the focus of the [next vignette](4-custom-param-boundaries-and-estimation-warning.html).
+Here it's a minimalist usage of the function, where we only specify the `lifelihoodData` object, the configuration and the seeds to use (four integers used by Mersenne Twister pseudorandom number generator of the lifelihood program). The `raise_estimation_warning` argument will be the focus of the [next vignette](4-custom-param-boundaries-and-estimation-warning.html).
 
 ```{r}
+config <- list(
+  mortality = list(expt_death = "par", survival_param2 = 1, ratio_expt_death = 1),
+  maturity = list(expt_maturity = 1, maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = 1,
+    reproduction_param2 = 1,
+    n_offspring = 1
+  )
+)
+
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = use_test_config("config_pierrick"),
+  config = config,
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )
