@@ -18,7 +18,9 @@ prediction(
 \arguments{
 \item{object}{output of \code{\link[=lifelihood]{lifelihood()}}}
 
-\item{parameter_name}{A string specifying the name of the parameter for which to make the prediction. Must be one of \code{unique(lifelihoodResults$effects$parameter)}.}
+\item{parameter_name}{A string, or vector of strings, specifying the name(s)
+of the parameter(s) for which to make the prediction. Each name must be
+one of \code{unique(lifelihoodResults$effects$parameter)}.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.}
 
@@ -29,7 +31,10 @@ prediction(
 \item{se.fit}{Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).}
 }
 \value{
-A vector or list containing the predicted values for the parameter.
+For a single parameter, a vector or list containing the predicted
+values for the parameter. For multiple parameters, a data frame with one
+column per parameter, or a list containing parameter-prefixed data frames
+when MCMC samples are kept.
 }
 \description{
 S3 method used to make predictions using \code{lifelihoodResults} objects, i.e. results from \code{\link[=lifelihood]{lifelihood()}}.

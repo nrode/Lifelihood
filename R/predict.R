@@ -4,13 +4,18 @@
 #' S3 method used to make predictions using `lifelihoodResults` objects, i.e. results from [lifelihood()].
 #'
 #' @param object output of [lifelihood()]
-#' @param parameter_name A string specifying the name of the parameter for which to make the prediction. Must be one of `unique(lifelihoodResults$effects$parameter)`.
+#' @param parameter_name A string, or vector of strings, specifying the name(s)
+#'   of the parameter(s) for which to make the prediction. Each name must be
+#'   one of `unique(lifelihoodResults$effects$parameter)`.
 #' @param newdata Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.
 #' @param type The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.
 #' @param se.fit Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).
 #' @param keep_mcmc_samples Whether or not to also retrieve MCMC samples in output. If `TRUE`, output is a list with 2 elements: pred and mcmc_samples.
 #'
-#' @return A vector or list containing the predicted values for the parameter.
+#' @return For a single parameter, a vector or list containing the predicted
+#'   values for the parameter. For multiple parameters, a data frame with one
+#'   column per parameter, or a list containing parameter-prefixed data frames
+#'   when MCMC samples are kept.
 #'
 #' @importFrom stats formula model.frame model.matrix terms
 #'
@@ -76,6 +81,63 @@ prediction <- function(
     stop(
       "prediction() is not supported for group_by_group results. ",
       "Use coef() to access per-group estimates."
+    )
+  }
+
+  if (length(parameter_name) > 1) {
+    if (!isTRUE(mcmc.fit) && isTRUE(keep_mcmc_samples)) {
+      warning(
+        "`keep_mcmc_samples = TRUE` has no effect when `mcmc.fit = FALSE`. ",
+        "MCMC samples are only returned when `mcmc.fit = TRUE`."
+      )
+    }
+
+    predictions <- lapply(parameter_name, function(parameter) {
+      prediction(
+        object = object,
+        parameter_name = parameter,
+        newdata = newdata,
+        mcmc.fit = mcmc.fit,
+        keep_mcmc_samples = isTRUE(mcmc.fit) && isTRUE(keep_mcmc_samples),
+        type = type,
+        se.fit = se.fit,
+        .warning_ratio_male = .warning_ratio_male
+      )
+    })
+
+    prefix_columns <- function(data, parameter) {
+      names(data) <- paste0(parameter, "_", names(data))
+      data
+    }
+
+    if (isTRUE(mcmc.fit) && isTRUE(keep_mcmc_samples)) {
+      pred <- lapply(seq_along(predictions), function(index) {
+        prefix_columns(predictions[[index]]$pred, parameter_name[[index]])
+      }) |>
+        bind_cols()
+      mcmc_samples <- lapply(seq_along(predictions), function(index) {
+        prefix_columns(
+          predictions[[index]]$mcmc_samples,
+          parameter_name[[index]]
+        )
+      }) |>
+        bind_cols()
+
+      return(list(pred = pred, mcmc_samples = mcmc_samples))
+    }
+
+    if (isTRUE(se.fit) || isTRUE(mcmc.fit)) {
+      return(
+        lapply(seq_along(predictions), function(index) {
+          prefix_columns(predictions[[index]], parameter_name[[index]])
+        }) |>
+          bind_cols()
+      )
+    }
+
+    return(
+      setNames(predictions, parameter_name) |>
+        bind_cols()
     )
   }
 

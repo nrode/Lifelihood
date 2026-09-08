@@ -153,6 +153,20 @@ prediction(
   head()
 ```
 
+Several parameters can be predicted in one call by passing a character vector
+to `parameter_name`. The predictions are returned as one column per parameter:
+
+```{r}
+predicted_parameters <- prediction(
+  results,
+  parameter_name = c("expt_death", "survival_param2"),
+  type = "response"
+)
+
+predicted_parameters |>
+  head()
+```
+
 ## Choose the prediction scale
 
 By default, `type = "link"`. This returns the linear predictor on the internal
