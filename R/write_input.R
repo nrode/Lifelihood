@@ -32,8 +32,7 @@
 #' @param dist Named character vector with one distribution family for each
 #' event. It must contain entries named `mortality`, `maturity`, and
 #' `reproduction`.
-#' @param path_config A character string specifying the file path
-#' to the YAML configuration file.
+#' @param config A complete configuration list.
 #' @param temp_dir Name of the temporary directory with temporary
 #' files.
 #'
@@ -51,7 +50,7 @@ format_dataframe_to_txt <- function(
   death_end,
   covariates,
   dist,
-  path_config,
+  config,
   temp_dir
 ) {
   all_column_names <- c(
@@ -126,7 +125,7 @@ format_dataframe_to_txt <- function(
     }
   }
   config_file_info <- format_config(
-    path_config = path_config,
+    config = config,
     covariates = covariates,
     covar_types = covar_types
   )

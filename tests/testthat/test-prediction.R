@@ -1,9 +1,13 @@
 test_that("predictions work", {
-  path_config <- if (rlang::is_interactive()) {
-    "tests/testthat/config.yaml"
-  } else {
-    "config.yaml"
-  }
+  path_config <- list(
+    mortality = list(expt_death = "par + spore", survival_param2 = 1),
+    maturity = list(expt_maturity = "par", maturity_param2 = 1),
+    reproduction = list(
+      expt_reproduction = "par",
+      reproduction_param2 = 1,
+      n_offspring = 1
+    )
+  )
 
   df <- datapierrick |>
     as_tibble() |>
@@ -32,7 +36,7 @@ test_that("predictions work", {
 
   results <- lifelihood(
     lifelihoodData,
-    path_config = path_config,
+    config = path_config,
     raise_estimation_warning = FALSE
   )
 
@@ -99,7 +103,19 @@ test_that("Prediction with ratio expt death", {
 
   results <- lifelihood(
     lifelihoodData = lifelihoodData,
-    path_config = use_test_config("config_pierrick"),
+    config = list(
+      mortality = list(
+        expt_death = "par",
+        survival_param2 = 1,
+        ratio_expt_death = 1
+      ),
+      maturity = list(expt_maturity = 1, maturity_param2 = 1),
+      reproduction = list(
+        expt_reproduction = 1,
+        reproduction_param2 = 1,
+        n_offspring = 1
+      )
+    ),
     seeds = c(9614, 1017, 8004, 4775),
     se.fit = TRUE
   )

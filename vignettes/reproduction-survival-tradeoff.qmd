@@ -60,7 +60,16 @@ lifelihoodData <- as_lifelihoodData(
 ## Right convergence
 m1 <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_pierrick_geno_death"),
+  config = list(
+    mortality = list(expt_death = "geno", survival_param2 = 1),
+    maturity = list(expt_maturity = 1, maturity_param2 = 1),
+    reproduction = list(
+      expt_reproduction = 1,
+      reproduction_param2 = 1,
+      n_offspring = 1,
+      increase_death_hazard = 1
+    )
+  ),
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
   seeds = c(2054, 9713, 3767, 8573)
@@ -308,7 +317,16 @@ lifelihoodData <- as_lifelihoodData(
 ## Right convergence
 m1 <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_pierrick_geno_death"),
+  config = list(
+    mortality = list(expt_death = "geno", survival_param2 = 1),
+    maturity = list(expt_maturity = 1, maturity_param2 = 1),
+    reproduction = list(
+      expt_reproduction = 1,
+      reproduction_param2 = 1,
+      n_offspring = 1,
+      increase_death_hazard = 1
+    )
+  ),
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,
   seeds = c(2055, 9713, 3767, 8573),

@@ -60,7 +60,7 @@ lifelihoodData <- as_lifelihoodData(
 
 results_sans_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_tradeoff"),
+  config = use_test_config("config_tradeoff"),
   delete_temp_files = FALSE
 )
 
@@ -68,7 +68,7 @@ results_sans_tradeoff <- lifelihood(
 
 results_avec_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_tradeoff"),
+  config = use_test_config("config_tradeoff"),
   delete_temp_files = FALSE
 )
 

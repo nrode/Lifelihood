@@ -1,9 +1,19 @@
 test_that("lifelihoodResults works", {
-  path_config <- if (rlang::is_interactive()) {
-    "tests/testthat/config.yaml"
-  } else {
-    "config.yaml"
-  }
+  path_config <- list(
+    mortality = list(
+      expt_death = "par + spore",
+      survival_param2 = 1
+    ),
+    maturity = list(
+      expt_maturity = "par",
+      maturity_param2 = 1
+    ),
+    reproduction = list(
+      expt_reproduction = "par",
+      reproduction_param2 = 1,
+      n_offspring = 1
+    )
+  )
 
   df <- datapierrick |>
     as_tibble() |>
@@ -34,21 +44,21 @@ test_that("lifelihoodResults works", {
   args_list <- list(
     list(
       lifelihoodData = lifelihoodData,
-      path_config = path_config,
+      config = path_config,
       n_fit = 3,
       raise_estimation_warning = FALSE,
       se.fit = FALSE
     ),
     list(
       lifelihoodData = lifelihoodData,
-      path_config = path_config,
+      config = path_config,
       n_fit = 1,
       raise_estimation_warning = FALSE,
       se.fit = TRUE
     ),
     list(
       lifelihoodData = lifelihoodData,
-      path_config = path_config,
+      config = path_config,
       n_fit = 1,
       raise_estimation_warning = FALSE,
       MCMC = 30

@@ -26,14 +26,14 @@ lifelihoodData <- as_lifelihoodData(
 
 results_without_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_without_tradeoff"),
+  config = use_test_config("config_without_tradeoff"),
   delete_temp_files = FALSE,
   n_fit = 10
 )
 
 results_with_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_with_tradeoff"),
+  config = use_test_config("config_with_tradeoff"),
   delete_temp_files = FALSE,
   n_fit = 2
 )
@@ -66,7 +66,7 @@ lifelihoodData <- as_lifelihoodData(
 
 results_with_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_with_tradeoff"),
+  config = use_test_config("config_with_tradeoff"),
   delete_temp_files = FALSE,
   n_fit = 10
 )
@@ -103,14 +103,14 @@ lifelihoodData <- as_lifelihoodData(
 
 results_without_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_without_tradeoff"),
+  config = use_test_config("config_without_tradeoff"),
   delete_temp_files = FALSE,
   n_fit = 10
 )
 
 results_with_tradeoff <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("config_with_tradeoff"),
+  config = use_test_config("config_with_tradeoff"),
   delete_temp_files = FALSE,
   n_fit = 10
 )

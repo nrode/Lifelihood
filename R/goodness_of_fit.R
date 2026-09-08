@@ -73,22 +73,10 @@ goodness_of_fit <- function(
     )
   }
 
-  temp_config <- NULL
   if (is.null(object$config)) {
     stop(
-      "`path_config` is NULL and `object$config` is missing. ",
-      "Provide `path_config` explicitly."
+      "`object$config` is missing. Provide a fitted object with configuration."
     )
-  }
-  temp_config <- tempfile(
-    pattern = "lifelihood_gof_config_",
-    fileext = ".yaml"
-  )
-  yaml::write_yaml(object$config, file = temp_config)
-  path_config <- temp_config
-
-  if (!is.null(temp_config)) {
-    on.exit(unlink(temp_config), add = TRUE)
   }
 
   sim_seeds <- sample.int(.Machine$integer.max, nsim)
@@ -137,7 +125,7 @@ goodness_of_fit <- function(
 
     base_fit_args <- list(
       lifelihoodData = sim_lfh,
-      path_config = path_config,
+      config = object$config,
       param_bounds_df = object$param_bounds_df,
       n_fit = 1,
       group_by_group = FALSE,

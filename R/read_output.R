@@ -8,10 +8,10 @@
 #'
 #' @param file_path Location of the output file of the program.
 #' @param covariates Vector containing the names of the covariates.
-#' @param path_config A character string specifying the file path
-#' to the YAML configuration file.
+#' @param config A complete configuration list.
 #' @param MCMC Perform MCMC sampling of the parameter after
 #' convergence to estimate their 95% confidence interval.
+#' @param path_config Deprecated alias for `config`.
 #'
 #' @importFrom tidyr starts_with
 #'
@@ -22,9 +22,22 @@
 read_output_from_file <- function(
   file_path,
   covariates = NULL,
-  path_config,
-  MCMC
+  config = NULL,
+  MCMC,
+  path_config = NULL
 ) {
+  if (!is.null(path_config)) {
+    if (!is.null(config)) {
+      stop("Supply only one of `config` and deprecated `path_config`.")
+    }
+    warning(
+      "`path_config` is deprecated; use `config` instead.",
+      call. = FALSE
+    )
+    config <- path_config
+  }
+  config <- validate_config_input(config)
+
   lines <- readLines(file_path)
   results <- list()
 
@@ -50,7 +63,7 @@ read_output_from_file <- function(
     return(covar_names)
   }
 
-  results$config <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
+  results$config <- config
 
   sections <- list(
     mortality = c(

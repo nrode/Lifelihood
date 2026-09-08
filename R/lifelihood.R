@@ -7,7 +7,11 @@
 #' using maximum likelihood.
 #'
 #' @param lifelihoodData `lifelihoodData` object created with [as_lifelihoodData()].
-#' @param path_config A character string specifying the file path to the YAML configuration file.
+#' @param config An existing YAML configuration file path or a named
+#'   configuration list. Missing sections and parameters default to
+#'   `"not_fitted"`.
+#' @param path_config Deprecated alias for `config`. A warning is raised when
+#'   this argument is used.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
 #' @param n_fit Number of replicates for model fit to check convergence through consistency in log-likelihood values. The `seeds` argument should be `NULL` when `n_fit` > 1.
 #' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
@@ -38,7 +42,7 @@
 #' @export
 lifelihood <- function(
   lifelihoodData,
-  path_config,
+  config = NULL,
   path_to_Lifelihood = NULL,
   n_fit = 1,
   param_bounds_df = NULL,
@@ -60,9 +64,22 @@ lifelihood <- function(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE
+  delete_temp_files = TRUE,
+  path_config = NULL
 ) {
   check_lifelihoodData(lifelihoodData)
+
+  if (!is.null(path_config)) {
+    if (!is.null(config)) {
+      stop("Supply only one of `config` and deprecated `path_config`.")
+    }
+    warning(
+      "`path_config` is deprecated; use `config` instead.",
+      call. = FALSE
+    )
+    config <- path_config
+  }
+  config <- validate_config_input(config)
 
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
@@ -73,7 +90,7 @@ lifelihood <- function(
   if (isTRUE(group_by_group)) {
     results <- lifelihood_fit_group_by_group(
       lifelihoodData = lifelihoodData,
-      path_config = path_config,
+      config = config,
       path_to_Lifelihood = path_to_Lifelihood,
       n_fit = n_fit,
       param_bounds_df = param_bounds_df,
@@ -113,7 +130,7 @@ lifelihood <- function(
 
     results <- lifelihood_fit(
       lifelihoodData = lifelihoodData,
-      path_config = path_config,
+      config = config,
       path_to_Lifelihood = path_to_Lifelihood,
       param_bounds_df = param_bounds_df,
       group_by_group = group_by_group,
@@ -177,7 +194,7 @@ lifelihood <- function(
 #' @return `lifelihoodResults`
 lifelihood_fit <- function(
   lifelihoodData,
-  path_config,
+  config,
   path_to_Lifelihood = NULL,
   param_bounds_df = NULL,
   group_by_group = FALSE,
@@ -272,18 +289,16 @@ lifelihood_fit <- function(
     matclutch = lifelihoodData$matclutch,
     matclutch_size = lifelihoodData$matclutch_size,
     dist = lifelihoodData$dist,
-    path_config = path_config,
+    config = config,
     temp_dir = temp_dir
   )
 
   # we deduce fitness from the configuration file
-  config_yaml <- yaml::yaml.load_file(path_config, readLines.warn = FALSE)
-  if (read_formula(config_yaml, "fitness") != "not_fitted") {
-    if (read_formula(config_yaml, "n_offspring") != "not_fitted") {
+  if (read_formula(config, "fitness") != "not_fitted") {
+    if (read_formula(config, "n_offspring") != "not_fitted") {
       stop(
-        "Model in configuration file (",
-        path_config,
-        ") is not identifiable: you should either fit 'fitness' or 'n_offpsring' in your model, not both."
+        "Configuration is not identifiable: you should either fit 'fitness' ",
+        "or 'n_offspring' in your model, not both."
       )
     }
     fitness <- TRUE
@@ -293,7 +308,7 @@ lifelihood_fit <- function(
 
   # Validate MCMC iterations vs number of parameters
   if (MCMC > 0) {
-    n_params <- count_parameters(config_yaml)
+    n_params <- count_parameters(config)
     if (MCMC < (n_params + 1)) {
       stop(
         "The number of MCMC iterations (",
@@ -346,7 +361,7 @@ lifelihood_fit <- function(
   results <- read_output_from_file(
     output_path,
     covariates = lifelihoodData$covariates,
-    path_config = path_config,
+    config = config,
     MCMC = MCMC
   )
 

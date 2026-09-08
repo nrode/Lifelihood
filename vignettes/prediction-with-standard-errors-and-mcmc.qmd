@@ -47,6 +47,20 @@ lifelihoodData <- as_lifelihoodData(
   covariates = c("par", "spore"),
   dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
+
+config_se <- list(
+  mortality = list(expt_death = "par", survival_param2 = 1)
+)
+
+config_mcmc <- list(
+  mortality = list(expt_death = "par", survival_param2 = 1),
+  maturity = list(expt_maturity = "par", maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = "par",
+    reproduction_param2 = 1,
+    fitness = 1
+  )
+)
 ```
 
 ## Standard errors
@@ -58,7 +72,7 @@ By default, lifelihood will not try to fit standard errors. But, you can use the
 ## Fail to compute standard errors due to absence of convergence to the ML optimum
 results_wrong <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("example_config_se"),
+  config = config_se,
   se.fit = TRUE,
   seed = c(103, 349, 1213, 1283)
 )
@@ -67,7 +81,7 @@ results_wrong <- lifelihood(
 set.seed(123)
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("example_config_se"),
+  config = config_se,
   se.fit = TRUE,
   n_fit = 5
 )
@@ -115,7 +129,7 @@ prediction(results, "expt_death", type = "response", se.fit = TRUE) |>
 ```{r}
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
-  path_config = use_test_config("example_config_mcmc"),
+  config = config_mcmc,
   MCMC = 30
 )
 ```

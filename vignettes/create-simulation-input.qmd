@@ -197,9 +197,6 @@ values. We can fit the same model to that dataset with `lifelihood()` and compar
 the refitted estimates with the values used for simulation.
 
 ```{r}
-simulation_config_path <- tempfile(fileext = ".yaml")
-yaml::write_yaml(simulation_config, simulation_config_path)
-
 simulated_for_fit <- simulated |>
   mutate(
     sex_start = 0,
@@ -228,7 +225,7 @@ simulated_lifelihood_data <- as_lifelihoodData(
 
 refit <- lifelihood(
   lifelihoodData = simulated_lifelihood_data,
-  path_config = simulation_config_path,
+  config = simulation_config,
   param_bounds_df = pseudo_results$param_bounds_df,
   raise_estimation_warning = FALSE,
   delete_temp_files = FALSE,

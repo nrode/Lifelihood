@@ -56,7 +56,15 @@
 #' # then we pass it to lifelihood()
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
-#'   path_config = use_test_config("config"),
+#'   config = list(
+#'     mortality = list(expt_death = "geno + type", survival_param2 = 1),
+#'     maturity = list(expt_maturity = "geno * type", maturity_param2 = 1),
+#'     reproduction = list(
+#'       expt_reproduction = "geno",
+#'       reproduction_param2 = 1,
+#'       n_offspring = "geno"
+#'     )
+#'   ),
 #'   param_bounds_df = bounds_df,
 #'   raise_estimation_warning = FALSE
 #' )

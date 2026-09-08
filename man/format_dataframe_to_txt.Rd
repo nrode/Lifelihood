@@ -18,7 +18,7 @@ format_dataframe_to_txt(
   death_end,
   covariates,
   dist,
-  path_config,
+  config,
   temp_dir
 )
 }
@@ -61,8 +61,7 @@ interval in which the death was determined.}
 event. It must contain entries named \code{mortality}, \code{maturity}, and
 \code{reproduction}.}
 
-\item{path_config}{A character string specifying the file path
-to the YAML configuration file.}
+\item{config}{A complete configuration list.}
 
 \item{temp_dir}{Name of the temporary directory with temporary
 files.}

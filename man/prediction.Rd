@@ -67,7 +67,9 @@ dataLFH <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = use_test_config("config2"),
+  config = list(
+    mortality = list(expt_death = "geno + type", survival_param2 = 1)
+  ),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

@@ -6,7 +6,7 @@
 \usage{
 lifelihood_fit_group_by_group(
   lifelihoodData,
-  path_config,
+  config,
   path_to_Lifelihood = NULL,
   n_fit = 1,
   param_bounds_df = NULL,
@@ -32,7 +32,9 @@ lifelihood_fit_group_by_group(
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 
-\item{path_config}{A character string specifying the file path to the YAML configuration file.}
+\item{config}{An existing YAML configuration file path or a named
+configuration list. Missing sections and parameters default to
+\code{"not_fitted"}.}
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 

@@ -35,7 +35,7 @@ We first create paired female and male observations from `datadaphnia`. The
 observed male death intervals are multiplied by 10, while the female death
 intervals are left unchanged. Reproduction data are set to `NA` for males.
 
-The mortality formula in `config_pierrick` models `expt_death` as a function of
+The mortality formula in the named configuration below models `expt_death` as a function of
 `par` and also fits `ratio_expt_death`, which represents the male-to-female
 ratio in expected longevity.
 
@@ -81,9 +81,19 @@ lifelihood_data <- as_lifelihoodData(
   dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
+config <- list(
+  mortality = list(expt_death = "par", survival_param2 = 1, ratio_expt_death = 1),
+  maturity = list(expt_maturity = 1, maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = 1,
+    reproduction_param2 = 1,
+    n_offspring = 1
+  )
+)
+
 results <- lifelihood(
   lifelihoodData = lifelihood_data,
-  path_config = use_test_config("config_pierrick"),
+  config = config,
   seeds = c(3699, 783, 5401, 6502),
   raise_estimation_warning = FALSE
 )

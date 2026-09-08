@@ -58,7 +58,7 @@ create_simulation_input <- function(
     stop("`data` must be supplied.", call. = FALSE)
   }
 
-  config <- load_simulation_config(config)
+  config <- validate_config_input(config)
   dist <- validate_dist(dist)
 
   df <- as.data.frame(data)
@@ -132,60 +132,13 @@ create_simulation_input <- function(
 }
 
 #' @keywords internal
-simulation_parameter_sections <- function() {
-  list(
-    mortality = c(
-      "expt_death",
-      "survival_param2",
-      "ratio_expt_death",
-      "prob_death",
-      "sex_ratio"
-    ),
-    maturity = c("expt_maturity", "maturity_param2", "ratio_expt_maturity"),
-    reproduction = c(
-      "expt_reproduction",
-      "reproduction_param2",
-      "n_offspring",
-      "increase_death_hazard",
-      "tof_decay",
-      "increase_death_hazard_n_offspring",
-      "lin_decrease_hazard",
-      "quad_decrease_hazard",
-      "lin_change_n_offspring",
-      "quad_change_n_offspring",
-      "tof_n_offspring",
-      "fitness"
-    )
-  )
-}
-
-#' @keywords internal
-load_simulation_config <- function(config) {
-  if (is.character(config) && length(config) == 1) {
-    if (!file.exists(config)) {
-      stop("Configuration file not found: ", config, call. = FALSE)
-    }
-    return(yaml::yaml.load_file(config, readLines.warn = FALSE))
-  }
-
-  if (is.list(config)) {
-    return(config)
-  }
-
-  stop(
-    "`config` must be a YAML file path or a configuration list.",
-    call. = FALSE
-  )
-}
-
-#' @keywords internal
 is_simulation_formula_fitted <- function(value) {
   !is.null(value) && trimws(as.character(value)) != "not_fitted"
 }
 
 #' @keywords internal
 get_simulation_fitted_parameters <- function(config) {
-  sections <- simulation_parameter_sections()
+  sections <- config_parameter_sections()
   fitted <- character()
 
   for (section in names(sections)) {

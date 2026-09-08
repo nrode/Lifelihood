@@ -139,7 +139,7 @@ test_that("lifelihood with group_by_group=TRUE and n_fit > 1 works end-to-end", 
   results <- suppressWarnings(
     lifelihood(
       lifelihoodData,
-      path_config = path_config,
+      config = path_config,
       group_by_group = TRUE,
       n_fit = 4,
       delete_temp_files = TRUE
@@ -218,7 +218,7 @@ test_that("lifelihood rejects seeds when group_by_group=TRUE and n_fit > 1", {
   expect_error(
     lifelihood(
       lifelihoodData,
-      path_config = path_config,
+      config = path_config,
       group_by_group = TRUE,
       n_fit = 2,
       seeds = c(1, 2, 3, 4),

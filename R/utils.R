@@ -200,27 +200,22 @@ detect_os <- function() {
 #'
 #' @param config_name Configuration name. Currently available options:
 #' - config
-#' - config2
-#' - config_pierrick
+#' - config_with_tradeoff
+#' - config_without_tradeoff
+#' - config_gbg
 #' By default, it will use "config".
 #'
 #' @return Absolute path to the configuration file
 #'
 #' @examples
 #' use_test_config("config")
-#' use_test_config("config2")
 #'
 #' @export
 use_test_config <- function(
   config_name = c(
     "config",
-    "config2",
-    "config_pierrick",
     "config_with_tradeoff",
     "config_without_tradeoff",
-    "example_config_se",
-    "example_config_mcmc",
-    "config_pierrick_geno_death",
     "config_gbg"
   )
 ) {
