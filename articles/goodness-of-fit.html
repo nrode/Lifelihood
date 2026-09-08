@@ -47,7 +47,7 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -156,9 +156,19 @@
 <span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"gam"</span>, reproduction <span class="op">=</span> <span class="st">"exp"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">config</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  mortality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_death <span class="op">=</span> <span class="st">"par"</span>, survival_param2 <span class="op">=</span> <span class="fl">1</span>, ratio_expt_death <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  maturity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_maturity <span class="op">=</span> <span class="fl">1</span>, maturity_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  reproduction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    expt_reproduction <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    reproduction_param2 <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    n_offspring <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  <span class="va">lifelihoodData</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_pierrick"</span><span class="op">)</span>,</span>
+<span>  config <span class="op">=</span> <span class="va">config</span>,</span>
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -173,9 +183,9 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gof</span><span class="op">$</span><span class="va">original_loglik</span></span>
-<span><span class="co">#&gt; [1] -7925.106</span></span>
+<span><span class="co">#&gt; [1] -8357.363</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">simulated_loglik</span></span>
-<span><span class="co">#&gt; [1] -889.3337 -889.1103 -889.0665 -889.0406 -889.0648</span></span>
+<span><span class="co">#&gt; [1] -876.1064 -876.0793 -876.0727 -876.1005 -876.0829</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_success</span></span>
 <span><span class="co">#&gt; [1] 5</span></span>
 <span><span class="va">gof</span><span class="op">$</span><span class="va">n_failed</span></span>

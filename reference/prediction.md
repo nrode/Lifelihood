@@ -28,9 +28,9 @@ prediction(
 
 - parameter_name:
 
-  A string specifying the name of the parameter for which to make the
-  prediction. Must be one of
-  `unique(lifelihoodResults$effects$parameter)`.
+  A string, or vector of strings, specifying the name(s) of the
+  parameter(s) for which to make the prediction. Each name must be one
+  of `unique(lifelihoodResults$effects$parameter)`.
 
 - newdata:
 
@@ -55,7 +55,10 @@ prediction(
 
 ## Value
 
-A vector or list containing the predicted values for the parameter.
+For a single parameter, a vector or list containing the predicted values
+for the parameter. For multiple parameters, a data frame with one column
+per parameter, or a list containing parameter-prefixed data frames when
+MCMC samples are kept.
 
 ## Examples
 
@@ -88,7 +91,9 @@ dataLFH <- as_lifelihoodData(
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
-  path_config = use_test_config("config2"),
+  config = list(
+    mortality = list(expt_death = "geno + type", survival_param2 = 1)
+  ),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
 )

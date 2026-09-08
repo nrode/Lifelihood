@@ -30,7 +30,7 @@ input data file."></head><body>pkgdown/assets/header.html
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -99,7 +99,7 @@ input data file.</p>
 <span>  <span class="va">death_end</span>,</span>
 <span>  <span class="va">covariates</span>,</span>
 <span>  <span class="va">dist</span>,</span>
-<span>  <span class="va">path_config</span>,</span>
+<span>  <span class="va">config</span>,</span>
 <span>  <span class="va">temp_dir</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -172,9 +172,8 @@ event. It must contain entries named <code>mortality</code>, <code>maturity</cod
 <code>reproduction</code>.</p></dd>
 
 
-<dt id="arg-path-config">path_config<a class="anchor" aria-label="anchor" href="#arg-path-config"></a></dt>
-<dd><p>A character string specifying the file path
-to the YAML configuration file.</p></dd>
+<dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
+<dd><p>A complete configuration list.</p></dd>
 
 
 <dt id="arg-temp-dir">temp_dir<a class="anchor" aria-label="anchor" href="#arg-temp-dir"></a></dt>

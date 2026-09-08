@@ -105,9 +105,19 @@ vignette.*
 Let’s run the analysis with default parameters.
 
 \
+`config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"geno + type"``, survival_param2 ``=`` ``1``)``,`\
+`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``"geno * type"``, maturity_param2 ``=`` ``1``)``,`\
+`  reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    expt_reproduction ``=`` ``"geno"``,`\
+`    reproduction_param2 ``=`` ``1``,`\
+`    n_offspring ``=`` ``"geno"`\
+`  ``)`\
+`)`\
+\
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``dataLFH``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config"``)`\
+`  config ``=`` ``config`\
 `)`
 
 ## Warning
@@ -181,7 +191,7 @@ again with the `param_bounds_df` argument:
 \
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``dataLFH``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config"``)``,`\
+`  config ``=`` ``config``,`\
 `  param_bounds_df ``=`` ``bounds_df`\
 `)`
 

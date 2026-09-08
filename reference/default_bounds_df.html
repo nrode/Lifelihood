@@ -40,7 +40,7 @@ generate it and keep the default values)."></head><body>pkgdown/assets/header.ht
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -175,7 +175,15 @@ generate it and keep the default values).</p>
 <span class="r-in"><span><span class="co"># then we pass it to lifelihood()</span></span></span>
 <span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihood.html">lifelihood</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span></span>
-<span class="r-in"><span>  path_config <span class="op">=</span> <span class="fu"><a href="use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mortality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_death <span class="op">=</span> <span class="st">"geno + type"</span>, survival_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    maturity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_maturity <span class="op">=</span> <span class="st">"geno * type"</span>, maturity_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    reproduction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      expt_reproduction <span class="op">=</span> <span class="st">"geno"</span>,</span></span>
+<span class="r-in"><span>      reproduction_param2 <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>      n_offspring <span class="op">=</span> <span class="st">"geno"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

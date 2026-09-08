@@ -47,7 +47,7 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -166,13 +166,13 @@
 <code class="sourceCode R"><span><span class="va">time_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">results_default</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>    <span class="va">lifelihoodData</span>,</span>
-<span>    path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_gbg"</span><span class="op">)</span>,</span>
+<span>    config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_gbg"</span><span class="op">)</span>,</span>
 <span>    group_by_group <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># Default value</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_default</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  31.393   0.348  32.914</span></span></code></pre></div>
+<span><span class="co">#&gt;  24.788   0.277  26.388</span></span></code></pre></div>
 </div>
 <ul>
 <li>Interaction model using the <code>group_by_group</code> argument (default to <code>FALSE</code>)</li>
@@ -182,13 +182,13 @@
 <code class="sourceCode R"><span><span class="va">time_gbg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">results_gbg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>    <span class="va">lifelihoodData</span>,</span>
-<span>    path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_gbg"</span><span class="op">)</span>,</span>
+<span>    config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config_gbg"</span><span class="op">)</span>,</span>
 <span>    group_by_group <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">time_gbg</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.975   0.100   2.129</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.499   0.091   2.273</span></span></code></pre></div>
 </div>
 <p>Fitting interaction model with group by group is faster than default model.</p>
 <ul>

@@ -91,7 +91,15 @@ dataLFH <- as_lifelihoodData(
 )
 results <- lifelihood(
 lifelihoodData = dataLFH,
-path_config = use_test_config("config_pierrick"),
+config = list(
+ mortality = list(expt_death = "par", survival_param2 = 1),
+ maturity = list(expt_maturity = 1, maturity_param2 = 1),
+ reproduction = list(
+   expt_reproduction = 1,
+   reproduction_param2 = 1,
+   n_offspring = 1
+ )
+),
 seeds = c(1, 2, 3, 4)
 )
 fitted_emergence_rate <- compute_fitted_event_rate(
@@ -101,7 +109,9 @@ fitted_emergence_rate <- compute_fitted_event_rate(
  max_time=150,
  groupby=c("par"))|>
  dplyr::mutate(sex = paste0("sex=", sex))
-#> Warning: Sex covariate fitted for ratio_expt_death but not included in `groupby` argument. Include 'sex' if you want separate plots for males and females.
+#> Error in dplyr::mutate(compute_fitted_event_rate(lifelihoodResults = results,     interval_width = 5, event = c("mortality"), max_time = 150,     groupby = c("par")), sex = paste0("sex=", sex)): ℹ In argument: `sex = paste0("sex=", sex)`.
+#> Caused by error:
+#> ! object 'sex' not found
 
 p <- fitted_emergence_rate |>
  ggplot2::ggplot(
@@ -117,10 +127,7 @@ p <- fitted_emergence_rate |>
  xlab("Time (days)")+
  ylab("Fitted mortality rate over 5 day-periods")+
  facet_wrap(vars(sex, par), labeller = "label_both")
+#> Error: object 'fitted_emergence_rate' not found
 p
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_line()`).
-
+#> Error: object 'p' not found
 ```

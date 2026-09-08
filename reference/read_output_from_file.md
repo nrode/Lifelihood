@@ -7,7 +7,13 @@ parsers from
 ## Usage
 
 ``` r
-read_output_from_file(file_path, covariates = NULL, path_config, MCMC)
+read_output_from_file(
+  file_path,
+  covariates = NULL,
+  config = NULL,
+  MCMC,
+  path_config = NULL
+)
 ```
 
 ## Arguments
@@ -20,15 +26,18 @@ read_output_from_file(file_path, covariates = NULL, path_config, MCMC)
 
   Vector containing the names of the covariates.
 
-- path_config:
+- config:
 
-  A character string specifying the file path to the YAML configuration
-  file.
+  A complete configuration list.
 
 - MCMC:
 
   Perform MCMC sampling of the parameter after convergence to estimate
   their 95% confidence interval.
+
+- path_config:
+
+  Deprecated alias for `config`.
 
 ## Value
 

@@ -4,8 +4,8 @@
 
 - [Required data
   format](https://nrode.github.io/Lifelihood/articles/required-data-format.md):
-- [Setting up YAML configuration
-  file](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md):
+- [Setting up a
+  configuration](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md):
 - [Fitting your first model in
   lifelihood](https://nrode.github.io/Lifelihood/articles/fitting-your-first-model-in-lifelihood.md):
 - [Customize parameter boundaries and estimation

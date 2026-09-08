@@ -9,7 +9,7 @@ This function fits
 ``` r
 lifelihood_fit(
   lifelihoodData,
-  path_config,
+  config,
   path_to_Lifelihood = NULL,
   param_bounds_df = NULL,
   group_by_group = FALSE,
@@ -42,10 +42,10 @@ lifelihood_fit(
   `lifelihoodData` object created with
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
 
-- path_config:
+- config:
 
-  A character string specifying the file path to the YAML configuration
-  file.
+  An existing YAML configuration file path or a named configuration
+  list. Missing sections and parameters default to `"not_fitted"`.
 
 - path_to_Lifelihood:
 

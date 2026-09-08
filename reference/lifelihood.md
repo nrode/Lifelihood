@@ -9,7 +9,7 @@ estimates the parameters of the model using maximum likelihood.
 ``` r
 lifelihood(
   lifelihoodData,
-  path_config,
+  config = NULL,
   path_to_Lifelihood = NULL,
   n_fit = 1,
   param_bounds_df = NULL,
@@ -31,7 +31,8 @@ lifelihood(
   tinf = 1000,
   sub_interval = 0.3,
   raise_estimation_warning = TRUE,
-  delete_temp_files = TRUE
+  delete_temp_files = TRUE,
+  path_config = NULL
 )
 ```
 
@@ -42,10 +43,10 @@ lifelihood(
   `lifelihoodData` object created with
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
 
-- path_config:
+- config:
 
-  A character string specifying the file path to the YAML configuration
-  file.
+  An existing YAML configuration file path or a named configuration
+  list. Missing sections and parameters default to `"not_fitted"`.
 
 - path_to_Lifelihood:
 
@@ -160,6 +161,11 @@ lifelihood(
 
   Indicates whether temporary files should be deleted. TRUE by default
   and recommended.
+
+- path_config:
+
+  Deprecated alias for `config`. A warning is raised when this argument
+  is used.
 
 ## Value
 

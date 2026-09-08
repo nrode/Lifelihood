@@ -246,9 +246,6 @@ parameter values. We can fit the same model to that dataset with
 and compare the refitted estimates with the values used for simulation.
 
 \
-`simulation_config_path`` ``<-`` `[`tempfile`](https://rdrr.io/r/base/tempfile.html)`(``fileext ``=`` ``".yaml"``)`\
-`yaml``::`[`write_yaml`](https://yaml.r-lib.org/reference/write_yaml.html)`(``simulation_config``, ``simulation_config_path``)`\
-\
 `simulated_for_fit`` ``<-`` ``simulated`` ``|>`\
 `  `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(`\
 `    sex_start ``=`` ``0``,`\
@@ -277,7 +274,7 @@ and compare the refitted estimates with the values used for simulation.
 \
 `refit`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``simulated_lifelihood_data``,`\
-`  path_config ``=`` ``simulation_config_path``,`\
+`  config ``=`` ``simulation_config``,`\
 `  param_bounds_df ``=`` ``pseudo_results``$``param_bounds_df``,`\
 `  raise_estimation_warning ``=`` ``FALSE``,`\
 `  delete_temp_files ``=`` ``FALSE``,`\

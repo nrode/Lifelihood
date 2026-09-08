@@ -8,15 +8,14 @@ when creating the input text file.
 ## Usage
 
 ``` r
-format_config(path_config, covariates, covar_types)
+format_config(config, covariates, covar_types)
 ```
 
 ## Arguments
 
-- path_config:
+- config:
 
-  A character string specifying the file path to the YAML configuration
-  file.
+  A complete configuration list.
 
 - covariates:
 

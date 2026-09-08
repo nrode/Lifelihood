@@ -44,9 +44,19 @@
 `  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"exp"``)`\
 `)`\
 \
+`config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"par"``, survival_param2 ``=`` ``1``, ratio_expt_death ``=`` ``1``)``,`\
+`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``1``, maturity_param2 ``=`` ``1``)``,`\
+`  reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    expt_reproduction ``=`` ``1``,`\
+`    reproduction_param2 ``=`` ``1``,`\
+`    n_offspring ``=`` ``1`\
+`  ``)`\
+`)`\
+\
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  ``lifelihoodData``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_pierrick"``)``,`\
+`  config ``=`` ``config``,`\
 `  raise_estimation_warning ``=`` ``FALSE`\
 `)`
 
@@ -66,9 +76,9 @@ following attributes:
 
 \
 `gof``$``original_loglik`\
-`#> [1] -7925.106`\
+`#> [1] -8357.363`\
 `gof``$``simulated_loglik`\
-`#> [1] -889.3337 -889.1103 -889.0665 -889.0406 -889.0648`\
+`#> [1] -876.1064 -876.0793 -876.0727 -876.1005 -876.0829`\
 `gof``$``n_success`\
 `#> [1] 5`\
 `gof``$``n_failed`\

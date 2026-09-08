@@ -52,13 +52,13 @@
 `time_default`` ``<-`` `[`system.time`](https://rdrr.io/r/base/system.time.html)`(``{`\
 `  ``results_default`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `    ``lifelihoodData``,`\
-`    path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_gbg"``)``,`\
+`    config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_gbg"``)``,`\
 `    group_by_group ``=`` ``FALSE`` ``# Default value`\
 `  ``)`\
 `}``)`\
 `time_default`\
 `#>    user  system elapsed `\
-`#>  31.393   0.348  32.914`
+`#>  24.788   0.277  26.388`
 
 - Interaction model using the `group_by_group` argument (default to
   `FALSE`)
@@ -67,13 +67,13 @@
 `time_gbg`` ``<-`` `[`system.time`](https://rdrr.io/r/base/system.time.html)`(``{`\
 `  ``results_gbg`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `    ``lifelihoodData``,`\
-`    path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_gbg"``)``,`\
+`    config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_gbg"``)``,`\
 `    group_by_group ``=`` ``TRUE`\
 `  ``)`\
 `}``)`\
 `time_gbg`\
 `#>    user  system elapsed `\
-`#>   1.975   0.100   2.129`
+`#>   1.499   0.091   2.273`
 
 Fitting interaction model with group by group is faster than default
 model.

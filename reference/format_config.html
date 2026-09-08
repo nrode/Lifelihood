@@ -30,7 +30,7 @@ input text file."></head><body>pkgdown/assets/header.html
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -85,16 +85,15 @@ input text file.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_config</span><span class="op">(</span><span class="va">path_config</span>, <span class="va">covariates</span>, <span class="va">covar_types</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_config</span><span class="op">(</span><span class="va">config</span>, <span class="va">covariates</span>, <span class="va">covar_types</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-path-config">path_config<a class="anchor" aria-label="anchor" href="#arg-path-config"></a></dt>
-<dd><p>A character string specifying the file path
-to the YAML configuration file.</p></dd>
+<dl><dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
+<dd><p>A complete configuration list.</p></dd>
 
 
 <dt id="arg-covariates">covariates<a class="anchor" aria-label="anchor" href="#arg-covariates"></a></dt>

@@ -42,6 +42,20 @@
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
 `  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
+`)`\
+\
+`config_se`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"par"``, survival_param2 ``=`` ``1``)`\
+`)`\
+\
+`config_mcmc`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"par"``, survival_param2 ``=`` ``1``)``,`\
+`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``"par"``, maturity_param2 ``=`` ``1``)``,`\
+`  reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    expt_reproduction ``=`` ``"par"``,`\
+`    reproduction_param2 ``=`` ``1``,`\
+`    fitness ``=`` ``1`\
+`  ``)`\
 `)`
 
 ## Standard errors
@@ -54,7 +68,7 @@ use the `se.fit` argument for this purpose:
 `## Fail to compute standard errors due to absence of convergence to the ML optimum`\
 `results_wrong`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``lifelihoodData``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"example_config_se"``)``,`\
+`  config ``=`` ``config_se``,`\
 `  se.fit ``=`` ``TRUE``,`\
 `  seed ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``103``, ``349``, ``1213``, ``1283``)`\
 `)`\
@@ -63,14 +77,14 @@ use the `se.fit` argument for this purpose:
 [`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``lifelihoodData``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"example_config_se"``)``,`\
+`  config ``=`` ``config_se``,`\
 `  se.fit ``=`` ``TRUE``,`\
 `  n_fit ``=`` ``5`\
 `)`\
-`#> Warning in lifelihood(lifelihoodData = lifelihoodData, path_config =`\
-`#> use_test_config("example_config_se"), : Best and second-best likelihoods differ`\
-`#> by 0.552 (> 0.1). Consider increasing n_fit (currently 5) to be sure of model`\
-`#> convergence and find the model with highest log-likelihood.`\
+`#> Warning in lifelihood(lifelihoodData = lifelihoodData, config = config_se, :`\
+`#> Best and second-best likelihoods differ by 0.552 (> 0.1). Consider increasing`\
+`#> n_fit (currently 5) to be sure of model convergence and find the model with`\
+`#> highest log-likelihood.`\
 \
 `## New model has better convergence`\
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results_wrong``)`\
@@ -158,7 +172,7 @@ We can predict with standard errors.
 \
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``lifelihoodData``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"example_config_mcmc"``)``,`\
+`  config ``=`` ``config_mcmc``,`\
 `  MCMC ``=`` ``30`\
 `)`
 

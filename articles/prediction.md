@@ -23,9 +23,9 @@ The observed male death intervals are multiplied by 10, while the female
 death intervals are left unchanged. Reproduction data are set to `NA`
 for males.
 
-The mortality formula in `config_pierrick` models `expt_death` as a
-function of `par` and also fits `ratio_expt_death`, which represents the
-male-to-female ratio in expected longevity.
+The mortality formula in the named configuration below models
+`expt_death` as a function of `par` and also fits `ratio_expt_death`,
+which represents the male-to-female ratio in expected longevity.
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
@@ -67,9 +67,19 @@ male-to-female ratio in expected longevity.
 `  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
 `)`\
 \
+`config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"par"``, survival_param2 ``=`` ``1``, ratio_expt_death ``=`` ``1``)``,`\
+`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``1``, maturity_param2 ``=`` ``1``)``,`\
+`  reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    expt_reproduction ``=`` ``1``,`\
+`    reproduction_param2 ``=`` ``1``,`\
+`    n_offspring ``=`` ``1`\
+`  ``)`\
+`)`\
+\
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``lifelihood_data``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_pierrick"``)``,`\
+`  config ``=`` ``config``,`\
 `  seeds ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``3699``, ``783``, ``5401``, ``6502``)``,`\
 `  raise_estimation_warning ``=`` ``FALSE`\
 `)`
@@ -160,6 +170,29 @@ The same approach applies to any fitted parameter:
 `)`` ``|>`\
 `  `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
 `#> [1] 0.3561403 0.3561403 0.3561403 0.3561403 0.3561403 0.3561403`
+
+Several parameters can be predicted in one call by passing a character
+vector to `parameter_name`. The predictions are returned as one column
+per parameter:
+
+\
+`predicted_parameters`` ``<-`` `[`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(`\
+`  ``results``,`\
+`  parameter_name ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"expt_death"``, ``"survival_param2"``)``,`\
+`  type ``=`` ``"response"`\
+`)`\
+\
+`predicted_parameters`` ``|>`\
+`  `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
+`#> # A tibble: 6 × 2`\
+`#>   expt_death survival_param2`\
+`#>        <dbl>           <dbl>`\
+`#> 1       91.7            4.06`\
+`#> 2       91.7            4.06`\
+`#> 3       91.7            4.06`\
+`#> 4       91.7            4.06`\
+`#> 5       91.7            4.06`\
+`#> 6       91.7            4.06`
 
 ## Choose the prediction scale
 

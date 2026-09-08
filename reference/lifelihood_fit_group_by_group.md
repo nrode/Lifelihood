@@ -8,7 +8,7 @@ intercept-only models for each group, and merges results.
 ``` r
 lifelihood_fit_group_by_group(
   lifelihoodData,
-  path_config,
+  config,
   path_to_Lifelihood = NULL,
   n_fit = 1,
   param_bounds_df = NULL,
@@ -39,10 +39,10 @@ lifelihood_fit_group_by_group(
   `lifelihoodData` object created with
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
 
-- path_config:
+- config:
 
-  A character string specifying the file path to the YAML configuration
-  file.
+  An existing YAML configuration file path or a named configuration
+  list. Missing sections and parameters default to `"not_fitted"`.
 
 - path_to_Lifelihood:
 

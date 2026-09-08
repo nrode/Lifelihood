@@ -1,4 +1,4 @@
-# Setting up YAML configuration file
+# Setting up a configuration
 
 If you haven’t check it yet, have a look at:
 
@@ -11,13 +11,28 @@ If you haven’t check it yet, have a look at:
 
 Since `lifelihood` allows for a large number of combinations on which
 parameters to estimate for a given dataset, it makes it easier to have a
-separate **configuration file** to specify what you want to fit. Under
-the hood, the program will use this file to only estimate what you have
+separate configuration to specify what you want to fit. Under the hood,
+the program will use this configuration to only estimate what you have
 specified and returns the estimations.
 
-The needed configuration file must be in the `YAML` format, a convenient
-kind of file that is both easy to **read** (for humans) and to **parse**
-(for the program). It relies on **indentation** to represent structure.
+The configuration can be supplied either as a `YAML` file or as a named
+R list. YAML is convenient when the configuration is large or reused
+across analyses, while a named list is concise for simple models.
+Missing sections and parameters in a named list default to `not_fitted`.
+
+For example, this fits only the expected mortality time as a function of
+`geno`:
+
+\
+`config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"geno"``)`\
+`)`
+
+The equivalent YAML configuration contains all three sections and
+parameters, with every omitted value written as `not_fitted`.
+
+The YAML format is convenient when the configuration is large or reused
+across analyses. It relies on **indentation** to represent structure.
 Learn more about [YAML](https://en.wikipedia.org/wiki/YAML).
 
 ## Parameters

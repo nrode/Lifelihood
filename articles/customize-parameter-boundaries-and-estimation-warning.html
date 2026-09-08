@@ -47,7 +47,7 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -207,9 +207,19 @@ If you haven’t check it yet, have a look at:
 <p>Let’s run the analysis with default parameters.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">config</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  mortality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_death <span class="op">=</span> <span class="st">"geno + type"</span>, survival_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  maturity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_maturity <span class="op">=</span> <span class="st">"geno * type"</span>, maturity_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  reproduction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    expt_reproduction <span class="op">=</span> <span class="st">"geno"</span>,</span>
+<span>    reproduction_param2 <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    n_offspring <span class="op">=</span> <span class="st">"geno"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span></span>
+<span>  config <span class="op">=</span> <span class="va">config</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a>
@@ -264,7 +274,7 @@ If you haven’t check it yet, have a look at:
 <div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
 <span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span>
-<span>  path_config <span class="op">=</span> <span class="fu"><a href="../reference/use_test_config.html">use_test_config</a></span><span class="op">(</span><span class="st">"config"</span><span class="op">)</span>,</span>
+<span>  config <span class="op">=</span> <span class="va">config</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="va">bounds_df</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>

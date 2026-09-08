@@ -116,17 +116,26 @@ It returns a `lifelihoodResults` object, which is a list containing all
 the results of the analysis.
 
 Here it’s a minimalist usage of the function, where we only specify the
-`lifelihoodData` object, the path to the [configuration
-file](https://nrode.github.io/Lifelihood/articles/2-setting-up-the-configuration-file.md)
-and the seeds to use (four integers used by Mersenne Twister
-pseudorandom number generator of the lifelihood program). The
-`raise_estimation_warning` argument will be the focus of the [next
+`lifelihoodData` object, the configuration and the seeds to use (four
+integers used by Mersenne Twister pseudorandom number generator of the
+lifelihood program). The `raise_estimation_warning` argument will be the
+focus of the [next
 vignette](https://nrode.github.io/Lifelihood/articles/4-custom-param-boundaries-and-estimation-warning.md).
 
 \
+`config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"par"``, survival_param2 ``=`` ``1``, ratio_expt_death ``=`` ``1``)``,`\
+`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``1``, maturity_param2 ``=`` ``1``)``,`\
+`  reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    expt_reproduction ``=`` ``1``,`\
+`    reproduction_param2 ``=`` ``1``,`\
+`    n_offspring ``=`` ``1`\
+`  ``)`\
+`)`\
+\
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``dataLFH``,`\
-`  path_config ``=`` `[`use_test_config`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)`(``"config_pierrick"``)``,`\
+`  config ``=`` ``config``,`\
 `  seeds ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``3``, ``4``)``,`\
 `  raise_estimation_warning ``=`` ``FALSE`\
 `)`\

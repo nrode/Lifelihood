@@ -53,7 +53,11 @@ It requires R 4.1.0 or later, and work on all of:
 \
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``dataLFH``,`\
-`  path_config ``=`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"configs/config.yaml"``, package ``=`` ``"lifelihood"``)``,`\
+`  config ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"geno + type"``, survival_param2 ``=`` ``1``)``,`\
+`    maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``"geno + type"``, maturity_param2 ``=`` ``1``)``,`\
+`    reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_reproduction ``=`` ``"geno"``, reproduction_param2 ``=`` ``1``)`\
+`  ``)``,`\
 `  seeds ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``3``, ``4``)`\
 `)`\
 [`summary`](https://rdrr.io/r/base/summary.html)`(``results``)`\

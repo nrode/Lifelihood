@@ -23,7 +23,7 @@ format_dataframe_to_txt(
   death_end,
   covariates,
   dist,
-  path_config,
+  config,
   temp_dir
 )
 ```
@@ -93,10 +93,9 @@ format_dataframe_to_txt(
   must contain entries named `mortality`, `maturity`, and
   `reproduction`.
 
-- path_config:
+- config:
 
-  A character string specifying the file path to the YAML configuration
-  file.
+  A complete configuration list.
 
 - temp_dir:
 

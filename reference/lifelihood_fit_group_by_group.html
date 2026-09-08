@@ -28,7 +28,7 @@ fits intercept-only models for each group, and merges results."></head><body>pkg
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
     <li><a class="dropdown-item" href="../articles/required-data-format.html">Required data format</a></li>
-    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up YAML configuration file</a></li>
+    <li><a class="dropdown-item" href="../articles/setting-up-the-configuration-file.html">Setting up a configuration</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-your-first-model-in-lifelihood.html">Fitting your first model in lifelihood</a></li>
     <li><a class="dropdown-item" href="../articles/customize-parameter-boundaries-and-estimation-warning.html">Customize parameter boundaries and estimation warning</a></li>
     <li><a class="dropdown-item" href="../articles/generate-clutch-names.html">Generate clutch names</a></li>
@@ -84,7 +84,7 @@ fits intercept-only models for each group, and merges results.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lifelihood_fit_group_by_group</span><span class="op">(</span></span>
 <span>  <span class="va">lifelihoodData</span>,</span>
-<span>  <span class="va">path_config</span>,</span>
+<span>  <span class="va">config</span>,</span>
 <span>  path_to_Lifelihood <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_fit <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  param_bounds_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -116,8 +116,10 @@ fits intercept-only models for each group, and merges results.</p>
 <dd><p><code>lifelihoodData</code> object created with <code><a href="as_lifelihoodData.html">as_lifelihoodData()</a></code>.</p></dd>
 
 
-<dt id="arg-path-config">path_config<a class="anchor" aria-label="anchor" href="#arg-path-config"></a></dt>
-<dd><p>A character string specifying the file path to the YAML configuration file.</p></dd>
+<dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
+<dd><p>An existing YAML configuration file path or a named
+configuration list. Missing sections and parameters default to
+<code>"not_fitted"</code>.</p></dd>
 
 
 <dt id="arg-path-to-lifelihood">path_to_Lifelihood<a class="anchor" aria-label="anchor" href="#arg-path-to-lifelihood"></a></dt>
