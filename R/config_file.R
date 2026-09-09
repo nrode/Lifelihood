@@ -260,14 +260,31 @@ format_config <- function(config, covariates, covar_types) {
         covar_types
       )[1]
     ),
-    paste(
-      "n_offspring",
-      R_to_lifelihood(
-        safe_access(config, c("reproduction", "n_offspring")),
-        covariates,
-        covar_types
-      )[1]
-    ),
+    # when we want to fit fitness, we replace n_offspring
+    # params by fitness one's, see:
+    # https://github.com/nrode/Lifelihood/issues/188
+    if (
+      !is.null(config$reproduction$fitness) &&
+        config$reproduction$fitness != "not_fitted"
+    ) {
+      paste(
+        "n_offspring",
+        R_to_lifelihood(
+          safe_access(config, c("reproduction", "fitness")),
+          covariates,
+          covar_types
+        )[1]
+      )
+    } else {
+      paste(
+        "n_offspring",
+        R_to_lifelihood(
+          safe_access(config, c("reproduction", "n_offspring")),
+          covariates,
+          covar_types
+        )[1]
+      )
+    },
     paste(
       "increase_death_hazard",
       R_to_lifelihood(
@@ -331,14 +348,6 @@ format_config <- function(config, covariates, covar_types) {
       "tof_n_offspring",
       R_to_lifelihood(
         safe_access(config, c("reproduction", "tof_n_offspring")),
-        covariates,
-        covar_types
-      )[1]
-    ),
-    paste(
-      "fitness",
-      R_to_lifelihood(
-        safe_access(config, c("reproduction", "fitness")),
         covariates,
         covar_types
       )[1]

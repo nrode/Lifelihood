@@ -49,12 +49,10 @@ const
   a2_erfra = -0.0958798;
   a3_erfra = 0.7478556;
   minus = 0.00000000000000000000000000000000001;
-  // nbparposs = 19;
-  nbparposs = 20;
+  nbparposs = 19;
   nbparmort = 5; {  mortuf  morta  Rmortum mortp propmal}
   nbparmat = 3; {  matuf mata Rmatum }
-  // nbparponte = 11;
-  nbparponte = 12;
+  nbparponte = 11;
   {pontu  ponta  (W)pontn  to(ps)int  to(ps)am  to(ps)tp  sen(pu)t  sen(pu)t2  sen(pn)t  sen(pn)t2  to(pnpu) }
 
 type
@@ -1636,14 +1634,14 @@ begin
     //    value := 1;
   end;
 
-  // if fitness_repar = 'TRUE' then  with FD.paramdescript[10] do
-  //   begin
-  //     Name := 'n_offspring'; // 'W'
-  //     minBound := 0.0001;
-  //     maxBound := 1000;
-  //     //   value := 20;
-  //   end
-  // else
+  if fitness_repar = 'TRUE' then  with FD.paramdescript[10] do
+    begin
+      Name := 'fitness'; // 'W'
+      minBound := 0.0001;
+      maxBound := 1000;
+      //   value := 20;
+    end
+  else
   with FD.paramdescript[10] do
   begin
     Name := 'n_offspring';
@@ -1724,13 +1722,13 @@ begin
     //   value := 0.5;
   end;
 
-  with FD.paramdescript[19] do
-  begin
-    Name := 'fitness'; // 'W'
-    minBound := 0.0001;
-    maxBound := 1000;
-    //   value := 20;
-  end;
+  // with FD.paramdescript[19] do
+  // begin
+  //   Name := 'fitness'; // 'W'
+  //   minBound := 0.0001;
+  //   maxBound := 1000;
+  //   //   value := 20;
+  // end;
 
 end;
 

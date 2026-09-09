@@ -323,17 +323,17 @@ begin
         maxBound := StrToFloat(lal[2]);
       end;
 
-    // if fitness_repar='TRUE' then
-    // begin
-    //   with FD.paramdescript[19] do        //n_offspring est le 11 param ds custom.txt
-    //   begin
-    //     readln(fc, check);
-    //     lal.DelimitedText := check;
-    //     name := lal[0];
-    //     minBound := StrToFloat(lal[1]);
-    //     maxBound := StrToFloat(lal[2]);
-    //   end;
-    // end;
+    if fitness_repar='TRUE' then
+    begin
+      with FD.paramdescript[10] do        //n_offspring est le 11 param ds custom.txt
+      begin
+        readln(fc, check);
+        lal.DelimitedText := check;
+        name := lal[0];
+        minBound := StrToFloat(lal[1]);
+        maxBound := StrToFloat(lal[2]);
+      end;
+    end;
     lal.Free;
     closefile(fc);
   except

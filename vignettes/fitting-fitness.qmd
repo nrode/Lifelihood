@@ -1,0 +1,176 @@
+---
+title: "Fitting fitness"
+vignette: >
+  %\VignetteIndexEntry{fitting-fitness}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+code-annotations: hover
+execute: 
+  cache: false
+embed-resources: true
+---
+
+```{r}
+#| label: setup
+devtools::load_all()
+library(tidyverse)
+
+clutchs <- generate_clutch_vector(6)
+
+lifelihoodData <- as_lifelihoodData(
+  df = datalenski,
+  matclutch = FALSE,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "mat_start",
+  maturity_end = "mat_end",
+  clutchs = clutchs,
+  death_start = "death_start",
+  death_end = "death_end",
+  covariates = "Group",
+  dist = c(mortality = "wei", maturity = "lgn", reproduction = "lgn")
+)
+
+config_fitness <- list(
+  mortality = list(expt_death = 1, survival_param2 = 1),
+  maturity = list(expt_maturity = 1, maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = 1,
+    reproduction_param2 = 1,
+    fitness = 1
+  )
+)
+```
+
+
+## Fit lifetime reproductive success
+
+To fit lifetime reproductive success, we need to replace the `n_offspring` parameter by the `fitness` parameter. 
+
+We recommend using MCMC sampling to compute fitness confidence intervals instead of `se.fit` which is likely to give wrong results.
+
+```{r}
+results <- lifelihood(
+  lifelihoodData,
+  config = config_fitness,
+  n_fit = 30
+)
+```
+
+## Results
+
+We can then predict fitness and its confidence interval:
+
+```{r}
+summary(results)
+
+prediction(results, "fitness", type = "response")
+```
+
+## Using simulated data
+
+
+```{r}
+population <- crossing(group = as.factor(0), sex = 0) |>
+  mutate(n_individuals = 100)
+
+effects <- list(
+  expt_death = list(intercept = 0),
+  survival_param2 = 0,
+  expt_maturity = list(intercept = 0),
+  maturity_param2 = 0,
+  expt_reproduction = list(intercept = 0),
+  reproduction_param2 = 0,
+  n_offspring = list(intercept = 0)
+)
+
+config <- list(
+  mortality = list(expt_death = 1, survival_param2 = 1),
+  maturity = list(expt_maturity = 1, maturity_param2 = 1),
+  reproduction = list(
+    expt_reproduction = 1,
+    reproduction_param2 = 1,
+    n_offspring = 1
+  )
+)
+
+pseudo_results <- create_simulation_input(
+  effects = effects,
+  data = population,
+  covariates = c("group"),
+  sex = "sex",
+  config = config,
+  dist = c(mortality = "exp", maturity = "exp", reproduction = "exp"),
+  n_per_combination = "n_individuals"
+)
+
+bounds_df <- default_bounds_df(pseudo_results$lifelihoodData)
+bounds_df$max[bounds_df$param == "expt_death"] <- 110
+bounds_df$min[bounds_df$param == "expt_death"] <- 110
+bounds_df$max[bounds_df$param == "survival_param2"] <- 2
+bounds_df$max[bounds_df$param == "expt_maturity"] <- 10
+bounds_df$min[bounds_df$param == "expt_maturity"] <- 10
+bounds_df$max[bounds_df$param == "maturity_param2"] <- 2
+bounds_df$max[bounds_df$param == "expt_reproduction"] <- 5
+bounds_df$min[bounds_df$param == "expt_reproduction"] <- 5
+bounds_df$max[bounds_df$param == "reproduction_param2"] <- 2
+bounds_df$max[bounds_df$param == "n_offspring"] <- 10
+bounds_df$min[bounds_df$param == "n_offspring"] <- 10
+
+pseudo_results$param_bounds_df <- bounds_df
+
+visits <- data.frame(block = 1, visit = seq(0, 1000, by = 0.1))
+pseudo_results$lifelihoodData$block <- "block"
+pseudo_results$lifelihoodData$df$block <- 1
+simulated_df <- simulate_life_history(pseudo_results, visits = visits)
+```
+
+## Refit
+
+```{r}
+max_n_clutches <- max(simulated_df$total_n_clutches, na.rm = TRUE)
+clutchs <- generate_clutch_vector(max_n_clutches)
+
+lifelihoodData <- as_lifelihoodData(
+  df = simulated_df,
+  matclutch = FALSE,
+  sex = "sex",
+  sex_start = "sex_start",
+  sex_end = "sex_end",
+  maturity_start = "maturity_start",
+  maturity_end = "maturity_end",
+  clutchs = clutchs,
+  death_start = "mortality_start",
+  death_end = "mortality_end",
+  covariates = "group",
+  dist = c(mortality = "exp", maturity = "exp", reproduction = "exp")
+)
+
+config_fitness <- list(
+  mortality = list(expt_death = 1),
+  maturity = list(expt_maturity = 1),
+  reproduction = list(expt_reproduction = 1, fitness = 1)
+)
+config_fitness$reproduction$fitness
+
+default_bounds_df(lifelihoodData)
+results <- lifelihood(
+  lifelihoodData,
+  config = config_fitness,
+  n_fit = 10,
+  delete_temp_files = FALSE
+)
+
+summary(results)
+
+prediction(
+  results,
+  c("expt_death", "expt_maturity", "expt_reproduction", "fitness"),
+  type = "response"
+)
+```
