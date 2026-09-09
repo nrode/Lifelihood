@@ -66,6 +66,7 @@
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/goodness-of-fit.html">Goodness of fit</a></li>
     <li><a class="dropdown-item" href="../articles/fitting-interaction-model.html">Fit interaction model using `group_by_group = TRUE`</a></li>
+    <li><a class="dropdown-item" href="../articles/fitting-fitness.html">Fitting fitness</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Developer</h6></li>
     <li><a class="dropdown-item" href="../articles/overview.html">Overview</a></li>
@@ -262,10 +263,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          86.1</span></span>
-<span><span class="co">#&gt; 2 1         105. </span></span>
-<span><span class="co">#&gt; 3 2          81.0</span></span>
-<span><span class="co">#&gt; 4 3         102.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          83.9</span></span>
+<span><span class="co">#&gt; 2 1          98.4</span></span>
+<span><span class="co">#&gt; 3 2          83.2</span></span>
+<span><span class="co">#&gt; 4 3         103.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-without-tradeoffs">From scratch without tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-without-tradeoffs"></a>
 </h3>
@@ -349,21 +350,21 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"</span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 400 × 110</span></span>
+<span><span class="co">#&gt; # A tibble: 400 × 113</span></span>
 <span><span class="co">#&gt;    geno  block   sex sex_start sex_end mortality mortality_start mortality_end</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         1     0       990    1000      56.0            56            56.1</span></span>
-<span><span class="co">#&gt;  2 0         1     0       990    1000      92.8            92.7          92.8</span></span>
-<span><span class="co">#&gt;  3 0         1     0       990    1000      60.3            60.2          60.3</span></span>
-<span><span class="co">#&gt;  4 0         1     0       990    1000     112.            112.          112. </span></span>
-<span><span class="co">#&gt;  5 0         1     0       990    1000      66.7            66.7          66.8</span></span>
-<span><span class="co">#&gt;  6 0         1     0       990    1000      92.1            92            92.1</span></span>
-<span><span class="co">#&gt;  7 0         1     0       990    1000     111.            111           111. </span></span>
-<span><span class="co">#&gt;  8 0         1     0       990    1000     121.            121.          121. </span></span>
-<span><span class="co">#&gt;  9 0         1     0       990    1000      84.5            84.5          84.6</span></span>
-<span><span class="co">#&gt; 10 0         1     0       990    1000      92.4            92.4          92.5</span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000      83.9            83.9          84  </span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000      90.2            90.1          90.2</span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000     113.            113.          114. </span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000      36.5            36.4          36.5</span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000     103.            103           103. </span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000     120.            120.          120. </span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000      94.9            94.8          94.9</span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000      74.1            74            74.1</span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000      94.6            94.6          94.7</span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000      96.9            96.9          97  </span></span>
 <span><span class="co">#&gt; # ℹ 390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 102 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 105 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   maturity_end &lt;dbl&gt;, first_clutch_size &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
@@ -377,10 +378,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          85.6</span></span>
-<span><span class="co">#&gt; 2 1         104. </span></span>
-<span><span class="co">#&gt; 3 2          79.7</span></span>
-<span><span class="co">#&gt; 4 3          97.8</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          86.0</span></span>
+<span><span class="co">#&gt; 2 1         106. </span></span>
+<span><span class="co">#&gt; 3 2          84.0</span></span>
+<span><span class="co">#&gt; 4 3         108.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-with-tradeoffs">From scratch with tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-with-tradeoffs"></a>
 </h3>

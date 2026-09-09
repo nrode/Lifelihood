@@ -37,6 +37,8 @@
   fit](https://nrode.github.io/Lifelihood/articles/goodness-of-fit.md):
 - [Fit interaction model using \`group_by_group =
   TRUE\`](https://nrode.github.io/Lifelihood/articles/fitting-interaction-model.md):
+- [Fitting
+  fitness](https://nrode.github.io/Lifelihood/articles/fitting-fitness.md):
 
 ### Developer
 

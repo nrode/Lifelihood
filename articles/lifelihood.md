@@ -194,36 +194,36 @@
 
 \
 [`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 64959.64`\
+`#> [1] 64960.4`\
 [`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 65002.74`
+`#> [1] 65003.5`
 
 ### Summary results
 
 \
 [`coef`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``)`\
 `#>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 `\
-`#>              -0.9116904              -1.7641920              -1.7826477 `\
+`#>              -0.9072068              -2.5058851              -2.5244262 `\
 `#>     int_survival_param2    int_ratio_expt_death       int_expt_maturity `\
-`#>              -4.8770150              -3.7085045              -1.4537389 `\
+`#>              -4.8697181              -2.9781630              -1.4381797 `\
 `#>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 `\
-`#>              -3.2745851              -4.2556527              -5.3518201 `\
+`#>              -3.2828666              -4.2585564              -5.3559421 `\
 `#>         int_n_offspring `\
-`#>              -2.5541646`\
+`#>              -2.5551285`\
 [`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"expt_death"``)`\
 `#>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 `\
-`#>           -0.9116904           -1.7641920           -1.7826477`\
+`#>           -0.9072068           -2.5058851           -2.5244262`\
 [`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"survival_param2"``)`\
 `#> int_survival_param2 `\
-`#>           -4.877015`\
+`#>           -4.869718`\
 \
 [`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 64959.64`\
+`#> [1] 64960.4`\
 [`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 65002.74`\
+`#> [1] 65003.5`\
 \
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results``)`\
-`#> [1] -32469.82`
+`#> [1] -32470.2`
 
 ### Prediction on new data
 
@@ -238,6 +238,6 @@
 `  ``)`\
 \
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"expt_death"``, newdata ``=`` ``newdata``)`\
-`#> [1] -0.9116904 -2.6758823 -2.6943380 -0.9116904 -2.6758823 -2.6943380 -2.6758823`\
+`#> [1] -0.9072068 -3.4130920 -3.4316331 -0.9072068 -3.4130920 -3.4316331 -3.4130920`\
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"expt_death"``, newdata ``=`` ``newdata``, type ``=`` ``"response"``)`\
 `#> numeric(0)`

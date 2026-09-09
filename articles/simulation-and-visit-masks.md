@@ -76,27 +76,27 @@ First, we need to fit the model with
 `#> Sample size: 550 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -32470.111`\
-`#> AIC:             64960.2`\
-`#> BIC:             65003.3`\
+`#> Log-likelihood:  -32470.837`\
+`#> AIC:             64961.7`\
+`#> BIC:             65004.8`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -0.914 (0.000)`\
-`#>   expt_death eff_expt_death_par_1 -2.041 (0.000)`\
-`#>   expt_death eff_expt_death_par_2 -2.077 (0.000)`\
-`#>   survival_param2 (Intercept) -4.883 (0.000)`\
-`#>   ratio_expt_death (Intercept) -3.438 (0.000)`\
+`#>   expt_death (Intercept)    -0.918 (0.000)`\
+`#>   expt_death eff_expt_death_par_1 -1.558 (0.000)`\
+`#>   expt_death eff_expt_death_par_2 -1.579 (0.000)`\
+`#>   survival_param2 (Intercept) -4.885 (0.000)`\
+`#>   ratio_expt_death (Intercept) -3.897 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -1.448 (0.000)`\
-`#>   maturity_param2 (Intercept) -3.279 (0.000)`\
+`#>   expt_maturity (Intercept) -1.481 (0.000)`\
+`#>   maturity_param2 (Intercept) -3.262 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -4.261 (0.000)`\
-`#>   reproduction_param2 (Intercept) -5.360 (0.000)`\
-`#>   n_offspring (Intercept)   -2.554 (0.000)`\
+`#>   expt_reproduction (Intercept) -4.257 (0.000)`\
+`#>   reproduction_param2 (Intercept) -5.353 (0.000)`\
+`#>   n_offspring (Intercept)   -2.553 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -113,12 +113,12 @@ By default, `lifelihood` will simulate all life history events
 `#> # A tibble: 6 × 114`\
 `#>   par   spore block   sex sex_start sex_end total_n_offspring total_n_clutches`\
 `#>   <fct> <fct> <int> <int>     <int>   <int>             <dbl>            <dbl>`\
-`#> 1 0     0         1     0        13    1000                68               13`\
-`#> 2 0     0         1     0        13    1000                32                7`\
-`#> 3 0     0         1     0        15    1000                86               18`\
-`#> 4 0     0         1     0        14    1000               110               21`\
-`#> 5 0     0         1     0        19    1000                59               12`\
-`#> 6 0     0         1     0        12    1000                56               14`\
+`#> 1 0     0         1     0        13    1000               125               30`\
+`#> 2 0     0         1     0        13    1000                59               13`\
+`#> 3 0     0         1     0        15    1000                59               13`\
+`#> 4 0     0         1     0        14    1000                81               19`\
+`#> 5 0     0         1     0        19    1000               119               28`\
+`#> 6 0     0         1     0        12    1000                77               18`\
 `#> # ℹ 106 more variables: maturity_start <dbl>, maturity_end <dbl>,`\
 `#> #   clutch_start_1 <dbl>, clutch_end_1 <dbl>, clutch_size_1 <int>,`\
 `#> #   clutch_start_2 <dbl>, clutch_end_2 <dbl>, clutch_size_2 <int>,`\
@@ -134,11 +134,11 @@ But you can specify which event you want:
 `#> # A tibble: 6 × 10`\
 `#>   par   spore block   sex sex_start sex_end maturity_start maturity_end`\
 `#>   <fct> <fct> <int> <int>     <int>   <int>          <dbl>        <dbl>`\
-`#> 1 0     0         1     0        13    1000           13.1         13.1`\
-`#> 2 0     0         1     0        13    1000           13.9         13.9`\
-`#> 3 0     0         1     0        15    1000           14.8         14.8`\
-`#> 4 0     0         1     0        14    1000           13.6         13.6`\
-`#> 5 0     0         1     0        19    1000           13.2         13.2`\
+`#> 1 0     0         1     0        13    1000           13.3         13.3`\
+`#> 2 0     0         1     0        13    1000           13.6         13.6`\
+`#> 3 0     0         1     0        15    1000           12.5         12.5`\
+`#> 4 0     0         1     0        14    1000           11.8         11.8`\
+`#> 5 0     0         1     0        19    1000           12.4         12.4`\
 `#> 6 0     0         1     0        12    1000           13.0         13.0`\
 `#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>`
 
@@ -184,12 +184,12 @@ To use censoring intervals in the simulation, pass visits explicitly:
 `#> # A tibble: 6 × 11`\
 `#>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end`\
 `#>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>`\
-`#> 1 0     0         1     0        13    1000     12.6             12           13`\
-`#> 2 0     0         1     0        13    1000     14.4             14           15`\
-`#> 3 0     0         1     0        15    1000     13.9             13           14`\
-`#> 4 0     0         1     0        14    1000     13.9             13           14`\
-`#> 5 0     0         1     0        19    1000     13.5             13           14`\
-`#> 6 0     0         1     0        12    1000     13.4             13           14`\
+`#> 1 0     0         1     0        13    1000     13.0             12           13`\
+`#> 2 0     0         1     0        13    1000     13.2             13           14`\
+`#> 3 0     0         1     0        15    1000     12.7             12           13`\
+`#> 4 0     0         1     0        14    1000     12.9             12           13`\
+`#> 5 0     0         1     0        19    1000     12.2             12           13`\
+`#> 6 0     0         1     0        12    1000     13.7             13           14`\
 `#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>`
 
 Ideally, we recommend to provide explicitly the date where each visit
@@ -235,12 +235,12 @@ function:
 `#> # A tibble: 6 × 11`\
 `#>   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end`\
 `#>   <fct> <fct> <int> <int>     <int>   <int>    <dbl>          <dbl>        <dbl>`\
-`#> 1 0     0         1     0        13    1000     12.5             12           13`\
+`#> 1 0     0         1     0        13    1000     13.1             13           14`\
 `#> 2 0     0         1     0        13    1000     12.8             12           13`\
-`#> 3 0     0         1     0        15    1000     14.0             14           15`\
-`#> 4 0     0         1     0        14    1000     13.6             13           14`\
-`#> 5 0     0         1     0        19    1000     12.7             12           13`\
-`#> 6 0     0         1     0        12    1000     13.7             13           14`\
+`#> 3 0     0         1     0        15    1000     12.3             12           13`\
+`#> 4 0     0         1     0        14    1000     13.1             13           14`\
+`#> 5 0     0         1     0        19    1000     12.1             12           13`\
+`#> 6 0     0         1     0        12    1000     13.9             13           14`\
 `#> # ℹ 2 more variables: total_n_offspring <dbl>, total_n_clutches <dbl>`
 
 ## Details
@@ -262,12 +262,12 @@ the reproduction-survival trade-off simulation.
 `#> # A tibble: 6 × 116`\
 `#>   par   spore block   sex sex_start sex_end mortality maturity maturity_start`\
 `#>   <fct> <fct> <int> <int>     <int>   <int>     <dbl>    <dbl>          <dbl>`\
-`#> 1 0     0         1     0        13    1000      79.5     12.9             12`\
-`#> 2 0     0         1     0        13    1000      80.6     13.4             13`\
-`#> 3 0     0         1     0        15    1000      82.8     12.8             12`\
-`#> 4 0     0         1     0        14    1000      93.5     14.3             14`\
-`#> 5 0     0         1     0        19    1000      91.8     13.5             13`\
-`#> 6 0     0         1     0        12    1000      70.6     12.8             12`\
+`#> 1 0     0         1     0        13    1000      79.2     12.6             12`\
+`#> 2 0     0         1     0        13    1000      80.3     13.1             13`\
+`#> 3 0     0         1     0        15    1000      82.6     12.5             12`\
+`#> 4 0     0         1     0        14    1000      93.3     14.0             13`\
+`#> 5 0     0         1     0        19    1000      91.5     13.2             13`\
+`#> 6 0     0         1     0        12    1000      70.4     12.5             12`\
 `#> # ℹ 107 more variables: maturity_end <dbl>, mortality_start <dbl>,`\
 `#> #   mortality_end <dbl>, clutch_start_1 <dbl>, clutch_end_1 <dbl>,`\
 `#> #   clutch_size_1 <int>, clutch_start_2 <dbl>, clutch_end_2 <dbl>,`\
