@@ -38,6 +38,7 @@
 #' @return A `lifelihoodResults` object
 #'
 #' @importFrom utils write.table
+#' @importFrom stats AIC logLik
 #'
 #' @export
 lifelihood <- function(

@@ -85,7 +85,6 @@ effects <- list(
   expt_maturity = list(intercept = 0),
   maturity_param2 = 0,
   expt_reproduction = list(intercept = 0),
-  reproduction_param2 = 0,
   n_offspring = list(intercept = 0)
 )
 
@@ -94,7 +93,6 @@ config <- list(
   maturity = list(expt_maturity = 1, maturity_param2 = 1),
   reproduction = list(
     expt_reproduction = 1,
-    reproduction_param2 = 1,
     n_offspring = 1
   )
 )
@@ -118,7 +116,6 @@ bounds_df$min[bounds_df$param == "expt_maturity"] <- 10
 bounds_df$max[bounds_df$param == "maturity_param2"] <- 2
 bounds_df$max[bounds_df$param == "expt_reproduction"] <- 5
 bounds_df$min[bounds_df$param == "expt_reproduction"] <- 5
-bounds_df$max[bounds_df$param == "reproduction_param2"] <- 2
 bounds_df$max[bounds_df$param == "n_offspring"] <- 10
 bounds_df$min[bounds_df$param == "n_offspring"] <- 10
 

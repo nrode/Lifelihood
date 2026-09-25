@@ -89,7 +89,7 @@ fitted_emergence_rate <- compute_fitted_event_rate(
  event = c("mortality"),
  max_time=150,
  groupby=c("par"))|>
- dplyr::mutate(sex = paste0("sex=", sex))
+ dplyr::mutate(sex = "sex=all")
 
 p <- fitted_emergence_rate |>
  ggplot2::ggplot(

@@ -93,6 +93,8 @@ predict_or_default <- function(
 #'
 #' @return A numeric vector with high-quantile longevity values.
 #'
+#' @importFrom stats qexp qgamma qlnorm qweibull
+#'
 #' @keywords internal
 compute_max_longevity <- function(expected, shape, family) {
   if (family == "wei") {

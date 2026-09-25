@@ -10,8 +10,6 @@
 #' @param fit_args Named list of additional arguments passed to [lifelihood()]
 #' when refitting each simulated dataset. By default, refits use
 #' `n_fit = 1`, `MCMC = 0`, and `se.fit = FALSE` for speed.
-#' @param keep_fits Whether to store fitted objects for each successful
-#' simulation. Default is `FALSE`.
 #'
 #' @return A `lifelihoodGOF` object (list) with:
 #' - `original_loglik`: log-likelihood of the original fit
@@ -21,8 +19,10 @@
 #' - `p_lower_or_equal`: proportion of simulated log-likelihoods lower than or
 #' equal to the original value
 #' - `errors`: per-simulation error messages (if any)
-#' - `fits`: optional list of fitted objects (only if `keep_fits = TRUE`)
+#' - `fits`: list containing the fitted object for each simulation, or `NULL`
+#'   for failed refits
 #'
+#' @importFrom stats logLik
 #' @export
 goodness_of_fit <- function(
   object,
@@ -191,14 +191,14 @@ goodness_of_fit <- function(
 #'
 #' @export
 plot.lifelihoodGOF <- function(
-  gof,
+  x,
   bins = 30,
   fill = "grey80",
   color = "white",
   line_color = "red",
   ...
 ) {
-  check_lifelihoodGOF(gof)
+  check_lifelihoodGOF(x)
 
   if (
     !is.numeric(bins) ||
@@ -211,7 +211,7 @@ plot.lifelihoodGOF <- function(
   }
   bins <- as.integer(bins)
 
-  plot_df <- data.frame(loglikelihood = gof$simulated_loglik)
+  plot_df <- data.frame(loglikelihood = x$simulated_loglik)
   plot_df <- plot_df[!is.na(plot_df$loglikelihood), , drop = FALSE]
 
   if (nrow(plot_df) == 0) {
@@ -221,7 +221,7 @@ plot.lifelihoodGOF <- function(
   ggplot(plot_df, aes(x = loglikelihood)) +
     geom_histogram(bins = bins, fill = fill, color = color) +
     geom_vline(
-      xintercept = gof$original_loglik,
+      xintercept = x$original_loglik,
       color = line_color,
       linewidth = 1
     ) +
@@ -231,7 +231,7 @@ plot.lifelihoodGOF <- function(
       title = "Goodness of fit",
       subtitle = paste0(
         "Original log-likelihood: ",
-        signif(gof$original_loglik, 6)
+        signif(x$original_loglik, 6)
       )
     ) +
     theme_minimal()

@@ -11,6 +11,8 @@
 #' @return A data frame with one column named like `lifelihoodData$block` and
 #'   one column named `visit`.
 #'
+#' @importFrom tidyr expand_grid pivot_longer
+#'
 #' @export
 get_visits <- function(lifelihoodData) {
   check_lifelihoodData(lifelihoodData)

@@ -24,11 +24,17 @@ one of \code{unique(lifelihoodResults$effects$parameter)}.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.}
 
+\item{mcmc.fit}{Whether to return predictions based on the fitted MCMC
+samples. Requires fitting the model with \code{MCMC > 0}.}
+
 \item{keep_mcmc_samples}{Whether or not to also retrieve MCMC samples in output. If \code{TRUE}, output is a list with 2 elements: pred and mcmc_samples.}
 
 \item{type}{The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.}
 
 \item{se.fit}{Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).}
+
+\item{.warning_ratio_male}{Whether to warn when male predictions for
+\code{expt_death} are identical to female predictions on the link scale.}
 }
 \value{
 For a single parameter, a vector or list containing the predicted

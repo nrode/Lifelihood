@@ -68,7 +68,7 @@
 #'  event = c("mortality"),
 #'  max_time=150,
 #'  groupby=c("par"))|>
-#'  dplyr::mutate(sex = paste0("sex=", sex))
+#'  dplyr::mutate(sex = "sex=all")
 #'
 #' p <- fitted_emergence_rate |>
 #'  ggplot2::ggplot(
@@ -240,12 +240,9 @@ compute_fitted_event_rate <- function(
       relocate(time)
 
     if (lifelihoodData$sex %in% covar_sex) {
-      newdata <- newdata |>
-        mutate(
-          !!lifelihoodData$sex := as.numeric(as.character(.data[[
-            lifelihoodData$sex
-          ]]))
-        )
+      newdata[[lifelihoodData$sex]] <- as.numeric(as.character(
+        newdata[[lifelihoodData$sex]]
+      ))
     }
 
     newdata <- newdata |>

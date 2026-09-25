@@ -8,9 +8,13 @@
 #'   of the parameter(s) for which to make the prediction. Each name must be
 #'   one of `unique(lifelihoodResults$effects$parameter)`.
 #' @param newdata Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.
+#' @param mcmc.fit Whether to return predictions based on the fitted MCMC
+#'   samples. Requires fitting the model with `MCMC > 0`.
 #' @param type The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.
 #' @param se.fit Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).
 #' @param keep_mcmc_samples Whether or not to also retrieve MCMC samples in output. If `TRUE`, output is a list with 2 elements: pred and mcmc_samples.
+#' @param .warning_ratio_male Whether to warn when male predictions for
+#'   `expt_death` are identical to female predictions on the link scale.
 #'
 #' @return For a single parameter, a vector or list containing the predicted
 #'   values for the parameter. For multiple parameters, a data frame with one

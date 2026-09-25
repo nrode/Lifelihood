@@ -8,6 +8,10 @@
 #' "reproduction" or "maturity")
 #' @param newdata An optional dataset used for prediction
 #'
+#' @importFrom stats qexp qgamma qlnorm qpois qweibull rexp rgamma rlnorm runif
+#'   rweibull
+#' @importFrom tibble as_tibble tibble
+#'
 #' @keywords internal
 simulate_event <- function(
   object,
@@ -707,12 +711,9 @@ simulate_life_history <- function(
     )
     df_sims_up_na <- df_sims_up_na |>
       select(-maturity) |>
-      rename(
-        maturity = clutch_1,
-        !!as.symbol(
-          object$lifelihoodData$matclutch_size
-        ) := clutch_size_1
-      )
+      rename(maturity = clutch_1)
+    names(df_sims_up_na)[names(df_sims_up_na) == "clutch_size_1"] <-
+      object$lifelihoodData$matclutch_size
     if (censoring) {
       # The first clutch is maturity, so its visit bounds become the maturity
       # censoring interval, replacing the now-stale maturity-event bounds.
