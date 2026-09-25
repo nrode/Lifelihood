@@ -24,16 +24,13 @@
 #' @importFrom stats formula model.frame model.matrix terms
 #'
 #' @examples
-#' df <- fakesample |>
-#'   mutate(
-#'     geno = as.factor(geno),
-#'     type = as.factor(type)
+#' df <- datapierrick |>
+#'   dplyr::mutate(
+#'     par = as.factor(par),
+#'     spore = as.factor(spore)
 #'   )
 #'
-#' clutchs <- c(
-#'   "clutch_start1", "clutch_end1", "clutch_size1",
-#'   "clutch_start2", "clutch_end2", "clutch_size2"
-#' )
+#' clutchs <- generate_clutch_vector(28)
 #'
 #' dataLFH <- as_lifelihoodData(
 #'   df = df,
@@ -45,14 +42,15 @@
 #'   clutchs = clutchs,
 #'   death_start = "death_start",
 #'   death_end = "death_end",
-#'   covariates = c("geno", "type"),
-#'   dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+#'   covariates = c("par", "spore"),
+#'   matclutch = FALSE,
+#'   dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 #' )
 #'
 #' results <- lifelihood(
 #'   lifelihoodData = dataLFH,
 #'   config = list(
-#'     mortality = list(expt_death = "geno + type", survival_param2 = 1)
+#'     mortality = list(expt_death = "par + spore", survival_param2 = 1)
 #'   ),
 #'   seeds = c(1, 2, 3, 4),
 #'   raise_estimation_warning = FALSE
@@ -63,11 +61,11 @@
 #'
 #' # predict on new data
 #' newdata <- data.frame(
-#'   type = c(1, 2, 0, 1, 2, 0),
-#'   geno = c(0, 1, 0, 1, 0, 1)
+#'   par = c(0, 1, 2, 0, 1, 2),
+#'   spore = c(0, 1, 0, 1, 0, 1)
 #' )
-#' newdata$type <- factor(newdata$type)
-#' newdata$geno <- factor(newdata$geno)
+#' newdata$par <- factor(newdata$par)
+#' newdata$spore <- factor(newdata$spore)
 #' prediction(results, "expt_death", newdata)
 #' prediction(results, "expt_death", newdata, type = "response")
 #' @export

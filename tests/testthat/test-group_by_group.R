@@ -94,7 +94,7 @@ test_that("split_data_by_groups creates correct sub-datasets", {
   )
   class(mock_data) <- "lifelihoodData"
 
-  sub <- split_data_by_groups(mock_data, "grp")
+  sub <- suppressWarnings(split_data_by_groups(mock_data, "grp"))
 
   expect_equal(length(sub), 2)
   expect_true("A" %in% names(sub))

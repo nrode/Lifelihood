@@ -30,8 +30,8 @@
 #' @import dplyr
 #' @examples
 #' df <- datapierrick |>
-#'as_tibble() |>
-#'  mutate(par = as.factor(par))
+#'tibble::as_tibble() |>
+#'  dplyr::mutate(par = as.factor(par))
 #'
 #' # name of the columns of the clutchs into a single vector
 #'clutchs <- generate_clutch_vector(28)
@@ -79,11 +79,11 @@
 #'      shape = par
 #'    )
 #'  )+
-#'  geom_point()+
-#'  geom_line(linewidth=0.5)+
-#'  xlab("Time (days)")+
-#'  ylab("Fitted mortality rate over 5 day-periods")+
-#'  facet_wrap(vars(sex, par), labeller = "label_both")
+#'  ggplot2::geom_point()+
+#'  ggplot2::geom_line(linewidth=0.5)+
+#'  ggplot2::xlab("Time (days)")+
+#'  ggplot2::ylab("Fitted mortality rate over 5 day-periods")+
+#'  ggplot2::facet_wrap(ggplot2::vars(sex, par), labeller = "label_both")
 #' p
 #'
 #' @export
@@ -358,10 +358,9 @@ compute_fitted_event_rate <- function(
   }
 
   if (lifelihoodData$sex %in% covar_sex) {
-    newdata <- newdata |>
-      mutate(
-        !!lifelihoodData$sex := as.factor(.data[[lifelihoodData$sex]])
-      )
+    newdata[[lifelihoodData$sex]] <- as.factor(
+      newdata[[lifelihoodData$sex]]
+    )
   }
 
   return(newdata)
@@ -400,8 +399,8 @@ compute_fitted_event_rate <- function(
 #' @importFrom dplyr mutate if_else select
 #' @examples
 #' df <- datapierrick |>
-#'as_tibble() |>
-#'  mutate(par = as.factor(par))
+#'tibble::as_tibble() |>
+#'  dplyr::mutate(par = as.factor(par))
 #'
 #' # name of the columns of the clutchs into a single vector
 #'clutchs <- generate_clutch_vector(28)
@@ -435,11 +434,11 @@ compute_fitted_event_rate <- function(
 #'      shape = par
 #'    )
 #'  )+
-#'  geom_point()+
-#'  geom_line(linewidth=0.5)+
-#'  xlab("Time (days)")+
-#'  ylab("Observed mortality rate over 5 day-periods")+
-#'  facet_wrap(vars(par), labeller = "label_both")
+#'  ggplot2::geom_point()+
+#'  ggplot2::geom_line(linewidth=0.5)+
+#'  ggplot2::xlab("Time (days)")+
+#'  ggplot2::ylab("Observed mortality rate over 5 day-periods")+
+#'  ggplot2::facet_wrap(ggplot2::vars(par), labeller = "label_both")
 #' p
 #'
 #' @export

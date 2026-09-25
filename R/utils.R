@@ -50,7 +50,7 @@ utils::globalVariables(c(
 #'
 #' @inheritParams lifelihood
 #'
-#' @importFrom stats as.formula model.matrix pgamma plnorm setNames
+#' @importFrom stats as.formula model.matrix pgamma plnorm quantile setNames
 #'
 #' @export
 make_design_matrix <- function(covariates, data) {

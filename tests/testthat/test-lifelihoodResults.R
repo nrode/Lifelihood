@@ -66,7 +66,7 @@ test_that("lifelihoodResults works", {
   )
 
   results_list <- lapply(args_list, function(args) {
-    do.call(lifelihood, args)
+    suppressWarnings(do.call(lifelihood, args))
   })
 
   # Run tests on each result
