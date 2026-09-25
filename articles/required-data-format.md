@@ -2,7 +2,7 @@
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
-`#> Loading required package: tidyverse`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 `#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
 `#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
 `#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
@@ -12,8 +12,7 @@
 `#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
 `#> ✖ dplyr::filter() masks stats::filter()`\
 `#> ✖ dplyr::lag()    masks stats::lag()`\
-`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`
+`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`
 
 ## Introduction
 

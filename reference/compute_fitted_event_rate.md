@@ -70,8 +70,8 @@ reproduction rate
 
 ``` r
 df <- datapierrick |>
-as_tibble() |>
- mutate(par = as.factor(par))
+tibble::as_tibble() |>
+ dplyr::mutate(par = as.factor(par))
 
 # name of the columns of the clutchs into a single vector
 clutchs <- generate_clutch_vector(28)
@@ -108,10 +108,7 @@ fitted_emergence_rate <- compute_fitted_event_rate(
  event = c("mortality"),
  max_time=150,
  groupby=c("par"))|>
- dplyr::mutate(sex = paste0("sex=", sex))
-#> Error in dplyr::mutate(compute_fitted_event_rate(lifelihoodResults = results,     interval_width = 5, event = c("mortality"), max_time = 150,     groupby = c("par")), sex = paste0("sex=", sex)): ℹ In argument: `sex = paste0("sex=", sex)`.
-#> Caused by error:
-#> ! object 'sex' not found
+ dplyr::mutate(sex = "sex=all")
 
 p <- fitted_emergence_rate |>
  ggplot2::ggplot(
@@ -122,12 +119,11 @@ p <- fitted_emergence_rate |>
      shape = par
    )
  )+
- geom_point()+
- geom_line(linewidth=0.5)+
- xlab("Time (days)")+
- ylab("Fitted mortality rate over 5 day-periods")+
- facet_wrap(vars(sex, par), labeller = "label_both")
-#> Error: object 'fitted_emergence_rate' not found
+ ggplot2::geom_point()+
+ ggplot2::geom_line(linewidth=0.5)+
+ ggplot2::xlab("Time (days)")+
+ ggplot2::ylab("Fitted mortality rate over 5 day-periods")+
+ ggplot2::facet_wrap(ggplot2::vars(sex, par), labeller = "label_both")
 p
-#> Error: object 'p' not found
+
 ```

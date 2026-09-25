@@ -21,6 +21,14 @@
   : Compute time interval between clutches
 - [`create_simulation_input()`](https://nrode.github.io/Lifelihood/reference/create_simulation_input.md)
   : Create a lifelihood-like object for simulation
+- [`data_lin_decrease_hazard`](https://nrode.github.io/Lifelihood/reference/data_lin_decrease_hazard.md)
+  : Simulated data with a linear decrease in hazard
+- [`data_no_lin_decrease_hazard`](https://nrode.github.io/Lifelihood/reference/data_no_lin_decrease_hazard.md)
+  : Simulated data without a linear decrease in hazard
+- [`datadaphnia`](https://nrode.github.io/Lifelihood/reference/datadaphnia.md)
+  : Daphnia data
+- [`datalenski`](https://nrode.github.io/Lifelihood/reference/datalenski.md)
+  : Lenski data
 - [`datapierrick`](https://nrode.github.io/Lifelihood/reference/datapierrick.md)
   : Pierrick data
 - [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)

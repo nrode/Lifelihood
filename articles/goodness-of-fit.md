@@ -4,7 +4,7 @@
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
-`#> Loading required package: tidyverse`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 `#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
 `#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
 `#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
@@ -14,8 +14,7 @@
 `#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
 `#> ✖ dplyr::filter() masks stats::filter()`\
 `#> ✖ dplyr::lag()    masks stats::lag()`\
-`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`
+`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`
 
 ## Fit a simple model
 
@@ -41,7 +40,7 @@
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"exp"``)`\
+`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
 `)`\
 \
 `config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
@@ -76,9 +75,9 @@ following attributes:
 
 \
 `gof``$``original_loglik`\
-`#> [1] -7881.317`\
+`#> [1] -6900.974`\
 `gof``$``simulated_loglik`\
-`#> [1] -864.7080 -864.6810 -864.6639 -864.7453 -864.8842`\
+`#> [1] -885.1127 -885.0899 -885.1105 -885.0907 -885.1234`\
 `gof``$``n_success`\
 `#> [1] 5`\
 `gof``$``n_failed`\

@@ -31,6 +31,16 @@ A dataframe with the default parameter boundaries.
 ``` r
 library(lifelihood)
 library(tidyverse)
+#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
+#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+#> ✔ purrr     1.2.2     
+#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
 df <- fakesample |>
   mutate(
@@ -66,21 +76,25 @@ dataLFH <- as_lifelihoodData(
   maturity_start = "mat_start",
   maturity_end = "mat_end",
   clutchs = clutchs,
-  death_start = "death_end",
+  death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
+  matclutch = FALSE,
   dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
 )
-#> Error in as_lifelihoodData(df = df, sex = "sex", sex_start = "sex_start",     sex_end = "sex_end", maturity_start = "mat_start", maturity_end = "mat_end",     clutchs = clutchs, death_start = "death_end", death_end = "death_end",     covariates = c("geno", "type"), dist = c(mortality = "gam",         maturity = "lgn", reproduction = "wei")): argument "matclutch" is missing, with no default
 
 bounds_df <- default_bounds_df(dataLFH)
-#> Error: object 'dataLFH' not found
 head(bounds_df)
-#> Error: object 'bounds_df' not found
+#>              param   min     max
+#> 1       expt_death 0.001      40
+#> 2  survival_param2 0.005     600
+#> 3 ratio_expt_death  0.01     100
+#> 4       prob_death 1e-05 0.99999
+#> 5        sex_ratio 1e-05 0.99999
+#> 6    expt_maturity 0.001       8
 
 # for example, we want to change this value
 bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
-#> Error: object 'bounds_df' not found
 
 # then we pass it to lifelihood()
 results <- lifelihood(
@@ -97,5 +111,4 @@ results <- lifelihood(
   param_bounds_df = bounds_df,
   raise_estimation_warning = FALSE
 )
-#> Error: object 'dataLFH' not found
 ```

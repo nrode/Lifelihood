@@ -107,11 +107,6 @@ dataset, and compare simulated log-likelihood values to the original fit.</p>
 when refitting each simulated dataset. By default, refits use
 <code>n_fit = 1</code>, <code>MCMC = 0</code>, and <code>se.fit = FALSE</code> for speed.</p></dd>
 
-
-<dt id="arg-keep-fits">keep_fits<a class="anchor" aria-label="anchor" href="#arg-keep-fits"></a></dt>
-<dd><p>Whether to store fitted objects for each successful
-simulation. Default is <code>FALSE</code>.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -122,7 +117,8 @@ simulation. Default is <code>FALSE</code>.</p></dd>
 <li><p><code>p_lower_or_equal</code>: proportion of simulated log-likelihoods lower than or
 equal to the original value</p></li>
 <li><p><code>errors</code>: per-simulation error messages (if any)</p></li>
-<li><p><code>fits</code>: optional list of fitted objects (only if <code>keep_fits = TRUE</code>)</p></li>
+<li><p><code>fits</code>: list containing the fitted object for each simulation, or <code>NULL</code>
+for failed refits</p></li>
 </ul></div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

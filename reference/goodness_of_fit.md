@@ -32,11 +32,6 @@ goodness_of_fit(object, nsim, seed = NULL, fit_args = list())
   when refitting each simulated dataset. By default, refits use
   `n_fit = 1`, `MCMC = 0`, and `se.fit = FALSE` for speed.
 
-- keep_fits:
-
-  Whether to store fitted objects for each successful simulation.
-  Default is `FALSE`.
-
 ## Value
 
 A `lifelihoodGOF` object (list) with:
@@ -55,4 +50,5 @@ A `lifelihoodGOF` object (list) with:
 
 - `errors`: per-simulation error messages (if any)
 
-- `fits`: optional list of fitted objects (only if `keep_fits = TRUE`)
+- `fits`: list containing the fitted object for each simulation, or
+  `NULL` for failed refits

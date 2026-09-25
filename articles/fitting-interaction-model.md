@@ -4,7 +4,7 @@
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
-`#> Loading required package: tidyverse`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 `#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
 `#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
 `#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
@@ -15,7 +15,6 @@
 `#> ✖ dplyr::filter() masks stats::filter()`\
 `#> ✖ dplyr::lag()    masks stats::lag()`\
 `#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 \
 `df`` ``<-`` ``datapierrick`` ``|>`\
 `  `[`as_tibble`](https://tibble.tidyverse.org/reference/as_tibble.html)`(``)`` ``|>`\
@@ -58,7 +57,7 @@
 `}``)`\
 `time_default`\
 `#>    user  system elapsed `\
-`#>  31.347   0.301  32.587`
+`#>  25.860   0.234  27.606`
 
 - Interaction model using the `group_by_group` argument (default to
   `FALSE`)
@@ -73,7 +72,7 @@
 `}``)`\
 `time_gbg`\
 `#>    user  system elapsed `\
-`#>   1.594   0.078   1.695`
+`#>   1.482   0.078   1.957`
 
 Fitting interaction model with group by group is faster than default
 model.

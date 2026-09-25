@@ -7,10 +7,15 @@ a vertical line for the original model log-likelihood.
 
 ``` r
 # S3 method for class 'lifelihoodGOF'
-plot(gof, bins = 30, fill = "grey80", color = "white", line_color = "red", ...)
+plot(x, bins = 30, fill = "grey80", color = "white", line_color = "red", ...)
 ```
 
 ## Arguments
+
+- x:
+
+  Output of
+  [`goodness_of_fit()`](https://nrode.github.io/Lifelihood/reference/goodness_of_fit.md).
 
 - bins:
 
@@ -31,11 +36,6 @@ plot(gof, bins = 30, fill = "grey80", color = "white", line_color = "red", ...)
 - ...:
 
   Ignored.
-
-- x:
-
-  Output of
-  [`goodness_of_fit()`](https://nrode.github.io/Lifelihood/reference/goodness_of_fit.md).
 
 ## Value
 

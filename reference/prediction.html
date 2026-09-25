@@ -110,6 +110,11 @@ one of <code>unique(lifelihoodResults$effects$parameter)</code>.</p></dd>
 <dd><p>Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.</p></dd>
 
 
+<dt id="arg-mcmc-fit">mcmc.fit<a class="anchor" aria-label="anchor" href="#arg-mcmc-fit"></a></dt>
+<dd><p>Whether to return predictions based on the fitted MCMC
+samples. Requires fitting the model with <code>MCMC &gt; 0</code>.</p></dd>
+
+
 <dt id="arg-keep-mcmc-samples">keep_mcmc_samples<a class="anchor" aria-label="anchor" href="#arg-keep-mcmc-samples"></a></dt>
 <dd><p>Whether or not to also retrieve MCMC samples in output. If <code>TRUE</code>, output is a list with 2 elements: pred and mcmc_samples.</p></dd>
 
@@ -120,6 +125,11 @@ one of <code>unique(lifelihoodResults$effects$parameter)</code>.</p></dd>
 
 <dt id="arg-se-fit">se.fit<a class="anchor" aria-label="anchor" href="#arg-se-fit"></a></dt>
 <dd><p>Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).</p></dd>
+
+
+<dt id="arg--warning-ratio-male">.warning_ratio_male<a class="anchor" aria-label="anchor" href="#arg--warning-ratio-male"></a></dt>
+<dd><p>Whether to warn when male predictions for
+<code>expt_death</code> are identical to female predictions on the link scale.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -132,16 +142,13 @@ when MCMC samples are kept.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">fakesample</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">geno</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">datapierrick</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">par</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">spore</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"clutch_start1"</span>, <span class="st">"clutch_end1"</span>, <span class="st">"clutch_size1"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"clutch_start2"</span>, <span class="st">"clutch_end2"</span>, <span class="st">"clutch_size2"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">clutchs</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_clutch_vector.html">generate_clutch_vector</a></span><span class="op">(</span><span class="fl">28</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  df <span class="op">=</span> <span class="va">df</span>,</span></span>
@@ -153,37 +160,183 @@ when MCMC samples are kept.</p>
 <span class="r-in"><span>  clutchs <span class="op">=</span> <span class="va">clutchs</span>,</span></span>
 <span class="r-in"><span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span></span>
 <span class="r-in"><span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span></span>
-<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"type"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"gam"</span>, maturity <span class="op">=</span> <span class="st">"lgn"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"gam"</span>, reproduction <span class="op">=</span> <span class="st">"lgn"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in as_lifelihoodData(df = df, sex = "sex", sex_start = "sex_start",     sex_end = "sex_end", maturity_start = "mat_start", maturity_end = "mat_end",     clutchs = clutchs, death_start = "death_start", death_end = "death_end",     covariates = c("geno", "type"), dist = c(mortality = "gam",         maturity = "lgn", reproduction = "wei")):</span> argument "matclutch" is missing, with no default</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="lifelihood.html">lifelihood</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  lifelihoodData <span class="op">=</span> <span class="va">dataLFH</span>,</span></span>
 <span class="r-in"><span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    mortality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_death <span class="op">=</span> <span class="st">"geno + type"</span>, survival_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    mortality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>expt_death <span class="op">=</span> <span class="st">"par + spore"</span>, survival_param2 <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
 <span class="r-in"><span>  seeds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'dataLFH' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">prediction</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'results' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Lifelihood parameter estimate(s) for males are identical to that of females. Use type='response', to get the right parameter estimate(s) for males on the response scale.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [8] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [15] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [22] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [29] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -1.702634 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] -1.702634 -1.702634 -2.029652 -1.702634 -1.702634 -1.702634 -1.702634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] -1.702634 -1.702634 -2.029652 -1.702634 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [50] -2.029652 -2.029652 -1.702634 -2.029652 -2.029652 -1.702634 -1.702634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] -2.029652 -1.702634 -1.702634 -1.702634 -1.702634 -1.702634 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [64] -1.702634 -1.702634 -2.029652 -2.029652 -2.029652 -1.735566 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] -1.735566 -2.029652 -1.735566 -2.029652 -1.735566 -1.735566 -1.735566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] -1.735566 -1.735566 -1.735566 -2.029652 -2.029652 -1.735566 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] -1.735566 -1.735566 -1.735566 -2.029652 -1.735566 -1.735566 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [92] -1.735566 -1.735566 -1.735566 -1.735566 -1.735566 -1.735566 -1.735566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [99] -1.735566 -2.029652 -1.735566 -1.735566 -1.735566 -1.657905 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [106] -1.657905 -2.029652 -2.029652 -2.029652 -2.029652 -1.657905 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [113] -1.657905 -1.657905 -2.029652 -1.657905 -2.029652 -1.657905 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [120] -1.657905 -2.029652 -2.029652 -2.029652 -1.657905 -2.029652 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [127] -1.657905 -1.657905 -1.657905 -1.657905 -1.657905 -1.657905 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [134] -1.657905 -1.657905 -1.657905 -1.657905 -1.657905 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [141] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [148] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [155] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [162] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [169] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [176] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [183] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [190] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [197] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [204] -2.029652 -2.029652 -2.029652 -2.029652 -1.735566 -1.735566 -1.735566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [211] -1.735566 -1.735566 -1.735566 -1.735566 -1.735566 -1.735566 -1.735566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [218] -1.735566 -1.735566 -2.029652 -1.735566 -1.735566 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [225] -1.735566 -1.735566 -2.029652 -2.029652 -2.029652 -1.735566 -1.735566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [232] -2.029652 -1.735566 -2.029652 -1.735566 -2.029652 -2.029652 -1.735566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [239] -2.029652 -2.029652 -2.029652 -1.657905 -1.657905 -1.657905 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [246] -1.657905 -1.657905 -1.657905 -1.657905 -1.657905 -1.657905 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [253] -1.657905 -1.657905 -1.657905 -1.657905 -2.029652 -1.657905 -1.657905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [260] -1.657905 -1.657905 -2.029652 -2.029652 -1.657905 -1.657905 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [267] -1.657905 -1.657905 -1.657905 -2.029652 -2.029652 -1.657905 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [274] -1.657905 -1.657905 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [281] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [288] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [295] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [302] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [309] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [316] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [323] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [330] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [337] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [344] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [351] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [358] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [365] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [372] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [379] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [386] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [393] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [400] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [407] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [414] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [421] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [428] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [435] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [442] -2.029652 -2.029652 -2.029652 -2.029652 -1.702634 -1.702634 -1.702634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [449] -1.702634 -1.702634 -1.702634 -2.029652 -1.702634 -1.702634 -1.702634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [456] -2.029652 -1.702634 -1.702634 -1.702634 -1.702634 -1.702634 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [463] -2.029652 -1.702634 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [470] -1.702634 -1.702634 -1.702634 -1.702634 -1.702634 -1.702634 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [477] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [484] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [491] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [498] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [505] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [512] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [519] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [526] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [533] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [540] -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652 -2.029652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [547] -2.029652 -2.029652 -2.029652 -2.029652</span>
 <span class="r-in"><span><span class="fu">prediction</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'results' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [9] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [17] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [33] 37.62528 49.93623 37.62528 49.93623 49.93623 37.62528 49.93623 49.93623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] 49.93623 49.93623 49.93623 49.93623 37.62528 49.93623 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] 37.62528 37.62528 37.62528 49.93623 37.62528 37.62528 49.93623 49.93623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] 37.62528 49.93623 49.93623 49.93623 49.93623 49.93623 37.62528 49.93623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [65] 49.93623 37.62528 37.62528 37.62528 48.56102 37.62528 48.56102 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] 48.56102 37.62528 48.56102 48.56102 48.56102 48.56102 48.56102 48.56102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] 37.62528 37.62528 48.56102 37.62528 48.56102 48.56102 48.56102 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] 48.56102 48.56102 37.62528 48.56102 48.56102 48.56102 48.56102 48.56102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] 48.56102 48.56102 48.56102 37.62528 48.56102 48.56102 48.56102 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [105] 51.85490 51.85490 37.62528 37.62528 37.62528 37.62528 51.85490 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [113] 51.85490 51.85490 37.62528 51.85490 37.62528 51.85490 37.62528 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121] 37.62528 37.62528 37.62528 51.85490 37.62528 51.85490 51.85490 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [129] 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 51.85490 51.85490 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [145] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [153] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [161] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [169] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [177] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [185] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [193] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [201] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 48.56102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [209] 48.56102 48.56102 48.56102 48.56102 48.56102 48.56102 48.56102 48.56102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [217] 48.56102 48.56102 48.56102 37.62528 48.56102 48.56102 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [225] 48.56102 48.56102 37.62528 37.62528 37.62528 48.56102 48.56102 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [233] 48.56102 37.62528 48.56102 37.62528 37.62528 48.56102 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [241] 37.62528 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [249] 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [257] 37.62528 51.85490 51.85490 51.85490 51.85490 37.62528 37.62528 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [265] 51.85490 37.62528 51.85490 51.85490 51.85490 37.62528 37.62528 51.85490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [273] 37.62528 51.85490 51.85490 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [281] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [289] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [297] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [305] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [313] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [321] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [329] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [337] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [345] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [353] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [361] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [369] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [377] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [385] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [393] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [401] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [409] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [417] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [425] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [433] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [441] 37.62528 37.62528 37.62528 37.62528 37.62528 49.93623 49.93623 49.93623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [449] 49.93623 49.93623 49.93623 37.62528 49.93623 49.93623 49.93623 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [457] 49.93623 49.93623 49.93623 49.93623 49.93623 37.62528 37.62528 49.93623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [465] 37.62528 37.62528 37.62528 37.62528 37.62528 49.93623 49.93623 49.93623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [473] 49.93623 49.93623 49.93623 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [481] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [489] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [497] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [505] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [513] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [521] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [529] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [537] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [545] 37.62528 37.62528 37.62528 37.62528 37.62528 37.62528</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># predict on new data</span></span></span>
 <span class="r-in"><span><span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  spore <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">newdata</span><span class="op">$</span><span class="va">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">newdata</span><span class="op">$</span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">geno</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">newdata</span><span class="op">$</span><span class="va">par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">par</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">newdata</span><span class="op">$</span><span class="va">spore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">$</span><span class="va">spore</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">prediction</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, <span class="va">newdata</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'results' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -2.029652 -1.735566 -1.865740 -1.778890 -1.986328 -1.614977</span>
 <span class="r-in"><span><span class="fu">prediction</span><span class="op">(</span><span class="va">results</span>, <span class="st">"expt_death"</span>, <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'results' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 37.62528 48.56102 43.42836 46.79951 39.09016 53.75201</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

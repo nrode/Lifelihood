@@ -63,14 +63,3 @@ A copy of the input data frame with specified columns converted back to
 factors.
 
 The new output_path
-
-## Examples
-
-``` r
-df <- data.frame(
-  type = factor(c("A", "B", "A")),
-  geno = factor(c("X", "Y", "X"))
-)
-translator <- create_translator(df, c("type", "geno"))
-#> Error in create_translator(df, c("type", "geno")): could not find function "create_translator"
-```

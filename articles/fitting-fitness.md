@@ -3,8 +3,7 @@
 \
 `devtools``::`[`load_all`](https://devtools.r-lib.org/reference/load_all.html)`(``)`\
 `#> ℹ Loading lifelihood`\
-`#> Loading required package: tidyverse`\
-`#> `\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 `#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
 `#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
 `#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
@@ -12,10 +11,11 @@
 `#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2`\
 `#> ✔ purrr     1.2.2     `\
 `#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
-`#> ✖ dplyr::filter() masks stats::filter()`\
-`#> ✖ dplyr::lag()    masks stats::lag()`\
+`#> ✖ readr::edition_get()   masks testthat::edition_get()`\
+`#> ✖ dplyr::filter()        masks lifelihood::filter(), stats::filter()`\
+`#> ✖ dplyr::lag()           masks lifelihood::lag(), stats::lag()`\
+`#> ✖ readr::local_edition() masks testthat::local_edition()`\
 `#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 \
 `clutchs`` ``<-`` `[`generate_clutch_vector`](https://nrode.github.io/Lifelihood/reference/generate_clutch_vector.md)`(``6``)`\
 \
@@ -71,24 +71,24 @@ We can then predict fitness and its confidence interval:
 `#> Sample size: 18 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -171.082`\
+`#> Log-likelihood:  -171.076`\
 `#> AIC:             356.2`\
 `#> BIC:             362.4`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -0.986 (0.000)`\
-`#>   survival_param2 (Intercept) -5.781 (0.000)`\
+`#>   expt_death (Intercept)    -0.990 (0.000)`\
+`#>   survival_param2 (Intercept) -5.772 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -0.961 (0.000)`\
-`#>   maturity_param2 (Intercept) -3.548 (0.000)`\
+`#>   expt_maturity (Intercept) -0.957 (0.000)`\
+`#>   maturity_param2 (Intercept) -3.553 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -3.679 (0.000)`\
-`#>   reproduction_param2 (Intercept) -5.561 (0.000)`\
-`#>   fitness (Intercept)       -3.734 (0.000)`\
+`#>   expt_reproduction (Intercept) -3.737 (0.000)`\
+`#>   reproduction_param2 (Intercept) -5.704 (0.000)`\
+`#>   fitness (Intercept)       -3.684 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -96,9 +96,8 @@ We can then predict fitness and its confidence interval:
 `#> ======================`\
 \
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"fitness"``, type ``=`` ``"response"``)`\
-`#>  [1] 23.34324 23.34324 23.34324 23.34324 23.34324 23.34324 23.34324 23.34324`\
-`#>  [9] 23.34324 23.34324 23.34324 23.34324 23.34324 23.34324 23.34324 23.34324`\
-`#> [17] 23.34324 23.34324`
+`#>  [1] 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974`\
+`#> [10] 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974 24.4974`
 
 ## Using simulated data
 
@@ -108,20 +107,16 @@ We can then predict fitness and its confidence interval:
 \
 `effects`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
 `  expt_death ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``intercept ``=`` ``0``)``,`\
-`  survival_param2 ``=`` ``0``,`\
 `  expt_maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``intercept ``=`` ``0``)``,`\
-`  maturity_param2 ``=`` ``0``,`\
 `  expt_reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``intercept ``=`` ``0``)``,`\
-`  reproduction_param2 ``=`` ``0``,`\
 `  n_offspring ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``intercept ``=`` ``0``)`\
 `)`\
 \
 `config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``1``, survival_param2 ``=`` ``1``)``,`\
-`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``1``, maturity_param2 ``=`` ``1``)``,`\
+`  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``1``)``,`\
+`  maturity ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_maturity ``=`` ``1``)``,`\
 `  reproduction ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
 `    expt_reproduction ``=`` ``1``,`\
-`    reproduction_param2 ``=`` ``1``,`\
 `    n_offspring ``=`` ``1`\
 `  ``)`\
 `)`\
@@ -139,13 +134,10 @@ We can then predict fitness and its confidence interval:
 `bounds_df`` ``<-`` `[`default_bounds_df`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)`(``pseudo_results``$``lifelihoodData``)`\
 `bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"expt_death"``]`` ``<-`` ``110`\
 `bounds_df``$``min``[``bounds_df``$``param`` ``==`` ``"expt_death"``]`` ``<-`` ``110`\
-`bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"survival_param2"``]`` ``<-`` ``2`\
 `bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"expt_maturity"``]`` ``<-`` ``10`\
 `bounds_df``$``min``[``bounds_df``$``param`` ``==`` ``"expt_maturity"``]`` ``<-`` ``10`\
-`bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"maturity_param2"``]`` ``<-`` ``2`\
 `bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"expt_reproduction"``]`` ``<-`` ``5`\
 `bounds_df``$``min``[``bounds_df``$``param`` ``==`` ``"expt_reproduction"``]`` ``<-`` ``5`\
-`bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"reproduction_param2"``]`` ``<-`` ``2`\
 `bounds_df``$``max``[``bounds_df``$``param`` ``==`` ``"n_offspring"``]`` ``<-`` ``10`\
 `bounds_df``$``min``[``bounds_df``$``param`` ``==`` ``"n_offspring"``]`` ``<-`` ``10`\
 \
@@ -187,15 +179,15 @@ We can then predict fitness and its confidence interval:
 \
 [`default_bounds_df`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)`(``lifelihoodData``)`\
 `#>                                param   min     max`\
-`#> 1                         expt_death 0.001  1281.2`\
+`#> 1                         expt_death 0.001  1042.6`\
 `#> 2                    survival_param2  0.05    1000`\
 `#> 3                   ratio_expt_death  0.01     100`\
 `#> 4                         prob_death 1e-05 0.99999`\
 `#> 5                          sex_ratio 1e-05 0.99999`\
-`#> 6                      expt_maturity 0.001   101.6`\
+`#> 6                      expt_maturity 0.001   133.8`\
 `#> 7                    maturity_param2  0.05    1000`\
 `#> 8                ratio_expt_maturity  0.01     100`\
-`#> 9                  expt_reproduction 0.001  1281.2`\
+`#> 9                  expt_reproduction 0.001  1042.6`\
 `#> 10               reproduction_param2  0.05    1000`\
 `#> 11                       n_offspring     1      50`\
 `#> 12             increase_death_hazard 1e-05      10`\
@@ -214,7 +206,7 @@ We can then predict fitness and its confidence interval:
 `  delete_temp_files ``=`` ``FALSE`\
 `)`\
 `#> Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 10, :`\
-`#> Best and second-best likelihoods differ by 9.06 (> 0.1). Consider increasing`\
+`#> Best and second-best likelihoods differ by 10.747 (> 0.1). Consider increasing`\
 `#> n_fit (currently 10) to be sure of model convergence and find the model with`\
 `#> highest log-likelihood.`\
 \
@@ -225,21 +217,21 @@ We can then predict fitness and its confidence interval:
 `#> Sample size: 100 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -16165.606`\
-`#> AIC:             32339.2`\
-`#> BIC:             32349.6`\
+`#> Log-likelihood:  -16857.337`\
+`#> AIC:             33722.7`\
+`#> BIC:             33733.1`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -2.307 (0.000)`\
+`#>   expt_death (Intercept)    -1.683 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -2.180 (0.000)`\
+`#>   expt_maturity (Intercept) -2.443 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -5.474 (0.000)`\
-`#>   fitness (Intercept)       -1.379 (0.000)`\
+`#>   expt_reproduction (Intercept) -5.230 (0.000)`\
+`#>   fitness (Intercept)       -0.981 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -254,14 +246,14 @@ We can then predict fitness and its confidence interval:
 `#> # A tibble: 100 × 4`\
 `#>    expt_death expt_maturity expt_reproduction fitness`\
 `#>         <dbl>         <dbl>             <dbl>   <dbl>`\
-`#>  1       116.          10.3              5.35    201.`\
-`#>  2       116.          10.3              5.35    201.`\
-`#>  3       116.          10.3              5.35    201.`\
-`#>  4       116.          10.3              5.35    201.`\
-`#>  5       116.          10.3              5.35    201.`\
-`#>  6       116.          10.3              5.35    201.`\
-`#>  7       116.          10.3              5.35    201.`\
-`#>  8       116.          10.3              5.35    201.`\
-`#>  9       116.          10.3              5.35    201.`\
-`#> 10       116.          10.3              5.35    201.`\
+`#>  1       163.          10.7              5.55    273.`\
+`#>  2       163.          10.7              5.55    273.`\
+`#>  3       163.          10.7              5.55    273.`\
+`#>  4       163.          10.7              5.55    273.`\
+`#>  5       163.          10.7              5.55    273.`\
+`#>  6       163.          10.7              5.55    273.`\
+`#>  7       163.          10.7              5.55    273.`\
+`#>  8       163.          10.7              5.55    273.`\
+`#>  9       163.          10.7              5.55    273.`\
+`#> 10       163.          10.7              5.55    273.`\
 `#> # ℹ 90 more rows`

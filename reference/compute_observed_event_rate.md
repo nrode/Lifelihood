@@ -61,8 +61,8 @@ A dataframe with 3 columns: Interval (time interval, based on
 
 ``` r
 df <- datapierrick |>
-as_tibble() |>
- mutate(par = as.factor(par))
+tibble::as_tibble() |>
+ dplyr::mutate(par = as.factor(par))
 
 # name of the columns of the clutchs into a single vector
 clutchs <- generate_clutch_vector(28)
@@ -96,11 +96,11 @@ p <- observed_emergence_rate |>
      shape = par
    )
  )+
- geom_point()+
- geom_line(linewidth=0.5)+
- xlab("Time (days)")+
- ylab("Observed mortality rate over 5 day-periods")+
- facet_wrap(vars(par), labeller = "label_both")
+ ggplot2::geom_point()+
+ ggplot2::geom_line(linewidth=0.5)+
+ ggplot2::xlab("Time (days)")+
+ ggplot2::ylab("Observed mortality rate over 5 day-periods")+
+ ggplot2::facet_wrap(ggplot2::vars(par), labeller = "label_both")
 p
 #> Warning: Removed 30 rows containing missing values or values outside the scale range
 #> (`geom_point()`).

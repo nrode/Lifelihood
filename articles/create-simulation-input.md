@@ -19,8 +19,7 @@ flowchart LR\
 \
 `devtools``::`[`load_all`](https://devtools.r-lib.org/reference/load_all.html)`(``)`\
 `#> ℹ Loading lifelihood`\
-`#> Loading required package: tidyverse`\
-`#> `\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
 `#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──`\
 `#> ✔ dplyr     1.2.1     ✔ readr     2.2.0`\
 `#> ✔ forcats   1.0.1     ✔ stringr   1.6.0`\
@@ -28,10 +27,11 @@ flowchart LR\
 `#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2`\
 `#> ✔ purrr     1.2.2     `\
 `#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──`\
-`#> ✖ dplyr::filter() masks stats::filter()`\
-`#> ✖ dplyr::lag()    masks stats::lag()`\
-`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`
+`#> ✖ readr::edition_get()   masks testthat::edition_get()`\
+`#> ✖ dplyr::filter()        masks lifelihood::filter(), stats::filter()`\
+`#> ✖ dplyr::lag()           masks lifelihood::lag(), stats::lag()`\
+`#> ✖ readr::local_edition() masks testthat::local_edition()`\
+`#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`
 
 ## Create the population to simulate
 
