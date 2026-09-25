@@ -79,7 +79,7 @@ lifelihood <- function(
     )
     config <- path_config
   }
-  config <- validate_config_input(config)
+  config <- validate_config_input(config, lifelihoodData$dist)
 
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
