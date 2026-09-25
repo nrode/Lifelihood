@@ -15,27 +15,25 @@ License: MIT + file LICENSE
 URL: https://nrode.github.io/Lifelihood/
 BugReports: https://github.com/nrode/Lifelihood/issues
 Depends: 
-    R (>= 4.1.0),
-    tidyverse
+    R (>= 4.1.0)
 Imports: 
-    coda,
     dplyr,
     tidyr,
+    tibble,
     ggplot2,
     here,
-    reshape2,
     stats,
     yaml,
     glue,
     ggh4x,
-    future.apply
+    mcmcse
 Suggests: 
     devtools,
     knitr,
-    mcmcse,
     quarto,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyverse
 VignetteBuilder: 
     knitr,
     quarto

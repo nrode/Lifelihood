@@ -4,9 +4,11 @@
 \alias{plot.lifelihoodGOF}
 \title{Plot goodness-of-fit histogram}
 \usage{
-\method{plot}{lifelihoodGOF}(gof, bins = 30, fill = "grey80", color = "white", line_color = "red", ...)
+\method{plot}{lifelihoodGOF}(x, bins = 30, fill = "grey80", color = "white", line_color = "red", ...)
 }
 \arguments{
+\item{x}{Output of \code{\link[=goodness_of_fit]{goodness_of_fit()}}.}
+
 \item{bins}{Number of histogram bins.}
 
 \item{fill}{Histogram fill color.}
@@ -16,8 +18,6 @@
 \item{line_color}{Color of the vertical line showing original log-likelihood.}
 
 \item{...}{Ignored.}
-
-\item{x}{Output of \code{\link[=goodness_of_fit]{goodness_of_fit()}}.}
 }
 \value{
 A ggplot object.

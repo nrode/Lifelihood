@@ -16,9 +16,6 @@ goodness_of_fit(object, nsim, seed = NULL, fit_args = list())
 \item{fit_args}{Named list of additional arguments passed to \code{\link[=lifelihood]{lifelihood()}}
 when refitting each simulated dataset. By default, refits use
 \code{n_fit = 1}, \code{MCMC = 0}, and \code{se.fit = FALSE} for speed.}
-
-\item{keep_fits}{Whether to store fitted objects for each successful
-simulation. Default is \code{FALSE}.}
 }
 \value{
 A \code{lifelihoodGOF} object (list) with:
@@ -30,7 +27,8 @@ A \code{lifelihoodGOF} object (list) with:
 \item \code{p_lower_or_equal}: proportion of simulated log-likelihoods lower than or
 equal to the original value
 \item \code{errors}: per-simulation error messages (if any)
-\item \code{fits}: optional list of fitted objects (only if \code{keep_fits = TRUE})
+\item \code{fits}: list containing the fitted object for each simulation, or \code{NULL}
+for failed refits
 }
 }
 \description{

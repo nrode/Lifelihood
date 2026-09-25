@@ -41,9 +41,10 @@
 #'   maturity_start = "mat_start",
 #'   maturity_end = "mat_end",
 #'   clutchs = clutchs,
-#'   death_start = "death_end",
+#'   death_start = "death_start",
 #'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
+#'   matclutch = FALSE,
 #'   dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
 #' )
 #'

@@ -38,7 +38,7 @@ test_that("lifelihoodResults works", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
   )
 
   args_list <- list(
@@ -66,7 +66,7 @@ test_that("lifelihoodResults works", {
   )
 
   results_list <- lapply(args_list, function(args) {
-    do.call(lifelihood, args)
+    suppressWarnings(do.call(lifelihood, args))
   })
 
   # Run tests on each result

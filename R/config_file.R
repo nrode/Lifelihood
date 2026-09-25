@@ -65,7 +65,25 @@ config_parameter_sections <- function() {
 }
 
 #' @keywords internal
-validate_config_input <- function(config) {
+validate_param2_for_exponential <- function(config, dist, event, parameter) {
+  if (
+    identical(unname(dist[[event]]), "exp") &&
+      !identical(as.character(config[[event]][[parameter]]), "not_fitted")
+  ) {
+    stop(
+      "Configuration parameter `",
+      parameter,
+      "` cannot be fitted when the ",
+      event,
+      " distribution is exponential (`exp`): exponential distributions ",
+      "do not have a second parameter.",
+      call. = FALSE
+    )
+  }
+}
+
+#' @keywords internal
+validate_config_input <- function(config, dist = NULL) {
   if (is.character(config) && length(config) == 1) {
     if (!file.exists(config)) {
       stop("Configuration file not found: ", config, call. = FALSE)
@@ -158,6 +176,27 @@ validate_config_input <- function(config) {
       }
       validated_config[[section]][[parameter]] <- value
     }
+  }
+
+  if (!is.null(dist)) {
+    validate_param2_for_exponential(
+      validated_config,
+      dist,
+      "mortality",
+      "survival_param2"
+    )
+    validate_param2_for_exponential(
+      validated_config,
+      dist,
+      "maturity",
+      "maturity_param2"
+    )
+    validate_param2_for_exponential(
+      validated_config,
+      dist,
+      "reproduction",
+      "reproduction_param2"
+    )
   }
 
   validated_config

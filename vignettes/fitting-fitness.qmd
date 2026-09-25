@@ -81,20 +81,16 @@ population <- crossing(group = as.factor(0), sex = 0) |>
 
 effects <- list(
   expt_death = list(intercept = 0),
-  survival_param2 = 0,
   expt_maturity = list(intercept = 0),
-  maturity_param2 = 0,
   expt_reproduction = list(intercept = 0),
-  reproduction_param2 = 0,
   n_offspring = list(intercept = 0)
 )
 
 config <- list(
-  mortality = list(expt_death = 1, survival_param2 = 1),
-  maturity = list(expt_maturity = 1, maturity_param2 = 1),
+  mortality = list(expt_death = 1),
+  maturity = list(expt_maturity = 1),
   reproduction = list(
     expt_reproduction = 1,
-    reproduction_param2 = 1,
     n_offspring = 1
   )
 )
@@ -112,13 +108,10 @@ pseudo_results <- create_simulation_input(
 bounds_df <- default_bounds_df(pseudo_results$lifelihoodData)
 bounds_df$max[bounds_df$param == "expt_death"] <- 110
 bounds_df$min[bounds_df$param == "expt_death"] <- 110
-bounds_df$max[bounds_df$param == "survival_param2"] <- 2
 bounds_df$max[bounds_df$param == "expt_maturity"] <- 10
 bounds_df$min[bounds_df$param == "expt_maturity"] <- 10
-bounds_df$max[bounds_df$param == "maturity_param2"] <- 2
 bounds_df$max[bounds_df$param == "expt_reproduction"] <- 5
 bounds_df$min[bounds_df$param == "expt_reproduction"] <- 5
-bounds_df$max[bounds_df$param == "reproduction_param2"] <- 2
 bounds_df$max[bounds_df$param == "n_offspring"] <- 10
 bounds_df$min[bounds_df$param == "n_offspring"] <- 10
 
