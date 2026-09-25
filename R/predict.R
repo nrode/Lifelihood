@@ -210,6 +210,17 @@ prediction <- function(
   effects <- object$effects
   range1 <- effects$parameter == parameter_name
 
+  # Older bundled binaries can label the fitness coefficient as
+  # `n_offspring`, even when the configuration fits `fitness`.
+  if (
+    !any(range1) &&
+      parameter_name == "fitness" &&
+      read_formula(object$config, "fitness") != "not_fitted" &&
+      any(effects$parameter == "n_offspring")
+  ) {
+    range1 <- effects$parameter == "n_offspring"
+  }
+
   fml <- read_formula(config = object$config, parameter = parameter_name)
   fml <- formula(paste("~ ", fml))
   check_fitted_factor_levels(
