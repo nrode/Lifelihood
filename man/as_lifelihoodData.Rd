@@ -57,10 +57,10 @@ the interval in which the death was determined.}
 \item{death_end}{Column name containing the second date of
 the interval in which the death was determined.}
 
-\item{dist}{Named character vector specifying the statistical law to use
-for each event. It must contain entries named \code{mortality}, \code{maturity}, and
-\code{reproduction}, with each value one of "wei" (Weibull law), "exp"
-(Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).}
+\item{dist}{Data frame with exactly three columns: \code{mortality}, \code{maturity},
+and \code{reproduction}. Each row specifies one model to fit with \code{\link[=lifelihood]{lifelihood()}}.
+Each cell must contain "wei" (Weibull), "exp" (exponential), "gam" (gamma),
+or "lgn" (log-normal). Use a one-row data frame to fit a single model.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 

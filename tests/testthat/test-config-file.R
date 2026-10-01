@@ -73,34 +73,54 @@ test_that("validate_config_input accepts YAML paths and rejects invalid lists", 
   )
 })
 
-test_that("exponential distributions reject fitted params2", {
+test_that("exponential distributions warn and disable fitted params2", {
   config <- validate_config_input(list(
     mortality = list(survival_param2 = 1),
     maturity = list(maturity_param2 = "par"),
     reproduction = list(reproduction_param2 = 1)
   ))
 
-  expect_error(
-    validate_config_input(
+  expect_warning(
+    mortality_config <- validate_config_input(
       config,
-      dist = c(mortality = "exp", maturity = "wei", reproduction = "wei")
+      dist = data.frame(
+        mortality = "exp",
+        maturity = "wei",
+        reproduction = "wei"
+      )
     ),
     "survival_param2.*exponential.*second parameter"
   )
-  expect_error(
-    validate_config_input(
+  expect_warning(
+    maturity_config <- validate_config_input(
       config,
-      dist = c(mortality = "wei", maturity = "exp", reproduction = "wei")
+      dist = data.frame(
+        mortality = "wei",
+        maturity = "exp",
+        reproduction = "wei"
+      )
     ),
     "maturity_param2.*exponential.*second parameter"
   )
-  expect_error(
-    validate_config_input(
+  expect_warning(
+    reproduction_config <- validate_config_input(
       config,
-      dist = c(mortality = "wei", maturity = "wei", reproduction = "exp")
+      dist = data.frame(
+        mortality = "wei",
+        maturity = "wei",
+        reproduction = "exp"
+      )
     ),
     "reproduction_param2.*exponential.*second parameter"
   )
+  expect_identical(mortality_config$mortality$survival_param2, "not_fitted")
+  expect_identical(maturity_config$maturity$maturity_param2, "not_fitted")
+  expect_identical(
+    reproduction_config$reproduction$reproduction_param2,
+    "not_fitted"
+  )
+  expect_identical(mortality_config$maturity, config$maturity)
+  expect_identical(mortality_config$reproduction, config$reproduction)
 })
 
 test_that("unfitted params2 are accepted with exponential distributions", {
@@ -109,39 +129,65 @@ test_that("unfitted params2 are accepted with exponential distributions", {
   expect_identical(
     validate_config_input(
       config,
-      dist = c(mortality = "exp", maturity = "exp", reproduction = "exp")
+      dist = data.frame(
+        mortality = "exp",
+        maturity = "exp",
+        reproduction = "exp"
+      )
     ),
     config
   )
 })
 
-test_that("lifelihood rejects incompatible exponential configurations", {
+test_that("lifelihood warns and disables incompatible exponential parameters", {
+  local_mocked_bindings(
+    lifelihood_fit = function(config, ...) {
+      structure(
+        list(likelihood = -1, config = config),
+        class = "lifelihoodResults"
+      )
+    },
+    .package = "lifelihood"
+  )
   lifelihood_data <- structure(
-    list(dist = c(mortality = "exp", maturity = "wei", reproduction = "wei")),
+    list(
+      dist = data.frame(
+        mortality = "exp",
+        maturity = "wei",
+        reproduction = "wei"
+      )
+    ),
     class = "lifelihoodData"
   )
 
-  expect_error(
-    lifelihood(
+  expect_warning(
+    result <- lifelihood(
       lifelihoodData = lifelihood_data,
       config = list(mortality = list(survival_param2 = 1))
     ),
     "survival_param2.*exponential.*second parameter"
   )
+  expect_identical(result$config$mortality$survival_param2, "not_fitted")
 })
 
-test_that("create_simulation_input rejects incompatible exponential configurations", {
-  expect_error(
-    create_simulation_input(
-      effects = list(),
-      data = data.frame(),
+test_that("simulation input warns and disables incompatible exponential parameters", {
+  expect_warning(
+    result <- create_simulation_input(
+      effects = list(expt_death = 0),
+      data = data.frame(sex = 0),
       covariates = character(),
       sex = "sex",
-      config = list(mortality = list(survival_param2 = 1)),
-      dist = c(mortality = "exp", maturity = "wei", reproduction = "wei")
+      config = list(mortality = list(expt_death = 1, survival_param2 = 1)),
+      dist = data.frame(
+        mortality = "exp",
+        maturity = "wei",
+        reproduction = "wei"
+      )
     ),
     "survival_param2.*exponential.*second parameter"
   )
+  expect_identical(result$config$mortality$survival_param2, "not_fitted")
+  expect_false("survival_param2" %in% result$effects$parameter)
 })
 
 test_that("path_config is retained as a deprecated lifelihood argument", {

@@ -278,6 +278,7 @@ merge_group_results <- function(
   results$config <- original_config
   results$covariates <- original_lifelihoodData$covariates
   results$lifelihoodData <- original_lifelihoodData
+  results$dist <- original_lifelihoodData$dist
   results$sample_size <- nrow(original_lifelihoodData$df)
   results$seeds <- group_results[[1]]$seeds
   results$parameter_ranges <- group_results[[1]]$parameter_ranges
@@ -432,8 +433,9 @@ lifelihood_fit_group_by_group_once <- function(
     grp <- group_names[i]
     sub_data <- sub_datasets[[grp]]
 
-    # Generate unique seeds per group to ensure unique temp dirs
+    # Use separate seeds and directories for each group in this model fit.
     group_seeds <- seeds + i
+    grp_temp_dir <- file.path(gbg_temp_dir, paste0("group_", i))
 
     result <- tryCatch(
       {
@@ -460,7 +462,8 @@ lifelihood_fit_group_by_group_once <- function(
           tinf = tinf,
           sub_interval = sub_interval,
           raise_estimation_warning = FALSE,
-          delete_temp_files = FALSE
+          delete_temp_files = FALSE,
+          temp_dir = grp_temp_dir
         )
       },
       error = function(e) {
@@ -470,10 +473,6 @@ lifelihood_fit_group_by_group_once <- function(
     )
 
     # Track temp dir for cleanup
-    grp_temp_dir <- file.path(
-      here::here(),
-      paste0("lifelihood_", paste(group_seeds, collapse = "_"))
-    )
     group_temp_dirs <- c(group_temp_dirs, grp_temp_dir)
 
     if (!is.null(result)) {

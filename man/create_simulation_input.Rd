@@ -32,11 +32,12 @@ the columns named in \code{covariates} and \code{sex}.}
 \item{sex}{Name of the sex column in \code{data}.}
 
 \item{config}{Path to a YAML configuration file or an already-loaded
-configuration list.}
+configuration list. A fitted second parameter for an exponential event
+raises a warning and is set to \code{"not_fitted"}; omit its effect from \code{effects}.}
 
-\item{dist}{Named character vector with one distribution family for each
-event. It must contain entries named \code{mortality}, \code{maturity}, and
-\code{reproduction}, with values \code{"wei"}, \code{"exp"}, \code{"gam"}, or \code{"lgn"}.}
+\item{dist}{One-row data frame with columns \code{mortality}, \code{maturity}, and
+\code{reproduction}, with values \code{"wei"}, \code{"exp"}, \code{"gam"}, or \code{"lgn"}.
+Simulation uses a single model, so multiple rows are not accepted.}
 
 \item{matclutch}{Whether maturity corresponds to the first clutch.}
 

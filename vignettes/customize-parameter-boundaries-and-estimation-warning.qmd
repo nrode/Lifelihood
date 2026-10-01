@@ -75,7 +75,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
-  dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+  dist = data.frame(mortality = "gam", maturity = "lgn", reproduction = "wei")
 )
 ```
 
@@ -128,6 +128,21 @@ You can get the **default** parameter boundaries with the `default_bounds_df()` 
 bounds_df <- default_bounds_df(dataLFH)
 bounds_df
 ```
+
+`default_bounds_df()` needs a single model because shape-parameter boundaries
+depend on its distributions. If `dataLFH$dist` contains several rows, first
+select the model whose bounds you want to customise:
+
+```{r}
+#| eval: false
+data_one_model <- dataLFH
+data_one_model$dist <- dataLFH$dist[1, , drop = FALSE]
+bounds_df <- default_bounds_df(data_one_model)
+```
+
+When fitting multiple models with `param_bounds_df = NULL`, `lifelihood()`
+computes default boundaries separately for each row of `dist`. If you supply
+`param_bounds_df`, the same custom boundaries are used for every model.
 
 Since 10 seems to not be high enough, let's try with 80:
 

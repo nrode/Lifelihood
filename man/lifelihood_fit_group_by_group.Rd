@@ -34,13 +34,19 @@ lifelihood_fit_group_by_group(
 
 \item{config}{An existing YAML configuration file path or a named
 configuration list. Missing sections and parameters default to
-\code{"not_fitted"}.}
+\code{"not_fitted"}. The same configuration is used for every model. When
+\code{dist} has multiple rows, second parameters are set to \code{"not_fitted"}
+for exponential events in each model. With a single row, a warning is
+raised before disabling a second parameter for an exponential event.}
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 
-\item{n_fit}{Number of replicates for model fit to check convergence through consistency in log-likelihood values. The \code{seeds} argument should be \code{NULL} when \code{n_fit} > 1.}
+\item{n_fit}{Number of replicates per row of \code{lifelihoodData$dist} to check
+convergence through consistency in log-likelihood values. The \code{seeds}
+argument should be \code{NULL} when \code{n_fit} > 1.}
 
-\item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
+\item{param_bounds_df}{Data frame with parameter boundaries, applied to all
+models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 
 \item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
 
