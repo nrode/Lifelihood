@@ -242,14 +242,30 @@ infer_simulation_events <- function(object) {
   has_param <- function(param_name) {
     param_name %in% object$effects$parameter
   }
-  dist <- object$lifelihoodData$dist
+  can_simulate_event <- function(event, event_parameter, second_parameter) {
+    has_param(event_parameter) &&
+      (has_param(second_parameter) ||
+        identical(
+          as.character(object$lifelihoodData$dist[[event]]),
+          "exp"
+        ))
+  }
 
-  can_sim_mortality <- has_param("expt_death") &&
-    (identical(dist[["mortality"]], "exp") || has_param("survival_param2"))
-  can_sim_maturity <- has_param("expt_maturity") &&
-    (identical(dist[["maturity"]], "exp") || has_param("maturity_param2"))
-  can_sim_reproduction <- has_param("expt_reproduction") &&
-    (identical(dist[["reproduction"]], "exp") || has_param("reproduction_param2")) &&
+  can_sim_mortality <- can_simulate_event(
+    "mortality",
+    "expt_death",
+    "survival_param2"
+  )
+  can_sim_maturity <- can_simulate_event(
+    "maturity",
+    "expt_maturity",
+    "maturity_param2"
+  )
+  can_sim_reproduction <- can_simulate_event(
+    "reproduction",
+    "expt_reproduction",
+    "reproduction_param2"
+  ) &&
     can_sim_mortality &&
     can_sim_maturity
 
