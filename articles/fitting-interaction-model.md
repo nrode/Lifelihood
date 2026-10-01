@@ -57,7 +57,7 @@
 `}``)`\
 `time_default`\
 `#>    user  system elapsed `\
-`#>  25.860   0.234  27.606`
+`#>  28.583   0.161  28.906`
 
 - Interaction model using the `group_by_group` argument (default to
   `FALSE`)
@@ -72,7 +72,7 @@
 `}``)`\
 `time_gbg`\
 `#>    user  system elapsed `\
-`#>   1.482   0.078   1.957`
+`#>   1.360   0.071   1.468`
 
 Fitting interaction model with group by group is faster than default
 model.
