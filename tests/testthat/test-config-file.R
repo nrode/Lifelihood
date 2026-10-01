@@ -73,6 +73,77 @@ test_that("validate_config_input accepts YAML paths and rejects invalid lists", 
   )
 })
 
+test_that("exponential distributions reject fitted params2", {
+  config <- validate_config_input(list(
+    mortality = list(survival_param2 = 1),
+    maturity = list(maturity_param2 = "par"),
+    reproduction = list(reproduction_param2 = 1)
+  ))
+
+  expect_error(
+    validate_config_input(
+      config,
+      dist = c(mortality = "exp", maturity = "wei", reproduction = "wei")
+    ),
+    "survival_param2.*exponential.*second parameter"
+  )
+  expect_error(
+    validate_config_input(
+      config,
+      dist = c(mortality = "wei", maturity = "exp", reproduction = "wei")
+    ),
+    "maturity_param2.*exponential.*second parameter"
+  )
+  expect_error(
+    validate_config_input(
+      config,
+      dist = c(mortality = "wei", maturity = "wei", reproduction = "exp")
+    ),
+    "reproduction_param2.*exponential.*second parameter"
+  )
+})
+
+test_that("unfitted params2 are accepted with exponential distributions", {
+  config <- validate_config_input(list())
+
+  expect_identical(
+    validate_config_input(
+      config,
+      dist = c(mortality = "exp", maturity = "exp", reproduction = "exp")
+    ),
+    config
+  )
+})
+
+test_that("lifelihood rejects incompatible exponential configurations", {
+  lifelihood_data <- structure(
+    list(dist = c(mortality = "exp", maturity = "wei", reproduction = "wei")),
+    class = "lifelihoodData"
+  )
+
+  expect_error(
+    lifelihood(
+      lifelihoodData = lifelihood_data,
+      config = list(mortality = list(survival_param2 = 1))
+    ),
+    "survival_param2.*exponential.*second parameter"
+  )
+})
+
+test_that("create_simulation_input rejects incompatible exponential configurations", {
+  expect_error(
+    create_simulation_input(
+      effects = list(),
+      data = data.frame(),
+      covariates = character(),
+      sex = "sex",
+      config = list(mortality = list(survival_param2 = 1)),
+      dist = c(mortality = "exp", maturity = "wei", reproduction = "wei")
+    ),
+    "survival_param2.*exponential.*second parameter"
+  )
+})
+
 test_that("path_config is retained as a deprecated lifelihood argument", {
   lifelihood_data <- structure(list(), class = "lifelihoodData")
 

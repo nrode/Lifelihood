@@ -6,6 +6,9 @@
 \usage{
 generate_clutch_vector(N)
 }
+\arguments{
+\item{N}{Number of clutch slots to include in the returned vector.}
+}
 \description{
 Utility to generate vector of clutch names.
 }

@@ -1,5 +1,5 @@
 test_that("trade-off simulations work for reproduction events", {
-  path_config <- if (rlang::is_interactive()) {
+  path_config <- if (interactive()) {
     "tests/testthat/config_tradeoff.yaml"
   } else {
     "config_tradeoff.yaml"

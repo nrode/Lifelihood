@@ -12,13 +12,6 @@
 #'
 #' @return A named list of levels for each specified column, with class \code{"translator"}.
 #'
-#' @examples
-#' df <- data.frame(
-#'   type = factor(c("A", "B", "A")),
-#'   geno = factor(c("X", "Y", "X"))
-#' )
-#' translator <- create_translator(df, c("type", "geno"))
-#'
 #' @keywords internal
 create_translator <- function(df, cols) {
   translator <- list()

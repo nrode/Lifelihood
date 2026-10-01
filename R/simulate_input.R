@@ -58,8 +58,8 @@ create_simulation_input <- function(
     stop("`data` must be supplied.", call. = FALSE)
   }
 
-  config <- validate_config_input(config)
   dist <- validate_dist(dist)
+  config <- validate_config_input(config, dist)
 
   df <- as.data.frame(data)
 

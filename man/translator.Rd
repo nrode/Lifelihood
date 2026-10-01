@@ -51,12 +51,4 @@ a translator object.
 Parses a text file and replaces encoded factor labels (e.g., \code{type0}, \code{geno1})
 with their original levels using a translator object.
 }
-\examples{
-df <- data.frame(
-  type = factor(c("A", "B", "A")),
-  geno = factor(c("X", "Y", "X"))
-)
-translator <- create_translator(df, c("type", "geno"))
-
-}
 \keyword{internal}

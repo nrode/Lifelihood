@@ -19,7 +19,9 @@ dev.R
 ^pkgdown$
 ^LICENSE\.md$
 ^vignettes/\.quarto$
-^vignettes/*_files$
+^vignettes/.*_files$
+^vignettes/.*_cache$
+^vignettes/.*[.]html$
 ^dev/*
 ^img/*
 ^lifelihood_
@@ -30,3 +32,8 @@ dev.R
 ^BinaryFiles
 ^Dockerfile
 ^Makefile
+^AGENTS[.]md$
+^justfile$
+^release[.]sh$
+^t[.]R$
+^inst/bin/.*[.]o$

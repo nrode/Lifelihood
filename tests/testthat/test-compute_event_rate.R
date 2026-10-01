@@ -31,7 +31,7 @@ test_that("Overall demo works", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
   )
 
   results <- lifelihood(

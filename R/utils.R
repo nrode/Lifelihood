@@ -1,3 +1,45 @@
+# Avoid false positives from tidy-evaluation column names in R CMD check.
+utils::globalVariables(c(
+  ".clutch",
+  ".clutch_size",
+  ".clutch_slot",
+  ".visit_end",
+  ".visit_mask_row",
+  ".visit_start",
+  "CI_2.5%",
+  "CI_97.5%",
+  "Event_Rate",
+  "Group_tmp",
+  "LL",
+  "Mean_Interval",
+  "clutch",
+  "clutch_1",
+  "clutch_end_1",
+  "clutch_size",
+  "clutch_size_1",
+  "clutch_start_1",
+  "df",
+  "group",
+  "id",
+  "last_clutch_interval",
+  "last_clutch_interval2",
+  "loglikelihood",
+  "maturity",
+  "maturity_end",
+  "maturity_start",
+  "mcmc_estimation",
+  "mcmc_stderror",
+  "mortality",
+  "mortality_end",
+  "mortality_start",
+  "name",
+  "param",
+  "parameter",
+  "time",
+  "value",
+  "visit"
+))
+
 #' @title Make the design matrix
 #'
 #' @keywords internal
@@ -7,6 +49,8 @@
 #' the survival shape.
 #'
 #' @inheritParams lifelihood
+#'
+#' @importFrom stats as.formula model.matrix pgamma plnorm quantile setNames
 #'
 #' @export
 make_design_matrix <- function(covariates, data) {
@@ -340,6 +384,8 @@ count_parameters <- function(x) {
 }
 
 #' @title Utility to generate vector of clutch names.
+#'
+#' @param N Number of clutch slots to include in the returned vector.
 #'
 #' @export
 generate_clutch_vector <- function(N) {

@@ -24,11 +24,17 @@ one of \code{unique(lifelihoodResults$effects$parameter)}.}
 
 \item{newdata}{Data for prediction. If absent, predictions are for each individual in the original dataset provided by the user.}
 
+\item{mcmc.fit}{Whether to return predictions based on the fitted MCMC
+samples. Requires fitting the model with \code{MCMC > 0}.}
+
 \item{keep_mcmc_samples}{Whether or not to also retrieve MCMC samples in output. If \code{TRUE}, output is a list with 2 elements: pred and mcmc_samples.}
 
 \item{type}{The type of the predicted value: if type="response," predictions are on the original data scale; if type="link,"  predictions are on the lifelihood scale.}
 
 \item{se.fit}{Whether or not to include standard errors in the prediction (computed on the response scale using the delta method).}
+
+\item{.warning_ratio_male}{Whether to warn when male predictions for
+\code{expt_death} are identical to female predictions on the link scale.}
 }
 \value{
 For a single parameter, a vector or list containing the predicted
@@ -40,16 +46,13 @@ when MCMC samples are kept.
 S3 method used to make predictions using \code{lifelihoodResults} objects, i.e. results from \code{\link[=lifelihood]{lifelihood()}}.
 }
 \examples{
-df <- fakesample |>
-  mutate(
-    geno = as.factor(geno),
-    type = as.factor(type)
+df <- datapierrick |>
+  dplyr::mutate(
+    par = as.factor(par),
+    spore = as.factor(spore)
   )
 
-clutchs <- c(
-  "clutch_start1", "clutch_end1", "clutch_size1",
-  "clutch_start2", "clutch_end2", "clutch_size2"
-)
+clutchs <- generate_clutch_vector(28)
 
 dataLFH <- as_lifelihoodData(
   df = df,
@@ -61,14 +64,15 @@ dataLFH <- as_lifelihoodData(
   clutchs = clutchs,
   death_start = "death_start",
   death_end = "death_end",
-  covariates = c("geno", "type"),
-  dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+  covariates = c("par", "spore"),
+  matclutch = FALSE,
+  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 results <- lifelihood(
   lifelihoodData = dataLFH,
   config = list(
-    mortality = list(expt_death = "geno + type", survival_param2 = 1)
+    mortality = list(expt_death = "par + spore", survival_param2 = 1)
   ),
   seeds = c(1, 2, 3, 4),
   raise_estimation_warning = FALSE
@@ -79,11 +83,11 @@ prediction(results, "expt_death", type = "response")
 
 # predict on new data
 newdata <- data.frame(
-  type = c(1, 2, 0, 1, 2, 0),
-  geno = c(0, 1, 0, 1, 0, 1)
+  par = c(0, 1, 2, 0, 1, 2),
+  spore = c(0, 1, 0, 1, 0, 1)
 )
-newdata$type <- factor(newdata$type)
-newdata$geno <- factor(newdata$geno)
+newdata$par <- factor(newdata$par)
+newdata$spore <- factor(newdata$spore)
 prediction(results, "expt_death", newdata)
 prediction(results, "expt_death", newdata, type = "response")
 }

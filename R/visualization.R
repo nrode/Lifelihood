@@ -244,6 +244,8 @@ plot_observed_event_rate <- function(
 #' @return a ggplot2 plot
 #'
 #' @importFrom ggplot2 ggplot aes labs theme_minimal facet_wrap ylim geom_errorbar geom_ribbon
+#'   geom_histogram geom_line geom_point geom_vline guide_legend guides
+#'   scale_linetype_manual scale_shape_manual
 plot_event_rate <- function(
   rate_df,
   max_time,

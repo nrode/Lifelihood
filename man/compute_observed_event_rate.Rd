@@ -50,8 +50,8 @@ Calculate the empirical event rate over a given interval.
 }
 \examples{
 df <- datapierrick |>
-as_tibble() |>
- mutate(par = as.factor(par))
+tibble::as_tibble() |>
+ dplyr::mutate(par = as.factor(par))
 
 # name of the columns of the clutchs into a single vector
 clutchs <- generate_clutch_vector(28)
@@ -85,11 +85,11 @@ p <- observed_emergence_rate |>
      shape = par
    )
  )+
- geom_point()+
- geom_line(linewidth=0.5)+
- xlab("Time (days)")+
- ylab("Observed mortality rate over 5 day-periods")+
- facet_wrap(vars(par), labeller = "label_both")
+ ggplot2::geom_point()+
+ ggplot2::geom_line(linewidth=0.5)+
+ ggplot2::xlab("Time (days)")+
+ ggplot2::ylab("Observed mortality rate over 5 day-periods")+
+ ggplot2::facet_wrap(ggplot2::vars(par), labeller = "label_both")
 p
 
 }

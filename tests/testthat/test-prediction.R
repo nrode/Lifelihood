@@ -31,7 +31,7 @@ test_that("predictions work", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
+    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
   )
 
   results <- lifelihood(
@@ -180,6 +180,39 @@ test_that("prediction reports fitted factor covariates with one level", {
   expect_error(
     prediction(results, "expt_death"),
     "fitted factor covariate `par` has fewer than two levels"
+  )
+})
+
+test_that("prediction supports legacy fitness effect names", {
+  results <- list(
+    lifelihoodData = list(
+      df = data.frame(sex = c(0, 0)),
+      sex = "sex"
+    ),
+    formula = list(fitness = "1"),
+    config = list(
+      reproduction = list(
+        fitness = "1",
+        n_offspring = "not_fitted"
+      )
+    ),
+    effects = data.frame(
+      parameter = "n_offspring",
+      estimation = 0
+    ),
+    param_bounds_df = data.frame(
+      param = "fitness",
+      min = 0.001,
+      max = 1000
+    ),
+    MCMC = 0,
+    se.fit = FALSE
+  )
+  class(results) <- "lifelihoodResults"
+
+  expect_equal(
+    prediction(results, "fitness", type = "response"),
+    rep(500.0005, 2)
   )
 })
 

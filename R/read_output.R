@@ -13,8 +13,6 @@
 #' convergence to estimate their 95% confidence interval.
 #' @param path_config Deprecated alias for `config`.
 #'
-#' @importFrom tidyr starts_with
-#'
 #' @return An object of class `lifelihoodResults` with all results
 #' from the output file.
 #'
