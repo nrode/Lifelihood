@@ -22,7 +22,9 @@ Must be one of \code{"mortality"}, \code{"maturity"}, or \code{"all"} (event=\co
 Default is \code{"all"}, which simulates all fitted events.}
 
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
-If \code{NULL}, the original model data are used.}
+If \code{NULL}, corresponds to the original data used to fit the model. If you have
+fitted sex_ratio in the model but want to use the same number of males and
+females as in the original data, you need to pass the original data as \code{newdata}.}
 
 \item{visits}{Optional data frame with 2 columns: one column with the same
 name as the \code{block} argument passed to \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} and

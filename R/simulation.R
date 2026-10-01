@@ -514,11 +514,18 @@ simulate_life_history <- function(
   }
 
   lifelihoodData <- object$lifelihoodData
+  if (!is.null(newdata) && !lifelihoodData$sex %in% colnames(newdata)) {
+    stop(
+      "`newdata` must include a column for the sex of individuals named `",
+      lifelihoodData$sex,
+      "`."
+    )
+  }
+  simulation_data <- if (is.null(newdata)) lifelihoodData$df else newdata
 
   # When sex ratio has been fitted, and newdata isn't specified, we simulate
   # the sex ratio and add it to the original dataset.
   if (is_parameter_fitted(object, "sex_ratio") && is.null(newdata)) {
-    simulation_data <- lifelihoodData$df
     male_sex_ratio <- prediction(
       object,
       "sex_ratio",
@@ -530,9 +537,6 @@ simulate_life_history <- function(
       size = 1,
       prob = male_sex_ratio
     )
-    simulation_newdata <- simulation_data
-  } else {
-    simulation_newdata <- newdata
   }
 
   censoring <- !is.null(visits)
@@ -572,14 +576,14 @@ simulate_life_history <- function(
     # Simulation with tradeoffs
     df_sims_up_na <- simulate_life_history_tradeoff(
       object,
-      newdata = simulation_newdata,
+      newdata = simulation_data,
       lifelihoodData = lifelihoodData
     )
   } else {
     # Simulation without tradeoffs
     df_sims <- NULL
     for (ev in events) {
-      sim <- simulate_event(object, ev, simulation_newdata)
+      sim <- simulate_event(object, ev, simulation_data)
       df_sims <- bind_cols(sim, df_sims)
     }
 

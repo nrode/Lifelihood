@@ -97,12 +97,12 @@ test_that("drawn sex controls mortality and maturity predictions", {
   }
 })
 
-test_that("sex is drawn for newdata without changing its rows or input values", {
+test_that("newdata sex is preserved without changing its rows or input values", {
   object <- sex_ratio_simulation_input()
   newdata <- data.frame(
     id = 30:1,
     group = factor(rep(c("b", "a"), each = 15), levels = c("a", "b")),
-    sex_code = rep(0, 30)
+    sex_code = rep(c(0, 1), 15)
   )
   original <- newdata
   sim <- simulate_life_history(
@@ -114,32 +114,16 @@ test_that("sex is drawn for newdata without changing its rows or input values", 
   expect_identical(newdata, original)
   expect_identical(sim$id, newdata$id)
   expect_identical(sim$group, newdata$group)
-  expect_true(any(sim$sex_code == 1))
+  expect_identical(sim$sex_code, newdata$sex_code)
   expect_equal(sum(names(sim) == "sex_code"), 1)
-  set.seed(7)
-  expect_identical(
-    sim$sex_code,
-    rbinom(
-      nrow(newdata),
-      size = 1,
-      prob = prediction(
-        object,
-        "sex_ratio",
-        newdata = newdata,
-        type = "response"
-      )
-    )
-  )
+})
 
-  without_sex <- newdata[c("id", "group")]
-  expect_identical(
-    simulate_life_history(
-      object,
-      event = "mortality",
-      newdata = without_sex,
-      seed = 7
-    ),
-    sim
+test_that("newdata without a sex column gives a clear error", {
+  object <- sex_ratio_simulation_input()
+  without_sex <- data.frame(group = factor(c("a", "b")))
+  expect_error(
+    simulate_life_history(object, event = "mortality", newdata = without_sex),
+    "`newdata` must include a column for the sex of individuals named `sex_code`"
   )
 })
 
