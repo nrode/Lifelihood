@@ -37,13 +37,19 @@ lifelihood(
 
 \item{config}{An existing YAML configuration file path or a named
 configuration list. Missing sections and parameters default to
-\code{"not_fitted"}.}
+\code{"not_fitted"}. The same configuration is used for every model. When
+\code{dist} has multiple rows, second parameters are set to \code{"not_fitted"}
+for exponential events in each model. With a single row, a warning is
+raised before disabling a second parameter for an exponential event.}
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 
-\item{n_fit}{Number of replicates for model fit to check convergence through consistency in log-likelihood values. The \code{seeds} argument should be \code{NULL} when \code{n_fit} > 1.}
+\item{n_fit}{Number of replicates per row of \code{lifelihoodData$dist} to check
+convergence through consistency in log-likelihood values. The \code{seeds}
+argument should be \code{NULL} when \code{n_fit} > 1.}
 
-\item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
+\item{param_bounds_df}{Data frame with parameter boundaries, applied to all
+models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 
 \item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
 
@@ -87,11 +93,18 @@ configuration list. Missing sections and parameters default to
 this argument is used.}
 }
 \value{
-A \code{lifelihoodResults} object
+A \code{lifelihoodResults} object for the fit with the highest
+log-likelihood across all models and replicates. Its \code{dist} and
+\code{lifelihoodData$dist} contain only the fitted model's row. Its \code{all_models}
+element retains every fit, named \verb{lifelihood_fit_<replicate>_<model row>}.
+Use \code{summary(results$all_models)} to compare them by AICc and access
+individual fits with \code{results$all_models[[i]]}. The same behavior applies
+when \code{group_by_group = TRUE}.
 }
 \description{
 Computes the joined likelihood of all the events in
 an individual life-history (time of maturity, reproductive
 events, death) and estimates the parameters of the model
 using maximum likelihood.
+Each row of \code{lifelihoodData$dist} is fitted independently.
 }

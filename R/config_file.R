@@ -67,19 +67,21 @@ config_parameter_sections <- function() {
 #' @keywords internal
 validate_param2_for_exponential <- function(config, dist, event, parameter) {
   if (
-    identical(unname(dist[[event]]), "exp") &&
+    any(dist[[event]] == "exp") &&
       !identical(as.character(config[[event]][[parameter]]), "not_fitted")
   ) {
-    stop(
+    warning(
       "Configuration parameter `",
       parameter,
       "` cannot be fitted when the ",
       event,
       " distribution is exponential (`exp`): exponential distributions ",
-      "do not have a second parameter.",
+      "do not have a second parameter. This parameter is set to `not_fitted`.",
       call. = FALSE
     )
+    config[[event]][[parameter]] <- "not_fitted"
   }
+  config
 }
 
 #' @keywords internal
@@ -179,19 +181,19 @@ validate_config_input <- function(config, dist = NULL) {
   }
 
   if (!is.null(dist)) {
-    validate_param2_for_exponential(
+    validated_config <- validate_param2_for_exponential(
       validated_config,
       dist,
       "mortality",
       "survival_param2"
     )
-    validate_param2_for_exponential(
+    validated_config <- validate_param2_for_exponential(
       validated_config,
       dist,
       "maturity",
       "maturity_param2"
     )
-    validate_param2_for_exponential(
+    validated_config <- validate_param2_for_exponential(
       validated_config,
       dist,
       "reproduction",

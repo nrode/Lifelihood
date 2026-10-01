@@ -16,7 +16,7 @@ dataLFH <- as_lifelihoodData(
   death_end = "death_end",
   covariates = c("par", "spore"),
   matclutch = FALSE,
-  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 config_without <- list(

@@ -29,9 +29,8 @@
 #' @param death_end Column name containing the second date of the
 #' interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
-#' @param dist Named character vector with one distribution family for each
-#' event. It must contain entries named `mortality`, `maturity`, and
-#' `reproduction`.
+#' @param dist One-row data frame with columns `mortality`, `maturity`, and
+#' `reproduction`, specifying the model being fitted.
 #' @param config A complete configuration list.
 #' @param temp_dir Name of the temporary directory with temporary
 #' files.
@@ -131,7 +130,10 @@ format_dataframe_to_txt <- function(
   )
   model_info <- c(
     "****modele******",
-    paste(dist, collapse = " "),
+    paste(
+      unlist(dist[c("mortality", "maturity", "reproduction")]),
+      collapse = " "
+    ),
     config_file_info
   )
   formatted_rows <- c(model_info, formatted_rows)

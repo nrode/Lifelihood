@@ -21,7 +21,7 @@ test_that("as_lifelihoodData works", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "exp")
+    dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
 
   expect_true(!is.null(lifelihoodData$df))
@@ -35,7 +35,7 @@ test_that("as_lifelihoodData works", {
   expect_true(lifelihoodData$death_end == "death_end")
   expect_identical(
     lifelihoodData$dist,
-    c(mortality = "wei", maturity = "gam", reproduction = "exp")
+    data.frame(mortality = "wei", maturity = "gam", reproduction = "exp")
   )
   expect_true(all(lifelihoodData$covariates == c("par", "spore")))
   expect_true(!lifelihoodData$matclutch)
@@ -45,26 +45,39 @@ test_that("as_lifelihoodData works", {
   expect_null(lifelihoodData$block)
 })
 
-test_that("distribution families must be named by event", {
+test_that("distribution data frames are validated and ordered by event", {
+  dist <- data.frame(
+    reproduction = factor(c("exp", "lgn")),
+    maturity = c("gam", "wei"),
+    mortality = c("wei", "gam")
+  )
   expect_identical(
-    validate_dist(c(
-      reproduction = "exp",
-      mortality = "wei",
-      maturity = "gam"
-    )),
-    c(mortality = "wei", maturity = "gam", reproduction = "exp")
+    validate_dist(dist),
+    data.frame(
+      mortality = c("wei", "gam"),
+      maturity = c("gam", "wei"),
+      reproduction = c("exp", "lgn")
+    )
   )
 
-  expect_error(
-    validate_dist(c("wei", "gam", "exp")),
-    "`dist` must be a named character vector",
-    fixed = TRUE
+  invalid <- list(
+    c(mortality = "wei", maturity = "gam", reproduction = "exp"),
+    dist[FALSE, ],
+    dist[, -1],
+    transform(dist, extra = "wei"),
+    setNames(dist, c("mortality", "mortality", "reproduction")),
+    setNames(dist, c("reproduction", "maturity", "other")),
+    transform(dist, mortality = c("wei", "bad")),
+    transform(dist, mortality = c("wei", NA_character_)),
+    transform(dist, mortality = 1)
   )
-  expect_error(
-    validate_dist(c(mortality = "wei", maturity = "gam", reproduction = "bad")),
-    "`dist` must be a named character vector",
-    fixed = TRUE
-  )
+  for (value in invalid) {
+    expect_error(
+      validate_dist(value),
+      "`dist` must be a non-empty data frame",
+      fixed = TRUE
+    )
+  }
 })
 
 test_that("as_lifelihoodData validates matclutch_size", {
@@ -79,7 +92,11 @@ test_that("as_lifelihoodData validates matclutch_size", {
     clutchs = character(),
     death_start = "death_start",
     death_end = "death_end",
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
+    dist = data.frame(
+      mortality = "wei",
+      maturity = "gam",
+      reproduction = "lgn"
+    ),
     covariates = character()
   )
 
@@ -150,7 +167,11 @@ test_that("the intermediate file includes matclutch_size", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = "par",
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
+    dist = data.frame(
+      mortality = "wei",
+      maturity = "gam",
+      reproduction = "lgn"
+    ),
     config = validate_config_input(list(
       mortality = list(expt_death = "par", survival_param2 = 1),
       maturity = list(expt_maturity = 1, maturity_param2 = 1),

@@ -54,7 +54,7 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "death_end",
   matclutch = FALSE,
   covariates = c("par", "geno"),
-  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 ## Right convergence
@@ -166,7 +166,7 @@ simulation_input <- create_simulation_input(
   matclutch_size = "first_clutch_size",
   block = "block",
   config = simulation_config,
-  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
+  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn"),
   n_per_combination = "n_individuals",
   param_bounds_df = m1$param_bounds_df
 )
@@ -253,7 +253,7 @@ simulation_input <- create_simulation_input(
   matclutch_size = "first_clutch_size",
   block = "block",
   config = simulation_config,
-  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn"),
+  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn"),
   n_per_combination = "n_individuals",
   param_bounds_df = m1$param_bounds_df
 )
@@ -311,7 +311,7 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "mortality_end",
   matclutch = FALSE,
   covariates = c("geno"),
-  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
 )
 
 ## Right convergence

@@ -57,9 +57,8 @@ interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{dist}{Named character vector with one distribution family for each
-event. It must contain entries named \code{mortality}, \code{maturity}, and
-\code{reproduction}.}
+\item{dist}{One-row data frame with columns \code{mortality}, \code{maturity}, and
+\code{reproduction}, specifying the model being fitted.}
 
 \item{config}{A complete configuration list.}
 

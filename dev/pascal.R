@@ -23,7 +23,7 @@ make_lifelihood_data <- function() {
     death_end = "death_end",
     matclutch = FALSE,
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+    dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
   )
 }
 

@@ -44,7 +44,7 @@
 #'   death_end = "death_end",
 #'   covariates = c("par", "spore"),
 #'   matclutch = FALSE,
-#'   dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+#'   dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
 #' )
 #'
 #' results <- lifelihood(

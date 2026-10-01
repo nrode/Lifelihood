@@ -47,7 +47,7 @@
 #'  death_end = "death_end",
 #'  matclutch = FALSE,
 #'  covariates = c("par", "geno"),
-#'  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+#'  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
 #')
 #' results <- lifelihood(
 #'lifelihoodData = dataLFH,
@@ -295,13 +295,23 @@ compute_fitted_event_rate <- function(
     type = "response"
   )
 
-  param2 <- prediction(
-    object = lifelihoodResults,
-    parameter_name = parameter_name2,
-    newdata = newdata,
-    mcmc.fit = mcmc.ci.fit,
-    type = "response"
-  )
+  if (family == "exp") {
+    # Exponential event rates use only param1. Match the MCMC sample dimensions
+    # so the same sample-wise calculation can be used for every family.
+    param2 <- if (mcmc.ci.fit) {
+      matrix(NA_real_, nrow = nrow(param1), ncol = ncol(param1))
+    } else {
+      NULL
+    }
+  } else {
+    param2 <- prediction(
+      object = lifelihoodResults,
+      parameter_name = parameter_name2,
+      newdata = newdata,
+      mcmc.fit = mcmc.ci.fit,
+      type = "response"
+    )
+  }
 
   if (mcmc.ci.fit) {
     # param1 and param2 are data.frames with MCMC samples in columns
@@ -416,7 +426,7 @@ compute_fitted_event_rate <- function(
 #'  death_end = "death_end",
 #'  matclutch = FALSE,
 #'  covariates = c("par", "geno"),
-#'  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+#'  dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
 #')
 #' observed_emergence_rate <- compute_observed_event_rate(
 #'  lifelihoodData = dataLFH,
