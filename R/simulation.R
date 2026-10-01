@@ -160,7 +160,9 @@ simulate_life_history_tradeoff <- function(
   lifelihoodData,
   dt = 0.1
 ) {
-  n_ind <- if (is.null(newdata)) nrow(lifelihoodData$df) else nrow(newdata)
+  simulation_data <- if (is.null(newdata)) lifelihoodData$df else newdata
+  n_ind <- nrow(simulation_data)
+  can_reproduce <- simulation_data[[lifelihoodData$sex]] == 0
 
   family_mortality <- lifelihoodData$dist[["mortality"]]
   family_maturity <- lifelihoodData$dist[["maturity"]]
@@ -278,9 +280,6 @@ simulate_life_history_tradeoff <- function(
     max_iter <- ceiling(max_long[i] / dt) + 1
     iter <- 0
 
-    sex <- 3 ## Undefined sex by default
-    #sex<-ifelse(runif(1)<sexratiomale,1,0) ## Definition of the sex of the individual (if the sex ratio is not provided in "object")
-
     # simulate life-history while individual is alive and time interval before max longevity
     # and below maximum iteration
     while (alive && t < max_long[i] && iter <= max_iter) {
@@ -355,7 +354,7 @@ simulate_life_history_tradeoff <- function(
         }
       }
 
-      if (matured && !has_matured_this_interval) {
+      if (can_reproduce[i] && matured && !has_matured_this_interval) {
         t_from_maturity <- t - maturity[i]
 
         # Interval between reproduction events increases as time from maturity increases
@@ -435,6 +434,11 @@ simulate_life_history_tradeoff <- function(
 #'
 #' @description This function generates simulated data from a fitted lifelihood model,
 #' for one or several life history events. By default, all fitted events are simulated.
+#' If `sex_ratio` is fitted, sex is drawn for every individual before simulating
+#' events, using the predicted probability of being male (`1`; females are `0`).
+#' The drawn sex controls sex-specific event predictions and reproduction and
+#' replaces the input sex in the output. Otherwise, input sex is preserved.
+#' Sex-observation interval columns are copied from the input, not simulated.
 #'
 #' @param object A fitted `lifelihoodResults` object created either with [`lifelihood()`] or
 #'   [`create_simulation_input()`].
@@ -442,7 +446,9 @@ simulate_life_history_tradeoff <- function(
 #'   Must be one of `"mortality"`, `"maturity"`, or `"all"` (event=`"reproduction"` is equivalent to `"all"` as maturity and mortality are needed to simulate reproduction events).
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
-#'   If `NULL`, the original model data are used.
+#'   If `NULL`, corresponds to the original data used to fit the model. If you have
+#'   fitted sex_ratio in the model but want to use the same number of males and
+#'   females as in the original data, you need to pass the original data as `newdata`.
 #' @param visits Optional data frame with 2 columns: one column with the same
 #' name as the `block` argument passed to [lifelihood::as_lifelihoodData()] and
 #' one column named exactly `visit`. For each block, `visit` corresponds to the
@@ -456,6 +462,8 @@ simulate_life_history_tradeoff <- function(
 #'
 #' @return A list of `data.frame` with one column per simulated event.
 #'   Each column contains simulated values for that event.
+#'
+#' @importFrom stats rbinom
 #'
 #' @export
 simulate_life_history <- function(
@@ -506,6 +514,27 @@ simulate_life_history <- function(
   }
 
   lifelihoodData <- object$lifelihoodData
+
+  # When sex ratio has been fitted, and newdata isn't specified, we simulate
+  # the sex ratio and add it to the original dataset.
+  if (is_parameter_fitted(object, "sex_ratio") && is.null(newdata)) {
+    simulation_data <- lifelihoodData$df
+    male_sex_ratio <- prediction(
+      object,
+      "sex_ratio",
+      type = "response",
+      newdata = simulation_data
+    )
+    simulation_data[[lifelihoodData$sex]] <- rbinom(
+      nrow(simulation_data),
+      size = 1,
+      prob = male_sex_ratio
+    )
+    simulation_newdata <- simulation_data
+  } else {
+    simulation_newdata <- newdata
+  }
+
   censoring <- !is.null(visits)
   block_values <- NULL
   if (censoring) {
@@ -543,18 +572,14 @@ simulate_life_history <- function(
     # Simulation with tradeoffs
     df_sims_up_na <- simulate_life_history_tradeoff(
       object,
-      newdata = newdata,
+      newdata = simulation_newdata,
       lifelihoodData = lifelihoodData
     )
   } else {
     # Simulation without tradeoffs
     df_sims <- NULL
     for (ev in events) {
-      sim <- simulate_event(
-        object,
-        ev,
-        newdata
-      )
+      sim <- simulate_event(object, ev, simulation_newdata)
       df_sims <- bind_cols(sim, df_sims)
     }
 
@@ -652,14 +677,12 @@ simulate_life_history <- function(
   }
 
   if ("reproduction" %in% events) {
-    df <- if (is.null(newdata)) object$lifelihoodData$df else newdata
-
     df_sims_up_na <- df_sims_up_na |>
       # Set reproduction-related columns to NA for males
       mutate(
         across(
           c(starts_with("clutch_"), starts_with("clutch_size_")),
-          ~ if_else(df[[lifelihoodData$sex]] == 1, NA, .x)
+          ~ if_else(simulation_data[[lifelihoodData$sex]] == 1, NA, .x)
         )
       )
   }
@@ -814,11 +837,11 @@ simulate_life_history <- function(
       object$lifelihoodData$sex_start,
       object$lifelihoodData$sex_end
     ))
-    df_sims_up_na <- object$lifelihoodData$df |>
+    df_sims_up_na <- simulation_data |>
       select(all_of(simulation_data_cols)) |>
       bind_cols(df_sims_up_na)
   } else {
-    df_sims_up_na <- bind_cols(newdata, df_sims_up_na)
+    df_sims_up_na <- bind_cols(simulation_data, df_sims_up_na)
   }
 
   return(as_tibble(df_sims_up_na))

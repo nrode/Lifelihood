@@ -44,4 +44,9 @@ Each column contains simulated values for that event.
 \description{
 This function generates simulated data from a fitted lifelihood model,
 for one or several life history events. By default, all fitted events are simulated.
+If \code{sex_ratio} is fitted, sex is drawn for every individual before simulating
+events, using the predicted probability of being male (\code{1}; females are \code{0}).
+The drawn sex controls sex-specific event predictions and reproduction and
+replaces the input sex in the output. Otherwise, input sex is preserved.
+Sex-observation interval columns are copied from the input, not simulated.
 }
