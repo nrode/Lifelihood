@@ -8,7 +8,9 @@ default_bounds_df(lifelihoodData)
 }
 \arguments{
 \item{lifelihoodData}{\code{lifelihoodData} object created with
-\code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
+\code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.
+Its \code{dist} must contain one row. To customise bounds for a particular model,
+first subset \code{lifelihoodData$dist} to that row with \code{drop = FALSE}.}
 }
 \value{
 A dataframe with the default parameter boundaries.
@@ -51,7 +53,7 @@ dataLFH <- as_lifelihoodData(
   death_end = "death_end",
   covariates = c("geno", "type"),
   matclutch = FALSE,
-  dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+  dist = data.frame(mortality = "gam", maturity = "lgn", reproduction = "wei")
 )
 
 bounds_df <- default_bounds_df(dataLFH)

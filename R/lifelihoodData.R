@@ -30,10 +30,10 @@
 #' the interval in which the death was determined.
 #' @param death_end Column name containing the second date of
 #' the interval in which the death was determined.
-#' @param dist Named character vector specifying the statistical law to use
-#' for each event. It must contain entries named `mortality`, `maturity`, and
-#' `reproduction`, with each value one of "wei" (Weibull law), "exp"
-#' (Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).
+#' @param dist Data frame with exactly three columns: `mortality`, `maturity`,
+#' and `reproduction`. Each row specifies one model to fit with [lifelihood()].
+#' Each cell must contain "wei" (Weibull), "exp" (exponential), "gam" (gamma),
+#' or "lgn" (log-normal). Use a one-row data frame to fit a single model.
 #' @param covariates Vector containing the names of the covariates.
 #' @param block Column name containing the block to which each individual belong to.
 #' @param matclutch Whether the maturity event (designated by
@@ -136,25 +136,33 @@ as_lifelihoodData <- function(
 
 #' @keywords internal
 validate_dist <- function(dist) {
-  required_names <- c("mortality", "maturity", "reproduction")
+  required_columns <- c("mortality", "maturity", "reproduction")
   valid_values <- c("wei", "gam", "lgn", "exp")
 
   if (
-    !is.character(dist) ||
-      length(dist) != length(required_names) ||
-      is.null(names(dist)) ||
-      anyDuplicated(names(dist)) ||
-      !setequal(names(dist), required_names) ||
+    !is.data.frame(dist) ||
+      nrow(dist) == 0 ||
+      ncol(dist) != length(required_columns) ||
+      anyDuplicated(names(dist)) > 0 ||
+      !setequal(names(dist), required_columns) ||
+      !all(vapply(
+        dist,
+        function(x) is.character(x) || is.factor(x),
+        logical(1)
+      )) ||
       anyNA(dist) ||
-      !all(dist %in% valid_values)
+      !all(unlist(lapply(dist, as.character)) %in% valid_values)
   ) {
     stop(
-      "`dist` must be a named character vector with exactly the names ",
-      "`mortality`, `maturity`, and `reproduction`; each value must be one ",
-      "of `wei`, `exp`, `gam`, or `lgn`.",
+      "`dist` must be a non-empty data frame with exactly 3 columns (",
+      paste0(required_columns, collapse = ", "),
+      ") where all cells are in ",
+      paste0(valid_values, collapse = ", "),
+      ".",
       call. = FALSE
     )
   }
-
-  dist[required_names]
+  dist <- as.data.frame(dist[required_columns])
+  dist[] <- lapply(dist, as.character)
+  dist
 }

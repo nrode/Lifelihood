@@ -39,7 +39,11 @@ sex_ratio_simulation_input <- function(
     sex = "sex_code",
     block = "group",
     config = config,
-    dist = c(mortality = "exp", maturity = "exp", reproduction = "exp"),
+    dist = data.frame(
+      mortality = "exp",
+      maturity = "exp",
+      reproduction = "exp"
+    ),
     param_bounds_df = data.frame(
       param = c(
         "expt_death",

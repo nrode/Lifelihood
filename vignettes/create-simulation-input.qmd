@@ -16,6 +16,12 @@ values that you choose yourself. It is useful when you want to explore a model
 before fitting it, create a known synthetic population, or understand how
 covariate effects change simulated maturity, reproduction, and mortality.
 
+The `dist` argument must be a one-row data frame with columns `mortality`,
+`maturity`, and `reproduction`. Simulation inputs describe a single model;
+multiple rows are reserved for fitting models with `lifelihood()`.
+For exponential events, second parameters in the configuration raise a warning
+and are set to `"not_fitted"`; omit their entries from `effects`.
+
 ```{mermaid}
 flowchart LR
   data["data<br/>covariates + sex + counts"] --> input["create_simulation_input()"]
@@ -133,7 +139,7 @@ pseudo_results <- create_simulation_input(
   covariates = c("par", "spore"),
   sex = "sex",
   config = simulation_config,
-  dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
+  dist = data.frame(mortality = "wei", maturity = "wei", reproduction = "wei"),
   n_per_combination = "n_individuals"
 )
 
@@ -219,7 +225,7 @@ simulated_lifelihood_data <- as_lifelihoodData(
   death_start = "mortality_start",
   death_end = "mortality_end",
   covariates = c("par", "spore"),
-  dist = c(mortality = "wei", maturity = "wei", reproduction = "wei"),
+  dist = data.frame(mortality = "wei", maturity = "wei", reproduction = "wei"),
   matclutch = FALSE
 )
 

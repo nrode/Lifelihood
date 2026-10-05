@@ -36,11 +36,15 @@ lifelihood_fit(
 
 \item{config}{An existing YAML configuration file path or a named
 configuration list. Missing sections and parameters default to
-\code{"not_fitted"}.}
+\code{"not_fitted"}. The same configuration is used for every model. When
+\code{dist} has multiple rows, second parameters are set to \code{"not_fitted"}
+for exponential events in each model. With a single row, a warning is
+raised before disabling a second parameter for an exponential event.}
 
 \item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
 
-\item{param_bounds_df}{Dataframe with the parameter ranges/boundaries/boundaries}
+\item{param_bounds_df}{Data frame with parameter boundaries, applied to all
+models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 
 \item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
 

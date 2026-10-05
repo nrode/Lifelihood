@@ -22,6 +22,9 @@ pak::pak("nrode/Lifelihood")
 
 ## Quick start
 
+`dist` is a data frame with columns `mortality`, `maturity`, and `reproduction`.
+Each row specifies one model; the example below fits a single model.
+
 ```r
 library(lifelihood)
 
@@ -47,7 +50,7 @@ dataLFH <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = c("geno", "type"),
-  dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+  dist = data.frame(mortality = "gam", maturity = "lgn", reproduction = "wei")
 )
 
 results <- lifelihood(
@@ -100,6 +103,35 @@ summary(results)
 #>
 #> ======================
 ```
+
+## Fit multiple models
+
+```r
+dataLFH$dist <- data.frame(
+  mortality = c("wei", "exp"),
+  maturity = c("gam", "exp"),
+  reproduction = c("lgn", "exp")
+)
+
+results_multiple <- lifelihood(
+  lifelihoodData = dataLFH,
+  config = results$config,
+  n_fit = 2
+)
+comparison <- summary(results_multiple$all_models)
+best_aicc <- results_multiple$all_models[[comparison$fit[1]]]
+```
+
+`n_fit` replicates are run for each row, so this example fits four models in
+total. Leave `seeds = NULL` when `n_fit > 1`. In a batch, second parameters are
+automatically disabled for exponential events. Each model uses its own default
+parameter boundaries; supplied custom boundaries apply to all models.
+
+The returned result has the highest log-likelihood. `all_models` retains every
+fit, and its summary compares them by AICc. Each fit stores its own distributions
+for prediction, simulation, and goodness-of-fit. See the
+[first-model vignette](https://nrode.github.io/Lifelihood/articles/fitting-your-first-model-in-lifelihood.html)
+for more details.
 
 ## Goodness of fit
 

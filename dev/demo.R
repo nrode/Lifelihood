@@ -7,7 +7,8 @@ df <- datapierrick |>
     par = as.factor(par),
     geno = as.factor(geno),
     spore = as.factor(spore)
-  )
+  ) |>
+  sample_n(100)
 
 clutchs <- generate_clutch_vector(28)
 
@@ -23,28 +24,26 @@ lifelihoodData <- as_lifelihoodData(
   death_end = "death_end",
   matclutch = FALSE,
   covariates = c("par", "geno"),
-  dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+  dist = data.frame(
+    mortality = c("wei", "exp"),
+    maturity = c("wei", "exp"),
+    reproduction = c("wei", "exp")
+  )
 )
 
 results <- lifelihood(
   lifelihoodData = lifelihoodData,
   config = list(
-    mortality = list(
-      expt_death = "par",
-      survival_param2 = 1,
-      ratio_expt_death = 1
-    ),
+    mortality = list(expt_death = "par", survival_param2 = 1),
     maturity = list(expt_maturity = 1, maturity_param2 = 1),
-    reproduction = list(
-      expt_reproduction = 1,
-      reproduction_param2 = 1,
-      n_offspring = 1
-    )
+    reproduction = list(expt_reproduction = 1, reproduction_param2 = 1)
   ),
   raise_estimation_warning = FALSE,
-  delete_temp_files = FALSE
+  delete_temp_files = FALSE,
+  n_fit = 3
 )
-summary(results)
+summary(results$all_models) |> View()
+summary(results$all_models)
 
 gof <- goodness_of_fit(results, nsim = 5)
 plot(gof)

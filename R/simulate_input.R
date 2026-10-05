@@ -19,10 +19,11 @@
 #' @param covariates Character vector with covariate column names in `data`.
 #' @param sex Name of the sex column in `data`.
 #' @param config Path to a YAML configuration file or an already-loaded
-#'   configuration list.
-#' @param dist Named character vector with one distribution family for each
-#'   event. It must contain entries named `mortality`, `maturity`, and
+#'   configuration list. A fitted second parameter for an exponential event
+#'   raises a warning and is set to `"not_fitted"`; omit its effect from `effects`.
+#' @param dist One-row data frame with columns `mortality`, `maturity`, and
 #'   `reproduction`, with values `"wei"`, `"exp"`, `"gam"`, or `"lgn"`.
+#'   Simulation uses a single model, so multiple rows are not accepted.
 #' @param matclutch Whether maturity corresponds to the first clutch.
 #' @param matclutch_size Optional name of the first clutch size column when
 #'   `matclutch = TRUE`.
@@ -59,6 +60,9 @@ create_simulation_input <- function(
   }
 
   dist <- validate_dist(dist)
+  if (nrow(dist) != 1) {
+    stop("`dist` must contain exactly one row for simulation.", call. = FALSE)
+  }
   config <- validate_config_input(config, dist)
 
   df <- as.data.frame(data)
@@ -124,6 +128,7 @@ create_simulation_input <- function(
     lifelihoodData = lifelihoodData,
     sample_size = n,
     param_bounds_df = param_bounds_df,
+    dist = dist,
     group_by_group = FALSE
   )
 

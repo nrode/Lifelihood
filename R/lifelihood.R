@@ -5,16 +5,23 @@
 #' an individual life-history (time of maturity, reproductive
 #' events, death) and estimates the parameters of the model
 #' using maximum likelihood.
+#' Each row of `lifelihoodData$dist` is fitted independently.
 #'
 #' @param lifelihoodData `lifelihoodData` object created with [as_lifelihoodData()].
 #' @param config An existing YAML configuration file path or a named
 #'   configuration list. Missing sections and parameters default to
-#'   `"not_fitted"`.
+#'   `"not_fitted"`. The same configuration is used for every model. When
+#'   `dist` has multiple rows, second parameters are set to `"not_fitted"`
+#'   for exponential events in each model. With a single row, a warning is
+#'   raised before disabling a second parameter for an exponential event.
 #' @param path_config Deprecated alias for `config`. A warning is raised when
 #'   this argument is used.
 #' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
-#' @param n_fit Number of replicates for model fit to check convergence through consistency in log-likelihood values. The `seeds` argument should be `NULL` when `n_fit` > 1.
-#' @param param_bounds_df Dataframe with the parameter ranges/boundaries/boundaries
+#' @param n_fit Number of replicates per row of `lifelihoodData$dist` to check
+#'   convergence through consistency in log-likelihood values. The `seeds`
+#'   argument should be `NULL` when `n_fit` > 1.
+#' @param param_bounds_df Data frame with parameter boundaries, applied to all
+#'   models. If `NULL`, each model uses its own distribution-specific defaults.
 #' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
 #' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
 #' @param interval TBD - Check the actual meaning
@@ -35,7 +42,13 @@
 #' @param raise_estimation_warning Whether or not to raise a warning when the estimate of a parameter is too close to its minimum or maximum bound. Default is TRUE.
 #' @param delete_temp_files Indicates whether temporary files should be deleted. TRUE by default and recommended.
 #'
-#' @return A `lifelihoodResults` object
+#' @return A `lifelihoodResults` object for the fit with the highest
+#'   log-likelihood across all models and replicates. Its `dist` and
+#'   `lifelihoodData$dist` contain only the fitted model's row. Its `all_models`
+#'   element retains every fit, named `lifelihood_fit_<replicate>_<model row>`.
+#'   Use `summary(results$all_models)` to compare them by AICc and access
+#'   individual fits with `results$all_models[[i]]`. The same behavior applies
+#'   when `group_by_group = TRUE`.
 #'
 #' @importFrom utils write.table
 #' @importFrom stats AIC logLik
@@ -80,7 +93,8 @@ lifelihood <- function(
     )
     config <- path_config
   }
-  config <- validate_config_input(config, lifelihoodData$dist)
+  config <- validate_config_input(config)
+  lifelihoodData$dist <- validate_dist(lifelihoodData$dist)
 
   # we force generate seeds here because it would not make sense
   # to use n times the same seeds.
@@ -88,93 +102,115 @@ lifelihood <- function(
     stop("Can't set `seeds` with `n_fit` > 1.")
   }
 
-  if (isTRUE(group_by_group)) {
-    results <- lifelihood_fit_group_by_group(
-      lifelihoodData = lifelihoodData,
-      config = config,
-      path_to_Lifelihood = path_to_Lifelihood,
-      n_fit = n_fit,
-      param_bounds_df = param_bounds_df,
-      MCMC = MCMC,
-      interval = interval,
-      se.fit = se.fit,
-      saveprobevent = saveprobevent,
-      r = r,
-      seeds = seeds,
-      ntr = ntr,
-      nst = nst,
-      To = To,
-      Tf = Tf,
-      climbrate = climbrate,
-      precision = precision,
-      ratiomax = ratiomax,
-      tc = tc,
-      tinf = tinf,
-      sub_interval = sub_interval,
-      delete_temp_files = delete_temp_files
-    )
-
-    results$effects <- results$effects |> arrange(parameter)
-    return(results)
-  }
-
   all_results <- list()
-  for (i in 1:n_fit) {
-    if (is.null(seeds) || n_fit > 1) {
-      seeds <- sample(1:10000, 4, replace = TRUE)
+
+  for (j in seq_len(nrow(lifelihoodData$dist))) {
+    temp_lifelihoodData <- lifelihoodData
+    temp_lifelihoodData$dist <- lifelihoodData$dist[j, ]
+    model_config <- config
+
+    # When fitting multiple models, we don't want to raise
+    # the parameter 2 warning with an exponential distribution, so we replace
+    # it with a not_fitted
+    if (nrow(lifelihoodData$dist) > 1) {
+      second_parameters <- c(
+        mortality = "survival_param2",
+        maturity = "maturity_param2",
+        reproduction = "reproduction_param2"
+      )
+      for (event in names(second_parameters)) {
+        if (temp_lifelihoodData$dist[[event]] == "exp") {
+          model_config[[event]][[second_parameters[[event]]]] <- "not_fitted"
+        }
+      }
+    }
+    model_config <- validate_config_input(
+      model_config,
+      temp_lifelihoodData$dist
+    )
+    model_results <- list()
+
+    for (i in seq_len(n_fit)) {
+      fit_seeds <- seeds
+      if (is.null(fit_seeds)) {
+        fit_seeds <- sample(1:10000, 4, replace = TRUE)
+      }
+
+      temp_dir <- file.path(
+        here::here(),
+        paste0(
+          "lifelihood_",
+          paste(fit_seeds, collapse = "_"),
+          if (nrow(lifelihoodData$dist) > 1) paste0("_model_", j) else ""
+        )
+      )
+
+      fit_args <- list(
+        lifelihoodData = temp_lifelihoodData,
+        config = model_config,
+        path_to_Lifelihood = path_to_Lifelihood,
+        param_bounds_df = param_bounds_df,
+        group_by_group = group_by_group,
+        MCMC = MCMC,
+        interval = interval,
+        se.fit = se.fit,
+        saveprobevent = saveprobevent,
+        r = r,
+        ntr = ntr,
+        nst = nst,
+        To = To,
+        Tf = Tf,
+        climbrate = climbrate,
+        precision = precision,
+        ratiomax = ratiomax,
+        tc = tc,
+        tinf = tinf,
+        sub_interval = sub_interval,
+        raise_estimation_warning = raise_estimation_warning,
+        delete_temp_files = delete_temp_files,
+        seeds = fit_seeds,
+        temp_dir = temp_dir
+      )
+      fit_function <- lifelihood_fit
+      if (isTRUE(group_by_group)) {
+        fit_function <- lifelihood_fit_group_by_group
+        fit_args$group_by_group <- NULL
+        fit_args$raise_estimation_warning <- NULL
+        fit_args$temp_dir <- NULL
+        fit_args$n_fit <- 1
+      }
+      results <- do.call(fit_function, fit_args)
+      if (isTRUE(group_by_group)) {
+        results$effects <- results$effects |> arrange(parameter)
+      }
+      model_results[[i]] <- results
+      all_results[[glue::glue("lifelihood_fit_{i}_{j}")]] <- results
     }
 
-    temp_dir <- file.path(
-      here::here(),
-      paste0(paste0("lifelihood_", paste(seeds, collapse = "_")))
-    )
-
-    results <- lifelihood_fit(
-      lifelihoodData = lifelihoodData,
-      config = config,
-      path_to_Lifelihood = path_to_Lifelihood,
-      param_bounds_df = param_bounds_df,
-      group_by_group = group_by_group,
-      MCMC = MCMC,
-      interval = interval,
-      se.fit = se.fit,
-      saveprobevent = saveprobevent,
-      r = r,
-      ntr = ntr,
-      nst = nst,
-      To = To,
-      Tf = Tf,
-      climbrate = climbrate,
-      precision = precision,
-      ratiomax = ratiomax,
-      tc = tc,
-      tinf = tinf,
-      sub_interval = sub_interval,
-      raise_estimation_warning = raise_estimation_warning,
-      delete_temp_files = delete_temp_files,
-      seeds = seeds,
-      temp_dir = temp_dir
-    )
-    all_results[[glue::glue("lifelihood_fit_{i}")]] <- results
+    # Compare replicates of this model to check convergence.
+    if (length(model_results) > 1) {
+      likelihoods <- sort(
+        vapply(model_results, function(x) x$likelihood, numeric(1)),
+        decreasing = TRUE
+      )
+      diff_best <- likelihoods[1] - likelihoods[2]
+      if (diff_best > 0.1) {
+        warning(glue::glue(
+          "Best and second-best likelihoods for model row {j} differ by ",
+          "{round(diff_best, 3)} (> 0.1). Consider increasing n_fit ",
+          "(currently {n_fit}) to be sure of model convergence ",
+          "and find the model with highest log-likelihood."
+        ))
+      }
+    }
   }
 
   likelihoods <- sapply(all_results, function(x) x$likelihood)
   ord <- order(likelihoods, decreasing = TRUE)
 
   best_fit <- all_results[[ord[1]]]
-
-  # we want to make sure that we couldn't easily find a better
-  # solution (https://github.com/nrode/Lifelihood/issues/111)
-  if (length(likelihoods) > 1) {
-    diff_best <- likelihoods[ord[1]] - likelihoods[ord[2]]
-    if (diff_best > 0.1) {
-      warning(glue::glue(
-        "Best and second-best likelihoods differ by {round(diff_best, 3)} (> 0.1). ",
-        "Consider increasing n_fit (currently {n_fit}) to be sure of model convergence",
-        " and find the model with highest log-likelihood."
-      ))
-    }
-  }
+  best_fit$all_models <- all_results
+  class(best_fit$all_models) <- "all_models"
 
   return(best_fit)
 }
@@ -371,6 +407,7 @@ lifelihood_fit <- function(
   results$lifelihoodData <- lifelihoodData
   results$sample_size <- nrow(lifelihoodData$df)
   results$param_bounds_df <- param_bounds_df
+  results$dist <- lifelihoodData$dist
 
   if (delete_temp_files) {
     unlink(temp_dir, recursive = TRUE)
@@ -655,6 +692,54 @@ summary.lifelihoodResults <- function(object, digits = 3, ...) {
   cat("\n======================\n")
 
   invisible(object)
+}
+
+#' @title Compare all fitted models and replicates
+#'
+#' @description
+#' Summarises every fit retained by [lifelihood()], including the model's
+#' distribution families, random seeds, parameter estimates, and fit criteria.
+#' Rows are sorted by increasing AICc. The first row can differ from the fit
+#' returned by [lifelihood()], which selects the highest log-likelihood.
+#'
+#' @param object The `all_models` element of a [lifelihood()] result.
+#' @param ... Ignored.
+#'
+#' @return A tibble with one row per fit, sorted by AICc. `fit` identifies the
+#'   corresponding entry in `all_models`. The delta AICc column gives the
+#'   difference from the lowest AICc in the table.
+#'
+#' @export
+summary.all_models <- function(object, ...) {
+  df <- tibble::tibble()
+  for (i in seq_along(object)) {
+    model <- object[[i]]
+    df_model <- data.frame(
+      fit = names(object)[i],
+      seeds = paste0(model$seeds, collapse = "_"),
+      dist_maturity = model$dist[["maturity"]],
+      dist_reproduction = model$dist[["reproduction"]],
+      dist_mortality = model$dist[["mortality"]],
+      n_parameters = nrow(model$effects),
+      likelihood = model$likelihood,
+      AIC = AIC(model),
+      AICc = AICc(model)
+    )
+    if (nrow(model$effects) > 0) {
+      df_model <- bind_cols(
+        df_model,
+        model$effects |>
+          select(all_of(c("name", "estimation"))) |>
+          tidyr::pivot_wider(names_from = "name", values_from = "estimation")
+      )
+    }
+    df <- bind_rows(df, df_model)
+  }
+
+  df <- arrange(df, AICc)
+  min_AICc <- min(df$AICc)
+  df[["\u0394AICc"]] <- df$AICc - min_AICc
+  relocate(df, any_of("\u0394AICc"), .after = "AICc")
 }
 
 #' @title Print simplified coefficient table

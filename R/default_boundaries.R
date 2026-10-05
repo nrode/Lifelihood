@@ -12,6 +12,8 @@
 #'
 #' @param lifelihoodData `lifelihoodData` object created with
 #' [as_lifelihoodData()].
+#' Its `dist` must contain one row. To customise bounds for a particular model,
+#' first subset `lifelihoodData$dist` to that row with `drop = FALSE`.
 #'
 #' @return A dataframe with the default parameter boundaries.
 #'
@@ -45,7 +47,7 @@
 #'   death_end = "death_end",
 #'   covariates = c("geno", "type"),
 #'   matclutch = FALSE,
-#'   dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+#'   dist = data.frame(mortality = "gam", maturity = "lgn", reproduction = "wei")
 #' )
 #'
 #' bounds_df <- default_bounds_df(dataLFH)
@@ -79,6 +81,13 @@ default_bounds_df <- function(lifelihoodData) {
   maturity_end <- lifelihoodData$maturity_end
   clutchs <- lifelihoodData$clutchs
   dist <- lifelihoodData$dist
+  if (nrow(dist) != 1) {
+    stop(
+      "`default_bounds_df()` requires one model; subset `lifelihoodData$dist` ",
+      "to one row with `drop = FALSE`.",
+      call. = FALSE
+    )
+  }
   right_censoring_date <- lifelihoodData$right_censoring_date
 
   max_death <- max(
@@ -98,8 +107,7 @@ default_bounds_df <- function(lifelihoodData) {
     max_default = c(500, 600, 10, 1000)
   )
 
-  # `dist` is a named vector with one family per event, so each shape
-  # parameter must take its bounds from the family of its own event.
+  # Each shape parameter uses the family of its own event in this model.
   mortality_model <- dist[["mortality"]]
   mortality_specs <- subset(models_bounds, name == mortality_model)
   death_shape_min <- mortality_specs$min_default

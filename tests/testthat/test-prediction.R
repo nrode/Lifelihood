@@ -31,7 +31,7 @@ test_that("predictions work", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+    dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
   )
 
   results <- lifelihood(
@@ -98,7 +98,7 @@ test_that("Prediction with ratio expt death", {
     death_start = "death_start",
     death_end = "death_end",
     covariates = c("par", "spore"),
-    dist = c(mortality = "wei", maturity = "gam", reproduction = "lgn")
+    dist = data.frame(mortality = "wei", maturity = "gam", reproduction = "lgn")
   )
 
   results <- lifelihood(
