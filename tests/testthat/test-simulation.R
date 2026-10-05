@@ -194,7 +194,7 @@ test_that("censoring works for reproduction and validates block in newdata", {
     sim$total_n_offspring
   )
 
-  newdata_without_block <- df[1:5, c("par", "spore")]
+  newdata_without_block <- df[1:5, c("par", "spore", "sex")]
   expect_error(
     simulate_life_history(
       results,
