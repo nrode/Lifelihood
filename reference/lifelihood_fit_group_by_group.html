@@ -120,7 +120,10 @@ fits intercept-only models for each group, and merges results.</p>
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
 <dd><p>An existing YAML configuration file path or a named
 configuration list. Missing sections and parameters default to
-<code>"not_fitted"</code>.</p></dd>
+<code>"not_fitted"</code>. The same configuration is used for every model. When
+<code>dist</code> has multiple rows, second parameters are set to <code>"not_fitted"</code>
+for exponential events in each model. With a single row, a warning is
+raised before disabling a second parameter for an exponential event.</p></dd>
 
 
 <dt id="arg-path-to-lifelihood">path_to_Lifelihood<a class="anchor" aria-label="anchor" href="#arg-path-to-lifelihood"></a></dt>
@@ -128,11 +131,14 @@ configuration list. Missing sections and parameters default to
 
 
 <dt id="arg-n-fit">n_fit<a class="anchor" aria-label="anchor" href="#arg-n-fit"></a></dt>
-<dd><p>Number of replicates for model fit to check convergence through consistency in log-likelihood values. The <code>seeds</code> argument should be <code>NULL</code> when <code>n_fit</code> &gt; 1.</p></dd>
+<dd><p>Number of replicates per row of <code>lifelihoodData$dist</code> to check
+convergence through consistency in log-likelihood values. The <code>seeds</code>
+argument should be <code>NULL</code> when <code>n_fit</code> &gt; 1.</p></dd>
 
 
 <dt id="arg-param-bounds-df">param_bounds_df<a class="anchor" aria-label="anchor" href="#arg-param-bounds-df"></a></dt>
-<dd><p>Dataframe with the parameter ranges/boundaries/boundaries</p></dd>
+<dd><p>Data frame with parameter boundaries, applied to all
+models. If <code>NULL</code>, each model uses its own distribution-specific defaults.</p></dd>
 
 
 <dt id="arg-mcmc">MCMC<a class="anchor" aria-label="anchor" href="#arg-mcmc"></a></dt>

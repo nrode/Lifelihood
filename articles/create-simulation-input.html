@@ -113,6 +113,7 @@
 
 
     <p><code><a href="../reference/create_simulation_input.html">create_simulation_input()</a></code> lets you simulate life histories from parameter values that you choose yourself. It is useful when you want to explore a model before fitting it, create a known synthetic population, or understand how covariate effects change simulated maturity, reproduction, and mortality.</p>
+<p>The <code>dist</code> argument must be a one-row data frame with columns <code>mortality</code>, <code>maturity</code>, and <code>reproduction</code>. Simulation inputs describe a single model; multiple rows are reserved for fitting models with <code><a href="../reference/lifelihood.html">lifelihood()</a></code>. For exponential events, second parameters in the configuration raise a warning and are set to <code>"not_fitted"</code>; omit their entries from <code>effects</code>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -249,7 +250,7 @@
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  config <span class="op">=</span> <span class="va">simulation_config</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"wei"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"wei"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span>,</span>
 <span>  n_per_combination <span class="op">=</span> <span class="st">"n_individuals"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -364,7 +365,7 @@
 <span>  death_start <span class="op">=</span> <span class="st">"mortality_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"mortality_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"spore"</span><span class="op">)</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"wei"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"wei"</span>, reproduction <span class="op">=</span> <span class="st">"wei"</span><span class="op">)</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>

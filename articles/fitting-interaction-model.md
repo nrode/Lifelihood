@@ -38,7 +38,7 @@
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"geno"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
 `)`\
 \
 [`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`
@@ -57,7 +57,7 @@
 `}``)`\
 `time_default`\
 `#>    user  system elapsed `\
-`#>  31.109   0.341  33.728`
+`#>  18.732   0.089  19.287`
 
 - Interaction model using the `group_by_group` argument (default to
   `FALSE`)
@@ -72,7 +72,7 @@
 `}``)`\
 `time_gbg`\
 `#>    user  system elapsed `\
-`#>   1.771   0.116   2.026`
+`#>   0.967   0.034   1.052`
 
 Fitting interaction model with group by group is faster than default
 model.

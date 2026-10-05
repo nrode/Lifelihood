@@ -23,6 +23,10 @@ It requires R 4.1.0 or later, and work on all of:
 
 ## Quick start
 
+`dist` is a data frame with columns `mortality`, `maturity`, and
+`reproduction`. Each row specifies one model; the example below fits a
+single model.
+
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lifelihood`](https://nrode.github.io/Lifelihood/)`)`\
 \
@@ -48,7 +52,7 @@ It requires R 4.1.0 or later, and work on all of:
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"geno"``, ``"type"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"gam"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"gam"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
 `)`\
 \
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
@@ -100,6 +104,36 @@ It requires R 4.1.0 or later, and work on all of:
 `#> All parameters within bounds`\
 `#>`\
 `#> ======================`
+
+## Fit multiple models
+
+\
+`dataLFH``$``dist`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
+`  mortality ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"wei"``, ``"exp"``)``,`\
+`  maturity ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"gam"``, ``"exp"``)``,`\
+`  reproduction ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"lgn"``, ``"exp"``)`\
+`)`\
+\
+`results_multiple`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
+`  lifelihoodData ``=`` ``dataLFH``,`\
+`  config ``=`` ``results``$``config``,`\
+`  n_fit ``=`` ``2`\
+`)`\
+`comparison`` ``<-`` `[`summary`](https://rdrr.io/r/base/summary.html)`(``results_multiple``$``all_models``)`\
+`best_aicc`` ``<-`` ``results_multiple``$``all_models``[[``comparison``$``fit``[``1``]``]``]`
+
+`n_fit` replicates are run for each row, so this example fits four
+models in total. Leave `seeds = NULL` when `n_fit > 1`. In a batch,
+second parameters are automatically disabled for exponential events.
+Each model uses its own default parameter boundaries; supplied custom
+boundaries apply to all models.
+
+The returned result has the highest log-likelihood. `all_models` retains
+every fit, and its summary compares them by AICc. Each fit stores its
+own distributions for prediction, simulation, and goodness-of-fit. See
+the [first-model
+vignette](https://nrode.github.io/Lifelihood/articles/fitting-your-first-model-in-lifelihood.html)
+for more details.
 
 ## Goodness of fit
 
@@ -199,6 +233,8 @@ Learn more and find more examples in the
   : Prediction from a lifelihood model at new data values
 - [`simulate_life_history()`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)
   : Simulate outcomes from a fitted lifelihood model
+- [`summary(`*`<all_models>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.all_models.md)
+  : Compare all fitted models and replicates
 - [`summary(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.md)
   : Simple summary for lifelihoodResults objects
 - [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)

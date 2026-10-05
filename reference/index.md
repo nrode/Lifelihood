@@ -53,6 +53,8 @@
   : Prediction from a lifelihood model at new data values
 - [`simulate_life_history()`](https://nrode.github.io/Lifelihood/reference/simulate_life_history.md)
   : Simulate outcomes from a fitted lifelihood model
+- [`summary(`*`<all_models>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.all_models.md)
+  : Compare all fitted models and replicates
 - [`summary(`*`<lifelihoodResults>`*`)`](https://nrode.github.io/Lifelihood/reference/summary.lifelihoodResults.md)
   : Simple summary for lifelihoodResults objects
 - [`use_test_config()`](https://nrode.github.io/Lifelihood/reference/use_test_config.md)

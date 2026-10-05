@@ -83,10 +83,12 @@ as_lifelihoodData(
 
 - dist:
 
-  Named character vector specifying the statistical law to use for each
-  event. It must contain entries named `mortality`, `maturity`, and
-  `reproduction`, with each value one of "wei" (Weibull law), "exp"
-  (Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).
+  Data frame with exactly three columns: `mortality`, `maturity`, and
+  `reproduction`. Each row specifies one model to fit with
+  [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
+  Each cell must contain "wei" (Weibull), "exp" (exponential), "gam"
+  (gamma), or "lgn" (log-normal). Use a one-row data frame to fit a
+  single model.
 
 - covariates:
 

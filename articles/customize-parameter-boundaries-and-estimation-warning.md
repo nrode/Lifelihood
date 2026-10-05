@@ -94,7 +94,7 @@ vignette.*
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"geno"``, ``"type"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"gam"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"gam"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
 `)`
 
 ## Get the results
@@ -177,6 +177,22 @@ function and by passing the `lifelihoodData` object:
 `#> 18           quad_change_n_offspring    -10      10`\
 `#> 19                   tof_n_offspring    -10      10`\
 `#> 20                           fitness  0.001    1000`
+
+[`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
+needs a single model because shape-parameter boundaries depend on its
+distributions. If `dataLFH$dist` contains several rows, first select the
+model whose bounds you want to customise:
+
+\
+`data_one_model`` ``<-`` ``dataLFH`\
+`data_one_model``$``dist`` ``<-`` ``dataLFH``$``dist``[``1``, , drop ``=`` ``FALSE``]`\
+`bounds_df`` ``<-`` `[`default_bounds_df`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)`(``data_one_model``)`
+
+When fitting multiple models with `param_bounds_df = NULL`,
+[`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
+computes default boundaries separately for each row of `dist`. If you
+supply `param_bounds_df`, the same custom boundaries are used for every
+model.
 
 Since 10 seems to not be high enough, let’s try with 80:
 

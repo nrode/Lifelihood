@@ -2,7 +2,8 @@
 
 Computes the joined likelihood of all the events in an individual
 life-history (time of maturity, reproductive events, death) and
-estimates the parameters of the model using maximum likelihood.
+estimates the parameters of the model using maximum likelihood. Each row
+of `lifelihoodData$dist` is fitted independently.
 
 ## Usage
 
@@ -46,7 +47,11 @@ lifelihood(
 - config:
 
   An existing YAML configuration file path or a named configuration
-  list. Missing sections and parameters default to `"not_fitted"`.
+  list. Missing sections and parameters default to `"not_fitted"`. The
+  same configuration is used for every model. When `dist` has multiple
+  rows, second parameters are set to `"not_fitted"` for exponential
+  events in each model. With a single row, a warning is raised before
+  disabling a second parameter for an exponential event.
 
 - path_to_Lifelihood:
 
@@ -55,13 +60,14 @@ lifelihood(
 
 - n_fit:
 
-  Number of replicates for model fit to check convergence through
-  consistency in log-likelihood values. The `seeds` argument should be
-  `NULL` when `n_fit` \> 1.
+  Number of replicates per row of `lifelihoodData$dist` to check
+  convergence through consistency in log-likelihood values. The `seeds`
+  argument should be `NULL` when `n_fit` \> 1.
 
 - param_bounds_df:
 
-  Dataframe with the parameter ranges/boundaries/boundaries
+  Data frame with parameter boundaries, applied to all models. If
+  `NULL`, each model uses its own distribution-specific defaults.
 
 - group_by_group:
 
@@ -169,4 +175,10 @@ lifelihood(
 
 ## Value
 
-A `lifelihoodResults` object
+A `lifelihoodResults` object for the fit with the highest log-likelihood
+across all models and replicates. Its `dist` and `lifelihoodData$dist`
+contain only the fitted model's row. Its `all_models` element retains
+every fit, named `lifelihood_fit_<replicate>_<model row>`. Use
+`summary(results$all_models)` to compare them by AICc and access
+individual fits with `results$all_models[[i]]`. The same behavior
+applies when `group_by_group = TRUE`.

@@ -40,7 +40,7 @@
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
 `)`\
 \
 `config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
@@ -75,9 +75,9 @@ following attributes:
 
 \
 `gof``$``original_loglik`\
-`#> [1] -7292.251`\
+`#> [1] -7021.286`\
 `gof``$``simulated_loglik`\
-`#> [1] -854.4996 -854.4606 -854.6288 -854.4651 -854.4728`\
+`#> [1] -891.1972 -891.1354 -891.1554 -891.1268 -891.1101`\
 `gof``$``n_success`\
 `#> [1] 5`\
 `gof``$``n_failed`\

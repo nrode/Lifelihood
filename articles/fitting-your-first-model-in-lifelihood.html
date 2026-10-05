@@ -176,7 +176,7 @@ If you haven’t check it yet, have a look at:
 </h2>
 <p><code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> creates a <code>lifelihoodData</code> object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.</p>
 <p>This function mostly takes as input your dataset, your column names.</p>
-<p>It also has the <code>dist</code> argument, which is a named character vector specifying the statistical distribution for each event. It must contain <code>mortality</code>, <code>maturity</code>, and <code>reproduction</code> entries, each with one of <code>"wei"</code> (Weibull distribution), <code>"exp"</code> (exponential distribution), <code>"gam"</code> (gamma distribution), or <code>"lgn"</code> (log-normal distribution).</p>
+<p>The <code>dist</code> argument is a data frame with exactly three columns: <code>mortality</code>, <code>maturity</code>, and <code>reproduction</code>. Each row specifies one model to fit. Each cell must contain <code>"wei"</code> (Weibull), <code>"exp"</code> (exponential), <code>"gam"</code> (gamma), or <code>"lgn"</code> (log-normal). Use a one-row data frame to fit a single model, as below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
@@ -191,7 +191,7 @@ If you haven’t check it yet, have a look at:
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  matclutch <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"par"</span>, <span class="st">"geno"</span><span class="op">)</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"gam"</span>, reproduction <span class="op">=</span> <span class="st">"lgn"</span><span class="op">)</span></span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"gam"</span>, reproduction <span class="op">=</span> <span class="st">"lgn"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="get-the-results">Get the results<a class="anchor" aria-label="anchor" href="#get-the-results"></a>
@@ -290,6 +290,61 @@ If you haven’t check it yet, have a look at:
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, parameter_name <span class="op">=</span> <span class="st">"expt_death"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 94.0131 94.0131 94.0131 94.0131 94.0131 94.0131</span></span></code></pre></div>
 </div>
+</section><section class="section level2"><h2 id="fit-several-models-at-once">Fit several models at once<a class="anchor" aria-label="anchor" href="#fit-several-models-at-once"></a>
+</h2>
+<hr>
+<p>To compare distribution families, supply one row per model. For example, the following fits a Weibull/gamma/log-normal model and an exponential model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_multiple</span> <span class="op">&lt;-</span> <span class="va">dataLFH</span></span>
+<span><span class="va">data_multiple</span><span class="op">$</span><span class="va">dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  mortality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wei"</span>, <span class="st">"exp"</span><span class="op">)</span>,</span>
+<span>  maturity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gam"</span>, <span class="st">"exp"</span><span class="op">)</span>,</span>
+<span>  reproduction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lgn"</span>, <span class="st">"exp"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results_multiple</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
+<span>  lifelihoodData <span class="op">=</span> <span class="va">data_multiple</span>,</span>
+<span>  config <span class="op">=</span> <span class="va">config</span>,</span>
+<span>  n_fit <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =</span></span>
+<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 1 differ by 16.545 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; Consider increasing n_fit (currently 2) to be sure of model convergence and</span></span>
+<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
+<span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =</span></span>
+<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 2 differ by 0.554 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; Consider increasing n_fit (currently 2) to be sure of model convergence and</span></span>
+<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
+<span></span>
+<span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results_multiple</span><span class="op">$</span><span class="va">all_models</span><span class="op">)</span></span>
+<span><span class="va">comparison</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 20</span></span>
+<span><span class="co">#&gt;   fit          seeds dist_maturity dist_reproduction dist_mortality n_parameters</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;             &lt;chr&gt;                 &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 lifelihood_… 5954… gam           lgn               wei                      10</span></span>
+<span><span class="co">#&gt; 2 lifelihood_… 154_… gam           lgn               wei                      10</span></span>
+<span><span class="co">#&gt; 3 lifelihood_… 1609… exp           exp               exp                       7</span></span>
+<span><span class="co">#&gt; 4 lifelihood_… 825_… exp           exp               exp                       7</span></span>
+<span><span class="co">#&gt; # ℹ 14 more variables: likelihood &lt;dbl&gt;, AIC &lt;dbl&gt;, AICc &lt;dbl&gt;, ΔAICc &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   int_expt_death &lt;dbl&gt;, eff_expt_death_par_1 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   eff_expt_death_par_2 &lt;dbl&gt;, int_survival_param2 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   int_ratio_expt_death &lt;dbl&gt;, int_expt_maturity &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   int_maturity_param2 &lt;dbl&gt;, int_expt_reproduction &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   int_reproduction_param2 &lt;dbl&gt;, int_n_offspring &lt;dbl&gt;</span></span></code></pre></div>
+</div>
+<p><code>n_fit</code> applies to every row of <code>dist</code>, so this example runs four fits. Each replicate receives fresh random seeds. Leave <code>seeds = NULL</code> when <code>n_fit &gt; 1</code>; with <code>n_fit = 1</code>, explicit seeds are reused for each model.</p>
+<p>All models share the configuration. In a batch with multiple rows, second parameters (<code>survival_param2</code>, <code>maturity_param2</code>, and <code>reproduction_param2</code>) are automatically set to <code>"not_fitted"</code> for exponential events, which have no second parameter. Other events keep their configured formulas. For a single-model fit, an exponential event with a fitted second parameter raises a warning and that parameter is disabled before fitting.</p>
+<p><code>results_multiple</code> contains the fit with the highest log-likelihood. The comparison table includes every model and replicate, sorted by AICc, with the difference from the lowest AICc in its <code>ΔAICc</code> column. The first row of this table can differ from the model with the highest log-likelihood because AICc accounts for the number of parameters. Use the <code>fit</code> column to retrieve a particular fit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">best_aicc</span> <span class="op">&lt;-</span> <span class="va">results_multiple</span><span class="op">$</span><span class="va">all_models</span><span class="op">[[</span><span class="va">comparison</span><span class="op">$</span><span class="va">fit</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">best_aicc</span><span class="op">$</span><span class="va">dist</span></span>
+<span><span class="co">#&gt;   mortality maturity reproduction</span></span>
+<span><span class="co">#&gt; 1       wei      gam          lgn</span></span></code></pre></div>
+</div>
+<p>Each fit stores only its own row of <code>dist</code>; prediction, simulation, and goodness-of-fit therefore use that model’s distributions. Batch fitting also works with <code>group_by_group = TRUE</code>. When default parameter boundaries are used, they are computed separately for each model. A supplied <code>param_bounds_df</code> applies to every model in the batch.</p>
 </section><section class="section level2"><h2 id="next-step">Next step<a class="anchor" aria-label="anchor" href="#next-step"></a>
 </h2>
 <hr>

@@ -170,7 +170,7 @@
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"lgn"``, reproduction ``=`` ``"wei"``)`\
 `)`
 
 ### Estimation
@@ -193,36 +193,36 @@
 
 \
 [`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 64961.78`\
+`#> [1] 64962.48`\
 [`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 65004.88`
+`#> [1] 65005.58`
 
 ### Summary results
 
 \
 [`coef`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``)`\
 `#>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 `\
-`#>              -0.8902223              -1.2621798              -1.2807911 `\
+`#>              -0.9150485              -3.2314377              -3.2439050 `\
 `#>     int_survival_param2    int_ratio_expt_death       int_expt_maturity `\
-`#>              -4.8662168              -4.2006298              -1.4445372 `\
+`#>              -4.8762993              -2.2041100              -1.4797773 `\
 `#>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 `\
-`#>              -3.2795617              -4.2617330              -5.3600852 `\
+`#>              -3.2604046              -4.2568995              -5.3547380 `\
 `#>         int_n_offspring `\
-`#>              -2.5542647`\
+`#>              -2.5537683`\
 [`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"expt_death"``)`\
 `#>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 `\
-`#>           -0.8902223           -1.2621798           -1.2807911`\
+`#>           -0.9150485           -3.2314377           -3.2439050`\
 [`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"survival_param2"``)`\
 `#> int_survival_param2 `\
-`#>           -4.866217`\
+`#>           -4.876299`\
 \
 [`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 64961.78`\
+`#> [1] 64962.48`\
 [`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 65004.88`\
+`#> [1] 65005.58`\
 \
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results``)`\
-`#> [1] -32470.89`
+`#> [1] -32471.24`
 
 ### Prediction on new data
 
@@ -237,6 +237,6 @@
 `  ``)`\
 \
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"expt_death"``, newdata ``=`` ``newdata``)`\
-`#> [1] -0.8902223 -2.1524021 -2.1710133 -0.8902223 -2.1524021 -2.1710133 -2.1524021`\
+`#> [1] -0.9150485 -4.1464862 -4.1589536 -0.9150485 -4.1464862 -4.1589536 -4.1464862`\
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"expt_death"``, newdata ``=`` ``newdata``, type ``=`` ``"response"``)`\
 `#> numeric(0)`

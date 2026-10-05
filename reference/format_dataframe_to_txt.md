@@ -89,9 +89,8 @@ format_dataframe_to_txt(
 
 - dist:
 
-  Named character vector with one distribution family for each event. It
-  must contain entries named `mortality`, `maturity`, and
-  `reproduction`.
+  One-row data frame with columns `mortality`, `maturity`, and
+  `reproduction`, specifying the model being fitted.
 
 - config:
 

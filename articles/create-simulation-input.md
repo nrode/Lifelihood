@@ -6,6 +6,14 @@ yourself. It is useful when you want to explore a model before fitting
 it, create a known synthetic population, or understand how covariate
 effects change simulated maturity, reproduction, and mortality.
 
+The `dist` argument must be a one-row data frame with columns
+`mortality`, `maturity`, and `reproduction`. Simulation inputs describe
+a single model; multiple rows are reserved for fitting models with
+[`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
+For exponential events, second parameters in the configuration raise a
+warning and are set to `"not_fitted"`; omit their entries from
+`effects`.
+
 flowchart LR\
   data\["data\<br/\>covariates + sex + counts"\] --\> input\["create_simulation_input()"\]\
   effects\["effects\<br/\>chosen parameter values"\] --\> input\
@@ -147,7 +155,7 @@ internally.
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
 `  sex ``=`` ``"sex"``,`\
 `  config ``=`` ``simulation_config``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"wei"``, reproduction ``=`` ``"wei"``)``,`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"wei"``, reproduction ``=`` ``"wei"``)``,`\
 `  n_per_combination ``=`` ``"n_individuals"`\
 `)`\
 \
@@ -268,7 +276,7 @@ and compare the refitted estimates with the values used for simulation.
 `  death_start ``=`` ``"mortality_start"``,`\
 `  death_end ``=`` ``"mortality_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"wei"``, reproduction ``=`` ``"wei"``)``,`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"wei"``, reproduction ``=`` ``"wei"``)``,`\
 `  matclutch ``=`` ``FALSE`\
 `)`\
 \

@@ -143,7 +143,7 @@
 <span>  death_start <span class="op">=</span> <span class="st">"death_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"death_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="st">"Group"</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"lgn"</span>, reproduction <span class="op">=</span> <span class="st">"lgn"</span><span class="op">)</span></span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"wei"</span>, maturity <span class="op">=</span> <span class="st">"lgn"</span>, reproduction <span class="op">=</span> <span class="st">"lgn"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">config_fitness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -166,7 +166,11 @@
 <span>  <span class="va">lifelihoodData</span>,</span>
 <span>  config <span class="op">=</span> <span class="va">config_fitness</span>,</span>
 <span>  n_fit <span class="op">=</span> <span class="fl">30</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 30):</span></span>
+<span><span class="co">#&gt; Best and second-best likelihoods for model row 1 differ by 0.173 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; Consider increasing n_fit (currently 30) to be sure of model convergence and</span></span>
+<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="results">Results<a class="anchor" aria-label="anchor" href="#results"></a>
 </h2>
@@ -180,24 +184,24 @@
 <span><span class="co">#&gt; Sample size: 18 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -171.060</span></span>
-<span><span class="co">#&gt; AIC:             356.1</span></span>
-<span><span class="co">#&gt; BIC:             362.4</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -171.173</span></span>
+<span><span class="co">#&gt; AIC:             356.3</span></span>
+<span><span class="co">#&gt; BIC:             362.6</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.031 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -5.776 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -0.935 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -5.782 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -0.958 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.547 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -0.971 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.554 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -3.840 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -6.653 (0.000)</span></span>
-<span><span class="co">#&gt;   fitness (Intercept)       -3.624 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -3.474 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -5.094 (0.000)</span></span>
+<span><span class="co">#&gt;   fitness (Intercept)       -3.878 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -205,9 +209,9 @@
 <span><span class="co">#&gt; ======================</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"fitness"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 25.98554 25.98554 25.98554 25.98554 25.98554 25.98554 25.98554 25.98554</span></span>
-<span><span class="co">#&gt;  [9] 25.98554 25.98554 25.98554 25.98554 25.98554 25.98554 25.98554 25.98554</span></span>
-<span><span class="co">#&gt; [17] 25.98554 25.98554</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206</span></span>
+<span><span class="co">#&gt;  [9] 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206</span></span>
+<span><span class="co">#&gt; [17] 20.27206 20.27206</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="using-simulated-data">Using simulated data<a class="anchor" aria-label="anchor" href="#using-simulated-data"></a>
 </h2>
@@ -238,7 +242,7 @@
 <span>  covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span><span class="op">)</span>,</span>
 <span>  sex <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  config <span class="op">=</span> <span class="va">config</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"exp"</span>, maturity <span class="op">=</span> <span class="st">"exp"</span>, reproduction <span class="op">=</span> <span class="st">"exp"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"exp"</span>, maturity <span class="op">=</span> <span class="st">"exp"</span>, reproduction <span class="op">=</span> <span class="st">"exp"</span><span class="op">)</span>,</span>
 <span>  n_per_combination <span class="op">=</span> <span class="st">"n_individuals"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -278,7 +282,7 @@
 <span>  death_start <span class="op">=</span> <span class="st">"mortality_start"</span>,</span>
 <span>  death_end <span class="op">=</span> <span class="st">"mortality_end"</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="st">"group"</span>,</span>
-<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"exp"</span>, maturity <span class="op">=</span> <span class="st">"exp"</span>, reproduction <span class="op">=</span> <span class="st">"exp"</span><span class="op">)</span></span>
+<span>  dist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mortality <span class="op">=</span> <span class="st">"exp"</span>, maturity <span class="op">=</span> <span class="st">"exp"</span>, reproduction <span class="op">=</span> <span class="st">"exp"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">config_fitness</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -291,15 +295,15 @@
 <span></span>
 <span><span class="fu"><a href="../reference/default_bounds_df.html">default_bounds_df</a></span><span class="op">(</span><span class="va">lifelihoodData</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                param   min     max</span></span>
-<span><span class="co">#&gt; 1                         expt_death 0.001  1146.2</span></span>
+<span><span class="co">#&gt; 1                         expt_death 0.001  1438.4</span></span>
 <span><span class="co">#&gt; 2                    survival_param2  0.05    1000</span></span>
 <span><span class="co">#&gt; 3                   ratio_expt_death  0.01     100</span></span>
 <span><span class="co">#&gt; 4                         prob_death 1e-05 0.99999</span></span>
 <span><span class="co">#&gt; 5                          sex_ratio 1e-05 0.99999</span></span>
-<span><span class="co">#&gt; 6                      expt_maturity 0.001    83.2</span></span>
+<span><span class="co">#&gt; 6                      expt_maturity 0.001    72.2</span></span>
 <span><span class="co">#&gt; 7                    maturity_param2  0.05    1000</span></span>
 <span><span class="co">#&gt; 8                ratio_expt_maturity  0.01     100</span></span>
-<span><span class="co">#&gt; 9                  expt_reproduction 0.001  1146.2</span></span>
+<span><span class="co">#&gt; 9                  expt_reproduction 0.001  1438.4</span></span>
 <span><span class="co">#&gt; 10               reproduction_param2  0.05    1000</span></span>
 <span><span class="co">#&gt; 11                       n_offspring     1      50</span></span>
 <span><span class="co">#&gt; 12             increase_death_hazard 1e-05      10</span></span>
@@ -318,9 +322,9 @@
 <span>  delete_temp_files <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 10, :</span></span>
-<span><span class="co">#&gt; Best and second-best likelihoods differ by 2.846 (&gt; 0.1). Consider increasing</span></span>
-<span><span class="co">#&gt; n_fit (currently 10) to be sure of model convergence and find the model with</span></span>
-<span><span class="co">#&gt; highest log-likelihood.</span></span>
+<span><span class="co">#&gt; Best and second-best likelihoods for model row 1 differ by 14.351 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; Consider increasing n_fit (currently 10) to be sure of model convergence and</span></span>
+<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -329,21 +333,21 @@
 <span><span class="co">#&gt; Sample size: 100 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -16388.010</span></span>
-<span><span class="co">#&gt; AIC:             32784.0</span></span>
-<span><span class="co">#&gt; BIC:             32794.4</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -15416.634</span></span>
+<span><span class="co">#&gt; AIC:             30841.3</span></span>
+<span><span class="co">#&gt; BIC:             30851.7</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.965 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -2.217 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -1.709 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.777 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -5.365 (0.000)</span></span>
-<span><span class="co">#&gt;   fitness (Intercept)       -1.158 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -5.648 (0.000)</span></span>
+<span><span class="co">#&gt;   fitness (Intercept)       -1.057 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -358,16 +362,16 @@
 <span><span class="co">#&gt; # A tibble: 100 × 4</span></span>
 <span><span class="co">#&gt;    expt_death expt_maturity expt_reproduction fitness</span></span>
 <span><span class="co">#&gt;         &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  2       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  3       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  4       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  5       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  6       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  7       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  8       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt;  9       141.          12.8              5.34    239.</span></span>
-<span><span class="co">#&gt; 10       141.          12.8              5.34    239.</span></span>
+<span><span class="co">#&gt;  1       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  2       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  3       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  4       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  5       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  6       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  7       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  8       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt;  9       141.          10.4              5.05    258.</span></span>
+<span><span class="co">#&gt; 10       141.          10.4              5.05    258.</span></span>
 <span><span class="co">#&gt; # ℹ 90 more rows</span></span></code></pre></div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">

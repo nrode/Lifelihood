@@ -56,13 +56,14 @@ create_simulation_input(
 - config:
 
   Path to a YAML configuration file or an already-loaded configuration
-  list.
+  list. A fitted second parameter for an exponential event raises a
+  warning and is set to `"not_fitted"`; omit its effect from `effects`.
 
 - dist:
 
-  Named character vector with one distribution family for each event. It
-  must contain entries named `mortality`, `maturity`, and
+  One-row data frame with columns `mortality`, `maturity`, and
   `reproduction`, with values `"wei"`, `"exp"`, `"gam"`, or `"lgn"`.
+  Simulation uses a single model, so multiple rows are not accepted.
 
 - matclutch:
 

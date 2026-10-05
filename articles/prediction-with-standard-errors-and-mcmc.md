@@ -40,7 +40,7 @@
 `  death_start ``=`` ``"death_start"``,`\
 `  death_end ``=`` ``"death_end"``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"spore"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
 `)`\
 \
 `config_se`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
@@ -81,9 +81,9 @@ use the `se.fit` argument for this purpose:
 `  n_fit ``=`` ``5`\
 `)`\
 `#> Warning in lifelihood(lifelihoodData = lifelihoodData, config = config_se, :`\
-`#> Best and second-best likelihoods differ by 0.552 (> 0.1). Consider increasing`\
-`#> n_fit (currently 5) to be sure of model convergence and find the model with`\
-`#> highest log-likelihood.`\
+`#> Best and second-best likelihoods for model row 1 differ by 0.552 (> 0.1).`\
+`#> Consider increasing n_fit (currently 5) to be sure of model convergence and`\
+`#> find the model with highest log-likelihood.`\
 \
 `## New model has better convergence`\
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results_wrong``)`\

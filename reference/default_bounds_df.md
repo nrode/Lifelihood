@@ -21,6 +21,9 @@ default_bounds_df(lifelihoodData)
 
   `lifelihoodData` object created with
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md).
+  Its `dist` must contain one row. To customise bounds for a particular
+  model, first subset `lifelihoodData$dist` to that row with
+  `drop = FALSE`.
 
 ## Value
 
@@ -80,7 +83,7 @@ dataLFH <- as_lifelihoodData(
   death_end = "death_end",
   covariates = c("geno", "type"),
   matclutch = FALSE,
-  dist = c(mortality = "gam", maturity = "lgn", reproduction = "wei")
+  dist = data.frame(mortality = "gam", maturity = "lgn", reproduction = "wei")
 )
 
 bounds_df <- default_bounds_df(dataLFH)

@@ -168,10 +168,10 @@ the interval in which the death was determined.</p></dd>
 
 
 <dt id="arg-dist">dist<a class="anchor" aria-label="anchor" href="#arg-dist"></a></dt>
-<dd><p>Named character vector specifying the statistical law to use
-for each event. It must contain entries named <code>mortality</code>, <code>maturity</code>, and
-<code>reproduction</code>, with each value one of "wei" (Weibull law), "exp"
-(Exponential law), "gam" (Gamma law), or "lgn" (Log-normal law).</p></dd>
+<dd><p>Data frame with exactly three columns: <code>mortality</code>, <code>maturity</code>,
+and <code>reproduction</code>. Each row specifies one model to fit with <code><a href="lifelihood.html">lifelihood()</a></code>.
+Each cell must contain "wei" (Weibull), "exp" (exponential), "gam" (gamma),
+or "lgn" (log-normal). Use a one-row data frame to fit a single model.</p></dd>
 
 
 <dt id="arg-covariates">covariates<a class="anchor" aria-label="anchor" href="#arg-covariates"></a></dt>

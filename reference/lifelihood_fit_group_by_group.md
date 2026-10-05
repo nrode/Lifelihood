@@ -42,7 +42,11 @@ lifelihood_fit_group_by_group(
 - config:
 
   An existing YAML configuration file path or a named configuration
-  list. Missing sections and parameters default to `"not_fitted"`.
+  list. Missing sections and parameters default to `"not_fitted"`. The
+  same configuration is used for every model. When `dist` has multiple
+  rows, second parameters are set to `"not_fitted"` for exponential
+  events in each model. With a single row, a warning is raised before
+  disabling a second parameter for an exponential event.
 
 - path_to_Lifelihood:
 
@@ -51,13 +55,14 @@ lifelihood_fit_group_by_group(
 
 - n_fit:
 
-  Number of replicates for model fit to check convergence through
-  consistency in log-likelihood values. The `seeds` argument should be
-  `NULL` when `n_fit` \> 1.
+  Number of replicates per row of `lifelihoodData$dist` to check
+  convergence through consistency in log-likelihood values. The `seeds`
+  argument should be `NULL` when `n_fit` \> 1.
 
 - param_bounds_df:
 
-  Dataframe with the parameter ranges/boundaries/boundaries
+  Data frame with parameter boundaries, applied to all models. If
+  `NULL`, each model uses its own distribution-specific defaults.
 
 - MCMC:
 

@@ -77,11 +77,11 @@ individual life history.
 
 This function mostly takes as input your dataset, your column names.
 
-It also has the `dist` argument, which is a named character vector
-specifying the statistical distribution for each event. It must contain
-`mortality`, `maturity`, and `reproduction` entries, each with one of
-`"wei"` (Weibull distribution), `"exp"` (exponential distribution),
-`"gam"` (gamma distribution), or `"lgn"` (log-normal distribution).
+The `dist` argument is a data frame with exactly three columns:
+`mortality`, `maturity`, and `reproduction`. Each row specifies one
+model to fit. Each cell must contain `"wei"` (Weibull), `"exp"`
+(exponential), `"gam"` (gamma), or `"lgn"` (log-normal). Use a one-row
+data frame to fit a single model, as below.
 
 \
 `dataLFH`` ``<-`` `[`as_lifelihoodData`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)`(`\
@@ -96,7 +96,7 @@ specifying the statistical distribution for each event. It must contain
 `  death_end ``=`` ``"death_end"``,`\
 `  matclutch ``=`` ``FALSE``,`\
 `  covariates ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"par"``, ``"geno"``)``,`\
-`  dist ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
+`  dist ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mortality ``=`` ``"wei"``, maturity ``=`` ``"gam"``, reproduction ``=`` ``"lgn"``)`\
 `)`
 
 ## Get the results
@@ -209,6 +209,84 @@ the analysis. We can get specific results by calling the list element.
 `#> [1] -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988 -0.8945988`\
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, parameter_name ``=`` ``"expt_death"``, type ``=`` ``"response"``)`` ``|>`` `[`head`](https://rdrr.io/r/utils/head.html)`(``)`\
 `#> [1] 94.0131 94.0131 94.0131 94.0131 94.0131 94.0131`
+
+## Fit several models at once
+
+------------------------------------------------------------------------
+
+To compare distribution families, supply one row per model. For example,
+the following fits a Weibull/gamma/log-normal model and an exponential
+model:
+
+\
+`data_multiple`` ``<-`` ``dataLFH`\
+`data_multiple``$``dist`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
+`  mortality ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"wei"``, ``"exp"``)``,`\
+`  maturity ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"gam"``, ``"exp"``)``,`\
+`  reproduction ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"lgn"``, ``"exp"``)`\
+`)`\
+\
+`results_multiple`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
+`  lifelihoodData ``=`` ``data_multiple``,`\
+`  config ``=`` ``config``,`\
+`  n_fit ``=`` ``2``,`\
+`  raise_estimation_warning ``=`` ``FALSE`\
+`)`\
+`#> Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =`\
+`#> 2, : Best and second-best likelihoods for model row 1 differ by 16.545 (> 0.1).`\
+`#> Consider increasing n_fit (currently 2) to be sure of model convergence and`\
+`#> find the model with highest log-likelihood.`\
+`#> Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =`\
+`#> 2, : Best and second-best likelihoods for model row 2 differ by 0.554 (> 0.1).`\
+`#> Consider increasing n_fit (currently 2) to be sure of model convergence and`\
+`#> find the model with highest log-likelihood.`\
+\
+`comparison`` ``<-`` `[`summary`](https://rdrr.io/r/base/summary.html)`(``results_multiple``$``all_models``)`\
+`comparison`\
+`#> # A tibble: 4 × 20`\
+`#>   fit          seeds dist_maturity dist_reproduction dist_mortality n_parameters`\
+`#>   <chr>        <chr> <chr>         <chr>             <chr>                 <int>`\
+`#> 1 lifelihood_… 5954… gam           lgn               wei                      10`\
+`#> 2 lifelihood_… 154_… gam           lgn               wei                      10`\
+`#> 3 lifelihood_… 1609… exp           exp               exp                       7`\
+`#> 4 lifelihood_… 825_… exp           exp               exp                       7`\
+`#> # ℹ 14 more variables: likelihood <dbl>, AIC <dbl>, AICc <dbl>, ΔAICc <dbl>,`\
+`#> #   int_expt_death <dbl>, eff_expt_death_par_1 <dbl>,`\
+`#> #   eff_expt_death_par_2 <dbl>, int_survival_param2 <dbl>,`\
+`#> #   int_ratio_expt_death <dbl>, int_expt_maturity <dbl>,`\
+`#> #   int_maturity_param2 <dbl>, int_expt_reproduction <dbl>,`\
+`#> #   int_reproduction_param2 <dbl>, int_n_offspring <dbl>`
+
+`n_fit` applies to every row of `dist`, so this example runs four fits.
+Each replicate receives fresh random seeds. Leave `seeds = NULL` when
+`n_fit > 1`; with `n_fit = 1`, explicit seeds are reused for each model.
+
+All models share the configuration. In a batch with multiple rows,
+second parameters (`survival_param2`, `maturity_param2`, and
+`reproduction_param2`) are automatically set to `"not_fitted"` for
+exponential events, which have no second parameter. Other events keep
+their configured formulas. For a single-model fit, an exponential event
+with a fitted second parameter raises a warning and that parameter is
+disabled before fitting.
+
+`results_multiple` contains the fit with the highest log-likelihood. The
+comparison table includes every model and replicate, sorted by AICc,
+with the difference from the lowest AICc in its `ΔAICc` column. The
+first row of this table can differ from the model with the highest
+log-likelihood because AICc accounts for the number of parameters. Use
+the `fit` column to retrieve a particular fit:
+
+\
+`best_aicc`` ``<-`` ``results_multiple``$``all_models``[[``comparison``$``fit``[``1``]``]``]`\
+`best_aicc``$``dist`\
+`#>   mortality maturity reproduction`\
+`#> 1       wei      gam          lgn`
+
+Each fit stores only its own row of `dist`; prediction, simulation, and
+goodness-of-fit therefore use that model’s distributions. Batch fitting
+also works with `group_by_group = TRUE`. When default parameter
+boundaries are used, they are computed separately for each model. A
+supplied `param_bounds_df` applies to every model in the batch.
 
 ## Next step
 

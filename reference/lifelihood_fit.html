@@ -122,7 +122,10 @@ internally to fit multiple times lifelihood.</p>
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
 <dd><p>An existing YAML configuration file path or a named
 configuration list. Missing sections and parameters default to
-<code>"not_fitted"</code>.</p></dd>
+<code>"not_fitted"</code>. The same configuration is used for every model. When
+<code>dist</code> has multiple rows, second parameters are set to <code>"not_fitted"</code>
+for exponential events in each model. With a single row, a warning is
+raised before disabling a second parameter for an exponential event.</p></dd>
 
 
 <dt id="arg-path-to-lifelihood">path_to_Lifelihood<a class="anchor" aria-label="anchor" href="#arg-path-to-lifelihood"></a></dt>
@@ -130,7 +133,8 @@ configuration list. Missing sections and parameters default to
 
 
 <dt id="arg-param-bounds-df">param_bounds_df<a class="anchor" aria-label="anchor" href="#arg-param-bounds-df"></a></dt>
-<dd><p>Dataframe with the parameter ranges/boundaries/boundaries</p></dd>
+<dd><p>Data frame with parameter boundaries, applied to all
+models. If <code>NULL</code>, each model uses its own distribution-specific defaults.</p></dd>
 
 
 <dt id="arg-group-by-group">group_by_group<a class="anchor" aria-label="anchor" href="#arg-group-by-group"></a></dt>

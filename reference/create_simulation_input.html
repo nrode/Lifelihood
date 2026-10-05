@@ -145,13 +145,14 @@ the columns named in <code>covariates</code> and <code>sex</code>.</p></dd>
 
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
 <dd><p>Path to a YAML configuration file or an already-loaded
-configuration list.</p></dd>
+configuration list. A fitted second parameter for an exponential event
+raises a warning and is set to <code>"not_fitted"</code>; omit its effect from <code>effects</code>.</p></dd>
 
 
 <dt id="arg-dist">dist<a class="anchor" aria-label="anchor" href="#arg-dist"></a></dt>
-<dd><p>Named character vector with one distribution family for each
-event. It must contain entries named <code>mortality</code>, <code>maturity</code>, and
-<code>reproduction</code>, with values <code>"wei"</code>, <code>"exp"</code>, <code>"gam"</code>, or <code>"lgn"</code>.</p></dd>
+<dd><p>One-row data frame with columns <code>mortality</code>, <code>maturity</code>, and
+<code>reproduction</code>, with values <code>"wei"</code>, <code>"exp"</code>, <code>"gam"</code>, or <code>"lgn"</code>.
+Simulation uses a single model, so multiple rows are not accepted.</p></dd>
 
 
 <dt id="arg-matclutch">matclutch<a class="anchor" aria-label="anchor" href="#arg-matclutch"></a></dt>
