@@ -2,7 +2,12 @@
 
 This function generates simulated data from a fitted lifelihood model,
 for one or several life history events. By default, all fitted events
-are simulated.
+are simulated. If `sex_ratio` is fitted, sex is drawn for every
+individual before simulating events, using the predicted probability of
+being male (`1`; females are `0`). The drawn sex controls sex-specific
+event predictions and reproduction and replaces the input sex in the
+output. Otherwise, input sex is preserved. Sex-observation interval
+columns are copied from the input, not simulated.
 
 ## Usage
 
@@ -37,7 +42,10 @@ simulate_life_history(
 - newdata:
 
   Optional `data.frame` providing covariate values for prediction. If
-  `NULL`, the original model data are used.
+  `NULL`, corresponds to the original data used to fit the model. If you
+  have fitted sex_ratio in the model but want to use the same number of
+  males and females as in the original data, you need to pass the
+  original data as `newdata`.
 
 - visits:
 
