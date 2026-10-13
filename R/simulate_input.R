@@ -60,6 +60,12 @@ create_simulation_input <- function(
   }
 
   dist <- validate_dist(dist)
+  if (!setequal(names(dist), c("mortality", "maturity", "reproduction"))) {
+    stop(
+      "`dist` must include mortality, maturity, and reproduction when creating simulation input.",
+      call. = FALSE
+    )
+  }
   if (nrow(dist) != 1) {
     stop("`dist` must contain exactly one row for simulation.", call. = FALSE)
   }

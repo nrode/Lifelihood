@@ -98,6 +98,15 @@ compute_fitted_event_rate <- function(
 ) {
   event <- match.arg(event)
   check_lifelihoodResults(lifelihoodResults)
+  if (!event %in% names(lifelihoodResults$dist)) {
+    stop(
+      "The `",
+      event,
+      "` event was not fitted in these results.",
+      call. = FALSE
+    )
+  }
+  require_event_data(lifelihoodResults$lifelihoodData, event)
   if (
     !is.null(newdata) &&
       !lifelihoodResults$lifelihoodData$sex %in% colnames(newdata)
@@ -462,6 +471,7 @@ compute_observed_event_rate <- function(
 ) {
   event <- match.arg(event)
   check_lifelihoodData(lifelihoodData)
+  require_event_data(lifelihoodData, event)
   groupby <- validate_groupby_arg(lifelihoodData, groupby)
 
   # Select event-specific columns
@@ -630,6 +640,7 @@ compute_observed_event_rate <- function(
 #' @export
 compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
   check_lifelihoodData(lifelihoodData)
+  require_event_data(lifelihoodData, "reproduction")
 
   # Extract clutch column names - pattern is start, end, size repeated
   clutch_cols <- lifelihoodData$clutchs

@@ -29,11 +29,14 @@
 #' @param death_end Column name containing the second date of the
 #' interval in which the death was determined.
 #' @param covariates Vector containing the names of the covariates.
-#' @param dist One-row data frame with columns `mortality`, `maturity`, and
-#' `reproduction`, specifying the model being fitted.
+#' @param dist One-row data frame with selected event columns from `mortality`,
+#' `maturity`, and `reproduction`. Missing event columns are encoded with an
+#' exponential family in the fixed-width input format.
 #' @param config A complete configuration list.
 #' @param temp_dir Name of the temporary directory with temporary
 #' files.
+#' @param right_censoring_date Value used for event intervals that were not
+#' supplied because that event is not being fitted.
 #'
 format_dataframe_to_txt <- function(
   df,
@@ -50,8 +53,30 @@ format_dataframe_to_txt <- function(
   covariates,
   dist,
   config,
-  temp_dir
+  temp_dir,
+  right_censoring_date = 1000
 ) {
+  placeholders <- list(
+    maturity_start = maturity_start,
+    maturity_end = maturity_end,
+    death_start = death_start,
+    death_end = death_end
+  )
+  missing_placeholders <- names(placeholders)[vapply(
+    placeholders,
+    is.null,
+    logical(1)
+  )]
+  for (column in missing_placeholders) {
+    placeholder <- paste0(".lifelihood_", column)
+    df[[placeholder]] <- right_censoring_date
+    placeholders[[column]] <- placeholder
+  }
+  maturity_start <- placeholders[["maturity_start"]]
+  maturity_end <- placeholders[["maturity_end"]]
+  death_start <- placeholders[["death_start"]]
+  death_end <- placeholders[["death_end"]]
+
   all_column_names <- c(
     sex,
     sex_start,
@@ -131,7 +156,7 @@ format_dataframe_to_txt <- function(
   model_info <- c(
     "****modele******",
     paste(
-      unlist(dist[c("mortality", "maturity", "reproduction")]),
+      unlist(complete_dist(dist)[c("mortality", "maturity", "reproduction")]),
       collapse = " "
     ),
     config_file_info
@@ -226,7 +251,7 @@ format_row <- function(
 
   # extract clutch columns dynamically
   clutch_cols <- clutchs
-  for (i in seq(1, length(clutch_cols), by = 3)) {
+  for (i in seq_along(clutch_cols)[seq_along(clutch_cols) %% 3 == 1]) {
     clutch_start <- gsub("[[:space:]]", "", row[[clutch_cols[i]]])
     clutch_end <- gsub("[[:space:]]", "", row[[clutch_cols[i + 1]]])
     clutch_size <- gsub("[[:space:]]", "", row[[clutch_cols[i + 2]]])

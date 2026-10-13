@@ -9,15 +9,15 @@ as_lifelihoodData(
   sex,
   sex_start,
   sex_end,
-  maturity_start,
-  maturity_end,
-  clutchs,
-  death_start,
-  death_end,
+  maturity_start = NULL,
+  maturity_end = NULL,
+  clutchs = NULL,
+  death_start = NULL,
+  death_end = NULL,
   dist,
   covariates,
   block = NULL,
-  matclutch,
+  matclutch = FALSE,
   matclutch_size = NULL,
   right_censoring_date = 1000,
   critical_age = 20,
@@ -37,13 +37,15 @@ date of the interval in which the sex was determined.}
 \item{sex_end}{Column name containing the second date
 of the interval in which the sex was determined.}
 
-\item{maturity_start}{Column name containing the first
-date of the interval in which the maturity was determined.}
+\item{maturity_start}{Optional column name containing the first
+date of the interval in which the maturity was determined. Required when
+fitting maturity or reproduction.}
 
-\item{maturity_end}{Column name containing the second
-date of the interval in which the maturity was determined.}
+\item{maturity_end}{Optional column name containing the second
+date of the interval in which the maturity was determined. Required when
+fitting maturity or reproduction.}
 
-\item{clutchs}{Vector containing the names of the clutch
+\item{clutchs}{Optional vector containing the names of the clutch
 columns. The order should be: first clutch first date, first
 clutch second date, first clutch clutch size, second clutch
 first date, first clutch second date, second clutch clutch
@@ -51,14 +53,17 @@ size, and so on. If the observation with the most clutches
 is, for example, 10, then the vector must be of size 10 x 3 = 30
 (3 elements per clutch: first date, second date and size).}
 
-\item{death_start}{Column name containing the first date of
-the interval in which the death was determined.}
+\item{death_start}{Optional column name containing the first date of
+the interval in which the death was determined. Required when fitting
+mortality or reproduction.}
 
-\item{death_end}{Column name containing the second date of
-the interval in which the death was determined.}
+\item{death_end}{Optional column name containing the second date of
+the interval in which the death was determined. Required when fitting
+mortality or reproduction.}
 
-\item{dist}{Data frame with exactly three columns: \code{mortality}, \code{maturity},
-and \code{reproduction}. Each row specifies one model to fit with \code{\link[=lifelihood]{lifelihood()}}.
+\item{dist}{Data frame with one or more columns selected from \code{mortality},
+\code{maturity}, and \code{reproduction}. Each row specifies one model to fit with
+\code{\link[=lifelihood]{lifelihood()}}. Reproduction requires mortality and maturity data.
 Each cell must contain "wei" (Weibull), "exp" (exponential), "gam" (gamma),
 or "lgn" (log-normal). Use a one-row data frame to fit a single model.}
 
@@ -72,8 +77,8 @@ If \code{TRUE}, must specify the \code{matclutch_size} argument. Default
 is \code{FALSE}.}
 
 \item{matclutch_size}{Column name containing the size of the
-clutch for the maturity event. Only used (and required) if
-\code{matclutch} is \code{TRUE}.}
+clutch for the maturity event. Required when \code{matclutch} is \code{TRUE} and
+maturity data are used, including as a dependency of reproduction.}
 
 \item{right_censoring_date}{(CURRENTLY IGNORED) Time (integer)
 point at which a subject’s data is censored. This means that for

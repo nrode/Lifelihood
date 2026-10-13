@@ -168,6 +168,7 @@ var
   savedseed: array[1..4] of integer;
   suaux: survfunctype;
   continuous_var_flag: boolean; //tell if there is a file with valcont values
+  mortality_fitted, maturity_fitted, reproduction_fitted: boolean;
 
 
 function max(x, y: double): double;
@@ -832,7 +833,7 @@ end;
 function probevent(var ev: event_type; var mo, ma, pon: survfunctype;
   var integrale: double; sex: integer; var hv: life_history): double;
 var
-  probmale, esptailleponte: double;
+  probmale, esptailleponte, mat_probability: double;
 begin
   if ev.Name = 'sex' then if mo.vp[4] = 0 then probevent := 1
     else
@@ -842,12 +843,19 @@ begin
         sex * probmale + (1 - sex) * (1 - probmale) + minus;
     end;
   if ev.Name = 'mor' then
-    probevent := censored_mort(ev.t1, ev.t2, mo, sex, hv, pon.vp[3],
-      pon.vp[4], pon.vp[5]) + minus;
+    if mortality_fitted then
+      probevent := censored_mort(ev.t1, ev.t2, mo, sex, hv, pon.vp[3],
+        pon.vp[4], pon.vp[5]) + minus
+    else
+      probevent := 1;
   if ev.Name = 'mat' then
-    if matclutch = 0 then
-      probevent := censored_mat(ev.t1, ev.t2, ma, sex) + minus
-    else if ev.tp > 0 then
+  begin
+    if maturity_fitted then
+      mat_probability := censored_mat(ev.t1, ev.t2, ma, sex)
+    else
+      mat_probability := 1;
+
+    if (matclutch = 1) and reproduction_fitted and (ev.tp > 0) then
     begin
       if fitness_repar = 'TRUE' then esptailleponte :=
           pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv) / integrale
@@ -855,30 +863,36 @@ begin
         esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv);
       if esptailleponte <= 1 then  esptailleponte := 1 + minus;
       // attention du fait du ratio cette esperance pourrait se retrouver <1 et ce n'est pas possible mathematiquement
-      probevent :=
-        censored_mat(ev.t1, ev.t2, ma, sex) * ppoissontrunc(esptailleponte,
-        ev.tp) + minus;
+      probevent := mat_probability * ppoissontrunc(esptailleponte, ev.tp) + minus;
     end
+    else if maturity_fitted then
+      probevent := mat_probability + minus
     else
-      probevent := censored_mat(ev.t1, ev.t2, ma, sex) + minus;
+      probevent := 1;
+  end;
 
   if ev.Name = 'nop' then
-    probevent := survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin,
-      pon, hv, sex) + minus;
-  if ev.Name = 'pon' then
-  begin
-    if fitness_repar = 'TRUE' then
-      esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv) / integrale
+    if reproduction_fitted then
+      probevent := survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin,
+        pon, hv, sex) + minus
     else
-      esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv);
-    if esptailleponte < 1 then  esptailleponte := 1 + minus;
-    // attention du fait du ratio cette esperance pourrait se retrouver <1 et ce n'est pas possible mathematiquement
-    probevent :=
-      (survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin, pon, hv, sex) -
-      survtotpon(ev.t2 - ev.debut, ev.t1 - hv.events[1].fin, pon, hv, sex)) *
-      ppoissontrunc(esptailleponte, ev.tp) + minus;
-    //(Stot(t1) - Stot(t2))prob(taille ponte/integrale) attention pon.vp[2] n'est pas a proprement parler la moyenne de la loi de poisson tronquée qui vaut en fait vp3/(1-Exp(-vp3)): il faut reecrire la function poissontrunc pour que son parametre corresponde a son esperance directement
-  end;
+      probevent := 1;
+  if ev.Name = 'pon' then
+    if reproduction_fitted then
+    begin
+      if fitness_repar = 'TRUE' then
+        esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv) / integrale
+      else
+        esptailleponte := pon.vp[2] * CalculRatioEspPoissonTronque(ev, pon, hv);
+      if esptailleponte < 1 then  esptailleponte := 1 + minus;
+      // attention du fait du ratio cette esperance pourrait se retrouver <1 et ce n'est pas possible mathematiquement
+      probevent :=
+        (survtotpon(ev.t1 - ev.debut, ev.t1 - hv.events[1].fin, pon, hv, sex) -
+        survtotpon(ev.t2 - ev.debut, ev.t1 - hv.events[1].fin, pon, hv, sex)) *
+        ppoissontrunc(esptailleponte, ev.tp) + minus;
+    end
+    else
+      probevent := 1;
   //attention tfrommat calculé depuis ev.t1 car l'effet de snescence est pris en compte au debut de l'intervale
 
   //append(outfile);
@@ -1984,11 +1998,29 @@ end;
 
 { ************************************************************************** }
 procedure interpretation();
+var
+  i: integer;
 begin
   LL_D.number_of_variables := max_vars;
   LL_D.BestResult := -1E10;
   interpretmodel();
   interpretmodelpargroupe;
+
+  mortality_fitted := False;
+  maturity_fitted := False;
+  reproduction_fitted := False;
+  for i := 0 to nb_group - 1 do
+  begin
+    if (group[i].param[0].nbterms > 0) and
+      (group[i].param[0].po[0] <> -1) then
+      mortality_fitted := True;
+    if (group[i].param[5].nbterms > 0) and
+      (group[i].param[5].po[0] <> -1) then
+      maturity_fitted := True;
+    if (group[i].param[8].nbterms > 0) and
+      (group[i].param[8].po[0] <> -1) then
+      reproduction_fitted := True;
+  end;
 end;
 
 { ************************************************************************ }

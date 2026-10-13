@@ -439,11 +439,15 @@ simulate_life_history_tradeoff <- function(
 #' The drawn sex controls sex-specific event predictions and reproduction and
 #' replaces the input sex in the output. Otherwise, input sex is preserved.
 #' Sex-observation interval columns are copied from the input, not simulated.
+#' Reproduction can be simulated only when reproduction, maturity, and mortality
+#' are all fitted. With `event = "all"`, reproduction is included only when all
+#' three models are available.
 #'
 #' @param object A fitted `lifelihoodResults` object created either with [`lifelihood()`] or
 #'   [`create_simulation_input()`].
 #' @param event Character string specifying the event(s) to simulate.
-#'   Must be one of `"mortality"`, `"maturity"`, or `"all"` (event=`"reproduction"` is equivalent to `"all"` as maturity and mortality are needed to simulate reproduction events).
+#'   Must be one of `"mortality"`, `"maturity"`, `"reproduction"`, or `"all"`.
+#'   Explicitly requesting reproduction also simulates maturity and mortality.
 #'   Default is `"all"`, which simulates all fitted events.
 #' @param newdata Optional `data.frame` providing covariate values for prediction.
 #'   If `NULL`, corresponds to the original data used to fit the model. If you have
@@ -492,24 +496,59 @@ simulate_life_history <- function(
     several.ok = TRUE
   )
 
-  # Simulate all events if user selected either "all" or "reproduction".
-  # It's required for reproduction since we need info about maturity and death.
-  events <- if ("all" %in% event || "reproduction" %in% event) {
-    c("maturity", "reproduction", "mortality")
-  } else {
-    event
-  }
-
-  # We need maturity and death parameters to simulate reproduction
-  if ("reproduction" %in% events) {
-    fitted_params <- object$formula |> names()
-    if (
-      !("expt_maturity" %in% fitted_params && "expt_death" %in% fitted_params)
-    ) {
+  if ("all" %in% event) {
+    events <- simulation_events_for_fit(object)
+    if (length(events) == 0) {
       stop(
-        "To simulate reproduction, the fitted object must also include both ",
-        "maturity and mortality models."
+        "No fitted event can be simulated from these results.",
+        call. = FALSE
       )
+    }
+  } else {
+    omitted_events <- setdiff(event, names(object$dist))
+    if (length(omitted_events) > 0) {
+      stop(
+        "The `",
+        omitted_events[1],
+        "` event was not fitted in these results.",
+        call. = FALSE
+      )
+    }
+
+    if ("reproduction" %in% event) {
+      dependencies <- c("mortality", "maturity", "reproduction")
+      can_simulate_dependencies <- all(vapply(
+        dependencies,
+        function(required_event) {
+          simulation_event_is_fitted(object, required_event)
+        },
+        logical(1)
+      ))
+      if (!can_simulate_dependencies) {
+        stop(
+          "To simulate reproduction, the fitted object must include fitted reproduction, maturity, and mortality models.",
+          call. = FALSE
+        )
+      }
+      events <- c("maturity", "reproduction", "mortality")
+    } else {
+      events <- event
+      unavailable_events <- events[
+        !vapply(
+          events,
+          function(selected_event)
+            simulation_event_is_fitted(object, selected_event),
+          logical(1)
+        )
+      ]
+      if (length(unavailable_events) > 0) {
+        stop(
+          "The `",
+          unavailable_events[1],
+          "` event does not have the parameters needed for simulation.",
+          call. = FALSE
+        )
+      }
     }
   }
 
@@ -849,6 +888,47 @@ simulate_life_history <- function(
   }
 
   return(as_tibble(df_sims_up_na))
+}
+
+#' @keywords internal
+simulation_event_is_fitted <- function(object, event) {
+  if (!event %in% names(object$dist)) {
+    return(FALSE)
+  }
+
+  parameters <- switch(
+    event,
+    mortality = c("expt_death", "survival_param2"),
+    maturity = c("expt_maturity", "maturity_param2"),
+    reproduction = c("expt_reproduction", "reproduction_param2")
+  )
+  if (!is_parameter_fitted(object, parameters[1])) {
+    return(FALSE)
+  }
+  identical(as.character(object$dist[[event]]), "exp") ||
+    is_parameter_fitted(object, parameters[2])
+}
+
+#' @keywords internal
+simulation_events_for_fit <- function(object) {
+  mortality_fitted <- simulation_event_is_fitted(object, "mortality")
+  maturity_fitted <- simulation_event_is_fitted(object, "maturity")
+  reproduction_fitted <- simulation_event_is_fitted(object, "reproduction") &&
+    mortality_fitted &&
+    maturity_fitted
+
+  if (reproduction_fitted) {
+    return(c("maturity", "reproduction", "mortality"))
+  }
+
+  events <- character()
+  if (maturity_fitted) {
+    events <- c(events, "maturity")
+  }
+  if (mortality_fitted) {
+    events <- c(events, "mortality")
+  }
+  events
 }
 
 #' @keywords internal

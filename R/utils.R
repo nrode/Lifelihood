@@ -340,6 +340,37 @@ check_lifelihoodData <- function(object) {
   }
 }
 
+#' @keywords internal
+require_event_data <- function(object, event) {
+  columns <- switch(
+    event,
+    mortality = c(object$death_start, object$death_end),
+    maturity = c(object$maturity_start, object$maturity_end),
+    reproduction = c(
+      object$maturity_start,
+      object$maturity_end,
+      object$death_start,
+      object$death_end,
+      object$clutchs
+    ),
+    stop("Unknown event: ", event, call. = FALSE)
+  )
+  if (length(columns) == 0 || anyNA(columns) || any(columns == "")) {
+    stop("Data for the `", event, "` event was not supplied.", call. = FALSE)
+  }
+  missing_columns <- setdiff(columns, names(object$df))
+  if (length(missing_columns) > 0) {
+    stop(
+      "Data for the `",
+      event,
+      "` event is missing column(s): ",
+      paste(missing_columns, collapse = ", "),
+      call. = FALSE
+    )
+  }
+  invisible(object)
+}
+
 #' @title Convert a vector to factor codes
 #'
 #' @description

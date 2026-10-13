@@ -66,6 +66,9 @@ config_parameter_sections <- function() {
 
 #' @keywords internal
 validate_param2_for_exponential <- function(config, dist, event, parameter) {
+  if (!event %in% names(dist)) {
+    return(config)
+  }
   if (
     any(dist[[event]] == "exp") &&
       !identical(as.character(config[[event]][[parameter]]), "not_fitted")
@@ -80,6 +83,68 @@ validate_param2_for_exponential <- function(config, dist, event, parameter) {
       call. = FALSE
     )
     config[[event]][[parameter]] <- "not_fitted"
+  }
+  config
+}
+
+#' @keywords internal
+neutralize_omitted_events <- function(config, dist) {
+  core_parameters <- list(
+    mortality = c("expt_death", "survival_param2"),
+    maturity = c("expt_maturity", "maturity_param2"),
+    reproduction = c("expt_reproduction", "reproduction_param2", "n_offspring")
+  )
+  for (event in setdiff(names(core_parameters), names(dist))) {
+    section <- config[[event]]
+    fitted_parameters <- names(section)[
+      !vapply(
+        section,
+        function(value) identical(as.character(value), "not_fitted"),
+        logical(1)
+      )
+    ]
+    dropped_parameters <- setdiff(fitted_parameters, core_parameters[[event]])
+    if (length(dropped_parameters) > 0) {
+      warning(
+        "`",
+        event,
+        "` is not in `dist`, so these non-core parameters are not fitted: ",
+        paste(dropped_parameters, collapse = ", "),
+        ".",
+        call. = FALSE
+      )
+    }
+    config[[event]][] <- "not_fitted"
+  }
+  config
+}
+
+#' @keywords internal
+validate_tradeoff_parameters <- function(config, dist) {
+  tradeoff_parameters <- c(
+    "increase_death_hazard",
+    "tof_decay",
+    "increase_death_hazard_n_offspring"
+  )
+  if ("mortality" %in% names(dist)) {
+    return(config)
+  }
+
+  section <- config$reproduction[tradeoff_parameters]
+  fitted_parameters <- names(section)[
+    !vapply(
+      section,
+      function(value) identical(as.character(value), "not_fitted"),
+      logical(1)
+    )
+  ]
+  if (length(fitted_parameters) > 0) {
+    stop(
+      "Trade-off parameters (",
+      paste(fitted_parameters, collapse = ", "),
+      ") act on the mortality hazard and require `mortality` in `dist`.",
+      call. = FALSE
+    )
   }
   config
 }
@@ -181,6 +246,9 @@ validate_config_input <- function(config, dist = NULL) {
   }
 
   if (!is.null(dist)) {
+    # Validate trade-offs before omitted-event sections are reset below.
+    validated_config <- validate_tradeoff_parameters(validated_config, dist)
+    validated_config <- neutralize_omitted_events(validated_config, dist)
     validated_config <- validate_param2_for_exponential(
       validated_config,
       dist,

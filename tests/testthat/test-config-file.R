@@ -139,6 +139,48 @@ test_that("unfitted params2 are accepted with exponential distributions", {
   )
 })
 
+test_that("omitted event configuration only warns for non-core parameters", {
+  config <- list(
+    mortality = list(
+      expt_death = 1,
+      survival_param2 = 1,
+      sex_ratio = "geno"
+    )
+  )
+  maturity_only <- data.frame(maturity = "wei")
+
+  expect_warning(
+    validated <- validate_config_input(config, maturity_only),
+    "mortality.*sex_ratio",
+    fixed = FALSE
+  )
+  expect_identical(validated$mortality$expt_death, "not_fitted")
+  expect_identical(validated$mortality$survival_param2, "not_fitted")
+  expect_identical(validated$mortality$sex_ratio, "not_fitted")
+
+  expect_no_warning(validate_config_input(
+    list(mortality = list(expt_death = 1, survival_param2 = 1)),
+    maturity_only
+  ))
+  expect_no_warning(validate_config_input(
+    config,
+    data.frame(mortality = "wei", maturity = "wei", reproduction = "wei")
+  ))
+})
+
+test_that("trade-off parameters require a mortality distribution", {
+  config <- list(reproduction = list(increase_death_hazard = 1))
+
+  expect_error(
+    validate_config_input(config, data.frame(reproduction = "wei")),
+    "act on the mortality hazard and require `mortality` in `dist`"
+  )
+  expect_no_warning(validate_config_input(
+    config,
+    data.frame(mortality = "wei", maturity = "wei", reproduction = "wei")
+  ))
+})
+
 test_that("lifelihood warns and disables incompatible exponential parameters", {
   local_mocked_bindings(
     lifelihood_fit = function(config, ...) {
