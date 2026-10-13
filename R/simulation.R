@@ -536,8 +536,9 @@ simulate_life_history <- function(
       unavailable_events <- events[
         !vapply(
           events,
-          function(selected_event)
-            simulation_event_is_fitted(object, selected_event),
+          function(selected_event) {
+            simulation_event_is_fitted(object, selected_event)
+          },
           logical(1)
         )
       ]
