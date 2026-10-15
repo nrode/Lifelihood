@@ -66,3 +66,18 @@ test_that("Overall demo works", {
   check_compute_event_rate("reproduction", 5)
   check_compute_event_rate("reproduction", 15)
 })
+
+test_that("an omitted event is reported before missing event data", {
+  results <- structure(
+    list(
+      dist = data.frame(mortality = "wei"),
+      lifelihoodData = list()
+    ),
+    class = "lifelihoodResults"
+  )
+
+  expect_error(
+    compute_fitted_event_rate(results, interval_width = 1, event = "maturity"),
+    "The `maturity` event was not fitted in these results."
+  )
+})

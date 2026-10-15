@@ -90,16 +90,14 @@ default_bounds_df <- function(lifelihoodData) {
   }
   right_censoring_date <- lifelihoodData$right_censoring_date
 
-  max_death <- max(
-    df[df[[death_end]] < right_censoring_date, death_end],
-    na.rm = TRUE
-  ) *
-    2
-  max_maturity <- max(
-    df[df[[maturity_end]] < right_censoring_date, maturity_end],
-    na.rm = TRUE
-  ) *
-    2
+  max_event_time <- function(column) {
+    if (is.null(column)) {
+      return(right_censoring_date * 2)
+    }
+    max(df[df[[column]] < right_censoring_date, column], na.rm = TRUE) * 2
+  }
+  max_death <- max_event_time(death_end)
+  max_maturity <- max_event_time(maturity_end)
 
   models_bounds <- data.frame(
     name = c("wei", "gam", "lgn", "exp"),
@@ -108,6 +106,7 @@ default_bounds_df <- function(lifelihoodData) {
   )
 
   # Each shape parameter uses the family of its own event in this model.
+  dist <- complete_dist(dist)
   mortality_model <- dist[["mortality"]]
   mortality_specs <- subset(models_bounds, name == mortality_model)
   death_shape_min <- mortality_specs$min_default

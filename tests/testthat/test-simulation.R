@@ -42,6 +42,28 @@ test_that("simulations work", {
     raise_estimation_warning = FALSE
   )
 
+  mortality_only_results <- results
+  mortality_only_results$dist <- results$dist["mortality"]
+  mortality_only_results$lifelihoodData$dist <- results$dist["mortality"]
+  mortality_only_simulation <- suppressWarnings(
+    simulate_life_history(mortality_only_results)
+  )
+  expect_true("mortality_start" %in% names(mortality_only_simulation))
+  expect_false("maturity_start" %in% names(mortality_only_simulation))
+  expect_false("clutch_start_1" %in% names(mortality_only_simulation))
+  expect_error(
+    simulate_life_history(mortality_only_results, event = "maturity"),
+    "The `maturity` event was not fitted in these results."
+  )
+
+  reproduction_only_results <- results
+  reproduction_only_results$dist <- results$dist["reproduction"]
+  reproduction_only_results$lifelihoodData$dist <- results$dist["reproduction"]
+  expect_error(
+    simulate_life_history(reproduction_only_results, event = "reproduction"),
+    "must include fitted reproduction, maturity, and mortality models"
+  )
+
   suppressWarnings({
     simul <- simulate_life_history(results)
     expect_true(ncol(simul) >= 100)

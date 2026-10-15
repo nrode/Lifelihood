@@ -19,7 +19,8 @@ format_dataframe_to_txt(
   covariates,
   dist,
   config,
-  temp_dir
+  temp_dir,
+  right_censoring_date = 1000
 )
 }
 \arguments{
@@ -57,13 +58,17 @@ interval in which the death was determined.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{dist}{One-row data frame with columns \code{mortality}, \code{maturity}, and
-\code{reproduction}, specifying the model being fitted.}
+\item{dist}{One-row data frame with selected event columns from \code{mortality},
+\code{maturity}, and \code{reproduction}. Missing event columns are encoded with an
+exponential family in the fixed-width input format.}
 
 \item{config}{A complete configuration list.}
 
 \item{temp_dir}{Name of the temporary directory with temporary
 files.}
+
+\item{right_censoring_date}{Value used for event intervals that were not
+supplied because that event is not being fitted.}
 }
 \description{
 Takes a dataframe (\code{df} argument in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} function)

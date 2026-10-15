@@ -106,7 +106,7 @@ lifelihood <- function(
 
   for (j in seq_len(nrow(lifelihoodData$dist))) {
     temp_lifelihoodData <- lifelihoodData
-    temp_lifelihoodData$dist <- lifelihoodData$dist[j, ]
+    temp_lifelihoodData$dist <- lifelihoodData$dist[j, , drop = FALSE]
     model_config <- config
 
     # When fitting multiple models, we don't want to raise
@@ -118,7 +118,10 @@ lifelihood <- function(
         maturity = "maturity_param2",
         reproduction = "reproduction_param2"
       )
-      for (event in names(second_parameters)) {
+      for (event in intersect(
+        names(second_parameters),
+        names(temp_lifelihoodData$dist)
+      )) {
         if (temp_lifelihoodData$dist[[event]] == "exp") {
           model_config[[event]][[second_parameters[[event]]]] <- "not_fitted"
         }
@@ -327,7 +330,8 @@ lifelihood_fit <- function(
     matclutch_size = lifelihoodData$matclutch_size,
     dist = lifelihoodData$dist,
     config = config,
-    temp_dir = temp_dir
+    temp_dir = temp_dir,
+    right_censoring_date = lifelihoodData$right_censoring_date
   )
 
   # we deduce fitness from the configuration file
@@ -711,15 +715,18 @@ summary.lifelihoodResults <- function(object, digits = 3, ...) {
 #'
 #' @export
 summary.all_models <- function(object, ...) {
+  dist_or_na <- function(dist, event) {
+    if (event %in% names(dist)) dist[[event]] else NA_character_
+  }
   df <- tibble::tibble()
   for (i in seq_along(object)) {
     model <- object[[i]]
     df_model <- data.frame(
       fit = names(object)[i],
       seeds = paste0(model$seeds, collapse = "_"),
-      dist_maturity = model$dist[["maturity"]],
-      dist_reproduction = model$dist[["reproduction"]],
-      dist_mortality = model$dist[["mortality"]],
+      dist_maturity = dist_or_na(model$dist, "maturity"),
+      dist_reproduction = dist_or_na(model$dist, "reproduction"),
+      dist_mortality = dist_or_na(model$dist, "mortality"),
       n_parameters = nrow(model$effects),
       likelihood = model$likelihood,
       AIC = AIC(model),

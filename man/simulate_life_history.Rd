@@ -18,7 +18,8 @@ simulate_life_history(
 \code{\link[=create_simulation_input]{create_simulation_input()}}.}
 
 \item{event}{Character string specifying the event(s) to simulate.
-Must be one of \code{"mortality"}, \code{"maturity"}, or \code{"all"} (event=\code{"reproduction"} is equivalent to \code{"all"} as maturity and mortality are needed to simulate reproduction events).
+Must be one of \code{"mortality"}, \code{"maturity"}, \code{"reproduction"}, or \code{"all"}.
+Explicitly requesting reproduction also simulates maturity and mortality.
 Default is \code{"all"}, which simulates all fitted events.}
 
 \item{newdata}{Optional \code{data.frame} providing covariate values for prediction.
@@ -51,4 +52,7 @@ events, using the predicted probability of being male (\code{1}; females are \co
 The drawn sex controls sex-specific event predictions and reproduction and
 replaces the input sex in the output. Otherwise, input sex is preserved.
 Sex-observation interval columns are copied from the input, not simulated.
+Reproduction can be simulated only when reproduction, maturity, and mortality
+are all fitted. With \code{event = "all"}, reproduction is included only when all
+three models are available.
 }
