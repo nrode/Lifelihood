@@ -57,7 +57,7 @@
 `}``)`\
 `time_default`\
 `#>    user  system elapsed `\
-`#>  18.732   0.089  19.287`
+`#>  11.780   0.090  11.982`
 
 - Interaction model using the `group_by_group` argument (default to
   `FALSE`)
@@ -72,7 +72,7 @@
 `}``)`\
 `time_gbg`\
 `#>    user  system elapsed `\
-`#>   0.967   0.034   1.052`
+`#>   0.746   0.059   0.821`
 
 Fitting interaction model with group by group is faster than default
 model.
@@ -81,9 +81,9 @@ model.
 
 \
 `results_default``$``likelihood`\
-`#> [1] -343781.9`\
+`#> [1] -2458.396`\
 `results_gbg``$``likelihood`\
-`#> [1] -343764.9`
+`#> [1] -2455.379`
 
 Log-likelihood is also higher with group by group indicating better
 convergence towards the maximum log-likelihood value.

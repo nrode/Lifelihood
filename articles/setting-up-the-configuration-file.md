@@ -28,8 +28,11 @@ For example, this fits only the expected mortality time as a function of
 `  mortality ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``expt_death ``=`` ``"geno"``)`\
 `)`
 
-The equivalent YAML configuration contains all three sections and
-parameters, with every omitted value written as `not_fitted`.
+The YAML configuration can include all three sections and parameters,
+with every omitted value written as `not_fitted`. Sections for events
+omitted from `dist` are not fitted; you can also omit parameters from
+those sections in a named R list. Reproduction-specific parameters
+require reproduction in `dist`.
 
 The YAML format is convenient when the configuration is large or reused
 across analyses. It relies on **indentation** to represent structure.

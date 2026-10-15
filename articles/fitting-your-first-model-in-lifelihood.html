@@ -176,7 +176,8 @@ If you haven’t check it yet, have a look at:
 </h2>
 <p><code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> creates a <code>lifelihoodData</code> object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.</p>
 <p>This function mostly takes as input your dataset, your column names.</p>
-<p>The <code>dist</code> argument is a data frame with exactly three columns: <code>mortality</code>, <code>maturity</code>, and <code>reproduction</code>. Each row specifies one model to fit. Each cell must contain <code>"wei"</code> (Weibull), <code>"exp"</code> (exponential), <code>"gam"</code> (gamma), or <code>"lgn"</code> (log-normal). Use a one-row data frame to fit a single model, as below.</p>
+<p>The <code>dist</code> argument is a data frame with one or more columns selected from <code>mortality</code>, <code>maturity</code>, and <code>reproduction</code>. Each row specifies one model to fit. Each cell must contain <code>"wei"</code> (Weibull), <code>"exp"</code> (exponential), <code>"gam"</code> (gamma), or <code>"lgn"</code> (log-normal). Include only the events you want to fit. For example, a mortality-only model can use <code>dist = data.frame(mortality = "wei")</code> and needs only the death interval columns. Fitting reproduction also requires maturity and death interval data, even when those events are not fitted.</p>
+<p>This example fits all three events, so its <code>dist</code> includes all three:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dataLFH</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_lifelihoodData.html">as_lifelihoodData</a></span><span class="op">(</span></span>
@@ -310,11 +311,7 @@ If you haven’t check it yet, have a look at:
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =</span></span>
-<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 1 differ by 16.545 (&gt; 0.1).</span></span>
-<span><span class="co">#&gt; Consider increasing n_fit (currently 2) to be sure of model convergence and</span></span>
-<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
-<span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =</span></span>
-<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 2 differ by 0.554 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 1 differ by 0.312 (&gt; 0.1).</span></span>
 <span><span class="co">#&gt; Consider increasing n_fit (currently 2) to be sure of model convergence and</span></span>
 <span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
 <span></span>
@@ -323,10 +320,10 @@ If you haven’t check it yet, have a look at:
 <span><span class="co">#&gt; # A tibble: 4 × 20</span></span>
 <span><span class="co">#&gt;   fit          seeds dist_maturity dist_reproduction dist_mortality n_parameters</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;             &lt;chr&gt;                 &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 lifelihood_… 5954… gam           lgn               wei                      10</span></span>
-<span><span class="co">#&gt; 2 lifelihood_… 154_… gam           lgn               wei                      10</span></span>
-<span><span class="co">#&gt; 3 lifelihood_… 1609… exp           exp               exp                       7</span></span>
-<span><span class="co">#&gt; 4 lifelihood_… 825_… exp           exp               exp                       7</span></span>
+<span><span class="co">#&gt; 1 lifelihood_… 7685… gam           lgn               wei                      10</span></span>
+<span><span class="co">#&gt; 2 lifelihood_… 595_… gam           lgn               wei                      10</span></span>
+<span><span class="co">#&gt; 3 lifelihood_… 3574… exp           exp               exp                       7</span></span>
+<span><span class="co">#&gt; 4 lifelihood_… 4849… exp           exp               exp                       7</span></span>
 <span><span class="co">#&gt; # ℹ 14 more variables: likelihood &lt;dbl&gt;, AIC &lt;dbl&gt;, AICc &lt;dbl&gt;, ΔAICc &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   int_expt_death &lt;dbl&gt;, eff_expt_death_par_1 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   eff_expt_death_par_2 &lt;dbl&gt;, int_survival_param2 &lt;dbl&gt;,</span></span>

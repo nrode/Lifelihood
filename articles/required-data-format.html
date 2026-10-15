@@ -130,11 +130,11 @@
 </h2>
 <hr>
 <p>As life history data is by nature heterogeneous between observations from the same sample, the format of the data required can be somewhat tricky. Under the hood, <code>lifelihood</code> creates a text file containing the data (and other parameters), and then use this file for the (core) source code. Fortunately, <code>lifelihood</code> automatically transform the dataframe into the text file with the right format.</p>
-<p>In this vignette, we’ll look at how the dataframe containing your data needs to be formatted for the Lifelihood programme to work properly.</p>
+<p>In this vignette, we’ll look at how the dataframe containing your data needs to be formatted for the Lifelihood programme to work properly. Which event columns you need depends on the events selected in <code>dist</code>: maturity columns are needed when fitting maturity or reproduction; death columns are needed when fitting mortality or reproduction; clutch columns are needed when fitting reproduction. For example, a mortality-only fit can omit maturity and clutch columns and use <code>dist = data.frame(mortality = "wei")</code>.</p>
 </section><section class="section level2"><h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <hr>
-<p>Let’s create a simple dataset with just 7 observations and the following columns:</p>
+<p>Let’s create a simple dataset with just 7 observations and columns for all three events. A model that fits fewer events can omit columns it does not need, following the requirements above.</p>
 <ul>
 <li>
 <code>sex</code> Column name containing the sex of the observations.</li>
@@ -143,15 +143,11 @@
 <li>
 <code>sex_end</code> Column name containing the second date of the interval in which the sex was determined.</li>
 <li>
-<code>maturity_start</code> Column name containing the first date of the interval in which the maturity was determined.</li>
+<code>maturity_start</code> and <code>maturity_end</code> Column names for the maturity interval. Required when fitting maturity or reproduction.</li>
 <li>
-<code>maturity_end</code> Column name containing the second date of the interval in which the maturity was determined.</li>
+<code>clutchs</code> Vector containing the names of the clutch columns. Required when fitting reproduction. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, second clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</li>
 <li>
-<code>clutchs</code> Vector containing the names of the clutch columns. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, first clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</li>
-<li>
-<code>death_start</code> Column name containing the first date of the interval in which the death was determined.</li>
-<li>
-<code>death_end</code> Column name containing the second date of the interval in which the death was determined.</li>
+<code>death_start</code> and <code>death_end</code> Column names for the death interval. Required when fitting mortality or reproduction.</li>
 <li>
 <code>geno</code> Column name of the first column to add in the input data file</li>
 </ul>

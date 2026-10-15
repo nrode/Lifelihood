@@ -77,11 +77,16 @@ individual life history.
 
 This function mostly takes as input your dataset, your column names.
 
-The `dist` argument is a data frame with exactly three columns:
-`mortality`, `maturity`, and `reproduction`. Each row specifies one
+The `dist` argument is a data frame with one or more columns selected
+from `mortality`, `maturity`, and `reproduction`. Each row specifies one
 model to fit. Each cell must contain `"wei"` (Weibull), `"exp"`
-(exponential), `"gam"` (gamma), or `"lgn"` (log-normal). Use a one-row
-data frame to fit a single model, as below.
+(exponential), `"gam"` (gamma), or `"lgn"` (log-normal). Include only
+the events you want to fit. For example, a mortality-only model can use
+`dist = data.frame(mortality = "wei")` and needs only the death interval
+columns. Fitting reproduction also requires maturity and death interval
+data, even when those events are not fitted.
+
+This example fits all three events, so its `dist` includes all three:
 
 \
 `dataLFH`` ``<-`` `[`as_lifelihoodData`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)`(`\
@@ -233,11 +238,7 @@ model:
 `  raise_estimation_warning ``=`` ``FALSE`\
 `)`\
 `#> Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =`\
-`#> 2, : Best and second-best likelihoods for model row 1 differ by 16.545 (> 0.1).`\
-`#> Consider increasing n_fit (currently 2) to be sure of model convergence and`\
-`#> find the model with highest log-likelihood.`\
-`#> Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =`\
-`#> 2, : Best and second-best likelihoods for model row 2 differ by 0.554 (> 0.1).`\
+`#> 2, : Best and second-best likelihoods for model row 1 differ by 0.312 (> 0.1).`\
 `#> Consider increasing n_fit (currently 2) to be sure of model convergence and`\
 `#> find the model with highest log-likelihood.`\
 \
@@ -246,10 +247,10 @@ model:
 `#> # A tibble: 4 × 20`\
 `#>   fit          seeds dist_maturity dist_reproduction dist_mortality n_parameters`\
 `#>   <chr>        <chr> <chr>         <chr>             <chr>                 <int>`\
-`#> 1 lifelihood_… 5954… gam           lgn               wei                      10`\
-`#> 2 lifelihood_… 154_… gam           lgn               wei                      10`\
-`#> 3 lifelihood_… 1609… exp           exp               exp                       7`\
-`#> 4 lifelihood_… 825_… exp           exp               exp                       7`\
+`#> 1 lifelihood_… 7685… gam           lgn               wei                      10`\
+`#> 2 lifelihood_… 595_… gam           lgn               wei                      10`\
+`#> 3 lifelihood_… 3574… exp           exp               exp                       7`\
+`#> 4 lifelihood_… 4849… exp           exp               exp                       7`\
 `#> # ℹ 14 more variables: likelihood <dbl>, AIC <dbl>, AICc <dbl>, ΔAICc <dbl>,`\
 `#> #   int_expt_death <dbl>, eff_expt_death_par_1 <dbl>,`\
 `#> #   eff_expt_death_par_2 <dbl>, int_survival_param2 <dbl>,`\

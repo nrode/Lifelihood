@@ -57,11 +57,7 @@ instead of `se.fit` which is likely to give wrong results.
 `  ``lifelihoodData``,`\
 `  config ``=`` ``config_fitness``,`\
 `  n_fit ``=`` ``30`\
-`)`\
-`#> Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 30):`\
-`#> Best and second-best likelihoods for model row 1 differ by 0.173 (> 0.1).`\
-`#> Consider increasing n_fit (currently 30) to be sure of model convergence and`\
-`#> find the model with highest log-likelihood.`
+`)`
 
 ## Results
 
@@ -75,24 +71,24 @@ We can then predict fitness and its confidence interval:
 `#> Sample size: 18 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -171.173`\
-`#> AIC:             356.3`\
-`#> BIC:             362.6`\
+`#> Log-likelihood:  -171.076`\
+`#> AIC:             356.2`\
+`#> BIC:             362.4`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -0.935 (0.000)`\
-`#>   survival_param2 (Intercept) -5.782 (0.000)`\
+`#>   expt_death (Intercept)    -0.990 (0.000)`\
+`#>   survival_param2 (Intercept) -5.771 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -0.971 (0.000)`\
-`#>   maturity_param2 (Intercept) -3.554 (0.000)`\
+`#>   expt_maturity (Intercept) -0.956 (0.000)`\
+`#>   maturity_param2 (Intercept) -3.553 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -3.474 (0.000)`\
-`#>   reproduction_param2 (Intercept) -5.094 (0.000)`\
-`#>   fitness (Intercept)       -3.878 (0.000)`\
+`#>   expt_reproduction (Intercept) -3.271 (0.000)`\
+`#>   reproduction_param2 (Intercept) -5.450 (0.000)`\
+`#>   fitness (Intercept)       -4.144 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -100,9 +96,9 @@ We can then predict fitness and its confidence interval:
 `#> ======================`\
 \
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"fitness"``, type ``=`` ``"response"``)`\
-`#>  [1] 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206`\
-`#>  [9] 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206 20.27206`\
-`#> [17] 20.27206 20.27206`
+`#>  [1] 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671`\
+`#>  [9] 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671`\
+`#> [17] 15.60671 15.60671`
 
 ## Using simulated data
 
@@ -184,15 +180,15 @@ We can then predict fitness and its confidence interval:
 \
 [`default_bounds_df`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)`(``lifelihoodData``)`\
 `#>                                param   min     max`\
-`#> 1                         expt_death 0.001  1438.4`\
+`#> 1                         expt_death 0.001  1149.4`\
 `#> 2                    survival_param2  0.05    1000`\
 `#> 3                   ratio_expt_death  0.01     100`\
 `#> 4                         prob_death 1e-05 0.99999`\
 `#> 5                          sex_ratio 1e-05 0.99999`\
-`#> 6                      expt_maturity 0.001    72.2`\
+`#> 6                      expt_maturity 0.001   184.2`\
 `#> 7                    maturity_param2  0.05    1000`\
 `#> 8                ratio_expt_maturity  0.01     100`\
-`#> 9                  expt_reproduction 0.001  1438.4`\
+`#> 9                  expt_reproduction 0.001  1149.4`\
 `#> 10               reproduction_param2  0.05    1000`\
 `#> 11                       n_offspring     1      50`\
 `#> 12             increase_death_hazard 1e-05      10`\
@@ -211,7 +207,7 @@ We can then predict fitness and its confidence interval:
 `  delete_temp_files ``=`` ``FALSE`\
 `)`\
 `#> Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 10, :`\
-`#> Best and second-best likelihoods for model row 1 differ by 14.351 (> 0.1).`\
+`#> Best and second-best likelihoods for model row 1 differ by 5.383 (> 0.1).`\
 `#> Consider increasing n_fit (currently 10) to be sure of model convergence and`\
 `#> find the model with highest log-likelihood.`\
 \
@@ -222,21 +218,21 @@ We can then predict fitness and its confidence interval:
 `#> Sample size: 100 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -15416.634`\
-`#> AIC:             30841.3`\
-`#> BIC:             30851.7`\
+`#> Log-likelihood:  -17629.387`\
+`#> AIC:             35266.8`\
+`#> BIC:             35277.2`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -2.217 (0.000)`\
+`#>   expt_death (Intercept)    -2.006 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -1.777 (0.000)`\
+`#>   expt_maturity (Intercept) -2.680 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -5.648 (0.000)`\
-`#>   fitness (Intercept)       -1.057 (0.000)`\
+`#>   expt_reproduction (Intercept) -5.388 (0.000)`\
+`#>   fitness (Intercept)       -1.139 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -251,14 +247,14 @@ We can then predict fitness and its confidence interval:
 `#> # A tibble: 100 × 4`\
 `#>    expt_death expt_maturity expt_reproduction fitness`\
 `#>         <dbl>         <dbl>             <dbl>   <dbl>`\
-`#>  1       141.          10.4              5.05    258.`\
-`#>  2       141.          10.4              5.05    258.`\
-`#>  3       141.          10.4              5.05    258.`\
-`#>  4       141.          10.4              5.05    258.`\
-`#>  5       141.          10.4              5.05    258.`\
-`#>  6       141.          10.4              5.05    258.`\
-`#>  7       141.          10.4              5.05    258.`\
-`#>  8       141.          10.4              5.05    258.`\
-`#>  9       141.          10.4              5.05    258.`\
-`#> 10       141.          10.4              5.05    258.`\
+`#>  1       136.          11.8              5.23    242.`\
+`#>  2       136.          11.8              5.23    242.`\
+`#>  3       136.          11.8              5.23    242.`\
+`#>  4       136.          11.8              5.23    242.`\
+`#>  5       136.          11.8              5.23    242.`\
+`#>  6       136.          11.8              5.23    242.`\
+`#>  7       136.          11.8              5.23    242.`\
+`#>  8       136.          11.8              5.23    242.`\
+`#>  9       136.          11.8              5.23    242.`\
+`#> 10       136.          11.8              5.23    242.`\
 `#> # ℹ 90 more rows`

@@ -191,16 +191,12 @@
 <span>  se.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n_fit <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = lifelihoodData, config = config_se, :</span></span>
-<span><span class="co">#&gt; Best and second-best likelihoods for model row 1 differ by 0.552 (&gt; 0.1).</span></span>
-<span><span class="co">#&gt; Consider increasing n_fit (currently 5) to be sure of model convergence and</span></span>
-<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
 <span></span>
 <span><span class="co">## New model has better convergence</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results_wrong</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -343783.4</span></span>
+<span><span class="co">#&gt; [1] -2497.344</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -343783.9</span></span>
+<span><span class="co">#&gt; [1] -2497.366</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -209,17 +205,17 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -343783.924</span></span>
-<span><span class="co">#&gt; AIC:             687575.8</span></span>
-<span><span class="co">#&gt; BIC:             687593.1</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -2497.366</span></span>
+<span><span class="co">#&gt; AIC:             5002.7</span></span>
+<span><span class="co">#&gt; BIC:             5020.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -1.991 (0.070)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 0.306 (0.075)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 0.280 (0.082)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -4.738 (0.065)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -0.916 (0.020)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -0.780 (0.037)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -0.806 (0.052)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -4.884 (0.034)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -233,10 +229,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
 <span><span class="co">#&gt;   name                 estimation stderror parameter       kind            event</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;</span></span>
-<span><span class="co">#&gt; 1 int_expt_death           -1.99    0.0696 expt_death      intercept       mort…</span></span>
-<span><span class="co">#&gt; 2 eff_expt_death_par_1      0.306   0.0755 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 3 eff_expt_death_par_2      0.280   0.0815 expt_death      coefficient_ca… mort…</span></span>
-<span><span class="co">#&gt; 4 int_survival_param2      -4.74    0.0653 survival_param2 intercept       mort…</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 int_expt_death           -0.916   0.0201 expt_death      intercept       mort…</span></span>
+<span><span class="co">#&gt; 2 eff_expt_death_par_1     -0.780   0.0367 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 3 eff_expt_death_par_2     -0.806   0.0517 expt_death      coefficient_ca… mort…</span></span>
+<span><span class="co">#&gt; 4 int_survival_param2      -4.88    0.0345 survival_param2 intercept       mort…</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h2>
@@ -253,11 +249,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  -1.99    0.0696</span></span>
-<span><span class="co">#&gt; 2  -1.99    0.0696</span></span>
-<span><span class="co">#&gt; 3  -1.99    0.0696</span></span>
-<span><span class="co">#&gt; 4  -1.99    0.0696</span></span>
-<span><span class="co">#&gt; 5  -1.99    0.0696</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -0.916    0.0201</span></span>
+<span><span class="co">#&gt; 2 -0.916    0.0201</span></span>
+<span><span class="co">#&gt; 3 -0.916    0.0201</span></span>
+<span><span class="co">#&gt; 4 -0.916    0.0201</span></span>
+<span><span class="co">#&gt; 5 -0.916    0.0201</span></span></code></pre></div>
 </div>
 <ul>
 <li>Response scale</li>
@@ -270,11 +266,11 @@
 <span><span class="co">#&gt; # A tibble: 5 × 2</span></span>
 <span><span class="co">#&gt;   fitted se.fitted</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1   38.9      2.38</span></span>
-<span><span class="co">#&gt; 2   50.7      1.27</span></span>
-<span><span class="co">#&gt; 3   38.9      2.38</span></span>
-<span><span class="co">#&gt; 4   38.9      2.38</span></span>
-<span><span class="co">#&gt; 5   50.7      1.27</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   92.6      1.33</span></span>
+<span><span class="co">#&gt; 2   50.2      1.37</span></span>
+<span><span class="co">#&gt; 3   92.6      1.33</span></span>
+<span><span class="co">#&gt; 4   92.6      1.33</span></span>
+<span><span class="co">#&gt; 5   50.2      1.37</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="se-fails-with-interaction-model-with-mcmc">SE fails with interaction model with MCMC<a class="anchor" aria-label="anchor" href="#se-fails-with-interaction-model-with-mcmc"></a>
 </h2>

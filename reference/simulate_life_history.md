@@ -7,7 +7,10 @@ individual before simulating events, using the predicted probability of
 being male (`1`; females are `0`). The drawn sex controls sex-specific
 event predictions and reproduction and replaces the input sex in the
 output. Otherwise, input sex is preserved. Sex-observation interval
-columns are copied from the input, not simulated.
+columns are copied from the input, not simulated. Reproduction can be
+simulated only when reproduction, maturity, and mortality are all
+fitted. With `event = "all"`, reproduction is included only when all
+three models are available.
 
 ## Usage
 
@@ -34,10 +37,9 @@ simulate_life_history(
 - event:
 
   Character string specifying the event(s) to simulate. Must be one of
-  `"mortality"`, `"maturity"`, or `"all"` (event=`"reproduction"` is
-  equivalent to `"all"` as maturity and mortality are needed to simulate
-  reproduction events). Default is `"all"`, which simulates all fitted
-  events.
+  `"mortality"`, `"maturity"`, `"reproduction"`, or `"all"`. Explicitly
+  requesting reproduction also simulates maturity and mortality. Default
+  is `"all"`, which simulates all fitted events.
 
 - newdata:
 

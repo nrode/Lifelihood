@@ -24,7 +24,8 @@ format_dataframe_to_txt(
   covariates,
   dist,
   config,
-  temp_dir
+  temp_dir,
+  right_censoring_date = 1000
 )
 ```
 
@@ -89,8 +90,9 @@ format_dataframe_to_txt(
 
 - dist:
 
-  One-row data frame with columns `mortality`, `maturity`, and
-  `reproduction`, specifying the model being fitted.
+  One-row data frame with selected event columns from `mortality`,
+  `maturity`, and `reproduction`. Missing event columns are encoded with
+  an exponential family in the fixed-width input format.
 
 - config:
 
@@ -99,3 +101,8 @@ format_dataframe_to_txt(
 - temp_dir:
 
   Name of the temporary directory with temporary files.
+
+- right_censoring_date:
+
+  Value used for event intervals that were not supplied because that
+  event is not being fitted.

@@ -80,16 +80,12 @@ use the `se.fit` argument for this purpose:
 `  se.fit ``=`` ``TRUE``,`\
 `  n_fit ``=`` ``5`\
 `)`\
-`#> Warning in lifelihood(lifelihoodData = lifelihoodData, config = config_se, :`\
-`#> Best and second-best likelihoods for model row 1 differ by 0.552 (> 0.1).`\
-`#> Consider increasing n_fit (currently 5) to be sure of model convergence and`\
-`#> find the model with highest log-likelihood.`\
 \
 `## New model has better convergence`\
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results_wrong``)`\
-`#> [1] -343783.4`\
+`#> [1] -2497.344`\
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results``)`\
-`#> [1] -343783.9`\
+`#> [1] -2497.366`\
 \
 [`summary`](https://rdrr.io/r/base/summary.html)`(``results``)`\
 `#> `\
@@ -98,17 +94,17 @@ use the `se.fit` argument for this purpose:
 `#> Sample size: 550 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -343783.924`\
-`#> AIC:             687575.8`\
-`#> BIC:             687593.1`\
+`#> Log-likelihood:  -2497.366`\
+`#> AIC:             5002.7`\
+`#> BIC:             5020.0`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -1.991 (0.070)`\
-`#>   expt_death eff_expt_death_par_1 0.306 (0.075)`\
-`#>   expt_death eff_expt_death_par_2 0.280 (0.082)`\
-`#>   survival_param2 (Intercept) -4.738 (0.065)`\
+`#>   expt_death (Intercept)    -0.916 (0.020)`\
+`#>   expt_death eff_expt_death_par_1 -0.780 (0.037)`\
+`#>   expt_death eff_expt_death_par_2 -0.806 (0.052)`\
+`#>   survival_param2 (Intercept) -4.884 (0.034)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -122,10 +118,10 @@ Now if we have a look at the estimations we have standard errors:
 `#> # A tibble: 4 × 6`\
 `#>   name                 estimation stderror parameter       kind            event`\
 `#>   <chr>                     <dbl>    <dbl> <chr>           <chr>           <chr>`\
-`#> 1 int_expt_death           -1.99    0.0696 expt_death      intercept       mort…`\
-`#> 2 eff_expt_death_par_1      0.306   0.0755 expt_death      coefficient_ca… mort…`\
-`#> 3 eff_expt_death_par_2      0.280   0.0815 expt_death      coefficient_ca… mort…`\
-`#> 4 int_survival_param2      -4.74    0.0653 survival_param2 intercept       mort…`
+`#> 1 int_expt_death           -0.916   0.0201 expt_death      intercept       mort…`\
+`#> 2 eff_expt_death_par_1     -0.780   0.0367 expt_death      coefficient_ca… mort…`\
+`#> 3 eff_expt_death_par_2     -0.806   0.0517 expt_death      coefficient_ca… mort…`\
+`#> 4 int_survival_param2      -4.88    0.0345 survival_param2 intercept       mort…`
 
 ## Prediction
 
@@ -141,11 +137,11 @@ We can predict with standard errors.
 `#> # A tibble: 5 × 2`\
 `#>   fitted se.fitted`\
 `#>    <dbl>     <dbl>`\
-`#> 1  -1.99    0.0696`\
-`#> 2  -1.99    0.0696`\
-`#> 3  -1.99    0.0696`\
-`#> 4  -1.99    0.0696`\
-`#> 5  -1.99    0.0696`
+`#> 1 -0.916    0.0201`\
+`#> 2 -0.916    0.0201`\
+`#> 3 -0.916    0.0201`\
+`#> 4 -0.916    0.0201`\
+`#> 5 -0.916    0.0201`
 
 - Response scale
 
@@ -156,11 +152,11 @@ We can predict with standard errors.
 `#> # A tibble: 5 × 2`\
 `#>   fitted se.fitted`\
 `#>    <dbl>     <dbl>`\
-`#> 1   38.9      2.38`\
-`#> 2   50.7      1.27`\
-`#> 3   38.9      2.38`\
-`#> 4   38.9      2.38`\
-`#> 5   50.7      1.27`
+`#> 1   92.6      1.33`\
+`#> 2   50.2      1.37`\
+`#> 3   92.6      1.33`\
+`#> 4   92.6      1.33`\
+`#> 5   50.2      1.37`
 
 ## SE fails with interaction model with MCMC
 

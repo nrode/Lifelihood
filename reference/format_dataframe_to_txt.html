@@ -101,7 +101,8 @@ input data file.</p>
 <span>  <span class="va">covariates</span>,</span>
 <span>  <span class="va">dist</span>,</span>
 <span>  <span class="va">config</span>,</span>
-<span>  <span class="va">temp_dir</span></span>
+<span>  <span class="va">temp_dir</span>,</span>
+<span>  right_censoring_date <span class="op">=</span> <span class="fl">1000</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -168,8 +169,9 @@ interval in which the death was determined.</p></dd>
 
 
 <dt id="arg-dist">dist<a class="anchor" aria-label="anchor" href="#arg-dist"></a></dt>
-<dd><p>One-row data frame with columns <code>mortality</code>, <code>maturity</code>, and
-<code>reproduction</code>, specifying the model being fitted.</p></dd>
+<dd><p>One-row data frame with selected event columns from <code>mortality</code>,
+<code>maturity</code>, and <code>reproduction</code>. Missing event columns are encoded with an
+exponential family in the fixed-width input format.</p></dd>
 
 
 <dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
@@ -179,6 +181,11 @@ interval in which the death was determined.</p></dd>
 <dt id="arg-temp-dir">temp_dir<a class="anchor" aria-label="anchor" href="#arg-temp-dir"></a></dt>
 <dd><p>Name of the temporary directory with temporary
 files.</p></dd>
+
+
+<dt id="arg-right-censoring-date">right_censoring_date<a class="anchor" aria-label="anchor" href="#arg-right-censoring-date"></a></dt>
+<dd><p>Value used for event intervals that were not
+supplied because that event is not being fitted.</p></dd>
 
 </dl></div>
 

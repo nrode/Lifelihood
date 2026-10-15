@@ -15,15 +15,15 @@ as_lifelihoodData(
   sex,
   sex_start,
   sex_end,
-  maturity_start,
-  maturity_end,
-  clutchs,
-  death_start,
-  death_end,
+  maturity_start = NULL,
+  maturity_end = NULL,
+  clutchs = NULL,
+  death_start = NULL,
+  death_end = NULL,
   dist,
   covariates,
   block = NULL,
-  matclutch,
+  matclutch = FALSE,
   matclutch_size = NULL,
   right_censoring_date = 1000,
   critical_age = 20,
@@ -54,41 +54,46 @@ as_lifelihoodData(
 
 - maturity_start:
 
-  Column name containing the first date of the interval in which the
-  maturity was determined.
+  Optional column name containing the first date of the interval in
+  which the maturity was determined. Required when fitting maturity or
+  reproduction.
 
 - maturity_end:
 
-  Column name containing the second date of the interval in which the
-  maturity was determined.
+  Optional column name containing the second date of the interval in
+  which the maturity was determined. Required when fitting maturity or
+  reproduction.
 
 - clutchs:
 
-  Vector containing the names of the clutch columns. The order should
-  be: first clutch first date, first clutch second date, first clutch
-  clutch size, second clutch first date, first clutch second date,
-  second clutch clutch size, and so on. If the observation with the most
-  clutches is, for example, 10, then the vector must be of size 10 x 3 =
-  30 (3 elements per clutch: first date, second date and size).
+  Optional vector containing the names of the clutch columns. The order
+  should be: first clutch first date, first clutch second date, first
+  clutch clutch size, second clutch first date, first clutch second
+  date, second clutch clutch size, and so on. If the observation with
+  the most clutches is, for example, 10, then the vector must be of size
+  10 x 3 = 30 (3 elements per clutch: first date, second date and size).
 
 - death_start:
 
-  Column name containing the first date of the interval in which the
-  death was determined.
+  Optional column name containing the first date of the interval in
+  which the death was determined. Required when fitting mortality or
+  reproduction.
 
 - death_end:
 
-  Column name containing the second date of the interval in which the
-  death was determined.
+  Optional column name containing the second date of the interval in
+  which the death was determined. Required when fitting mortality or
+  reproduction.
 
 - dist:
 
-  Data frame with exactly three columns: `mortality`, `maturity`, and
-  `reproduction`. Each row specifies one model to fit with
+  Data frame with one or more columns selected from `mortality`,
+  `maturity`, and `reproduction`. Each row specifies one model to fit
+  with
   [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md).
-  Each cell must contain "wei" (Weibull), "exp" (exponential), "gam"
-  (gamma), or "lgn" (log-normal). Use a one-row data frame to fit a
-  single model.
+  Reproduction requires mortality and maturity data. Each cell must
+  contain "wei" (Weibull), "exp" (exponential), "gam" (gamma), or "lgn"
+  (log-normal). Use a one-row data frame to fit a single model.
 
 - covariates:
 
@@ -107,7 +112,8 @@ as_lifelihoodData(
 - matclutch_size:
 
   Column name containing the size of the clutch for the maturity event.
-  Only used (and required) if `matclutch` is `TRUE`.
+  Required when `matclutch` is `TRUE` and maturity data are used,
+  including as a dependency of reproduction.
 
 - right_censoring_date:
 
