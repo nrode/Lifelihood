@@ -33,7 +33,7 @@ lifelihoodData <- as_lifelihoodData(
   death_start = "death_start",
   death_end = "death_end",
   covariates = "Group",
-  dist = data.frame(mortality = "wei", maturity = "lgn", reproduction = "lgn")
+  dist = data.frame(reproduction = "lgn")
 )
 
 config_fitness <- list(

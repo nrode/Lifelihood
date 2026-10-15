@@ -55,7 +55,15 @@ clutchs <- generate_clutch_vector(28)
 
 This function mostly takes as input your dataset, your column names.
 
-The `dist` argument is a data frame with exactly three columns: `mortality`, `maturity`, and `reproduction`. Each row specifies one model to fit. Each cell must contain `"wei"` (Weibull), `"exp"` (exponential), `"gam"` (gamma), or `"lgn"` (log-normal). Use a one-row data frame to fit a single model, as below.
+The `dist` argument is a data frame with one or more columns selected from
+`mortality`, `maturity`, and `reproduction`. Each row specifies one model to
+fit. Each cell must contain `"wei"` (Weibull), `"exp"` (exponential), `"gam"`
+(gamma), or `"lgn"` (log-normal). Include only the events you want to fit. For
+example, a mortality-only model can use `dist = data.frame(mortality = "wei")`
+and needs only the death interval columns. Fitting reproduction also requires
+maturity and death interval data, even when those events are not fitted.
+
+This example fits all three events, so its `dist` includes all three:
 
 ```{r}
 dataLFH <- as_lifelihoodData(
