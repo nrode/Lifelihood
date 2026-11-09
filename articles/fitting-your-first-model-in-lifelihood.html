@@ -112,11 +112,11 @@
 
 
     <div class="topVignette">
-If you haven’t check it yet, have a look at:
+If you haven’t checked these out yet, have a look at:
 </div>
 <ul>
-<li><a href="required-data-format.html">what is the required data format to work with lifelihood?</a></li>
-<li><a href="setting-up-the-configuration-file.html">setting up the configuration file</a></li>
+<li><a href="required-data-format.html">What is the required data format for lifelihood?</a></li>
+<li><a href="setting-up-the-configuration-file.html">How to set up the configuration file</a></li>
 </ul>
 <section class="section level2"><h2 id="load-libraries">Load libraries<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
 </h2>
@@ -139,7 +139,7 @@ If you haven’t check it yet, have a look at:
 </section><section class="section level2"><h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <hr>
-<p>Load the dataset from <code>.csv</code> file:</p>
+<p>Load the dataset from a <code>.csv</code> file:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># input data</span></span>
@@ -174,8 +174,8 @@ If you haven’t check it yet, have a look at:
 <p><em>Note: If you have a large number of clutches, it is easier to generate this vector programmatically. See the <a href="generate-clutch-names.html">Generate clutch names</a> vignette.</em></p>
 </section><section class="section level2"><h2 id="create-the-lifelihooddata-object">Create the <code>lifelihoodData</code> object<a class="anchor" aria-label="anchor" href="#create-the-lifelihooddata-object"></a>
 </h2>
-<p><code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> creates a <code>lifelihoodData</code> object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.</p>
-<p>This function mostly takes as input your dataset, your column names.</p>
+<p><code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code> creates a <code>lifelihoodData</code> object, which is a list containing all the information needed to run the lifelihood program on a given dataset of individual life histories.</p>
+<p>This function mainly takes your dataset and column names as inputs.</p>
 <p>The <code>dist</code> argument is a data frame with one or more columns selected from <code>mortality</code>, <code>maturity</code>, and <code>reproduction</code>. Each row specifies one model to fit. Each cell must contain <code>"wei"</code> (Weibull), <code>"exp"</code> (exponential), <code>"gam"</code> (gamma), or <code>"lgn"</code> (log-normal). Include only the events you want to fit. For example, a mortality-only model can use <code>dist = data.frame(mortality = "wei")</code> and needs only the death interval columns. Fitting reproduction also requires maturity and death interval data, even when those events are not fitted.</p>
 <p>This example fits all three events, so its <code>dist</code> includes all three:</p>
 <div class="cell">
@@ -200,9 +200,9 @@ If you haven’t check it yet, have a look at:
 <hr>
 <section class="level2"><h3 id="all-default-parameters">All default parameters<a class="anchor" aria-label="anchor" href="#all-default-parameters"></a>
 </h3>
-<p>Once you have created your <code>lifelihoodData</code> object with <code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code>, you can call the <code><a href="../reference/lifelihood.html">lifelihood()</a></code> function to run the lifelihood program.</p>
-<p>It returns a <code>lifelihoodResults</code> object, which is a list containing all the results of the analysis.</p>
-<p>Here it’s a minimalist usage of the function, where we only specify the <code>lifelihoodData</code> object, the configuration and the seeds to use (four integers used by Mersenne Twister pseudorandom number generator of the lifelihood program). The <code>raise_estimation_warning</code> argument will be the focus of the <a href="4-custom-param-boundaries-and-estimation-warning.html">next vignette</a>.</p>
+<p>Once you have created your <code>lifelihoodData</code> object with <code><a href="../reference/as_lifelihoodData.html">as_lifelihoodData()</a></code>, call <code><a href="../reference/lifelihood.html">lifelihood()</a></code> to run the lifelihood program.</p>
+<p>This returns a <code>lifelihoodResults</code> object, which is a list containing the analysis results.</p>
+<p>This is a minimal example that specifies only the <code>lifelihoodData</code> object, the configuration, and the seeds (four integers used by the lifelihood program’s Mersenne Twister pseudorandom number generator). The <code>raise_estimation_warning</code> argument is covered in the <a href="customize-parameter-boundaries-and-estimation-warning.html">next vignette</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">config</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -311,7 +311,11 @@ If you haven’t check it yet, have a look at:
 <span>  raise_estimation_warning <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =</span></span>
-<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 1 differ by 0.312 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 1 differ by 4.821 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; Consider increasing n_fit (currently 2) to be sure of model convergence and</span></span>
+<span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
+<span><span class="co">#&gt; Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =</span></span>
+<span><span class="co">#&gt; 2, : Best and second-best likelihoods for model row 2 differ by 0.736 (&gt; 0.1).</span></span>
 <span><span class="co">#&gt; Consider increasing n_fit (currently 2) to be sure of model convergence and</span></span>
 <span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
 <span></span>
@@ -320,10 +324,10 @@ If you haven’t check it yet, have a look at:
 <span><span class="co">#&gt; # A tibble: 4 × 20</span></span>
 <span><span class="co">#&gt;   fit          seeds dist_maturity dist_reproduction dist_mortality n_parameters</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;             &lt;chr&gt;                 &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 lifelihood_… 7685… gam           lgn               wei                      10</span></span>
-<span><span class="co">#&gt; 2 lifelihood_… 595_… gam           lgn               wei                      10</span></span>
-<span><span class="co">#&gt; 3 lifelihood_… 3574… exp           exp               exp                       7</span></span>
-<span><span class="co">#&gt; 4 lifelihood_… 4849… exp           exp               exp                       7</span></span>
+<span><span class="co">#&gt; 1 lifelihood_… 1000… gam           lgn               wei                      10</span></span>
+<span><span class="co">#&gt; 2 lifelihood_… 2924… gam           lgn               wei                      10</span></span>
+<span><span class="co">#&gt; 3 lifelihood_… 8525… exp           exp               exp                       7</span></span>
+<span><span class="co">#&gt; 4 lifelihood_… 4003… exp           exp               exp                       7</span></span>
 <span><span class="co">#&gt; # ℹ 14 more variables: likelihood &lt;dbl&gt;, AIC &lt;dbl&gt;, AICc &lt;dbl&gt;, ΔAICc &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   int_expt_death &lt;dbl&gt;, eff_expt_death_par_1 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   eff_expt_death_par_2 &lt;dbl&gt;, int_survival_param2 &lt;dbl&gt;,</span></span>
@@ -355,7 +359,8 @@ If you haven’t check it yet, have a look at:
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -364,8 +369,69 @@ If you haven’t check it yet, have a look at:
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -379,6 +445,7 @@ If you haven’t check it yet, have a look at:
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;

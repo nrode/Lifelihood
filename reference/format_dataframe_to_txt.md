@@ -1,10 +1,10 @@
-# Create the input data file from a dataframe
+# Create the input data file from a data frame
 
-Takes a dataframe (`df` argument in
-[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
-function) and apply to each row the
+Takes a data frame (the `df` argument in
+[`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md))
+and applies
 [`format_row()`](https://nrode.github.io/Lifelihood/reference/format_row.md)
-function to create the input data file.
+to each row to create the input data file.
 
 ## Usage
 
@@ -33,7 +33,7 @@ format_dataframe_to_txt(
 
 - df:
 
-  Dataframe with the data of life history. It should have one row per
+  Data frame containing life-history data. It should have one row per
   life history / observation.
 
 - sex:

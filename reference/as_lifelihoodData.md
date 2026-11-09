@@ -1,10 +1,10 @@
 # Data object for lifelihood
 
 Creates a `lifelihoodData` object, which is a list containing all the
-information needed to run the lifelihood program of a given dataset of
-individual life history. This function will mainly be used to pass to
+information needed to run the lifelihood program for a given dataset of
+individual life histories. This function is mainly used to pass data to
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
-or for customizing parameter boundaries with
+or to customize parameter boundaries with
 [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md).
 
 ## Usage
@@ -35,7 +35,7 @@ as_lifelihoodData(
 
 - df:
 
-  Dataframe with the data of life history. It should have one row per
+  Data frame containing life-history data. It should have one row per
   life history / observation.
 
 - sex:
@@ -66,12 +66,10 @@ as_lifelihoodData(
 
 - clutchs:
 
-  Optional vector containing the names of the clutch columns. The order
-  should be: first clutch first date, first clutch second date, first
-  clutch clutch size, second clutch first date, first clutch second
-  date, second clutch clutch size, and so on. If the observation with
-  the most clutches is, for example, 10, then the vector must be of size
-  10 x 3 = 30 (3 elements per clutch: first date, second date and size).
+  Optional vector of clutch column names. For each clutch, list the
+  first date, second date, and clutch size, in that order. For example,
+  if the observation with the most clutches has 10, the vector must
+  contain 10 x 3 = 30 elements.
 
 - death_start:
 
@@ -101,7 +99,7 @@ as_lifelihoodData(
 
 - block:
 
-  Column name containing the block to which each individual belong to.
+  Column name containing the block to which each individual belongs.
 
 - matclutch:
 
@@ -117,9 +115,9 @@ as_lifelihoodData(
 
 - right_censoring_date:
 
-  (CURRENTLY IGNORED) Time (integer) point at which a subject’s data is
+  (CURRENTLY IGNORED) Time (integer) point at which a subject's data are
   censored. This means that for subjects who do not experience the event
-  of interest (e.g., death, failure) by this date, their data is
+  of interest (e.g., death or failure) by this date, their data are
   considered censored. In practice, choose a value much larger than the
   maximum longevity seen in the data.
 
@@ -130,9 +128,9 @@ as_lifelihoodData(
 
 - ratiomax:
 
-  (CURRENTLY IGNORED) Maximum ratio (integer) between number of
-  offspring of last and first reproduction events. Cannot be greater
-  than ratiomax.
+  (CURRENTLY IGNORED) Maximum ratio (integer) between the numbers of
+  offspring at the last and first reproduction events. It cannot be
+  greater than `ratiomax`.
 
 ## Value
 

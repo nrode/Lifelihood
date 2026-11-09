@@ -1,12 +1,12 @@
 # lifelihood
 
-`lifelihood` is an R package and a class of continuous time multi-event
-models which provide the joined likelihood of all the events in an
-individual life-history (time of maturity, reproductive events, death).
+`lifelihood` is an R package for continuous-time, multi-event models
+that provide the joint likelihood of all events in an individual’s life
+history (maturity, reproduction, and death).
 
 [Documentation](https://nrode.github.io/Lifelihood/)
 
-It requires R 4.1.0 or later, and work on all of:
+It requires R 4.1.0 or later and works on:
 
 - macOS (arm64 and x86)
 - Linux (arm64 and x86)

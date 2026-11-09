@@ -57,10 +57,10 @@
 `}``)`\
 `time_default`\
 `#>    user  system elapsed `\
-`#>  11.780   0.090  11.982`
+`#>  13.224   0.174  15.145`
 
-- Interaction model using the `group_by_group` argument (default to
-  `FALSE`)
+- Interaction model using the `group_by_group` argument (which defaults
+  to `FALSE`)
 
 \
 `time_gbg`` ``<-`` `[`system.time`](https://rdrr.io/r/base/system.time.html)`(``{`\
@@ -72,10 +72,10 @@
 `}``)`\
 `time_gbg`\
 `#>    user  system elapsed `\
-`#>   0.746   0.059   0.821`
+`#>   0.791   0.079   0.961`
 
-Fitting interaction model with group by group is faster than default
-model.
+Fitting the interaction model with `group_by_group = TRUE` is faster
+than fitting the default model.
 
 - Comparison
 
@@ -85,5 +85,5 @@ model.
 `results_gbg``$``likelihood`\
 `#> [1] -2455.379`
 
-Log-likelihood is also higher with group by group indicating better
-convergence towards the maximum log-likelihood value.
+The log-likelihood is also higher with `group_by_group = TRUE`,
+indicating better convergence toward the maximum log-likelihood.

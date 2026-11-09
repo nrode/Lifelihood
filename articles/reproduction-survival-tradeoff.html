@@ -262,10 +262,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          87.9</span></span>
-<span><span class="co">#&gt; 2 1         103. </span></span>
-<span><span class="co">#&gt; 3 2          81.0</span></span>
-<span><span class="co">#&gt; 4 3         101.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          87.8</span></span>
+<span><span class="co">#&gt; 2 1         105. </span></span>
+<span><span class="co">#&gt; 3 2          81.5</span></span>
+<span><span class="co">#&gt; 4 3         100.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-without-tradeoffs">From scratch without tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-without-tradeoffs"></a>
 </h3>
@@ -349,21 +349,21 @@
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"</span></span>
 <span><span class="va">sim_data</span></span>
-<span><span class="co">#&gt; # A tibble: 400 × 119</span></span>
+<span><span class="co">#&gt; # A tibble: 400 × 125</span></span>
 <span><span class="co">#&gt;    geno  block   sex sex_start sex_end mortality mortality_start mortality_end</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 0         1     0       990    1000      85.2            85.2          85.3</span></span>
-<span><span class="co">#&gt;  2 0         1     0       990    1000      79.5            79.4          79.5</span></span>
-<span><span class="co">#&gt;  3 0         1     0       990    1000      86.0            86            86.1</span></span>
-<span><span class="co">#&gt;  4 0         1     0       990    1000     113.            113.          113. </span></span>
-<span><span class="co">#&gt;  5 0         1     0       990    1000      78.9            78.9          79  </span></span>
-<span><span class="co">#&gt;  6 0         1     0       990    1000      98.7            98.6          98.7</span></span>
-<span><span class="co">#&gt;  7 0         1     0       990    1000      93.9            93.8          93.9</span></span>
-<span><span class="co">#&gt;  8 0         1     0       990    1000     101.            101.          101. </span></span>
-<span><span class="co">#&gt;  9 0         1     0       990    1000      71.8            71.7          71.8</span></span>
-<span><span class="co">#&gt; 10 0         1     0       990    1000     113.            112.          113. </span></span>
+<span><span class="co">#&gt;  1 0         1     0       990    1000      84.2            84.1          84.2</span></span>
+<span><span class="co">#&gt;  2 0         1     0       990    1000     107.            107.          107  </span></span>
+<span><span class="co">#&gt;  3 0         1     0       990    1000      86.5            86.4          86.5</span></span>
+<span><span class="co">#&gt;  4 0         1     0       990    1000     108.            108.          108. </span></span>
+<span><span class="co">#&gt;  5 0         1     0       990    1000      93.9            93.8          93.9</span></span>
+<span><span class="co">#&gt;  6 0         1     0       990    1000      76.1            76            76.1</span></span>
+<span><span class="co">#&gt;  7 0         1     0       990    1000      86.1            86            86.1</span></span>
+<span><span class="co">#&gt;  8 0         1     0       990    1000      22.7            22.7          22.8</span></span>
+<span><span class="co">#&gt;  9 0         1     0       990    1000     104.            104.          104. </span></span>
+<span><span class="co">#&gt; 10 0         1     0       990    1000      74.7            74.7          74.8</span></span>
 <span><span class="co">#&gt; # ℹ 390 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 111 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # ℹ 117 more variables: maturity &lt;dbl&gt;, maturity_start &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   maturity_end &lt;dbl&gt;, first_clutch_size &lt;int&gt;, clutch_start_2 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;, clutch_start_3 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_end_3 &lt;dbl&gt;, clutch_size_3 &lt;int&gt;, clutch_start_4 &lt;dbl&gt;,</span></span>
@@ -377,10 +377,10 @@
 <span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
 <span><span class="co">#&gt;   geno  longevity</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0          83.7</span></span>
-<span><span class="co">#&gt; 2 1          97.5</span></span>
-<span><span class="co">#&gt; 3 2          83.3</span></span>
-<span><span class="co">#&gt; 4 3         102.</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0          85.9</span></span>
+<span><span class="co">#&gt; 2 1         101. </span></span>
+<span><span class="co">#&gt; 3 2          79.9</span></span>
+<span><span class="co">#&gt; 4 3         101.</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="from-scratch-with-tradeoffs">From scratch with tradeoffs<a class="anchor" aria-label="anchor" href="#from-scratch-with-tradeoffs"></a>
 </h3>
@@ -623,7 +623,8 @@
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -632,8 +633,69 @@
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -647,6 +709,7 @@
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -675,44 +738,54 @@
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -789,6 +862,7 @@
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'right',
+            plugins: [hideOnEscAndFocusOut],
             popperOptions: {
               modifiers: [
               {

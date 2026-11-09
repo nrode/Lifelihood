@@ -16,7 +16,7 @@
 `#> ✖ dplyr::lag()    masks stats::lag()`\
 `#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors`
 
-### Data prepration
+### Data preparation
 
 \
 `df`` ``<-`` ``datapierrick`` ``|>`\
@@ -155,7 +155,7 @@
 `#> 5              NA            NA             NA         135       136`\
 `#> 6              NA            NA             NA          74        75`
 
-### Creata a data lifelihood object
+### Create a lifelihood data object
 
 \
 `dataLFH`` ``<-`` `[`as_lifelihoodData`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)`(`\
@@ -193,36 +193,36 @@
 
 \
 [`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 64976.55`\
+`#> [1] 64963.7`\
 [`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 65019.64`
+`#> [1] 65006.79`
 
 ### Summary results
 
 \
 [`coef`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``)`\
 `#>          int_expt_death    eff_expt_death_par_1    eff_expt_death_par_2 `\
-`#>              -0.9054257              -2.4851331              -2.4855652 `\
+`#>              -0.9177591              -3.8273378              -3.8473278 `\
 `#>     int_survival_param2    int_ratio_expt_death       int_expt_maturity `\
-`#>              -4.8722436              -3.0044804              -1.4765359 `\
+`#>              -4.8838004              -1.5208486              -1.4783588 `\
 `#>     int_maturity_param2   int_expt_reproduction int_reproduction_param2 `\
-`#>              -3.2354572              -4.2482637              -5.3398443 `\
+`#>              -3.2571905              -4.2562595              -5.3523928 `\
 `#>         int_n_offspring `\
-`#>              -2.5549542`\
+`#>              -2.5533340`\
 [`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"expt_death"``)`\
 `#>       int_expt_death eff_expt_death_par_1 eff_expt_death_par_2 `\
-`#>           -0.9054257           -2.4851331           -2.4855652`\
+`#>           -0.9177591           -3.8273378           -3.8473278`\
 [`coeff`](https://nrode.github.io/Lifelihood/reference/coef.md)`(``results``, ``"survival_param2"``)`\
 `#> int_survival_param2 `\
-`#>           -4.872244`\
+`#>             -4.8838`\
 \
 [`AIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 64976.55`\
+`#> [1] 64963.7`\
 [`BIC`](https://rdrr.io/r/stats/AIC.html)`(``results``)`\
-`#> [1] 65019.64`\
+`#> [1] 65006.79`\
 \
 [`logLik`](https://rdrr.io/r/stats/logLik.html)`(``results``)`\
-`#> [1] -32478.27`
+`#> [1] -32471.85`
 
 ### Prediction on new data
 
@@ -237,6 +237,6 @@
 `  ``)`\
 \
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"expt_death"``, newdata ``=`` ``newdata``)`\
-`#> [1] -0.9054257 -3.3905588 -3.3909909 -0.9054257 -3.3905588 -3.3909909 -3.3905588`\
+`#> [1] -0.9177591 -4.7450969 -4.7650869 -0.9177591 -4.7450969 -4.7650869 -4.7450969`\
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"expt_death"``, newdata ``=`` ``newdata``, type ``=`` ``"response"``)`\
 `#> numeric(0)`

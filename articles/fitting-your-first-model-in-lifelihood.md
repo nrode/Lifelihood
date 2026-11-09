@@ -1,10 +1,10 @@
 # Fitting your first model in lifelihood
 
-If you haven’t check it yet, have a look at:
+If you haven’t checked these out yet, have a look at:
 
-- [what is the required data format to work with
+- [What is the required data format for
   lifelihood?](https://nrode.github.io/Lifelihood/articles/required-data-format.md)
-- [setting up the configuration
+- [How to set up the configuration
   file](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md)
 
 ## Load libraries
@@ -29,7 +29,7 @@ If you haven’t check it yet, have a look at:
 
 ------------------------------------------------------------------------
 
-Load the dataset from `.csv` file:
+Load the dataset from a `.csv` file:
 
 \
 `# input data`\
@@ -72,10 +72,10 @@ vignette.*
 
 [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
 creates a `lifelihoodData` object, which is a list containing all the
-information needed to run the lifelihood program of a given dataset of
-individual life history.
+information needed to run the lifelihood program on a given dataset of
+individual life histories.
 
-This function mostly takes as input your dataset, your column names.
+This function mainly takes your dataset and column names as inputs.
 
 The `dist` argument is a data frame with one or more columns selected
 from `mortality`, `maturity`, and `reproduction`. Each row specifies one
@@ -112,19 +112,18 @@ This example fits all three events, so its `dist` includes all three:
 
 Once you have created your `lifelihoodData` object with
 [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md),
-you can call the
+call
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
-function to run the lifelihood program.
+to run the lifelihood program.
 
-It returns a `lifelihoodResults` object, which is a list containing all
-the results of the analysis.
+This returns a `lifelihoodResults` object, which is a list containing
+the analysis results.
 
-Here it’s a minimalist usage of the function, where we only specify the
-`lifelihoodData` object, the configuration and the seeds to use (four
-integers used by Mersenne Twister pseudorandom number generator of the
-lifelihood program). The `raise_estimation_warning` argument will be the
-focus of the [next
-vignette](https://nrode.github.io/Lifelihood/articles/4-custom-param-boundaries-and-estimation-warning.md).
+This is a minimal example that specifies only the `lifelihoodData`
+object, the configuration, and the seeds (four integers used by the
+lifelihood program’s Mersenne Twister pseudorandom number generator).
+The `raise_estimation_warning` argument is covered in the [next
+vignette](https://nrode.github.io/Lifelihood/articles/customize-parameter-boundaries-and-estimation-warning.md).
 
 \
 `config`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
@@ -238,7 +237,11 @@ model:
 `  raise_estimation_warning ``=`` ``FALSE`\
 `)`\
 `#> Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =`\
-`#> 2, : Best and second-best likelihoods for model row 1 differ by 0.312 (> 0.1).`\
+`#> 2, : Best and second-best likelihoods for model row 1 differ by 4.821 (> 0.1).`\
+`#> Consider increasing n_fit (currently 2) to be sure of model convergence and`\
+`#> find the model with highest log-likelihood.`\
+`#> Warning in lifelihood(lifelihoodData = data_multiple, config = config, n_fit =`\
+`#> 2, : Best and second-best likelihoods for model row 2 differ by 0.736 (> 0.1).`\
 `#> Consider increasing n_fit (currently 2) to be sure of model convergence and`\
 `#> find the model with highest log-likelihood.`\
 \
@@ -247,10 +250,10 @@ model:
 `#> # A tibble: 4 × 20`\
 `#>   fit          seeds dist_maturity dist_reproduction dist_mortality n_parameters`\
 `#>   <chr>        <chr> <chr>         <chr>             <chr>                 <int>`\
-`#> 1 lifelihood_… 7685… gam           lgn               wei                      10`\
-`#> 2 lifelihood_… 595_… gam           lgn               wei                      10`\
-`#> 3 lifelihood_… 3574… exp           exp               exp                       7`\
-`#> 4 lifelihood_… 4849… exp           exp               exp                       7`\
+`#> 1 lifelihood_… 1000… gam           lgn               wei                      10`\
+`#> 2 lifelihood_… 2924… gam           lgn               wei                      10`\
+`#> 3 lifelihood_… 8525… exp           exp               exp                       7`\
+`#> 4 lifelihood_… 4003… exp           exp               exp                       7`\
 `#> # ℹ 14 more variables: likelihood <dbl>, AIC <dbl>, AICc <dbl>, ΔAICc <dbl>,`\
 `#> #   int_expt_death <dbl>, eff_expt_death_par_1 <dbl>,`\
 `#> #   eff_expt_death_par_2 <dbl>, int_survival_param2 <dbl>,`\

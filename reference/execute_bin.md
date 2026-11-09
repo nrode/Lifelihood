@@ -37,8 +37,8 @@ execute_bin(
 
 - path_to_Lifelihood:
 
-  A character string specifying the file path to the compile Lifelihood
-  program (default is NULL).
+  A character string specifying the file path to the compiled Lifelihood
+  program (default is `NULL`).
 
 - path_input_data:
 
@@ -46,13 +46,13 @@ execute_bin(
 
 - path_param_bounds:
 
-  Path to the parameter boundaries text file with the min and max
-  boudaries for each parameter.
+  Path to the parameter boundaries text file with the minimum and
+  maximum boundaries for each parameter.
 
 - MCMC:
 
-  Perform MCMC sampling of the parameter after convergence to estimate
-  their 95% confidence interval.
+  Perform MCMC sampling of the parameters after convergence to estimate
+  their 95% confidence intervals.
 
 - interval:
 
@@ -69,13 +69,13 @@ execute_bin(
 
 - fitness:
 
-  Reparametrize the model with one parameter as the intrinsic rate of
-  increase.
+  Reparameterize the model so that one parameter represents the
+  intrinsic rate of increase.
 
 - r:
 
-  Reparametrize the model with one parameter as the intrinsic rate of
-  increase.
+  Reparameterize the model so that one parameter represents the
+  intrinsic rate of increase.
 
 - seed1:
 
@@ -123,7 +123,7 @@ execute_bin(
 
 - ntr:
 
-  Number of thread for the paralelisation.
+  Number of threads used for parallelization.
 
 - nst:
 

@@ -55,8 +55,8 @@ lifelihood(
 
 - path_to_Lifelihood:
 
-  A character string specifying the file path to the compile Lifelihood
-  program (default is NULL)
+  A character string specifying the path to the compiled Lifelihood
+  program (default is `NULL`).
 
 - n_fit:
 
@@ -76,8 +76,8 @@ lifelihood(
 
 - MCMC:
 
-  Perform MCMC sampling of the parameter after convergence to estimate
-  their 95% confidence interval
+  Perform MCMC sampling of the parameters after convergence to estimate
+  their 95% confidence intervals.
 
 - interval:
 
@@ -95,8 +95,8 @@ lifelihood(
 
 - r:
 
-  Reparametrize the model with one parameter as the intrinsic rate of
-  increase
+  Reparameterize the model so that one parameter represents the
+  intrinsic rate of increase.
 
 - seeds:
 
@@ -107,15 +107,15 @@ lifelihood(
 
 - ntr:
 
-  Number of temperature steps in each simulated annealing run; the
-  temperature decreases from To to Tf in exactly ntr steps, with nst
-  Metropolis trials at each step.
+  Number of temperature steps in each simulated annealing run. The
+  temperature decreases from `To` to `Tf` in exactly `ntr` steps, with
+  `nst` Metropolis trials at each step.
 
 - nst:
 
-  Simulated annealing tuning parameter increasing nst makes the search
-  more thorough at each temperature (better chance of finding the global
-  maximum, slower fit)
+  Simulated annealing tuning parameter. Increasing `nst` makes the
+  search more thorough at each temperature, improving the chance of
+  finding the global maximum but slowing the fit.
 
 - To:
 
@@ -140,18 +140,17 @@ lifelihood(
 - ratiomax:
 
   Maximum multiplicative factor for clutch size in models with
-  reproductive senescence (cf CalculRatioEspPoissonTronque function in
-  Lifelihood)
+  reproductive senescence.
 
 - tc:
 
-  critical age (after the juvenile mortality peak) at which the survival
-  model starts to be fitted
+  Critical age (after the juvenile mortality peak) at which the survival
+  model starts to be fitted.
 
 - tinf:
 
-  maximum censoring time (should be greater than the age of the oldest
-  individual observed dead in the dataset)
+  Maximum censoring time. It should be greater than the age of the
+  oldest individual observed dead in the dataset.
 
 - sub_interval:
 

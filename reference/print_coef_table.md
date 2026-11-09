@@ -1,6 +1,6 @@
 # Print simplified coefficient table
 
-Helper function to print a clean coefficient table
+Helper function to print a clean coefficient table.
 
 ## Usage
 
@@ -12,7 +12,7 @@ print_coef_table(df, digits = 3)
 
 - df:
 
-  Dataframe with effects
+  Data frame containing effects.
 
 - digits:
 

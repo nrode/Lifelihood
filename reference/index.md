@@ -32,7 +32,7 @@
 - [`datapierrick`](https://nrode.github.io/Lifelihood/reference/datapierrick.md)
   : Pierrick data
 - [`default_bounds_df()`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)
-  : Get dataframe with default parameter boundaries
+  : Get a data frame of default parameter boundaries
 - [`fakesample`](https://nrode.github.io/Lifelihood/reference/fakesample.md)
   : Fake sample
 - [`generate_clutch_vector()`](https://nrode.github.io/Lifelihood/reference/generate_clutch_vector.md)

@@ -1,6 +1,6 @@
 # Check that the `groupby` argument is valid
 
-Check that `groupby` has an expected value, and returns it
+Check that `groupby` has an expected value and return it.
 
 ## Usage
 

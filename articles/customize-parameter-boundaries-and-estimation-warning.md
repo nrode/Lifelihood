@@ -1,8 +1,8 @@
 # Customize parameter boundaries and estimation warning
 
-If you haven’t check it yet, have a look at:
+If you haven’t checked these out yet, have a look at:
 
-- [What is the required data format to work with
+- [What is the required data format for
   lifelihood?](https://nrode.github.io/Lifelihood/articles/required-data-format.md)
 - [Setting up the configuration
   file](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md)
@@ -31,7 +31,7 @@ If you haven’t check it yet, have a look at:
 
 ------------------------------------------------------------------------
 
-Load the dataset from `.csv` file:
+Load the dataset from a `.csv` file:
 
 \
 `# input data`\
@@ -125,7 +125,7 @@ Let’s run the analysis with default parameters.
 
 ### What is it?
 
-When runnning
+When running the
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
 function, you might encounter the following warning:
 
@@ -194,12 +194,12 @@ computes default boundaries separately for each row of `dist`. If you
 supply `param_bounds_df`, the same custom boundaries are used for every
 model.
 
-Since 10 seems to not be high enough, let’s try with 80:
+Since 10 does not seem to be high enough, let’s try 80:
 
 \
 `bounds_df``[``bounds_df``$``name`` ``==`` ``"increase_death_hazard"``, ``"max"``]`` ``<-`` ``80`
 
-Once it’s changed, you just have to call
+Once the boundary has been changed, call
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
 again with the `param_bounds_df` argument:
 

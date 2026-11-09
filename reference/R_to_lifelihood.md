@@ -1,10 +1,10 @@
 # Convert R formula to lifelihood formula
 
 Transforms a character string describing the covariates to be included
-into a format which the compiled program can understand. For example,
+in a format that the compiled program can understand. For example,
 `"geno + type"` will become `1 2` if `"geno"` is the first element of
-`covariables` and `"type"` is the second. This function is used to
-create the model part of the input text file.
+`covariates` and `"type"` is the second. This function is used to create
+the model part of the input text file.
 
 ## Usage
 
@@ -17,7 +17,7 @@ R_to_lifelihood(R_format, covariates, covar_types)
 - R_format:
 
   String representing the covariates to be adjusted. For example,
-  "geno + type" will use the covariates geno and type.
+  `"geno + type"` uses the `geno` and `type` covariates.
 
 - covariates:
 
@@ -30,5 +30,4 @@ R_to_lifelihood(R_format, covariates, covar_types)
 
 ## Value
 
-The formatted format for lifelihood to understand which parameter to
-fit.
+A formatted string that tells lifelihood which parameters to fit.

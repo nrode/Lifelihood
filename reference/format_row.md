@@ -1,7 +1,7 @@
-# Format a dataframe row for the input data file
+# Format a data frame row for the input data file
 
-Takes a row from a dataframe with input data (sex, maturity, clutch date
-and death) in interval format and transform it into a large string
+Takes a row from a data frame with input data (sex, maturity, clutch
+date and death) in interval format and transform it into a large string
 (required format for the data input file).
 
 ## Usage
@@ -27,7 +27,7 @@ format_row(
 
 - row:
 
-  A row of the dataframe object provided by the user (`df` argument in
+  A row of the data frame provided by the user (`df` argument in
   [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md)
   function).
 

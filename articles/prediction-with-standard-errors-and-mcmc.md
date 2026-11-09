@@ -59,8 +59,8 @@
 
 ## Standard errors
 
-By default, lifelihood will not try to fit standard errors. But, you can
-use the `se.fit` argument for this purpose:
+By default, lifelihood does not try to estimate standard errors. You can
+request them with the `se.fit` argument:
 
 \
 \
@@ -72,7 +72,7 @@ use the `se.fit` argument for this purpose:
 `  seed ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``103``, ``349``, ``1213``, ``1283``)`\
 `)`\
 \
-`## Change sees to converge to the ML optimum`\
+`## Change seeds to converge to the ML optimum`\
 [`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
 `results`` ``<-`` `[`lifelihood`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)`(`\
 `  lifelihoodData ``=`` ``lifelihoodData``,`\
@@ -111,7 +111,7 @@ use the `se.fit` argument for this purpose:
 `#> `\
 `#> ======================`
 
-Now if we have a look at the estimations we have standard errors:
+The estimates now include standard errors:
 
 \
 `results``$``effects`` ``|>`` `[`as_tibble`](https://tibble.tidyverse.org/reference/as_tibble.html)`(``)`\

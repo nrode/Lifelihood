@@ -18,21 +18,20 @@
 
 ------------------------------------------------------------------------
 
-As life history data is by nature heterogeneous between observations
-from the same sample, the format of the data required can be somewhat
-tricky. Under the hood, `lifelihood` creates a text file containing the
-data (and other parameters), and then use this file for the (core)
-source code. Fortunately, `lifelihood` automatically transform the
-dataframe into the text file with the right format.
+Because life-history data can vary between observations in the same
+sample, the required data format can be somewhat tricky. Under the hood,
+`lifelihood` creates a text file containing the data and other
+parameters, then passes this file to the core program. Fortunately,
+`lifelihood` automatically transforms the data frame into the required
+format.
 
-In this vignette, we’ll look at how the dataframe containing your data
-needs to be formatted for the Lifelihood programme to work properly.
-Which event columns you need depends on the events selected in `dist`:
-maturity columns are needed when fitting maturity or reproduction; death
-columns are needed when fitting mortality or reproduction; clutch
-columns are needed when fitting reproduction. For example, a
-mortality-only fit can omit maturity and clutch columns and use
-`dist = data.frame(mortality = "wei")`.
+This vignette explains how to format your data frame for the Lifelihood
+program. The event columns you need depend on the events selected in
+`dist`: maturity columns are needed when fitting maturity or
+reproduction; death columns are needed when fitting mortality or
+reproduction; and clutch columns are needed when fitting reproduction.
+For example, a mortality-only fit can omit maturity and clutch columns
+and use `dist = data.frame(mortality = "wei")`.
 
 ## Data preparation
 
@@ -42,23 +41,24 @@ Let’s create a simple dataset with just 7 observations and columns for
 all three events. A model that fits fewer events can omit columns it
 does not need, following the requirements above.
 
-- `sex` Column name containing the sex of the observations.
-- `sex_start` Column name containing the first date of the interval in
+- `sex`: Column name containing the sex of the observations.
+- `sex_start`: Column name containing the first date of the interval in
   which the sex was determined.
-- `sex_end` Column name containing the second date of the interval in
+- `sex_end`: Column name containing the second date of the interval in
   which the sex was determined.
-- `maturity_start` and `maturity_end` Column names for the maturity
+- `maturity_start` and `maturity_end`: Column names for the maturity
   interval. Required when fitting maturity or reproduction.
-- `clutchs` Vector containing the names of the clutch columns. Required
+- `clutchs`: Vector containing the names of the clutch columns. Required
   when fitting reproduction. The order should be: first clutch first
-  date, first clutch second date, first clutch clutch size, second
-  clutch first date, second clutch second date, second clutch clutch
-  size, and so on. If the observation with the most clutches is, for
-  example, 10, then the vector must be of size 10 x 3 = 30 (3 elements
-  per clutch: first date, second date and size).
-- `death_start` and `death_end` Column names for the death interval.
+  date, first clutch second date, first clutch size, second clutch first
+  date, second clutch second date, second clutch size, and so on. If the
+  observation with the most clutches has 10 clutches, the vector must
+  contain 10 x 3 = 30 elements (three elements per clutch: first date,
+  second date, and size).
+- `death_start` and `death_end`: Column names for the death interval.
   Required when fitting mortality or reproduction.
-- `geno` Column name of the first column to add in the input data file
+- `geno`: Column name of the first covariate to add to the input data
+  file.
 
 \
 `df`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
@@ -105,8 +105,8 @@ does not need, following the requirements above.
 `#> 5           NA           0         1    2`\
 `#> 6           NA           7         8    0`
 
-As you can see, some observations made more ponts, leading to the
-presence of NULL values.
+As you can see, some observations were recorded at more time points,
+leading to `NULL` values.
 
 *One* row of the dataset should represent the **life history** of *one*
 individual in the dataset.
@@ -115,6 +115,6 @@ individual in the dataset.
 
 ------------------------------------------------------------------------
 
-Once our dataframe has the right format, we now have to [create a
+Once our data frame is in the right format, we can [create a
 configuration
 file](https://nrode.github.io/Lifelihood/articles/setting-up-the-configuration-file.md).

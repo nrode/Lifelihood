@@ -71,24 +71,24 @@ We can then predict fitness and its confidence interval:
 `#> Sample size: 18 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -171.076`\
-`#> AIC:             356.2`\
+`#> Log-likelihood:  -171.060`\
+`#> AIC:             356.1`\
 `#> BIC:             362.4`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -0.990 (0.000)`\
-`#>   survival_param2 (Intercept) -5.771 (0.000)`\
+`#>   expt_death (Intercept)    -1.031 (0.000)`\
+`#>   survival_param2 (Intercept) -5.770 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -0.956 (0.000)`\
-`#>   maturity_param2 (Intercept) -3.553 (0.000)`\
+`#>   expt_maturity (Intercept) -0.952 (0.000)`\
+`#>   maturity_param2 (Intercept) -3.556 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -3.271 (0.000)`\
-`#>   reproduction_param2 (Intercept) -5.450 (0.000)`\
-`#>   fitness (Intercept)       -4.144 (0.000)`\
+`#>   expt_reproduction (Intercept) -3.896 (0.000)`\
+`#>   reproduction_param2 (Intercept) -8.172 (0.000)`\
+`#>   fitness (Intercept)       -3.568 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -96,9 +96,9 @@ We can then predict fitness and its confidence interval:
 `#> ======================`\
 \
 [`prediction`](https://nrode.github.io/Lifelihood/reference/prediction.md)`(``results``, ``"fitness"``, type ``=`` ``"response"``)`\
-`#>  [1] 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671`\
-`#>  [9] 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671`\
-`#> [17] 15.60671 15.60671`
+`#>  [1] 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647`\
+`#>  [9] 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647`\
+`#> [17] 27.42647 27.42647`
 
 ## Using simulated data
 
@@ -180,15 +180,15 @@ We can then predict fitness and its confidence interval:
 \
 [`default_bounds_df`](https://nrode.github.io/Lifelihood/reference/default_bounds_df.md)`(``lifelihoodData``)`\
 `#>                                param   min     max`\
-`#> 1                         expt_death 0.001  1149.4`\
+`#> 1                         expt_death 0.001   845.8`\
 `#> 2                    survival_param2  0.05    1000`\
 `#> 3                   ratio_expt_death  0.01     100`\
 `#> 4                         prob_death 1e-05 0.99999`\
 `#> 5                          sex_ratio 1e-05 0.99999`\
-`#> 6                      expt_maturity 0.001   184.2`\
+`#> 6                      expt_maturity 0.001    78.6`\
 `#> 7                    maturity_param2  0.05    1000`\
 `#> 8                ratio_expt_maturity  0.01     100`\
-`#> 9                  expt_reproduction 0.001  1149.4`\
+`#> 9                  expt_reproduction 0.001   845.8`\
 `#> 10               reproduction_param2  0.05    1000`\
 `#> 11                       n_offspring     1      50`\
 `#> 12             increase_death_hazard 1e-05      10`\
@@ -207,7 +207,7 @@ We can then predict fitness and its confidence interval:
 `  delete_temp_files ``=`` ``FALSE`\
 `)`\
 `#> Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 10, :`\
-`#> Best and second-best likelihoods for model row 1 differ by 5.383 (> 0.1).`\
+`#> Best and second-best likelihoods for model row 1 differ by 10.383 (> 0.1).`\
 `#> Consider increasing n_fit (currently 10) to be sure of model convergence and`\
 `#> find the model with highest log-likelihood.`\
 \
@@ -218,21 +218,21 @@ We can then predict fitness and its confidence interval:
 `#> Sample size: 100 `\
 `#> `\
 `#> --- Model Fit ---`\
-`#> Log-likelihood:  -17629.387`\
-`#> AIC:             35266.8`\
-`#> BIC:             35277.2`\
+`#> Log-likelihood:  -11300.031`\
+`#> AIC:             22608.1`\
+`#> BIC:             22618.5`\
 `#> `\
 `#> --- Key Parameters ---`\
 `#> `\
 `#> Mortality:`\
-`#>   expt_death (Intercept)    -2.006 (0.000)`\
+`#>   expt_death (Intercept)    -1.903 (0.000)`\
 `#> `\
 `#> Maturity:`\
-`#>   expt_maturity (Intercept) -2.680 (0.000)`\
+`#>   expt_maturity (Intercept) -1.927 (0.000)`\
 `#> `\
 `#> Reproduction:`\
-`#>   expt_reproduction (Intercept) -5.388 (0.000)`\
-`#>   fitness (Intercept)       -1.139 (0.000)`\
+`#>   expt_reproduction (Intercept) -5.055 (0.000)`\
+`#>   fitness (Intercept)       -1.470 (0.000)`\
 `#> `\
 `#> --- Convergence ---`\
 `#> All parameters within bounds`\
@@ -247,14 +247,14 @@ We can then predict fitness and its confidence interval:
 `#> # A tibble: 100 × 4`\
 `#>    expt_death expt_maturity expt_reproduction fitness`\
 `#>         <dbl>         <dbl>             <dbl>   <dbl>`\
-`#>  1       136.          11.8              5.23    242.`\
-`#>  2       136.          11.8              5.23    242.`\
-`#>  3       136.          11.8              5.23    242.`\
-`#>  4       136.          11.8              5.23    242.`\
-`#>  5       136.          11.8              5.23    242.`\
-`#>  6       136.          11.8              5.23    242.`\
-`#>  7       136.          11.8              5.23    242.`\
-`#>  8       136.          11.8              5.23    242.`\
-`#>  9       136.          11.8              5.23    242.`\
-`#> 10       136.          11.8              5.23    242.`\
+`#>  1       110.          9.99              5.36    187.`\
+`#>  2       110.          9.99              5.36    187.`\
+`#>  3       110.          9.99              5.36    187.`\
+`#>  4       110.          9.99              5.36    187.`\
+`#>  5       110.          9.99              5.36    187.`\
+`#>  6       110.          9.99              5.36    187.`\
+`#>  7       110.          9.99              5.36    187.`\
+`#>  8       110.          9.99              5.36    187.`\
+`#>  9       110.          9.99              5.36    187.`\
+`#> 10       110.          9.99              5.36    187.`\
 `#> # ℹ 90 more rows`

@@ -180,24 +180,24 @@
 <span><span class="co">#&gt; Sample size: 18 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -171.076</span></span>
-<span><span class="co">#&gt; AIC:             356.2</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -171.060</span></span>
+<span><span class="co">#&gt; AIC:             356.1</span></span>
 <span><span class="co">#&gt; BIC:             362.4</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -0.990 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -5.771 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.031 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -5.770 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -0.956 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.553 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -0.952 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.556 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -3.271 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -5.450 (0.000)</span></span>
-<span><span class="co">#&gt;   fitness (Intercept)       -4.144 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -3.896 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -8.172 (0.000)</span></span>
+<span><span class="co">#&gt;   fitness (Intercept)       -3.568 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -205,9 +205,9 @@
 <span><span class="co">#&gt; ======================</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"fitness"</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671</span></span>
-<span><span class="co">#&gt;  [9] 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671 15.60671</span></span>
-<span><span class="co">#&gt; [17] 15.60671 15.60671</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647</span></span>
+<span><span class="co">#&gt;  [9] 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647 27.42647</span></span>
+<span><span class="co">#&gt; [17] 27.42647 27.42647</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="using-simulated-data">Using simulated data<a class="anchor" aria-label="anchor" href="#using-simulated-data"></a>
 </h2>
@@ -291,15 +291,15 @@
 <span></span>
 <span><span class="fu"><a href="../reference/default_bounds_df.html">default_bounds_df</a></span><span class="op">(</span><span class="va">lifelihoodData</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                param   min     max</span></span>
-<span><span class="co">#&gt; 1                         expt_death 0.001  1149.4</span></span>
+<span><span class="co">#&gt; 1                         expt_death 0.001   845.8</span></span>
 <span><span class="co">#&gt; 2                    survival_param2  0.05    1000</span></span>
 <span><span class="co">#&gt; 3                   ratio_expt_death  0.01     100</span></span>
 <span><span class="co">#&gt; 4                         prob_death 1e-05 0.99999</span></span>
 <span><span class="co">#&gt; 5                          sex_ratio 1e-05 0.99999</span></span>
-<span><span class="co">#&gt; 6                      expt_maturity 0.001   184.2</span></span>
+<span><span class="co">#&gt; 6                      expt_maturity 0.001    78.6</span></span>
 <span><span class="co">#&gt; 7                    maturity_param2  0.05    1000</span></span>
 <span><span class="co">#&gt; 8                ratio_expt_maturity  0.01     100</span></span>
-<span><span class="co">#&gt; 9                  expt_reproduction 0.001  1149.4</span></span>
+<span><span class="co">#&gt; 9                  expt_reproduction 0.001   845.8</span></span>
 <span><span class="co">#&gt; 10               reproduction_param2  0.05    1000</span></span>
 <span><span class="co">#&gt; 11                       n_offspring     1      50</span></span>
 <span><span class="co">#&gt; 12             increase_death_hazard 1e-05      10</span></span>
@@ -318,7 +318,7 @@
 <span>  delete_temp_files <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in lifelihood(lifelihoodData, config = config_fitness, n_fit = 10, :</span></span>
-<span><span class="co">#&gt; Best and second-best likelihoods for model row 1 differ by 5.383 (&gt; 0.1).</span></span>
+<span><span class="co">#&gt; Best and second-best likelihoods for model row 1 differ by 10.383 (&gt; 0.1).</span></span>
 <span><span class="co">#&gt; Consider increasing n_fit (currently 10) to be sure of model convergence and</span></span>
 <span><span class="co">#&gt; find the model with highest log-likelihood.</span></span>
 <span></span>
@@ -329,21 +329,21 @@
 <span><span class="co">#&gt; Sample size: 100 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -17629.387</span></span>
-<span><span class="co">#&gt; AIC:             35266.8</span></span>
-<span><span class="co">#&gt; BIC:             35277.2</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -11300.031</span></span>
+<span><span class="co">#&gt; AIC:             22608.1</span></span>
+<span><span class="co">#&gt; BIC:             22618.5</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
-<span><span class="co">#&gt;   expt_death (Intercept)    -2.006 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death (Intercept)    -1.903 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -2.680 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.927 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -5.388 (0.000)</span></span>
-<span><span class="co">#&gt;   fitness (Intercept)       -1.139 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -5.055 (0.000)</span></span>
+<span><span class="co">#&gt;   fitness (Intercept)       -1.470 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
 <span><span class="co">#&gt; All parameters within bounds</span></span>
@@ -358,16 +358,16 @@
 <span><span class="co">#&gt; # A tibble: 100 × 4</span></span>
 <span><span class="co">#&gt;    expt_death expt_maturity expt_reproduction fitness</span></span>
 <span><span class="co">#&gt;         &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  2       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  3       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  4       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  5       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  6       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  7       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  8       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt;  9       136.          11.8              5.23    242.</span></span>
-<span><span class="co">#&gt; 10       136.          11.8              5.23    242.</span></span>
+<span><span class="co">#&gt;  1       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  2       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  3       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  4       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  5       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  6       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  7       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  8       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt;  9       110.          9.99              5.36    187.</span></span>
+<span><span class="co">#&gt; 10       110.          9.99              5.36    187.</span></span>
 <span><span class="co">#&gt; # ℹ 90 more rows</span></span></code></pre></div>
 </div>
 </section><script id="quarto-html-after-body" type="application/javascript">
@@ -379,7 +379,8 @@
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -388,8 +389,69 @@
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -403,6 +465,7 @@
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -431,44 +494,54 @@
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -545,6 +618,7 @@
             interactiveBorder: 10,
             theme: 'light-border',
             placement: 'right',
+            plugins: [hideOnEscAndFocusOut],
             popperOptions: {
               modifiers: [
               {

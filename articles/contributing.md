@@ -76,10 +76,10 @@ for new features or bug fixes is highly encouraged.
 
 ### Code format
 
-In order to ensure consistent code style, it’s recommend to install
-[Air](https://posit-dev.github.io/air/), an R formatter. The
-documentation with it has tutorials on how to set up it in your IDE
-(RStudio, Positron, VS Code, etc).
+To ensure a consistent code style, we recommend installing
+[Air](https://posit-dev.github.io/air/), an R formatter. Its
+documentation explains how to set it up in your IDE (RStudio, Positron,
+VS Code, etc.).
 
 ### Submitting a Pull Request (PR)
 

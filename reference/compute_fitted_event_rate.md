@@ -56,7 +56,7 @@ compute_fitted_event_rate(
 
 ## Value
 
-A dataframe with 3 columns: Interval (time interval, based on
+A data frame with three columns: `Interval` (time interval, based on
 `interval_width` value), group (identifier of a given subgroup, or
 "Overall" if groupby = NULL), and Event_rate (event rate over the
 interval). Note that for reproduction event, the first reproduction

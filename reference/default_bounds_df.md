@@ -1,13 +1,13 @@
-# Get dataframe with default parameter boundaries
+# Get a data frame of default parameter boundaries
 
 Once you have created your `lifelihoodData` object with
 [`as_lifelihoodData()`](https://nrode.github.io/Lifelihood/reference/as_lifelihoodData.md),
 you can call the `default_bounds_df()` function to generate (and load) a
-dataframe with default parameter bounds. This is useful when you want to
-customise these bounds and then pass this dataframe to the
+data frame with default parameter bounds. This is useful when you want
+to customise these bounds and then pass this data frame to
 [`lifelihood()`](https://nrode.github.io/Lifelihood/reference/lifelihood.md)
-function via the `param_bounds_df` argument (if not, it will
-automatically generate it and keep the default values).
+via the `param_bounds_df` argument. If you do not supply it, the
+function generates a data frame with the default values.
 
 ## Usage
 
@@ -27,7 +27,7 @@ default_bounds_df(lifelihoodData)
 
 ## Value
 
-A dataframe with the default parameter boundaries.
+A data frame with the default parameter boundaries.
 
 ## Examples
 

@@ -47,13 +47,13 @@ compute_observed_event_rate(
 - groupby:
 
   One or multiple factors used to define a group for which the event
-  rate the will be computed. If NULL, calculates a single overall rate.
-  If `"all"`, calculates rate over each combination of all factors
+  rate will be computed. If NULL, calculates a single overall rate. If
+  `"all"`, calculates rate over each combination of all factors
   Otherwise must be a character or character vector with factors names.
 
 ## Value
 
-A dataframe with 3 columns: Interval (time interval, based on
+A data frame with three columns: `Interval` (time interval, based on
 `interval_width` value), group (identifier of a given subgroup, or
 "Overall" if groupby = NULL), and Event_rate (event rate at this time).
 

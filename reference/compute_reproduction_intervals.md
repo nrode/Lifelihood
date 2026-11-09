@@ -25,5 +25,5 @@ compute_reproduction_intervals(lifelihoodData, verbose = TRUE)
 
 ## Value
 
-A dataframe with time interval between consecutive clutches starting
-from maturity.
+A data frame containing the time intervals between consecutive clutches,
+starting from maturity.

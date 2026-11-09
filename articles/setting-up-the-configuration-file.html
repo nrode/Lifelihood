@@ -112,7 +112,7 @@
 
 
     <div class="topVignette">
-If you haven’t check it yet, have a look at:
+If you haven’t checked this out yet, have a look at:
 </div>
 <ul>
 <li><a href="required-data-format.html">What is the required data format</a></li>
@@ -120,7 +120,7 @@ If you haven’t check it yet, have a look at:
 <section class="section level2"><h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <hr>
-<p>Since <code>lifelihood</code> allows for a large number of combinations on which parameters to estimate for a given dataset, it makes it easier to have a separate configuration to specify what you want to fit. Under the hood, the program will use this configuration to only estimate what you have specified and returns the estimations.</p>
+<p>Because <code>lifelihood</code> can estimate many combinations of parameters for a given dataset, you can use a separate configuration to specify which parameters to fit. The program uses this configuration to estimate only the specified parameters and return their estimates.</p>
 <p>The configuration can be supplied either as a <code>YAML</code> file or as a named R list. YAML is convenient when the configuration is large or reused across analyses, while a named list is concise for simple models. Missing sections and parameters in a named list default to <code>not_fitted</code>.</p>
 <p>For example, this fits only the expected mortality time as a function of <code>geno</code>:</p>
 <div class="cell">
@@ -144,7 +144,7 @@ If you haven’t check it yet, have a look at:
 </h4>
 <section class="level4"><h5 id="possible-values">Possible values<a class="anchor" aria-label="anchor" href="#possible-values"></a>
 </h5>
-<p>Assuming you have 2 covariables in your dataset (named <code>covar1</code> and <code>covar2</code>), for each of the estimation parameters, the following values are possible:</p>
+<p>Assuming your dataset has two covariates named <code>covar1</code> and <code>covar2</code>, the following values are available for each parameter to be estimated:</p>
 <ul>
 <li>
 <code>not_fitted</code>: do not estimate this parameter.</li>
@@ -159,7 +159,7 @@ If you haven’t check it yet, have a look at:
 <li>
 <code>covar1 * covar2</code>: equivalent to <code>covar1 + covar2 + covar1:covar2</code> (fit the intercept, the parameter of <code>covar1</code>, the parameter of <code>covar2</code> and the interaction between <code>covar1</code> and <code>covar2</code>).</li>
 </ul>
-<p>This is based the reference R implementation of formulas. <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link">Learn more</a>.</p>
+<p>This is based on the reference R implementation of formulas. <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link">Learn more</a>.</p>
 <p><em>Note: <code>covar1</code> and <code>covar2</code> are arbitrary names. The only rule is that they should be the name of one of your columns in your dataset.</em></p>
 </section><section class="level4"><h5 id="mortality">Mortality<a class="anchor" aria-label="anchor" href="#mortality"></a>
 </h5>
@@ -205,7 +205,7 @@ If you haven’t check it yet, have a look at:
 <li>
 <code>lin_change_n_offspring</code>: Linear change in number of offspring with time since maturity</li>
 <li>
-<code>quad_change_n_offspring</code>: Quadratic change in number of offsprings with time since maturity</li>
+<code>quad_change_n_offspring</code>: Quadratic change in the number of offspring with time since maturity</li>
 <li>
 <code>tof_n_offspring</code>: Trade-off between previous reproductive interval and current number of offspring</li>
 </ul></section></section></section><section class="section level2"><h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
@@ -247,7 +247,8 @@ If you haven’t check it yet, have a look at:
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -256,8 +257,69 @@ If you haven’t check it yet, have a look at:
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -271,6 +333,7 @@ If you haven’t check it yet, have a look at:
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;

@@ -145,10 +145,10 @@
 `#> # A tibble: 4 × 2`\
 `#>   geno  longevity`\
 `#>   <fct>     <dbl>`\
-`#> 1 0          87.9`\
-`#> 2 1         103. `\
-`#> 3 2          81.0`\
-`#> 4 3         101.`
+`#> 1 0          87.8`\
+`#> 2 1         105. `\
+`#> 3 2          81.5`\
+`#> 4 3         100.`
 
 ### From scratch without tradeoffs
 
@@ -231,21 +231,21 @@
 `)`\
 `#> [1] "Maturity correspond to first clutch as arguement matclutch is true in the Lifehood object provided"`\
 `sim_data`\
-`#> # A tibble: 400 × 119`\
+`#> # A tibble: 400 × 125`\
 `#>    geno  block   sex sex_start sex_end mortality mortality_start mortality_end`\
 `#>    <fct> <dbl> <dbl>     <dbl>   <dbl>     <dbl>           <dbl>         <dbl>`\
-`#>  1 0         1     0       990    1000      85.2            85.2          85.3`\
-`#>  2 0         1     0       990    1000      79.5            79.4          79.5`\
-`#>  3 0         1     0       990    1000      86.0            86            86.1`\
-`#>  4 0         1     0       990    1000     113.            113.          113. `\
-`#>  5 0         1     0       990    1000      78.9            78.9          79  `\
-`#>  6 0         1     0       990    1000      98.7            98.6          98.7`\
-`#>  7 0         1     0       990    1000      93.9            93.8          93.9`\
-`#>  8 0         1     0       990    1000     101.            101.          101. `\
-`#>  9 0         1     0       990    1000      71.8            71.7          71.8`\
-`#> 10 0         1     0       990    1000     113.            112.          113. `\
+`#>  1 0         1     0       990    1000      84.2            84.1          84.2`\
+`#>  2 0         1     0       990    1000     107.            107.          107  `\
+`#>  3 0         1     0       990    1000      86.5            86.4          86.5`\
+`#>  4 0         1     0       990    1000     108.            108.          108. `\
+`#>  5 0         1     0       990    1000      93.9            93.8          93.9`\
+`#>  6 0         1     0       990    1000      76.1            76            76.1`\
+`#>  7 0         1     0       990    1000      86.1            86            86.1`\
+`#>  8 0         1     0       990    1000      22.7            22.7          22.8`\
+`#>  9 0         1     0       990    1000     104.            104.          104. `\
+`#> 10 0         1     0       990    1000      74.7            74.7          74.8`\
 `#> # ℹ 390 more rows`\
-`#> # ℹ 111 more variables: maturity <dbl>, maturity_start <dbl>,`\
+`#> # ℹ 117 more variables: maturity <dbl>, maturity_start <dbl>,`\
 `#> #   maturity_end <dbl>, first_clutch_size <int>, clutch_start_2 <dbl>,`\
 `#> #   clutch_end_2 <dbl>, clutch_size_2 <int>, clutch_start_3 <dbl>,`\
 `#> #   clutch_end_3 <dbl>, clutch_size_3 <int>, clutch_start_4 <dbl>,`\
@@ -259,10 +259,10 @@
 `#> # A tibble: 4 × 2`\
 `#>   geno  longevity`\
 `#>   <fct>     <dbl>`\
-`#> 1 0          83.7`\
-`#> 2 1          97.5`\
-`#> 3 2          83.3`\
-`#> 4 3         102.`
+`#> 1 0          85.9`\
+`#> 2 1         101. `\
+`#> 3 2          79.9`\
+`#> 4 3         101.`
 
 ### From scratch with tradeoffs
 

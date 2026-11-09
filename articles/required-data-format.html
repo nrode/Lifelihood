@@ -129,27 +129,27 @@
 <section class="section level2"><h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <hr>
-<p>As life history data is by nature heterogeneous between observations from the same sample, the format of the data required can be somewhat tricky. Under the hood, <code>lifelihood</code> creates a text file containing the data (and other parameters), and then use this file for the (core) source code. Fortunately, <code>lifelihood</code> automatically transform the dataframe into the text file with the right format.</p>
-<p>In this vignette, we’ll look at how the dataframe containing your data needs to be formatted for the Lifelihood programme to work properly. Which event columns you need depends on the events selected in <code>dist</code>: maturity columns are needed when fitting maturity or reproduction; death columns are needed when fitting mortality or reproduction; clutch columns are needed when fitting reproduction. For example, a mortality-only fit can omit maturity and clutch columns and use <code>dist = data.frame(mortality = "wei")</code>.</p>
+<p>Because life-history data can vary between observations in the same sample, the required data format can be somewhat tricky. Under the hood, <code>lifelihood</code> creates a text file containing the data and other parameters, then passes this file to the core program. Fortunately, <code>lifelihood</code> automatically transforms the data frame into the required format.</p>
+<p>This vignette explains how to format your data frame for the Lifelihood program. The event columns you need depend on the events selected in <code>dist</code>: maturity columns are needed when fitting maturity or reproduction; death columns are needed when fitting mortality or reproduction; and clutch columns are needed when fitting reproduction. For example, a mortality-only fit can omit maturity and clutch columns and use <code>dist = data.frame(mortality = "wei")</code>.</p>
 </section><section class="section level2"><h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <hr>
 <p>Let’s create a simple dataset with just 7 observations and columns for all three events. A model that fits fewer events can omit columns it does not need, following the requirements above.</p>
 <ul>
 <li>
-<code>sex</code> Column name containing the sex of the observations.</li>
+<code>sex</code>: Column name containing the sex of the observations.</li>
 <li>
-<code>sex_start</code> Column name containing the first date of the interval in which the sex was determined.</li>
+<code>sex_start</code>: Column name containing the first date of the interval in which the sex was determined.</li>
 <li>
-<code>sex_end</code> Column name containing the second date of the interval in which the sex was determined.</li>
+<code>sex_end</code>: Column name containing the second date of the interval in which the sex was determined.</li>
 <li>
-<code>maturity_start</code> and <code>maturity_end</code> Column names for the maturity interval. Required when fitting maturity or reproduction.</li>
+<code>maturity_start</code> and <code>maturity_end</code>: Column names for the maturity interval. Required when fitting maturity or reproduction.</li>
 <li>
-<code>clutchs</code> Vector containing the names of the clutch columns. Required when fitting reproduction. The order should be: first clutch first date, first clutch second date, first clutch clutch size, second clutch first date, second clutch second date, second clutch clutch size, and so on. If the observation with the most clutches is, for example, 10, then the vector must be of size 10 x 3 = 30 (3 elements per clutch: first date, second date and size).</li>
+<code>clutchs</code>: Vector containing the names of the clutch columns. Required when fitting reproduction. The order should be: first clutch first date, first clutch second date, first clutch size, second clutch first date, second clutch second date, second clutch size, and so on. If the observation with the most clutches has 10 clutches, the vector must contain 10 x 3 = 30 elements (three elements per clutch: first date, second date, and size).</li>
 <li>
-<code>death_start</code> and <code>death_end</code> Column names for the death interval. Required when fitting mortality or reproduction.</li>
+<code>death_start</code> and <code>death_end</code>: Column names for the death interval. Required when fitting mortality or reproduction.</li>
 <li>
-<code>geno</code> Column name of the first column to add in the input data file</li>
+<code>geno</code>: Column name of the first covariate to add to the input data file.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
@@ -198,12 +198,12 @@
 <span><span class="co">#&gt; 5           NA           0         1    2</span></span>
 <span><span class="co">#&gt; 6           NA           7         8    0</span></span></code></pre></div>
 </div>
-<p>As you can see, some observations made more ponts, leading to the presence of NULL values.</p>
+<p>As you can see, some observations were recorded at more time points, leading to <code>NULL</code> values.</p>
 <p><em>One</em> row of the dataset should represent the <strong>life history</strong> of <em>one</em> individual in the dataset.</p>
 </section><section class="section level2"><h2 id="next-step">Next step<a class="anchor" aria-label="anchor" href="#next-step"></a>
 </h2>
 <hr>
-<p>Once our dataframe has the right format, we now have to <a href="setting-up-the-configuration-file.html">create a configuration file</a>.</p>
+<p>Once our data frame is in the right format, we can <a href="setting-up-the-configuration-file.html">create a configuration file</a>.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
@@ -213,7 +213,8 @@
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -222,8 +223,69 @@
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -237,6 +299,7 @@
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;

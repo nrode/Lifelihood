@@ -22,7 +22,7 @@ AIC(object, ..., k = length(coef(object)))
 
 - k:
 
-  Number of estimated parameter of the model. Default to
+  Number of estimated parameters in the model. Defaults to
   `length(coef(object))`.
 
 ## Value

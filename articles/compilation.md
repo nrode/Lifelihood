@@ -9,9 +9,9 @@ In order to compile the underlying Pascal code, you need to install:
 - [Docker](https://www.docker.com/): facilitate the compilation process
 - (ideally) [just](https://github.com/casey/just): facilitate the
   compilation process
-- (optionnal) [Pascal VS Code / Positron
+- (optional) [Pascal VS Code / Positron
   extension](https://github.com/alefragnani/vscode-language-pascal):
-  facilitate development
+  facilitates development
 
 ## Setup R environment
 
@@ -40,16 +40,16 @@ rather:
 \
 `devtools``::`[`load_all`](https://devtools.r-lib.org/reference/load_all.html)`(``)`
 
-This allows to use the latest local version and not having re-install
-the package every time you make a change.
+This lets you use the latest local version without reinstalling the
+package every time you make a change.
 
 To check that everything worked as expected, run:
 
 \
 `devtools``::`[`test`](https://devtools.r-lib.org/reference/test.html)`(``)`
 
-This will run all unit tests inside the package. If everything is okay,
-it should print many things and ends with something like this:
+This runs all unit tests in the package. If everything is okay, it
+should print several messages and end with something like this:
 
 ``` r
 ══ Results ═══════════════════════════════════════════════
@@ -83,8 +83,8 @@ it will build Docker images first.
 
 To build every supported macOS and Linux target, run `just`.
 
-> Note that except if you’re on a Linux machine, you’ll need to have
-> Docker installed and the Docker daemon running.
+> Unless you are on a Linux machine, you need to have Docker installed
+> and the Docker daemon running.
 
 - On Windows
 
@@ -93,21 +93,18 @@ manually using Lazarus.
 
 ## Open project in Lazarus
 
-Then, open Lazarus and select “Open project”. You should select the file
-named `lifelihood.lpi` that should be in
-`Lifelihood/source/lifelihood.lpi`.
+Then open Lazarus and select “Open project.” Choose the `lifelihood.lpi`
+file in `Lifelihood/source/`.
 
-Finally, we need to set the output directory for the compiled file. You
-need to go in `Project > Project Options > Compiler Options > Paths`. In
-the “Unit output directory (-FU)”, set the path to
-`Lifelihood/inst/bin/new/`. In my case the full path is:
+Finally, set the output directory for the compiled files. Go to
+`Project > Project Options > Compiler Options > Paths`. In “Unit output
+directory (-FU),” set the path to `Lifelihood/inst/bin/new/`. For
+example, the full path might be
 `/Users/josephbarbier/Desktop/Lifelihood/inst/bin/new/`.
 
-This will output all files in this directory. Then, you need take the
-compiled file in the `new/` directory (`lifelihood.exe` if you compile
-on Windows, `lifelihood` if you compile on Mac.) Take that file, remove
-the `C2023` (which gives either `lifelihood.exe` or `lifelihood`) and
-put it inside `Lifelihood/inst/bin/`. You will need to remove/overwrite
-previous compiled files.
+The compiled files will be written to this directory. Then, take the
+executable from the `new/` directory (`lifelihood.exe` on Windows or
+`lifelihood` on macOS), remove the `C2023` suffix if present, and move
+it to `Lifelihood/inst/bin/`, replacing the previous executable.
 
 You should now be able to compile the project with `Run > Compile`.

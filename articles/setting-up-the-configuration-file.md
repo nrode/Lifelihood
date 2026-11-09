@@ -1,6 +1,6 @@
 # Setting up a configuration
 
-If you haven’t check it yet, have a look at:
+If you haven’t checked this out yet, have a look at:
 
 - [What is the required data
   format](https://nrode.github.io/Lifelihood/articles/required-data-format.md)
@@ -9,11 +9,10 @@ If you haven’t check it yet, have a look at:
 
 ------------------------------------------------------------------------
 
-Since `lifelihood` allows for a large number of combinations on which
-parameters to estimate for a given dataset, it makes it easier to have a
-separate configuration to specify what you want to fit. Under the hood,
-the program will use this configuration to only estimate what you have
-specified and returns the estimations.
+Because `lifelihood` can estimate many combinations of parameters for a
+given dataset, you can use a separate configuration to specify which
+parameters to fit. The program uses this configuration to estimate only
+the specified parameters and return their estimates.
 
 The configuration can be supplied either as a `YAML` file or as a named
 R list. YAML is convenient when the configuration is large or reused
@@ -52,9 +51,8 @@ There are 3 main sections in the required `YAML` configuration file:
 
 ##### Possible values
 
-Assuming you have 2 covariables in your dataset (named `covar1` and
-`covar2`), for each of the estimation parameters, the following values
-are possible:
+Assuming your dataset has two covariates named `covar1` and `covar2`,
+the following values are available for each parameter to be estimated:
 
 - `not_fitted`: do not estimate this parameter.
 - `1`: only fit the intercept.
@@ -67,7 +65,7 @@ are possible:
   (fit the intercept, the parameter of `covar1`, the parameter of
   `covar2` and the interaction between `covar1` and `covar2`).
 
-This is based the reference R implementation of formulas. [Learn
+This is based on the reference R implementation of formulas. [Learn
 more](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html).
 
 *Note: `covar1` and `covar2` are arbitrary names. The only rule is that
@@ -109,7 +107,7 @@ they should be the name of one of your columns in your dataset.*
   increases quadratically as time since maturity increases)
 - `lin_change_n_offspring`: Linear change in number of offspring with
   time since maturity
-- `quad_change_n_offspring`: Quadratic change in number of offsprings
+- `quad_change_n_offspring`: Quadratic change in the number of offspring
   with time since maturity
 - `tof_n_offspring`: Trade-off between previous reproductive interval
   and current number of offspring

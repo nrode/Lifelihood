@@ -103,8 +103,8 @@ plot_event_rate(
 
 - groupby:
 
-  Factor(s) whosse levels over which event rate should be represented
-  (default=NULL).
+  Factor(s) whose levels define the groups over which the event rate
+  should be represented (default=NULL).
 
 - use_facet:
 
@@ -137,7 +137,7 @@ plot_event_rate(
 
 - rate_df:
 
-  Dataframe with event rate.
+  Data frame containing event rates.
 
 - fitted_data:
 

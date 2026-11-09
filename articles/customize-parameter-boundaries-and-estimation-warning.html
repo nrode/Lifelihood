@@ -112,10 +112,10 @@
 
 
     <div class="topVignette">
-If you haven’t check it yet, have a look at:
+If you haven’t checked these out yet, have a look at:
 </div>
 <ul>
-<li><a href="required-data-format.html">What is the required data format to work with lifelihood?</a></li>
+<li><a href="required-data-format.html">What is the required data format for lifelihood?</a></li>
 <li><a href="setting-up-the-configuration-file.html">Setting up the configuration file</a></li>
 <li><a href="fitting-your-first-model-in-lifelihood.html">How to use the lifelihood package</a></li>
 </ul>
@@ -140,7 +140,7 @@ If you haven’t check it yet, have a look at:
 </section><section class="section level2"><h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <hr>
-<p>Load the dataset from <code>.csv</code> file:</p>
+<p>Load the dataset from a <code>.csv</code> file:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># input data</span></span>
@@ -227,7 +227,7 @@ If you haven’t check it yet, have a look at:
 <hr>
 <section class="level2"><h3 id="what-is-it">What is it?<a class="anchor" aria-label="anchor" href="#what-is-it"></a>
 </h3>
-<p>When runnning <code><a href="../reference/lifelihood.html">lifelihood()</a></code> function, you might encounter the following warning:</p>
+<p>When running the <code><a href="../reference/lifelihood.html">lifelihood()</a></code> function, you might encounter the following warning:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Warning in check_estimation(results_lifelihood = results): Estimation of</span></span>
 <span><span class="co">## 'increase_death_hazard' is close to the maximum bound:</span></span>
@@ -272,12 +272,12 @@ If you haven’t check it yet, have a look at:
 <span><span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/default_bounds_df.html">default_bounds_df</a></span><span class="op">(</span><span class="va">data_one_model</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>When fitting multiple models with <code>param_bounds_df = NULL</code>, <code><a href="../reference/lifelihood.html">lifelihood()</a></code> computes default boundaries separately for each row of <code>dist</code>. If you supply <code>param_bounds_df</code>, the same custom boundaries are used for every model.</p>
-<p>Since 10 seems to not be high enough, let’s try with 80:</p>
+<p>Since 10 does not seem to be high enough, let’s try 80:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bounds_df</span><span class="op">[</span><span class="va">bounds_df</span><span class="op">$</span><span class="va">name</span> <span class="op">==</span> <span class="st">"increase_death_hazard"</span>, <span class="st">"max"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">80</span></span></code></pre></div>
 </div>
-<p>Once it’s changed, you just have to call <code><a href="../reference/lifelihood.html">lifelihood()</a></code> again with the <code>param_bounds_df</code> argument:</p>
+<p>Once the boundary has been changed, call <code><a href="../reference/lifelihood.html">lifelihood()</a></code> again with the <code>param_bounds_df</code> argument:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lifelihood.html">lifelihood</a></span><span class="op">(</span></span>
@@ -296,7 +296,8 @@ If you haven’t check it yet, have a look at:
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -305,8 +306,69 @@ If you haven’t check it yet, have a look at:
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -320,6 +382,7 @@ If you haven’t check it yet, have a look at:
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;

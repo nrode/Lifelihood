@@ -111,7 +111,7 @@
 
 
 
-    <p><code>lifelihood</code> offers a <code><a href="../reference/simulate_life_history.html">lifelihood::simulate_life_history()</a></code> function that lets you simulate new observations based on estimates you made.</p>
+    <p><code>lifelihood</code> provides the <code><a href="../reference/simulate_life_history.html">lifelihood::simulate_life_history()</a></code> function, which lets you simulate new observations based on your estimates.</p>
 <section class="level2"><h2 id="fitting">Fitting<a class="anchor" aria-label="anchor" href="#fitting"></a>
 </h2>
 <p>First, we need to fit the model with <code><a href="../reference/lifelihood.html">lifelihood::lifelihood()</a></code>:</p>
@@ -183,26 +183,26 @@
 <span><span class="co">#&gt; Sample size: 550 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Model Fit ---</span></span>
-<span><span class="co">#&gt; Log-likelihood:  -32470.852</span></span>
-<span><span class="co">#&gt; AIC:             64961.7</span></span>
-<span><span class="co">#&gt; BIC:             65004.8</span></span>
+<span><span class="co">#&gt; Log-likelihood:  -32472.850</span></span>
+<span><span class="co">#&gt; AIC:             64965.7</span></span>
+<span><span class="co">#&gt; BIC:             65008.8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Key Parameters ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mortality:</span></span>
 <span><span class="co">#&gt;   expt_death (Intercept)    -0.913 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -2.595 (0.000)</span></span>
-<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -2.615 (0.000)</span></span>
-<span><span class="co">#&gt;   survival_param2 (Intercept) -4.880 (0.000)</span></span>
-<span><span class="co">#&gt;   ratio_expt_death (Intercept) -2.882 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_1 -2.181 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_death eff_expt_death_par_2 -2.200 (0.000)</span></span>
+<span><span class="co">#&gt;   survival_param2 (Intercept) -4.879 (0.000)</span></span>
+<span><span class="co">#&gt;   ratio_expt_death (Intercept) -3.299 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Maturity:</span></span>
-<span><span class="co">#&gt;   expt_maturity (Intercept) -1.481 (0.000)</span></span>
-<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.262 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_maturity (Intercept) -1.410 (0.000)</span></span>
+<span><span class="co">#&gt;   maturity_param2 (Intercept) -3.299 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Reproduction:</span></span>
-<span><span class="co">#&gt;   expt_reproduction (Intercept) -4.255 (0.000)</span></span>
-<span><span class="co">#&gt;   reproduction_param2 (Intercept) -5.352 (0.000)</span></span>
+<span><span class="co">#&gt;   expt_reproduction (Intercept) -4.258 (0.000)</span></span>
+<span><span class="co">#&gt;   reproduction_param2 (Intercept) -5.353 (0.000)</span></span>
 <span><span class="co">#&gt;   n_offspring (Intercept)   -2.553 (0.000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- Convergence ---</span></span>
@@ -219,12 +219,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 117</span></span>
 <span><span class="co">#&gt;   par   spore block   sex sex_start sex_end total_n_offspring total_n_clutches</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         1     0        13    1000               165               34</span></span>
-<span><span class="co">#&gt; 2 0     0         1     0        13    1000               133               33</span></span>
-<span><span class="co">#&gt; 3 0     0         1     0        15    1000                91               19</span></span>
-<span><span class="co">#&gt; 4 0     0         1     0        14    1000               100               20</span></span>
-<span><span class="co">#&gt; 5 0     0         1     0        19    1000               127               28</span></span>
-<span><span class="co">#&gt; 6 0     0         1     0        12    1000                47               11</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000                70               17</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000                76               16</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000                69               16</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000               128               33</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000               142               29</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000                16                4</span></span>
 <span><span class="co">#&gt; # ℹ 109 more variables: maturity_start &lt;dbl&gt;, maturity_end &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_start_1 &lt;dbl&gt;, clutch_end_1 &lt;dbl&gt;, clutch_size_1 &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;, clutch_size_2 &lt;int&gt;,</span></span>
@@ -240,18 +240,18 @@
 <span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
 <span><span class="co">#&gt;   par   spore block   sex sex_start sex_end maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         1     0        13    1000           12.8         12.8</span></span>
-<span><span class="co">#&gt; 2 0     0         1     0        13    1000           13.7         13.7</span></span>
-<span><span class="co">#&gt; 3 0     0         1     0        15    1000           12.1         12.1</span></span>
-<span><span class="co">#&gt; 4 0     0         1     0        14    1000           13.7         13.7</span></span>
-<span><span class="co">#&gt; 5 0     0         1     0        19    1000           12.5         12.5</span></span>
-<span><span class="co">#&gt; 6 0     0         1     0        12    1000           12.5         12.5</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000           14.0         14.0</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000           14.0         14.0</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000           12.8         12.8</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000           13.5         13.5</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000           13.9         13.9</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000           14.0         14.0</span></span>
 <span><span class="co">#&gt; # ℹ 2 more variables: total_n_offspring &lt;dbl&gt;, total_n_clutches &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="simulations-with-visit-masks">Simulations with visit masks<a class="anchor" aria-label="anchor" href="#simulations-with-visit-masks"></a>
 </h2>
 <p><code>lifelihood</code> lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.</p>
-<p>If you scroll to the top, you’ll see that we passed a column name from our dataframe to the <code>block</code> argument. This column represents the block to which each individual belongs. Use <code><a href="../reference/get_visits.html">get_visits()</a></code> to retrieve the visit masks inferred from the original dataset:</p>
+<p>As shown near the top, we passed a column name from our data frame to the <code>block</code> argument. This column identifies the block to which each individual belongs. Use <code><a href="../reference/get_visits.html">get_visits()</a></code> to retrieve the visit masks inferred from the original dataset:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">visits</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_visits.html">get_visits</a></span><span class="op">(</span><span class="va">lifelihoodData</span><span class="op">)</span></span>
@@ -283,17 +283,17 @@
 <span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
 <span><span class="co">#&gt;   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         1     0        13    1000     12.4             12           13</span></span>
-<span><span class="co">#&gt; 2 0     0         1     0        13    1000     12.9             12           13</span></span>
-<span><span class="co">#&gt; 3 0     0         1     0        15    1000     13.5             13           14</span></span>
-<span><span class="co">#&gt; 4 0     0         1     0        14    1000     13.6             13           14</span></span>
-<span><span class="co">#&gt; 5 0     0         1     0        19    1000     13.4             13           14</span></span>
-<span><span class="co">#&gt; 6 0     0         1     0        12    1000     12.2             12           13</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000     14.3             14           15</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000     14.6             14           15</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000     13.2             13           14</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000     13.3             13           14</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000     14.0             14           15</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000     13.6             13           14</span></span>
 <span><span class="co">#&gt; # ℹ 2 more variables: total_n_offspring &lt;dbl&gt;, total_n_clutches &lt;dbl&gt;</span></span></code></pre></div>
 </div>
-<p>Ideally, we recommend to provide explicitly the date where each visit occured for each block in the simulation. Indeed, that we see that, by default, with the function <code><a href="../reference/get_visits.html">get_visits()</a></code> above, Lifelihood considers that there was no visits for block 1 between t=0 and t=7 (as no events occured in this time interval), also visits occured every day.</p>
-<p>You can also provide your own visit masks with the <code>visits</code> argument. It must be a dataframe with 2 columns: <code>block</code> (the same name as passed to <code><a href="../reference/as_lifelihoodData.html">lifelihood::as_lifelihoodData()</a></code> in the <code>block</code> argument) and exactly <code>visit</code>. For each block, <code>visit</code> corresponds to the ages at which the events of individuals were recorded.</p>
-<p>Let’s inspect the custom visits dataframe:</p>
+<p>Ideally, provide the date of each visit explicitly for every block in the simulation. By default, as shown by the <code><a href="../reference/get_visits.html">get_visits()</a></code> output above, Lifelihood assumes there were no visits for block 1 between t = 0 and t = 7 because no events occurred during that interval. It then assumes that visits occurred every day.</p>
+<p>You can also provide your own visit masks with the <code>visits</code> argument. It must be a data frame with two columns: <code>block</code> (using the same name as the <code>block</code> argument passed to <code><a href="../reference/as_lifelihoodData.html">lifelihood::as_lifelihoodData()</a></code>) and <code>visit</code>. For each block, <code>visit</code> contains the ages at which individuals’ events were recorded.</p>
+<p>Let’s inspect the custom visits data frame:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">custom_visits</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -319,12 +319,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
 <span><span class="co">#&gt;   par   spore block   sex sex_start sex_end maturity maturity_start maturity_end</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         1     0        13    1000     13.2             13           14</span></span>
-<span><span class="co">#&gt; 2 0     0         1     0        13    1000     13.3             13           14</span></span>
-<span><span class="co">#&gt; 3 0     0         1     0        15    1000     13.5             13           14</span></span>
-<span><span class="co">#&gt; 4 0     0         1     0        14    1000     13.2             13           14</span></span>
-<span><span class="co">#&gt; 5 0     0         1     0        19    1000     13.5             13           14</span></span>
-<span><span class="co">#&gt; 6 0     0         1     0        12    1000     11.9             11           12</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000     14.2             14           15</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000     15.0             15           16</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000     13.2             13           14</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000     13.3             13           14</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000     13.2             13           14</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000     14.4             14           15</span></span>
 <span><span class="co">#&gt; # ℹ 2 more variables: total_n_offspring &lt;dbl&gt;, total_n_clutches &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
@@ -342,12 +342,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 116</span></span>
 <span><span class="co">#&gt;   par   spore block   sex sex_start sex_end mortality maturity maturity_start</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 0     0         1     0        13    1000      79.6     12.6             12</span></span>
-<span><span class="co">#&gt; 2 0     0         1     0        13    1000      80.7     13.1             13</span></span>
-<span><span class="co">#&gt; 3 0     0         1     0        15    1000      82.9     12.5             12</span></span>
-<span><span class="co">#&gt; 4 0     0         1     0        14    1000      93.6     14.0             13</span></span>
-<span><span class="co">#&gt; 5 0     0         1     0        19    1000      91.9     13.2             13</span></span>
-<span><span class="co">#&gt; 6 0     0         1     0        12    1000      70.8     12.5             12</span></span>
+<span><span class="co">#&gt; 1 0     0         1     0        13    1000      79.6     13.4             13</span></span>
+<span><span class="co">#&gt; 2 0     0         1     0        13    1000      80.7     13.8             13</span></span>
+<span><span class="co">#&gt; 3 0     0         1     0        15    1000      82.9     13.2             13</span></span>
+<span><span class="co">#&gt; 4 0     0         1     0        14    1000      93.6     14.7             14</span></span>
+<span><span class="co">#&gt; 5 0     0         1     0        19    1000      91.9     13.9             13</span></span>
+<span><span class="co">#&gt; 6 0     0         1     0        12    1000      70.8     13.2             13</span></span>
 <span><span class="co">#&gt; # ℹ 107 more variables: maturity_end &lt;dbl&gt;, mortality_start &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   mortality_end &lt;dbl&gt;, clutch_start_1 &lt;dbl&gt;, clutch_end_1 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   clutch_size_1 &lt;int&gt;, clutch_start_2 &lt;dbl&gt;, clutch_end_2 &lt;dbl&gt;,</span></span>
@@ -361,7 +361,7 @@
 <li>Visit masks are block-specific. The <code>visits</code> data frame must contain the configured block column and a <code>visit</code> column, with visit times for every block represented in the simulation. When <code>newdata</code> is supplied, it must also contain the configured block column.</li>
 <li>
 <code><a href="../reference/get_visits.html">get_visits()</a></code> collects the observed sex, maturity, and clutch interval bounds. It removes missing values and the right-censoring date, then deduplicates and sorts visit times within each block.</li>
-<li>An event is censored by the last visit before it occured and the first visit after it occured. The supplied visits must cover every non-missing event age for its block; an error is raised when an event precedes the first visit or follows the last visit.</li>
+<li>An event is censored by the last visit before it occurred and the first visit after it occurred. The supplied visits must cover every non-missing event age for its block; an error is raised when an event precedes the first visit or follows the last visit.</li>
 <li>Reproduction masks are computed from absolute clutch ages. Maturity is added to the first inter-clutch duration, later durations are accumulated, and clutches after mortality are removed before visit intervals are assigned.</li>
 <li>If several clutches from one individual occur between the same visits, they are represented by a single clutch slot and the values of clutch sizes are summed. The exact simulated age is kept and named <code>clutch_{i}</code>.</li>
 <li>The clutches are numbered chronologically.</li>
@@ -375,7 +375,8 @@
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -384,8 +385,69 @@
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -399,6 +461,7 @@
         interactiveBorder: 10,
         theme: 'light-border',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;

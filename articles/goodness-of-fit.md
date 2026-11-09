@@ -61,9 +61,9 @@
 
 ## Goodness of fit
 
-The goodness of fit simulate datasets from a fitted model (`results)`,
-refit the model on each simulated dataset (`nsim`), and compare
-simulated log-likelihood values to the original fit.
+The goodness-of-fit procedure simulates datasets from a fitted model
+(`results`), refits the model to each simulated dataset (`nsim`), and
+compares the simulated log-likelihood values with the original fit.
 
 \
 `gof`` ``<-`` `[`goodness_of_fit`](https://nrode.github.io/Lifelihood/reference/goodness_of_fit.md)`(``results``, nsim ``=`` ``5``)`
@@ -75,9 +75,9 @@ following attributes:
 
 \
 `gof``$``original_loglik`\
-`#> [1] -7060.47`\
+`#> [1] -6894.199`\
 `gof``$``simulated_loglik`\
-`#> [1] -889.9300 -889.9070 -889.9117 -889.9078 -889.9386`\
+`#> [1] -869.1113 -869.0363 -869.0215 -869.0326 -869.0758`\
 `gof``$``n_success`\
 `#> [1] 5`\
 `gof``$``n_failed`\
@@ -100,6 +100,6 @@ S3 method on the output of
 
 ![](goodness-of-fit_files/figure-html/unnamed-chunk-5-1.png)
 
-We can see here that the simulated datasets, when fitted, have a less
-good log-likelihood compared to the original fit. This might suggest
-that the original fit isn’t that great.
+Here, the simulated datasets have lower log-likelihoods after refitting
+than the original fit. This might suggest that the original model does
+not fit the data very well.
