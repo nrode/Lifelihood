@@ -1,9 +1,9 @@
-#' @title Check if estimation are too close from boundaries.
+#' @title Check whether estimates are too close to their boundaries
 #'
 #' @description
 #' Since the parameter boundaries are from [default_bounds_df()]
-#' (or customized by user), this function checks is the estimation
-#' of each parameter is "too close" (0.5% tolerance) from one of
+#' (or customized by the user), this function checks whether each parameter
+#' estimate is "too close" (within 0.5%) to one of
 #' its boundaries (either min or max). If so, it raises a warning
 #' that tries to be explicit. This function can be ignored thanks
 #' to the `raise_estimation_warning` argument (boolean) in

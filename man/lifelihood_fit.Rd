@@ -41,14 +41,14 @@ configuration list. Missing sections and parameters default to
 for exponential events in each model. With a single row, a warning is
 raised before disabling a second parameter for an exponential event.}
 
-\item{path_to_Lifelihood}{A character string specifying the file path to the compile Lifelihood program (default is NULL)}
+\item{path_to_Lifelihood}{A character string specifying the path to the compiled Lifelihood program (default is \code{NULL}).}
 
 \item{param_bounds_df}{Data frame with parameter boundaries, applied to all
 models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 
 \item{group_by_group}{Boolean option to fit the full factorial model with all the interactions between each of the factors}
 
-\item{MCMC}{Perform MCMC sampling of the parameter after convergence to estimate their 95\% confidence interval}
+\item{MCMC}{Perform MCMC sampling of the parameters after convergence to estimate their 95\% confidence intervals.}
 
 \item{interval}{TBD - Check the actual meaning}
 
@@ -56,13 +56,13 @@ models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 
 \item{saveprobevent}{TBD - Check the actual meaning}
 
-\item{r}{Reparametrize the model with one parameter as the intrinsic rate of increase}
+\item{r}{Reparameterize the model so that one parameter represents the intrinsic rate of increase.}
 
 \item{seeds}{Vector of length four with seed integers used to reproduce results using Mersenne Twister pseudorandom number generator (same seeds = same results). This argument should be \code{NULL} (default) when \code{n_fit} > 1. \href{https://en.wikipedia.org/wiki/Random_seed}{Learn more}.}
 
-\item{ntr}{Number of temperature steps in each simulated annealing run; the temperature decreases from To to Tf in exactly ntr steps, with nst Metropolis trials at each step.}
+\item{ntr}{Number of temperature steps in each simulated annealing run. The temperature decreases from \code{To} to \code{Tf} in exactly \code{ntr} steps, with \code{nst} Metropolis trials at each step.}
 
-\item{nst}{Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)}
+\item{nst}{Simulated annealing tuning parameter. Increasing \code{nst} makes the search more thorough at each temperature, improving the chance of finding the global maximum but slowing the fit.}
 
 \item{To}{Initial temperature for the simulated annealing}
 
@@ -72,11 +72,11 @@ models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 
 \item{precision}{Convergence tolerance of the final local search: fitting stops when an additional batch of local-search iterations improves the log-likelihood by less than this amount.}
 
-\item{ratiomax}{Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)}
+\item{ratiomax}{Maximum multiplicative factor for clutch size in models with reproductive senescence.}
 
-\item{tc}{critical age (after the juvenile mortality peak) at which the survival model starts to be fitted}
+\item{tc}{Critical age (after the juvenile mortality peak) at which the survival model starts to be fitted.}
 
-\item{tinf}{maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)}
+\item{tinf}{Maximum censoring time. It should be greater than the age of the oldest individual observed dead in the dataset.}
 
 \item{sub_interval}{sub-interval used to integrate the left and right censoring dates of each event}
 
@@ -90,7 +90,7 @@ models. If \code{NULL}, each model uses its own distribution-specific defaults.}
 \code{lifelihoodResults}
 }
 \description{
-This function fits \code{\link[=lifelihood]{lifelihood()}} 1 time. It's used
-internally to fit multiple times lifelihood.
+This function fits \code{\link[=lifelihood]{lifelihood()}} once. It is used internally
+to fit \code{lifelihood()} multiple times.
 }
 \keyword{internal}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_input.R
 \name{format_dataframe_to_txt}
 \alias{format_dataframe_to_txt}
-\title{Create the input data file from a dataframe}
+\title{Create the input data file from a data frame}
 \usage{
 format_dataframe_to_txt(
   df,
@@ -24,7 +24,7 @@ format_dataframe_to_txt(
 )
 }
 \arguments{
-\item{df}{Dataframe with the data of life history. It should
+\item{df}{Data frame containing life-history data. It should
 have one row per life history / observation.}
 
 \item{sex}{Column name containing the sex of the observations.}
@@ -71,8 +71,8 @@ files.}
 supplied because that event is not being fitted.}
 }
 \description{
-Takes a dataframe (\code{df} argument in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} function)
-and apply to each row the \code{\link[=format_row]{format_row()}} function to create the
+Takes a data frame (the \code{df} argument in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}})
+and applies \code{\link[=format_row]{format_row()}} to each row to create the
 input data file.
 }
 \keyword{internal}

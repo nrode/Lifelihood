@@ -7,11 +7,11 @@
 print_coef_table(df, digits = 3)
 }
 \arguments{
-\item{df}{Dataframe with effects}
+\item{df}{Data frame containing effects.}
 
 \item{digits}{Number of digits to display}
 }
 \description{
-Helper function to print a clean coefficient table
+Helper function to print a clean coefficient table.
 }
 \keyword{internal}

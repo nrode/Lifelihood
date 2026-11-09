@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_input.R
 \name{format_row}
 \alias{format_row}
-\title{Format a dataframe row for the input data file}
+\title{Format a data frame row for the input data file}
 \usage{
 format_row(
   row,
@@ -20,7 +20,7 @@ format_row(
 )
 }
 \arguments{
-\item{row}{A row of the dataframe object provided by the user
+\item{row}{A row of the data frame provided by the user
 (\code{df} argument in \code{\link[=as_lifelihoodData]{as_lifelihoodData()}} function).}
 
 \item{sex}{Column name containing the sex of the observations.}
@@ -56,7 +56,7 @@ maturity event.}
 A string of the well formated row.
 }
 \description{
-Takes a row from a dataframe with input data (sex, maturity,
+Takes a row from a data frame with input data (sex, maturity,
 clutch date and death) in interval format and transform it
 into a large string (required format for the data input file).
 }

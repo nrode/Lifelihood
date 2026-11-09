@@ -19,7 +19,7 @@ library(lifelihood)
 library(tidyverse)
 ```
 
-### Data prepration
+### Data preparation
 
 ```{r}
 #| label: data preparation
@@ -34,7 +34,7 @@ clutchs <- generate_clutch_vector(28)
 df |> head()
 ```
 
-### Creata a data lifelihood object
+### Create a lifelihood data object
 
 ```{r}
 dataLFH <- as_lifelihoodData(

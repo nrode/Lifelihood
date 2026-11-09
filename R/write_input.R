@@ -1,13 +1,13 @@
-#' @title Create the input data file from a dataframe
+#' @title Create the input data file from a data frame
 #'
 #' @description
-#' Takes a dataframe (`df` argument in [as_lifelihoodData()] function)
-#' and apply to each row the [format_row()] function to create the
+#' Takes a data frame (the `df` argument in [as_lifelihoodData()])
+#' and applies [format_row()] to each row to create the
 #' input data file.
 #'
 #' @keywords internal
 #'
-#' @param df Dataframe with the data of life history. It should
+#' @param df Data frame containing life-history data. It should
 #' have one row per life history / observation.
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the
@@ -183,16 +183,16 @@ format_dataframe_to_txt <- function(
 }
 
 
-#' @title Format a dataframe row for the input data file
+#' @title Format a data frame row for the input data file
 #'
 #' @description
-#' Takes a row from a dataframe with input data (sex, maturity,
+#' Takes a row from a data frame with input data (sex, maturity,
 #' clutch date and death) in interval format and transform it
 #' into a large string (required format for the data input file).
 #'
 #' @keywords internal
 #'
-#' @param row A row of the dataframe object provided by the user
+#' @param row A row of the data frame provided by the user
 #' (`df` argument in [as_lifelihoodData()] function).
 #' @param sex Column name containing the sex of the observations.
 #' @param sex_start Column name containing the first date of the

@@ -16,25 +16,25 @@
 #'   raised before disabling a second parameter for an exponential event.
 #' @param path_config Deprecated alias for `config`. A warning is raised when
 #'   this argument is used.
-#' @param path_to_Lifelihood A character string specifying the file path to the compile Lifelihood program (default is NULL)
+#' @param path_to_Lifelihood A character string specifying the path to the compiled Lifelihood program (default is `NULL`).
 #' @param n_fit Number of replicates per row of `lifelihoodData$dist` to check
 #'   convergence through consistency in log-likelihood values. The `seeds`
 #'   argument should be `NULL` when `n_fit` > 1.
 #' @param param_bounds_df Data frame with parameter boundaries, applied to all
 #'   models. If `NULL`, each model uses its own distribution-specific defaults.
 #' @param group_by_group Boolean option to fit the full factorial model with all the interactions between each of the factors
-#' @param MCMC Perform MCMC sampling of the parameter after convergence to estimate their 95% confidence interval
+#' @param MCMC Perform MCMC sampling of the parameters after convergence to estimate their 95% confidence intervals.
 #' @param interval TBD - Check the actual meaning
 #' @param se.fit If TRUE, Lifelihood computes the standard error of each parameter using the variance-covariance matrix (approximated by the inverse of the negative of the Hessian matrix).
 #' @param saveprobevent TBD - Check the actual meaning
-#' @param r Reparametrize the model with one parameter as the intrinsic rate of increase
+#' @param r Reparameterize the model so that one parameter represents the intrinsic rate of increase.
 #' @param seeds Vector of length four with seed integers used to reproduce results using Mersenne Twister pseudorandom number generator (same seeds = same results). This argument should be `NULL` (default) when `n_fit` > 1. [Learn more](https://en.wikipedia.org/wiki/Random_seed).
-#' @param ratiomax Maximum multiplicative factor for clutch size in models with reproductive senescence (cf CalculRatioEspPoissonTronque function in Lifelihood)
-#' @param tc critical age (after the juvenile mortality peak) at which the survival model starts to be fitted
-#' @param tinf maximum censoring time (should be greater than the age of the oldest individual observed dead in the dataset)
+#' @param ratiomax Maximum multiplicative factor for clutch size in models with reproductive senescence.
+#' @param tc Critical age (after the juvenile mortality peak) at which the survival model starts to be fitted.
+#' @param tinf Maximum censoring time. It should be greater than the age of the oldest individual observed dead in the dataset.
 #' @param sub_interval sub-interval used to integrate the left and right censoring dates of each event
-#' @param ntr Number of temperature steps in each simulated annealing run; the temperature decreases from To to Tf in exactly ntr steps, with nst Metropolis trials at each step.
-#' @param nst Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)
+#' @param ntr Number of temperature steps in each simulated annealing run. The temperature decreases from `To` to `Tf` in exactly `ntr` steps, with `nst` Metropolis trials at each step.
+#' @param nst Simulated annealing tuning parameter. Increasing `nst` makes the search more thorough at each temperature, improving the chance of finding the global maximum but slowing the fit.
 #' @param To Initial temperature for the simulated annealing
 #' @param Tf Initial temperature for the simulated annealing
 #' @param climbrate Initial cooling rate of the adaptive annealing schedule: scales how fast the temperature is lowered between annealing runs (self-adjusting during the fit).
@@ -221,8 +221,8 @@ lifelihood <- function(
 #' @title Fit lifelihood one time.
 #'
 #' @description
-#' This function fits [`lifelihood()`] 1 time. It's used
-#' internally to fit multiple times lifelihood.
+#' This function fits [`lifelihood()`] once. It is used internally
+#' to fit `lifelihood()` multiple times.
 #'
 #' @inheritParams lifelihood
 #' @param temp_dir An optional temporary directory.
@@ -430,7 +430,7 @@ lifelihood_fit <- function(
 #' @name coef
 #'
 #' @description
-#' `coef()` retrieve all coefficients from the output of [lifelihood()]
+#' `coef()` retrieves all coefficients from the output of [lifelihood()].
 #'
 #' @param object output of [lifelihood()]
 #' @param ... Ignored
@@ -454,13 +454,13 @@ coef.lifelihoodResults <- function(object, ...) {
 #' @name coef
 #'
 #' @description
-#' `coeff()` retrieve coefficients of one parameter
-#' from the output of [lifelihood()]
+#' `coeff()` retrieves the coefficients for one parameter from the
+#' output of [lifelihood()].
 #'
 #' @param object output of [lifelihood()]
 #' @param parameter_name
-#' Name of the parameters to extract the estimate from to extract
-#' all parameter estimates). All parameters#' can be found
+#' Name of the parameter whose estimates should be extracted. To
+#' extract all parameter estimates, use `coef()`. All parameters can be found
 #' [here](/articles/setting-up-the-configuration-file.html#parameters).
 #'
 #' @return A list of coefficient estimates
@@ -514,7 +514,7 @@ vcov.lifelihoodResults <- function(object, ...) {
 #' @title MCMC
 #'
 #' @description
-#' Retrieve the mcmc from the output of [lifelihood()]
+#' Retrieve the MCMC samples from the output of [lifelihood()].
 #'
 #' @param object output of [lifelihood()]
 #'
@@ -533,7 +533,7 @@ mcmc <- function(object) {
 #'
 #' @param object output of [lifelihood()]
 #' @param ... Ignored
-#' @param k Number of estimated parameter of the model. Default to `length(coef(object))`.
+#' @param k Number of estimated parameters in the model. Defaults to `length(coef(object))`.
 #'
 #' @return The AIC
 #'
@@ -554,7 +554,7 @@ AIC.lifelihoodResults <- function(object, ..., k = length(coef(object))) {
 #'
 #' @param object Output of [lifelihood()].
 #' @param ... Ignored.
-#' @param k Number of estimated parameter of the model. Default
+#' @param k Number of estimated parameters in the model. Defaults
 #' to `length(coef(object))`.
 #'
 #' @return The AICc
@@ -752,9 +752,9 @@ summary.all_models <- function(object, ...) {
 #' @title Print simplified coefficient table
 #'
 #' @description
-#' Helper function to print a clean coefficient table
+#' Helper function to print a clean coefficient table.
 #'
-#' @param df Dataframe with effects
+#' @param df Data frame containing effects.
 #' @param digits Number of digits to display
 #'
 #' @keywords internal

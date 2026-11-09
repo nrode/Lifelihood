@@ -11,7 +11,7 @@
 
 \item{...}{Ignored}
 
-\item{k}{Number of estimated parameter of the model. Default to \code{length(coef(object))}.}
+\item{k}{Number of estimated parameters in the model. Defaults to \code{length(coef(object))}.}
 }
 \value{
 The AIC

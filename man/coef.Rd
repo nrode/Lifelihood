@@ -15,8 +15,8 @@ coeff(object, parameter_name)
 
 \item{...}{Ignored}
 
-\item{parameter_name}{Name of the parameters to extract the estimate from to extract
-all parameter estimates). All parameters#' can be found
+\item{parameter_name}{Name of the parameter whose estimates should be extracted. To
+extract all parameter estimates, use \code{coef()}. All parameters can be found
 \href{/articles/setting-up-the-configuration-file.html#parameters}{here}.}
 }
 \value{
@@ -25,8 +25,8 @@ A nested list of coefficient estimates
 A list of coefficient estimates
 }
 \description{
-\code{coef()} retrieve all coefficients from the output of \code{\link[=lifelihood]{lifelihood()}}
+\code{coef()} retrieves all coefficients from the output of \code{\link[=lifelihood]{lifelihood()}}.
 
-\code{coeff()} retrieve coefficients of one parameter
-from the output of \code{\link[=lifelihood]{lifelihood()}}
+\code{coeff()} retrieves the coefficients for one parameter from the
+output of \code{\link[=lifelihood]{lifelihood()}}.
 }

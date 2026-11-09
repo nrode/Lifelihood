@@ -11,7 +11,7 @@ knitr:
 embed-resources: true
 ---
 
-`lifelihood` offers a `lifelihood::simulate_life_history()` function that lets you simulate new observations based on estimates you made.
+`lifelihood` provides the `lifelihood::simulate_life_history()` function, which lets you simulate new observations based on your estimates.
 
 ## Fitting
 
@@ -87,7 +87,7 @@ simulate_life_history(results, event = "maturity") |> head()
 
 `lifelihood` lets you specify visit masks that are used to simulate data that more closely reflects how the original data was measured by adding constraints to the interval dates.
 
-If you scroll to the top, you'll see that we passed a column name from our dataframe to the `block` argument. This column represents the block to which each individual belongs. Use `get_visits()` to retrieve the visit masks inferred from the original dataset:
+As shown near the top, we passed a column name from our data frame to the `block` argument. This column identifies the block to which each individual belongs. Use `get_visits()` to retrieve the visit masks inferred from the original dataset:
 
 ```{r}
 visits <- get_visits(lifelihoodData)
@@ -110,11 +110,11 @@ results |>
   head()
 ```
 
-Ideally, we recommend to provide explicitly the date where each visit occured for each block in the simulation. Indeed, that we see that, by default, with the function `get_visits()` above, Lifelihood considers that there was no visits for block 1 between t=0 and t=7 (as no events occured in this time interval), also visits occured every day.
+Ideally, provide the date of each visit explicitly for every block in the simulation. By default, as shown by the `get_visits()` output above, Lifelihood assumes there were no visits for block 1 between t = 0 and t = 7 because no events occurred during that interval. It then assumes that visits occurred every day.
 
-You can also provide your own visit masks with the `visits` argument. It must be a dataframe with 2 columns: `block` (the same name as passed to `lifelihood::as_lifelihoodData()` in the `block` argument) and exactly `visit`. For each block, `visit` corresponds to the ages at which the events of individuals were recorded.
+You can also provide your own visit masks with the `visits` argument. It must be a data frame with two columns: `block` (using the same name as the `block` argument passed to `lifelihood::as_lifelihoodData()`) and `visit`. For each block, `visit` contains the ages at which individuals' events were recorded.
 
-Let's inspect the custom visits dataframe:
+Let's inspect the custom visits data frame:
 
 ```{r}
 custom_visits |> head()
@@ -149,7 +149,7 @@ The following rules define how visit masks are constructed and applied:
 
 - Visit masks are block-specific. The `visits` data frame must contain the configured block column and a `visit` column, with visit times for every block represented in the simulation. When `newdata` is supplied, it must also contain the configured block column.
 - `get_visits()` collects the observed sex, maturity, and clutch interval bounds. It removes missing values and the right-censoring date, then deduplicates and sorts visit times within each block.
-- An event is censored by the last visit before it occured and the first visit after it occured. The supplied visits must cover every non-missing event age for its block; an error is raised when an event precedes the first visit or follows the last visit.
+- An event is censored by the last visit before it occurred and the first visit after it occurred. The supplied visits must cover every non-missing event age for its block; an error is raised when an event precedes the first visit or follows the last visit.
 - Reproduction masks are computed from absolute clutch ages. Maturity is added to the first inter-clutch duration, later durations are accumulated, and clutches after mortality are removed before visit intervals are assigned.
 - If several clutches from one individual occur between the same visits, they are represented by a single clutch slot and the values of clutch sizes are summed. The exact simulated age is kept and named `clutch_{i}`.
 - The clutches are numbered chronologically.

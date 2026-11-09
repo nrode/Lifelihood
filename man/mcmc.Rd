@@ -13,5 +13,5 @@ mcmc(object)
 A covariance matrix
 }
 \description{
-Retrieve the mcmc from the output of \code{\link[=lifelihood]{lifelihood()}}
+Retrieve the MCMC samples from the output of \code{\link[=lifelihood]{lifelihood()}}.
 }

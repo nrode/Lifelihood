@@ -2,7 +2,7 @@
 % Please edit documentation in R/default_boundaries.R
 \name{default_bounds_df}
 \alias{default_bounds_df}
-\title{Get dataframe with default parameter boundaries}
+\title{Get a data frame of default parameter boundaries}
 \usage{
 default_bounds_df(lifelihoodData)
 }
@@ -13,17 +13,17 @@ Its \code{dist} must contain one row. To customise bounds for a particular model
 first subset \code{lifelihoodData$dist} to that row with \code{drop = FALSE}.}
 }
 \value{
-A dataframe with the default parameter boundaries.
+A data frame with the default parameter boundaries.
 }
 \description{
 Once you have created your \code{lifelihoodData} object with
 \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}, you can call the \code{default_bounds_df()}
-function to generate (and load) a dataframe with default
+function to generate (and load) a data frame with default
 parameter bounds.
 This is useful when you want to customise these bounds and
-then pass this dataframe to the \code{\link[=lifelihood]{lifelihood()}} function via
-the \code{param_bounds_df} argument (if not, it will automatically
-generate it and keep the default values).
+then pass this data frame to \code{\link[=lifelihood]{lifelihood()}} via the
+\code{param_bounds_df} argument. If you do not supply it, the function
+generates a data frame with the default values.
 }
 \examples{
 library(lifelihood)

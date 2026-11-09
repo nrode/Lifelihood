@@ -99,8 +99,8 @@ find_event_type <- function(parameter_name) {
 #'
 #' @description
 #' This function takes an estimate name as input and returns
-#' whether it is a intercept or a coefficient/slope. If the
-#' element is not found in the possible match, it returns an
+#' whether it is an intercept or a coefficient/slope. If the
+#' element is not among the possible matches, it returns an
 #' error. This function is used to add information about the
 #' type of estimate to the output of the [lifelihood()] function.
 #'

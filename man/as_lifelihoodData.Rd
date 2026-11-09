@@ -25,7 +25,7 @@ as_lifelihoodData(
 )
 }
 \arguments{
-\item{df}{Dataframe with the data of life history. It
+\item{df}{Data frame containing life-history data. It
 should have one row per life history / observation.}
 
 \item{sex}{Column name containing the sex of the
@@ -45,13 +45,10 @@ fitting maturity or reproduction.}
 date of the interval in which the maturity was determined. Required when
 fitting maturity or reproduction.}
 
-\item{clutchs}{Optional vector containing the names of the clutch
-columns. The order should be: first clutch first date, first
-clutch second date, first clutch clutch size, second clutch
-first date, first clutch second date, second clutch clutch
-size, and so on. If the observation with the most clutches
-is, for example, 10, then the vector must be of size 10 x 3 = 30
-(3 elements per clutch: first date, second date and size).}
+\item{clutchs}{Optional vector of clutch column names. For each clutch,
+list the first date, second date, and clutch size, in that order. For
+example, if the observation with the most clutches has 10, the vector must
+contain 10 x 3 = 30 elements.}
 
 \item{death_start}{Optional column name containing the first date of
 the interval in which the death was determined. Required when fitting
@@ -69,7 +66,7 @@ or "lgn" (log-normal). Use a one-row data frame to fit a single model.}
 
 \item{covariates}{Vector containing the names of the covariates.}
 
-\item{block}{Column name containing the block to which each individual belong to.}
+\item{block}{Column name containing the block to which each individual belongs.}
 
 \item{matclutch}{Whether the maturity event (designated by
 \code{maturity_start} and \code{maturity_end}) is a clutch event or not.
@@ -81,9 +78,9 @@ clutch for the maturity event. Required when \code{matclutch} is \code{TRUE} and
 maturity data are used, including as a dependency of reproduction.}
 
 \item{right_censoring_date}{(CURRENTLY IGNORED) Time (integer)
-point at which a subject’s data is censored. This means that for
+point at which a subject's data are censored. This means that for
 subjects who do not experience the event of interest (e.g.,
-death, failure) by this date, their data is considered censored.
+death or failure) by this date, their data are considered censored.
 In practice, choose a value much larger than the maximum longevity
 seen in the data.}
 
@@ -91,16 +88,16 @@ seen in the data.}
 below which life histories are not followed individually.}
 
 \item{ratiomax}{(CURRENTLY IGNORED) Maximum ratio (integer)
-between number of offspring of last and first reproduction events.
-Cannot be greater than ratiomax.}
+between the numbers of offspring at the last and first reproduction events.
+It cannot be greater than \code{ratiomax}.}
 }
 \value{
 \code{lifelihoodData} object
 }
 \description{
 Creates a \code{lifelihoodData} object, which is a list containing
-all the information needed to run the lifelihood program of a
-given dataset of individual life history. This function will
-mainly be used to pass to \code{\link[=lifelihood]{lifelihood()}} or for customizing
+all the information needed to run the lifelihood program for
+a given dataset of individual life histories. This function is
+mainly used to pass data to \code{\link[=lifelihood]{lifelihood()}} or to customize
 parameter boundaries with \code{\link[=default_bounds_df]{default_bounds_df()}}.
 }

@@ -68,7 +68,7 @@ event rate.}
 \item{max_time}{The maximum time for calculating the event rate.
 If set to NULL, the time of the last observed death is used.}
 
-\item{groupby}{Factor(s) whosse levels over which event rate
+\item{groupby}{Factor(s) whose levels define the groups over which the event rate
 should be represented (default=NULL).}
 
 \item{use_facet}{Use facet_wrap to plot one panel per group
@@ -87,7 +87,7 @@ of "points" or 'lines").}
 \item{lifelihoodData}{\code{lifelihoodData} object created with
 \code{\link[=as_lifelihoodData]{as_lifelihoodData()}}.}
 
-\item{rate_df}{Dataframe with event rate.}
+\item{rate_df}{Data frame containing event rates.}
 
 \item{fitted_data}{Boolean indicating if the data is fitted
 (default=FALSE).}

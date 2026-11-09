@@ -35,7 +35,7 @@ rate. If set to NULL, the time of the last observed death is used.}
 \item{mcmc.ci.fit}{Whether or not to retrieve MCMC CI estimations.}
 }
 \value{
-A dataframe with 3 columns: Interval (time interval, based
+A data frame with three columns: \code{Interval} (time interval, based
 on \code{interval_width} value), group (identifier of a given subgroup,
 or "Overall" if groupby = NULL), and Event_rate (event rate
 over the interval).

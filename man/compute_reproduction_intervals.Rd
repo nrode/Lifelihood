@@ -12,7 +12,7 @@ compute_reproduction_intervals(lifelihoodData, verbose = TRUE)
 \item{verbose}{Boolean whether to print messages during the computation process (default=TRUE)}
 }
 \value{
-A dataframe with time interval between consecutive clutches starting from maturity.
+A data frame containing the time intervals between consecutive clutches, starting from maturity.
 }
 \description{
 This function computes the time interval between consecutive clutches

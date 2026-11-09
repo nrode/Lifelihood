@@ -13,10 +13,10 @@ embed-resources: true
 
 
 
-<div class="topVignette">If you haven't check it yet, have a look at:</div>
+<div class="topVignette">If you haven't checked these out yet, have a look at:</div>
 
-- [what is the required data format to work with lifelihood?](required-data-format.html)
-- [setting up the configuration file](setting-up-the-configuration-file.html)
+- [What is the required data format for lifelihood?](required-data-format.html)
+- [How to set up the configuration file](setting-up-the-configuration-file.html)
 
 # Load libraries
 ***
@@ -29,7 +29,7 @@ library(tidyverse)
 # Data preparation
 ***
 
-Load the dataset from `.csv` file:
+Load the dataset from a `.csv` file:
 
 ```{r}
 # input data
@@ -51,9 +51,9 @@ clutchs <- generate_clutch_vector(28)
 
 # Create the `lifelihoodData` object
 
-`as_lifelihoodData()` creates a `lifelihoodData` object, which is a list containing all the information needed to run the lifelihood program of a given dataset of individual life history.
+`as_lifelihoodData()` creates a `lifelihoodData` object, which is a list containing all the information needed to run the lifelihood program on a given dataset of individual life histories.
 
-This function mostly takes as input your dataset, your column names.
+This function mainly takes your dataset and column names as inputs.
 
 The `dist` argument is a data frame with one or more columns selected from
 `mortality`, `maturity`, and `reproduction`. Each row specifies one model to
@@ -87,11 +87,11 @@ dataLFH <- as_lifelihoodData(
 
 ## All default parameters
 
-Once you have created your `lifelihoodData` object with `as_lifelihoodData()`, you can call the `lifelihood()` function to run the lifelihood program.
+Once you have created your `lifelihoodData` object with `as_lifelihoodData()`, call `lifelihood()` to run the lifelihood program.
 
-It returns a `lifelihoodResults` object, which is a list containing all the results of the analysis.
+This returns a `lifelihoodResults` object, which is a list containing the analysis results.
 
-Here it's a minimalist usage of the function, where we only specify the `lifelihoodData` object, the configuration and the seeds to use (four integers used by Mersenne Twister pseudorandom number generator of the lifelihood program). The `raise_estimation_warning` argument will be the focus of the [next vignette](4-custom-param-boundaries-and-estimation-warning.html).
+This is a minimal example that specifies only the `lifelihoodData` object, the configuration, and the seeds (four integers used by the lifelihood program's Mersenne Twister pseudorandom number generator). The `raise_estimation_warning` argument is covered in the [next vignette](customize-parameter-boundaries-and-estimation-warning.html).
 
 ```{r}
 config <- list(

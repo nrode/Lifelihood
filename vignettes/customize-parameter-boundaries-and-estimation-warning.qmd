@@ -12,9 +12,9 @@ embed-resources: true
 ---
 
 
-<div class="topVignette">If you haven't check it yet, have a look at:</div>
+<div class="topVignette">If you haven't checked these out yet, have a look at:</div>
 
-- [What is the required data format to work with lifelihood?](required-data-format.html)
+- [What is the required data format for lifelihood?](required-data-format.html)
 - [Setting up the configuration file](setting-up-the-configuration-file.html)
 - [How to use the lifelihood package](fitting-your-first-model-in-lifelihood.html)
 
@@ -29,7 +29,7 @@ library(tidyverse)
 # Data preparation
 ***
 
-Load the dataset from `.csv` file:
+Load the dataset from a `.csv` file:
 
 ```{r}
 # input data
@@ -106,7 +106,7 @@ results <- lifelihood(
 
 ## What is it?
 
-When runnning `lifelihood()` function, you might encounter the following warning:
+When running the `lifelihood()` function, you might encounter the following warning:
 
 ```r
 ## Warning in check_estimation(results_lifelihood = results): Estimation of
@@ -144,14 +144,14 @@ When fitting multiple models with `param_bounds_df = NULL`, `lifelihood()`
 computes default boundaries separately for each row of `dist`. If you supply
 `param_bounds_df`, the same custom boundaries are used for every model.
 
-Since 10 seems to not be high enough, let's try with 80:
+Since 10 does not seem to be high enough, let's try 80:
 
 ```{r}
 bounds_df[bounds_df$name == "increase_death_hazard", "max"] <- 80
 ```
 
 
-Once it's changed, you just have to call `lifelihood()` again with the `param_bounds_df` argument:
+Once the boundary has been changed, call `lifelihood()` again with the `param_bounds_df` argument:
 
 ```{r}
 results <- lifelihood(

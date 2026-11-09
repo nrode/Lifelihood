@@ -26,6 +26,6 @@ Note that the function will consider continuous covariates as factors
 The valid \code{groupby} value
 }
 \description{
-Check that \code{groupby} has an expected value, and returns it
+Check that \code{groupby} has an expected value and return it.
 }
 \keyword{internal}

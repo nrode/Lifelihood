@@ -17,7 +17,7 @@
 #' @param groupby One or multiple covariates used to group the computation.
 #' @param mcmc.ci.fit Whether or not to retrieve MCMC CI estimations.
 #'
-#' @return A dataframe with 3 columns: Interval (time interval, based
+#' @return A data frame with three columns: `Interval` (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
 #' or "Overall" if groupby = NULL), and Event_rate (event rate
 #' over the interval).
@@ -404,13 +404,13 @@ compute_fitted_event_rate <- function(
 #' at the beggining of a time interval for computing the observed
 #' event rate.
 #' @param groupby One or multiple factors used to define a group
-#' for which the event rate the will be computed.
+#' for which the event rate will be computed.
 #' If NULL, calculates a single overall rate. If `"all"`,
 #' calculates rate over each combination of all factors
 #' Otherwise must be a character or character vector with factors
 #' names.
 #'
-#' @return A dataframe with 3 columns: Interval (time interval, based
+#' @return A data frame with three columns: `Interval` (time interval, based
 #' on `interval_width` value), group (identifier of a given subgroup,
 #' or "Overall" if groupby = NULL), and Event_rate (event rate
 #' at this time).
@@ -635,7 +635,7 @@ compute_observed_event_rate <- function(
 #' @param lifelihoodData Ouput of [as_lifelihoodData()]
 #' @param verbose Boolean whether to print messages during the computation process (default=TRUE)
 #'
-#' @return A dataframe with time interval between consecutive clutches starting from maturity.
+#' @return A data frame containing the time intervals between consecutive clutches, starting from maturity.
 #'
 #' @export
 compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
@@ -751,7 +751,7 @@ compute_reproduction_intervals <- function(lifelihoodData, verbose = TRUE) {
 #' @title Check that the `groupby` argument is valid
 #'
 #' @description
-#' Check that `groupby` has an expected value, and returns it
+#' Check that `groupby` has an expected value and return it.
 #'
 #' @inheritParams lifelihood
 #' @param groupby vector of covariate(s) over which mortality rate should be

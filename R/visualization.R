@@ -223,12 +223,12 @@ plot_observed_event_rate <- function(
 #' Convenient function used in [plot_observed_event_rate()]
 #' and [plot_fitted_event_rate()].
 #'
-#' @param rate_df Dataframe with event rate.
+#' @param rate_df Data frame containing event rates.
 #' @param max_time The maximum time for calculating the event rate.
 #' If set to NULL, the time of the last observed death is used.
 #' @param type The type of symbol to be used for the plot (either
 #' of "points" or 'lines").
-#' @param groupby Factor(s) whosse levels over which event rate
+#' @param groupby Factor(s) whose levels define the groups over which the event rate
 #' should be represented (default=NULL).
 #' @param use_facet Use facet_wrap to plot one panel per group
 #' (default=FALSE).

@@ -550,21 +550,20 @@ extract_formula_covariates <- function(formula_terms) {
 #'
 #' @description
 #' Transforms a character string describing the covariates to be
-#' included into a format which the compiled program can understand.
+#' included in a format that the compiled program can understand.
 #' For example, `"geno + type"` will become `1 2` if `"geno"` is the
-#' first element of `covariables` and `"type"` is the second. This
+#' first element of `covariates` and `"type"` is the second. This
 #' function is used to create the model part of the input text file.
 #'
 #' @param R_format String representing the covariates to be adjusted.
-#' For example, "geno + type" will use the covariates geno and type.
+#' For example, `"geno + type"` uses the `geno` and `type` covariates.
 #' @param covariates Vector containing the names of the covariates.
 #' @param covar_types Vector containing the types of the covariates
 #' (either "cat" for categorical or "num" for numerical).
 #'
 #' @keywords internal
 #'
-#' @return The formatted format for lifelihood to understand which
-#' parameter to fit.
+#' @return A formatted string that tells lifelihood which parameters to fit.
 R_to_lifelihood <- function(R_format, covariates, covar_types) {
   # ensure input is a string
   R_format <- as.character(R_format)

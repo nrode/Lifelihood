@@ -33,16 +33,16 @@ execute_bin(
 }
 \arguments{
 \item{path_to_Lifelihood}{A character string specifying the file
-path to the compile Lifelihood program (default is NULL).}
+path to the compiled Lifelihood program (default is \code{NULL}).}
 
 \item{path_input_data}{Path to the input text file with the model
 and data to be fitted.}
 
 \item{path_param_bounds}{Path to the parameter boundaries text file
-with the min and max boudaries for each parameter.}
+with the minimum and maximum boundaries for each parameter.}
 
-\item{MCMC}{Perform MCMC sampling of the parameter after convergence
-to estimate their 95\% confidence interval.}
+\item{MCMC}{Perform MCMC sampling of the parameters after convergence
+to estimate their 95\% confidence intervals.}
 
 \item{interval}{TBD - Check the actual meaning.}
 
@@ -51,11 +51,11 @@ each parameter using the variance-covariance matrix.}
 
 \item{saveprobevent}{TBD - Check the actual meaning.}
 
-\item{fitness}{Reparametrize the model with one parameter as the
-intrinsic rate of increase.}
+\item{fitness}{Reparameterize the model so that one parameter represents
+the intrinsic rate of increase.}
 
-\item{r}{Reparametrize the model with one parameter as the intrinsic
-rate of increase.}
+\item{r}{Reparameterize the model so that one parameter represents the
+intrinsic rate of increase.}
 
 \item{seed1}{First seed number used to reproduce results (same seed
 = same results).}
@@ -83,7 +83,7 @@ right censoring dates of each event.}
 
 \item{path_continuous_var}{Path to the continuous variables file.}
 
-\item{ntr}{Number of thread for the paralelisation.}
+\item{ntr}{Number of threads used for parallelization.}
 
 \item{nst}{Simulated annealing tuning parameter increasing nst makes the search more thorough at each temperature (better chance of finding the global maximum, slower fit)}
 
